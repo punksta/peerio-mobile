@@ -1,0 +1,62 @@
+{
+  "name": "peeriomobile",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "commit": "git-cz",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "clean": "rm -rf ios/build",
+    "ios": "react-native run-ios",
+    "lint": "eslint . --ext .js,.jsx",
+    "lint-local": "eslint"
+  },
+  "dependencies": {
+    "react": "15.2.1",
+    "react-native": "0.30.0",
+    "react-native-cli": "*",
+    "file-loader": "0.9.0",
+    "react-native-picker": "3.0.5",
+    "react-native-web": "0.0.38",
+    "url-loader": "0.5.7"
+  },
+  "devDependencies": {
+    "chai": "3.5.0",
+    "commitizen": "2.8.5",
+    "cz-conventional-changelog": "1.1.7",
+    "eslint": "2.10.2",
+    "eslint-config-peerio": "1.1.1",
+    "eslint-plugin-jsx-a11y": "1.2.0",
+    "ghooks": "1.3.2",
+    "mocha": "3.0.2",
+    "semantic-release": "4.3.5",
+    "validate-commit-message": "3.0.1"
+  },
+  "config": {
+    "ghooks": {
+      "pre-push": "opt --out pre-push --exec \"npm run lint\"",
+      "post-checkout": "opt --out post-checkout --exec \"npm update\"",
+      "post-merge": "opt --out post-merge --exec \"npm update\"",
+      "commit-msg": "validate-commit-msg"
+    },
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "validate-commit-msg": {
+      "types": [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "chore",
+        "revert"
+      ],
+      "warnOnFail": false,
+      "maxSubjectLength": 100,
+      "subjectPattern": ".+",
+      "helpMessage": "Convention: https://goo.gl/3TgTsh"
+    }
+  }
+}
