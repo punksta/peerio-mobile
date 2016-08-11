@@ -1,7 +1,7 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
 
-# nicebear
+# peerio-mobile
 
 ## prepare environment
 
@@ -9,6 +9,7 @@ You would need Android SDK and XCode tools (and xcodeselect) installed, along wi
 Checkout the project and run:
 
 `npm install`
+
 `npm update`
 
 Run these commands every time there's a major pull from repository, which affects package.json
