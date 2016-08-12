@@ -44,6 +44,6 @@ android/keystores/debug.keystore
 
 # tests
 testrun.log
-tests/cache
+tests/.cache
 tests/console.py
 *.pyc
