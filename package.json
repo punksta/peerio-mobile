@@ -10,7 +10,9 @@
     "lint": "eslint . --ext .js,.jsx",
     "lint-local": "eslint",
     "localize": "tx pull -af",
-    "release": "standard-version && git push --follow-tags origin master"
+    "release": "standard-version && git push --follow-tags origin master",
+    "bundle": "./node_modules/.bin/react-native bundle --dev --entry-file index.ios.js --bundle-output ios/main.jsbundle --platform ios",
+    "build-ios": "npm run bundle && cd ios && xcodebuild -scheme peeriomobile -configuration Debug build"
   },
   "dependencies": {
     "react": "15.2.1",
