@@ -6,7 +6,7 @@ from appium import webdriver
 from time import sleep
 
 executor = 'http://127.0.0.1:4723/wd/hub'
-ios_dir = '../../ios/build/Debug-iphoneos'
+ios_dir = '../../ios/build/peeriomobile/Build/Products/Debug-iphoneos'
 ios_appname = 'peeriomobile.app'
 ios_bundle = 'com.peerio'
 

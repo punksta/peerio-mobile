@@ -43,12 +43,12 @@ export class App extends Component {
                 <View style={{ height: 10 }} />
                 <View style={{ height: 40, flexDirection: 'row' }}>
                     <TouchableOpacity style={styles.pickerButton} onPress={() => this.langPicker.toggle()}>
-                        <Text style={{ color: 'white' }}>{this.state.lang}</Text>
+                        <Text style={{ color: 'white' }}>{'Russian'}</Text>
                     </TouchableOpacity>
                 </View>
                 <Picker style={styles.picker}
                         ref={picker => { this.langPicker = picker; }}
-                        pickerData={[]} selectedValue="English" showMask />
+                        pickerData={['Blah']} selectedValue="English" showMask />
             </View>
         );
     }

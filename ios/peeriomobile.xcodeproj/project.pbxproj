@@ -636,7 +636,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
-				SYMROOT = $SRCROOT/build;
+				SYMROOT = build;
 			};
 			name = Debug;
 		};
@@ -658,7 +658,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
-				SYMROOT = $SRCROOT/build;
+				SYMROOT = build;
 			};
 			name = Release;
 		};

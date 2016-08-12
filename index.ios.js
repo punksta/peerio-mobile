@@ -12,4 +12,4 @@ const nicebear = () => (
     <App />
 );
 
-AppRegistry.registerComponent('nicebear', nicebear);
+AppRegistry.registerComponent('peeriomobile', () => nicebear);
