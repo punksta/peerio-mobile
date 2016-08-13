@@ -1,5 +1,6 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
+[![Build Status](http://circleci-badges-max.herokuapp.com/img/:owner/:repo/:branch?token=:circle-ci-token)](https://circleci.com/gh/:owner/:repo/tree/:branch)
 
 # peerio-mobile
 
