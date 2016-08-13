@@ -3,4 +3,4 @@ machine:
     version: 5.12.0
 test:
   override:
-    npm run bundle
+    - npm run bundle
