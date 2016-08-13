@@ -31,18 +31,18 @@
     "cz-conventional-changelog": "1.1.7",
     "eslint": "2.10.2",
     "eslint-config-peerio": "1.1.1",
-    "eslint-plugin-jsx-a11y": "1.2.0",
     "flow-bin": "^0.27.0",
     "ghooks": "1.3.2",
     "mocha": "3.0.2",
+    "opt-cli": "^1.5.1",
     "semantic-release": "4.3.5",
     "standard-version": "^2.4.0",
     "validate-commit-message": "3.0.1"
   },
   "config": {
     "ghooks": {
-      "pre-push": "opt --out pre-push --exec \"npm run lint\"",
       "post-checkout": "opt --out post-checkout --exec \"npm update\"",
+      "pre-push": "opt --out pre-push --exec \"npm run lint\"",
       "post-merge": "opt --out post-merge --exec \"npm update\"",
       "commit-msg": "validate-commit-msg"
     },
