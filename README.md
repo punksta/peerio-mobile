@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/PeerioTechnologies/peerio-mobile/tree/master.svg?style=svg&t=1)](https://circleci.com/gh/PeerioTechnologies/peerio-mobile/tree/master)
+[![CircleCI](https://circleci.com/gh/PeerioTechnologies/peerio-mobile/tree/master.svg?style=svg&circle-token=3d5e0f5519862084666d65a2597232084413c17c)](https://circleci.com/gh/PeerioTechnologies/peerio-mobile/tree/master)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![Standard Version](https://img.shields.io/badge/release-standard%20version-brightgreen.svg)](https://github.com/conventional-changelog/standard-version)
 
