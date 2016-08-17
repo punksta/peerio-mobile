@@ -7,6 +7,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "clean": "rm -rf ios/build",
     "ios": "react-native run-ios",
+    "android": "react-native run-android",
     "lint": "eslint . --ext .js,.jsx",
     "lint-local": "eslint",
     "localize": "tx pull -af",
@@ -14,6 +15,7 @@
     "bundle": "./node_modules/.bin/react-native bundle --dev --entry-file index.ios.js --bundle-output ios/main.jsbundle --platform ios",
     "build-ios": "npm run bundle && cd ios && xcodebuild -scheme peeriomobile -configuration Debug build",
     "build-ios-nocodesign": "npm run bundle && cd ios && xcodebuild -scheme peeriomobile -configuration Debug build -sdk iphonesimulator",
+    "build-android": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleRelease",
     "test": "bash setup_tests.sh && py.test --platform=ios -s -x tests",
     "appium": "appium"
   },
