@@ -21,16 +21,20 @@
   },
   "dependencies": {
     "file-loader": "0.9.0",
+    "mobx": "^2.4.3",
     "react": "15.2.1",
     "react-native": "0.30.0",
     "react-native-cli": "*",
     "react-native-picker": "3.0.5",
-    "react-router": "^2.6.1",
+    "react-native-router-flux": "^3.35.0",
     "url-loader": "0.5.7"
   },
   "devDependencies": {
     "appium": "^1.5.3",
     "babel-eslint": "^6.1.2",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
     "chai": "3.5.0",
     "commitizen": "2.8.5",
     "cz-conventional-changelog": "1.1.7",
