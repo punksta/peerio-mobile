@@ -30,6 +30,7 @@ ios/main.jsbundle.*
 .idea
 .gradle
 local.properties
+index.android.bundle*
 
 # node.js
 #
@@ -46,4 +47,5 @@ android/keystores/debug.keystore
 testrun.log
 tests/.cache
 tests/console.py
+tests/env
 *.pyc
