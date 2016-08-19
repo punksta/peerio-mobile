@@ -12,7 +12,7 @@ global chromedriverProcess
 def startAppium():
     global appiumProcess
     atexit.register(killAppium)
-    appiumProcess = subprocess.Popen(['appium'], stdout=subprocess.PIPE)
+    appiumProcess = subprocess.Popen(['node_modules/.bin/appium'], stdout=subprocess.PIPE)
     while True:
         line = appiumProcess.stdout.readline()
         if line != '':
