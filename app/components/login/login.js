@@ -1,54 +1,43 @@
 import React, { Component } from 'react';
-import { Actions } from 'react-native-router-flux';
+import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
 import {
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View,
+    ScrollView,
+    KeyboardAvoidingView,
+    Keyboard
 } from 'react-native';
-
+import TextBox from '../controls/textbox';
+import SignupFooter from '../controls/signup-footer';
+import LoginStep1 from './login-step1';
+import LoginStep2 from './login-step2';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Picker from 'react-native-picker';
 import { styles } from '../../styles/styles';
 
 export default class Login extends Component {
     render() {
+       const getSceneStyle = (props, computedProps) => {
+          const style = {
+            backgroundColor: '#2C95CF',
+            shadowColor: 'black',
+            shadowOffset: { height: 1, width: -1 },
+            shadowOpacity: 0.2,
+            shadowRadius: 5,
+          };
+          return style;
+       };
         return (
-            <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    Peerio Native Icebear Client
-                </Text>
-                <Text style={styles.instructions}>
-                    Login:
-                </Text>
-                <TextInput
-                    style={styles.input}
-                    value={'enter login here'} />
-                <Text style={styles.instructions}>
-                    Passphrase or passcode:
-                </Text>
-                <TextInput
-                    style={styles.input}
-                    value={'enter passphrase here'} />
-                <View style={{ height: 40, flexDirection: 'row' }}>
-                    <TouchableOpacity style={styles.buttonSafe} onPress={() => this.langPicker.toggle()}>
-                        <Text style={{ color: 'white' }}>Login</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ height: 10 }} />
-                <View style={{ height: 40, flexDirection: 'row' }}>
-                    <TouchableOpacity style={styles.buttonPrimary} onPress={() => Actions.signup()}>
-                        <Text style={{ color: 'white' }}>Signup</Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ height: 10 }} />
-                <View style={{ height: 40, flexDirection: 'row' }}>
-                    <TouchableOpacity style={styles.pickerButton} onPress={() => this.langPicker.toggle()}>
-                        <Text style={{ color: 'white' }}>{'Russian'}</Text>
-                    </TouchableOpacity>
-                </View>
-                <Picker style={styles.picker}
-                        ref={picker => { this.langPicker = picker; }}
-                        pickerData={['Blah']} selectedValue="English" showMask />
+            <View style={styles.rootContainer}>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps contentContainerStyle={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <Router hideNavBar={true} getSceneStyle={getSceneStyle}>
+                        <Scene key="signupStep1" component={LoginStep1} />
+                        <Scene key="signupStep2" component={LoginStep2} />
+                    </Router>
+                    <SignupFooter />
+                </KeyboardAwareScrollView>
             </View>
         );
     }

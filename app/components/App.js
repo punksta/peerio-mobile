@@ -21,9 +21,9 @@ export class App extends Component {
     render() {
         return (
             <Router>
-                <Scene key="root" title="dev-root">
+                <Scene key="root" title="dev-root" hideNavBar>
+                    <Scene key="login" component={Login} hideNavBar />
                     <Scene key="dev-nav" component={DevNav} />
-                    <Scene key="login" component={Login} />
                     <Scene key="signup" component={Signup} />
                     <Scene key="setup-wizard" component={SetupWizard} />
                     <Scene key="conversation" component={Conversation} />
