@@ -16,15 +16,16 @@ import { styles } from '../../styles/styles';
 
 export default class LoginStep1 extends Component {
     render() {
+        var style = styles.wizard;
         return (
-            <View style={styles.container}>
-                <Text style={styles.textTitle}>Signup</Text>
-                <Text style={styles.textSubTitle}>Profile</Text>
+            <View style={style.container}>
+                <Text style={style.text.title}>Signup</Text>
+                <Text style={style.text.subTitle}>Profile</Text>
                 <TextBox />
                 <TextBox />
                 <TextBox />
                 <TextBox />
-                <Text style={styles.textInfo}>
+                <Text style={style.text.info}>
                     By creating a <Text style={{ fontWeight: 'bold' }}>Peerio</Text> account you agree to
                     our <Text style={{ textDecorationLine: 'underline' }}>terms of service</Text>
                 </Text>

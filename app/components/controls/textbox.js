@@ -21,10 +21,11 @@ export default class TextBox extends Component {
     }
 
     render() {
+        var style = this.state.focused ? styles.input.active : styles.input.normal;
         return (
-            <View style={this.state.focused ? styles.shadowBox : styles.shadowBoxUnfocused}>
+            <View style={style.shadow}>
                 <TextInput 
-                    style={this.state.focused ? styles.input : styles.inputInactive} 
+                    style={style.textbox} 
                     value="Alice" 
                     onFocus={this.focus.bind(this)} 
                     onBlur={this.blur.bind(this)}
