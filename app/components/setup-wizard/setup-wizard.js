@@ -6,7 +6,7 @@ import {
     View
 } from 'react-native';
 
-import { styles } from '../../styles/styles';
+import styles from '../../styles/styles';
 
 export default class SetupWizard extends Component {
     render() {

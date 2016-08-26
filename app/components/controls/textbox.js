@@ -6,7 +6,7 @@ import {
     TouchableWithoutFeedback,
     LayoutAnimation
 } from 'react-native';
-import { styles } from '../../styles/styles';
+import styles from '../../styles/styles';
 
 export default class TextBox extends Component {
     constructor(props) {
@@ -58,7 +58,7 @@ export default class TextBox extends Component {
 
 TextBox.propTypes = {
     onChangeText: React.PropTypes.func.isRequired,
-    value: React.PropTypes.object.isRequired,
+    value: React.PropTypes.any.isRequired,
     hint: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired
 };

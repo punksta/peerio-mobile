@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import TextBox from '../controls/textbox';
 import Circles from '../controls/circles';
-import { styles } from '../../styles/styles';
+import styles from '../../styles/styles';
 
 export default class Footer extends Component {
     render() {

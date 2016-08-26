@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import Picker from 'react-native-picker';
-import { styles } from '../../styles/styles';
+import styles from '../../styles/styles';
 
 export default class Contacts extends Component {
     render() {

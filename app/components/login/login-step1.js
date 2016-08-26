@@ -13,7 +13,7 @@ import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import Picker from 'react-native-picker';
 import TextBox from '../controls/textbox';
-import { styles } from '../../styles/styles';
+import styles from '../../styles/styles';
 
 const info = observable({
     username: '',

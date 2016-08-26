@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View
 } from 'react-native';
-import { styles } from '../../styles/styles';
+import styles from '../../styles/styles';
 
 export default class Circles extends Component {
     render() {

@@ -15,7 +15,7 @@ import TextBox from '../controls/textbox';
 import SignupFooter from '../controls/signup-footer';
 import LoginStep1 from './login-step1';
 import LoginStep2 from './login-step2';
-import { styles } from '../../styles/styles';
+import styles from '../../styles/styles';
 
 export default class Login extends Component {
     render() {

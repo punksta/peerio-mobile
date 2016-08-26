@@ -9,14 +9,6 @@ import Contacts from './contacts/contacts.js';
 import Conversation from './messaging/conversation.js';
 import ConversationInfo from './messaging/conversation-info.js';
 
-const reducerCreate = params => {
-    const defaultReducer = new Reducer(params);
-    return (state, action) => {
-        console.log('ACTION:', action);
-        return defaultReducer(state, action);
-    };
-};
-
 export default class App extends Component {
     render() {
         return (
