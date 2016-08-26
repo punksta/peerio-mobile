@@ -10,8 +10,6 @@ import {
     Keyboard
 } from 'react-native';
 import TextBox from '../controls/textbox';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import Picker from 'react-native-picker';
 import { styles } from '../../styles/styles';
 
 export default class LoginStep2 extends Component {

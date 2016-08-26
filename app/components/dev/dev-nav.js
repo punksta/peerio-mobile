@@ -24,11 +24,6 @@ export default class DevNav extends Component {
         return (
             <View style={styles.rootContainer}>
                 <View style={styles.container}>
-                    <View>
-                        <Text style={styles.textTitle}>Signup</Text>
-                        <Text style={styles.textSubTitle}>Profile</Text>
-                        <Text style={styles.textInfo}>By creating a Peerio account you agree to our terms of service</Text>
-                    </View>
                     {this.routeLink('signup')}
                     {this.routeLink('login')}
                     {this.routeLink('setup-wizard')}

@@ -17,7 +17,7 @@ const reducerCreate = params => {
     };
 };
 
-export class App extends Component {
+export default class App extends Component {
     render() {
         return (
             <Router>

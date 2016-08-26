@@ -14,21 +14,21 @@ const vars = {
     footerMarginX: 24
 };
 
-var base_styles = {};
+const styleCache = {};
 function baseclass(name, style) {
-    base_styles[name] = style;
+    styleCache[name] = style;
     return style;
 }
 
 function inherit(name, item) {
-    if(!base_styles[name]) throw 'Style not found ' + name;
-    var items = [];
-    items.push(base_styles[name]);
-    item && items.push(item);
+    if (!styleCache[name]) throw Error(`#peerio-mobile#styles.js Style not found ${name}`);
+    const items = [];
+    items.push(styleCache[name]);
+    if (item) items.push(item);
     return StyleSheet.flatten(items);
 }
 
-export const styles = {
+const styles = {
     text: {
         inverse: baseclass('text-inverse', {
             color: vars.txtLight
@@ -36,6 +36,7 @@ export const styles = {
     },
     shadow: {
         normal: baseclass('shadow-normal', {
+            height: 48,
             margin: 2,
             marginBottom: 36,
             marginTop: 6
@@ -52,26 +53,32 @@ export const styles = {
     input: {
         base: {
             normal: baseclass('input-normal', {
-                height: 48,
-                backgroundColor: vars.inputBgInactive,
+                position: 'absolute',
+                left: 10,
+                right: 0,
+                bottom: 0,
+                top: 20,
+                height: 28,
+                backgroundColor: 'transparent',
                 color: vars.inputBgInactiveText,
-                padding: 10,
                 fontSize: 14,
                 borderRadius: 2
             }),
             active: baseclass('input-active', inherit('input-normal', {
-                height: 48,
-                backgroundColor: vars.inputBg,
-                color: vars.txtDark,
+                color: vars.txtDark
             }))
         },
         normal: {
             textbox: inherit('input-normal'),
-            shadow: inherit('shadow-normal')
+            shadow: inherit('shadow-normal', {
+                backgroundColor: vars.inputBgInactive
+            })
         },
         active: {
             textbox: inherit('input-active'),
-            shadow: inherit('shadow-active')
+            shadow: inherit('shadow-active', {
+                backgroundColor: vars.inputBg
+            })
         }
     },
     container: StyleSheet.create({
@@ -87,19 +94,19 @@ export const styles = {
             left: 0,
             right: 0,
             bottom: 0
-        },
+        }
     }),
     circle: {
         container: {
             height: 40,
             flexDirection: 'row',
-            justifyContent: 'center' 
+            justifyContent: 'center'
         },
         small: {
             base: baseclass('small-circle', {
                 width: vars.circle,
                 height: vars.circle,
-                borderRadius: vars.circle/2,
+                borderRadius: vars.circle / 2,
                 marginLeft: vars.circle,
                 marginRight: vars.circle,
                 backgroundColor: vars.txtLight
@@ -166,11 +173,13 @@ export const styles = {
     },
     navigator: StyleSheet.create({
         card: {
-            backgroundColor: vars.bg,
-            shadowColor: 'black',
-            shadowOffset: { height: 1, width: -1 },
-            shadowOpacity: 0.2,
-            shadowRadius: 5,
+            backgroundColor: vars.bg
+            // shadowColor: 'black',
+            // shadowOffset: { height: 1, width: -1 },
+            // shadowOpacity: 0.2,
+            // shadowRadius: 5,
         }
     })
 };
+
+export default styles;
