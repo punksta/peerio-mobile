@@ -24,13 +24,7 @@ const info = observable({
 
 @observer
 export default class LoginStep1 extends Component {
-    constructor(props) {
-        super(props);
-        this.onChange = this.onChangeText.bind(this);
-    }
     onChangeText(name, text) {
-        // console.log(name);
-        // console.log(text);
         info[name] = text;
     }
     render() {

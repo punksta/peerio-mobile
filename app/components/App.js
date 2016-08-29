@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { LayoutAnimation } from 'react-native';
 import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
 import DevNav from './dev/dev-nav.js';
 import Login from './login/login.js';
@@ -15,8 +16,8 @@ export default class App extends Component {
             <Router>
                 <Scene key="root" title="dev-root" hideNavBar>
                     <Scene key="login" component={Login} hideNavBar />
-                    <Scene key="dev-nav" component={DevNav} />
                     <Scene key="signup" component={Signup} />
+                    <Scene key="dev-nav" component={DevNav} />
                     <Scene key="setup-wizard" component={SetupWizard} />
                     <Scene key="conversation" component={Conversation} />
                     <Scene key="conversation-info" component={ConversationInfo} />

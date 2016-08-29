@@ -10,28 +10,45 @@ import {
     Keyboard,
     Modal
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import TextBox from '../controls/textbox';
+import { observable } from 'mobx';
+import Layout1 from '../layout/layout1';
 import SignupFooter from '../controls/signup-footer';
-import LoginStep1 from './login-step1';
-import LoginStep2 from './login-step2';
+import TextBox from '../controls/textbox';
 import styles from '../../styles/styles';
 
+const info = observable({
+    username: '',
+    name: '',
+    email: 'alicevinkins@mailinator.com',
+    language: 'English'
+});
+
 export default class Login extends Component {
+    onChangeText(name, text) {
+        info[name] = text;
+    }
+    renderBody() {
+        const style = styles.wizard;
+        const props = (name, hint) => ({
+            value: info[name],
+            name,
+            onChangeText: this.onChangeText,
+            hint
+        });
+        return (
+            <View style={style.container}>
+                <TextBox {...props('name', 'Name')} />
+                <TextBox {...props('email', 'Email')} />
+                <TextBox {...props('language', 'Language')} />
+            </View>
+        );
+    }
+    renderFooter() {
+        return null;
+    }
     render() {
         return (
-            <View style={styles.container.root}>
-                <KeyboardAwareScrollView
-                    keyboardShouldPersistTaps
-                    contentContainerStyle={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}
-                    extraHeight={0}>
-                    <Router hideNavBar getSceneStyle={() => styles.navigator.card}>
-                        <Scene key="signupStep1" component={LoginStep1} />
-                        <Scene key="signupStep2" component={LoginStep2} />
-                    </Router>
-                    <SignupFooter />
-                </KeyboardAwareScrollView>
-            </View>
+            <Layout1 body={this.renderBody()} footer={this.renderFooter()} />
         );
     }
 }
