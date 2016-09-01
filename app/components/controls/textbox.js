@@ -30,7 +30,8 @@ export default class TextBox extends Component {
 
     render() {
         const style = this.state.focused ? styles.input.active : styles.input.normal;
-        let hint = this.state.focused || this.props.value && this.props.value.length ? styles.input.hint.scaled : styles.input.hint.full;
+        let hint = this.state.focused || this.props.value && this.props.value.length ?
+            styles.input.hint.scaled : styles.input.hint.full;
         return (
             <TouchableWithoutFeedback onPress={() => this.textinput}>
                 <View style={style.shadow}>

@@ -6,12 +6,13 @@ import styles from '../../styles/styles';
 
 export default class Center extends Component {
     render() {
-        var style = {
+        let style = {
             flexDirection: 'row',
             justifyContent: 'center'
         };
-        if(this.props.style)
+        if (this.props.style) {
             style = styles.inherit(style, this.props.style);
+        }
         return (
             <View style={style}>
                 {this.props.children}
@@ -19,3 +20,8 @@ export default class Center extends Component {
         );
     }
 }
+
+Center.propTypes = {
+    children: React.PropTypes.any.isRequired,
+    style: React.PropTypes.any
+};

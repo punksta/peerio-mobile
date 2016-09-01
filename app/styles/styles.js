@@ -32,8 +32,9 @@ function baseclass(name, style) {
 }
 
 function inherit(name, item) {
-    if (_.isObject(name))
+    if (_.isObject(name)) {
         return _.merge(name, item);
+    }
     if (!styleCache[name]) throw Error(`#peerio-mobile#styles.js Style not found ${name}`);
     const items = [];
     items.push(styleCache[name]);
@@ -106,18 +107,18 @@ const styles = {
         },
         hint: {
             text: {
-                color: 'gray', 
+                color: 'gray',
                 fontSize: 12
             },
-            full: { 
-                position: 'absolute', 
-                top: 18, 
-                left: 10 
+            full: {
+                position: 'absolute',
+                top: 18,
+                left: 10
             },
-            scaled: { 
-                position: 'absolute', 
-                top: 6, 
-                left: 10, 
+            scaled: {
+                position: 'absolute',
+                top: 6,
+                left: 10
                 /* transform: [{ scale: 0.8 }]  */
             }
         }
@@ -160,11 +161,11 @@ const styles = {
     },
     wizard: {
         containerNoPadding: {
-                flex: 1,
-                paddingTop: 0,
-                borderColor: 'red',
-                borderWidth: 0,
-                backgroundColor: 'transparent'
+            flex: 1,
+            paddingTop: 0,
+            borderColor: 'red',
+            borderWidth: 0,
+            backgroundColor: 'transparent'
         },
         container: {
             flex: 1,

@@ -7,11 +7,12 @@ import styles from '../../styles/styles';
 
 export default class Small extends Component {
     render() {
-        var style = {
+        let style = {
             fontSize: styles.vars.font.size.smaller
         };
-        if(this.props.style)
+        if (this.props.style) {
             style = styles.inherit(style, this.props.style);
+        }
         return (
             <Text style={style}>
                 {this.props.children}
@@ -19,3 +20,8 @@ export default class Small extends Component {
         );
     }
 }
+
+Small.propTypes = {
+    children: React.PropTypes.any.isRequired,
+    style: React.PropTypes.any
+};

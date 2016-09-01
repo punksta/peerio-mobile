@@ -8,15 +8,11 @@ import {
 import styles from '../../styles/styles';
 
 export default class Button extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         const style = styles.button;
-        const textStyle = this.props.bold ? 
+        const textStyle = this.props.bold ?
             style.text.bold : style.text.normal;
-        var text = this.props.text || "";
+        let text = this.props.text || '';
         text = this.props.caps ? text.toUpperCase() : text;
         return (
             <TouchableOpacity style={this.props.style}>

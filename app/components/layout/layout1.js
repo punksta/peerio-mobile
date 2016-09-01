@@ -21,3 +21,7 @@ export default class Layout1 extends Component {
     }
 }
 
+Layout1.propTypes = {
+    body: React.PropTypes.any,
+    footer: React.PropTypes.any
+};

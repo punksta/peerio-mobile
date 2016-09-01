@@ -7,11 +7,12 @@ import styles from '../../styles/styles';
 
 export default class Big extends Component {
     render() {
-        var style = {
+        let style = {
             fontSize: styles.vars.font.size.big
         };
-        if(this.props.style)
+        if (this.props.style) {
             style = styles.inherit(style, this.props.style);
+        }
         return (
             <Text style={style}>
                 {this.props.children}
@@ -19,3 +20,8 @@ export default class Big extends Component {
         );
     }
 }
+
+Big.propTypes = {
+    children: React.PropTypes.any.isRequired,
+    style: React.PropTypes.any
+};

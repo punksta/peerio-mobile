@@ -37,14 +37,14 @@ export default class Login extends Component {
         this.signIn = this.signIn.bind(this);
     }
 
-    signIn() {
-        // Actions.signInMock1();
-        info.username = "peeriotest1";
-        info.savedUserInfo = !info.savedUserInfo;
-    }
-
     onChangeText(name, text) {
         info[name] = text;
+    }
+
+    signIn() {
+        // Actions.signInMock1();
+        info.username = 'peeriotest1';
+        info.savedUserInfo = !info.savedUserInfo;
     }
 
     renderBody() {
