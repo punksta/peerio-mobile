@@ -2,6 +2,8 @@ import {
     StyleSheet
 } from 'react-native';
 
+import _ from 'lodash';
+
 const vars = {
     circle: 8,
     bg: '#2C95CF',
@@ -11,7 +13,16 @@ const vars = {
     inputBg: 'white',
     inputBgInactive: '#c2e0ef',
     inputBgInactiveText: '#7c8e98',
-    footerMarginX: 24
+    footerMarginX: 24,
+    font: {
+        size: {
+            normal: 14,
+            smaller: 12,
+            small: 10,
+            big: 18,
+            bigger: 16
+        }
+    }
 };
 
 const styleCache = {};
@@ -21,6 +32,8 @@ function baseclass(name, style) {
 }
 
 function inherit(name, item) {
+    if (_.isObject(name))
+        return _.merge(name, item);
     if (!styleCache[name]) throw Error(`#peerio-mobile#styles.js Style not found ${name}`);
     const items = [];
     items.push(styleCache[name]);
@@ -49,6 +62,17 @@ const styles = {
                 width: 1
             }
         }))
+    },
+    button: {
+        text: {
+            normal: {
+                color: vars.highlight
+            },
+            bold: {
+                color: vars.highlight,
+                fontWeight: 'bold'
+            }
+        }
     },
     input: {
         base: {
@@ -79,6 +103,23 @@ const styles = {
             shadow: inherit('shadow-active', {
                 backgroundColor: vars.inputBg
             })
+        },
+        hint: {
+            text: {
+                color: 'gray', 
+                fontSize: 12
+            },
+            full: { 
+                position: 'absolute', 
+                top: 18, 
+                left: 10 
+            },
+            scaled: { 
+                position: 'absolute', 
+                top: 6, 
+                left: 10, 
+                /* transform: [{ scale: 0.8 }]  */
+            }
         }
     },
     container: StyleSheet.create({
@@ -118,12 +159,17 @@ const styles = {
         }
     },
     wizard: {
+        containerNoPadding: {
+                flex: 1,
+                paddingTop: 0,
+                borderColor: 'red',
+                borderWidth: 0,
+                backgroundColor: 'transparent'
+        },
         container: {
             flex: 1,
             padding: 50,
             paddingTop: 0,
-            borderColor: 'red',
-            borderWidth: 0,
             backgroundColor: 'transparent'
         },
         textSubTitle: {
@@ -181,5 +227,9 @@ const styles = {
         }
     })
 };
+
+styles.baseclass = baseclass;
+styles.inherit = inherit;
+styles.vars = vars;
 
 export default styles;
