@@ -4,7 +4,6 @@ import {
     Text
 } from 'react-native';
 import styles from '../../styles/styles';
-import { pages } from '../controls/multipagecomponent';
 import DevNav from '../dev/dev-nav';
 
 export default class DebugPanel extends Component {

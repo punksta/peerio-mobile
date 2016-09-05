@@ -19,7 +19,6 @@ import SignupFooter from '../controls/signup-footer';
 import LoginClean from './loginClean';
 import LoginSaved from './loginSaved';
 import TextBox from '../controls/textbox';
-import MultiPageComponent from '../controls/multipagecomponent';
 import Button from '../controls/button';
 import Center from '../controls/center';
 import Big from '../controls/big';
