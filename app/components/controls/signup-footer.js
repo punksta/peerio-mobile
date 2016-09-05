@@ -10,23 +10,41 @@ import {
     Keyboard
 } from 'react-native';
 import TextBox from '../controls/textbox';
-import Circles from '../controls/circles';
+import signupState from '../signup/signup-state';
 import styles from '../../styles/styles';
 
-export default class Footer extends Component {
+export default class SignupFooter extends Component {
+    constructor(props) {
+        super(props);
+        this.next = this.next.bind(this);
+        this.prev = this.prev.bind(this);
+    }
+    next() {
+        console.log('ffff');
+        if (signupState.current < signupState.count - 1) {
+            signupState.current++;
+        }
+    }
+    prev() {
+        if (signupState.current > 0) {
+            Actions.pop();
+            signupState.current--;
+        } else {
+            signupState.exit();
+        }
+    }
     render() {
         const style = styles.wizard.footer;
         return (
             <View style={styles.container.footer}>
                 <View style={style.row}>
-                    <TouchableOpacity style={style.button.left}>
-                        <Text style={style.button.text} onPress={() => Actions.pop()}>EXIT</Text>
+                    <TouchableOpacity style={style.button.left} onPress={this.prev}>
+                        <Text style={style.button.text}>{signupState.isFirst ? 'EXIT' : 'PREV'}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.button.right}>
-                        <Text style={style.button.text} onPress={() => Actions.signupStep2()}>NEXT</Text>
+                    <TouchableOpacity style={style.button.right} onPress={this.next}>
+                        <Text style={style.button.text}>{signupState.isLast ? 'FINISH' : 'NEXT'}</Text>
                     </TouchableOpacity>
                 </View>
-                <Circles />
             </View>
         );
     }

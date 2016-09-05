@@ -7,10 +7,13 @@ import _ from 'lodash';
 const vars = {
     circle: 8,
     bg: '#2C95CF',
-    highlight: 'white',
+    highlight: '#FFFFFFCC',
     txtLight: '#bfdfef',
     txtDark: 'black',
     inputBg: 'white',
+    subtleBg: '#c3dfee',
+    subtleText: '#7b8c95',
+    subtleTextBold: '#181c1f',
     inputBgInactive: '#c2e0ef',
     inputBgInactiveText: '#7c8e98',
     footerMarginX: 24,
@@ -171,7 +174,9 @@ const styles = {
             flex: 1,
             padding: 50,
             paddingTop: 0,
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
         },
         textSubTitle: {
             color: vars.txtLight,
@@ -219,12 +224,15 @@ const styles = {
         }
     },
     navigator: StyleSheet.create({
-        card: {
+        router: {
             backgroundColor: vars.bg
-            // shadowColor: 'black',
-            // shadowOffset: { height: 1, width: -1 },
-            // shadowOpacity: 0.2,
-            // shadowRadius: 5,
+        },
+        card: {
+            backgroundColor: vars.bg,
+            shadowColor: 'black',
+            shadowOffset: { height: 1, width: -1 },
+            shadowOpacity: 0.2,
+            shadowRadius: 5
         }
     })
 };

@@ -8,103 +8,64 @@ import {
     ScrollView,
     KeyboardAvoidingView,
     Keyboard,
-    Modal
+    Modal,
+    Image
 } from 'react-native';
-import { observable } from 'mobx';
+import { observable, extendObservable } from 'mobx';
 import { observer } from 'mobx-react/native';
+import styles from '../../styles/styles';
 import Layout1 from '../layout/layout1';
 import SignupFooter from '../controls/signup-footer';
+import LoginClean from './loginClean';
+import LoginSaved from './loginSaved';
 import TextBox from '../controls/textbox';
+import MultiPageComponent from '../controls/multipagecomponent';
 import Button from '../controls/button';
 import Center from '../controls/center';
 import Big from '../controls/big';
 import Small from '../controls/small';
+import Bold from '../controls/bold';
+import Logo from '../controls/logo';
 import Conditional from '../controls/conditional';
-import styles from '../../styles/styles';
+import ReducerCreate from '../utils/reducer';
+import state from '../layout/state';
 
-const info = observable({
-    username: '',
-    name: 'Peerio Test',
-    passphrase: '',
-    language: 'English',
-    savedUserInfo: true
+const loginState = observable({
+    saved: false
 });
 
 @observer
 export default class Login extends Component {
-    constructor(props) {
-        super(props);
-        this.signIn = this.signIn.bind(this);
+    static get states() {
+        return {
+            clean: () => { loginState.saved = false; },
+            saved: () => { loginState.saved = true; }
+        };
     }
-
-    onChangeText(name, text) {
-        info[name] = text;
+    componentDidMount() {
+        console.log('login mounted');
     }
-
-    signIn() {
-        // Actions.signInMock1();
-        info.username = 'peeriotest1';
-        info.savedUserInfo = !info.savedUserInfo;
+    componentWillUnmount() {
+        console.log('login unmount');
     }
-
-    renderBody() {
+    pageState() {
+        return loginState;
+    }
+    render() {
         const style = styles.wizard;
-        const props = (name, hint) => ({
-            value: info[name],
-            name,
-            onChangeText: this.onChangeText,
-            hint
-        });
-        const savedStyle = {
-            backgroundColor: '#CFCFCF'
-        };
-        const indentBig = {
-            marginTop: 20,
-            marginBottom: 10
-        };
-        const indentSmall = {
-            marginTop: 0,
-            marginBottom: 16
-        };
-        return (
+        let body = (
             <View style={style.containerNoPadding}>
-                <Conditional test={info.savedUserInfo}>
-                    <View style={savedStyle}>
-                        <Center style={indentBig}>
-                            <Big>
-                                Welcome back, {info.name}
-                            </Big>
-                        </Center>
-                        <Center style={indentSmall}>
-                            <Small>
-                                Not {info.name}? Tap to change user
-                            </Small>
-                        </Center>
-                    </View>
+                <Logo />
+                <Conditional test={loginState.saved}>
+                    <LoginSaved />
                 </Conditional>
-                <View style={style.container}>
-                    <Conditional test={!info.savedUserInfo}>
-                        <TextBox {...props('username', 'Name')} />
-                    </Conditional>
-                    <TextBox {...props('passphrase', 'Passphrase')} />
-                    <Conditional test={!info.savedUserInfo}>
-                        <TextBox {...props('language', 'Language')} />
-                    </Conditional>
-                    <Center>
-                        <Button text="Sign In" caps bold onPress={this.signIn} />
-                    </Center>
-                </View>
+                <Conditional test={!loginState.saved}>
+                    <LoginClean />
+                </Conditional>
             </View>
         );
-    }
-
-    renderFooter() {
-        return null;
-    }
-
-    render() {
         return (
-            <Layout1 body={this.renderBody()} footer={this.renderFooter()} />
+            <Layout1 body={body} footer={null} />
         );
     }
 }
