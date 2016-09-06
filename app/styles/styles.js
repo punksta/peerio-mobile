@@ -39,7 +39,7 @@ function baseclass(name, style) {
 
 function inherit(name, item) {
     if (_.isObject(name)) {
-        let result = {};
+        const result = {};
         return _.merge(result, name, item);
     }
     if (!styleCache[name]) throw Error(`#peerio-mobile#styles.js Style not found ${name}`);

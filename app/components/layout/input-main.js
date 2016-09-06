@@ -5,7 +5,7 @@ import {
     View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
+import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import Button from '../controls/button';
 import styles from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -15,6 +15,8 @@ import state from '../layout/state';
 export default class InputMain extends Component {
     constructor(props) {
         super(props);
+        this.plus = this.plus.bind(this);
+        this.send = this.send.bind(this);
     }
 
     plus() {
@@ -30,8 +32,8 @@ export default class InputMain extends Component {
                 flexDirection: 'row',
                 alignItems: 'flex-end'
             }}>
-                {icons.dark('control-point', this.plus, {padding: 20})}
-                <AutoGrowingTextInput 
+                {icons.dark('control-point', this.plus, { padding: 20 })}
+                <AutoGrowingTextInput
                     maxHeight={120}
                     style={{ flex: 1, height: 20 }} />
                 <Button
@@ -44,5 +46,3 @@ export default class InputMain extends Component {
         );
     }
 }
-
-
