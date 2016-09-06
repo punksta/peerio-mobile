@@ -23,6 +23,8 @@ export default class SignupFooter extends Component {
         console.log('ffff');
         if (signupState.current < signupState.count - 1) {
             signupState.current++;
+        } else {
+            signupState.finish();
         }
     }
     prev() {

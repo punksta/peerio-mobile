@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import { TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../../styles/styles';
 
 const icons = {
     basic(name, color, onPress, style) {
         return (
-            <Icon
-                style={style}
-                name={name}
-                size={24}
-                color={color}
-                onPress={onPress} />
+            <TouchableOpacity onPress={onPress}>
+                <Icon
+                    style={style}
+                    name={name}
+                    size={24}
+                    color={color} />
+            </TouchableOpacity>
         );
     },
     white(name, onPress, style) {

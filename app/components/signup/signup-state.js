@@ -21,6 +21,9 @@ const signupState = observable({
     },
     @action exit() {
         state.route = 'login';
+    },
+    @action finish() {
+        state.routes.main.transition();
     }
 });
 

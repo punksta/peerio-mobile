@@ -5,7 +5,10 @@ import {
     LayoutAnimation,
     View,
     ScrollView,
-    KeyboardAvoidingView
+    KeyboardAvoidingView,
+    TouchableWithoutFeedback,
+    Dimensions,
+    PanResponder
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { observer } from 'mobx-react/native';
@@ -17,22 +20,45 @@ import styles from '../../styles/styles';
 
 @observer
 export default class LayoutMain extends Component {
+    constructor(props) {
+        super(props);
+        this.hideMenus = this.hideMenus.bind(this);
+    }
+    componentWillMount() {
+        this.panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: (evt, gestureState) => {
+                console.log('oh well');
+                this.hideMenus();
+                return false;
+            }
+        });
+    }
     componentWillUpdate() {
         LayoutAnimation.easeInEaseOut();
     }
+    hideMenus() {
+        state.isLeftMenuVisible = false;
+        state.isRightMenuVisible = false;
+    }
     render() {
-        const leftMenuWidth = state.isLeftMenuVisible ? 200 : 0;
-        const rightMenuWidth = state.isRightMenuVisible ? 200 : 0;
+        const width = Dimensions.get('window').width;
+        const ratio = 0.8;
+        const leftMenuWidth = state.isLeftMenuVisible ? width * ratio : 0;
+        const rightMenuWidth = state.isRightMenuVisible ? width * ratio : 0;
         return (
             <View style={styles.container.root}>
                 <HeaderMain />
-                <KeyboardAvoidingView behavior="padding" style={{
-                    backgroundColor: 'white',
-                    flex: 1,
-                    flexDirection: 'column',
-                    justifyContent: 'space-between'
-                }}>
-                    <ScrollView style={{ flex: 1, backgroundColor: '#fff' }}>
+                <KeyboardAvoidingView
+                    {...this.panResponder.panHandlers}
+                    behavior="padding"
+                    style={{
+                        backgroundColor: 'white',
+                        flex: 1,
+                        flexDirection: 'column',
+                        justifyContent: 'space-between'
+                    }}>
+                    <ScrollView
+                        style={{ flex: 1, backgroundColor: '#fff' }}>
                         <TextIpsum />
                     </ScrollView>
                     <View style={{
@@ -51,7 +77,7 @@ export default class LayoutMain extends Component {
                     top: 0,
                     bottom: 0,
                     width: leftMenuWidth,
-                    backgroundColor: '#FFFFFF40' }}>
+                    backgroundColor: '#FFFFFFA0' }}>
                     <Text>
                         left slide menu
                     </Text>
@@ -63,7 +89,7 @@ export default class LayoutMain extends Component {
                     top: 0,
                     bottom: 0,
                     width: rightMenuWidth,
-                    backgroundColor: '#FFFFFF40' }}>
+                    backgroundColor: '#FFFFFFA0' }}>
                     <Text>
                         right slide menu
                     </Text>

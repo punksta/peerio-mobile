@@ -13,10 +13,19 @@ export default class HeaderMain extends Component {
     constructor(props) {
         super(props);
         this.leftMenu = this.leftMenu.bind(this);
+        this.rightMenu = this.rightMenu.bind(this);
     }
+
     leftMenu() {
         state.isLeftMenuVisible = true;
+        state.isRightMenuVisible = false;
     }
+
+    rightMenu() {
+        state.isLeftMenuVisible = false;
+        state.isRightMenuVisible = true;
+    }
+
     render() {
         return (
             <View style={{ height: 56, flex: 0, justifyContent: 'center' }}>
@@ -38,7 +47,7 @@ export default class HeaderMain extends Component {
                     </View>
                     <View style={{ flexDirection: 'row', backgroundColor: 'transparent' }}>
                         {icons.white('search', this.leftMenu)}
-                        {icons.white('more-vert', this.leftMenu)}
+                        {icons.white('more-vert', this.rightMenu)}
                     </View>
                 </View>
             </View>
