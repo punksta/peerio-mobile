@@ -8,6 +8,9 @@ const vars = {
     circle: 8,
     bg: '#2C95CF',
     highlight: '#FFFFFFCC',
+    white: '#FFF',
+    whiteIcon: '#fff',
+    darkIcon: '#00000070',
     txtLight: '#bfdfef',
     txtDark: 'black',
     inputBg: 'white',
@@ -36,7 +39,8 @@ function baseclass(name, style) {
 
 function inherit(name, item) {
     if (_.isObject(name)) {
-        return _.merge(name, item);
+        let result = {};
+        return _.merge(result, name, item);
     }
     if (!styleCache[name]) throw Error(`#peerio-mobile#styles.js Style not found ${name}`);
     const items = [];
@@ -135,10 +139,6 @@ const styles = {
             backgroundColor: vars.bg
         },
         footer: {
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0
         }
     }),
     circle: {
@@ -164,13 +164,19 @@ const styles = {
     },
     wizard: {
         containerNoPadding: {
-            flex: 1,
             paddingTop: 0,
             borderColor: 'red',
             borderWidth: 0,
             backgroundColor: 'transparent'
         },
         container: {
+            padding: 50,
+            paddingTop: 0,
+            backgroundColor: 'transparent',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+        },
+        containerFlex: {
             flex: 1,
             padding: 50,
             paddingTop: 0,

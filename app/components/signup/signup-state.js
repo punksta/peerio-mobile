@@ -17,7 +17,7 @@ const signupState = observable({
         return this.current === 0;
     },
     @action transition() {
-        state.route = 'signup-step1';
+        state.route = 'signupStep1';
     },
     @action exit() {
         state.route = 'login';
@@ -26,7 +26,10 @@ const signupState = observable({
 
 const signupWizardRoutes = [
     'signupStep1',
-    'signupStep2'
+    'signupStep2',
+    'signupStep3',
+    'signupStep4',
+    'signupStep5'
 ];
 
 signupState.count = signupWizardRoutes.length;

@@ -6,7 +6,10 @@ import DevNav from './dev/dev-nav.js';
 import Logo from './controls/logo.js';
 import Login from './login/login.js';
 import SignupStep1 from './signup/signup-step1.js';
-import SignupStep2 from './signup/signup-step2.js';
+import SignupPassphrase from './signup/signup-passphrase.js';
+import SignupConfirmPassphrase from './signup/signup-confirm-passphrase.js';
+import SignupImportContacts from './signup/signup-import-contacts.js';
+import SignupAccess from './signup/signup-access.js';
 import SetupWizard from './setup-wizard/setup-wizard.js';
 import Files from './files/files.js';
 import Contacts from './contacts/contacts.js';
@@ -15,6 +18,7 @@ import ConversationInfo from './messaging/conversation-info.js';
 import ReducerCreate from './utils/reducer.js';
 import PersistentFooter from './layout/persistent-footer';
 import DebugPanel from './layout/debugPanel';
+import LayoutMain from './layout/layout-main';
 import state from './layout/state';
 import styles from './../styles/styles';
 
@@ -26,7 +30,7 @@ export default class App extends Component {
             const newIndex = state.routesList.indexOf(route);
             const oldIndex = state.routesList.indexOf(state.prevRoute);
             state.prevRoute = route;
-            if (newIndex < oldIndex) {
+            if (newIndex === oldIndex - 1) {
                 Actions.pop();
             } else {
                 Actions[route]();
@@ -37,14 +41,18 @@ export default class App extends Component {
         this.routes = [
             this.route('login', Login),
             this.route('signupStep1', SignupStep1),
-            this.route('signupStep2', SignupStep2)
+            this.route('signupStep2', SignupPassphrase),
+            this.route('signupStep3', SignupConfirmPassphrase),
+            this.route('signupStep4', SignupImportContacts),
+            this.route('signupStep5', SignupAccess),
+            this.route('main', LayoutMain)
         ];
     }
     componentDidMount() {
         // navigating to initial route
         // timeout is needed for router to properly initialize
         setTimeout(() => {
-            state.routes.signupStep1.transition();
+            // state.routes.main.transition();
         }, 0);
     }
     route(key, component) {
@@ -64,6 +72,7 @@ export default class App extends Component {
         );
     }
     render() {
+        const debugPanel = null && <DebugPanel />;
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
@@ -74,7 +83,7 @@ export default class App extends Component {
                     </Router>
                     <PersistentFooter />
                 </View>
-                <DebugPanel />
+                {debugPanel}
             </View>
         );
     }

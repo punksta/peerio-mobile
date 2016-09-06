@@ -16,7 +16,9 @@ const state = observable({
     routes: {},
     routesList: [],
     persistentFooter: [],
-    pages: []
+    pages: [],
+    isLeftMenuVisible: false,
+    isRightMenuVisible: false
 });
 
 autorun(() => {

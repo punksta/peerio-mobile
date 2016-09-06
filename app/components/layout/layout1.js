@@ -14,7 +14,7 @@ export default class Layout1 extends Component {
                     contentContainerStyle={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}
                     extraHeight={0}>
                     {this.props.body}
-                   {this.props.footer}
+                    {this.props.footer}
                 </KeyboardAwareScrollView>
             </View>
         );

@@ -53,7 +53,7 @@ export default class Login extends Component {
     render() {
         const style = styles.wizard;
         let body = (
-            <View style={style.containerNoPadding}>
+            <View style={{ flex: 1 }}>
                 <Logo />
                 <Conditional test={loginState.saved}>
                     <LoginSaved />

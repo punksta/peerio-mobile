@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { observable } from 'mobx';
 import TextBox from '../controls/textbox';
+import Bold from '../controls/bold';
 import SignupFooter from '../controls/signup-footer';
 import Layout1 from '../layout/layout1';
 import styles from '../../styles/styles';
@@ -23,7 +24,7 @@ const info = observable({
     language: 'English'
 });
 
-export default class SignupStep2 extends Component {
+export default class SignupPassphrase extends Component {
     onChangeText(name, text) {
         info[name] = text;
     }
@@ -39,9 +40,12 @@ export default class SignupStep2 extends Component {
             <View style={style.container}>
                 <View>
                     <Text style={style.text.title}>Signup</Text>
-                    <Text style={style.text.subTitle}>More info</Text>
-                    <TextBox {...props('username', 'Username')} />
-                    <TextBox {...props('name', 'Name')} />
+                    <Text style={style.text.subTitle}>Passphrase</Text>
+                    <Text style={style.text.info}>
+                        This is your secure randomly generated passphrase.
+                        If you lose it, you will <Bold>permanently</Bold> lose
+                        access to your account.
+                    </Text>
                 </View>
             </View>
         );

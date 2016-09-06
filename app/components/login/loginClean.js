@@ -16,45 +16,31 @@ import Bold from '../controls/bold';
 import Logo from '../controls/logo';
 import Conditional from '../controls/conditional';
 import LoginTermsSignup from './login-terms-signup';
+import loginState from './login-state';
 import styles from '../../styles/styles';
-
-const info = observable({
-    username: '',
-    name: 'Peerio Test',
-    passphrase: '',
-    language: 'English',
-    savedUserInfo: true
-});
+import forms from '../helpers/forms';
 
 @observer
 export default class LoginClean extends Component {
     constructor(props) {
         super(props);
+        forms.mixin(this, loginState);
         this.signIn = this.signIn.bind(this);
-        this.onChangeText = this.onChangeText.bind(this);
-    }
-
-    onChangeText(name, text) {
-        info[name] = text;
     }
 
     signIn() {
+        loginState.login();
     }
 
     render() {
         const style = styles.wizard;
-        const props = (name, hint) => ({
-            value: info[name],
-            name,
-            onChangeText: this.onChangeText,
-            hint
-        });
+
         return (
-            <View style={style.container}>
+            <View style={style.containerFlex}>
                 <View>
-                    <TextBox {...props('username', 'Name')} />
-                    <TextBox {...props('passphrase', 'Passphrase')} />
-                    <TextBox {...props('language', 'Language')} />
+                    <TextBox {...this.tb('username', 'Name')} />
+                    <TextBox {...this.tb('passphrase', 'Passphrase')} />
+                    <TextBox {...this.tb('language', 'Language')} />
                 </View>
                 <Center>
                     <Button text="Sign In" caps bold onPress={this.signIn} />
