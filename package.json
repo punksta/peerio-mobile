@@ -60,7 +60,7 @@
   },
   "config": {
     "ghooks": {
-      "post-checkout": "opt --out post-checkout --exec \"npm update\"",
+      "post-checkout": "",
       "pre-push": "opt --out pre-push --exec \"npm run lint\"",
       "post-merge": "opt --out post-merge --exec \"npm update\"",
       "commit-msg": "validate-commit-msg"

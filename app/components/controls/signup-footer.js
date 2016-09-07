@@ -40,10 +40,10 @@ export default class SignupFooter extends Component {
         return (
             <View style={styles.container.footer}>
                 <View style={style.row}>
-                    <TouchableOpacity style={style.button.left} onPress={this.prev}>
+                    <TouchableOpacity style={style.button.left} onPressIn={this.prev}>
                         <Text style={style.button.text}>{signupState.isFirst ? 'EXIT' : 'PREV'}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.button.right} onPress={this.next}>
+                    <TouchableOpacity style={style.button.right} onPressIn={this.next}>
                         <Text style={style.button.text}>{signupState.isLast ? 'FINISH' : 'NEXT'}</Text>
                     </TouchableOpacity>
                 </View>

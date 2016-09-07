@@ -92,6 +92,8 @@ const styles = {
                 top: 20,
                 height: 28,
                 backgroundColor: 'transparent',
+                borderColor: 'yellow',
+                borderWidth: 0,
                 color: vars.inputBgInactiveText,
                 fontSize: 14,
                 borderRadius: 2

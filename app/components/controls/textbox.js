@@ -21,11 +21,15 @@ export default class TextBox extends Component {
     }
 
     blur() {
-        this.setState({ focused: false });
+        requestAnimationFrame(() => {
+            this.setState({ focused: false });
+        });
     }
 
     focus() {
-        this.setState({ focused: true });
+        requestAnimationFrame(() => {
+            this.setState({ focused: true });
+        });
     }
 
     render() {
@@ -33,7 +37,7 @@ export default class TextBox extends Component {
         let hint = this.state.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
         return (
-            <TouchableWithoutFeedback onPress={() => this.textinput}>
+            <TouchableWithoutFeedback onPressIn={() => { this.focus(); this.textinput.focus(); }}>
                 <View style={style.shadow}>
                     <TextInput
                         ref={t => { this.textinput = t; }}
