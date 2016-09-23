@@ -58,7 +58,8 @@ export default class LoginSaved extends Component {
                     <View style={savedStyle}>
                         <Center style={indentBig}>
                             <Big style={{ color: styles.vars.subtleText }}>
-                                Welcome back, <Bold style={{ color: styles.vars.subtleTextBold }}>{loginState.name}</Bold>
+                                Welcome back,
+                                <Bold style={{ color: styles.vars.subtleTextBold }}>{loginState.name}</Bold>
                             </Big>
                         </Center>
                         <Center style={indentSmall}>

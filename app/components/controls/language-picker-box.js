@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { Text, View, TouchableOpacity, LayoutAnimation, Picker } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { Picker } from 'react-native';
 import LanguagePicker from './language-picker';
 import state from '../layout/state';
 import styles from '../../styles/styles';
@@ -31,7 +30,7 @@ export default class LanguagePickerBox extends Component {
         let hint = this.state.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
         return (
-            <TouchableOpacity onPressIn={this.focus} accessible={true}>
+            <TouchableOpacity onPressIn={this.focus} accessible>
                 <View style={style.shadow}>
                     <View style={hint}>
                         <Text style={styles.input.hint.text}>

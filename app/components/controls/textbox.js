@@ -45,7 +45,7 @@ export default class TextBox extends Component {
         let hint = this.state.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
         return (
-            <TouchableOpacity 
+            <TouchableOpacity
                 onPressIn={() => { this.focus(); this.textinput.focus(); }}>
                 <View
                     pointerEvents="none"

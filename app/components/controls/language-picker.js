@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { LayoutAnimation } from 'react-native';
+import { LayoutAnimation, Picker } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { Picker } from 'react-native';
 import state from '../layout/state';
 
 @observer
@@ -28,5 +27,3 @@ export default class LanguagePicker extends Component {
         );
     }
 }
-
-

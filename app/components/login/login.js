@@ -93,7 +93,7 @@ export default class Login extends Component {
             </View>
         );
         const rows = [this.row(0, [1, 2, 3]), this.row(1, [4, 5, 6]), this.row(2, [7, 8, 9])];
-        let pinPad = (
+        const pinPad = (
             <View style={{
                 flex: 1,
                 flexDirection: 'row',

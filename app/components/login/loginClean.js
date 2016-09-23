@@ -33,9 +33,7 @@ export default class LoginClean extends Component {
         forms.mixin(this, loginState);
         this.signIn = this.signIn.bind(this);
         this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: (evt, gestureState) => {
-                return false;
-            }
+            onStartShouldSetPanResponder: (evt, gestureState) => false
         });
     }
 
