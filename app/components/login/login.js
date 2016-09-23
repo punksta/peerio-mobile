@@ -27,11 +27,7 @@ import Bold from '../controls/bold';
 import Logo from '../controls/logo';
 import Conditional from '../controls/conditional';
 import ReducerCreate from '../utils/reducer';
-import state from '../layout/state';
-
-const loginState = observable({
-    saved: false
-});
+import loginState from './login-state';
 
 @observer
 export default class Login extends Component {
@@ -50,10 +46,43 @@ export default class Login extends Component {
     pageState() {
         return loginState;
     }
+    button(k) {
+        return (
+            <TouchableOpacity
+                onPress={() => { loginState.pin = false; }}
+                key={k}>
+                <View
+                    style={{
+                        width: 40,
+                        height: 40,
+                        borderRadius: 20,
+                        borderColor: '#fff',
+                        borderWidth: 1
+                    }} />
+            </TouchableOpacity>
+        );
+    }
+
+    row(i, keys) {
+        const buttons = keys.map(k => this.button(k));
+        return (
+            <View
+                key={i}
+                style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    width: 200
+                }}>
+                {buttons}
+            </View>
+        );
+    }
+
     render() {
         const style = styles.wizard;
         let body = (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, borderColor: 'blue', borderWidth: 0 }}>
                 <Logo />
                 <Conditional test={loginState.saved}>
                     <LoginSaved />
@@ -63,9 +92,26 @@ export default class Login extends Component {
                 </Conditional>
             </View>
         );
-        return (
-            <Layout1 body={body} footer={null} />
+        const rows = [this.row(0, [1, 2, 3]), this.row(1, [4, 5, 6]), this.row(2, [7, 8, 9])];
+        let pinPad = (
+            <View style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center'
+            }}>
+                <View style={{
+                    flex: 1,
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    height: 300
+                }}>
+                    {rows}
+                </View>
+            </View>
         );
+        body = <Layout1 body={body} footer={null} />;
+        body = loginState.pin ? pinPad : body;
+        return body;
     }
 }
 

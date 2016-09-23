@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { Scene, Router, TabBar, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
 import {
+    TouchableOpacity,
     Text,
     TextInput,
-    View
+    View,
+    PanResponder,
+    ScrollView
 } from 'react-native';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
+import LanguagePicker from '../controls/language-picker';
+import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
 import Button from '../controls/button';
 import Center from '../controls/center';
@@ -16,6 +21,7 @@ import Bold from '../controls/bold';
 import Logo from '../controls/logo';
 import Conditional from '../controls/conditional';
 import LoginTermsSignup from './login-terms-signup';
+import state from '../layout/state';
 import loginState from './login-state';
 import styles from '../../styles/styles';
 import forms from '../helpers/forms';
@@ -26,6 +32,15 @@ export default class LoginClean extends Component {
         super(props);
         forms.mixin(this, loginState);
         this.signIn = this.signIn.bind(this);
+        this.panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: (evt, gestureState) => {
+                return false;
+            }
+        });
+    }
+
+    languagePicker() {
+        return <LanguagePicker />;
     }
 
     signIn() {
@@ -34,13 +49,14 @@ export default class LoginClean extends Component {
 
     render() {
         const style = styles.wizard;
-
         return (
-            <View style={style.containerFlex}>
+            <View
+                {...this.panResponder.panHandlers}
+                style={style.containerFlex}>
                 <View>
                     <TextBox {...this.tb('username', 'Name')} />
                     <TextBox {...this.tb('passphrase', 'Passphrase')} />
-                    <TextBox {...this.tb('language', 'Language')} />
+                    <LanguagePickerBox {...this.tb('language', 'Language')} />
                 </View>
                 <Center>
                     <Button text="Sign In" caps bold onPress={this.signIn} />

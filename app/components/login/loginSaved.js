@@ -3,6 +3,7 @@ import { Scene, Router, TabBar, Schema, Actions, Reducer, ActionConst } from 're
 import {
     Text,
     TextInput,
+    TouchableOpacity,
     View
 } from 'react-native';
 import { observable } from 'mobx';
@@ -17,38 +18,28 @@ import Logo from '../controls/logo';
 import Conditional from '../controls/conditional';
 import LoginTermsSignup from './login-terms-signup';
 import styles from '../../styles/styles';
-
-const info = observable({
-    username: '',
-    name: 'Peerio Test',
-    passphrase: '',
-    language: 'English',
-    savedUserInfo: true
-});
+import loginState from './login-state';
+import forms from '../helpers/forms';
 
 @observer
 export default class LoginSaved extends Component {
     constructor(props) {
         super(props);
+        forms.mixin(this, loginState);
         this.signIn = this.signIn.bind(this);
-        this.onChangeText = this.onChangeText.bind(this);
-    }
-
-    onChangeText(name, text) {
-        info[name] = text;
+        this.changeUser = this.changeUser.bind(this);
     }
 
     signIn() {
+        loginState.pin = true;
+    }
+
+    changeUser() {
+        loginState.saved = false;
     }
 
     render() {
         const style = styles.wizard;
-        const props = (name, hint) => ({
-            value: info[name],
-            name,
-            onChangeText: this.onChangeText,
-            hint
-        });
         const savedStyle = {
             backgroundColor: styles.vars.subtleBg,
             marginBottom: 16
@@ -63,20 +54,21 @@ export default class LoginSaved extends Component {
         };
         return (
             <View>
-                <View style={savedStyle}>
-                    <Center style={indentBig}>
-                        <Big style={{ color: styles.vars.subtleText }}>
-                            Welcome back, <Bold style={{ color: styles.vars.subtleTextBold }}>{info.name}</Bold>
-                        </Big>
-                    </Center>
-                    <Center style={indentSmall}>
-                        <Small style={{ color: styles.vars.subtleText }}>
-                            Not {info.name}? Tap to change user
-                        </Small>
-                    </Center>
-                </View>
+                <TouchableOpacity onPress={this.changeUser}>
+                    <View style={savedStyle}>
+                        <Center style={indentBig}>
+                            <Big style={{ color: styles.vars.subtleText }}>
+                                Welcome back, <Bold style={{ color: styles.vars.subtleTextBold }}>{loginState.name}</Bold>
+                            </Big>
+                        </Center>
+                        <Center style={indentSmall}>
+                            <Small style={{ color: styles.vars.subtleText }}>
+                                Not {loginState.name}? Tap to change user
+                            </Small>
+                        </Center>
+                    </View>
+                </TouchableOpacity>
                 <View style={style.container}>
-                    <TextBox {...props('passphrase', 'Passphrase')} />
                     <Center style={{ marginTop: 36 }}>
                         <Button text="Sign In" caps bold onPress={this.signIn} />
                     </Center>

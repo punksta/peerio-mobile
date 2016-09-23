@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     Text,
     TextInput,
-    View
+    View,
+    PanResponder
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
@@ -19,6 +20,17 @@ export default class InputMain extends Component {
         this.send = this.send.bind(this);
     }
 
+    componentWillMount() {
+        this.panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: (evt, gestureState) => {
+                requestAnimationFrame(() => {
+                    this.input.focus();
+                });
+                return true;
+            }
+        });
+    }
+
     plus() {
     }
 
@@ -27,13 +39,17 @@ export default class InputMain extends Component {
 
     render() {
         return (
-            <View style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'flex-end'
-            }}>
+            <View
+                pointerEvents="box-only"
+                {...this.panResponder.panHandlers}
+                style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    alignItems: 'flex-end'
+                }}>
                 {icons.dark('control-point', this.plus, { padding: 20 })}
-                <AutoGrowingTextInput
+                <TextInput
+                    ref={ref => { this.input = ref; }}
                     maxHeight={120}
                     style={{ flex: 1, height: 20 }} />
                 <Button

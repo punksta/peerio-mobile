@@ -104,12 +104,18 @@ const styles = {
         },
         normal: {
             textbox: inherit('input-normal'),
+            textview: inherit('input-active', {
+                top: 24
+            }),
             shadow: inherit('shadow-normal', {
                 backgroundColor: vars.inputBgInactive
             })
         },
         active: {
             textbox: inherit('input-active'),
+            textview: inherit('input-active', {
+                top: 24
+            }),
             shadow: inherit('shadow-active', {
                 backgroundColor: vars.inputBg
             })
@@ -137,7 +143,6 @@ const styles = {
             flex: 1,
             flexDirection: 'column',
             justifyContent: 'space-between',
-            paddingTop: 28,
             backgroundColor: vars.bg
         },
         footer: {
@@ -182,6 +187,8 @@ const styles = {
             flex: 1,
             padding: 50,
             paddingTop: 0,
+            borderColor: 'violet',
+            borderWidth: 0,
             backgroundColor: 'transparent',
             flexDirection: 'column',
             justifyContent: 'space-between'

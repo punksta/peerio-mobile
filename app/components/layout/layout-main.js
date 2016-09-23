@@ -5,12 +5,10 @@ import {
     LayoutAnimation,
     View,
     ScrollView,
-    KeyboardAvoidingView,
     TouchableWithoutFeedback,
     Dimensions,
-    PanResponder
+    PanResponder,
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { observer } from 'mobx-react/native';
 import state from './state';
 import HeaderMain from './header-main';
@@ -24,18 +22,28 @@ export default class LayoutMain extends Component {
         super(props);
         this.hideMenus = this.hideMenus.bind(this);
     }
+
     componentWillMount() {
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (evt, gestureState) => {
-                console.log('oh well');
                 this.hideMenus();
                 return false;
             }
         });
     }
+
     componentWillUpdate() {
-        LayoutAnimation.easeInEaseOut();
+        // LayoutAnimation.easeInEaseOut();
     }
+
+    keyboardWillShow(e) {
+        state.keyboardHeight = e.endCoordinates.height;
+    }
+
+    keyboardWillHide(e) {
+        state.keyboardHeight = 0;
+    }
+
     hideMenus() {
         state.isLeftMenuVisible = false;
         state.isRightMenuVisible = false;
@@ -48,14 +56,15 @@ export default class LayoutMain extends Component {
         return (
             <View style={styles.container.root}>
                 <HeaderMain />
-                <KeyboardAvoidingView
+                <View
                     {...this.panResponder.panHandlers}
                     behavior="padding"
                     style={{
                         backgroundColor: 'white',
                         flex: 1,
                         flexDirection: 'column',
-                        justifyContent: 'space-between'
+                        justifyContent: 'space-between',
+                        paddingBottom: state.keyboardHeight
                     }}>
                     <ScrollView
                         style={{ flex: 1, backgroundColor: '#fff' }}>
@@ -69,7 +78,7 @@ export default class LayoutMain extends Component {
                     }}>
                         <InputMain />
                     </View>
-                </KeyboardAvoidingView>
+                </View>
                 <View style={{
                     position: 'absolute',
                     paddingTop: 30,

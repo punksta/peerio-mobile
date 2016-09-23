@@ -1,21 +1,58 @@
 import React, { Component } from 'react';
 import {
-    View
+    View, ScrollView, Text, LayoutAnimation
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { observer } from 'mobx-react/native';
+import state from './state';
 import styles from '../../styles/styles';
 
+@observer
 export default class Layout1 extends Component {
+    constructor(props) {
+        super(props);
+        this.layout = this.layout.bind(this);
+        this.scroll = this.scroll.bind(this);
+    }
+
+    layout(e) {
+        this.scrollViewHeight = e.nativeEvent.layout.height;
+    }
+
+    scroll(e) {
+        this.scrollViewTop = e.nativeEvent.contentOffset.y;
+    }
+
     render() {
+        console.log(state.keyboardHeight);
         return (
-            <View style={styles.container.root}>
-                <KeyboardAwareScrollView
+            <View style={{
+                flex: 1,
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                borderColor: 'yellow',
+                borderWidth: 0,
+                paddingBottom: state.keyboardHeight
+            }}>
+                <ScrollView
+                    ref={(ref) => { this.scrollView = ref; }}
+                    style={{
+                        flex: 1,
+                        borderColor: 'green',
+                        borderWidth: 0
+                    }}
+                    contentContainerStyle={{
+                        flex: 1,
+                        height: this.scrollViewHeight
+                    }}
                     keyboardShouldPersistTaps
-                    contentContainerStyle={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }}
-                    extraHeight={0}>
+                    onScroll={this.scroll}
+                    onLayout={this.layout}>
+                    <View style={{
+                        flex: 0
+                    }} />
                     {this.props.body}
-                    {this.props.footer}
-                </KeyboardAwareScrollView>
+                        {this.props.footer}
+                </ScrollView>
             </View>
         );
     }

@@ -4,8 +4,10 @@ import {
     Text,
     TextInput,
     TouchableWithoutFeedback,
+    TouchableOpacity,
     LayoutAnimation
 } from 'react-native';
+import state from '../layout/state';
 import styles from '../../styles/styles';
 
 export default class TextBox extends Component {
@@ -20,13 +22,19 @@ export default class TextBox extends Component {
         LayoutAnimation.easeInEaseOut();
     }
 
+    componentWillUnmount() {
+        state.focusedTextBox = null;
+    }
+
     blur() {
+        state.focusedTextBox = null;
         requestAnimationFrame(() => {
             this.setState({ focused: false });
         });
     }
 
     focus() {
+        state.focusedTextBox = this.textinput;
         requestAnimationFrame(() => {
             this.setState({ focused: true });
         });
@@ -37,8 +45,11 @@ export default class TextBox extends Component {
         let hint = this.state.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
         return (
-            <TouchableWithoutFeedback onPressIn={() => { this.focus(); this.textinput.focus(); }}>
-                <View style={style.shadow}>
+            <TouchableOpacity 
+                onPressIn={() => { this.focus(); this.textinput.focus(); }}>
+                <View
+                    pointerEvents="none"
+                    style={style.shadow}>
                     <TextInput
                         ref={t => { this.textinput = t; }}
                         style={style.textbox}
@@ -54,7 +65,7 @@ export default class TextBox extends Component {
                         </Text>
                     </View>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
         );
     }
 }

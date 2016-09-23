@@ -9,6 +9,8 @@ const loginState = observable({
     passphrase: '',
     language: 'English',
     savedUserInfo: true,
+    saved: false,
+    pin: false,
     @action login() {
         state.routes.main.transition();
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
 import { reaction } from 'mobx';
+import { observer } from 'mobx-react/native';
 import DevNav from './dev/dev-nav.js';
 import Logo from './controls/logo.js';
 import Login from './login/login.js';
@@ -22,6 +23,7 @@ import LayoutMain from './layout/layout-main';
 import state from './layout/state';
 import styles from './../styles/styles';
 
+@observer
 export default class App extends Component {
     constructor(props) {
         super(props);
@@ -37,6 +39,7 @@ export default class App extends Component {
             }
         });
     }
+
     componentWillMount() {
         this.routes = [
             this.route('login', Login),
@@ -48,6 +51,7 @@ export default class App extends Component {
             this.route('main', LayoutMain)
         ];
     }
+
     componentDidMount() {
         // navigating to initial route
         // timeout is needed for router to properly initialize
@@ -55,6 +59,7 @@ export default class App extends Component {
             // state.routes.main.transition();
         }, 0);
     }
+
     route(key, component) {
         state.routesList.push(key);
         state.routes[key] = {
@@ -83,6 +88,7 @@ export default class App extends Component {
                     </Router>
                     <PersistentFooter />
                 </View>
+                {state.picker}
                 {debugPanel}
             </View>
         );
