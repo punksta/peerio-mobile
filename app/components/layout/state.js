@@ -26,10 +26,12 @@ const state = observable({
     isRightMenuVisible: false,
     keyboardVisible: false,
     keyboardHeight: 0,
+    languageSelected: null,
 
-    showPicker: action(() => {
+    showPicker: action(picker => {
         state.hideKeyboard();
-        state.pickerVisible = true;
+        state.picker = picker;
+        setTimeout(() => { state.pickerVisible = true; }, 0);
     }),
 
     hideKeyboard: action(() => {
@@ -50,7 +52,6 @@ autorun(() => {
     }
     state.pages = pages;
     if (state.focusedTextBox) {
-        state.picker = null;
         state.pickerVisible = false;
     }
 });

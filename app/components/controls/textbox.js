@@ -5,6 +5,7 @@ import {
     TextInput,
     TouchableWithoutFeedback,
     TouchableOpacity,
+    TouchableHighlight,
     LayoutAnimation
 } from 'react-native';
 import state from '../layout/state';
@@ -45,27 +46,38 @@ export default class TextBox extends Component {
         let hint = this.state.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
         return (
-            <TouchableOpacity
-                onPressIn={() => { this.focus(); this.textinput.focus(); }}>
+            <View
+                style={style.shadow}>
                 <View
-                    pointerEvents="none"
-                    style={style.shadow}>
-                    <TextInput
-                        ref={t => { this.textinput = t; }}
-                        style={style.textbox}
-                        value={this.props.value}
-                        onFocus={this.focus}
-                        onBlur={this.blur}
-                        onChangeText={(text) => this.props.onChangeText(this.props.name, text)}
-                        autoCorrect={false}
-                    />
-                    <View style={hint}>
+                    style={{ backgroundColor: styles.vars.inputBg }}>
+                    <TouchableOpacity
+                        onPress={() => { this.focus(); this.textinput.focus(); }}>
+                        <View
+                            pointerEvents="none"
+                            style={{
+                                height: styles.vars.inputHeight,
+                                backgroundColor: this.state.focused ? 'transparent' : styles.vars.subtleBg,
+                                opacity: 1 }}>
+                            <TextInput
+                                ref={t => { this.textinput = t; }}
+                                style={style.textbox}
+                                value={this.props.value}
+                                onFocus={this.focus}
+                                onBlur={this.blur}
+                                onChangeText={(text) => this.props.onChangeText(this.props.name, text)}
+                                autoCorrect={false}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                    <View
+                        pointerEvents="none"
+                        style={hint}>
                         <Text style={styles.input.hint.text}>
                             {this.props.hint}
                         </Text>
                     </View>
                 </View>
-            </TouchableOpacity>
+            </View>
         );
     }
 }

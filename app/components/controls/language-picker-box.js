@@ -19,27 +19,36 @@ export default class LanguagePickerBox extends Component {
     }
 
     focus() {
+        state.showPicker(this.picker);
         this.setState({ focused: true });
-        state.hideKeyboard();
-        state.picker = this.picker;
-        setTimeout(() => { state.pickerVisible = true; }, 0);
     }
 
     render() {
-        const style = this.state.focused ? styles.input.active : styles.input.normal;
-        let hint = this.state.focused || this.props.value && this.props.value.length ?
+        const focused = state.pickerVisible && state.picker === this.picker;
+        const style = focused ? styles.input.active : styles.input.normal;
+        let hint = focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
         return (
-            <TouchableOpacity onPressIn={this.focus} accessible>
-                <View style={style.shadow}>
+            <View style={style.shadow}>
+                <View
+                    style={{ backgroundColor: styles.vars.inputBg }}>
+                    <TouchableOpacity onPressIn={this.focus}>
+                        <View
+                            pointerEvents="none"
+                            style={{
+                                height: styles.vars.inputHeight,
+                                backgroundColor: focused ? 'transparent' : styles.vars.subtleBg,
+                                opacity: 1 }}>
+                            <Text style={style.textview}>{this.props.value}</Text>
+                        </View>
+                    </TouchableOpacity>
                     <View style={hint}>
                         <Text style={styles.input.hint.text}>
                             {this.props.hint}
                         </Text>
                     </View>
-                    <Text style={style.textview}>{this.props.value}</Text>
                 </View>
-            </TouchableOpacity>
+            </View>
         );
     }
 }

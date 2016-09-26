@@ -28,7 +28,8 @@ const vars = {
             big: 18,
             bigger: 16
         }
-    }
+    },
+    inputHeight: 48
 };
 
 const styleCache = {};
@@ -57,10 +58,11 @@ const styles = {
     },
     shadow: {
         normal: baseclass('shadow-normal', {
-            height: 48,
+            height: vars.inputHeight,
             margin: 2,
             marginBottom: 36,
-            marginTop: 6
+            marginTop: 6,
+            backgroundColor: vars.inputBg
         }),
         active: baseclass('shadow-active', inherit('shadow-normal', {
             shadowColor: '#000000',
@@ -123,7 +125,8 @@ const styles = {
         hint: {
             text: {
                 color: 'gray',
-                fontSize: 12
+                fontSize: 12,
+                backgroundColor: 'transparent'
             },
             full: {
                 position: 'absolute',
