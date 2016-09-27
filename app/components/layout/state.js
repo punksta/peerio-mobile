@@ -26,12 +26,23 @@ const state = observable({
     isRightMenuVisible: false,
     keyboardVisible: false,
     keyboardHeight: 0,
-    languageSelected: null,
+    languageSelected: 'en',
+    languages: {
+        en: 'English',
+        fr: 'French',
+        es: 'Spanish',
+        ru: 'Russian'
+    },
 
     showPicker: action(picker => {
         state.hideKeyboard();
         state.picker = picker;
         setTimeout(() => { state.pickerVisible = true; }, 0);
+    }),
+
+    hidePicker: action(picker => {
+        state.hideKeyboard();
+        setTimeout(() => { state.pickerVisible = false; }, 0);
     }),
 
     hideKeyboard: action(() => {

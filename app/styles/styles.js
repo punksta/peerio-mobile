@@ -84,6 +84,22 @@ const styles = {
             }
         }
     },
+    hint: baseclass('hint', {
+        view: {
+            position: 'absolute',
+            top: 6,
+            left: 10
+        },
+        text: {
+            color: 'gray',
+            fontSize: 12,
+            backgroundColor: 'transparent'
+        }
+    }),
+    inputContainer: baseclass('input-container', {
+        height: vars.inputHeight,
+        opacity: 1
+    }),
     input: {
         base: {
             normal: baseclass('input-normal', {
@@ -111,7 +127,14 @@ const styles = {
             }),
             shadow: inherit('shadow-normal', {
                 backgroundColor: vars.inputBgInactive
-            })
+            }),
+            background: {
+                backgroundColor: vars.inputBg
+            },
+            container: inherit('input-container', {
+                backgroundColor: vars.subtleBg
+            }),
+            hint: inherit('hint')
         },
         active: {
             textbox: inherit('input-active'),
@@ -120,6 +143,13 @@ const styles = {
             }),
             shadow: inherit('shadow-active', {
                 backgroundColor: vars.inputBg
+            }),
+            background: {
+                backgroundColor: vars.inputBg
+            },
+            hint: inherit('hint'),
+            container: inherit('input-container', {
+                backgroundColor: 'transparent'
             })
         },
         hint: {
