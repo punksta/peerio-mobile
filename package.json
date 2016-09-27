@@ -15,7 +15,7 @@
     "link": "react-native link",
     "bundle": "./node_modules/.bin/react-native bundle --dev --entry-file index.ios.js --bundle-output ios/main.jsbundle --platform ios",
     "build-ios": "npm run link && npm run bundle && cd ios && xcodebuild -scheme peeriomobile -configuration Debug build",
-    "build-ios-nocodesign": "npm run link && npm run bundle && cd ios && xcodebuild -scheme peeriomobile -configuration Debug build -sdk iphonesimulator PLATFORM_NAME=iphonesimulator",
+    "build-ios-nocodesign": "npm run link && npm run bundle && cd ios && xcodebuild -workspace peeriomobile.xcodeproj/project.xcworkspace -scheme peeriomobile -configuration Debug build -sdk iphonesimulator PLATFORM_NAME=iphonesimulator",
     "build-android": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleRelease",
     "test": "bash setup_tests.sh && py.test --platform=ios -s -x tests",
     "appium": "appium"
