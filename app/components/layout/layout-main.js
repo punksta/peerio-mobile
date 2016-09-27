@@ -33,7 +33,7 @@ export default class LayoutMain extends Component {
     }
 
     componentWillUpdate() {
-        // LayoutAnimation.easeInEaseOut();
+        LayoutAnimation.easeInEaseOut();
     }
 
     keyboardWillShow(e) {

@@ -18,7 +18,7 @@ export default class PickerBox extends Component {
     }
 
     focus() {
-        if (this.state.focused) {
+        if (state.pickerVisible && this.state.focused) {
             this.setState({ focused: false });
             state.hidePicker();
             return;

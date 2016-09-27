@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, PanResponder } from 'react-native';
 import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
@@ -50,6 +50,13 @@ export default class App extends Component {
             this.route('signupStep5', SignupAccess),
             this.route('main', LayoutMain)
         ];
+
+        this.panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: (evt, gestureState) => {
+                state.hidePicker();
+                return false;
+            }
+        });
     }
 
     componentDidMount() {
@@ -80,7 +87,9 @@ export default class App extends Component {
         const debugPanel = null && <DebugPanel />;
         return (
             <View style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}>
+                <View
+                    {...this.panResponder.panHandlers}
+                    style={{ flex: 1 }}>
                     <Router style={styles.navigator.router} onNavigate={(params) => console.log(params)}>
                         <Scene key="root" title="dev-root" hideNavBar getSceneStyle={() => styles.navigator.card}>
                             {this.routes}
