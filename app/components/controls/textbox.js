@@ -10,13 +10,16 @@ import {
 } from 'react-native';
 import state from '../layout/state';
 import styles from '../../styles/styles';
+import icons from '../helpers/icons';
 
 export default class TextBox extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { value: this.props.value };
         this.blur = this.blur.bind(this);
         this.focus = this.focus.bind(this);
+        this.changeText = this.changeText.bind(this);
+        this.toggleSecret = this.toggleSecret.bind(this);
     }
 
     componentWillUpdate() {
@@ -34,6 +37,11 @@ export default class TextBox extends Component {
         });
     }
 
+    changeText(text) {
+        this.setState({ value: text });
+        this.props.onChangeText(this.props.name, text);
+    }
+
     focus() {
         state.focusedTextBox = this.textinput;
         requestAnimationFrame(() => {
@@ -41,10 +49,21 @@ export default class TextBox extends Component {
         });
     }
 
+    toggleSecret() {
+        // we don't give user the ability to hide passphrase again, because Apple
+        this.setState({ showSecret: true });
+    }
+
     render() {
         const style = this.state.focused ? styles.input.active : styles.input.normal;
         let hint = this.state.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
+        const showSecretIcon = !this.props.secureTextEntry ? null :
+            <View style={style.iconContainer}>
+                {icons.dark(
+                    this.state.showSecret ? 'visibility-off' : 'visibility',
+                    this.toggleSecret, style.icon)}
+            </View>;
         return (
             <View
                 style={style.shadow}>
@@ -59,16 +78,18 @@ export default class TextBox extends Component {
                                 backgroundColor: this.state.focused ? 'transparent' : styles.vars.subtleBg,
                                 opacity: 1 }}>
                             <TextInput
+                                secureTextEntry={this.props.secureTextEntry && !this.state.showSecret}
                                 ref={t => { this.textinput = t; }}
                                 style={style.textbox}
-                                value={this.props.value}
+                                value={this.state.value}
                                 onFocus={this.focus}
                                 onBlur={this.blur}
-                                onChangeText={(text) => this.props.onChangeText(this.props.name, text)}
+                                onChangeText={this.changeText}
                                 autoCorrect={false}
                             />
                         </View>
                     </TouchableOpacity>
+                    {showSecretIcon}
                     <View
                         pointerEvents="none"
                         style={hint}>
@@ -86,5 +107,6 @@ TextBox.propTypes = {
     onChangeText: React.PropTypes.func.isRequired,
     value: React.PropTypes.any.isRequired,
     hint: React.PropTypes.string.isRequired,
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
+    secureTextEntry: React.PropTypes.bool
 };

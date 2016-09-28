@@ -53,7 +53,9 @@ export default class LoginClean extends Component {
                 style={style.containerFlex}>
                 <View>
                     <TextBox {...this.tb('username', 'Name')} />
-                    <TextBox {...this.tb('passphrase', 'Passphrase')} />
+                    <TextBox
+                        secureTextEntry
+                        {...this.tb('passphrase', 'Passphrase')} />
                     <LanguagePickerBox {...this.tb('language', 'Language')} />
                 </View>
                 <Center>

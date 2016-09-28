@@ -6,7 +6,7 @@ import icons from '../helpers/icons';
 import PickerPopup from './picker-popup';
 
 @observer
-export default class PickerBox extends Component {
+export default class PinModal extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -58,11 +58,10 @@ export default class PickerBox extends Component {
     }
 }
 
-PickerBox.propTypes = {
+PinModal.propTypes = {
     value: React.PropTypes.any.isRequired,
     picker: React.PropTypes.any.isRequired,
     data: React.PropTypes.any.isRequired,
     style: React.PropTypes.any.isRequired,
     hint: React.PropTypes.string.isRequired
 };
-

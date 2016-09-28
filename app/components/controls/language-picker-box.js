@@ -18,7 +18,7 @@ export default class LanguagePickerBox extends Component {
             <PickerBox
                 picker={this.picker}
                 data={state.languages}
-                style={styles.input}
+                style={styles.pickerBox}
                 picker={this.picker}
                 hint={this.props.hint}
                 value={state.languageSelected}

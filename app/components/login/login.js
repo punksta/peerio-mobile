@@ -18,16 +18,10 @@ import Layout1 from '../layout/layout1';
 import SignupFooter from '../controls/signup-footer';
 import LoginClean from './loginClean';
 import LoginSaved from './loginSaved';
-import TextBox from '../controls/textbox';
-import Button from '../controls/button';
-import Center from '../controls/center';
-import Big from '../controls/big';
-import Small from '../controls/small';
-import Bold from '../controls/bold';
 import Logo from '../controls/logo';
 import Conditional from '../controls/conditional';
-import ReducerCreate from '../utils/reducer';
 import loginState from './login-state';
+import state from '../layout/state';
 
 @observer
 export default class Login extends Component {

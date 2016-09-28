@@ -14,6 +14,8 @@ const vars = {
     txtLight: '#bfdfef',
     txtDark: 'black',
     inputBg: 'white',
+    pickerBg: '#ffffff10',
+    pickerText: 'white',
     subtleBg: '#c3dfee',
     subtleText: '#7b8c95',
     subtleTextBold: '#181c1f',
@@ -102,7 +104,7 @@ const styles = {
     }),
     input: {
         base: {
-            normal: baseclass('input-normal', {
+            normal: baseclass('input-base', {
                 position: 'absolute',
                 left: 10,
                 right: 0,
@@ -116,12 +118,12 @@ const styles = {
                 fontSize: 14,
                 borderRadius: 2
             }),
-            active: baseclass('input-active', inherit('input-normal', {
+            active: baseclass('input-active', inherit('input-base', {
                 color: vars.txtDark
             }))
         },
         normal: {
-            textbox: inherit('input-normal'),
+            textbox: inherit('input-base'),
             textview: inherit('input-active', {
                 top: 24
             }),
@@ -134,7 +136,15 @@ const styles = {
             container: inherit('input-container', {
                 backgroundColor: vars.subtleBg
             }),
-            hint: inherit('hint')
+            hint: inherit('hint'),
+            iconContainer: {
+                position: 'absolute',
+                right: 12,
+                top: 12
+            },
+            icon: {
+                backgroundColor: 'transparent'
+            }
         },
         active: {
             textbox: inherit('input-active'),
@@ -150,7 +160,15 @@ const styles = {
             hint: inherit('hint'),
             container: inherit('input-container', {
                 backgroundColor: 'transparent'
-            })
+            }),
+            iconContainer: {
+                position: 'absolute',
+                right: 12,
+                top: 12
+            },
+            icon: {
+                backgroundColor: 'transparent'
+            }
         },
         hint: {
             text: {
@@ -168,6 +186,56 @@ const styles = {
                 top: 6,
                 left: 10
                 /* transform: [{ scale: 0.8 }]  */
+            }
+        }
+    },
+    pickerBox: {
+        normal: {
+            textbox: inherit('input-base'),
+            textview: inherit('input-active', {
+                color: vars.pickerText,
+                top: 16
+            }),
+            shadow: inherit('shadow-normal', {
+                backgroundColor: vars.pickerBg
+            }),
+            background: {
+                backgroundColor: vars.pickerBg
+            },
+            container: inherit('input-container', {
+                backgroundColor: vars.pickerBg
+            }),
+            iconContainer: {
+                position: 'absolute',
+                right: 12,
+                top: 12
+            },
+            icon: {
+                backgroundColor: 'transparent'
+            }
+        },
+        active: {
+            textbox: inherit('input-active'),
+            textview: inherit('input-active', {
+                top: 16
+            }),
+            shadow: inherit('shadow-active', {
+                backgroundColor: vars.inputBg
+            }),
+            background: {
+                backgroundColor: vars.inputBg
+            },
+            hint: inherit('hint'),
+            container: inherit('input-container', {
+                backgroundColor: 'transparent'
+            }),
+            iconContainer: {
+                position: 'absolute',
+                right: 12,
+                top: 12
+            },
+            icon: {
+                backgroundColor: 'transparent'
             }
         }
     },
@@ -284,9 +352,9 @@ const styles = {
         }
     })
 };
-
 styles.baseclass = baseclass;
 styles.inherit = inherit;
 styles.vars = vars;
+
 
 export default styles;

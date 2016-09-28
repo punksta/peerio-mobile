@@ -3,6 +3,7 @@ import { Text, View, PanResponder } from 'react-native';
 import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
+import { a } from 'peerio-icebear';
 import DevNav from './dev/dev-nav.js';
 import Logo from './controls/logo.js';
 import Login from './login/login.js';
@@ -41,6 +42,7 @@ export default class App extends Component {
     }
 
     componentWillMount() {
+        console.log(a);
         this.routes = [
             this.route('login', Login),
             this.route('signupStep1', SignupStep1),
@@ -63,7 +65,7 @@ export default class App extends Component {
         // navigating to initial route
         // timeout is needed for router to properly initialize
         setTimeout(() => {
-            // state.routes.main.transition();
+            state.routes.login.transition();
         }, 0);
     }
 
@@ -84,7 +86,7 @@ export default class App extends Component {
         );
     }
     render() {
-        const debugPanel = null && <DebugPanel />;
+        const debugPanel = true && <DebugPanel />;
         return (
             <View style={{ flex: 1 }}>
                 <View
