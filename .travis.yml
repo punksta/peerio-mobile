@@ -7,3 +7,6 @@ install:
   - npm install
 script:
   - npm run build-ios-nocodesign
+cache:
+  directories:
+    - node_modules
