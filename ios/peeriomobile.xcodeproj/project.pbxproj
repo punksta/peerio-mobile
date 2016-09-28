@@ -596,7 +596,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# export NODE_BINARY=node\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\n# if [ ! -f ios/main.jsbundle ]; then\n    ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios\n# fi";
+			shellScript = "# export NODE_BINARY=node\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\nnpm run bundle\n# if [ ! -f ios/main.jsbundle ]; then\n#    ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios\n# fi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
