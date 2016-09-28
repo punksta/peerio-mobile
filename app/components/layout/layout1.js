@@ -31,6 +31,7 @@ export default class Layout1 extends Component {
                 justifyContent: 'space-between',
                 borderColor: 'yellow',
                 borderWidth: 0,
+                paddingTop: 24,
                 paddingBottom: state.keyboardHeight
             }}>
                 <ScrollView

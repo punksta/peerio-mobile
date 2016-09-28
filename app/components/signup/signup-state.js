@@ -29,10 +29,7 @@ const signupState = observable({
 
 const signupWizardRoutes = [
     'signupStep1',
-    'signupStep2',
-    'signupStep3',
-    'signupStep4',
-    'signupStep5'
+    'signupStep2'
 ];
 
 signupState.count = signupWizardRoutes.length;

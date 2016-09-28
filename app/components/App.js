@@ -8,11 +8,7 @@ import DevNav from './dev/dev-nav.js';
 import Logo from './controls/logo.js';
 import Login from './login/login.js';
 import SignupStep1 from './signup/signup-step1.js';
-import SignupPassphrase from './signup/signup-passphrase.js';
-import SignupConfirmPassphrase from './signup/signup-confirm-passphrase.js';
-import SignupImportContacts from './signup/signup-import-contacts.js';
-import SignupAccess from './signup/signup-access.js';
-import SetupWizard from './setup-wizard/setup-wizard.js';
+import SignupPin from './signup/signup-pin.js';
 import Files from './files/files.js';
 import Contacts from './contacts/contacts.js';
 import Conversation from './messaging/conversation.js';
@@ -21,6 +17,7 @@ import ReducerCreate from './utils/reducer.js';
 import PersistentFooter from './layout/persistent-footer';
 import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
+import ModalContainer from './layout/modal-container';
 import state from './layout/state';
 import styles from './../styles/styles';
 
@@ -46,10 +43,7 @@ export default class App extends Component {
         this.routes = [
             this.route('login', Login),
             this.route('signupStep1', SignupStep1),
-            this.route('signupStep2', SignupPassphrase),
-            this.route('signupStep3', SignupConfirmPassphrase),
-            this.route('signupStep4', SignupImportContacts),
-            this.route('signupStep5', SignupAccess),
+            this.route('signupStep2', SignupPin),
             this.route('main', LayoutMain)
         ];
 
@@ -85,8 +79,21 @@ export default class App extends Component {
                 getSceneStyle={() => styles.navigator.card} />
         );
     }
+
     render() {
         const debugPanel = true && <DebugPanel />;
+        const modals = state.modals.map((modal, i) => (
+            <View
+                key={i}
+                style={{
+                    flex: 1,
+                    position: 'absolute',
+                    backgroundColor: 'transparent',
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 0 }}>{modal}</View>
+        ));
         return (
             <View style={{ flex: 1 }}>
                 <View
@@ -99,6 +106,7 @@ export default class App extends Component {
                     </Router>
                     <PersistentFooter />
                 </View>
+                <ModalContainer />
                 {state.picker}
                 {debugPanel}
             </View>

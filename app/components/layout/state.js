@@ -33,6 +33,7 @@ const state = observable({
         es: 'Spanish',
         ru: 'Russian'
     },
+    modals: [],
 
     showPicker: action(picker => {
         state.hideKeyboard();

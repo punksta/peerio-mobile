@@ -28,7 +28,10 @@ export default class Login extends Component {
     static get states() {
         return {
             clean: () => { loginState.saved = false; },
-            saved: () => { loginState.saved = true; }
+            saved: () => { loginState.saved = true; },
+            pin: () => {
+                state.modals.push(<Text>test</Text>);
+            }
         };
     }
     componentDidMount() {

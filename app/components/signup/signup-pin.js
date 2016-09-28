@@ -24,7 +24,7 @@ const info = observable({
     language: 'English'
 });
 
-export default class SignupPassphrase extends Component {
+export default class SignupPin extends Component {
     onChangeText(name, text) {
         info[name] = text;
     }
@@ -40,7 +40,7 @@ export default class SignupPassphrase extends Component {
             <View style={style.container}>
                 <View>
                     <Text style={style.text.title}>Signup</Text>
-                    <Text style={style.text.subTitle}>Passphrase</Text>
+                    <Text style={style.text.subTitle}>Create device PIN</Text>
                     <Text style={style.text.info}>
                         This is your secure randomly generated passphrase.
                         If you lose it, you will <Bold>permanently</Bold> lose

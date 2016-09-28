@@ -75,20 +75,28 @@ export default class TextBox extends Component {
                             pointerEvents="none"
                             style={{
                                 height: styles.vars.inputHeight,
-                                backgroundColor: this.state.focused ? 'transparent' : styles.vars.subtleBg,
-                                opacity: 1 }}>
-                            <TextInput
-                                secureTextEntry={this.props.secureTextEntry && !this.state.showSecret}
-                                ref={t => { this.textinput = t; }}
-                                style={style.textbox}
-                                value={this.state.value}
-                                onFocus={this.focus}
-                                onBlur={this.blur}
-                                onChangeText={this.changeText}
-                                autoCorrect={false}
-                            />
-                        </View>
+                                backgroundColor: this.state.focused ? 'transparent' : styles.vars.subtleBg }} />
                     </TouchableOpacity>
+                    <View
+                        pointerEvents="none"
+                        style={{
+                            position: 'absolute',
+                            left: 0,
+                            top: 0,
+                            right: 0,
+                            bottom: 0,
+                            backgroundColor: 'transparent' }}>
+                        <TextInput
+                            secureTextEntry={this.props.secureTextEntry && !this.state.showSecret}
+                            ref={t => { this.textinput = t; }}
+                            style={style.textbox}
+                            value={this.state.value}
+                            onFocus={this.focus}
+                            onBlur={this.blur}
+                            onChangeText={this.changeText}
+                            autoCorrect={false}
+                        />
+                    </View>
                     {showSecretIcon}
                     <View
                         pointerEvents="none"
