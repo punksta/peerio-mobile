@@ -31,7 +31,7 @@ export default class Layout1 extends Component {
                 justifyContent: 'space-between',
                 borderColor: 'yellow',
                 borderWidth: 0,
-                paddingTop: 24,
+                paddingTop: styles.vars.layoutPaddingTop,
                 paddingBottom: state.keyboardHeight
             }}>
                 <ScrollView
@@ -48,11 +48,11 @@ export default class Layout1 extends Component {
                     keyboardShouldPersistTaps
                     onScroll={this.scroll}
                     onLayout={this.layout}>
-                    <View style={{
-                        flex: 0
-                    }} />
                     {this.props.body}
-                        {this.props.footer}
+                    <View style={{
+                        flex: 1
+                    }} />
+                    {this.props.footer}
                 </ScrollView>
             </View>
         );

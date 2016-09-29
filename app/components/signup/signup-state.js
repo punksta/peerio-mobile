@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { observable, asMap, action, computed, autorun } from 'mobx';
-import Circles from '../controls/circles';
+import SignupCircles from './signup-circles';
 import state from '../layout/state';
 
 const signupState = observable({
-    current: 0,
-    count: 5,
+    username: '',
+    email: '',
+    current: 1,
+    count: 0,
     isActive() {
         return state.route.startsWith('signup');
     },
@@ -34,7 +36,7 @@ const signupWizardRoutes = [
 
 signupState.count = signupWizardRoutes.length;
 
-state.persistentFooter.signup = (i) => (signupState.isActive ? <Circles key={i} /> : null);
+state.persistentFooter.signup = (i) => (signupState.isActive ? <SignupCircles key={i} /> : null);
 
 autorun(() => {
     if (signupState.isActive) {

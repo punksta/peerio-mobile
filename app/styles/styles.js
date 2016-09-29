@@ -8,6 +8,7 @@ const vars = {
     circle: 8,
     bg: '#2C95CF',
     highlight: '#FFFFFFCC',
+    midlight: '#FFFFFF55',
     white: '#FFF',
     whiteIcon: '#fff',
     darkIcon: '#00000070',
@@ -21,6 +22,7 @@ const vars = {
     subtleTextBold: '#181c1f',
     inputBgInactive: '#c2e0ef',
     inputBgInactiveText: '#7c8e98',
+    layoutPaddingTop: 24,
     footerMarginX: 24,
     font: {
         size: {
@@ -50,6 +52,11 @@ function inherit(name, item) {
     items.push(styleCache[name]);
     if (item) items.push(item);
     return StyleSheet.flatten(items);
+}
+
+function merge(style1, style2) {
+    const result = {};
+    return _.merge(result, style1, style2);
 }
 
 const styles = {
@@ -262,12 +269,28 @@ const styles = {
                 borderRadius: vars.circle / 2,
                 marginLeft: vars.circle,
                 marginRight: vars.circle,
-                backgroundColor: vars.txtLight
+                backgroundColor: vars.midlight
             }),
             normal: inherit('small-circle'),
             active: inherit('small-circle', {
                 backgroundColor: vars.highlight
             })
+        },
+        create(size, style) {
+            return merge({
+                width: size,
+                height: size,
+                borderRadius: size / 2,
+                backgroundColor: vars.txtLight
+            }, style);
+        }
+    },
+    pin: {
+        message: {
+            text: inherit('text-inverse'),
+            container: {
+                marginBottom: 22
+            }
         }
     },
     wizard: {

@@ -59,7 +59,7 @@ export default class App extends Component {
         // navigating to initial route
         // timeout is needed for router to properly initialize
         setTimeout(() => {
-            state.routes.login.transition();
+            state.routes.signupStep2.transition();
         }, 0);
     }
 
@@ -82,18 +82,6 @@ export default class App extends Component {
 
     render() {
         const debugPanel = true && <DebugPanel />;
-        const modals = state.modals.map((modal, i) => (
-            <View
-                key={i}
-                style={{
-                    flex: 1,
-                    position: 'absolute',
-                    backgroundColor: 'transparent',
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    bottom: 0 }}>{modal}</View>
-        ));
         return (
             <View style={{ flex: 1 }}>
                 <View

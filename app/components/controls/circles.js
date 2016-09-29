@@ -4,18 +4,19 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import styles from '../../styles/styles';
-import signupState from '../signup/signup-state';
 
 @observer
 export default class Circles extends Component {
     circle(i, current) {
         const style = styles.circle.small;
-        return <View key={i} style={i === current ? style.active : style.normal} />;
+        const active =
+            this.props.fill ? i < current : i === current;
+        return <View key={i} style={active ? style.active : style.normal} />;
     }
     render() {
         const circles = [];
-        for (let i = 0; i < signupState.count; ++i) {
-            circles.push(this.circle(i, signupState.current));
+        for (let i = 0; i < this.props.count; ++i) {
+            circles.push(this.circle(i, this.props.current));
         }
         return (
             <View style={styles.circle.container}>
@@ -24,3 +25,9 @@ export default class Circles extends Component {
         );
     }
 }
+
+Circles.propTypes = {
+    count: React.PropTypes.number.isRequired,
+    current: React.PropTypes.number.isRequired,
+    fill: React.PropTypes.bool
+};

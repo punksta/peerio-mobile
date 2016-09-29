@@ -94,7 +94,8 @@ export default class TextBox extends Component {
                             onFocus={this.focus}
                             onBlur={this.blur}
                             onChangeText={this.changeText}
-                            autoCorrect={false}
+                            autoCapitalize={this.props.autoCapitalize || 'none'}
+                            autoCorrect={this.props.autoCorrect}
                         />
                     </View>
                     {showSecretIcon}
@@ -116,5 +117,7 @@ TextBox.propTypes = {
     value: React.PropTypes.any.isRequired,
     hint: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
-    secureTextEntry: React.PropTypes.bool
+    secureTextEntry: React.PropTypes.bool,
+    autoCapitalize: React.PropTypes.oneOf(['none', 'sentences', 'words', 'characters']),
+    autoCorrect: React.PropTypes.bool
 };
