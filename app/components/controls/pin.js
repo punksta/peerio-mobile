@@ -14,9 +14,46 @@ import styles from '../../styles/styles';
 export default class Pin extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.maxPinLength = 6;
+        this.state = {
+            message: '',
+            pin: '',
+            enteredPin: '',
+            failNumber: 0,
+            isConfirm: false,
+
+            check: () => {
+                if (this.state.pin === this.state.enteredPin) {
+                    this.setState({ message: 'Confirmed!' });
+                    this.props.onConfirm && this.props.onConfirm(this.state.enteredPin);
+                } else {
+                    this.shake();
+                }
+            },
+
+            confirm: () => {
+                this.setState({
+                    enteredPin: this.state.pin,
+                    pin: '',
+                    isConfirm: true,
+                    message: 'Confirm PIN'
+                });
+            },
+
+            error: () => {
+                this.setState({ isConfirm: false, message: 'Wrong PIN' });
+            },
+
+            initial: () => {
+                this.setState({ isConfirm: false, pin: '', enteredPin: '', message: 'Enter PIN' });
+            }
+        };
         this.layout = this.layout.bind(this);
         this.shake = this.shake.bind(this);
+    }
+
+    componentWillMount() {
+        this.state.initial();
     }
 
     circle(index, text, subText) {
@@ -33,7 +70,7 @@ export default class Pin extends Component {
         });
         return (
             <View style={circleHl} key={index}>
-                <TouchableOpacity onPress={this.shake}>
+                <TouchableOpacity onPress={() => this.enter(text)}>
                     <View style={circle}>
                         <Text style={{ color: styles.vars.highlight, fontSize: r / 3 }}>{text}</Text>
                         <Text style={{ color: styles.vars.midlight, fontSize: r / 6 }}>{subText}</Text>
@@ -41,6 +78,22 @@ export default class Pin extends Component {
                 </TouchableOpacity>
             </View>
         );
+    }
+
+    enter(num) {
+        if (this.state.pin.length >= this.maxPinLength) return;
+        const pin = this.state.pin + num;
+        this.setState({
+            pin
+        }, () => {
+            if (this.state.pin.length === this.maxPinLength) {
+                if (this.state.isConfirm) {
+                    this.state.check();
+                } else {
+                    setTimeout(() => this.state.confirm(), 200);
+                }
+            }
+        });
     }
 
     layout(e) {
@@ -64,7 +117,9 @@ export default class Pin extends Component {
     }
 
     shake() {
+        this.state.error();
         this.shaker.shake(500, 5, 5);
+        setTimeout(() => this.state.initial(), 1000);
     }
 
     render() {
@@ -82,11 +137,11 @@ export default class Pin extends Component {
                 <Animatable.View ref={v => { this.shaker = v; }}>
                     <Center style={style.message.container}>
                         <Text style={style.message.text}>
-                            PIN confirmed
+                            {this.state.message}
                         </Text>
                     </Center>
                 </Animatable.View>
-                <Circles count={6} current={4} fill />
+                <Circles count={this.maxPinLength} current={this.state.pin.length} fill />
                 {this.row(0, [p(1), p(2, 'ABC'), p(3, 'DEF')])}
                 {this.row(1, [p(4, 'GHI'), p(5, 'JKL'), p(6, 'MNO')])}
                 {this.row(2, [p(7, 'PQR'), p(8, 'STU'), p(9, 'WXYZ')])}
@@ -95,3 +150,8 @@ export default class Pin extends Component {
         );
     }
 }
+
+
+Pin.propTypes = {
+    onConfirm: React.PropTypes.func.isRequired
+};
