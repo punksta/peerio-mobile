@@ -367,6 +367,7 @@ const styles = {
             backgroundColor: vars.bg
         },
         card: {
+            flex: 1,
             backgroundColor: vars.bg,
             shadowColor: 'black',
             shadowOffset: { height: 1, width: -1 },

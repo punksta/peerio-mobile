@@ -41,6 +41,7 @@ export default class TextBox extends Component {
     }
 
     focus() {
+        console.log('focused text box event');
         state.focusedTextBox = this.textinput;
         requestAnimationFrame(() => {
             this.setState({ focused: true });

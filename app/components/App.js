@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, PanResponder } from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
-import { reaction } from 'mobx';
+import { reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { a } from 'peerio-icebear';
 import Login from './login/login.js';
@@ -25,7 +25,8 @@ export default class App extends Component {
             const newIndex = state.routesList.indexOf(route);
             const oldIndex = state.routesList.indexOf(state.prevRoute);
             state.prevRoute = route;
-            if (newIndex === oldIndex - 1) {
+            const rInfo = state.routes[route];
+            if ((newIndex === oldIndex - 1) && !rInfo.replace) {
                 Actions.pop();
             } else {
                 Actions[route]();
@@ -37,11 +38,11 @@ export default class App extends Component {
         console.log(a);
         this.routes = [
             this.route('login', Login),
-            this.route('loginClean', LoginClean, 'replace'),
-            this.route('loginSaved', LoginSaved, 'replace'),
+            this.route('loginClean', LoginClean, true),
+            this.route('loginSaved', LoginSaved, true),
             this.route('signupStep1', SignupStep1),
             this.route('signupStep2', SignupPin),
-            this.route('main', LayoutMain, 'reset')
+            this.route('main', LayoutMain, true, 'reset')
         ];
 
         this.panResponder = PanResponder.create({
@@ -60,13 +61,15 @@ export default class App extends Component {
         }, 0);
     }
 
-    route(key, component, type) {
+    route(key, component, replace, type) {
         state.routesList.push(key);
         state.routes[key] = {
+            replace,
+            type,
             states: component.states,
-            transition: () => {
+            transition: action(() => {
                 state.route = key;
-            }
+            })
         };
         return (
             <Scene
@@ -83,7 +86,6 @@ export default class App extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View
-                    {...this.panResponder.panHandlers}
                     style={{ flex: 1 }}>
                     <Router style={styles.navigator.router} onNavigate={(params) => console.log(params)}>
                         <Scene key="root" title="dev-root" hideNavBar getSceneStyle={() => styles.navigator.card}>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View,
-    PanResponder
+    View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Layout1 from '../layout/layout1';
@@ -22,9 +21,6 @@ export default class LoginClean extends Component {
         super(props);
         forms.mixin(this, loginState);
         this.signIn = this.signIn.bind(this);
-        this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: () => false
-        });
     }
 
     languagePicker() {
@@ -39,7 +35,6 @@ export default class LoginClean extends Component {
         const style = styles.wizard;
         const body = (
             <View
-                {...this.panResponder.panHandlers}
                 style={style.containerFlex}>
                 <Logo />
                 <View>

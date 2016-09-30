@@ -34,16 +34,22 @@ export default class Pin extends Component {
                     enteredPin: this.state.pin,
                     pin: '',
                     isConfirm: true,
-                    message: 'Confirm PIN'
+                    message: this.props.messageConfirm || 'Confirm PIN'
                 });
             },
 
             error: () => {
-                this.setState({ isConfirm: false, message: 'Wrong PIN' });
+                this.setState({
+                    isConfirm: false,
+                    message: this.props.messageWrong || 'Wrong PIN' });
             },
 
             initial: () => {
-                this.setState({ isConfirm: false, pin: '', enteredPin: '', message: 'Enter PIN' });
+                this.setState({
+                    isConfirm: false,
+                    pin: '',
+                    enteredPin: '',
+                    message: this.props.messageEnter || 'Enter PIN' });
             }
         };
         this.layout = this.layout.bind(this);
@@ -88,7 +94,8 @@ export default class Pin extends Component {
                 if (this.state.isConfirm) {
                     this.state.check();
                 } else {
-                    setTimeout(() => this.state.confirm(), 200);
+                    const callback = this.props.checkPin || this.state.confirm;
+                    setTimeout(() => callback(this.state.pin, this), 200);
                 }
             }
         });
@@ -146,5 +153,9 @@ export default class Pin extends Component {
 
 
 Pin.propTypes = {
-    onConfirm: React.PropTypes.func.isRequired
+    onConfirm: React.PropTypes.func.isRequired,
+    checkPin: React.PropTypes.func,
+    messageEnter: React.PropTypes.string,
+    messageWrong: React.PropTypes.string,
+    messageConfirm: React.PropTypes.string
 };
