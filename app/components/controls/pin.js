@@ -10,6 +10,7 @@ import * as Animatable from 'react-native-animatable';
 import Circles from '../controls/circles';
 import Center from '../controls/center';
 import styles from '../../styles/styles';
+import Util from '../helpers/util';
 
 @observer
 export default class Pin extends Component {
@@ -23,6 +24,7 @@ export default class Pin extends Component {
     constructor(props) {
         super(props);
         this.layout = this.layout.bind(this);
+        this.enter = this.enter.bind(this);
         this.shake = this.shake.bind(this);
     }
 
@@ -46,9 +48,9 @@ export default class Pin extends Component {
         this.message = this.props.messageConfirm || 'Confirm PIN';
     }
 
-    error() {
+    error(msg) {
         this.isConfirm = false;
-        this.message = this.props.messageWrong || 'Wrong PIN';
+        this.message = msg || this.props.messageWrong || 'Wrong PIN';
     }
 
     initial() {
@@ -90,7 +92,13 @@ export default class Pin extends Component {
             if (this.isConfirm) {
                 this.check();
             } else {
-                const callback = this.props.checkPin || this.confirm;
+                if (this.props.preventSimplePin) {
+                    if (!Util.pinEntropyCheck(this.pin)) {
+                        this.shake('Not strong enough');
+                        return;
+                    }
+                }
+                const callback = this.props.checkPin || this.confirm.bind(this);
                 setTimeout(() => callback(this.pin, this), 200);
             }
         }
@@ -114,8 +122,8 @@ export default class Pin extends Component {
         );
     }
 
-    shake() {
-        this.error();
+    shake(msg) {
+        this.error(msg);
         this.shaker.shake(500, 5, 5);
         setTimeout(() => this.initial(), 1000);
     }
@@ -155,5 +163,6 @@ Pin.propTypes = {
     checkPin: React.PropTypes.func,
     messageEnter: React.PropTypes.string,
     messageWrong: React.PropTypes.string,
-    messageConfirm: React.PropTypes.string
+    messageConfirm: React.PropTypes.string,
+    preventSimplePin: React.PropTypes.bool
 };

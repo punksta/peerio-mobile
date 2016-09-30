@@ -22,7 +22,9 @@ export default class SignupPin extends Component {
             <View style={style.containerFlex}>
                 <Text style={style.text.title}>Signup</Text>
                 <Text style={style.text.subTitle}>Create device PIN</Text>
-                <Pin onConfirm={pin => this.usePin(pin)} />
+                <Pin
+                    preventSimplePin
+                    onConfirm={pin => this.usePin(pin)} />
             </View>
         );
 
