@@ -79,7 +79,7 @@ export default class Login extends Component {
     render() {
         const style = styles.wizard;
         let body = (
-            <View style={{ flex: 1, borderColor: 'blue', borderWidth: 0 }}>
+            <View style={{ flex: 1, flexGrow: 1, borderColor: 'blue', borderWidth: 0 }}>
                 <Logo />
                 <Conditional test={loginState.saved}>
                     <LoginSaved />

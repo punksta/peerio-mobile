@@ -36,7 +36,7 @@ export default class SignupStep1 extends Component {
     render() {
         const style = styles.wizard;
         const body = (
-            <View style={style.container}>
+            <View style={style.containerFlex}>
                 <Text style={style.text.title}>Signup</Text>
                 <Text style={style.text.subTitle}>Profile</Text>
                 <TextBox {...this.tb('username', 'Username')} />
@@ -46,6 +46,7 @@ export default class SignupStep1 extends Component {
                     By creating a <Text style={{ fontWeight: 'bold' }}>Peerio</Text> account you agree to
                     our <Text style={{ textDecorationLine: 'underline' }} onPress={this.terms}>terms of service</Text>
                 </Text>
+                <View style={{ flex: 1 }} />
             </View>
         );
 

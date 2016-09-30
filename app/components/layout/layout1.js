@@ -43,15 +43,14 @@ export default class Layout1 extends Component {
                     }}
                     contentContainerStyle={{
                         flex: 1,
-                        height: this.scrollViewHeight
+                        height: this.scrollViewHeight,
+                        borderColor: 'red',
+                        borderWidth: 0
                     }}
                     keyboardShouldPersistTaps
                     onScroll={this.scroll}
                     onLayout={this.layout}>
                     {this.props.body}
-                    <View style={{
-                        flex: 1
-                    }} />
                     {this.props.footer}
                 </ScrollView>
             </View>

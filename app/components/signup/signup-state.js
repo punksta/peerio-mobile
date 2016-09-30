@@ -7,7 +7,7 @@ import state from '../layout/state';
 const signupState = observable({
     username: '',
     email: '',
-    current: 1,
+    current: 0,
     count: 0,
     isActive() {
         return state.route.startsWith('signup');

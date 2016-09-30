@@ -19,6 +19,7 @@ export default class PickerBox extends Component {
     }
 
     focus() {
+        console.log('press');
         if (state.pickerVisible && this.state.focused) {
             this.setState({ focused: false });
             state.hidePicker();

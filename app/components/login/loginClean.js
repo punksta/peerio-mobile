@@ -59,7 +59,7 @@ export default class LoginClean extends Component {
                     <LanguagePickerBox {...this.tb('language', 'Language')} />
                 </View>
                 <Center>
-                    <Button text="Sign In" caps bold onPress={this.signIn} />
+                    <Button text="Login" caps bold onPress={this.signIn} />
                 </Center>
                 <LoginTermsSignup />
             </View>
