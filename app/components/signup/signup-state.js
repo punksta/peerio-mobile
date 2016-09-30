@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
-import { observable, asMap, action, computed, autorun } from 'mobx';
+import React from 'react';
+import { observable, action, computed, autorun } from 'mobx';
 import SignupCircles from './signup-circles';
 import state from '../layout/state';
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, LayoutAnimation, Picker } from 'react-native';
 import { observer } from 'mobx-react/native';
 import PickerBox from './picker-box';
 import LanguagePicker from './language-picker';

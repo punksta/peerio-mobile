@@ -1,15 +1,6 @@
-import React, { Component } from 'react';
 import { Keyboard } from 'react-native';
 import _ from 'lodash';
-import { observable, asMap, action, computed, autorun } from 'mobx';
-import { observer } from 'mobx-react/native';
-
-function route(name, pages) {
-    return function() {
-        this.route = name;
-        this.pages = pages || [];
-    };
-}
+import { observable, action, autorun } from 'mobx';
 
 const state = observable({
     isFirstLogin: false,
@@ -41,7 +32,7 @@ const state = observable({
         setTimeout(() => { state.pickerVisible = true; }, 0);
     }),
 
-    hidePicker: action(picker => {
+    hidePicker: action((/* picker */) => {
         state.hideKeyboard();
         setTimeout(() => { state.pickerVisible = false; }, 0);
     }),

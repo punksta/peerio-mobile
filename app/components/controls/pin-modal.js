@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, LayoutAnimation, Picker } from 'react-native';
+import { Text, View, TouchableOpacity, LayoutAnimation } from 'react-native';
 import { observer } from 'mobx-react/native';
 import state from '../layout/state';
 import icons from '../helpers/icons';
-import PickerPopup from './picker-popup';
 
 @observer
 export default class PinModal extends Component {
@@ -30,7 +29,7 @@ export default class PinModal extends Component {
 
     render() {
         const focused = state.pickerVisible && state.picker === this.picker;
-        const { hint, shadow, background, textview, container, iconContainer, icon } =
+        const { /* hint, */ shadow, background, textview, container, iconContainer, icon } =
             focused ? this.props.style.active : this.props.style.normal;
         return (
             <View style={shadow}>

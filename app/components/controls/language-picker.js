@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LayoutAnimation, Picker } from 'react-native';
+import { LayoutAnimation } from 'react-native';
 import { observer } from 'mobx-react/native';
 import PickerPopup from './picker-popup';
 import state from '../layout/state';

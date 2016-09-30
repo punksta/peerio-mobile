@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import { Scene, Router, TabBar, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
 import {
-    View,
     Image
 } from 'react-native';
-import styles from '../../styles/styles';
 import Center from './center';
 
 

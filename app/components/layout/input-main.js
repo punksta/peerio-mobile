@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import {
-    Text,
     TextInput,
     View,
     PanResponder
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
+// import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import Button from '../controls/button';
 import styles from '../../styles/styles';
 import icons from '../helpers/icons';
-import state from '../layout/state';
+// import state from '../layout/state';
 
 @observer
 export default class InputMain extends Component {
@@ -22,7 +21,7 @@ export default class InputMain extends Component {
 
     componentWillMount() {
         this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: (evt, gestureState) => {
+            onStartShouldSetPanResponder: (/* evt, gestureState */) => {
                 requestAnimationFrame(() => {
                     this.input.focus();
                 });

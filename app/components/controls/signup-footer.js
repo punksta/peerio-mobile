@@ -2,14 +2,9 @@ import React, { Component } from 'react';
 import { Actions } from 'react-native-router-flux';
 import {
     Text,
-    TextInput,
     TouchableOpacity,
-    View,
-    ScrollView,
-    KeyboardAvoidingView,
-    Keyboard
+    View
 } from 'react-native';
-import TextBox from '../controls/textbox';
 import signupState from '../signup/signup-state';
 import styles from '../../styles/styles';
 

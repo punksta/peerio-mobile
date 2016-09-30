@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-import {
-    View
-} from 'react-native';
-import styles from '../../styles/styles';
 
 export default class Conditional extends Component {
     render() {

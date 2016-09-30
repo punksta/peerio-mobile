@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, ScrollView, Text, LayoutAnimation
+    View, ScrollView
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import state from './state';

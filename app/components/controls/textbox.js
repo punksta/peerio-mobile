@@ -3,9 +3,7 @@ import {
     View,
     Text,
     TextInput,
-    TouchableWithoutFeedback,
     TouchableOpacity,
-    TouchableHighlight,
     LayoutAnimation
 } from 'react-native';
 import state from '../layout/state';

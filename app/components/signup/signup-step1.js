@@ -1,18 +1,10 @@
 import React, { Component } from 'react';
-import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
 import {
     Text,
-    TextInput,
-    TouchableOpacity,
     View,
-    ScrollView,
-    Linking,
-    KeyboardAvoidingView,
-    Keyboard
+    Linking
 } from 'react-native';
-import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
-import Picker from 'react-native-picker';
 import TextBox from '../controls/textbox';
 import LanguagePickerBox from '../controls/language-picker-box';
 import SignupFooter from '../controls/signup-footer';

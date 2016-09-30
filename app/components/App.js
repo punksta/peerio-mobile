@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, PanResponder } from 'react-native';
-import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
+import { View, PanResponder } from 'react-native';
+import { Scene, Router, Actions } from 'react-native-router-flux';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { a } from 'peerio-icebear';
-import DevNav from './dev/dev-nav.js';
-import Logo from './controls/logo.js';
 import Login from './login/login.js';
+import LoginClean from './login/login-clean.js';
+import LoginSaved from './login/login-saved.js';
 import SignupStep1 from './signup/signup-step1.js';
 import SignupPin from './signup/signup-pin.js';
-import Files from './files/files.js';
-import Contacts from './contacts/contacts.js';
-import Conversation from './messaging/conversation.js';
-import ConversationInfo from './messaging/conversation-info.js';
-import ReducerCreate from './utils/reducer.js';
 import PersistentFooter from './layout/persistent-footer';
 import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
@@ -42,13 +37,15 @@ export default class App extends Component {
         console.log(a);
         this.routes = [
             this.route('login', Login),
+            this.route('loginClean', LoginClean, 'replace'),
+            this.route('loginSaved', LoginSaved, 'replace'),
             this.route('signupStep1', SignupStep1),
             this.route('signupStep2', SignupPin),
-            this.route('main', LayoutMain)
+            this.route('main', LayoutMain, 'reset')
         ];
 
         this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: (evt, gestureState) => {
+            onStartShouldSetPanResponder: () => {
                 state.hidePicker();
                 return false;
             }
@@ -59,11 +56,11 @@ export default class App extends Component {
         // navigating to initial route
         // timeout is needed for router to properly initialize
         setTimeout(() => {
-            state.routes.login.transition();
+            state.routes.loginSaved.transition();
         }, 0);
     }
 
-    route(key, component) {
+    route(key, component, type) {
         state.routesList.push(key);
         state.routes[key] = {
             states: component.states,
@@ -73,6 +70,7 @@ export default class App extends Component {
         };
         return (
             <Scene
+                type={type}
                 key={key}
                 component={component}
                 hideNavBar

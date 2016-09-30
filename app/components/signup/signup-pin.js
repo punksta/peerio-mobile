@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
-import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, ActionConst } from 'react-native-router-flux';
 import {
     Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-    ScrollView,
-    KeyboardAvoidingView,
-    Keyboard
+    View
 } from 'react-native';
-import { observable } from 'mobx';
-import TextBox from '../controls/textbox';
-import Bold from '../controls/bold';
 import SignupFooter from '../controls/signup-footer';
 import Pin from '../controls/pin';
 import Layout2 from '../layout/layout2';

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
-    Text,
-    View
+    Text
 } from 'react-native';
-import styles from '../../styles/styles';
 
 export default class TextIpsum extends Component {
     render() {

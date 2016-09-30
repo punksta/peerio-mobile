@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
-import { Actions } from 'react-native-router-flux';
 import {
     Text,
-    TextInput,
     TouchableOpacity,
     View
 } from 'react-native';
 
-import Picker from 'react-native-picker';
-import styles from '../../styles/styles';
 import state from './../layout/state';
 
 let currentRoute = 0;
@@ -35,14 +31,14 @@ export default class DevNav extends Component {
         }
     }
 
-    next(value) {
+    next(/* value */) {
         if (++currentRoute >= state.routesList.length - 1) {
             currentRoute = 0;
         }
         this.navigate();
     }
 
-    prev(value) {
+    prev(/* value */) {
         if (--currentRoute < 0) {
             currentRoute = state.routesList.length - 1;
         }

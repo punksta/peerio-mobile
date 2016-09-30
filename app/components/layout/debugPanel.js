@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
-    View,
-    Text
+    View
 } from 'react-native';
-import styles from '../../styles/styles';
 import DevNav from '../dev/dev-nav';
 
 export default class DebugPanel extends Component {

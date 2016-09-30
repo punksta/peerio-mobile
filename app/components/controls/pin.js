@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Actions } from 'react-native-router-flux';
 import {
     Text,
     TouchableOpacity,
     View
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
-import TextBox from '../controls/textbox';
 import Circles from '../controls/circles';
 import Center from '../controls/center';
 import styles from '../../styles/styles';
@@ -124,11 +122,6 @@ export default class Pin extends Component {
 
     render() {
         const style = styles.pin;
-        const circle = styles.circle.create(60, {
-            backgroundColor: 'transparent',
-            borderColor: 'white',
-            borderWidth: 1
-        });
         const p = (text, subText) => ({ text, subText });
         return (
             <View style={{

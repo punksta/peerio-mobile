@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import {
     Text,
-    TextInput,
     LayoutAnimation,
     View,
     ScrollView,
-    TouchableWithoutFeedback,
     Dimensions,
     PanResponder
 } from 'react-native';
@@ -25,7 +23,7 @@ export default class LayoutMain extends Component {
 
     componentWillMount() {
         this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: (evt, gestureState) => {
+            onStartShouldSetPanResponder: (/* evt, gestureState */) => {
                 this.hideMenus();
                 return false;
             }
@@ -40,7 +38,7 @@ export default class LayoutMain extends Component {
         state.keyboardHeight = e.endCoordinates.height;
     }
 
-    keyboardWillHide(e) {
+    keyboardWillHide(/* e */) {
         state.keyboardHeight = 0;
     }
 

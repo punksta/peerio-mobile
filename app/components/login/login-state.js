@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import _ from 'lodash';
-import { observable, asMap, action, computed, autorun } from 'mobx';
+import { observable, action } from 'mobx';
 import state from '../layout/state';
 
 const loginState = observable({
@@ -9,8 +7,17 @@ const loginState = observable({
     passphrase: '',
     language: 'English',
     savedUserInfo: true,
-    saved: false,
     pin: false,
+
+    @action clean() {
+        console.log('transitioning to clean');
+        state.routes.loginClean.transition();
+    },
+
+    @action saved() {
+        state.routes.loginSaved.transition();
+    },
+
     @action login() {
         state.routes.main.transition();
     }
