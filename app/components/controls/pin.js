@@ -4,64 +4,62 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import { observable } from 'mobx';
+import { observer } from 'mobx-react/native';
 import * as Animatable from 'react-native-animatable';
 import Circles from '../controls/circles';
 import Center from '../controls/center';
 import styles from '../../styles/styles';
 
+@observer
 export default class Pin extends Component {
+    @observable message = '';
+    @observable enteredPin = '';
+    @observable pin = '';
+    @observable isConfirm = false;
+    @observable circleW = 0;
+    maxPinLength = 6;
+
     constructor(props) {
         super(props);
-        this.maxPinLength = 6;
-        this.state = {
-            message: '',
-            pin: '',
-            enteredPin: '',
-            failNumber: 0,
-            isConfirm: false,
-
-            check: () => {
-                if (this.state.pin === this.state.enteredPin) {
-                    this.setState({ message: 'Confirmed!' });
-                    this.props.onConfirm && this.props.onConfirm(this.state.enteredPin);
-                } else {
-                    this.shake();
-                }
-            },
-
-            confirm: () => {
-                this.setState({
-                    enteredPin: this.state.pin,
-                    pin: '',
-                    isConfirm: true,
-                    message: this.props.messageConfirm || 'Confirm PIN'
-                });
-            },
-
-            error: () => {
-                this.setState({
-                    isConfirm: false,
-                    message: this.props.messageWrong || 'Wrong PIN' });
-            },
-
-            initial: () => {
-                this.setState({
-                    isConfirm: false,
-                    pin: '',
-                    enteredPin: '',
-                    message: this.props.messageEnter || 'Enter PIN' });
-            }
-        };
         this.layout = this.layout.bind(this);
         this.shake = this.shake.bind(this);
     }
 
     componentWillMount() {
-        this.state.initial();
+        this.initial();
+    }
+
+    check() {
+        if (this.pin === this.enteredPin) {
+            this.message = 'Confirmed!';
+            this.props.onConfirm && this.props.onConfirm(this.enteredPin);
+        } else {
+            this.shake();
+        }
+    }
+
+    confirm() {
+        this.enteredPin = this.pin;
+        this.pin = '';
+        this.isConfirm = true;
+        this.message = this.props.messageConfirm || 'Confirm PIN';
+    }
+
+    error() {
+        this.isConfirm = false;
+        this.message = this.props.messageWrong || 'Wrong PIN';
+    }
+
+    initial() {
+        this.enteredPin = '';
+        this.pin = '';
+        this.isConfirm = false;
+        this.message = this.props.messageEnter || 'Enter PIN';
     }
 
     circle(index, text, subText) {
-        const r = this.state.circleW || 60;
+        const r = this.circleW || 60;
         const circle = styles.circle.create(r, {
             backgroundColor: styles.vars.bg,
             borderColor: styles.vars.highlight,
@@ -85,27 +83,22 @@ export default class Pin extends Component {
     }
 
     enter(num) {
-        if (this.state.pin.length >= this.maxPinLength) return;
-        const pin = this.state.pin + num;
-        this.setState({
-            pin
-        }, () => {
-            if (this.state.pin.length === this.maxPinLength) {
-                if (this.state.isConfirm) {
-                    this.state.check();
-                } else {
-                    const callback = this.props.checkPin || this.state.confirm;
-                    setTimeout(() => callback(this.state.pin, this), 200);
-                }
+        if (this.pin.length >= this.maxPinLength) return;
+        const pin = this.pin + num;
+        this.pin = pin;
+        if (this.pin.length === this.maxPinLength) {
+            if (this.isConfirm) {
+                this.check();
+            } else {
+                const callback = this.props.checkPin || this.confirm;
+                setTimeout(() => callback(this.pin, this), 200);
             }
-        });
+        }
     }
 
     layout(e) {
         const w = e.nativeEvent.layout.width;
-        this.setState({
-            circleW: w / 4
-        });
+        this.circleW = w / 4;
     }
 
     row(index, items) {
@@ -122,30 +115,35 @@ export default class Pin extends Component {
     }
 
     shake() {
-        this.state.error();
+        this.error();
         this.shaker.shake(500, 5, 5);
-        setTimeout(() => this.state.initial(), 1000);
+        setTimeout(() => this.initial(), 1000);
     }
 
     render() {
         const style = styles.pin;
         const p = (text, subText) => ({ text, subText });
-        return (
-            <View style={{
-                flex: 1
-            }} onLayout={this.layout}>
+        const body = (
+            <View style={{ flex: 1 }}>
                 <Animatable.View ref={v => { this.shaker = v; }}>
                     <Center style={style.message.container}>
                         <Text style={style.message.text}>
-                            {this.state.message}
+                            {this.message}
                         </Text>
                     </Center>
                 </Animatable.View>
-                <Circles count={this.maxPinLength} current={this.state.pin.length} fill />
+                <Circles count={this.maxPinLength} current={this.pin.length} fill />
                 {this.row(0, [p(1), p(2, 'ABC'), p(3, 'DEF')])}
                 {this.row(1, [p(4, 'GHI'), p(5, 'JKL'), p(6, 'MNO')])}
                 {this.row(2, [p(7, 'PQR'), p(8, 'STU'), p(9, 'WXYZ')])}
                 {this.row(3, [p(0)])}
+            </View>
+        );
+        return (
+            <View style={{
+                flex: 1
+            }} onLayout={this.layout}>
+                {this.circleW ? body : null}
             </View>
         );
     }

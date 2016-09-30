@@ -6,9 +6,9 @@ import icons from '../helpers/icons';
 
 @observer
 export default class PickerBox extends Component {
+
     constructor(props) {
         super(props);
-        this.state = {};
         this.focus = this.focus.bind(this);
         this.picker = this.props.picker;
     }
@@ -18,14 +18,11 @@ export default class PickerBox extends Component {
     }
 
     focus() {
-        console.log('press');
-        if (state.pickerVisible && this.state.focused) {
-            this.setState({ focused: false });
+        if (state.pickerVisible) {
             state.hidePicker();
             return;
         }
         state.showPicker(this.picker);
-        this.setState({ focused: true });
     }
 
     render() {

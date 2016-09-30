@@ -8,7 +8,6 @@ import icons from '../helpers/icons';
 export default class PinModal extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
         this.focus = this.focus.bind(this);
         this.picker = this.props.picker;
     }
@@ -18,13 +17,11 @@ export default class PinModal extends Component {
     }
 
     focus() {
-        if (state.pickerVisible && this.state.focused) {
-            this.setState({ focused: false });
+        if (state.pickerVisible) {
             state.hidePicker();
             return;
         }
         state.showPicker(this.picker);
-        this.setState({ focused: true });
     }
 
     render() {
