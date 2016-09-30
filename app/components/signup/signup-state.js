@@ -1,11 +1,14 @@
 import React from 'react';
-import { observable, action, computed, autorun } from 'mobx';
+import { observable, action, computed, autorun, reaction } from 'mobx';
 import SignupCircles from './signup-circles';
 import state from '../layout/state';
+import Util from '../helpers/util';
 
 const signupState = observable({
     username: '',
+    usernameValid: null,
     email: '',
+    emailValid: null,
     current: 0,
     count: 0,
     isActive() {
@@ -36,6 +39,14 @@ const signupWizardRoutes = [
 signupState.count = signupWizardRoutes.length;
 
 state.persistentFooter.signup = (i) => (signupState.isActive ? <SignupCircles key={i} /> : null);
+
+reaction(() => signupState.username, username => {
+    signupState.usernameValid = Util.isValidUsername(username);
+});
+
+reaction(() => signupState.email, email => {
+    signupState.emailValid = Util.isValidEmail(email);
+});
 
 autorun(() => {
     if (signupState.isActive) {

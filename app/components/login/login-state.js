@@ -1,8 +1,10 @@
-import { observable, action } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 import state from '../layout/state';
+import Util from '../helpers/util';
 
 const loginState = observable({
     username: '',
+    usernameValid: null,
     name: 'Peerio Test',
     passphrase: '',
     language: 'English',
@@ -21,6 +23,10 @@ const loginState = observable({
     @action login() {
         state.routes.main.transition();
     }
+});
+
+reaction(() => loginState.username, username => {
+    loginState.usernameValid = Util.isValidUsername(username);
 });
 
 export default loginState;

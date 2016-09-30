@@ -38,7 +38,7 @@ export default class LoginClean extends Component {
                 style={style.containerFlex}>
                 <Logo />
                 <View>
-                    <TextBox {...this.tb('username', 'Name')} />
+                    <TextBox valid={loginState.usernameValid} {...this.tb('username', 'Name')} />
                     <TextBox
                         secureTextEntry
                         {...this.tb('passphrase', 'Passphrase')} />

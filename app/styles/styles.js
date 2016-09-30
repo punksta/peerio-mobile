@@ -13,6 +13,7 @@ const vars = {
     whiteIcon: '#fff',
     darkIcon: '#00000070',
     txtLight: '#bfdfef',
+    txtAlert: '#ff0000aa',
     txtDark: 'black',
     inputBg: 'white',
     pickerBg: '#ffffff10',

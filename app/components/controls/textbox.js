@@ -17,6 +17,7 @@ export default class TextBox extends Component {
     @observable focused = false;
     @observable showSecret = false;
     @observable value = '';
+    @observable validationMessage = null;
 
     constructor(props) {
         super(props);
@@ -48,7 +49,6 @@ export default class TextBox extends Component {
     }
 
     focus() {
-        console.log('focused text box event');
         state.focusedTextBox = this.textinput;
         requestAnimationFrame(() => {
             this.focused = true;
@@ -70,6 +70,18 @@ export default class TextBox extends Component {
                     this.showSecret ? 'visibility-off' : 'visibility',
                     this.toggleSecret, style.icon)}
             </View>;
+        const validationControl = (this.value && this.value.length && !this.props.valid) ? (
+            <View
+                pointerEvents="none"
+                style={{ position: 'absolute', top: 0, right: 4 }}>
+                <Text
+                    style={{
+                        color: styles.vars.txtAlert,
+                        fontSize: 12,
+                        backgroundColor: 'transparent'
+                    }}>validation error</Text>
+            </View>
+        ) : null;
         return (
             <View
                 style={style.shadow}>
@@ -101,7 +113,7 @@ export default class TextBox extends Component {
                             onBlur={this.blur}
                             onChangeText={this.changeText}
                             autoCapitalize={this.props.autoCapitalize || 'none'}
-                            autoCorrect={this.props.autoCorrect}
+                            autoCorrect={false}
                         />
                     </View>
                     {showSecretIcon}
@@ -112,6 +124,7 @@ export default class TextBox extends Component {
                             {this.props.hint}
                         </Text>
                     </View>
+                    {validationControl}
                 </View>
             </View>
         );
@@ -121,6 +134,7 @@ export default class TextBox extends Component {
 TextBox.propTypes = {
     onChangeText: React.PropTypes.func.isRequired,
     value: React.PropTypes.any.isRequired,
+    valid: React.PropTypes.bool,
     hint: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
     secureTextEntry: React.PropTypes.bool,
