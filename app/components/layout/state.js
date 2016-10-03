@@ -1,6 +1,8 @@
 import { Keyboard } from 'react-native';
 import _ from 'lodash';
-import { observable, action, autorun } from 'mobx';
+import { observable, action, reaction, autorun } from 'mobx';
+import translator from 'peerio-translator';
+import locales from '../../../locales/locales';
 
 const state = observable({
     isFirstLogin: false,
@@ -17,7 +19,8 @@ const state = observable({
     isRightMenuVisible: false,
     keyboardVisible: false,
     keyboardHeight: 0,
-    languageSelected: 'en',
+    locale: null,
+    languageSelected: null,
     languages: {
         en: 'English',
         fr: 'French',
@@ -42,8 +45,16 @@ const state = observable({
             state.focusedTextBox.blur();
             state.focusedTextBox = null;
         }
+    }),
+
+    setLocale: action(lc => {
+        translator.loadLocale(lc, locales);
+        state.locale = lc;
+        state.languageSelected = lc;
     })
 });
+
+reaction(() => state.languageSelected, ls => state.setLocale(ls));
 
 autorun(() => {
     const r = state.routes[state.route];

@@ -3,7 +3,6 @@ import { View, PanResponder } from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import { reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { a } from 'peerio-icebear';
 import Login from './login/login.js';
 import LoginClean from './login/login-clean.js';
 import LoginSaved from './login/login-saved.js';
@@ -20,6 +19,11 @@ import styles from './../styles/styles';
 export default class App extends Component {
     constructor(props) {
         super(props);
+        state.setLocale('fr');
+        reaction(() => state.locale, () => {
+            console.log('force update locale');
+            Actions.refresh();
+        });
         this.bindRouteState = reaction(() => state.route, route => {
             console.log('reaction: %s => %s', state.prevRoute, route);
             const newIndex = state.routesList.indexOf(route);
@@ -35,11 +39,10 @@ export default class App extends Component {
     }
 
     componentWillMount() {
-        console.log(a);
         this.routes = [
             this.route('login', Login),
             this.route('loginClean', LoginClean, true),
-            this.route('loginSaved', LoginSaved, true),
+            this.route('loginSaved', LoginSaved, true, 'reset'),
             this.route('signupStep1', SignupStep1),
             this.route('signupStep2', SignupPin),
             this.route('main', LayoutMain, true, 'reset')
@@ -56,9 +59,9 @@ export default class App extends Component {
     componentDidMount() {
         // navigating to initial route
         // timeout is needed for router to properly initialize
-        setTimeout(() => {
-            state.routes.loginClean.transition();
-        }, 0);
+        // setTimeout(() => {
+        //     state.routes.loginClean.transition();
+        // }, 0);
     }
 
     route(key, component, replace, type) {
@@ -82,7 +85,7 @@ export default class App extends Component {
     }
 
     render() {
-        const debugPanel = true && <DebugPanel />;
+        const debugPanel = false && <DebugPanel />;
         return (
             <View style={{ flex: 1 }}>
                 <View
