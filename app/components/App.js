@@ -85,7 +85,7 @@ export default class App extends Component {
     }
 
     render() {
-        const debugPanel = false && <DebugPanel />;
+        const debugPanel = true && <DebugPanel />;
         return (
             <View style={{ flex: 1 }}>
                 <View

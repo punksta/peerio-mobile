@@ -8,7 +8,7 @@ export default class Login extends Component {
 
     componentDidMount() {
         console.log('login mounted');
-        loginState.saved();
+        loginState.clean();
     }
 
     componentWillUnmount() {

@@ -3,6 +3,7 @@ import {
     Text,
     View
 } from 'react-native';
+import { t } from 'peerio-translator';
 import SignupFooter from '../controls/signup-footer';
 import Pin from '../controls/pin';
 import Layout2 from '../layout/layout2';
@@ -20,8 +21,8 @@ export default class SignupPin extends Component {
         const style = styles.wizard;
         const body = (
             <View style={style.containerFlex}>
-                <Text style={style.text.title}>Signup</Text>
-                <Text style={style.text.subTitle}>Create device PIN</Text>
+                <Text style={style.text.title}>{t('signup')}</Text>
+                <Text style={style.text.subTitle}>{t('passcode_inputPlaceholder')}</Text>
                 <Pin
                     preventSimplePin
                     onConfirm={pin => this.usePin(pin)} />

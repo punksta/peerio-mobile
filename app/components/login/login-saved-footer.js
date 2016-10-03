@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import { t } from 'peerio-translator';
 import loginState from './login-state';
 import styles from '../../styles/styles';
 
@@ -28,10 +29,10 @@ export default class LoginSavedFooter extends Component {
             <View style={styles.container.footer}>
                 <View style={style.row}>
                     <TouchableOpacity style={style.button.left} onPressIn={this.touchID}>
-                        <Text style={style.button.text}>Touch ID</Text>
+                        <Text style={style.button.text}>{t('touchId')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.button.right} onPressIn={this.changeUser}>
-                        <Text style={style.button.text}>Change User</Text>
+                        <Text style={style.button.text}>{t('login_changeUserButton')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

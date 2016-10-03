@@ -4,6 +4,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import { t } from 'peerio-translator';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import * as Animatable from 'react-native-animatable';
@@ -45,19 +46,19 @@ export default class Pin extends Component {
         this.enteredPin = this.pin;
         this.pin = '';
         this.isConfirm = true;
-        this.message = this.props.messageConfirm || 'Confirm PIN';
+        this.message = this.props.messageConfirm || t('passcode_confirm');
     }
 
     error(msg) {
         this.isConfirm = false;
-        this.message = msg || this.props.messageWrong || 'Wrong PIN';
+        this.message = msg || this.props.messageWrong || t('passphrase_wrongpin');
     }
 
     initial() {
         this.enteredPin = '';
         this.pin = '';
         this.isConfirm = false;
-        this.message = this.props.messageEnter || 'Enter PIN';
+        this.message = this.props.messageEnter || t('passcode_inputPlaceholder');
     }
 
     circle(index, text, subText) {

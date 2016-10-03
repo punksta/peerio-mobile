@@ -4,6 +4,7 @@ import {
     View,
     Linking
 } from 'react-native';
+import { t } from 'peerio-translator';
 import { observer } from 'mobx-react/native';
 import TextBox from '../controls/textbox';
 import LanguagePickerBox from '../controls/language-picker-box';
@@ -29,16 +30,17 @@ export default class SignupStep1 extends Component {
         const style = styles.wizard;
         const body = (
             <View style={style.containerFlex}>
-                <Text style={style.text.title}>Signup</Text>
-                <Text style={style.text.subTitle}>Profile</Text>
+                <Text style={style.text.title}>{t('signup')}</Text>
+                <Text style={style.text.subTitle}>{t('profile')}</Text>
                 <TextBox
                     valid={signupState.usernameValid}
-                    {...this.tb('username', 'Username')} />
+                    {...this.tb('username', t('username'))} />
                 <TextBox
                     valid={signupState.emailValid}
-                    {...this.tb('email', 'Email')} />
-                <LanguagePickerBox {...this.tb('language', 'Language')} />
+                    {...this.tb('email', t('email'))} />
+                <LanguagePickerBox {...this.tb('language', t('language'))} />
                 <Text style={style.text.info}>
+                    {t('signup_TOSRequestText')}
                     By creating a <Text style={{ fontWeight: 'bold' }}>Peerio</Text> account you agree to
                     our <Text style={{ textDecorationLine: 'underline' }} onPress={this.terms}>terms of service</Text>
                 </Text>

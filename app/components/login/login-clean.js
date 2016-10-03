@@ -3,6 +3,7 @@ import {
     View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
+import { t } from 'peerio-translator';
 import Layout1 from '../layout/layout1';
 import LanguagePicker from '../controls/language-picker';
 import LanguagePickerBox from '../controls/language-picker-box';
@@ -38,14 +39,14 @@ export default class LoginClean extends Component {
                 style={style.containerFlex}>
                 <Logo />
                 <View>
-                    <TextBox valid={loginState.usernameValid} {...this.tb('username', 'Name')} />
+                    <TextBox valid={loginState.usernameValid} {...this.tb('username', t('name'))} />
                     <TextBox
                         secureTextEntry
-                        {...this.tb('passphrase', 'Passphrase')} />
-                    <LanguagePickerBox {...this.tb('language', 'Language')} />
+                        {...this.tb('passphrase', t('passphrase'))} />
+                    <LanguagePickerBox {...this.tb('language', t('language'))} />
                 </View>
                 <Center>
-                    <Button text="Login" caps bold onPress={this.signIn} />
+                    <Button text={t('login')} caps bold onPress={this.signIn} />
                 </Center>
                 <LoginTermsSignup />
             </View>

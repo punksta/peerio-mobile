@@ -8,7 +8,7 @@ const loginState = observable({
     name: 'Peerio Test',
     passphrase: '',
     language: 'English',
-    savedUserInfo: true,
+    savedUserInfo: false,
     pin: false,
 
     @action clean() {

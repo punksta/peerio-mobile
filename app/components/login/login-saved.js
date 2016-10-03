@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     View
 } from 'react-native';
+import { t } from 'peerio-translator';
 import Layout2 from '../layout/layout2';
 import Center from '../controls/center';
 import Big from '../controls/big';
@@ -40,7 +41,7 @@ export default class LoginSaved extends Component {
                     marginTop: 6,
                     marginBottom: 18
                 }}>
-                    <Big style={styles.text.inverse}>Welcome back, <Bold>Alice</Bold></Big>
+                    <Big style={styles.text.inverse}>{t('login_welcomeBack')} <Bold>Alice</Bold></Big>
                 </Center>
                 <Pin
                     messageEnter={' '}

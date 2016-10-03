@@ -3,7 +3,7 @@ import {
     Text,
     Linking
 } from 'react-native';
-
+import { t } from 'peerio-translator';
 import Button from '../controls/button';
 import Center from '../controls/center';
 import styles from '../../styles/styles';
@@ -27,9 +27,9 @@ export default class LoginTermsSignup extends Component {
     render() {
         return (
             <Center>
-                <Button text="Terms" onPress={this.terms} />
+                <Button text={t('terms')} onPress={this.terms} />
                 <Text style={{ color: styles.vars.highlight }}> | </Text>
-                <Button text="Sign up" onPress={this.signUp} />
+                <Button text={t('signup')} onPress={this.signUp} />
             </Center>
         );
     }

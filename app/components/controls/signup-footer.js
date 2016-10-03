@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import { tu } from 'peerio-translator';
 import signupState from '../signup/signup-state';
 import styles from '../../styles/styles';
 
@@ -36,10 +37,14 @@ export default class SignupFooter extends Component {
             <View style={styles.container.footer}>
                 <View style={style.row}>
                     <TouchableOpacity style={style.button.left} onPressIn={this.prev}>
-                        <Text style={style.button.text}>{signupState.isFirst ? 'EXIT' : 'PREV'}</Text>
+                        <Text style={style.button.text}>
+                            {signupState.isFirst ? tu('button_exit') : tu('button_back')}
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.button.right} onPressIn={this.next}>
-                        <Text style={style.button.text}>{signupState.isLast ? 'FINISH' : 'NEXT'}</Text>
+                        <Text style={style.button.text}>
+                            {signupState.isLast ? tu('button_finish') : tu('continue')}
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </View>
