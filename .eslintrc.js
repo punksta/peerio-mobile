@@ -6,6 +6,7 @@ module.exports = {
     ],
     rules:{
         'global-require': 0,
+        'generator-star-spacing': 0,
         'react/prefer-stateless-function': 0,
         'react/jsx-filename-extension': 0,
         'react/sort-comp': 0,

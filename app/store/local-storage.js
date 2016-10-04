@@ -1,7 +1,5 @@
-import { observe, observable, asMap } from 'mobx';
 import { AsyncStorage } from 'react-native';
 
-const original = {};
 // const store = new Proxy(original, {
 //     get(target, name) {
 //         if (!(name in target)) {
@@ -28,11 +26,11 @@ const store = {};
 store.get = async function(name) {
     const value = await AsyncStorage.getItem(name);
     return JSON.parse(value);
-}
+};
 
 store.set = async function(name, value) {
     await AsyncStorage.setItem(name, JSON.stringify(value));
-}
+};
 
 export default store;
 
