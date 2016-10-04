@@ -1,5 +1,6 @@
 import { observable, action, reaction } from 'mobx';
 import state from '../layout/state';
+import store from '../../store/local-storage';
 import Util from '../helpers/util';
 
 const loginState = observable({
@@ -22,6 +23,23 @@ const loginState = observable({
 
     @action login() {
         state.routes.main.transition();
+    },
+
+    @action async load() {
+        const userData = await store.get('userData');
+        if (userData) {
+            loginState.username = userData.username;
+            loginState.name = userData.name;
+            loginState.savedUserInfo = true;
+        }
+    },
+
+    @action async save() {
+        const { username, name } = this;
+        await store.set('userData', {
+            username,
+            name
+        });
     }
 });
 
@@ -30,3 +48,6 @@ reaction(() => loginState.username, username => {
 });
 
 export default loginState;
+
+this.Peerio = this.Peerio || {};
+this.Peerio.loginState = loginState;

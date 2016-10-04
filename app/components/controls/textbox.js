@@ -36,6 +36,10 @@ export default class TextBox extends Component {
         state.focusedTextBox = null;
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.value = nextProps.value;
+    }
+
     blur() {
         state.focusedTextBox = null;
         requestAnimationFrame(() => {

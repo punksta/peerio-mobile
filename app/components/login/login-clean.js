@@ -22,6 +22,7 @@ export default class LoginClean extends Component {
         super(props);
         forms.mixin(this, loginState);
         this.signIn = this.signIn.bind(this);
+        loginState.load();
     }
 
     languagePicker() {
@@ -39,7 +40,8 @@ export default class LoginClean extends Component {
                 style={style.containerFlex}>
                 <Logo />
                 <View>
-                    <TextBox valid={loginState.usernameValid} {...this.tb('username', t('name'))} />
+                    <TextBox valid={loginState.usernameValid}
+                        {...this.tb('username', t('name'))} />
                     <TextBox
                         secureTextEntry
                         {...this.tb('passphrase', t('passphrase'))} />

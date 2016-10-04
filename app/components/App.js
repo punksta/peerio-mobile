@@ -13,12 +13,14 @@ import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
 import ModalContainer from './layout/modal-container';
 import state from './layout/state';
+import store from '../store/local-storage';
 import styles from './../styles/styles';
 
 @observer
 export default class App extends Component {
     constructor(props) {
         super(props);
+        console.log(store.test);
         state.setLocale('fr');
         reaction(() => state.locale, () => {
             console.log('force update locale');
