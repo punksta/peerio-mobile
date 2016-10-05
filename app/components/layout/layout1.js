@@ -23,7 +23,6 @@ export default class Layout1 extends Component {
     }
 
     render() {
-        console.log(state.keyboardHeight);
         return (
             <View style={{
                 flex: 1,

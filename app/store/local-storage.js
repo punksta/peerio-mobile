@@ -32,7 +32,26 @@ store.set = async function(name, value) {
     await AsyncStorage.setItem(name, JSON.stringify(value));
 };
 
-export default store;
+class PrefixStore {
+    constructor(prefix) {
+        this.prefix = prefix;
+        this.set = this.set.bind(this);
+        this.get = this.get.bind(this);
+    }
 
-this.Peerio = this.Peerio || {};
-this.Peerio.store = store;
+    async set(name, value) {
+        await store.set(`${this.prefix}::${name}`, value);
+    }
+
+    async get(name) {
+        return await store.set(`${this.prefix}::${name}`);
+    }
+}
+
+store.global = new PrefixStore('global');
+
+store.setUserDB = (username) => {
+    store.user = new PrefixStore(username);
+};
+
+export default store;
