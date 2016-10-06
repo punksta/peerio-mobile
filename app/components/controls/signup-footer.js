@@ -5,10 +5,12 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+import { observer } from 'mobx-react/native';
 import { tu } from 'peerio-translator';
 import signupState from '../signup/signup-state';
 import styles from '../../styles/styles';
 
+@observer
 export default class SignupFooter extends Component {
     constructor(props) {
         super(props);
@@ -33,6 +35,12 @@ export default class SignupFooter extends Component {
     }
     render() {
         const style = styles.wizard.footer;
+        const next = signupState.nextAvailable ?
+            <TouchableOpacity style={style.button.right} onPressIn={this.next}>
+                <Text style={style.button.text}>
+                    {signupState.isLast ? tu('button_finish') : tu('continue')}
+                </Text>
+            </TouchableOpacity> : null;
         return (
             <View style={styles.container.footer}>
                 <View style={style.row}>
@@ -41,12 +49,8 @@ export default class SignupFooter extends Component {
                             {signupState.isFirst ? tu('button_exit') : tu('button_back')}
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.button.right} onPressIn={this.next}>
-                        <Text style={style.button.text}>
-                            {signupState.isLast ? tu('button_finish') : tu('continue')}
-                        </Text>
-                    </TouchableOpacity>
                 </View>
+                {next}
             </View>
         );
     }

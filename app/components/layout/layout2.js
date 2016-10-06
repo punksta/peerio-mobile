@@ -3,7 +3,6 @@ import {
     View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import state from './state';
 import styles from '../../styles/styles';
 
 @observer

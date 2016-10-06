@@ -13,7 +13,6 @@ import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
 import ModalContainer from './layout/modal-container';
 import state from './layout/state';
-import store from '../store/local-storage';
 import styles from './../styles/styles';
 import '../lib/icebear';
 import './utils/bridge';

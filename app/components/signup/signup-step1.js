@@ -34,15 +34,15 @@ export default class SignupStep1 extends Component {
                 <Text style={style.text.subTitle}>{t('profile')}</Text>
                 <TextBox
                     valid={signupState.usernameValid}
+                    validationMessage={signupState.usernameValidationMessage}
                     {...this.tb('username', t('username'))} />
                 <TextBox
                     valid={signupState.emailValid}
+                    validationMessage={signupState.emailValidationMessage}
                     {...this.tb('email', t('email'))} />
                 <LanguagePickerBox {...this.tb('language', t('language'))} />
                 <Text style={style.text.info}>
                     {t('signup_TOSRequestText')}
-                    By creating a <Text style={{ fontWeight: 'bold' }}>Peerio</Text> account you agree to
-                    our <Text style={{ textDecorationLine: 'underline' }} onPress={this.terms}>terms of service</Text>
                 </Text>
                 <View style={{ flex: 1 }} />
             </View>

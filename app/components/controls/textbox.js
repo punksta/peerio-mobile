@@ -17,11 +17,12 @@ export default class TextBox extends Component {
     @observable focused = false;
     @observable showSecret = false;
     @observable value = '';
-    @observable validationMessage = null;
+    @observable validationMessage = '';
 
     constructor(props) {
         super(props);
         this.value = this.props.value;
+        this.validationMessage = this.props.validationMessage;
         this.blur = this.blur.bind(this);
         this.focus = this.focus.bind(this);
         this.changeText = this.changeText.bind(this);
@@ -38,6 +39,7 @@ export default class TextBox extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.value = nextProps.value;
+        this.validationMessage = nextProps.validationMessage;
     }
 
     blur() {
@@ -83,7 +85,7 @@ export default class TextBox extends Component {
                         color: styles.vars.txtAlert,
                         fontSize: 12,
                         backgroundColor: 'transparent'
-                    }}>validation error</Text>
+                    }}>{this.validationMessage}</Text>
             </View>
         ) : null;
         return (
@@ -139,6 +141,7 @@ TextBox.propTypes = {
     onChangeText: React.PropTypes.func.isRequired,
     value: React.PropTypes.any.isRequired,
     valid: React.PropTypes.bool,
+    validationMessage: React.PropTypes.string,
     hint: React.PropTypes.string.isRequired,
     name: React.PropTypes.string.isRequired,
     secureTextEntry: React.PropTypes.bool,
