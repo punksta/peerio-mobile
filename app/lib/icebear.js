@@ -6,18 +6,18 @@ global.navigator.userAgent = global.navigator.userAgent || 'react-native';
 
 global.crypto = crypto;
 
-require('peerio-icebear');
+const { User, socket, config } = require('peerio-icebear');
+config.socketServerUrl = 'wss://***REMOVED***/';
+socket.start();
 
-const SocketClient = require('peerio-icebear/src/network/socket-client');
-const User = require('peerio-icebear/src/models/user');
-
-const icebear = {
-    SocketClient,
-    User
-};
+// const icebear = {
+//     SocketClient: null,
+//     User: null
+// };
 
 // export default icebear;
-module.exports.SocketClient = SocketClient;
+module.exports.config = config;
+module.exports.socket = socket;
 module.exports.User = User;
 
-global.Icebear = icebear;
+global.socket = socket;

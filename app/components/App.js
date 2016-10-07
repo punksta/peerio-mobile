@@ -17,6 +17,8 @@ import styles from './../styles/styles';
 import '../lib/icebear';
 import './utils/bridge';
 
+process.env.WS_SOCKET_SERVER;
+
 @observer
 export default class App extends Component {
     constructor(props) {
@@ -87,7 +89,7 @@ export default class App extends Component {
     }
 
     render() {
-        const debugPanel = true && <DebugPanel />;
+        const debugPanel = __DEV__ && <DebugPanel />;
         return (
             <View style={{ flex: 1 }}>
                 <View
