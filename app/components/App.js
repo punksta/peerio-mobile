@@ -3,11 +3,11 @@ import { View, PanResponder } from 'react-native';
 import { Scene, Router, Actions } from 'react-native-router-flux';
 import { reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import Login from './login/login.js';
-import LoginClean from './login/login-clean.js';
-import LoginSaved from './login/login-saved.js';
-import SignupStep1 from './signup/signup-step1.js';
-import SignupPin from './signup/signup-pin.js';
+import Login from './login/login';
+import LoginClean from './login/login-clean';
+import LoginSaved from './login/login-saved';
+import SignupStep1 from './signup/signup-step1';
+import SignupPin from './signup/signup-pin';
 import PersistentFooter from './layout/persistent-footer';
 import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
@@ -16,8 +16,6 @@ import state from './layout/state';
 import styles from './../styles/styles';
 import '../lib/icebear';
 import './utils/bridge';
-
-process.env.WS_SOCKET_SERVER;
 
 @observer
 export default class App extends Component {
@@ -89,12 +87,12 @@ export default class App extends Component {
     }
 
     render() {
-        const debugPanel = __DEV__ && <DebugPanel />;
+        const debugPanel = false && <DebugPanel />;
         return (
             <View style={{ flex: 1 }}>
                 <View
                     style={{ flex: 1 }}>
-                    <Router style={styles.navigator.router} onNavigate={(params) => console.log(params)}>
+                    <Router style={styles.navigator.router} onNavigate={params => console.log(params)}>
                         <Scene key="root" title="dev-root" hideNavBar getSceneStyle={() => styles.navigator.card}>
                             {this.routes}
                         </Scene>

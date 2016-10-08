@@ -68,7 +68,7 @@ export default class TextBox extends Component {
 
     render() {
         const style = this.focused ? styles.input.active : styles.input.normal;
-        let hint = this.focused || this.props.value && this.props.value.length ?
+        const hint = this.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
         const showSecretIcon = !this.props.secureTextEntry ? null :
             <View style={style.iconContainer}>

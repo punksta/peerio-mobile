@@ -5,7 +5,7 @@ import React from 'react';
 import {
     AppRegistry
 } from 'react-native';
-import './shim.js';
+import './shim';
 import App from './app/components/App';
 
 const nicebear = () => (

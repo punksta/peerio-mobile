@@ -7,6 +7,7 @@ global.navigator.userAgent = global.navigator.userAgent || 'react-native';
 global.crypto = crypto;
 
 const { User, socket, config } = require('peerio-icebear');
+
 config.socketServerUrl = 'wss://***REMOVED***/';
 socket.start();
 
