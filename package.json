@@ -14,6 +14,7 @@
     "localize": "tx pull -af",
     "release": "standard-version && git push --follow-tags origin master",
     "link": "react-native link",
+    "bundle": "echo stub",
     "build-ios": "cd ios && xcodebuild -scheme peeriomobile -configuration Debug build",
     "build-ios-nocodesign": "cd ios && xcodebuild -scheme peeriomobile -configuration Debug build -sdk iphonesimulator PLATFORM_NAME=iphonesimulator",
     "build-android": "react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/ && cd android && ./gradlew assembleRelease",
