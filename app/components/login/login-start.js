@@ -19,5 +19,3 @@ export default class LoginStart extends Component {
         return <Layout1 body={null} footer={null} />;
     }
 }
-
-
