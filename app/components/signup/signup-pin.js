@@ -6,7 +6,7 @@ import {
 import { t } from 'peerio-translator';
 import SignupFooter from '../controls/signup-footer';
 import Pin from '../controls/pin';
-import Button from '../controls/button';
+// import Button from '../controls/button';
 import Layout2 from '../layout/layout2';
 import styles from '../../styles/styles';
 import signupState from './signup-state';
