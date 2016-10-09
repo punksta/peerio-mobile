@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import state from './state';
-import styles from '../../styles/styles';
 
 @observer
 export default class Layout1 extends Component {
@@ -24,15 +23,15 @@ export default class Layout1 extends Component {
 
     render() {
         return (
-            <View style={{
-                flex: 1,
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                borderColor: 'yellow',
-                borderWidth: 0,
-                paddingTop: styles.vars.layoutPaddingTop,
-                paddingBottom: state.keyboardHeight
-            }}>
+            <View
+                style={{
+                    flex: 1,
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    borderColor: 'yellow',
+                    borderWidth: 0,
+                    marginBottom: state.keyboardHeight
+                }}>
                 <ScrollView
                     ref={(ref) => { this.scrollView = ref; }}
                     style={{

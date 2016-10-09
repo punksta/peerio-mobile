@@ -1,4 +1,5 @@
 import { Keyboard } from 'react-native';
+import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import _ from 'lodash';
 import { observable, action, reaction, autorun } from 'mobx';
 import translator from 'peerio-translator';
@@ -45,6 +46,7 @@ const state = observable({
             state.focusedTextBox.blur();
             state.focusedTextBox = null;
         }
+        dismissKeyboard();
     }),
 
     setLocale: action(lc => {

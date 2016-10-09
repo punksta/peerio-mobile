@@ -40,6 +40,18 @@ export default class SignupStep1 extends Component {
                     valid={signupState.emailValid}
                     validationMessage={signupState.emailValidationMessage}
                     {...this.tb('email', t('email'))} />
+                <View style={{ flexDirection: 'row', flex: 1 }}>
+                    <View style={{ flex: 1 }}>
+                        <TextBox
+                            info={t('optional')}
+                            {...this.tb('firstName', t('firstName'))} />
+                    </View>
+                    <View style={{ flex: 1 }}>
+                        <TextBox
+                            info={t('optional')}
+                            {...this.tb('lastName', t('lastName'))} />
+                    </View>
+                </View>
                 <LanguagePickerBox {...this.tb('language', t('language'))} />
                 <Text style={style.text.info}>
                     {t('signup_TOSRequestText')}

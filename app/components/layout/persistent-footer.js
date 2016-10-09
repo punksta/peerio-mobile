@@ -17,7 +17,7 @@ export default class PersistentFooter extends Component {
         return (
             <View
                 pointerEvents="none"
-                style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+                style={{ position: 'absolute', bottom: state.keyboardHeight, left: 0, right: 0 }}>
                 {items}
             </View>
         );

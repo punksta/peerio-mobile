@@ -88,6 +88,15 @@ export default class TextBox extends Component {
                     }}>{this.validationMessage}</Text>
             </View>
         ) : null;
+        const infoControl = this.props.info ? (
+            <Text style={{
+                backgroundColor: 'transparent',
+                color: styles.vars.midlight,
+                position: 'absolute',
+                fontSize: 10,
+                marginTop: 2
+            }}>Optional</Text>
+        ) : null;
         return (
             <View
                 style={style.shadow}>
@@ -130,6 +139,7 @@ export default class TextBox extends Component {
                             {this.props.hint}
                         </Text>
                     </View>
+                    {infoControl}
                     {validationControl}
                 </View>
             </View>
@@ -143,6 +153,7 @@ TextBox.propTypes = {
     valid: React.PropTypes.bool,
     validationMessage: React.PropTypes.string,
     hint: React.PropTypes.string.isRequired,
+    info: React.PropTypes.string,
     name: React.PropTypes.string.isRequired,
     secureTextEntry: React.PropTypes.bool,
     autoCapitalize: React.PropTypes.oneOf(['none', 'sentences', 'words', 'characters']),

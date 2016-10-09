@@ -13,6 +13,8 @@ const signupState = observable({
     emailValid: null,
     emailValidationMessage: 'email should contain @',
     pinSaved: false,
+    firstName: '',
+    lastName: '',
     current: 0,
     count: 0,
     isActive() {
@@ -20,8 +22,9 @@ const signupState = observable({
     },
 
     @computed get nextAvailable() {
+        return true;
         switch (signupState.current) {
-            case 0: return this.usernameValid;
+            case 0: return this.usernameValid && this.email && this.emailValid;
             case 1: return this.pinSaved;
             default: return false;
         }
@@ -48,6 +51,9 @@ const signupState = observable({
         user.username = signupState.username;
         user.email = signupState.email;
         user.passphrase = 'such a secret passphrase';
+        user.firstName = signupState.firstName;
+        user.lastName = signupState.lastName;
+        user.localeCode = state.locale;
         user.createAccount()
             .then(state.routes.main.transition());
     }

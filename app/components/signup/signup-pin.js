@@ -29,8 +29,6 @@ export default class SignupPin extends Component {
                     preventSimplePin
                     ref={pin => (this.pin = pin)}
                     onConfirm={pin => this.usePin(pin)} />
-                <Button text="Toggle spinner"
-                        onPress={() => { this.pin.spinner(!this.spin); this.spin = !this.spin; }} />
             </View>
         );
 
