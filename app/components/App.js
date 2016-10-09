@@ -6,8 +6,7 @@ import { observer } from 'mobx-react/native';
 import Login from './login/login';
 import LoginClean from './login/login-clean';
 import LoginSaved from './login/login-saved';
-import SignupStep1 from './signup/signup-step1';
-import SignupPin from './signup/signup-pin';
+import Signup from './signup/signup';
 import PersistentFooter from './layout/persistent-footer';
 import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
@@ -45,8 +44,9 @@ export default class App extends Component {
             this.route('login', Login),
             this.route('loginClean', LoginClean, true),
             this.route('loginSaved', LoginSaved, true, 'reset'),
-            this.route('signupStep1', SignupStep1),
-            this.route('signupStep2', SignupPin),
+            this.route('signupStep1', Signup.Step1),
+            this.route('signupStep2', Signup.Pin),
+            this.route('signupSpinner', Signup.Spinner),
             this.route('main', LayoutMain, true, 'reset')
         ];
 
@@ -61,9 +61,9 @@ export default class App extends Component {
     componentDidMount() {
         // navigating to initial route
         // timeout is needed for router to properly initialize
-        // setTimeout(() => {
-        //     state.routes.loginClean.transition();
-        // }, 0);
+        setTimeout(() => {
+            state.routes.signupSpinner.transition();
+        }, 0);
     }
 
     route(key, component, replace, type) {

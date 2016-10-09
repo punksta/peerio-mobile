@@ -13,7 +13,7 @@ const signupState = observable({
     emailValid: null,
     emailValidationMessage: 'email should contain @',
     pinSaved: false,
-    current: 0,
+    current: 2,
     count: 0,
     isActive() {
         return state.route.startsWith('signup');
@@ -49,7 +49,8 @@ const signupState = observable({
 
 const signupWizardRoutes = [
     'signupStep1',
-    'signupStep2'
+    'signupStep2',
+    'signupSpinner'
 ];
 
 signupState.count = signupWizardRoutes.length;
