@@ -50,3 +50,6 @@ tests/console.py
 tests/env
 *.pyc
 misc
+
+# env settings
+env.sh

@@ -656,7 +656,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\n\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n    ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n";
+			shellScript = "export NODE_BINARY=node\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\n\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n    source env.sh && ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    source env.sh && ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
