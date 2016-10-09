@@ -710,7 +710,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
-				SYMROOT = build;
+				SYMROOT = build/Build/Products;
 			};
 			name = Debug;
 		};
@@ -750,7 +750,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
-				SYMROOT = build;
+				SYMROOT = build/Build/Products;
 			};
 			name = Release;
 		};
