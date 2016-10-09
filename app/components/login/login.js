@@ -1,22 +1,7 @@
-import React, { Component } from 'react';
-import { observer } from 'mobx-react/native';
-import Layout1 from '../layout/layout1';
-import loginState from './login-state';
+import Start from './login-start';
+import Saved from './login-saved';
+import Clean from './login-clean';
 
-@observer
-export default class Login extends Component {
-
-    componentDidMount() {
-        console.log('login mounted');
-        loginState.clean();
-    }
-
-    componentWillUnmount() {
-        console.log('login unmount');
-    }
-
-    render() {
-        return <Layout1 body={null} footer={null} />;
-    }
-}
-
+export default {
+    Start, Saved, Clean
+};

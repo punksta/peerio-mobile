@@ -261,6 +261,7 @@ const styles = {
         container: {
             height: 40,
             flexDirection: 'row',
+            alignItems: 'center',
             justifyContent: 'center'
         },
         small: {
@@ -290,7 +291,7 @@ const styles = {
         message: {
             text: inherit('text-inverse'),
             container: {
-                marginBottom: 22
+                marginBottom: 0
             }
         }
     },
@@ -312,6 +313,7 @@ const styles = {
             flex: 1,
             padding: 50,
             paddingTop: 0,
+            paddingBottom: 0,
             borderColor: 'violet',
             borderWidth: 0,
             backgroundColor: 'transparent',

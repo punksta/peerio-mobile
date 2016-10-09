@@ -6,6 +6,7 @@ import {
 import { t } from 'peerio-translator';
 import SignupFooter from '../controls/signup-footer';
 import Pin from '../controls/pin';
+import Button from '../controls/button';
 import Layout2 from '../layout/layout2';
 import styles from '../../styles/styles';
 import signupState from './signup-state';
@@ -14,6 +15,7 @@ export default class SignupPin extends Component {
 
     usePin(pin) {
         signupState.pin = pin;
+        this.pin.spinner(true);
         setTimeout(() => signupState.finish(), 200);
     }
 
@@ -25,7 +27,10 @@ export default class SignupPin extends Component {
                 <Text style={style.text.subTitle}>{t('passcode_inputPlaceholder')}</Text>
                 <Pin
                     preventSimplePin
+                    ref={pin => (this.pin = pin)}
                     onConfirm={pin => this.usePin(pin)} />
+                <Button text="Toggle spinner"
+                        onPress={() => { this.pin.spinner(!this.spin); this.spin = !this.spin; }} />
             </View>
         );
 

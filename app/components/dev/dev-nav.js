@@ -69,7 +69,6 @@ export default class DevNav extends Component {
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
                 {this.routeLink('<<', this.prev)}
                 {this.routeLink('>>', this.next)}
-                {this.routeLink('login', () => state.routes.loginClean.transition())}
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
                     {secondaryDebug}
                 </View>

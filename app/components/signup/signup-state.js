@@ -13,11 +13,12 @@ const signupState = observable({
     emailValid: null,
     emailValidationMessage: 'email should contain @',
     pinSaved: false,
-    current: 2,
+    current: 0,
     count: 0,
     isActive() {
         return state.route.startsWith('signup');
     },
+
     @computed get nextAvailable() {
         switch (signupState.current) {
             case 0: return this.usernameValid;
@@ -25,18 +26,23 @@ const signupState = observable({
             default: return false;
         }
     },
+
     @computed get isLast() {
         return this.current === this.count - 1;
     },
+
     @computed get isFirst() {
         return this.current === 0;
     },
+
     @action transition() {
         state.route = 'signupStep1';
     },
+
     @action exit() {
         state.route = 'login';
     },
+
     @action finish() {
         const user = new User();
         user.username = signupState.username;
@@ -45,12 +51,12 @@ const signupState = observable({
         user.createAccount()
             .then(state.routes.main.transition());
     }
+
 });
 
 const signupWizardRoutes = [
     'signupStep1',
-    'signupStep2',
-    'signupSpinner'
+    'signupStep2'
 ];
 
 signupState.count = signupWizardRoutes.length;

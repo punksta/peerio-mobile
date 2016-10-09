@@ -8,7 +8,7 @@ global.crypto = crypto;
 
 const { User, socket, config } = require('peerio-icebear');
 
-config.socketServerUrl = 'wss://***REMOVED***/';
+config.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://app.peerio.com';
 socket.start();
 
 // const icebear = {

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     Text,
     TouchableOpacity,
+    ActivityIndicator,
     View
 } from 'react-native';
 import { t } from 'peerio-translator';
@@ -20,6 +21,7 @@ export default class Pin extends Component {
     @observable pin = '';
     @observable isConfirm = false;
     @observable circleW = 0;
+    @observable isSpinner = false;
     maxPinLength = 6;
 
     constructor(props) {
@@ -129,6 +131,10 @@ export default class Pin extends Component {
         setTimeout(() => this.initial(), 1000);
     }
 
+    spinner(value) {
+        this.isSpinner = value;
+    }
+
     render() {
         const style = styles.pin;
         const p = (text, subText) => ({ text, subText });
@@ -141,11 +147,19 @@ export default class Pin extends Component {
                         </Text>
                     </Center>
                 </Animatable.View>
-                <Circles count={this.maxPinLength} current={this.pin.length} fill />
-                {this.row(0, [p(1), p(2, 'ABC'), p(3, 'DEF')])}
-                {this.row(1, [p(4, 'GHI'), p(5, 'JKL'), p(6, 'MNO')])}
-                {this.row(2, [p(7, 'PQR'), p(8, 'STU'), p(9, 'WXYZ')])}
-                {this.row(3, [p(0)])}
+                <View style={{ height: 40, marginBottom: 12 }}>
+                    { this.isSpinner ?
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                            <ActivityIndicator color={styles.vars.highlight} />
+                        </View> :
+                        <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
+                </View>
+                <View style={{ flex: 1, opacity: this.isSpinner ? 0.5 : 1 }}>
+                    {this.row(0, [p(1), p(2, 'ABC'), p(3, 'DEF')])}
+                    {this.row(1, [p(4, 'GHI'), p(5, 'JKL'), p(6, 'MNO')])}
+                    {this.row(2, [p(7, 'PQR'), p(8, 'STU'), p(9, 'WXYZ')])}
+                    {this.row(3, [p(0)])}
+                </View>
             </View>
         );
         return (

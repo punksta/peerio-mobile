@@ -4,8 +4,6 @@ import { Scene, Router, Actions } from 'react-native-router-flux';
 import { reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import Login from './login/login';
-import LoginClean from './login/login-clean';
-import LoginSaved from './login/login-saved';
 import Signup from './signup/signup';
 import PersistentFooter from './layout/persistent-footer';
 import DebugPanel from './layout/debugPanel';
@@ -41,12 +39,11 @@ export default class App extends Component {
 
     componentWillMount() {
         this.routes = [
-            this.route('login', Login),
-            this.route('loginClean', LoginClean, true),
-            this.route('loginSaved', LoginSaved, true, 'reset'),
+            this.route('login', Login.Start),
+            this.route('loginClean', Login.Clean, true),
+            this.route('loginSaved', Login.Saved, true, 'reset'),
             this.route('signupStep1', Signup.Step1),
             this.route('signupStep2', Signup.Pin),
-            this.route('signupSpinner', Signup.Spinner),
             this.route('main', LayoutMain, true, 'reset')
         ];
 
@@ -62,7 +59,7 @@ export default class App extends Component {
         // navigating to initial route
         // timeout is needed for router to properly initialize
         setTimeout(() => {
-            state.routes.signupSpinner.transition();
+            state.routes.signupStep1.transition();
         }, 0);
     }
 
@@ -87,7 +84,7 @@ export default class App extends Component {
     }
 
     render() {
-        const debugPanel = false && <DebugPanel />;
+        const debugPanel = (typeof __DEV__ !== 'undefined') && <DebugPanel />;
         return (
             <View style={{ flex: 1 }}>
                 <View
