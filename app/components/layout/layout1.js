@@ -14,7 +14,9 @@ export default class Layout1 extends Component {
     }
 
     layout(e) {
-        this.scrollViewHeight = e.nativeEvent.layout.height;
+        if (!this.scrollViewHeight) {
+            this.scrollViewHeight = e.nativeEvent.layout.height;
+        }
     }
 
     scroll(e) {
@@ -30,7 +32,7 @@ export default class Layout1 extends Component {
                     justifyContent: 'space-between',
                     borderColor: 'yellow',
                     borderWidth: 0,
-                    marginBottom: state.keyboardHeight
+                    paddingBottom: state.keyboardHeight
                 }}>
                 <ScrollView
                     ref={(ref) => { this.scrollView = ref; }}
@@ -49,8 +51,8 @@ export default class Layout1 extends Component {
                     onScroll={this.scroll}
                     onLayout={this.layout}>
                     {this.props.body}
-                    {this.props.footer}
                 </ScrollView>
+                {this.props.footer}
             </View>
         );
     }

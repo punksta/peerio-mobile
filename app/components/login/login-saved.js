@@ -22,9 +22,10 @@ export default class LoginSaved extends Component {
     }
 
     checkPin(pin, pinControl) {
-        if (pin !== '111111') {
+        if (pin !== loginState.pin) {
             pinControl.shake();
         } else {
+            pinControl.spinner(true);
             this.signIn();
         }
     }

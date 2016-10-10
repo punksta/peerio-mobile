@@ -2,14 +2,19 @@ import { observable, action, reaction } from 'mobx';
 import state from '../layout/state';
 import store from '../../store/local-storage';
 import Util from '../helpers/util';
+import { User } from '../../lib/icebear';
 
 const loginState = observable({
-    username: '',
+    username: 'test909090',
     usernameValid: null,
-    name: 'Peerio Test',
+    firstName: 'Peerio',
+    lastName: 'Test',
     passphrase: '',
+    savedPassphrase: '',
     language: 'English',
+    changeUser: false,
     savedUserInfo: false,
+    isInProgress: false,
     pin: false,
 
     @action clean() {
@@ -22,25 +27,46 @@ const loginState = observable({
     },
 
     @action login() {
-        state.routes.main.transition();
+        const user = new User();
+        user.username = this.username;
+        user.passphrase = this.passphrase || this.savedPassphrase || 'such a secret passphrase';
+        this.isInProgress = true;
+        user.login()
+            .then(state.routes.main.transition)
+            .finally(() => {
+                this.isInProgress = false;
+            });
     },
 
     @action async load() {
         const userData = await store.get('userData');
         if (userData) {
-            loginState.username = userData.username;
-            loginState.name = userData.name;
-            loginState.savedUserInfo = true;
+            this.username = userData.username;
+            this.name = userData.name;
+            const userRegData = await store.get(`user::${this.username}`);
+            if (userRegData) {
+                const { passphrase, pin } = userRegData;
+                this.savedPassphrase = passphrase;
+                this.pin = pin;
+                // this.savedUserInfo = true;
+                if (!this.changeUser) {
+                    this.saved();
+                }
+            }
         }
     },
 
     @action async save() {
-        const { username, name } = this;
+        const { username, firstName, lastName } = this;
         await store.set('userData', {
             username,
-            name
+            firstName,
+            lastName
+        });
+        await store.set(`user::${username}`, {
         });
     }
+
 });
 
 reaction(() => loginState.username, username => {

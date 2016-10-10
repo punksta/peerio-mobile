@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-    View
+    View,
+    ActivityIndicator
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { t } from 'peerio-translator';
@@ -35,6 +36,9 @@ export default class LoginClean extends Component {
 
     render() {
         const style = styles.wizard;
+        const button = loginState.isInProgress ?
+            <ActivityIndicator color={styles.vars.highlight} style={{ height: 12 }} /> :
+            <Button text={t('login')} caps bold onPress={this.signIn} style={{ height: 12 }} />;
         const body = (
             <View
                 style={style.containerFlex}>
@@ -48,9 +52,10 @@ export default class LoginClean extends Component {
                     <LanguagePickerBox {...this.tb('language', t('language'))} />
                 </View>
                 <Center>
-                    <Button text={t('login')} caps bold onPress={this.signIn} />
+                    {button}
                 </Center>
                 <LoginTermsSignup />
+                <View />
             </View>
         );
         return <Layout1 body={body} footer={null} />;

@@ -2,6 +2,7 @@ import React from 'react';
 import { observable, action, computed, autorun, reaction } from 'mobx';
 import SignupCircles from './signup-circles';
 import state from '../layout/state';
+import store from '../../store/local-storage';
 import Util from '../helpers/util';
 import { User } from '../../lib/icebear';
 
@@ -12,6 +13,7 @@ const signupState = observable({
     email: '',
     emailValid: null,
     emailValidationMessage: 'email should contain @',
+    pin: '',
     pinSaved: false,
     firstName: '',
     lastName: '',
@@ -45,16 +47,33 @@ const signupState = observable({
         state.route = 'login';
     },
 
-    @action finish() {
+    @action async finish() {
         const user = new User();
-        user.username = signupState.username;
-        user.email = signupState.email;
-        user.passphrase = 'such a secret passphrase';
-        user.firstName = signupState.firstName;
-        user.lastName = signupState.lastName;
-        user.localeCode = state.locale;
+        const { username, email, firstName, lastName, pin } = this;
+        const passphrase = 'such a secret passphrase';
+        const localeCode = state.locale;
+
+        user.username = username;
+        user.email = email;
+        user.passphrase = passphrase;
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.localeCode = localeCode;
         user.createAccount()
-            .then(state.routes.main.transition());
+            .then(state.routes.main.transition);
+        await store.set(`user::${user.username}`, {
+            pin,
+            username,
+            firstName,
+            lastName,
+            localeCode,
+            passphrase
+        });
+        await store.set('userData', {
+            username,
+            firstName,
+            lastName
+        });
     }
 
 });

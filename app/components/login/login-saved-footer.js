@@ -20,6 +20,7 @@ export default class LoginSavedFooter extends Component {
     }
 
     changeUser() {
+        loginState.changeUser = true;
         loginState.clean();
     }
 

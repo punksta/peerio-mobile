@@ -59,9 +59,9 @@ export default class App extends Component {
     componentDidMount() {
         // navigating to initial route
         // timeout is needed for router to properly initialize
-        setTimeout(() => {
-            state.routes.signupStep1.transition();
-        }, 0);
+        // setTimeout(() => {
+        //     state.routes.signupStep1.transition();
+        // }, 0);
     }
 
     route(key, component, replace, type) {
