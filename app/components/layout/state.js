@@ -3,7 +3,7 @@ import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import _ from 'lodash';
 import { observable, action, reaction, autorun } from 'mobx';
 import translator from 'peerio-translator';
-import locales from '../../../locales/locales';
+import locales from '../../lib/locales';
 
 const state = observable({
     isFirstLogin: false,
@@ -50,13 +50,13 @@ const state = observable({
     }),
 
     @action setLocale(lc) {
-        locales.loadLocaleFile(lc)
+        return locales.loadLocaleFile(lc)
             .then(locale => {
                 console.log(locale);
                 translator.setLocale(lc, locale);
                 state.locale = lc;
                 state.languageSelected = lc;
-            })
+            });
     }
 });
 
