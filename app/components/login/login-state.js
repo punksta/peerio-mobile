@@ -71,8 +71,9 @@ const loginState = observable({
         });
     },
 
-    @action triggerTouchId() {
-        touchid.get(`user::${this.username}`)
+    @action async triggerTouchId() {
+        await touchid.load();
+        touchid.available && touchid.get(`user::${this.username}`)
             .then(passphrase => {
                 this.passphrase = passphrase;
                 this.login();

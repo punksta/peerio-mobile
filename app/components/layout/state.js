@@ -20,8 +20,8 @@ const state = observable({
     isRightMenuVisible: false,
     keyboardVisible: false,
     keyboardHeight: 0,
-    locale: null,
-    languageSelected: null,
+    locale: 'en',
+    languageSelected: 'en',
     languages: {
         en: 'English',
         fr: 'French',
@@ -49,11 +49,15 @@ const state = observable({
         }
     }),
 
-    setLocale: action(lc => {
-        translator.loadLocale(lc, locales);
-        state.locale = lc;
-        state.languageSelected = lc;
-    })
+    @action setLocale(lc) {
+        locales.loadLocaleFile(lc)
+            .then(locale => {
+                console.log(locale);
+                translator.setLocale(lc, locale);
+                state.locale = lc;
+                state.languageSelected = lc;
+            })
+    }
 });
 
 reaction(() => state.languageSelected, ls => state.setLocale(ls));

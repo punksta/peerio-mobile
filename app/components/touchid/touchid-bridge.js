@@ -19,8 +19,6 @@ const touchid = observable({
     }
 });
 
-touchid.load();
-
 export default touchid;
 
 this.Peerio = this.Peerio || {};

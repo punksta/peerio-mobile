@@ -91,10 +91,10 @@ export default class App extends Component {
         const debugPanel = false && (typeof __DEV__ !== 'undefined') && <DebugPanel />;
         return (
             <View
-                pointerEvents="auto"
-                {...this._panResponder.panHandlers}
                 style={{ flex: 1 }}>
                 <View
+                    pointerEvents="auto"
+                    {...this._panResponder.panHandlers}
                     style={{ flex: 1, borderWidth: 0, borderColor: 'red' }}>
                     <Router style={styles.navigator.router} onNavigate={params => console.log(params)}>
                         <Scene key="root" title="dev-root" hideNavBar getSceneStyle={() => styles.navigator.card}>
