@@ -3,12 +3,14 @@ import state from '../layout/state';
 import store from '../../store/local-storage';
 import Util from '../helpers/util';
 import { User } from '../../lib/icebear';
+import touchid from '../touchid/touchid-bridge';
 
 const loginState = observable({
     username: 'test909090',
     usernameValid: null,
     firstName: 'Peerio',
     lastName: 'Test',
+    touchIdSaved: false,
     passphrase: '',
     savedPassphrase: '',
     language: 'English',
@@ -41,8 +43,10 @@ const loginState = observable({
     @action async load() {
         const userData = await store.get('userData');
         if (userData) {
-            this.username = userData.username;
-            this.name = userData.name;
+            const { username, name, touchIdSaved } = userData;
+            this.username = username;
+            this.name = name;
+            this.touchIdSaved = touchIdSaved;
             const userRegData = await store.get(`user::${this.username}`);
             if (userRegData) {
                 const { passphrase, pin } = userRegData;
@@ -65,8 +69,15 @@ const loginState = observable({
         });
         await store.set(`user::${username}`, {
         });
-    }
+    },
 
+    @action triggerTouchId() {
+        touchid.get(`user::${this.username}`)
+            .then(passphrase => {
+                this.passphrase = passphrase;
+                this.login();
+            });
+    }
 });
 
 reaction(() => loginState.username, username => {

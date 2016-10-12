@@ -45,8 +45,8 @@ const state = observable({
         if (state.focusedTextBox) {
             state.focusedTextBox.blur();
             state.focusedTextBox = null;
+            dismissKeyboard();
         }
-        dismissKeyboard();
     }),
 
     setLocale: action(lc => {

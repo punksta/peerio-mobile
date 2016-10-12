@@ -13,6 +13,7 @@ import state from './layout/state';
 import styles from './../styles/styles';
 import '../lib/icebear';
 import './utils/bridge';
+import './touchid/touchid-bridge';
 
 @observer
 export default class App extends Component {
@@ -34,7 +35,7 @@ export default class App extends Component {
             } else {
                 Actions[route]();
             }
-            state.hideKeyboard();
+            requestAnimationFrame(state.hideKeyboard);
         });
     }
 
@@ -71,7 +72,9 @@ export default class App extends Component {
             type,
             states: component.states,
             transition: action(() => {
-                state.route = key;
+                setTimeout(() => {
+                    state.route = key;
+                }, 0);
             })
         };
         return (

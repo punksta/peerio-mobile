@@ -21,6 +21,10 @@ export default class LoginSaved extends Component {
         this.checkPin = this.checkPin.bind(this);
     }
 
+    componentDidMount() {
+        loginState.triggerTouchId();
+    }
+
     checkPin(pin, pinControl) {
         if (pin !== loginState.pin) {
             pinControl.shake();

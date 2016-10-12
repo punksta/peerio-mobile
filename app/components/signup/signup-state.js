@@ -3,6 +3,7 @@ import { observable, action, computed, autorun, reaction } from 'mobx';
 import SignupCircles from './signup-circles';
 import state from '../layout/state';
 import store from '../../store/local-storage';
+import touchid from '../touchid/touchid-bridge';
 import Util from '../helpers/util';
 import { User } from '../../lib/icebear';
 
@@ -61,6 +62,7 @@ const signupState = observable({
         user.localeCode = localeCode;
         user.createAccount()
             .then(state.routes.main.transition);
+
         await store.set(`user::${user.username}`, {
             pin,
             username,
@@ -74,8 +76,22 @@ const signupState = observable({
             firstName,
             lastName
         });
-    }
 
+        if (touchid.available) {
+            setTimeout(() => {
+                touchid.save(`user::${user.username}`, passphrase)
+                    .then(() => {
+                        store.set('userData', {
+                            username,
+                            firstName,
+                            lastName,
+                            touchIdSaved: true
+                        });
+                    })
+                    .catch(e => console.log(e));
+            }, 5000);
+        }
+    }
 });
 
 const signupWizardRoutes = [

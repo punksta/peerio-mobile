@@ -3,11 +3,9 @@ import state from '../layout/state';
 import loginState from '../login/login-state';
 import signupState from '../signup/signup-state';
 
-const bridge = {
-    store,
-    state,
-    loginState,
-    signupState
-};
+this.Peerio = global.Peerio = global.Peerio || {};
+this.Peerio.store = store;
+this.Peerio.state = state;
+this.Peerio.loginState = loginState;
+this.Peerio.signupState = signupState;
 
-global.Peerio = bridge;

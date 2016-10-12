@@ -19,6 +19,7 @@
 		023A732E1DA6D59100E47992 /* libTcpSockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FDD4BA1DA6457E004E1D5A /* libTcpSockets.a */; };
 		02D764C71D9B139800E7E57C /* libAutoGrowTextInput.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D764341D9AA2C000E7E57C /* libAutoGrowTextInput.a */; };
 		02D764D31D9B13B300E7E57C /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D763F21D9918E800E7E57C /* libRNVectorIcons.a */; };
+		02E096B11DAD8E2A00641B85 /* TouchId.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E096B01DAD8E2A00641B85 /* TouchId.m */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -149,6 +150,8 @@
 		02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		02321C5C1D80558E00282EB1 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = peeriomobile.entitlements; path = peeriomobile/peeriomobile.entitlements; sourceTree = "<group>"; };
+		02E096AF1DAD8DEC00641B85 /* TouchId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchId.h; path = peeriomobile/TouchId.h; sourceTree = "<group>"; };
+		02E096B01DAD8E2A00641B85 /* TouchId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchId.m; path = peeriomobile/TouchId.m; sourceTree = "<group>"; };
 		081BA9E7BB014EC9A1CF87BA /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -314,6 +317,8 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				02E096AF1DAD8DEC00641B85 /* TouchId.h */,
+				02E096B01DAD8E2A00641B85 /* TouchId.m */,
 			);
 			name = peeriomobile;
 			sourceTree = "<group>";
@@ -665,6 +670,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02E096B11DAD8E2A00641B85 /* TouchId.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
