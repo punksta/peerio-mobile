@@ -5,7 +5,8 @@ import state from '../layout/state';
 import store from '../../store/local-storage';
 import touchid from '../touchid/touchid-bridge';
 import Util from '../helpers/util';
-import { User } from '../../lib/icebear';
+import { User, PhraseDictionary } from '../../lib/icebear';
+import locales from '../../lib/locales';
 
 const signupState = observable({
     username: '',
@@ -48,10 +49,17 @@ const signupState = observable({
         state.route = 'login';
     },
 
+    @action async generatePassphrase() {
+        const dictString = await locales.loadDictFile(state.locale);
+        const dict = new PhraseDictionary(dictString);
+        return dict.getPassphrase(5);
+    },
+
     @action async finish() {
+        this.passphrase = await this.generatePassphrase();
+        console.log(this.passphrase);
         const user = new User();
-        const { username, email, firstName, lastName, pin } = this;
-        const passphrase = 'such a secret passphrase';
+        const { username, email, firstName, lastName, pin, passphrase } = this;
         const localeCode = state.locale;
 
         user.username = username;

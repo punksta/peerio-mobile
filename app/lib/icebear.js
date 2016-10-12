@@ -6,7 +6,7 @@ global.navigator.userAgent = global.navigator.userAgent || 'react-native';
 
 global.crypto = crypto;
 
-const { User, socket, config } = require('peerio-icebear');
+const { PhraseDictionary, User, socket, config } = require('peerio-icebear');
 
 config.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://app.peerio.com';
 socket.start();
@@ -20,5 +20,6 @@ socket.start();
 module.exports.config = config;
 module.exports.socket = socket;
 module.exports.User = User;
+module.exports.PhraseDictionary = PhraseDictionary;
 
 global.socket = socket;
