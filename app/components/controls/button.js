@@ -16,8 +16,8 @@ export default class Button extends Component {
         let text = this.props.text || '';
         text = this.props.caps ? text.toUpperCase() : text;
         return (
-            <TouchableOpacity style={this.props.style}>
-                <Text style={textStyle} onPress={this.props.onPress}>
+            <TouchableOpacity style={this.props.style} onPress={this.props.onPress}>
+                <Text style={textStyle}>
                     {text}
                 </Text>
             </TouchableOpacity>

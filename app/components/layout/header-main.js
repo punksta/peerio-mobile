@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import {
-    Text,
     View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import styles from '../../styles/styles';
 import icons from '../helpers/icons';
-import state from '../layout/state';
+import mainState from '../main/main-state';
 
 @observer
 export default class HeaderMain extends Component {
@@ -17,13 +15,13 @@ export default class HeaderMain extends Component {
     }
 
     leftMenu() {
-        state.isLeftMenuVisible = true;
-        state.isRightMenuVisible = false;
+        mainState.isLeftMenuVisible = true;
+        mainState.isRightMenuVisible = false;
     }
 
     rightMenu() {
-        state.isLeftMenuVisible = false;
-        state.isRightMenuVisible = true;
+        mainState.isLeftMenuVisible = false;
+        mainState.isRightMenuVisible = true;
     }
 
     render() {
@@ -36,14 +34,16 @@ export default class HeaderMain extends Component {
                     alignItems: 'center',
                     paddingRight: 8,
                     paddingLeft: 8,
+                    paddingTop: 8,
                     height: 28 }}>
                     <View style={{ flexDirection: 'row', paddingLeft: 6, backgroundColor: 'transparent' }}>
                         {icons.white('menu', this.leftMenu)}
+                        {/*
                         <Text style={{
                             marginLeft: 46,
                             color: styles.vars.highlight,
                             lineHeight: 20 }}>Alice</Text>
-                        {icons.white('arrow-drop-down', this.leftMenu)}
+                        {icons.white('arrow-drop-down', this.leftMenu)} */}
                     </View>
                     <View style={{ flexDirection: 'row', backgroundColor: 'transparent' }}>
                         {icons.white('search', this.leftMenu)}

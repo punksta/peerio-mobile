@@ -16,8 +16,6 @@ const state = observable({
     focusedTextBox: null,
     picker: null,
     pickerVisible: false,
-    isLeftMenuVisible: false,
-    isRightMenuVisible: false,
     keyboardVisible: false,
     keyboardHeight: 0,
     locale: 'en',

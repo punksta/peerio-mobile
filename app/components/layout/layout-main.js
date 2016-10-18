@@ -1,24 +1,46 @@
 import React, { Component } from 'react';
 import {
-    Text,
-    LayoutAnimation,
     View,
     ScrollView,
-    Dimensions,
-    PanResponder
+    PanResponder,
+    LayoutAnimation
 } from 'react-native';
 import { observer } from 'mobx-react/native';
+import { observable, reaction } from 'mobx';
 import state from './state';
+import mainState from '../main/main-state';
+import LeftMenu from '../main/left-menu';
+import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
 import InputMain from './input-main';
 import TextIpsum from './text-ipsum';
+import RecentList from '../main/recent-list';
+import Chat from '../messaging/chat';
 import styles from '../../styles/styles';
+
+const routes = ({
+    recent: () => <RecentList />,
+    chat: () => <Chat />,
+    ipsum: () => <TextIpsum />
+});
+
+const current = observable({
+    control: null
+});
+
+reaction(() => mainState.route, () => {
+    console.log('transitioning');
+    console.log(mainState.route);
+    const r = routes[mainState.route];
+    current.control = r();
+});
 
 @observer
 export default class LayoutMain extends Component {
     constructor(props) {
         super(props);
         this.hideMenus = this.hideMenus.bind(this);
+        this.send = this.send.bind(this);
     }
 
     componentWillMount() {
@@ -28,29 +50,44 @@ export default class LayoutMain extends Component {
                 return false;
             }
         });
+        mainState.recent();
     }
 
     componentWillUpdate() {
         LayoutAnimation.easeInEaseOut();
     }
 
-    keyboardWillShow(e) {
-        state.keyboardHeight = e.endCoordinates.height;
-    }
-
-    keyboardWillHide(/* e */) {
-        state.keyboardHeight = 0;
-    }
-
     hideMenus() {
-        state.isLeftMenuVisible = false;
-        state.isRightMenuVisible = false;
+        mainState.isLeftMenuVisible = false;
+        mainState.isRightMenuVisible = false;
     }
+
+    renderInput() {
+        const s = {
+            flex: 0,
+            borderTopColor: '#EFEFEF',
+            borderTopWidth: 1,
+            backgroundColor: '#fff'
+        };
+        return (
+            <View style={s}>
+                <InputMain send={this.send} />
+            </View>
+        );
+    }
+
+    send(v) {
+        console.log(v);
+        mainState.addMessage({
+            name: 'Alice',
+            date: '2:40PM',
+            message: v
+        });
+    }
+
     render() {
-        const width = Dimensions.get('window').width;
-        const ratio = 0.8;
-        const leftMenuWidth = state.isLeftMenuVisible ? width * ratio : 0;
-        const rightMenuWidth = state.isRightMenuVisible ? width * ratio : 0;
+        const control = current.control;
+        const input = mainState.isInputVisible ? this.renderInput() : null;
         return (
             <View style={styles.container.root}>
                 <HeaderMain />
@@ -66,41 +103,12 @@ export default class LayoutMain extends Component {
                     }}>
                     <ScrollView
                         style={{ flex: 1, backgroundColor: '#fff' }}>
-                        <TextIpsum />
+                        {control}
                     </ScrollView>
-                    <View style={{
-                        flex: 0,
-                        borderTopColor: '#EFEFEF',
-                        borderTopWidth: 2,
-                        backgroundColor: '#fff'
-                    }}>
-                        <InputMain />
-                    </View>
+                    {input}
                 </View>
-                <View style={{
-                    position: 'absolute',
-                    paddingTop: 30,
-                    left: 0,
-                    top: 0,
-                    bottom: 0,
-                    width: leftMenuWidth,
-                    backgroundColor: '#FFFFFFA0' }}>
-                    <Text>
-                        left slide menu
-                    </Text>
-                </View>
-                <View style={{
-                    position: 'absolute',
-                    paddingTop: 30,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                    width: rightMenuWidth,
-                    backgroundColor: '#FFFFFFA0' }}>
-                    <Text>
-                        right slide menu
-                    </Text>
-                </View>
+                <LeftMenu />
+                <RightMenu />
             </View>
         );
     }
