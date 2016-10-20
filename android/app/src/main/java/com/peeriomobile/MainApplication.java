@@ -4,12 +4,9 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
-import com.rnfs.RNFSPackage;
-import com.tradle.react.UdpSocketsModule;
-import com.peel.react.TcpSocketsModule;
-import com.bitgo.randombytes.RandomBytesPackage;
-import com.gcrabtree.rctsocketio.SocketIoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.bitgo.randombytes.RandomBytesPackage;
+import com.rnfs.RNFSPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -30,12 +27,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNFSPackage(),
-            new UdpSocketsModule(),
-            new TcpSocketsModule(),
+            new VectorIconsPackage(),
             new RandomBytesPackage(),
-            new SocketIoPackage(),
-            new VectorIconsPackage()
+            new RNFSPackage()
       );
     }
   };
