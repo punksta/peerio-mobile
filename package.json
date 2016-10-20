@@ -22,6 +22,7 @@
     "appium": "appium"
   },
   "dependencies": {
+    "events": "^1.1.1",
     "file-loader": "0.9.0",
     "lodash": "^4.15.0",
     "mobx": "^2.4.4",
@@ -29,9 +30,10 @@
     "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git",
     "peerio-icebear": "git@github.com:PeerioTechnologies/peerio-icebear.git",
     "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
+    "process": "^0.11.9",
     "react": "^15.3.1-rc.2",
     "react-dom": "^15.3.1-rc.2",
-    "react-native": "^0.34.1",
+    "react-native": "0.34.1",
     "react-native-animatable": "^0.6.1",
     "react-native-auto-expanding-textinput": "0.0.5",
     "react-native-cli": "*",
@@ -41,7 +43,9 @@
     "react-native-picker": "3.0.5",
     "react-native-randombytes": "^2.1.0",
     "react-native-router-flux": "^3.35.0",
-    "react-native-vector-icons": "^2.1.0"
+    "react-native-vector-icons": "^2.1.0",
+    "readable-stream": "^1.0.33",
+    "stream-browserify": "^1.0.0"
   },
   "devDependencies": {
     "appium": "^1.5.3",
@@ -96,9 +100,21 @@
     }
   },
   "react-native": {
-    "crypto": "react-native-crypto"
+    "crypto": "react-native-crypto",
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "stream": "stream-browserify"
   },
   "browser": {
-    "crypto": "react-native-crypto"
+    "crypto": "react-native-crypto",
+    "_stream_transform": "readable-stream/transform",
+    "_stream_readable": "readable-stream/readable",
+    "_stream_writable": "readable-stream/writable",
+    "_stream_duplex": "readable-stream/duplex",
+    "_stream_passthrough": "readable-stream/passthrough",
+    "stream": "stream-browserify"
   }
 }
