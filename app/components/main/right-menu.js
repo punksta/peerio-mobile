@@ -6,6 +6,8 @@ import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
 import icons from '../helpers/icons';
 import styles from '../../styles/styles';
+import Swiper from '../controls/swiper';
+import Hider from '../controls/hider';
 
 const itemStyle = {
     flex: 1,
@@ -25,8 +27,15 @@ const textStyle = {
 @observer
 export default class RightMenu extends Component {
 
-    componentWillUpdate() {
+    hideAnimated() {
         LayoutAnimation.easeInEaseOut();
+        mainState.isRightMenuVisible = false;
+    }
+
+    componentWillUpdate() {
+        if (mainState.isRightMenuVisible) {
+            LayoutAnimation.easeInEaseOut();
+        }
     }
 
     item(i, key) {
@@ -47,14 +56,17 @@ export default class RightMenu extends Component {
         const width = Dimensions.get('window').width * ratio;
         const containerStyle = {
             position: 'absolute',
-            paddingTop: 30,
             right: mainState.isRightMenuVisible ? 0 : -width,
+            left: mainState.isRightMenuVisible ? 0 : undefined,
             top: 0,
-            bottom: 0,
+            bottom: 0
+        };
+
+        const menuContainerStyle = {
+            paddingTop: 30,
             width,
-            backgroundColor: '#FFFFFF',
-            flex: 1,
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            backgroundColor: '#FFFFFF'
         };
 
         const items = [
@@ -72,14 +84,20 @@ export default class RightMenu extends Component {
         };
 
         return (
-            <View style={containerStyle}>
-                <View>
-                    { items.map(this.item) }
-                </View>
-                <View>
-                    { this.item(signOut, 0) }
-                </View>
-            </View>
+            <Swiper style={containerStyle}
+                    onHide={() => (mainState.isRightMenuVisible = false)}
+                    leftToRight>
+                <Hider onHide={this.hideAnimated}>
+                    <View style={menuContainerStyle}>
+                        <View>
+                            { items.map(this.item) }
+                        </View>
+                        <View>
+                            { this.item(signOut, 0) }
+                        </View>
+                    </View>
+                </Hider>
+            </Swiper>
         );
     }
 }

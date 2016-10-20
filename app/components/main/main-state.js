@@ -1,8 +1,8 @@
 import { observable, action } from 'mobx';
 
 const mainState = observable({
-    isLeftMenuVisible: true,
-    isRightMenuVisible: false,
+    isLeftMenuVisible: false,
+    isRightMenuVisible: true,
     isInputVisible: false,
     route: null,
 

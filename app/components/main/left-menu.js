@@ -7,6 +7,8 @@ import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
 import icons from '../helpers/icons';
 import styles from '../../styles/styles';
+import Swiper from '../controls/swiper';
+import Hider from '../controls/hider';
 
 const circleRadius = 6;
 const circleStyle = {
@@ -56,18 +58,15 @@ const headerContainer = {
 
 @observer
 export default class LeftMenu extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { x: 0, y: 0 };
-        this.drag = { x: 0, y: 0 };
-        this.setPosition = this.setPosition.bind(this);
-        this.resetPosition = this.resetPosition.bind(this);
-        this._onStartShouldSetResponder = this._onStartShouldSetResponder.bind(this);
-        this._onMoveShouldSetResponder = this._onMoveShouldSetResponder.bind(this);
+
+    hideAnimated() {
+        LayoutAnimation.easeInEaseOut();
+        mainState.isLeftMenuVisible = false;
     }
 
     componentWillUpdate() {
-        LayoutAnimation.easeInEaseOut();
+        if (mainState.isLeftMenuVisible)
+            LayoutAnimation.easeInEaseOut();
     }
 
     channel(i) {
@@ -105,54 +104,15 @@ export default class LeftMenu extends Component {
         );
     }
 
-    setPosition(e) {
-        this.setState({
-            x: this.state.x + (e.nativeEvent.pageX - this.drag.x),
-            y: this.state.y + (e.nativeEvent.pageY - this.drag.y)
-        });
-        this.drag.x = e.nativeEvent.pageX;
-        this.drag.y = e.nativeEvent.pageY;
-        console.log(this.drag);
-    }
-
-    resetPosition(/* e */) {
-        LayoutAnimation.easeInEaseOut();
-        this.dragging = false;
-        this.setState({
-            x: 0,
-            y: 0
-        });
-    }
-
-    _onStartShouldSetResponder(e) {
-        this.dragging = true;
-        this.drag = {
-            x: e.nativeEvent.pageX,
-            y: e.nativeEvent.pageY
-        };
-        return true;
-    }
-
-    _onMoveShouldSetResponder(/* e */) {
-        return true;
-    }
-
-    getCardStyle() {
-        const transform = [{ translateX: this.state.x }];
-        return { transform };
-    }
-
     render() {
         const ratio = 0.8;
         const width = Dimensions.get('window').width * ratio;
         const containerStyle = {
             position: 'absolute',
-            paddingTop: 30,
             left: (mainState.isLeftMenuVisible ? 0 : -width),
             top: 0,
             bottom: 0,
-            width,
-            backgroundColor: '#FFFFFF'
+            right: (mainState.isLeftMenuVisible ? 0 : undefined)
         };
 
         const testItems = [
@@ -163,23 +123,22 @@ export default class LeftMenu extends Component {
             { name: 'Willie', id: '5', online: true }
         ];
 
-        const s = this.getCardStyle();
-
         return (
-            <View
-                onResponderMove={this.setPosition}
-                onResponderRelease={this.resetPosition}
-                onStartShouldSetResponder={this._onStartShouldSetResponder}
-                onMoveShouldSetResponder={this._onMoveShouldSetResponder}
-                style={[containerStyle, s]}>
-                <View>
-                    { this.header('Channels') }
-                </View>
-                <View>
-                    { this.header('Conversations') }
-                    { testItems.map(this.item) }
-                </View>
-            </View>
+            <Swiper style={containerStyle}
+                    onHide={() => (mainState.isLeftMenuVisible = false)}
+                    rightToLeft>
+                <Hider onHide={this.hideAnimated} isLeft>
+                    <View style={{ width, backgroundColor: 'white', paddingTop: 30 }}>
+                        <View>
+                            { this.header('Channels') }
+                        </View>
+                        <View>
+                            { this.header('Conversations') }
+                            { testItems.map(this.item) }
+                        </View>
+                    </View>
+                </Hider>
+            </Swiper>
         );
     }
 }
