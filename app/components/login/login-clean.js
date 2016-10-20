@@ -23,7 +23,7 @@ export default class LoginClean extends Component {
         super(props);
         forms.mixin(this, loginState);
         this.signIn = this.signIn.bind(this);
-        loginState.load();
+        // loginState.load();
     }
 
     languagePicker() {
