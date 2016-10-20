@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    "postinstall": "sh setup-env.sh && rn-nodeify --install crypto --hack && perl -pi -e 's/RCT_NO_LAUNCH_PACKAGER/MAC_OS_X_PRODUCT_BUILD_VERSION/g' node_modules/react-native/React/React.xcodeproj/project.pbxproj",
+    "postinstall": "sh setup-env.sh && rn-nodeify --install 'buffer, crypto, stream, process, events, vm' --hack && perl -pi -e 's/RCT_NO_LAUNCH_PACKAGER/MAC_OS_X_PRODUCT_BUILD_VERSION/g' node_modules/react-native/React/React.xcodeproj/project.pbxproj",
     "commit": "git-cz",
     "start": "source env.sh && ./node_modules/react-native/packager/packager.sh --reset-cache",
     "clean": "rm -rf ios/build",
@@ -22,6 +22,7 @@
     "appium": "appium"
   },
   "dependencies": {
+    "buffer": "^3.6.0",
     "events": "^1.1.1",
     "file-loader": "0.9.0",
     "lodash": "^4.15.0",
@@ -45,7 +46,8 @@
     "react-native-router-flux": "^3.35.0",
     "react-native-vector-icons": "^2.1.0",
     "readable-stream": "^1.0.33",
-    "stream-browserify": "^1.0.0"
+    "stream-browserify": "^1.0.0",
+    "vm-browserify": "0.0.4"
   },
   "devDependencies": {
     "appium": "^1.5.3",
@@ -106,7 +108,8 @@
     "_stream_writable": "readable-stream/writable",
     "_stream_duplex": "readable-stream/duplex",
     "_stream_passthrough": "readable-stream/passthrough",
-    "stream": "stream-browserify"
+    "stream": "stream-browserify",
+    "vm": "vm-browserify"
   },
   "browser": {
     "crypto": "react-native-crypto",
@@ -115,6 +118,7 @@
     "_stream_writable": "readable-stream/writable",
     "_stream_duplex": "readable-stream/duplex",
     "_stream_passthrough": "readable-stream/passthrough",
-    "stream": "stream-browserify"
+    "stream": "stream-browserify",
+    "vm": "vm-browserify"
   }
 }
