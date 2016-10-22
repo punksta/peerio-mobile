@@ -68,8 +68,9 @@ const signupState = observable({
         user.firstName = firstName;
         user.lastName = lastName;
         user.localeCode = localeCode;
-        user.createAccount()
-            .then(state.routes.main.transition);
+        user.createAccountAndLogin()
+            .then(state.routes.main.transition)
+            .catch(console.error.bind(console));
 
         await store.set(`user::${user.username}`, {
             pin,

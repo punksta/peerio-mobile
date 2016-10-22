@@ -31,6 +31,8 @@ ios/main.jsbundle.*
 .gradle
 local.properties
 index.android.bundle*
+android/app/src/main/assets
+android/app/src/main/res
 
 # node.js
 #

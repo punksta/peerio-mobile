@@ -1,9 +1,11 @@
 import RNFS from 'react-native-fs';
 
+const root = RNFS.MainBundlePath || `${RNFS.DocumentDirectoryPath}/assets`;
+
 module.exports = {
     loadLocaleFile(lc) {
         const def = require('peerio-copy/client_en.json');
-        const path = `${RNFS.MainBundlePath}/locales/${lc}.json`;
+        const path = `${root}/locales/${lc}.json`;
         return RNFS.exists(path)
             .then(exists => (exists ? RNFS.readFile(path).then(JSON.parse) : def))
             .catch(e => {
@@ -13,8 +15,8 @@ module.exports = {
     },
 
     loadDictFile(lc) {
-        const path = `${RNFS.MainBundlePath}/dict/${lc}.txt`;
-        const def = `${RNFS.MainBundlePath}/dict/en.txt`;
+        const path = `${root}/dict/${lc}.txt`;
+        const def = `${root}/dict/en.txt`;
         return RNFS.exists(path)
             .then(exists => RNFS.readFile(exists ? path : def))
             .catch(e => {

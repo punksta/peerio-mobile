@@ -58,12 +58,11 @@ export default class RightMenu extends Component {
             position: 'absolute',
             right: mainState.isRightMenuVisible ? 0 : -width,
             left: mainState.isRightMenuVisible ? 0 : undefined,
-            top: 0,
+            top: styles.vars.headerSpacing,
             bottom: 0
         };
 
         const menuContainerStyle = {
-            paddingTop: 30,
             width,
             justifyContent: 'space-between',
             backgroundColor: '#FFFFFF'

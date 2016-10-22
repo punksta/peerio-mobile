@@ -25,6 +25,8 @@ const vars = {
     inputBgInactiveText: '#7c8e98',
     layoutPaddingTop: 24,
     footerMarginX: 24,
+    headerHeight: 28,
+    headerSpacing: 56,
     font: {
         size: {
             normal: 14,

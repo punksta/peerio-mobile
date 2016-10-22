@@ -65,8 +65,9 @@ export default class LeftMenu extends Component {
     }
 
     componentWillUpdate() {
-        if (mainState.isLeftMenuVisible)
+        if (mainState.isLeftMenuVisible) {
             LayoutAnimation.easeInEaseOut();
+        }
     }
 
     channel(i) {
@@ -110,7 +111,7 @@ export default class LeftMenu extends Component {
         const containerStyle = {
             position: 'absolute',
             left: (mainState.isLeftMenuVisible ? 0 : -width),
-            top: 0,
+            top: styles.vars.headerSpacing,
             bottom: 0,
             right: (mainState.isLeftMenuVisible ? 0 : undefined)
         };
@@ -128,7 +129,7 @@ export default class LeftMenu extends Component {
                     onHide={() => (mainState.isLeftMenuVisible = false)}
                     rightToLeft>
                 <Hider onHide={this.hideAnimated} isLeft>
-                    <View style={{ width, backgroundColor: 'white', paddingTop: 30 }}>
+                    <View style={{ width, backgroundColor: 'white' }}>
                         <View>
                             { this.header('Channels') }
                         </View>

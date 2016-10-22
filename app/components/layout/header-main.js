@@ -5,6 +5,7 @@ import {
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
 import mainState from '../main/main-state';
+import styles from '../../styles/styles';
 
 @observer
 export default class HeaderMain extends Component {
@@ -35,7 +36,7 @@ export default class HeaderMain extends Component {
                     paddingRight: 8,
                     paddingLeft: 8,
                     paddingTop: 8,
-                    height: 28 }}>
+                    height: styles.vars.headerHeight }}>
                     <View style={{ flexDirection: 'row', paddingLeft: 6, backgroundColor: 'transparent' }}>
                         {icons.white('menu', this.leftMenu)}
                         {/*
