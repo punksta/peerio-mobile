@@ -50,7 +50,7 @@ const state = observable({
     @action setLocale(lc) {
         return locales.loadLocaleFile(lc)
             .then(locale => {
-                console.log(locale);
+                // console.log(locale);
                 translator.setLocale(lc, locale);
                 state.locale = lc;
                 state.languageSelected = lc;
