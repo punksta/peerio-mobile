@@ -43,7 +43,6 @@
     "react-native-fs": "https://github.com/calvium/react-native-fs#android_assets_support_plus_exists",
     "react-native-picker": "3.0.5",
     "react-native-randombytes": "^2.1.0",
-    "react-native-router-flux": "^3.35.0",
     "react-native-vector-icons": "^2.1.0",
     "readable-stream": "^1.0.33",
     "stream-browserify": "^1.0.0",

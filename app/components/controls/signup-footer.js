@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Actions } from 'react-native-router-flux';
 import {
     Text,
     TouchableOpacity,
@@ -27,7 +26,6 @@ export default class SignupFooter extends Component {
     }
     prev() {
         if (signupState.current > 0) {
-            Actions.pop();
             signupState.current--;
         } else {
             signupState.exit();

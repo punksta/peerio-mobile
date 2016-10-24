@@ -46,7 +46,7 @@ const signupState = observable({
     },
 
     @action exit() {
-        state.route = 'login';
+        state.route = 'loginClean';
     },
 
     @action async generatePassphrase() {

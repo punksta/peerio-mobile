@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { View, PanResponder } from 'react-native';
-import { Scene, Router, Actions } from 'react-native-router-flux';
+import { View, PanResponder, Navigator } from 'react-native';
 import { reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import Login from './login/login';
 import Signup from './signup/signup';
 import PersistentFooter from './layout/persistent-footer';
-import DebugPanel from './layout/debugPanel';
+// import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
 import ModalContainer from './layout/modal-container';
 import state from './layout/state';
@@ -20,33 +19,36 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         state.setLocale('fr');
-        reaction(() => state.locale, () => {
-            console.log('force update locale');
-            Actions.refresh();
-        });
         this.bindRouteState = reaction(() => state.route, route => {
             console.log('reaction: %s => %s', state.prevRoute, route);
             const newIndex = state.routesList.indexOf(route);
             const oldIndex = state.routesList.indexOf(state.prevRoute);
             state.prevRoute = route;
             const rInfo = state.routes[route];
-            if ((newIndex === oldIndex - 1) && !rInfo.replace) {
-                Actions.pop();
+            if (rInfo.replace) {
+                this.nav.resetTo(rInfo);
+                return;
+            }
+            if (newIndex === oldIndex - 1) {
+                this.nav.pop();
+            } else if (newIndex < oldIndex) {
+                this.nav.jumpTo(rInfo);
             } else {
-                Actions[route]();
+                this.nav.push(rInfo);
             }
             requestAnimationFrame(state.hideKeyboard);
         });
+        this.renderScene = this.renderScene.bind(this);
     }
 
     componentWillMount() {
         this.routes = [
-            this.route('login', Login.Start),
-            this.route('loginClean', Login.Clean, true),
-            this.route('loginSaved', Login.Saved, true, 'reset'),
+            this.route('login', Login.Start, true),
+            this.route('loginClean', Login.Clean),
+            this.route('loginSaved', Login.Saved),
             this.route('signupStep1', Signup.Step1),
             this.route('signupStep2', Signup.Pin),
-            this.route('main', LayoutMain, true, 'reset')
+            this.route('main', LayoutMain, true)
         ];
 
         this._panResponder = PanResponder.create({
@@ -68,8 +70,11 @@ export default class App extends Component {
     route(key, component, replace, type) {
         state.routesList.push(key);
         state.routes[key] = {
+            index: state.routesList.length - 1,
             replace,
+            key,
             type,
+            component,
             states: component.states,
             transition: action(() => {
                 setTimeout(() => {
@@ -77,35 +82,47 @@ export default class App extends Component {
                 }, 0);
             })
         };
-        return (
-            <Scene
-                type={type}
-                key={key}
-                component={component}
-                hideNavBar
-                getSceneStyle={() => styles.navigator.card} />
-        );
+        return state.routes[key];
+        // return (
+        //     <Scene
+        //         type={type}
+        //         key={key}
+        //         component={component}
+        //         hideNavBar
+        //         getSceneStyle={() => styles.navigator.card} />
+        // );
+    }
+
+    renderScene(route) {
+        const inner = React.createElement(route.component);
+        this.scene = inner;
+        return <View key={route.key} style={styles.navigator.card}>{inner}</View>;
+    }
+
+    configureScene(route /* , routeStack */) {
+        if (route.index < 2) {
+            return Navigator.SceneConfigs.FadeAndroid;
+        }
+        return Navigator.SceneConfigs.PushFromRight;
     }
 
     render() {
-        const debugPanel = false && (typeof __DEV__ !== 'undefined') && <DebugPanel />;
         return (
             <View
                 style={{ flex: 1 }}>
                 <View
                     pointerEvents="auto"
-                    {...this._panResponder.panHandlers}
                     style={{ flex: 1, borderWidth: 0, borderColor: 'red' }}>
-                    <Router style={styles.navigator.router} onNavigate={params => console.log(params)}>
-                        <Scene key="root" title="dev-root" hideNavBar getSceneStyle={() => styles.navigator.card}>
-                            {this.routes}
-                        </Scene>
-                    </Router>
+                    <Navigator
+                        style={{ backgroundColor: styles.vars.bg }}
+                        ref={nav => (this.nav = nav)}
+                        initialRoute={this.routes[0]}
+                        configureScene={(route, routeStack) => this.configureScene(route, routeStack)}
+                        renderScene={this.renderScene} />
                     <PersistentFooter />
                 </View>
                 <ModalContainer />
                 {state.picker}
-                {debugPanel}
             </View>
         );
     }
