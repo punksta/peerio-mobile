@@ -120,9 +120,12 @@ export default class TextBox extends Component {
                             bottom: 0,
                             backgroundColor: 'transparent' }}>
                         <TextInput
+                            style={[ style.textbox,
+                            { height: 56, top: 0 }
+                            ]}
+                            underlineColorAndroid={'transparent'}
                             secureTextEntry={this.props.secureTextEntry && !this.showSecret}
                             ref={t => { this.textinput = t; }}
-                            style={style.textbox}
                             value={this.value}
                             onFocus={this.focus}
                             onBlur={this.blur}
