@@ -4,7 +4,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import { t } from 'peerio-translator';
+import { t } from '../utils/translator';
 import loginState from './login-state';
 import styles from '../../styles/styles';
 

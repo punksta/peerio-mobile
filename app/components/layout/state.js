@@ -18,7 +18,7 @@ const state = observable({
     pickerVisible: false,
     keyboardVisible: false,
     keyboardHeight: 0,
-    locale: 'en',
+    locale: null,
     languageSelected: 'en',
     languages: {
         en: 'English',

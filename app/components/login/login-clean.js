@@ -4,9 +4,8 @@ import {
     ActivityIndicator
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { t } from 'peerio-translator';
+import { t } from '../utils/translator';
 import Layout1 from '../layout/layout1';
-import state from '../layout/state';
 import LanguagePicker from '../controls/language-picker';
 import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
@@ -18,17 +17,13 @@ import loginState from './login-state';
 import styles from '../../styles/styles';
 import forms from '../helpers/forms';
 
-function tx(id) {
-    if (state.locale === null) return '';
-    return t(id);
-}
-
 @observer
 export default class LoginClean extends Component {
     constructor(props) {
         super(props);
         forms.mixin(this, loginState);
         this.signIn = this.signIn.bind(this);
+
         // loginState.load();
     }
 
@@ -41,7 +36,6 @@ export default class LoginClean extends Component {
     }
 
     render() {
-        console.log('render');
         const style = styles.wizard;
         const button = loginState.isInProgress ?
             <ActivityIndicator color={styles.vars.highlight} style={{ height: 12 }} /> :

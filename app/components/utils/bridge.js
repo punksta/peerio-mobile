@@ -1,3 +1,4 @@
+import { t } from 'peerio-translator';
 import store from '../../store/local-storage';
 import state from '../layout/state';
 import loginState from '../login/login-state';
@@ -8,4 +9,4 @@ this.Peerio.store = store;
 this.Peerio.state = state;
 this.Peerio.loginState = loginState;
 this.Peerio.signupState = signupState;
-
+this.Peerio.t = t;

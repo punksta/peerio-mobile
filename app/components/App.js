@@ -19,6 +19,7 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         state.setLocale('fr');
+
         this.bindRouteState = reaction(() => state.route, route => {
             console.log('reaction: %s => %s', state.prevRoute, route);
             const newIndex = state.routesList.indexOf(route);
@@ -43,8 +44,7 @@ export default class App extends Component {
 
     componentWillMount() {
         this.routes = [
-            this.route('login', Login.Start, true),
-            this.route('loginClean', Login.Clean),
+            this.route('loginClean', Login.Clean, true),
             this.route('loginSaved', Login.Saved),
             this.route('signupStep1', Signup.Step1),
             this.route('signupStep2', Signup.Pin),
@@ -83,14 +83,6 @@ export default class App extends Component {
             })
         };
         return state.routes[key];
-        // return (
-        //     <Scene
-        //         type={type}
-        //         key={key}
-        //         component={component}
-        //         hideNavBar
-        //         getSceneStyle={() => styles.navigator.card} />
-        // );
     }
 
     renderScene(route) {
@@ -107,6 +99,7 @@ export default class App extends Component {
     }
 
     render() {
+        if (!state.locale) return null;
         return (
             <View
                 style={{ flex: 1 }}>

@@ -1,29 +1,25 @@
 import React, { Component } from 'react';
 import {
     Text,
-    View,
-    Linking
+    View
 } from 'react-native';
-import { t } from 'peerio-translator';
 import { observer } from 'mobx-react/native';
 import TextBox from '../controls/textbox';
+import Link from '../controls/link';
 import LanguagePickerBox from '../controls/language-picker-box';
 import SignupFooter from '../controls/signup-footer';
 import Layout1 from '../layout/layout1';
 import styles from '../../styles/styles';
 import signupState from './signup-state';
 import forms from '../helpers/forms';
+import { t, T } from '../utils/translator';
 
 @observer
 export default class SignupStep1 extends Component {
     constructor(props) {
         super(props);
         forms.mixin(this, signupState);
-        this.terms = this.terms.bind(this);
-    }
-
-    terms() {
-        Linking.openURL('https://www.peerio.com/');
+        this.url = 'https://www.peerio.com/';
     }
 
     render() {
@@ -54,7 +50,9 @@ export default class SignupStep1 extends Component {
                 </View>
                 <LanguagePickerBox {...this.tb('language', t('language'))} />
                 <Text style={style.text.info}>
-                    {t('signup_TOSRequestText')}
+                    <T k="signup_TOSRequestText">
+                        {{ tosLink: text => <Link url={this.url}>{text}</Link> }}
+                    </T>
                 </Text>
                 <View style={{ flex: 1 }} />
             </View>

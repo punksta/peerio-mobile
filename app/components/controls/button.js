@@ -14,7 +14,7 @@ export default class Button extends Component {
             textStyle = styles.inherit(textStyle, this.props.textStyle);
         }
         let text = this.props.text || '';
-        text = this.props.caps ? text.toUpperCase() : text;
+        // text = this.props.caps ? text.toUpperCase() : text;
         return (
             <TouchableOpacity style={this.props.style} onPress={this.props.onPress}>
                 <Text style={textStyle}>
@@ -29,7 +29,7 @@ Button.propTypes = {
     onPress: React.PropTypes.func.isRequired,
     style: React.PropTypes.any,
     textStyle: React.PropTypes.any,
-    text: React.PropTypes.string.isRequired,
+    text: React.PropTypes.any.isRequired,
     caps: React.PropTypes.bool,
     bold: React.PropTypes.bool
 };

@@ -3,7 +3,7 @@ import {
     Text,
     View
 } from 'react-native';
-import { t } from 'peerio-translator';
+import { t } from '../utils/translator';
 import SignupFooter from '../controls/signup-footer';
 import Pin from '../controls/pin';
 // import Button from '../controls/button';

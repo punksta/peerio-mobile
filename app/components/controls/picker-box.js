@@ -60,6 +60,6 @@ PickerBox.propTypes = {
     picker: React.PropTypes.any.isRequired,
     data: React.PropTypes.any.isRequired,
     style: React.PropTypes.any.isRequired,
-    hint: React.PropTypes.string.isRequired
+    hint: React.PropTypes.any.isRequired
 };
 

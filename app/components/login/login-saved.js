@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View
 } from 'react-native';
-import { t } from 'peerio-translator';
+import { t } from '../utils/translator';
 import Layout2 from '../layout/layout2';
 import Center from '../controls/center';
 import Big from '../controls/big';
