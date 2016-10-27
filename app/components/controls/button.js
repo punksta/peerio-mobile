@@ -13,8 +13,7 @@ export default class Button extends Component {
         if (this.props.textStyle) {
             textStyle = styles.inherit(textStyle, this.props.textStyle);
         }
-        let text = this.props.text || '';
-        // text = this.props.caps ? text.toUpperCase() : text;
+        const text = this.props.text || '';
         return (
             <TouchableOpacity style={this.props.style} onPress={this.props.onPress}>
                 <Text style={textStyle}>

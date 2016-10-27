@@ -6,7 +6,6 @@ import {
     LayoutAnimation
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, reaction } from 'mobx';
 import state from './state';
 import mainState from '../main/main-state';
 import LeftMenu from '../main/left-menu';
@@ -24,23 +23,12 @@ const routes = ({
     ipsum: () => <TextIpsum />
 });
 
-const current = observable({
-    control: null
-});
-
 @observer
 export default class LayoutMain extends Component {
     constructor(props) {
         super(props);
         this.hideMenus = this.hideMenus.bind(this);
         this.send = this.send.bind(this);
-
-        // reaction(() => mainState.route, () => {
-        //     console.log('transitioning');
-        //     console.log(mainState.route);
-        //     const r = routes[mainState.route];
-        //     current.control = r();
-        // });
     }
 
     componentWillMount() {

@@ -72,7 +72,6 @@ const state = observable({
         const locale = this.locale || 'en';
         await store.system.set('state', { locale });
     }
- 
 });
 
 reaction(() => state.languageSelected, ls => state.setLocale(ls));
