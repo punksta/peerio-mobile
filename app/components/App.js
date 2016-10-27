@@ -18,8 +18,7 @@ import './touchid/touchid-bridge';
 export default class App extends Component {
     constructor(props) {
         super(props);
-        state.setLocale('fr');
-
+        state.load();
         this.bindRouteState = reaction(() => state.route, route => {
             console.log('reaction: %s => %s', state.prevRoute, route);
             const newIndex = state.routesList.indexOf(route);
@@ -63,8 +62,8 @@ export default class App extends Component {
         // navigating to initial route
         // timeout is needed for router to properly initialize
         // setTimeout(() => {
-        //     state.routes.main.transition();
-        // }, 0);
+        //     state.routes.signupStep2.transition();
+        // }, 1000);
     }
 
     route(key, component, replace, type) {

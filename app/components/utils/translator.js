@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { t } from 'peerio-translator';
 import { reaction } from 'mobx';
-import { observer } from 'mobx-react/native';
 import state from '../layout/state';
 
-@observer
 class T extends Component {
     componentDidMount() {
         this.localeUpdateReaction = reaction(() => state.locale, () => {
             console.log('update reaction');
             this.forceUpdate();
-            // this.nav && this.nav.forceUpdate();
         });
     }
 

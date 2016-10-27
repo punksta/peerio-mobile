@@ -5,7 +5,7 @@ import {
     ActivityIndicator,
     View
 } from 'react-native';
-import { t } from '../utils/translator';
+import { t } from 'peerio-translator';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import * as Animatable from 'react-native-animatable';

@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { observable, action, reaction, autorun } from 'mobx';
 import translator from 'peerio-translator';
 import locales from '../../lib/locales';
+import store from '../../store/local-storage';
 
 const state = observable({
     isFirstLogin: false,
@@ -54,8 +55,24 @@ const state = observable({
                 translator.setLocale(lc, locale);
                 state.locale = lc;
                 state.languageSelected = lc;
+                this.save();
             });
+    },
+
+    @action async load() {
+        const s = await store.system.get('state');
+        let locale = 'en';
+        if (s) {
+            locale = s.locale;
+        }
+        this.setLocale(locale);
+    },
+
+    @action async save() {
+        const locale = this.locale || 'en';
+        await store.system.set('state', { locale });
     }
+ 
 });
 
 reaction(() => state.languageSelected, ls => state.setLocale(ls));

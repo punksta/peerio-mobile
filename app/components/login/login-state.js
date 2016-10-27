@@ -41,13 +41,14 @@ const loginState = observable({
     },
 
     @action async load() {
-        const userData = await store.get('userData');
+        const userData = await store.system.get('userData');
         if (userData) {
             const { username, name, touchIdSaved } = userData;
             this.username = username;
             this.name = name;
             this.touchIdSaved = touchIdSaved;
-            const userRegData = await store.get(`user::${this.username}`);
+            store.openUserDb(this.username);
+            const userRegData = await store.user.get('registration');
             if (userRegData) {
                 const { passphrase, pin } = userRegData;
                 this.savedPassphrase = passphrase;
@@ -62,13 +63,13 @@ const loginState = observable({
 
     @action async save() {
         const { username, firstName, lastName } = this;
-        await store.set('userData', {
+        store.openUserDb(username);
+        await store.user.set('userData', {
             username,
             firstName,
             lastName
         });
-        await store.set(`user::${username}`, {
-        });
+        await store.user.set('registration', {});
     },
 
     @action async triggerTouchId() {

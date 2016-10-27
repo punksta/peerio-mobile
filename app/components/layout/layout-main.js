@@ -28,19 +28,19 @@ const current = observable({
     control: null
 });
 
-reaction(() => mainState.route, () => {
-    console.log('transitioning');
-    console.log(mainState.route);
-    const r = routes[mainState.route];
-    current.control = r();
-});
-
 @observer
 export default class LayoutMain extends Component {
     constructor(props) {
         super(props);
         this.hideMenus = this.hideMenus.bind(this);
         this.send = this.send.bind(this);
+
+        // reaction(() => mainState.route, () => {
+        //     console.log('transitioning');
+        //     console.log(mainState.route);
+        //     const r = routes[mainState.route];
+        //     current.control = r();
+        // });
     }
 
     componentWillMount() {
@@ -86,7 +86,7 @@ export default class LayoutMain extends Component {
     }
 
     render() {
-        const control = current.control;
+        const control = mainState.route ? routes[mainState.route]() : null;
         const input = mainState.isInputVisible ? this.renderInput() : null;
         return (
             <View style={styles.container.root}>

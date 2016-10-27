@@ -72,7 +72,8 @@ const signupState = observable({
             .then(state.routes.main.transition)
             .catch(console.error.bind(console));
 
-        await store.set(`user::${user.username}`, {
+        store.openUserDb(this.username);
+        await store.user.set('registration', {
             pin,
             username,
             firstName,
@@ -80,7 +81,7 @@ const signupState = observable({
             localeCode,
             passphrase
         });
-        await store.set('userData', {
+        await store.system.set('userData', {
             username,
             firstName,
             lastName
@@ -90,7 +91,7 @@ const signupState = observable({
             setTimeout(() => {
                 touchid.save(`user::${user.username}`, passphrase)
                     .then(() => {
-                        store.set('userData', {
+                        store.system.set('userData', {
                             username,
                             firstName,
                             lastName,
