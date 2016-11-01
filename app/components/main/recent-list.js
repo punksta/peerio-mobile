@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TouchableOpacity
+    ScrollView, View, Text, TouchableOpacity
 } from 'react-native';
 import icons from '../helpers/icons';
 import styles from '../../styles/styles';
@@ -111,9 +111,9 @@ export default class RecentList extends Component {
         ];
 
         return (
-            <View>
+            <ScrollView>
                 { items.map(this.item) }
-            </View>
+            </ScrollView>
         );
     }
 }

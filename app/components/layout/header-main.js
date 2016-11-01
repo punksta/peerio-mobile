@@ -16,16 +16,24 @@ export default class HeaderMain extends Component {
     }
 
     leftMenu() {
-        mainState.isLeftMenuVisible = true;
-        mainState.isRightMenuVisible = false;
+        mainState.toggleLeftMenu();
     }
 
     rightMenu() {
-        mainState.isLeftMenuVisible = false;
-        mainState.isRightMenuVisible = true;
+        mainState.toggleRightMenu();
+    }
+
+    search() {
+    }
+
+    back() {
+        mainState.back();
     }
 
     render() {
+        const leftIcon = mainState.isBackVisible ?
+            icons.white('keyboard-arrow-left', this.back) :
+            icons.white('menu', this.leftMenu);
         return (
             <View style={{ height: 56, flex: 0, justifyContent: 'center' }}>
                 <View style={{
@@ -35,10 +43,10 @@ export default class HeaderMain extends Component {
                     alignItems: 'center',
                     paddingRight: 8,
                     paddingLeft: 8,
-                    paddingTop: 8,
+                    paddingTop: 10,
                     height: styles.vars.headerHeight }}>
                     <View style={{ flexDirection: 'row', paddingLeft: 6, backgroundColor: 'transparent' }}>
-                        {icons.white('menu', this.leftMenu)}
+                        {leftIcon}
                         {/*
                         <Text style={{
                             marginLeft: 46,
@@ -47,7 +55,7 @@ export default class HeaderMain extends Component {
                         {icons.white('arrow-drop-down', this.leftMenu)} */}
                     </View>
                     <View style={{ flexDirection: 'row', backgroundColor: 'transparent' }}>
-                        {icons.white('search', this.leftMenu)}
+                        {icons.white('search', this.search)}
                         {icons.white('more-vert', this.rightMenu)}
                     </View>
                 </View>

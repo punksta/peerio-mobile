@@ -3,32 +3,43 @@ import {
     View,
     ScrollView,
     PanResponder,
-    LayoutAnimation
+    LayoutAnimation,
+    Animated,
+    Dimensions
 } from 'react-native';
 import { observer } from 'mobx-react/native';
+import { reaction } from 'mobx';
 import state from './state';
 import mainState from '../main/main-state';
 import LeftMenu from '../main/left-menu';
 import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
-import InputMain from './input-main';
-import TextIpsum from './text-ipsum';
+// import TextIpsum from './text-ipsum';
 import RecentList from '../main/recent-list';
 import Chat from '../messaging/chat';
 import styles from '../../styles/styles';
 
-const routes = ({
-    recent: () => <RecentList />,
-    chat: () => <Chat />,
-    ipsum: () => <TextIpsum />
-});
+// const routes = ({
+//     recent: () => <RecentList />,
+//     chat: () => <Chat />
+// });
 
 @observer
 export default class LayoutMain extends Component {
     constructor(props) {
         super(props);
         this.hideMenus = this.hideMenus.bind(this);
-        this.send = this.send.bind(this);
+        this.width = Dimensions.get('window').width;
+        this.currentIndex = 0;
+        this.animatedX = new Animated.Value(0);
+        this.indexAnimation = reaction(() => mainState.currentIndex, i => {
+            console.log('index animation');
+            const toValue = -i * this.width;
+            Animated.timing(this.animatedX, { toValue, duration: 300 })
+                .start(() => {
+                    this.currentIndex = i;
+                });
+        });
     }
 
     componentWillMount() {
@@ -41,8 +52,18 @@ export default class LayoutMain extends Component {
         mainState.recent();
     }
 
+    componentDidMount() {
+        console.log('mounted');
+    }
+
+    componentWillUnmount() {
+        this.indexAnimation();
+        console.log('unmounted');
+    }
+
+
     componentWillUpdate() {
-        LayoutAnimation.easeInEaseOut();
+        // LayoutAnimation.easeInEaseOut();
     }
 
     hideMenus() {
@@ -50,51 +71,48 @@ export default class LayoutMain extends Component {
         mainState.isRightMenuVisible = false;
     }
 
-    renderInput() {
+    page(control, key) {
+        const menuLeft = mainState.isLeftMenuVisible ? this.width * 0.8 : 0;
         const s = {
-            flex: 0,
-            borderTopColor: '#EFEFEF',
-            borderTopWidth: 1,
-            backgroundColor: '#fff'
+            backgroundColor: '#fff',
+            position: 'absolute',
+            left: key * this.width + menuLeft,
+            right: -(key) * this.width - menuLeft,
+            bottom: 0,
+            top: 0
         };
         return (
-            <View style={s}>
-                <InputMain send={this.send} />
+            <View style={s} key={key}>
+                {control}
             </View>
         );
     }
 
-    send(v) {
-        console.log(v);
-        mainState.addMessage({
-            name: 'Alice',
-            date: '2:40PM',
-            message: v
-        });
+    pages(controls) {
+        return controls.map((item, index) => this.page(item, index));
     }
 
     render() {
-        const control = mainState.route ? routes[mainState.route]() : null;
-        const input = mainState.isInputVisible ? this.renderInput() : null;
+        const transform = [{ translateX: this.animatedX }];
+        const transformOuter = [{ translateX: this.leftMenuAnimated || 0 }];
         return (
             <View style={styles.container.root}>
                 <HeaderMain />
-                <View
+                <Animated.View
                     {...this.panResponder.panHandlers}
                     behavior="padding"
                     style={{
+                        transform: transformOuter,
                         backgroundColor: 'white',
                         flex: 1,
                         flexDirection: 'column',
                         justifyContent: 'space-between',
                         paddingBottom: state.keyboardHeight
                     }}>
-                    <ScrollView
-                        style={{ flex: 1, backgroundColor: '#fff' }}>
-                        {control}
-                    </ScrollView>
-                    {input}
-                </View>
+                    <Animated.View style={{ flex: 1, transform }}>
+                        { this.pages([<RecentList />, <Chat />]) }
+                    </Animated.View>
+                </Animated.View>
                 <LeftMenu />
                 <RightMenu />
             </View>

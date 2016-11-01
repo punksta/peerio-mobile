@@ -116,6 +116,13 @@ export default class LeftMenu extends Component {
             right: (mainState.isLeftMenuVisible ? 0 : undefined)
         };
 
+        const innerContainerStyle = {
+            width,
+            backgroundColor: 'white',
+            borderRightWidth: 1,
+            borderRightColor: '#efefef'
+        };
+
         const testItems = [
             { name: 'Alice', id: '1', online: true },
             { name: 'Albert', id: '2', online: false },
@@ -127,9 +134,10 @@ export default class LeftMenu extends Component {
         return (
             <Swiper style={containerStyle}
                     onHide={() => (mainState.isLeftMenuVisible = false)}
+                    {...this.props}
                     rightToLeft>
                 <Hider onHide={this.hideAnimated} isLeft>
-                    <View style={{ width, backgroundColor: 'white' }}>
+                    <View style={innerContainerStyle}>
                         <View>
                             { this.header('Channels') }
                         </View>

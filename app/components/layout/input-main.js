@@ -46,6 +46,7 @@ export default class InputMain extends Component {
 
     send() {
         this.props.send(this.value);
+        this.value = '';
     }
 
     _onChangeHeight(/* before, after */) {

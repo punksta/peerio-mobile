@@ -23,18 +23,18 @@ export default class Swiper extends Component {
 
     setPosition(e) {
         this.animatedX = null;
-        const x = this.state.x;
-        const y = this.state.y;
+        let x = this.state.x;
+        let y = this.state.y;
         const tx = e.nativeEvent.pageX - this.drag.x;
         const ty = e.nativeEvent.pageY - this.drag.y;
         if (x === 0) {
             if (this.props.rightToLeft && tx > 0) return;
             if (this.props.leftToRight && tx < 0) return;
         }
-        this.setState({
-            x: x + tx,
-            y: y + ty
-        });
+        x += tx;
+        y += ty;
+        this.setState({ x, y });
+        this.props.setXY && this.props.setXY({ x, y });
         this.drag.x = e.nativeEvent.pageX;
         this.drag.y = e.nativeEvent.pageY;
         console.log(this.drag);
@@ -43,6 +43,7 @@ export default class Swiper extends Component {
     resetPosition(/* e */) {
         if (this.state.x !== 0) {
             this.animatedX = new Animated.Value(this.state.x);
+            this.props.setAnimated && this.props.setAnimated(this.animatedX);
             let toValue = 0;
             if (this.props.rightToLeft) {
                 toValue = this.state.x < -100 ? -this.width : 0;
@@ -53,6 +54,7 @@ export default class Swiper extends Component {
             Animated.timing(this.animatedX, { toValue, duration: 200 })
                 .start(() => {
                     this.animatedX = null;
+                    this.props.setAnimated && this.props.setAnimated(this.animatedX);
                     toValue !== 0 && this.props.onHide && this.props.onHide(this);
                 });
         }
@@ -60,6 +62,7 @@ export default class Swiper extends Component {
             x: 0,
             y: 0
         });
+        this.props.setXY && this.props.setXY({ x: 0, y: 0 });
     }
 
     _onMoveShouldSetResponderCapture(e) {
@@ -127,5 +130,6 @@ Swiper.propTypes = {
     leftToRight: React.PropTypes.bool,
     topToBottom: React.PropTypes.bool,
     bottomToTop: React.PropTypes.bool,
-    onHide: React.PropTypes.func
+    onHide: React.PropTypes.func,
+    setXY: React.PropTypes.func
 };
