@@ -43,7 +43,7 @@ export default class Swiper extends Component {
     resetPosition(/* e */) {
         if (this.state.x !== 0) {
             this.animatedX = new Animated.Value(this.state.x);
-            this.props.setAnimated && this.props.setAnimated(this.animatedX);
+            // this.props.setAnimated && this.props.setAnimated(this.animatedX);
             let toValue = 0;
             if (this.props.rightToLeft) {
                 toValue = this.state.x < -100 ? -this.width : 0;
@@ -54,7 +54,7 @@ export default class Swiper extends Component {
             Animated.timing(this.animatedX, { toValue, duration: 200 })
                 .start(() => {
                     this.animatedX = null;
-                    this.props.setAnimated && this.props.setAnimated(this.animatedX);
+                    // this.props.setAnimated && this.props.setAnimated(this.animatedX);
                     toValue !== 0 && this.props.onHide && this.props.onHide(this);
                 });
         }

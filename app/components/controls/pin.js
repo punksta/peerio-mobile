@@ -152,7 +152,7 @@ export default class Pin extends Component {
                         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                             <ActivityIndicator color={styles.vars.highlight} />
                         </View> :
-                        <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
+                            <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
                 </View>
                 <View style={{ flex: 1, marginTop: 26, opacity: this.isSpinner ? 0.5 : 1 }}>
                     {this.row(0, [p(1), p(2, 'ABC'), p(3, 'DEF')])}
