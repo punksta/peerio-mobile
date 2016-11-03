@@ -19,6 +19,23 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         state.load();
+        this.renderScene = this.renderScene.bind(this);
+
+        this.routes = [
+            this.route('loginClean', Login.Clean, true),
+            this.route('loginSaved', Login.Saved),
+            this.route('signupStep1', Signup.Step1),
+            this.route('signupStep2', Signup.Pin),
+            this.route('main', LayoutMain, true)
+        ];
+
+        this._panResponder = PanResponder.create({
+            onStartShouldSetPanResponder: () => {
+                state.hidePicker();
+                return false;
+            }
+        });
+
         this.bindRouteState = reaction(() => state.route, route => {
             console.log('reaction: %s => %s', state.prevRoute, route);
             const newIndex = state.routesList.indexOf(route);
@@ -38,32 +55,17 @@ export default class App extends Component {
             }
             requestAnimationFrame(state.hideKeyboard);
         });
-        this.renderScene = this.renderScene.bind(this);
     }
 
     componentWillMount() {
-        this.routes = [
-            this.route('loginClean', Login.Clean, true),
-            this.route('loginSaved', Login.Saved),
-            this.route('signupStep1', Signup.Step1),
-            this.route('signupStep2', Signup.Pin),
-            this.route('main', LayoutMain, true)
-        ];
-
-        this._panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: () => {
-                state.hidePicker();
-                return false;
-            }
-        });
     }
 
     componentDidMount() {
         // navigating to initial route
         // timeout is needed for router to properly initialize
-        setTimeout(() => {
-            state.routes.main.transition();
-        }, 1000);
+        // setTimeout(() => {
+        //     state.routes.main.transition();
+        // }, 1000);
     }
 
     route(key, component, replace, type) {

@@ -24,7 +24,7 @@ export default class LoginClean extends Component {
         forms.mixin(this, loginState);
         this.signIn = this.signIn.bind(this);
 
-        // loginState.load();
+        loginState.load();
     }
 
     languagePicker() {
@@ -37,9 +37,9 @@ export default class LoginClean extends Component {
 
     render() {
         const style = styles.wizard;
-        const button = loginState.isInProgress ?
-            <ActivityIndicator color={styles.vars.highlight} style={{ height: 12 }} /> :
-            <Button text={t('login')} caps bold onPress={this.signIn} style={{ height: 12 }} />;
+        const activityIndicator = <ActivityIndicator color={styles.vars.highlight} style={{ height: 12 }} />;
+        const loginButton = <Button text={t('login')} caps bold onPress={this.signIn} style={{ height: 12 }} />;
+        const button = loginState.isInProgress ? activityIndicator : loginButton;
         const body = (
             <View
                 style={style.containerFlex}>
