@@ -101,7 +101,7 @@ export default class Chat extends Component {
 
     item(i, key) {
         const msg = i.message || '';
-        const text = msg.replace(/\s+/g, ' ');
+        const text = msg.replace(/[ ]+/g, ' ');
         return (
             <View style={{ backgroundColor: styles.vars.bg }} key={key}>
                 <TouchableOpacity>
@@ -139,12 +139,6 @@ export default class Chat extends Component {
 
     render() {
         const items = mainState.chatItems;
-        const s = {
-            flex: 0,
-            flexDirection: 'column',
-            justifyContent: 'flex-end',
-            minHeight: this.contentHeight || undefined
-        };
         return (
             <View style={{ flex: 1 }}>
                 <ScrollView

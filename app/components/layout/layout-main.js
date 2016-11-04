@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
     View,
-    ScrollView,
+    /* ScrollView, */
     PanResponder,
-    LayoutAnimation,
+    /* LayoutAnimation, */
     Animated,
     Dimensions
 } from 'react-native';

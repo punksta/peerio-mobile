@@ -6,7 +6,7 @@ import { User } from '../../lib/icebear';
 import touchid from '../touchid/touchid-bridge';
 
 const loginState = observable({
-    username: 'test909090',
+    username: '',
     usernameValid: null,
     firstName: 'Peerio',
     lastName: 'Test',
@@ -18,10 +18,19 @@ const loginState = observable({
     savedUserInfo: false,
     isInProgress: false,
     pin: false,
+    error: null,
 
     @action clean() {
         console.log('transitioning to clean');
         state.routes.loginClean.transition();
+    },
+
+    @action async changeUserAction() {
+        await store.system.set('userData', null);
+        this.username = null;
+        this.usernameValid = null;
+        this.passphrase = '';
+        this.savedPassphrase = '';
     },
 
     @action saved() {
@@ -33,8 +42,13 @@ const loginState = observable({
         user.username = this.username;
         user.passphrase = this.passphrase || this.savedPassphrase || 'such a secret passphrase';
         this.isInProgress = true;
-        user.login()
+        return user.login()
             .then(state.routes.main.transition)
+            .catch(e => {
+                console.error(e);
+                this.error = 'loginFailed';
+                setTimeout(() => (this.error = null), 1000);
+            })
             .finally(() => {
                 this.isInProgress = false;
             });
@@ -54,7 +68,7 @@ const loginState = observable({
                 this.savedPassphrase = passphrase;
                 this.pin = pin;
                 // this.savedUserInfo = true;
-                if (!this.changeUser) {
+                if (!this.changeUserAction) {
                     this.saved();
                 }
             }

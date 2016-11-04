@@ -138,9 +138,9 @@ export default class LeftMenu extends Component {
                     rightToLeft>
                 <Hider onHide={this.hideAnimated} isLeft>
                     <View style={innerContainerStyle}>
-                        <View>
+                        {/* <View>
                             { this.header('Channels') }
-                        </View>
+                    </View> */}
                         <View>
                             { this.header('Conversations') }
                             { testItems.map(this.item) }

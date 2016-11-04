@@ -11,6 +11,7 @@ import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
 import Button from '../controls/button';
 import Center from '../controls/center';
+import ErrorText from '../controls/error-text';
 import Logo from '../controls/logo';
 import LoginTermsSignup from './login-terms-signup';
 import loginState from './login-state';
@@ -37,9 +38,10 @@ export default class LoginClean extends Component {
 
     render() {
         const style = styles.wizard;
-        const activityIndicator = <ActivityIndicator color={styles.vars.highlight} style={{ height: 12 }} />;
-        const loginButton = <Button text={t('login')} caps bold onPress={this.signIn} style={{ height: 12 }} />;
+        const activityIndicator = <ActivityIndicator color={styles.vars.highlight} style={{ height: 14 }} />;
+        const loginButton = <Button text={t('login')} caps bold onPress={this.signIn} style={{ height: 14 }} />;
         const button = loginState.isInProgress ? activityIndicator : loginButton;
+        const centerItem = loginState.error ? <ErrorText>{t(loginState.error)}</ErrorText> : button;
         const body = (
             <View
                 style={style.containerFlex}>
@@ -53,7 +55,7 @@ export default class LoginClean extends Component {
                     <LanguagePickerBox {...this.tb('language', t('language'))} />
                 </View>
                 <Center>
-                    {button}
+                    {centerItem}
                 </Center>
                 <LoginTermsSignup />
                 <View />

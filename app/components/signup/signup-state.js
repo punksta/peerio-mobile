@@ -14,7 +14,7 @@ const signupState = observable({
     usernameValidationMessage: '',
     email: '',
     emailValid: null,
-    emailValidationMessage: 'email should contain @',
+    emailValidationMessage: '',
     pin: '',
     pinSaved: false,
     firstName: '',
@@ -49,6 +49,10 @@ const signupState = observable({
         state.route = 'loginClean';
     },
 
+    @action reset() {
+        this.current = 0;
+    },
+
     @action async generatePassphrase() {
         const dictString = await locales.loadDictFile(state.locale);
         const dict = new PhraseDictionary(dictString);
@@ -68,39 +72,45 @@ const signupState = observable({
         user.firstName = firstName;
         user.lastName = lastName;
         user.localeCode = localeCode;
-        user.createAccountAndLogin()
+        return user.createAccountAndLogin()
             .then(state.routes.main.transition)
-            .catch(console.error.bind(console));
-
-        store.openUserDb(this.username);
-        await store.user.set('registration', {
-            pin,
-            username,
-            firstName,
-            lastName,
-            localeCode,
-            passphrase
-        });
-        await store.system.set('userData', {
-            username,
-            firstName,
-            lastName
-        });
-
-        if (touchid.available) {
-            setTimeout(() => {
-                touchid.save(`user::${user.username}`, passphrase)
-                    .then(() => {
-                        store.system.set('userData', {
-                            username,
-                            firstName,
-                            lastName,
-                            touchIdSaved: true
-                        });
-                    })
-                    .catch(e => console.log(e));
-            }, 5000);
-        }
+            .catch((e) => {
+                console.log(e);
+                if (e && e.code === 406) {
+                    this.emailValid = false;
+                    this.emailValidationMessage = 'email is taken. try another one';
+                }
+                this.reset();
+            })
+            .then(() => {
+                store.openUserDb(username);
+                return store.user.set('registration', {
+                    pin,
+                    username,
+                    firstName,
+                    lastName,
+                    localeCode,
+                    passphrase
+                }).then(() => store.system.set('userData', {
+                    username,
+                    firstName,
+                    lastName
+                })).then(() => {
+                    if (touchid.available) {
+                        return touchid.save(`user::${user.username}`, passphrase)
+                            .then(() => {
+                                store.system.set('userData', {
+                                    username,
+                                    firstName,
+                                    lastName,
+                                    touchIdSaved: true
+                                });
+                            })
+                            .catch(e => console.log(e));
+                    }
+                    return false;
+                });
+            });
     }
 });
 
@@ -131,6 +141,9 @@ reaction(() => signupState.username, username => {
 
 reaction(() => signupState.email, email => {
     signupState.emailValid = Util.isValidEmail(email);
+    if (!signupState.emailValid) {
+        signupState.emailValidationMessage = 'email should contain @';
+    }
 });
 
 autorun(() => {
