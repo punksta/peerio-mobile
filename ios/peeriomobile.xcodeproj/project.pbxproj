@@ -825,8 +825,8 @@
 		02DB417D1DCD1DB000E04176 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.Expandoo;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage.Expandoo;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -876,8 +876,8 @@
 		02DB417E1DCD1DB000E04176 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.Expandoo;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage.Expandoo;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
