@@ -4,9 +4,24 @@ import {
 
 import _ from 'lodash';
 
+const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
+console.log(`Branding ${EN}`);
+
+const branding = {
+    name: EN,
+    peeriomobile: {
+        bg: '#2C95CF'
+    },
+    expandoo: {
+        bg: '#009dfd'
+    }
+};
+
+const { bg } = branding[EN];
+
 const vars = {
     circle: 8,
-    bg: '#2C95CF',
+    bg,
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',
     white: '#FFF',
@@ -384,6 +399,7 @@ const styles = {
 styles.baseclass = baseclass;
 styles.inherit = inherit;
 styles.vars = vars;
+styles.branding = branding;
 
 
 export default styles;
