@@ -20,6 +20,7 @@ const state = observable({
     keyboardVisible: false,
     keyboardHeight: 0,
     locale: null,
+    pickerHeight: 200,
     languageSelected: 'en',
     languages: {
         en: 'English',
@@ -29,24 +30,34 @@ const state = observable({
     },
     modals: [],
 
-    showPicker: action(picker => {
+    get bottomOffset() {
+        const pickerHeight = this.pickerVisible ? this.pickerHeight : 0;
+        return this.keyboardHeight || pickerHeight;
+    },
+
+    @action showPicker(picker) {
         state.hideKeyboard();
         state.picker = picker;
         setTimeout(() => { state.pickerVisible = true; }, 0);
-    }),
+    },
 
-    hidePicker: action((/* picker */) => {
+    @action hidePicker(/* picker */) {
         state.hideKeyboard();
         setTimeout(() => { state.pickerVisible = false; }, 0);
-    }),
+    },
 
-    hideKeyboard: action(() => {
+    @action hideKeyboard() {
         if (state.focusedTextBox) {
             state.focusedTextBox.blur();
             state.focusedTextBox = null;
         }
         dismissKeyboard();
-    }),
+    },
+
+    @action hideAll() {
+        this.hideKeyboard();
+        this.hidePicker();
+    },
 
     @action setLocale(lc) {
         return locales.loadLocaleFile(lc)

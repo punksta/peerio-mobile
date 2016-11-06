@@ -19,11 +19,16 @@ export default class PickerPopup extends Component {
         state[this.props.name] = lang;
     }
 
+    layout(e) {
+        console.log(e.nativeEvent.layout.height);
+    }
+
     render() {
         const items = _.values(_.mapValues(this.props.data, (value, key) =>
             <Picker.Item label={value} value={key} key={key} />));
         return (
             <Picker
+                onLayout={this.layout}
                 selectedValue={this.props.value}
                 onValueChange={this.onValueChange}
                 style={{
@@ -33,7 +38,7 @@ export default class PickerPopup extends Component {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    height: state.pickerVisible ? undefined : 0
+                    height: state.pickerVisible ? state.pickerHeight : 0
                 }}>
                 {items}
             </Picker>
