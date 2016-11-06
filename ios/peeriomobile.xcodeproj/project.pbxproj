@@ -187,9 +187,7 @@
 		02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		02321C5C1D80558E00282EB1 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = peeriomobile.entitlements; path = peeriomobile/peeriomobile.entitlements; sourceTree = "<group>"; };
-		02DB41481DCD0CC900E04176 /* peeriomobile copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "peeriomobile copy-Info.plist"; path = "/Users/seavan/Documents/peerio/peerio-mobile/ios/peeriomobile copy-Info.plist"; sourceTree = "<absolute>"; };
 		02DB417F1DCD1DB000E04176 /* expandoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = expandoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		02DB41801DCD1DB100E04176 /* peeriomobile copy2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "peeriomobile copy2-Info.plist"; path = "/Users/seavan/Documents/peerio/peerio-mobile/ios/peeriomobile copy2-Info.plist"; sourceTree = "<absolute>"; };
 		02E096AF1DAD8DEC00641B85 /* TouchId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchId.h; path = peeriomobile/TouchId.h; sourceTree = "<group>"; };
 		02E096B01DAD8E2A00641B85 /* TouchId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchId.m; path = peeriomobile/TouchId.m; sourceTree = "<group>"; };
 		02E096B21DAE398B00641B85 /* locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = locales; path = ../locales; sourceTree = "<group>"; };
@@ -440,8 +438,6 @@
 				00E356EF1AD99517003FC87E /* peeriomobileTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				EE3B3AB15A814B41A0267C44 /* Resources */,
-				02DB41481DCD0CC900E04176 /* peeriomobile copy-Info.plist */,
-				02DB41801DCD1DB100E04176 /* peeriomobile copy2-Info.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
