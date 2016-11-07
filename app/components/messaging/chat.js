@@ -1,57 +1,13 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View, Text, TouchableOpacity
+    ScrollView, View
 } from 'react-native';
 import _ from 'lodash';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
-import styles from '../../styles/styles';
 import mainState from '../main/main-state';
 import InputMain from '../layout/input-main';
-
-const avatarRadius = 36;
-
-const avatarStyle = {
-    width: avatarRadius,
-    height: avatarRadius,
-    borderRadius: avatarRadius / 2,
-    backgroundColor: '#CFCFCF',
-    margin: 4
-};
-
-const nameContainerStyle = {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center'
-};
-
-const nameMessageContainerStyle = {
-    flex: 1,
-    flexDirection: 'column',
-    marginLeft: 6
-};
-
-const nameTextStyle = {
-    fontWeight: '500'
-};
-
-const lastMessageTextStyle = {
-    color: '#000000CC'
-};
-
-const dateTextStyle = {
-    fontSize: 11,
-    color: '#0000009A',
-    marginLeft: 6
-};
-
-const itemStyle = {
-    flex: 1,
-    flexDirection: 'row',
-    padding: 8,
-    alignItems: 'flex-start',
-    backgroundColor: 'white'
-};
+import Avatar from '../shared/avatar';
 
 const randomMessages = [
     'I did not know what to say so I wrote this',
@@ -101,22 +57,15 @@ export default class Chat extends Component {
 
     item(i, key) {
         const msg = i.message || '';
-        const text = msg.replace(/[ ]+/g, ' ');
+        const text = msg.replace(/\n[ ]+/g, '\n');
         return (
-            <View style={{ backgroundColor: styles.vars.bg }} key={key}>
-                <TouchableOpacity>
-                    <View key={key} style={itemStyle}>
-                        <View style={avatarStyle} />
-                        <View style={nameMessageContainerStyle}>
-                            <View style={nameContainerStyle}>
-                                <Text style={nameTextStyle}>{i.name}</Text>
-                                <Text style={dateTextStyle}>{i.date}</Text>
-                            </View>
-                            <Text style={lastMessageTextStyle}>{text}</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <Avatar
+                hideOnline
+                date={i.date}
+                name={i.name}
+                message={text}
+                key={key}
+                onPress={() => (mainState.chat())} />
         );
     }
 

@@ -1,72 +1,12 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View, Text, TouchableOpacity
+    ScrollView
 } from 'react-native';
-import icons from '../helpers/icons';
-import styles from '../../styles/styles';
+import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
+import Avatar from '../shared/avatar';
 
-const avatarRadius = 36;
-
-const avatarStyle = {
-    width: avatarRadius,
-    height: avatarRadius,
-    borderRadius: avatarRadius / 2,
-    backgroundColor: '#CFCFCF',
-    margin: 4,
-    marginTop: 12
-};
-
-const circleRadius = 6;
-const circleStyle = {
-    width: circleRadius,
-    height: circleRadius,
-    borderRadius: circleRadius / 2,
-    backgroundColor: '#7ed321',
-    margin: 4
-};
-
-const circleStyleOff = {
-    width: circleRadius,
-    height: circleRadius,
-    borderRadius: circleRadius / 2,
-    borderWidth: 1,
-    borderColor: '#00000050',
-    backgroundColor: 'transparent',
-    margin: 4
-};
-
-const nameContainerStyle = {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center'
-};
-
-const nameMessageContainerStyle = {
-    flex: 1,
-    flexDirection: 'column',
-    marginLeft: 6
-};
-
-const nameTextStyle = {
-    fontWeight: '500'
-};
-
-const lastMessageTextStyle = {
-    fontWeight: '300',
-    color: '#000000AA'
-};
-
-const itemStyle = {
-    flex: 1,
-    flexDirection: 'row',
-    padding: 8,
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    borderBottomColor: '#EFEFEF',
-    backgroundColor: 'white'
-};
-
+@observer
 export default class RecentList extends Component {
     press(/* i, key */) {
         console.log('pressing');
@@ -75,21 +15,13 @@ export default class RecentList extends Component {
 
     item(i, key) {
         return (
-            <View style={{ backgroundColor: styles.vars.bg }} key={key}>
-                <TouchableOpacity onPress={() => { mainState.chat(); }}>
-                    <View key={key} style={itemStyle}>
-                        <View style={avatarStyle} />
-                        <View style={nameMessageContainerStyle}>
-                            <View style={nameContainerStyle}>
-                                <Text style={nameTextStyle}>{i.name}</Text>
-                                <View style={i.online ? circleStyle : circleStyleOff} />
-                            </View>
-                            <Text style={lastMessageTextStyle}>{i.lastMessage}</Text>
-                        </View>
-                        {icons.dark('navigate-next')}
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <Avatar
+                icon="navigate-next"
+                online={i.online}
+                name={i.name}
+                message={i.lastMessage}
+                key={key}
+                onPress={() => (mainState.chat())} />
         );
     }
 

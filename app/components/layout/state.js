@@ -35,6 +35,10 @@ const state = observable({
         return this.keyboardHeight || pickerHeight;
     },
 
+    @action focusTextBox(textbox) {
+        state.focusedTextBox = textbox;
+    },
+
     @action showPicker(picker) {
         state.hideKeyboard();
         state.picker = picker;

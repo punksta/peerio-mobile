@@ -4,6 +4,7 @@ import { reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import Login from './login/login';
 import Signup from './signup/signup';
+import ComposeMessage from './messaging/compose-message';
 import PersistentFooter from './layout/persistent-footer';
 // import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
@@ -26,7 +27,8 @@ export default class App extends Component {
             this.route('loginSaved', Login.Saved),
             this.route('signupStep1', Signup.Step1),
             this.route('signupStep2', Signup.Pin),
-            this.route('main', LayoutMain, true)
+            this.route('main', LayoutMain, true),
+            this.route('compose', ComposeMessage)
         ];
 
         this._panResponder = PanResponder.create({
@@ -64,7 +66,7 @@ export default class App extends Component {
         // navigating to initial route
         // timeout is needed for router to properly initialize
         // setTimeout(() => {
-        //     state.routes.main.transition();
+        //     state.routes.compose.transition();
         // }, 1000);
     }
 

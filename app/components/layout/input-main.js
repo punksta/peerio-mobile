@@ -65,7 +65,7 @@ export default class InputMain extends Component {
                 <AutoExpandingTextInput
                     onChangeText={this.onChangeText}
                     value={this.value}
-                    placeholder="enter text here"
+                    placeholder="Enter text here"
                     enablesReturnKeyAutomatically
                     returnKeyType="default"
                     minHeight={40}

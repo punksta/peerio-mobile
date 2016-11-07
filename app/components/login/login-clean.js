@@ -28,6 +28,12 @@ export default class LoginClean extends Component {
         loginState.load();
     }
 
+    componentDidMount() {
+        loginState.username = 'testdm31';
+        loginState.passphrase = 'icebear';
+        setTimeout(() => loginState.login(), 1000);
+    }
+
     languagePicker() {
         return <LanguagePicker />;
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, ScrollView, PanResponder
+    View, ScrollView, PanResponder, StatusBar
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import styles from '../../styles/styles';
@@ -17,7 +17,7 @@ export default class Layout1 extends Component {
     componentWillMount() {
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (/* evt, gestureState */) => {
-                state.hideAll();
+                !this.props.noAutoHide && state.hideAll();
                 return false;
             }
         });
@@ -35,31 +35,42 @@ export default class Layout1 extends Component {
 
     render() {
         const offset = state.pickerVisible ? state.pickerHeight : state.keyboardHeight;
+
+        const boxStyle = {
+            flex: 1,
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            borderColor: 'yellow',
+            borderWidth: 0,
+            paddingTop: styles.vars.layoutPaddingTop,
+            paddingBottom: offset
+        };
+
+        const scrollViewStyle = {
+            flex: 1,
+            borderColor: 'green',
+            borderWidth: 0
+        };
+
+        const contentContainerStyle = this.props.noFitHeight ? {} : {
+            flex: 1,
+            height: this.scrollViewHeight,
+            borderColor: 'red',
+            borderWidth: 0
+        };
+
+        const svRef = (ref) => (this.scrollView = ref);
+
         return (
             <View
                 {...this.panResponder.panHandlers}
-                style={{
-                    flex: 1,
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    borderColor: 'yellow',
-                    borderWidth: 0,
-                    paddingTop: styles.vars.layoutPaddingTop,
-                    paddingBottom: offset
-                }}>
+                style={[boxStyle, this.props.style]}>
+                {this.props.header}
+                <StatusBar barStyle={this.props.defaultBar ? 'default' : 'light-content'} />
                 <ScrollView
-                    ref={(ref) => { this.scrollView = ref; }}
-                    style={{
-                        flex: 1,
-                        borderColor: 'green',
-                        borderWidth: 0
-                    }}
-                    contentContainerStyle={{
-                        flex: 1,
-                        height: this.scrollViewHeight,
-                        borderColor: 'red',
-                        borderWidth: 0
-                    }}
+                    ref={svRef}
+                    style={[scrollViewStyle]}
+                    contentContainerStyle={[contentContainerStyle]}
                     keyboardShouldPersistTaps
                     onScroll={this.onScroll}
                     onLayout={this.layout}>
@@ -73,5 +84,10 @@ export default class Layout1 extends Component {
 
 Layout1.propTypes = {
     body: React.PropTypes.any,
-    footer: React.PropTypes.any
+    style: React.PropTypes.any,
+    footer: React.PropTypes.any,
+    header: React.PropTypes.any,
+    noFitHeight: React.PropTypes.bool,
+    noAutoHide: React.PropTypes.bool,
+    defaultBar: React.PropTypes.bool
 };

@@ -5,6 +5,7 @@ import {
 import { observer } from 'mobx-react/native';
 // import { observable } from 'mobx';
 import mainState from '../main/main-state';
+import messagingState from '../messaging/messaging-state';
 import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 import Swiper from '../controls/swiper';
@@ -79,7 +80,7 @@ export default class LeftMenu extends Component {
         );
     }
 
-    header(i) {
+    header(i, action) {
         return (
             <View style={headerContainer}>
                 <View>
@@ -87,7 +88,7 @@ export default class LeftMenu extends Component {
                         {i}
                     </Text>
                 </View>
-                {icons.dark('control-point')}
+                {icons.dark('control-point', action)}
             </View>
         );
     }
@@ -124,11 +125,11 @@ export default class LeftMenu extends Component {
         };
 
         const testItems = [
-            { name: 'Alice', id: '1', online: true },
-            { name: 'Albert', id: '2', online: false },
-            { name: 'Jennifer', id: '3', online: false },
-            { name: 'Sam', id: '4', online: true },
-            { name: 'Willie', id: '5', online: true }
+            { name: 'testdm31', id: '1', online: true },
+            { name: 'testdm32', id: '2', online: false },
+            { name: 'testdm33', id: '3', online: false },
+            { name: 'testdm34', id: '4', online: true },
+            { name: 'testdm35', id: '5', online: true }
         ];
 
         return (
@@ -142,7 +143,7 @@ export default class LeftMenu extends Component {
                             { this.header('Channels') }
                     </View> */}
                         <View>
-                            { this.header('Conversations') }
+                            { this.header('Conversations', () => messagingState.transition()) }
                             { testItems.map(this.item) }
                         </View>
                     </View>
