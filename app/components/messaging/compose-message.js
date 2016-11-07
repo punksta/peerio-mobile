@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {
     View, Text, TextInput
 } from 'react-native';
+import { observer } from 'mobx-react/native';
+import { observable, when } from 'mobx';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import Avatar from '../shared/avatar';
@@ -9,11 +11,14 @@ import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 import InputMain from '../layout/input-main';
 import messagingState from './messaging-state';
+import { chatStore, Contact, contactStore } from '../../lib/icebear';
 
+@observer
 export default class ComposeMessage extends Component {
     constructor(props) {
         super(props);
         this.exit = this.exit.bind(this);
+        this.send = this.send.bind(this);
     }
 
     componentDidMount() {
@@ -24,7 +29,7 @@ export default class ComposeMessage extends Component {
         messagingState.exit();
     }
 
-    userbox(username, i) {
+    userbox(contact, i) {
         const style = {
             backgroundColor: styles.vars.bg,
             borderRadius: 4,
@@ -37,10 +42,12 @@ export default class ComposeMessage extends Component {
         };
         return (
             <View key={i} style={style}>
-                <Text style={textStyle}>{username}</Text>
+                <Text style={textStyle}>{contact.username}</Text>
             </View>
         );
     }
+
+    @observable recipients = [];
 
     userboxline() {
         const container = {
@@ -50,14 +57,22 @@ export default class ComposeMessage extends Component {
             paddingLeft: 8,
             flexWrap: 'wrap'
         };
-        const users = ['testdm10', 'testdm20', 'testdm30', 'testdm50', 'testdm60', 'test11111111111'];
-        const boxes = users.map(this.userbox);
+        const boxes = this.recipients.map(this.userbox);
 
         return (
             <View style={container}>
                 {boxes}
             </View>
         );
+    }
+
+    @observable findUserText = '';
+
+    onChangeFindUserText(text) {
+        this.findUserText = text;
+        if (text && text.length > 0) {
+            this.searchUser(text);
+        }
     }
 
     textbox() {
@@ -75,6 +90,8 @@ export default class ComposeMessage extends Component {
             <View style={container}>
                 {icons.dark('search')}
                 <TextInput
+                    value={this.findUserText}
+                    onChangeText={text => this.onChangeFindUserText(text)}
                     autoCorrect={false}
                     placeholder="Find someone"
                     ref={ti => (this.textInput = ti)} style={style} />
@@ -104,25 +121,42 @@ export default class ComposeMessage extends Component {
         );
     }
 
-    item(i, text) {
+    addRecipient(contact) {
+        if (this.recipients.indexOf(contact) === -1) {
+            this.found = [];
+            this.findUserText = '';
+            this.recipients.push(contact);
+        }
+    }
+
+    item(contact, i) {
+        const { username /* , message */ } = contact;
         return (
-            <Avatar key={i} name={text} message={text} hideOnline />
+            <Avatar key={i} name={username} message={username} hideOnline onPress={() => this.addRecipient(contact)} />
         );
     }
 
-    listBlock(header, items) {
-        return (
-            <View>
-                <Text>Your contacts:</Text>
-            </View>
-        );
+    // listBlock(header, items) {
+    //     return (
+    //         <View>
+    //             <Text>Your contacts:</Text>
+    //         </View>
+    //     );
+    // }
+
+    @observable found = [];
+
+    searchUser(username) {
+        const c = contactStore.getContact(username);
+        when(() => !c.loading, () => {
+            if (!c.notFound) {
+                this.found = [c];
+            }
+        });
     }
 
     body() {
-        const mockItems = [];
-        for (let i = 0; i < 50; ++i) {
-            mockItems.push(this.item(i, `test item ${i}`));
-        }
+        const mockItems = this.found.map((item, i) => this.item(item, i));
 
         return (
             <View>
@@ -152,7 +186,7 @@ export default class ComposeMessage extends Component {
         return (
             <View>
                 {this.lineBlock(exitRow)}
-                {this.lineBlock(userRow)}
+                {this.recipients.length ? this.lineBlock(userRow) : null}
                 {this.lineBlock(tbSearch)}
             </View>
         );
@@ -173,6 +207,8 @@ export default class ComposeMessage extends Component {
     }
 
     send() {
+        const chat = chatStore.startChat(this.recipients);
+        chat.addMessage('test');
     }
 
     render() {
@@ -181,7 +217,7 @@ export default class ComposeMessage extends Component {
         const layoutStyle = {
             backgroundColor: 'white'
         };
-        const footer = null; // this.renderInput();
+        const footer = this.recipients.length ? this.renderInput() : null;
         return (
             <Layout1
                 defaultBar

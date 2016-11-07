@@ -1,8 +1,8 @@
-import { observable, action, reaction } from 'mobx';
+import { when, observable, action, reaction } from 'mobx';
 import state from '../layout/state';
 import store from '../../store/local-storage';
 import Util from '../helpers/util';
-import { User } from '../../lib/icebear';
+import { User, chatStore } from '../../lib/icebear';
 import touchid from '../touchid/touchid-bridge';
 
 const loginState = observable({
@@ -44,13 +44,25 @@ const loginState = observable({
         this.isInProgress = true;
         return user.login()
             .then(state.routes.main.transition)
+            // .then(state.routes.compose.transition)
             .catch(e => {
                 console.error(e);
                 this.error = 'loginFailed';
                 setTimeout(() => (this.error = null), 1000);
             })
             .finally(() => {
+                User.current = user;
                 this.isInProgress = false;
+                chatStore.loadAllChats();
+                when(() => !chatStore.loading, () => {
+                    console.log('when loaded');
+                    console.log(chatStore.chats.length);
+                    chatStore.chats.forEach(c => {
+                        console.log(c);
+                        console.log(c.participants);
+                    });
+                });
+                return null;
             });
     },
 
