@@ -71,33 +71,30 @@ const circleStyleOff = {
     margin: 4
 };
 
-function hashCode(str) { // java String#hashCode
-    var hash = 0;
-    for (var i = 0; i < str.length; i++) {
-       hash = str.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return hash;
-} 
-
-function intToRGB(i){
-    i = i * i * i % i;
-    var c = (i & 0x00FFFFFF)
-        .toString(16)
-        .toUpperCase();
-
-    return "00000".substring(0, 6 - c.length) + c;
-}
-
-function stringColor(s) {
-    return `#${intToRGB(hashCode(s))}`;
-}
-
 export default class Avatar extends Component {
+    hashCode(str) { // java String#hashCode
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+            hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return hash;
+    }
+
+    intToRGB(_i) {
+        const i = _i * _i * _i % _i;
+        const c = (i & 0x00FFFFFF).toString(16).toUpperCase();
+        return '00000'.substring(0, 6 - c.length) + c;
+    }
+
+    stringColor(s) {
+        return `#${this.intToRGB(this.hashCode(s))}`;
+    }
+
     render() {
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
         const date = this.props.date ? <Text style={dateTextStyle}>{this.props.date}</Text> : null;
         const online = this.props.hideOnline ? null : <View style={this.props.online ? circleStyle : circleStyleOff} />;
-        const color = this.props.name ? stringColor(this.props.name) : 'green';
+        const color = this.props.name ? this.stringColor(this.props.name) : 'green';
         const coloredAvatarStyle = [avatarStyle, { backgroundColor: color }];
         const avatar = <View style={coloredAvatarStyle} />;
         const loader = <ActivityIndicator style={{ height: avatarRadius, margin: 4 }} />;

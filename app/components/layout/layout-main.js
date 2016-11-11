@@ -136,7 +136,7 @@ export default class LayoutMain extends Component {
                     behavior="padding"
                     style={outerStyle}>
                     <Animated.View style={{ flex: 1, transform }}>
-                        { this.pages([<RecentList />, <Chat ref={c => (this.chatControl = c)}/>]) }
+                        { this.pages([<RecentList />, <Chat ref={c => (this.chatControl = c)} />]) }
                     </Animated.View>
                 </Animated.View>
                 <LeftMenu />

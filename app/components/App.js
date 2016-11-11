@@ -19,7 +19,6 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         state.load();
-        
         this.renderScene = this.renderScene.bind(this);
 
         this.routes = [
