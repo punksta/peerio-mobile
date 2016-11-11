@@ -14,7 +14,7 @@ export default class PickerBox extends Component {
     }
 
     componentWillUpdate() {
-        LayoutAnimation.easeInEaseOut();
+        // LayoutAnimation.easeInEaseOut();
     }
 
     focus() {

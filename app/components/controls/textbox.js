@@ -4,9 +4,9 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    LayoutAnimation
+    Animated
 } from 'react-native';
-import { observable } from 'mobx';
+import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import state from '../layout/state';
 import styles from '../../styles/styles';
@@ -27,10 +27,32 @@ export default class TextBox extends Component {
         this.focus = this.focus.bind(this);
         this.changeText = this.changeText.bind(this);
         this.toggleSecret = this.toggleSecret.bind(this);
+
+        const scaleFrom = 1;
+        const translateFrom = 0;
+        const translateFromY = 0;
+        this.animatedHintTranslate = new Animated.Value(translateFrom);
+        this.animatedHintTranslateY = new Animated.Value(translateFrom);
+        this.animatedHintScale = new Animated.Value(scaleFrom);
+        reaction(() => this.focused, () => {
+            const duration = 300;
+            const scaleTo = 0.8;
+            const width = 200;
+            const translateTo = -width * (1 - scaleTo) + 12 / scaleTo;
+            const translateToY = -16;
+            Animated.parallel([
+                Animated.timing(this.animatedHintTranslate, { toValue: this.focused ? translateTo : translateFrom, duration }),
+                Animated.timing(this.animatedHintTranslateY, { toValue: this.focused ? translateToY : translateFromY, duration }),
+                Animated.timing(this.animatedHintScale, { toValue: this.focused ? scaleTo : scaleFrom, duration })
+            ]).start();
+        });
+    }
+
+    componentDidMount() {
     }
 
     componentWillUpdate() {
-        LayoutAnimation.easeInEaseOut();
+        // LayoutAnimation.easeInEaseOut();
     }
 
     componentWillUnmount() {
@@ -70,7 +92,7 @@ export default class TextBox extends Component {
         const style = this.focused ? styles.input.active : styles.input.normal;
         const hint = this.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
-        const showSecretIcon = !this.props.secureTextEntry ? null :
+        const showSecretIcon = !this.props.secureTextEntry || this.showSecret ? null :
             <View style={style.iconContainer}>
                 {icons.dark(
                     this.showSecret ? 'visibility-off' : 'visibility',
@@ -97,6 +119,23 @@ export default class TextBox extends Component {
                 marginTop: 2
             }}>Optional</Text>
         ) : null;
+        const hintStyle = [styles.input.hint.text, {
+            borderWidth: 0,
+            width: 200,
+            borderColor: 'red',
+            transform: [
+                { scale: this.animatedHintScale },
+                { translateX: this.animatedHintTranslate },
+                { translateY: this.animatedHintTranslateY }
+            ]
+        }];
+        const hintContainer = [hint, {
+            flex: 1,
+            alignItems: 'flex-start',
+            padding: 0,
+            borderWidth: 0,
+            borderColor: 'yellow'
+        }];
         return (
             <View
                 style={style.shadow}>
@@ -136,10 +175,10 @@ export default class TextBox extends Component {
                     {showSecretIcon}
                     <View
                         pointerEvents="none"
-                        style={hint}>
-                        <Text style={styles.input.hint.text}>
+                        style={hintContainer}>
+                        <Animated.Text style={hintStyle}>
                             {this.props.hint}
-                        </Text>
+                        </Animated.Text>
                     </View>
                     {infoControl}
                     {validationControl}

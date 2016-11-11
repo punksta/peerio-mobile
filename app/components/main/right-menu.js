@@ -14,14 +14,14 @@ const itemStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     paddingLeft: 20,
-    paddingTop: 14,
-    paddingBottom: 14,
+    paddingTop: 4,
+    paddingBottom: 4,
     backgroundColor: 'white'
 };
 
 const textStyle = {
     color: '#000000CF',
-    marginLeft: 14
+    marginLeft: 4
 };
 
 @observer

@@ -2,7 +2,7 @@ import { when, observable, action, reaction } from 'mobx';
 import state from '../layout/state';
 import store from '../../store/local-storage';
 import Util from '../helpers/util';
-import { User, chatStore } from '../../lib/icebear';
+import { User, chatStore, socket } from '../../lib/icebear';
 import touchid from '../touchid/touchid-bridge';
 
 const loginState = observable({
@@ -37,14 +37,9 @@ const loginState = observable({
         state.routes.loginSaved.transition();
     },
 
-    @action login() {
-        const user = new User();
-        user.username = this.username;
-        user.passphrase = this.passphrase || this.savedPassphrase || 'such a secret passphrase';
-        this.isInProgress = true;
+    @action _login(user) {
         return user.login()
             .then(state.routes.main.transition)
-            // .then(state.routes.compose.transition)
             .catch(e => {
                 console.error(e);
                 this.error = 'loginFailed';
@@ -64,6 +59,14 @@ const loginState = observable({
                 });
                 return null;
             });
+    },
+
+    @action login() {
+        const user = new User();
+        user.username = this.username;
+        user.passphrase = this.passphrase || this.savedPassphrase || 'such a secret passphrase';
+        this.isInProgress = true;
+        when(() => socket.connected, () => this._login(user));
     },
 
     @action async load() {

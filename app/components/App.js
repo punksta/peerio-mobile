@@ -4,7 +4,6 @@ import { reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import Login from './login/login';
 import Signup from './signup/signup';
-import ComposeMessage from './messaging/compose-message';
 import PersistentFooter from './layout/persistent-footer';
 // import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
@@ -20,6 +19,7 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         state.load();
+        
         this.renderScene = this.renderScene.bind(this);
 
         this.routes = [
@@ -27,8 +27,7 @@ export default class App extends Component {
             this.route('loginSaved', Login.Saved),
             this.route('signupStep1', Signup.Step1),
             this.route('signupStep2', Signup.Pin),
-            this.route('main', LayoutMain, true),
-            this.route('compose', ComposeMessage)
+            this.route('main', LayoutMain, true)
         ];
 
         this._panResponder = PanResponder.create({
@@ -95,7 +94,7 @@ export default class App extends Component {
     }
 
     configureScene(route /* , routeStack */) {
-        if (route.index < 2) {
+        if (route.index < 2 || route.Index > 3) {
             return Navigator.SceneConfigs.FadeAndroid;
         }
         return Navigator.SceneConfigs.PushFromRight;

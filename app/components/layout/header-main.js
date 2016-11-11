@@ -41,8 +41,6 @@ export default class HeaderMain extends Component {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    paddingRight: 8,
-                    paddingLeft: 8,
                     paddingTop: 10,
                     height: styles.vars.headerHeight }}>
                     <View style={{ flexDirection: 'row', paddingLeft: 6, backgroundColor: 'transparent' }}>

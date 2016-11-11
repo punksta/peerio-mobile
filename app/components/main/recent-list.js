@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
-    ScrollView
+    ScrollView, RefreshControl
 } from 'react-native';
+import { observable, when } from 'mobx';
 import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
 import Avatar from '../shared/avatar';
@@ -9,23 +10,32 @@ import { chatStore } from '../../lib/icebear';
 
 @observer
 export default class RecentList extends Component {
-    press(/* i, key */) {
-        console.log('pressing');
-        mainState.chat();
+    constructor(props) {
+        super(props);
+        this._onRefresh = this._onRefresh.bind(this);
+    }
+
+    @observable refreshing = false;
+
+    _onRefresh() {
+        this.refreshing = true;
+        chatStore.loadAllChats();
+        when(() => !chatStore.loading, () => (this.refreshing = false));
     }
 
     item(i, key) {
         const online = true;
-        const lastMessage = 'n/a';
-        const name = i.participants && i.participants.length ? i.participants[0].username : 'n/a';
+        const lastMessage = '';
+        const name = i.participants && i.participants.length ? i.participants.map(p => p.username).join(', ') : '';
         return (
             <Avatar
+                loading={i.loadingMeta}
                 icon="navigate-next"
                 online={online}
                 name={name}
                 message={lastMessage}
                 key={key}
-                onPress={() => (mainState.chat())} />
+                onPress={() => (mainState.chat(i))} />
         );
     }
 
@@ -47,9 +57,15 @@ export default class RecentList extends Component {
         // ];
 
         const items = chatStore.chats;
+        const refreshControl = (
+            <RefreshControl
+                refreshing={this.refreshing}
+                onRefresh={this._onRefresh}
+            />
+        );
 
         return (
-            <ScrollView>
+            <ScrollView refreshControl={refreshControl}>
                 { items.map(this.item) }
             </ScrollView>
         );

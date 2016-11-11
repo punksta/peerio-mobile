@@ -55,3 +55,6 @@ misc
 
 # env settings
 env.sh
+
+# vs code
+.vscode

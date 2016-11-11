@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import _ from 'lodash';
 import { observer } from 'mobx-react/native';
-import { observable } from 'mobx';
+import { observable, when } from 'mobx';
 import mainState from '../main/main-state';
 import InputMain from '../layout/input-main';
 import Avatar from '../shared/avatar';
@@ -31,14 +31,18 @@ export default class Chat extends Component {
         this.scroll = this.scroll.bind(this);
     }
 
+    componentWillMount() {
+        // when(() => mainState.chat != null, () => mainState.chat.loadMessages());
+    }
+
     send(v) {
         const message = v || _.sample(randomMessages);
         console.log(v);
-        mainState.addMessage({
-            name: 'Alice',
-            date: '2:40PM',
-            message
-        });
+        mainState.addMessage(message);
+    }
+
+    setFocus() {
+        this.input && this.input.setFocus();
     }
 
     renderInput() {
@@ -50,22 +54,22 @@ export default class Chat extends Component {
         };
         return (
             <View style={s}>
-                <InputMain send={this.send} />
+                <InputMain ref={i => (this.input = i)} send={this.send} />
             </View>
         );
     }
 
     item(i, key) {
-        const msg = i.message || '';
+        const msg = i.text || '';
+        const name = i.sender.username;
         const text = msg.replace(/\n[ ]+/g, '\n');
         return (
             <Avatar
                 hideOnline
-                date={i.date}
-                name={i.name}
+                date={'12:00'}
+                name={name}
                 message={text}
-                key={key}
-                onPress={() => (mainState.chat())} />
+                key={key} />
         );
     }
 
@@ -73,21 +77,30 @@ export default class Chat extends Component {
 
     layoutScrollView(event) {
         this.scrollViewHeight = event.nativeEvent.layout.height;
+        this.scroll();
     }
+
+    @observable firstLayout = true;
 
     layoutChat(event) {
         console.log('layout');
         this.contentHeight = event.nativeEvent.layout.height;
         console.log(this.contentHeight);
         console.log(this.scrollViewHeight);
-        this.scrollView.scrollTo({ y: this.contentHeight - this.scrollViewHeight, animated: true });
     }
 
-    scroll() {
+    scroll(contentWidth, contentHeight) {
+        this.contentHeight = contentHeight;
+        if (this.contentHeight && this.scrollViewHeight) {
+            this.scrollView.scrollTo({ y: this.contentHeight - this.scrollViewHeight, animated: !this.props.hideInput && !this.firstLayout });
+            this.firstLayout = false;
+        } else {
+            setTimeout(() => this.scroll(), 100);
+        }
     }
 
     render() {
-        const items = mainState.chatItems;
+        const items = (mainState.currentChat && mainState.currentChat.messages) || [];
         return (
             <View style={{ flex: 1 }}>
                 <ScrollView
@@ -99,8 +112,13 @@ export default class Chat extends Component {
                         { items.map(this.item) }
                     </View>
                 </ScrollView>
-                {this.renderInput()}
+                {this.props.hideInput ? null : this.renderInput()}
             </View>
         );
     }
 }
+
+Chat.propTypes = {
+    hideInput: React.PropTypes.bool
+};
+

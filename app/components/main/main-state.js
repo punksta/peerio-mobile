@@ -1,6 +1,7 @@
-import { observable, action } from 'mobx';
+import { observable, action, when } from 'mobx';
 import { LayoutAnimation } from 'react-native';
 import state from '../layout/state';
+import { chatStore } from '../../lib/icebear';
 
 const mainState = observable({
     isBackVisible: false,
@@ -8,7 +9,10 @@ const mainState = observable({
     isRightMenuVisible: false,
     isInputVisible: false,
     route: null,
+    currentChat: null,
     currentIndex: 0,
+    showCompose: false,
+    suppressTransition: false,
 
     @action recent() {
         state.hideKeyboard();
@@ -18,11 +22,15 @@ const mainState = observable({
         this.isBackVisible = false;
     },
 
-    @action chat() {
+    @action chat(i) {
+        this.isLeftMenuVisible = false;
+        this.isLeftMenuVisible = false;
         this.isInputVisible = true;
         this.route = 'chat';
         this.currentIndex = 1;
         this.isBackVisible = true;
+        this.currentChat = i;
+        when(() => !i.loadingMeta, () => (this.currentChat.loadMessages()));
     },
 
     @action back() {
@@ -30,7 +38,8 @@ const mainState = observable({
     },
 
     @action addMessage(msg) {
-        this.chatItems.push(msg);
+        // this.chatItems.push(msg);
+        mainState.currentChat && mainState.currentChat.sendMessage(msg);
     },
 
     @action toggleLeftMenu() {
@@ -44,7 +53,6 @@ const mainState = observable({
         this.isRightMenuVisible = !this.isRightMenuVisible;
         this.isLeftMenuVisible = false;
     },
-
 
     chatItems: [
         { name: 'Alice', date: '2:23PM', message: 'Whoever sent me this prank box will suffer in hell, for sure' },

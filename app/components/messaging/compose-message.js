@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TextInput
+    View, Text, TextInput, ActivityIndicator
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, when } from 'mobx';
@@ -11,7 +11,9 @@ import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 import InputMain from '../layout/input-main';
 import messagingState from './messaging-state';
-import { chatStore, Contact, contactStore } from '../../lib/icebear';
+import mainState from '../main/main-state';
+import Chat from './chat';
+import { chatStore, contactStore } from '../../lib/icebear';
 
 @observer
 export default class ComposeMessage extends Component {
@@ -23,6 +25,7 @@ export default class ComposeMessage extends Component {
 
     componentDidMount() {
         // setTimeout(() => this.textInput.focus(), 100);
+        // this.searchAddUser('anritest7');
     }
 
     exit() {
@@ -47,7 +50,6 @@ export default class ComposeMessage extends Component {
         );
     }
 
-    @observable recipients = [];
 
     userboxline() {
         const container = {
@@ -57,7 +59,7 @@ export default class ComposeMessage extends Component {
             paddingLeft: 8,
             flexWrap: 'wrap'
         };
-        const boxes = this.recipients.map(this.userbox);
+        const boxes = messagingState.recipients.map(this.userbox);
 
         return (
             <View style={container}>
@@ -66,10 +68,8 @@ export default class ComposeMessage extends Component {
         );
     }
 
-    @observable findUserText = '';
-
     onChangeFindUserText(text) {
-        this.findUserText = text;
+        messagingState.findUserText = text;
         if (text && text.length > 0) {
             this.searchUser(text);
         }
@@ -90,10 +90,11 @@ export default class ComposeMessage extends Component {
             <View style={container}>
                 {icons.dark('search')}
                 <TextInput
-                    value={this.findUserText}
+                    value={messagingState.findUserText}
                     onChangeText={text => this.onChangeFindUserText(text)}
+                    autoCapitalize="none"
                     autoCorrect={false}
-                    placeholder="Find someone"
+                    placeholder="Find someone by username"
                     ref={ti => (this.textInput = ti)} style={style} />
             </View>
         );
@@ -122,10 +123,17 @@ export default class ComposeMessage extends Component {
     }
 
     addRecipient(contact) {
-        if (this.recipients.indexOf(contact) === -1) {
+        const recipients = messagingState.recipients;
+        if (recipients.indexOf(contact) === -1) {
             this.found = [];
-            this.findUserText = '';
-            this.recipients.push(contact);
+            messagingState.findUserText = '';
+            recipients.push(contact);
+            const chat = chatStore.findChatWithParticipants(recipients);
+            if (chat) {
+                messagingState.currentChat = chat;
+                mainState.currentChat = chat;
+                chat.loadMessages();
+            }
         }
     }
 
@@ -148,19 +156,36 @@ export default class ComposeMessage extends Component {
 
     searchUser(username) {
         const c = contactStore.getContact(username);
+        this.loading = true;
         when(() => !c.loading, () => {
+            this.loading = false;
             if (!c.notFound) {
                 this.found = [c];
             }
         });
     }
 
+    searchAddUser(username) {
+        const c = contactStore.getContact(username);
+        this.loading = true;
+        when(() => !c.loading, () => {
+            this.loading = false;
+            if (!c.notFound) {
+                // this.addRecipient(c);
+            }
+        });
+    }
+
     body() {
         const mockItems = this.found.map((item, i) => this.item(item, i));
-
+        const activityIndicator = <ActivityIndicator />;
+        const chat = messagingState.chat ? <Chat hideInput /> : null;
+        const findUserText = messagingState.findUserText;
+        const result = findUserText && findUserText.length ? mockItems : chat;
+        const body = messagingState.loading ? activityIndicator : result;
         return (
             <View>
-                {mockItems}
+                {body}
             </View>
         );
     }
@@ -183,10 +208,11 @@ export default class ComposeMessage extends Component {
         const tbSearch = this.textbox();
         const userRow = this.userboxline();
         const exitRow = this.exitRow();
+        const recipients = messagingState.recipients;
         return (
             <View>
                 {this.lineBlock(exitRow)}
-                {this.recipients.length ? this.lineBlock(userRow) : null}
+                {recipients.length ? this.lineBlock(userRow) : null}
                 {this.lineBlock(tbSearch)}
             </View>
         );
@@ -206,9 +232,8 @@ export default class ComposeMessage extends Component {
         );
     }
 
-    send() {
-        const chat = chatStore.startChat(this.recipients);
-        chat.addMessage('test');
+    send(text) {
+        messagingState.send(text);
     }
 
     render() {
@@ -217,7 +242,7 @@ export default class ComposeMessage extends Component {
         const layoutStyle = {
             backgroundColor: 'white'
         };
-        const footer = this.recipients.length ? this.renderInput() : null;
+        const footer = messagingState.recipients.length ? this.renderInput() : null;
         return (
             <Layout1
                 defaultBar

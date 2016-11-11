@@ -40,7 +40,7 @@ const vars = {
     inputBgInactiveText: '#7c8e98',
     layoutPaddingTop: 24,
     footerMarginX: 24,
-    headerHeight: 28,
+    headerHeight: 48,
     headerSpacing: 56,
     font: {
         size: {
@@ -164,8 +164,8 @@ const styles = {
             hint: inherit('hint'),
             iconContainer: {
                 position: 'absolute',
-                right: 12,
-                top: 12
+                right: 2,
+                top: 2
             },
             icon: {
                 backgroundColor: 'transparent'
@@ -188,8 +188,8 @@ const styles = {
             }),
             iconContainer: {
                 position: 'absolute',
-                right: 12,
-                top: 12
+                right: 2,
+                top: 2
             },
             icon: {
                 backgroundColor: 'transparent'
@@ -208,7 +208,7 @@ const styles = {
             },
             scaled: {
                 position: 'absolute',
-                top: 6,
+                top: 18,
                 left: 10
                 /* transform: [{ scale: 0.8 }]  */
             }
@@ -232,8 +232,8 @@ const styles = {
             }),
             iconContainer: {
                 position: 'absolute',
-                right: 12,
-                top: 12
+                right: 2,
+                top: 2
             },
             icon: {
                 backgroundColor: 'transparent'
@@ -256,8 +256,8 @@ const styles = {
             }),
             iconContainer: {
                 position: 'absolute',
-                right: 12,
-                top: 12
+                right: 2,
+                top: 2
             },
             icon: {
                 backgroundColor: 'transparent'

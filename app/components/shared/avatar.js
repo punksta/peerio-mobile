@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TouchableOpacity
+    View, Text, TouchableOpacity, ActivityIndicator
 } from 'react-native';
-
 import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 
@@ -72,17 +71,42 @@ const circleStyleOff = {
     margin: 4
 };
 
-export default class Avatar extends Component {
+function hashCode(str) { // java String#hashCode
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+       hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
+} 
 
+function intToRGB(i){
+    i = i * i * i % i;
+    var c = (i & 0x00FFFFFF)
+        .toString(16)
+        .toUpperCase();
+
+    return "00000".substring(0, 6 - c.length) + c;
+}
+
+function stringColor(s) {
+    return `#${intToRGB(hashCode(s))}`;
+}
+
+export default class Avatar extends Component {
     render() {
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
         const date = this.props.date ? <Text style={dateTextStyle}>{this.props.date}</Text> : null;
         const online = this.props.hideOnline ? null : <View style={this.props.online ? circleStyle : circleStyleOff} />;
+        const color = this.props.name ? stringColor(this.props.name) : 'green';
+        const coloredAvatarStyle = [avatarStyle, { backgroundColor: color }];
+        const avatar = <View style={coloredAvatarStyle} />;
+        const loader = <ActivityIndicator style={{ height: avatarRadius, margin: 4 }} />;
+        const avatarPlaceholder = this.props.loading ? loader : avatar;
         return (
             <View style={{ backgroundColor: styles.vars.bg }}>
                 <TouchableOpacity onPress={this.props.onPress}>
                     <View style={itemStyle}>
-                        <View style={avatarStyle} />
+                        {avatarPlaceholder}
                         <View style={nameMessageContainerStyle}>
                             <View style={nameContainerStyle}>
                                 <Text style={nameTextStyle}>{this.props.name}</Text>
@@ -106,6 +130,7 @@ Avatar.propTypes = {
     icon: React.PropTypes.string,
     message: React.PropTypes.string,
     online: React.PropTypes.bool,
+    loading: React.PropTypes.bool,
     hideOnline: React.PropTypes.bool
 };
 

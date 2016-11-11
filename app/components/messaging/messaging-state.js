@@ -1,17 +1,47 @@
-import { observable, action, reaction } from 'mobx';
-import state from '../layout/state';
-import store from '../../store/local-storage';
-import Util from '../helpers/util';
-import { User } from '../../lib/icebear';
-import touchid from '../touchid/touchid-bridge';
+import { observable, action, when } from 'mobx';
+import mainState from '../main/main-state';
+import { chatStore, contactStore } from '../../lib/icebear';
 
 const messagingState = observable({
+    @action chat(v) {
+        mainState.chat(v);
+        this.exit();
+    },
+
     @action transition() {
-        state.routes.compose.transition();
+        mainState.currentChat = null;
+        mainState.showCompose = true;
     },
 
     @action exit() {
-        state.routes.main.transition();
+        mainState.showCompose = false;
+        this.clear();
+    },
+
+    currentChat: null,
+    findUserText: '',
+    loading: false,
+    recipients: [],
+
+    @action clear() {
+        this.loading = false;
+        this.currentChat = null;
+        this.findUserText = '';
+        this.recipients = [];
+    },
+
+    @action send(text, recipient) {
+        mainState.suppressTransition = true;
+        when(() => !mainState.suppressTransition, () => this.clear());
+        const chat = chatStore.startChat(recipient ? [recipient] : this.recipients);
+        when(() => chat.id, () => {
+            text && chat.sendMessage(text);
+            messagingState.chat(chat);
+        });
+    },
+
+    @action sendTo(contact) {
+        this.send(null, contact);
     }
 });
 

@@ -17,7 +17,6 @@ export default class SignupFooter extends Component {
         this.prev = this.prev.bind(this);
     }
     next() {
-        console.log('ffff');
         if (signupState.current < signupState.count - 1) {
             signupState.current++;
         } else {

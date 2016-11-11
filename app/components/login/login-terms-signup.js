@@ -8,6 +8,7 @@ import Button from '../controls/button';
 import Center from '../controls/center';
 import styles from '../../styles/styles';
 import signupState from '../signup/signup-state';
+import loginState from '../login/login-state';
 
 export default class LoginTermsSignup extends Component {
     constructor(props) {
@@ -17,10 +18,12 @@ export default class LoginTermsSignup extends Component {
     }
 
     signUp() {
+        if (loginState.isInProgress) return;
         signupState.transition();
     }
 
     terms() {
+        if (loginState.isInProgress) return;
         Linking.openURL('https://www.peerio.com/');
     }
 

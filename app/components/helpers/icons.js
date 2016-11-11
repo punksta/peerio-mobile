@@ -8,7 +8,7 @@ const icons = {
         return (
             <TouchableOpacity onPress={onPress}>
                 <Icon
-                    style={style}
+                    style={[{ padding: 10 }, style]}
                     name={name}
                     size={24}
                     color={color} />

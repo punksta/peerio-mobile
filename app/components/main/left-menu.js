@@ -10,6 +10,7 @@ import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
+import { chatStore, contactStore } from '../../lib/icebear';
 
 const circleRadius = 6;
 const circleStyle = {
@@ -88,7 +89,7 @@ export default class LeftMenu extends Component {
                         {i}
                     </Text>
                 </View>
-                {icons.dark('control-point', action)}
+                {icons.dark('control-point', () => { this.hideAnimated(); action(); })}
             </View>
         );
     }
@@ -96,7 +97,7 @@ export default class LeftMenu extends Component {
     item(i) {
         return (
             <View style={{ backgroundColor: styles.vars.bg }} key={i.id}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={i.action}>
                     <View style={itemStyle}>
                         <View style={i.online ? circleStyle : circleStyleOff} />
                         <Text style={textStyle}>{i.name}</Text>
@@ -132,6 +133,22 @@ export default class LeftMenu extends Component {
             { name: 'testdm35', id: '5', online: true }
         ];
 
+        const itemsMap = {};
+        const cachedContacts = contactStore.contacts.map(i => {
+            return {
+                name: i.username,
+                id: i.username,
+                online: true,
+                action: () => {
+                    messagingState.sendTo(i);
+                }
+            };
+        });
+
+        cachedContacts.forEach(i => (itemsMap[i.name] = i));
+
+        testItems.forEach(i => !itemsMap[i.name] && cachedContacts.push(i));
+
         return (
             <Swiper style={containerStyle}
                     onHide={() => (mainState.isLeftMenuVisible = false)}
@@ -144,7 +161,7 @@ export default class LeftMenu extends Component {
                     </View> */}
                         <View>
                             { this.header('Conversations', () => messagingState.transition()) }
-                            { testItems.map(this.item) }
+                            { cachedContacts.map(this.item) }
                         </View>
                     </View>
                 </Hider>

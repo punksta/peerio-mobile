@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
-import AutoExpandingTextInput from 'react-native-auto-expanding-textinput';
+import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
 import Button from '../controls/button';
 import styles from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -49,6 +49,10 @@ export default class InputMain extends Component {
         this.value = '';
     }
 
+    setFocus() {
+        this.input.ti.focus();
+    }
+
     _onChangeHeight(/* before, after */) {
         // console.log('before: ' + before + ' after: ' + after);
     }
@@ -64,6 +68,7 @@ export default class InputMain extends Component {
                 {icons.dark('control-point', this.plus, { padding: 20 })}
                 <AutoExpandingTextInput
                     onChangeText={this.onChangeText}
+                    autoCorrect={false}
                     value={this.value}
                     placeholder="Enter text here"
                     enablesReturnKeyAutomatically
