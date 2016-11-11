@@ -56,5 +56,8 @@ misc
 # env settings
 env.sh
 
+# icebear
+app/lib/peerio-icebear
+
 # vs code
 .vscode
