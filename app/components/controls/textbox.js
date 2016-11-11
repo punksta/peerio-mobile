@@ -21,7 +21,6 @@ export default class TextBox extends Component {
 
     constructor(props) {
         super(props);
-        this.value = this.props.value;
         this.validationMessage = this.props.validationMessage;
         this.blur = this.blur.bind(this);
         this.focus = this.focus.bind(this);
@@ -34,18 +33,21 @@ export default class TextBox extends Component {
         this.animatedHintTranslate = new Animated.Value(translateFrom);
         this.animatedHintTranslateY = new Animated.Value(translateFrom);
         this.animatedHintScale = new Animated.Value(scaleFrom);
-        reaction(() => this.focused, () => {
+        reaction(() => [this.focused, this.value], () => {
+            const v = this.focused || (this.value && this.value.length);
             const duration = 300;
             const scaleTo = 0.8;
             const width = 200;
             const translateTo = -width * (1 - scaleTo) + 12 / scaleTo;
             const translateToY = -16;
             Animated.parallel([
-                Animated.timing(this.animatedHintTranslate, { toValue: this.focused ? translateTo : translateFrom, duration }),
-                Animated.timing(this.animatedHintTranslateY, { toValue: this.focused ? translateToY : translateFromY, duration }),
-                Animated.timing(this.animatedHintScale, { toValue: this.focused ? scaleTo : scaleFrom, duration })
+                Animated.timing(this.animatedHintTranslate, { toValue: v ? translateTo : translateFrom, duration }),
+                Animated.timing(this.animatedHintTranslateY, { toValue: v ? translateToY : translateFromY, duration }),
+                Animated.timing(this.animatedHintScale, { toValue: v ? scaleTo : scaleFrom, duration })
             ]).start();
         });
+
+        this.value = this.props.value;
     }
 
     componentDidMount() {
