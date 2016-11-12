@@ -734,7 +734,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\n\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n    source env.sh && ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    source env.sh && ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n";
+			shellScript = "export NODE_BINARY=node\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\nsource env.sh\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n    ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n";
 		};
 		02DB415B1DCD1DB000E04176 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -748,7 +748,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\n\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n    source env.sh && ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    source env.sh && ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n";
+			shellScript = "export NODE_BINARY=node\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\nsource env-expandoo.sh\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n     ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -883,6 +883,7 @@
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 48;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
 				HEADER_SEARCH_PATHS = (
@@ -934,6 +935,7 @@
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 48;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

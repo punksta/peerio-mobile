@@ -1,8 +1,5 @@
-app_identifier "com.peerio" # The bundle identifier of your app
-apple_id "seavan@gmail.com" # Your Apple email address
+apple_id "seavan@gmail.com"
 
-team_id "7L45B96YPK"  # Developer Portal Team ID
-itc_team_id "117139026"
-
-# you can even provide different app identifiers, Apple IDs and team names per lane:
-# More information: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Appfile.md
+# team_id "7L45B96YPK" 
+# itc_team_id "117139026"
+# app_identifier "com.peerio"

@@ -61,3 +61,8 @@ app/lib/peerio-icebear
 
 # vs code
 .vscode
+
+# fastlane
+*.ipa
+*.dSYM*
+fastlane/report.xml
