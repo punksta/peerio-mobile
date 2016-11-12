@@ -1,0 +1,30 @@
+Peerio is a simple way to send private messages and files and store them in the cloud. Everything inside Peerio is end-to-end encrypted by default, meaning no one but you and your intended recipients can access your data. Simply get the app, create an account, and start sending private messages and files using state-of-the-art encryption!
+
+Peerio is proudly open source software licensed under the GPLv3. You can view our source code and make contributions on our GitHub (github.com/PeerioTechnologies).
+
+FEATURES:
+• Secure messages, file sharing, and cloud storage
+• Ability to send encrypted messages to arbitrary email addresses (Ghosts)
+• 1 GB of free cloud storage, for life. (Up to 10GB free with referrals)
+• Supports files up to 400MB
+• Group chat
+• Remote access to encrypted data from any mobile or desktop device
+• Touch ID ready
+• Ad-free, forever
+ 
+SECURITY:
+• All data end-to-end encrypted by default
+• Open source — https://github.com/PeerioTechnologies/peerio-client
+• Independently audited by security firm Cure53
+• User-held keys, no third party access (including Peerio)
+• Users own their data
+• Two factor authentication ready
+• Strong computer generated passphrases
+• Out-of-band authentication possible through identicons or public keys.
+
+We offer in-app purchases to subscribe to Peerio Pro, which includes 50GB of additional storage and priority support services for $9.99/month or 99.99/year. The amount will be charged to your iTunes account and will vary by country and currency rates. You’ll see the total price before completing payment.
+
+Peerio Pro subscriptions purchased in-app renew monthly or yearly depending on the plan you select. To avoid renewal, you must turn off auto-renew at least 24 hours before your subscription ends. You can turn off auto-renew at any time from your iTunes account settings.
+
+Terms of Service: https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Terms_of_Use.md
+Privacy Policy: https://github.com/PeerioTechnologies/peerio-documentation/blob/master/Privacy_Policy.md
