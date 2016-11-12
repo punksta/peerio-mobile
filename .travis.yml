@@ -6,4 +6,4 @@ osx_image: xcode8
 install:
   - npm install
 script:
-  - npm run postinstall
+  - npm run build-ios-nocodesign
