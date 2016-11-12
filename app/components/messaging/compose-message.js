@@ -103,7 +103,8 @@ export default class ComposeMessage extends Component {
     exitRow() {
         const container = {
             flex: 1,
-            flexDirection: 'row'
+            flexDirection: 'row',
+            alignItems: 'center'
         };
         const style = {
             flex: 1
@@ -118,6 +119,7 @@ export default class ComposeMessage extends Component {
             <View style={container}>
                 {icons.dark('close', this.exit)}
                 <Center style={style}><Text style={textStyle}>New message</Text></Center>
+                {icons.placeholder()}
             </View>
         );
     }

@@ -1,4 +1,4 @@
-import { observable, action, when } from 'mobx';
+import { observable, action, when, reaction, computed } from 'mobx';
 import { LayoutAnimation } from 'react-native';
 import state from '../layout/state';
 import { chatStore } from '../../lib/icebear';
@@ -8,13 +8,14 @@ const mainState = observable({
     isLeftMenuVisible: false,
     isRightMenuVisible: false,
     isInputVisible: false,
+    blackStatusBar: false,
     route: null,
     currentChat: null,
     currentIndex: 0,
-    showCompose: false,
+    showCompose: true,
     suppressTransition: false,
 
-    @action recent() {
+    @action initial() {
         state.hideKeyboard();
         this.isInputVisible = false;
         this.route = 'recent';
@@ -27,14 +28,20 @@ const mainState = observable({
         this.isLeftMenuVisible = false;
         this.isInputVisible = true;
         this.route = 'chat';
-        this.currentIndex = 1;
-        this.isBackVisible = true;
+        this.currentIndex = 0;
+        this.showCompose = false;
+        // this.isBackVisible = true;
         this.currentChat = i;
         when(() => !i.loadingMeta, () => (this.currentChat.loadMessages()));
     },
 
     @action back() {
         this.recent();
+    },
+
+    @computed get title() {
+        const i = this.currentChat;
+        return i && i.participants && i.participants.length ? i.participants.map(p => p.username).join(', ') : '';
     },
 
     @action addMessage(msg) {
@@ -74,6 +81,10 @@ const mainState = observable({
             darling. You do know I love Justin!`
         }
     ]
+});
+
+reaction(() => mainState.isLeftMenuVisible, () => {
+    if (mainState.isLeftMenuVisible) state.hideKeyboard();
 });
 
 export default mainState;

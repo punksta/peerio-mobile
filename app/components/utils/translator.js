@@ -7,7 +7,7 @@ import state from '../layout/state';
 class T extends Component {
     componentDidMount() {
         this.localeUpdateReaction = reaction(() => state.locale, () => {
-            console.log('update reaction');
+            // console.log('update reaction');
             this.forceUpdate();
         });
     }

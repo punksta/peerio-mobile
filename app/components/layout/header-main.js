@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View
+    View, Text
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
@@ -34,26 +34,27 @@ export default class HeaderMain extends Component {
         const leftIcon = mainState.isBackVisible ?
             icons.white('keyboard-arrow-left', this.back) :
             icons.white('menu', this.leftMenu);
+        const textStyle = {
+            color: styles.vars.highlight,
+            fontWeight: 'bold',
+            lineHeight: 20
+        };
+        const containerStyle = {
+            flex: 0,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingTop: 10,
+            height: styles.vars.headerHeight
+        };
         return (
             <View style={{ height: 56, flex: 0, justifyContent: 'center' }}>
-                <View style={{
-                    flex: 0,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    paddingTop: 10,
-                    height: styles.vars.headerHeight }}>
+                <View style={containerStyle}>
                     <View style={{ flexDirection: 'row', paddingLeft: 6, backgroundColor: 'transparent' }}>
                         {leftIcon}
-                        {/*
-                        <Text style={{
-                            marginLeft: 46,
-                            color: styles.vars.highlight,
-                            lineHeight: 20 }}>Alice</Text>
-                        {icons.white('arrow-drop-down', this.leftMenu)} */}
                     </View>
+                    <Text style={textStyle}>{this.props.title}</Text>
                     <View style={{ flexDirection: 'row', backgroundColor: 'transparent' }}>
-                        {icons.white('search', this.search)}
                         {icons.white('more-vert', this.rightMenu)}
                     </View>
                 </View>
@@ -62,3 +63,6 @@ export default class HeaderMain extends Component {
     }
 }
 
+HeaderMain.propTypes = {
+    title: React.PropTypes.string
+};

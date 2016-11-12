@@ -4,6 +4,7 @@ import {
     /* ScrollView, */
     PanResponder,
     /* LayoutAnimation, */
+    StatusBar,
     Animated,
     Dimensions
 } from 'react-native';
@@ -36,7 +37,7 @@ export default class LayoutMain extends Component {
         this.animatedX = new Animated.Value(0);
         this.composeAnimated = new Animated.Value(this.height);
         this.indexAnimation = reaction(() => mainState.currentIndex, i => {
-            console.log('index animation');
+            console.log('layout-main.js: index animation');
             const toValue = -i * this.width;
             const duration = mainState.suppressTransition ? 0 : 300;
             Animated.timing(this.animatedX, { toValue, duration })
@@ -47,7 +48,7 @@ export default class LayoutMain extends Component {
                     }
                     mainState.suppressTransition = false;
                 });
-        });
+        }, true);
     }
 
     componentWillMount() {
@@ -57,24 +58,25 @@ export default class LayoutMain extends Component {
                 return false;
             }
         });
-        mainState.recent();
+        mainState.initial();
     }
 
     componentDidMount() {
-        console.log('mounted');
         reaction(() => mainState.showCompose, () => {
             if (mainState.showCompose) {
+                console.log('layout-main.js: show compose');
                 Animated.timing(this.composeAnimated, { toValue: 0, duration: 300 })
-                    .start();
+                    .start(() => (mainState.blackStatusBar = true));
             } else {
-                this.composeAnimated.setValue(this.height);
+                Animated.timing(this.composeAnimated, { toValue: this.height, duration: 300 }).start();
+                mainState.blackStatusBar = false;
             }
-        });
+        }, true);
     }
 
     componentWillUnmount() {
         this.indexAnimation();
-        console.log('unmounted');
+        console.log('layout-main.js: unmounted');
     }
 
 
@@ -88,7 +90,7 @@ export default class LayoutMain extends Component {
     }
 
     page(control, key) {
-        const menuLeft = mainState.isLeftMenuVisible ? this.width * 0.8 : 0;
+        const menuLeft = mainState.isLeftMenuVisible ? this.width * 0.9 : 0;
         const s = {
             backgroundColor: '#fff',
             position: 'absolute',
@@ -128,15 +130,17 @@ export default class LayoutMain extends Component {
             bottom: 0,
             right: 0
         };
+        const body = <Chat ref={c => (this.chatControl = c)} />;
+        const title = mainState.title;
         return (
             <View style={styles.container.root}>
-                <HeaderMain />
+                <HeaderMain title={title} />
                 <Animated.View
                     {...this.panResponder.panHandlers}
                     behavior="padding"
                     style={outerStyle}>
                     <Animated.View style={{ flex: 1, transform }}>
-                        { this.pages([<RecentList />, <Chat ref={c => (this.chatControl = c)} />]) }
+                        {this.pages([body])}
                     </Animated.View>
                 </Animated.View>
                 <LeftMenu />
@@ -144,6 +148,7 @@ export default class LayoutMain extends Component {
                 <Animated.View style={composeStyle}>
                     <ComposeMessage />
                 </Animated.View>
+                <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'} />
             </View>
         );
     }

@@ -42,6 +42,8 @@ const vars = {
     footerMarginX: 24,
     headerHeight: 48,
     headerSpacing: 56,
+    iconSize: 24,
+    iconPadding: 10,
     font: {
         size: {
             normal: 14,

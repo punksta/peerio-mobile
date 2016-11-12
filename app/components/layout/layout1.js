@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, ScrollView, PanResponder, StatusBar
+    View, ScrollView, PanResponder
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import styles from '../../styles/styles';
@@ -35,6 +35,7 @@ export default class Layout1 extends Component {
 
     render() {
         const offset = state.pickerVisible ? state.pickerHeight : state.keyboardHeight;
+        const paddingTop = styles.vars.layoutPaddingTop;
 
         const boxStyle = {
             flex: 1,
@@ -42,8 +43,8 @@ export default class Layout1 extends Component {
             justifyContent: 'space-between',
             borderColor: 'yellow',
             borderWidth: 0,
-            paddingTop: styles.vars.layoutPaddingTop,
-            paddingBottom: offset
+            paddingTop,
+            paddingBottom: this.props.noKeyboard ? 0 : offset
         };
 
         const scrollViewStyle = {
@@ -66,7 +67,6 @@ export default class Layout1 extends Component {
                 {...this.panResponder.panHandlers}
                 style={[boxStyle, this.props.style]}>
                 {this.props.header}
-                <StatusBar barStyle={this.props.defaultBar ? 'default' : 'light-content'} />
                 <ScrollView
                     ref={svRef}
                     style={[scrollViewStyle]}
@@ -87,7 +87,9 @@ Layout1.propTypes = {
     style: React.PropTypes.any,
     footer: React.PropTypes.any,
     header: React.PropTypes.any,
+    padding: React.PropTypes.any,
     noFitHeight: React.PropTypes.bool,
     noAutoHide: React.PropTypes.bool,
+    noKeyboard: React.PropTypes.bool,
     defaultBar: React.PropTypes.bool
 };

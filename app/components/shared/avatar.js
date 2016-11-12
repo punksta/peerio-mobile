@@ -38,7 +38,8 @@ const nameMessageContainerStyle = {
 };
 
 const nameTextStyle = {
-    fontWeight: '500'
+    fontWeight: '500',
+    flex: 1
 };
 
 const dateTextStyle = {
@@ -106,7 +107,7 @@ export default class Avatar extends Component {
                         {avatarPlaceholder}
                         <View style={nameMessageContainerStyle}>
                             <View style={nameContainerStyle}>
-                                <Text style={nameTextStyle}>{this.props.name}</Text>
+                                <Text ellipsizeMode="tail" style={nameTextStyle}>{this.props.name}</Text>
                                 {date}
                             </View>
                             <Text style={lastMessageTextStyle}>{this.props.message}</Text>

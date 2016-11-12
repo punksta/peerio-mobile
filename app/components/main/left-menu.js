@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-    View, Dimensions, Text, TouchableOpacity, LayoutAnimation
+    View, Dimensions, Text, TouchableOpacity, LayoutAnimation, ScrollView
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-// import { observable } from 'mobx';
+import { reaction } from 'mobx';
 import mainState from '../main/main-state';
 import messagingState from '../messaging/messaging-state';
 import icons from '../helpers/icons';
@@ -61,15 +61,18 @@ const headerContainer = {
 @observer
 export default class LeftMenu extends Component {
 
+    componentDidMount() {
+    }
+
     hideAnimated() {
         LayoutAnimation.easeInEaseOut();
         mainState.isLeftMenuVisible = false;
     }
 
     componentWillUpdate() {
-        if (mainState.isLeftMenuVisible) {
-            LayoutAnimation.easeInEaseOut();
-        }
+        LayoutAnimation.easeInEaseOut();
+        // if (mainState.isLeftMenuVisible) {
+        // }
     }
 
     channel(i) {
@@ -125,14 +128,6 @@ export default class LeftMenu extends Component {
             borderRightColor: '#efefef'
         };
 
-        const testItems = [
-            { name: 'testdm31', id: '1', online: true },
-            { name: 'testdm32', id: '2', online: false },
-            { name: 'testdm33', id: '3', online: false },
-            { name: 'testdm34', id: '4', online: true },
-            { name: 'testdm35', id: '5', online: true }
-        ];
-
         const itemsMap = {};
         const cachedContacts = contactStore.contacts.map(i => {
             return {
@@ -147,7 +142,6 @@ export default class LeftMenu extends Component {
 
         cachedContacts.forEach(i => (itemsMap[i.name] = i));
 
-        testItems.forEach(i => !itemsMap[i.name] && cachedContacts.push(i));
 
         return (
             <Swiper style={containerStyle}
@@ -155,7 +149,7 @@ export default class LeftMenu extends Component {
                     {...this.props}
                     rightToLeft>
                 <Hider onHide={this.hideAnimated} isLeft>
-                    <View style={innerContainerStyle}>
+                    <ScrollView style={innerContainerStyle}>
                         {/* <View>
                             { this.header('Channels') }
                     </View> */}
@@ -163,7 +157,7 @@ export default class LeftMenu extends Component {
                             { this.header('Conversations', () => messagingState.transition()) }
                             { cachedContacts.map(this.item) }
                         </View>
-                    </View>
+                    </ScrollView>
                 </Hider>
             </Swiper>
         );

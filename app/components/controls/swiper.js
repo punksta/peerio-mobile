@@ -74,11 +74,11 @@ export default class Swiper extends Component {
             x: e.nativeEvent.pageX,
             y: e.nativeEvent.pageY
         };
-        return true;
+        return false;
     }
 
     _onMoveShouldSetResponder(/* e */) {
-        return true;
+        return false;
     }
 
     getCardStyle() {
