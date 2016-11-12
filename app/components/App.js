@@ -55,6 +55,15 @@ export default class App extends Component {
             }
             requestAnimationFrame(state.hideKeyboard);
         });
+
+        if (console._errorOriginal) {
+            console.error = console._errorOriginal;
+        }
+
+        global.ErrorUtils && global.ErrorUtils.setGlobalHandler((e) => {
+            console.log('catched error');
+            console.log(e);
+        });
     }
 
     componentWillMount() {
@@ -64,7 +73,7 @@ export default class App extends Component {
         // navigating to initial route
         // timeout is needed for router to properly initialize
         // setTimeout(() => {
-        //     state.routes.compose.transition();
+        //     state.routes.signupStep1.transition();
         // }, 1000);
     }
 
