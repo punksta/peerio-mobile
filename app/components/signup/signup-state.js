@@ -27,7 +27,7 @@ const signupState = observable({
 
     @computed get nextAvailable() {
         switch (signupState.current) {
-            case 0: return this.usernameValid && this.email && this.emailValid;
+            case 0: return this.usernameValid && this.email && this.emailValid && this.firstName && this.lastName;
             case 1: return this.pinSaved;
             default: return false;
         }

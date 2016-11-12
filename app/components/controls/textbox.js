@@ -74,8 +74,8 @@ export default class TextBox extends Component {
     }
 
     changeText(text) {
-        this.value = text;
-        this.props.onChangeText(this.props.name, text);
+        this.value = this.props.lowerCase ? text.toLowerCase() : text;
+        this.props.onChangeText(this.props.name, this.value);
     }
 
     focus() {
@@ -199,6 +199,7 @@ TextBox.propTypes = {
     info: React.PropTypes.any,
     name: React.PropTypes.string.isRequired,
     secureTextEntry: React.PropTypes.bool,
+    lowerCase: React.PropTypes.bool,
     autoCapitalize: React.PropTypes.oneOf(['none', 'sentences', 'words', 'characters']),
     autoCorrect: React.PropTypes.bool
 };

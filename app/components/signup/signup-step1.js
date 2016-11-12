@@ -29,6 +29,7 @@ export default class SignupStep1 extends Component {
                 <Text style={style.text.title}>{t('signup')}</Text>
                 <Text style={style.text.subTitle}>{t('profile')}</Text>
                 <TextBox
+                    lowerCase
                     valid={signupState.usernameValid}
                     validationMessage={signupState.usernameValidationMessage}
                     {...this.tb('username', t('username'))} />
@@ -39,12 +40,10 @@ export default class SignupStep1 extends Component {
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1 }}>
                         <TextBox
-                            info={t('optional')}
                             {...this.tb('firstName', t('firstName'))} />
                     </View>
                     <View style={{ flex: 1 }}>
                         <TextBox
-                            info={t('optional')}
                             {...this.tb('lastName', t('lastName'))} />
                     </View>
                 </View>

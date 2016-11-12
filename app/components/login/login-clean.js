@@ -29,7 +29,7 @@ export default class LoginClean extends Component {
     }
 
     componentDidMount() {
-        loginState.username = 'testdm32';
+        loginState.username = 'anritest6';
         loginState.passphrase = 'icebear';
         // loginState.login();
     }
@@ -53,7 +53,9 @@ export default class LoginClean extends Component {
                 style={style.containerFlex}>
                 <Logo />
                 <View>
-                    <TextBox valid={loginState.usernameValid}
+                    <TextBox
+                        lowerCase
+                        valid={loginState.usernameValid}
                         {...this.tb('username', t('name'))} />
                     <TextBox
                         secureTextEntry
