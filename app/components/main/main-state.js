@@ -20,6 +20,10 @@ const mainState = observable({
         this.route = 'recent';
         this.currentIndex = 0;
         this.isBackVisible = false;
+        //
+        if (!this.currentChat) {
+            this.showCompose = true;
+        }
     },
 
     @action chat(i) {

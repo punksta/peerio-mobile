@@ -9,7 +9,7 @@ import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
-import { chatStore, contactStore } from '../../lib/icebear';
+import { chatStore } from '../../lib/icebear';
 
 const circleRadius = 6;
 const circleStyle = {
@@ -36,11 +36,6 @@ const itemStyle = {
     paddingTop: 14,
     paddingBottom: 14,
     backgroundColor: 'white'
-};
-
-const textStyle = {
-    color: '#000000CF',
-    marginLeft: 14
 };
 
 const headerTextStyle = {
@@ -86,13 +81,26 @@ export default class LeftMenu extends Component {
         );
     }
 
-    item(i) {
+    item(i, key) {
+        const action = () => messagingState.chat(i);
+        const text = i.chatName;
+        const online = true;
+
+        const textStyle = {
+            flex: 1,
+            color: '#000000CF',
+            marginLeft: 14
+        };
+
         return (
-            <View style={{ backgroundColor: styles.vars.bg }} key={i.id}>
-                <TouchableOpacity onPress={i.action}>
+            <View style={{ backgroundColor: styles.vars.bg }} key={key}>
+                <TouchableOpacity onPress={action}>
                     <View style={itemStyle}>
-                        <View style={i.online ? circleStyle : circleStyleOff} />
-                        <Text style={textStyle}>{i.name}</Text>
+                        <View style={online ? circleStyle : circleStyleOff} />
+                        <Text
+                            ellipsizeMode="tail"
+                            numberOfLines={1}
+                            style={textStyle}>{text}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -117,20 +125,7 @@ export default class LeftMenu extends Component {
             borderRightColor: '#efefef'
         };
 
-        const itemsMap = {};
-        const cachedContacts = contactStore.contacts.map(i => {
-            return {
-                name: i.username,
-                id: i.username,
-                online: true,
-                action: () => {
-                    messagingState.sendTo(i);
-                }
-            };
-        });
-
-        cachedContacts.forEach(i => (itemsMap[i.name] = i));
-
+        const chats = chatStore.chats;
 
         return (
             <Swiper
@@ -149,7 +144,7 @@ export default class LeftMenu extends Component {
                             { this.header('Conversations', () => messagingState.transition()) }
                         </View>
                         <ScrollView>
-                            { cachedContacts.map(this.item) }
+                            { chats.map(this.item) }
                         </ScrollView>
                     </View>
                 </Hider>

@@ -128,7 +128,7 @@ export default class LayoutMain extends Component {
             bottom: 0,
             right: 0
         };
-        const body = <Chat ref={c => (this.chatControl = c)} />;
+        const body = mainState.currentChat ? <Chat ref={c => (this.chatControl = c)} /> : null;
         const title = mainState.title;
         return (
             <View style={styles.container.root}>

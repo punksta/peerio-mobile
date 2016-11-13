@@ -37,7 +37,7 @@ export default class Chat extends Component {
 
     send(v) {
         const message = v || _.sample(randomMessages);
-        console.log(v);
+        // console.log(v);
         mainState.addMessage(message);
     }
 
