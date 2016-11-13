@@ -45,6 +45,9 @@ platform :ios do
   end
 
   after_all do |lane|
+    commit_version_bump(message: "chore(project): fastlane version bump")
+    push_to_git_remote
+    clean_build_artifacts
     # This block is called, only if the executed lane was successful
 
     # slack(
