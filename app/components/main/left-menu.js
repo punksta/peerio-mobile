@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {
-    View, Dimensions, Text, TouchableOpacity, LayoutAnimation, ScrollView
+    View, Dimensions, Text, TouchableOpacity, ScrollView
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { reaction } from 'mobx';
 import mainState from '../main/main-state';
 import messagingState from '../messaging/messaging-state';
 import icons from '../helpers/icons';
@@ -61,18 +60,8 @@ const headerContainer = {
 @observer
 export default class LeftMenu extends Component {
 
-    componentDidMount() {
-    }
-
     hideAnimated() {
-        LayoutAnimation.easeInEaseOut();
         mainState.isLeftMenuVisible = false;
-    }
-
-    componentWillUpdate() {
-        LayoutAnimation.easeInEaseOut();
-        // if (mainState.isLeftMenuVisible) {
-        // }
     }
 
     channel(i) {
@@ -111,14 +100,15 @@ export default class LeftMenu extends Component {
     }
 
     render() {
-        const ratio = 0.8;
+        const ratio = styles.vars.menuWidthRatio;
         const width = Dimensions.get('window').width * ratio;
         const containerStyle = {
             position: 'absolute',
-            left: (mainState.isLeftMenuVisible ? 0 : -width),
+            left: 0,
+            // left: (mainState.isLeftMenuVisible ? 0 : -width),
             top: styles.vars.headerSpacing,
             bottom: 0,
-            right: (mainState.isLeftMenuVisible ? 0 : undefined)
+            width
         };
 
         const innerContainerStyle = {
@@ -144,20 +134,24 @@ export default class LeftMenu extends Component {
 
 
         return (
-            <Swiper style={containerStyle}
-                    onHide={() => (mainState.isLeftMenuVisible = false)}
-                    {...this.props}
-                    rightToLeft>
+            <Swiper
+                state={mainState}
+                visible="isLeftMenuVisible"
+                style={containerStyle}
+                {...this.props}
+                rightToLeft>
                 <Hider onHide={this.hideAnimated} isLeft>
-                    <ScrollView style={innerContainerStyle}>
+                    <View style={innerContainerStyle}>
                         {/* <View>
                             { this.header('Channels') }
                     </View> */}
                         <View>
                             { this.header('Conversations', () => messagingState.transition()) }
-                            { cachedContacts.map(this.item) }
                         </View>
-                    </ScrollView>
+                        <ScrollView>
+                            { cachedContacts.map(this.item) }
+                        </ScrollView>
+                    </View>
                 </Hider>
             </Swiper>
         );

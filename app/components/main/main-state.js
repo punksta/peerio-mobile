@@ -1,19 +1,18 @@
 import { observable, action, when, reaction, computed } from 'mobx';
-import { LayoutAnimation } from 'react-native';
 import state from '../layout/state';
-import { chatStore } from '../../lib/icebear';
 
 const mainState = observable({
     isBackVisible: false,
-    isLeftMenuVisible: false,
+    isLeftMenuVisible: true,
     isRightMenuVisible: false,
     isInputVisible: false,
     blackStatusBar: false,
     route: null,
     currentChat: null,
     currentIndex: 0,
-    showCompose: true,
+    showCompose: false,
     suppressTransition: false,
+    suppressChatScroll: false,
 
     @action initial() {
         state.hideKeyboard();
@@ -30,6 +29,7 @@ const mainState = observable({
         this.route = 'chat';
         this.currentIndex = 0;
         this.showCompose = false;
+        this.suppressChatScroll = true;
         // this.isBackVisible = true;
         this.currentChat = i;
         when(() => !i.loadingMeta, () => (this.currentChat.loadMessages()));
@@ -50,13 +50,11 @@ const mainState = observable({
     },
 
     @action toggleLeftMenu() {
-        LayoutAnimation.easeInEaseOut();
         this.isLeftMenuVisible = !this.isLeftMenuVisible;
         this.isRightMenuVisible = false;
     },
 
     @action toggleRightMenu() {
-        LayoutAnimation.easeInEaseOut();
         this.isRightMenuVisible = !this.isRightMenuVisible;
         this.isLeftMenuVisible = false;
     },

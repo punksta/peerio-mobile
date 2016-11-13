@@ -44,6 +44,8 @@ const vars = {
     headerSpacing: 56,
     iconSize: 24,
     iconPadding: 10,
+    menuWidthRatio: 0.9,
+    animationDuration: 200,
     font: {
         size: {
             normal: 14,

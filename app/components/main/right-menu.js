@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Dimensions, Text, TouchableOpacity, LayoutAnimation
+    View, Dimensions, Text, TouchableOpacity
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
@@ -28,14 +28,7 @@ const textStyle = {
 export default class RightMenu extends Component {
 
     hideAnimated() {
-        LayoutAnimation.easeInEaseOut();
         mainState.isRightMenuVisible = false;
-    }
-
-    componentWillUpdate() {
-        if (mainState.isRightMenuVisible) {
-            LayoutAnimation.easeInEaseOut();
-        }
     }
 
     item(i, key) {
@@ -83,9 +76,11 @@ export default class RightMenu extends Component {
         };
 
         return (
-            <Swiper style={containerStyle}
-                    onHide={() => (mainState.isRightMenuVisible = false)}
-                    leftToRight>
+            <Swiper
+                state={mainState}
+                visible="isRightMenuVisible"
+                style={containerStyle}
+                leftToRight>
                 <Hider onHide={this.hideAnimated}>
                     <View style={menuContainerStyle}>
                         <View>

@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import _ from 'lodash';
 import { observer } from 'mobx-react/native';
-import { observable, when } from 'mobx';
+import { observable } from 'mobx';
 import mainState from '../main/main-state';
 import InputMain from '../layout/input-main';
 import Avatar from '../shared/avatar';
@@ -80,8 +80,6 @@ export default class Chat extends Component {
         this.scroll();
     }
 
-    @observable firstLayout = true;
-
     layoutChat(event) {
         console.log('layout');
         this.contentHeight = event.nativeEvent.layout.height;
@@ -92,8 +90,10 @@ export default class Chat extends Component {
     scroll(contentWidth, contentHeight) {
         this.contentHeight = contentHeight;
         if (this.contentHeight && this.scrollViewHeight) {
-            this.scrollView.scrollTo({ y: this.contentHeight - this.scrollViewHeight, animated: !this.props.hideInput && !this.firstLayout });
-            this.firstLayout = false;
+            const y = this.contentHeight - this.scrollViewHeight;
+            const animated = !this.props.hideInput && !mainState.suppressChatScroll;
+            this.scrollView.scrollTo({ y, animated });
+            mainState.suppressChatScroll = false;
         } else {
             setTimeout(() => this.scroll(), 100);
         }

@@ -50,13 +50,6 @@ export default class TextBox extends Component {
         this.value = this.props.value;
     }
 
-    componentDidMount() {
-    }
-
-    componentWillUpdate() {
-        // LayoutAnimation.easeInEaseOut();
-    }
-
     componentWillUnmount() {
         state.focusedTextBox = null;
     }

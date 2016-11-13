@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
 import state from '../layout/state';
 import icons from '../helpers/icons';
@@ -10,10 +10,6 @@ export default class PinModal extends Component {
         super(props);
         this.focus = this.focus.bind(this);
         this.picker = this.props.picker;
-    }
-
-    componentWillUpdate() {
-        LayoutAnimation.easeInEaseOut();
     }
 
     focus() {

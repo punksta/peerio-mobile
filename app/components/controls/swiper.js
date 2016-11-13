@@ -2,18 +2,27 @@ import React, { Component } from 'react';
 import {
     Animated
 } from 'react-native';
+import { reaction } from 'mobx';
 
 export default class Swiper extends Component {
     constructor(props) {
         super(props);
-        this.state = { x: 0, y: 0 };
+        this.x = 0;
+        this.y = 0;
         this.drag = { x: 0, y: 0 };
         this.setPosition = this.setPosition.bind(this);
         this.resetPosition = this.resetPosition.bind(this);
         this.layout = this.layout.bind(this);
+        this.animatedX = new Animated.Value(this.x);
         this._onStartShouldSetResponder = this._onStartShouldSetResponder.bind(this);
         this._onMoveShouldSetResponder = this._onMoveShouldSetResponder.bind(this);
         this._onMoveShouldSetResponderCapture = this._onMoveShouldSetResponderCapture.bind(this);
+        this.state = props.state;
+        if (props.visible) {
+            reaction(() => this.state[props.visible], () => {
+                this.state[props.visible] ? this.show() : this.hide();
+            }, true);
+        }
     }
 
     layout(e) {
@@ -21,10 +30,21 @@ export default class Swiper extends Component {
         this.height = e.nativeEvent.layout.width;
     }
 
+    animate(toValue, fast, cb) {
+        Animated.timing(this.animatedX, { toValue, duration: fast ? 0 : 200 }).start(cb);
+    }
+
+    show() {
+        this.animate(0);
+    }
+
+    hide() {
+        this.animate(this.props.rightToLeft ? -this.width : this.width);
+    }
+
     setPosition(e) {
-        this.animatedX = null;
-        let x = this.state.x;
-        let y = this.state.y;
+        let x = this.x;
+        let y = this.y;
         const tx = e.nativeEvent.pageX - this.drag.x;
         const ty = e.nativeEvent.pageY - this.drag.y;
         if (x === 0) {
@@ -33,40 +53,42 @@ export default class Swiper extends Component {
         }
         x += tx;
         y += ty;
-        this.setState({ x, y });
-        this.props.setXY && this.props.setXY({ x, y });
+        this.animate(x, true);
+        this.x = x;
+        this.y = y;
         this.drag.x = e.nativeEvent.pageX;
         this.drag.y = e.nativeEvent.pageY;
-        console.log(this.drag);
+        // console.log(this.drag);
     }
 
     resetPosition(/* e */) {
-        if (this.state.x !== 0) {
-            this.animatedX = new Animated.Value(this.state.x);
-            // this.props.setAnimated && this.props.setAnimated(this.animatedX);
+        if (this.x !== 0) {
+            this.animatedX.setValue(this.x);
             let toValue = 0;
             if (this.props.rightToLeft) {
-                toValue = this.state.x < -100 ? -this.width : 0;
+                toValue = this.x < -100 ? -this.width : 0;
             }
             if (this.props.leftToRight) {
-                toValue = this.state.x > 100 ? this.width : 0;
+                toValue = this.x > 100 ? this.width : 0;
             }
-            Animated.timing(this.animatedX, { toValue, duration: 200 })
-                .start(() => {
-                    this.animatedX = null;
-                    // this.props.setAnimated && this.props.setAnimated(this.animatedX);
-                    toValue !== 0 && this.props.onHide && this.props.onHide(this);
-                });
+            toValue !== 0 && (this.state[this.props.visible] = false);
+            this.animate(toValue);
         }
-        this.setState({
-            x: 0,
-            y: 0
-        });
-        this.props.setXY && this.props.setXY({ x: 0, y: 0 });
+        this.x = 0;
+        this.y = 0;
     }
 
     _onMoveShouldSetResponderCapture(e) {
-        return this._onStartShouldSetResponder(e);
+        // console.log('swiper.js: getting capture offer');
+        const { x, y } = { x: e.nativeEvent.pageX, y: e.nativeEvent.pageY };
+        const dx = Math.abs(x - this.drag.x);
+        const dy = Math.abs(y - this.drag.y);
+        if (dx > dy || dx > 100) {
+            this.drag = { x, y };
+            return true;
+        }
+        return false;
+        // return this._onStartShouldSetResponder(e);
     }
 
     _onStartShouldSetResponder(e) {
@@ -74,7 +96,8 @@ export default class Swiper extends Component {
             x: e.nativeEvent.pageX,
             y: e.nativeEvent.pageY
         };
-        return false;
+        // console.log('swiper.js: captured grag');
+        return true;
     }
 
     _onMoveShouldSetResponder(/* e */) {
@@ -87,25 +110,9 @@ export default class Swiper extends Component {
     render() {
         const containerStyle = this.props.style || {};
         let t = [];
-        const x = { translateX: this.state.x };
-        const y = { translateY: this.state.y };
-        if (this.props.rightToLeft && this.state.x < 0) {
-            t.push(x);
-        }
-        if (this.props.leftToRight && this.state.x > 0) {
-            t.push(x);
-        }
-        if (this.props.topToBottom && this.state.y > 0) {
-            t.push(y);
-        }
-        if (this.props.bottomToTop && this.state.y < 0) {
-            t.push(y);
-        }
-
         if (this.animatedX) {
             t = [{ translateX: this.animatedX }];
         }
-
         const s = { transform: t };
 
         return (
@@ -126,10 +133,10 @@ export default class Swiper extends Component {
 Swiper.propTypes = {
     children: React.PropTypes.any.isRequired,
     style: React.PropTypes.any,
+    state: React.PropTypes.any,
+    visible: React.PropTypes.string.isRequired,
     rightToLeft: React.PropTypes.bool,
-    leftToRight: React.PropTypes.bool,
-    topToBottom: React.PropTypes.bool,
-    bottomToTop: React.PropTypes.bool,
-    onHide: React.PropTypes.func,
-    setXY: React.PropTypes.func
+    leftToRight: React.PropTypes.bool
+    // topToBottom: React.PropTypes.bool,
+    // bottomToTop: React.PropTypes.bool,
 };

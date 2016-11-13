@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {
     View,
-    /* ScrollView, */
     PanResponder,
-    /* LayoutAnimation, */
     StatusBar,
     Animated,
     Dimensions
@@ -16,7 +14,7 @@ import LeftMenu from '../main/left-menu';
 import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
 // import TextIpsum from './text-ipsum';
-import RecentList from '../main/recent-list';
+// import RecentList from '../main/recent-list';
 import Chat from '../messaging/chat';
 import ComposeMessage from '../messaging/compose-message';
 import styles from '../../styles/styles';
@@ -35,11 +33,12 @@ export default class LayoutMain extends Component {
         this.height = Dimensions.get('window').height;
         this.currentIndex = mainState.currentIndex;
         this.animatedX = new Animated.Value(0);
+        this.leftMenuAnimated = new Animated.Value(0);
         this.composeAnimated = new Animated.Value(this.height);
         this.indexAnimation = reaction(() => mainState.currentIndex, i => {
             console.log('layout-main.js: index animation');
             const toValue = -i * this.width;
-            const duration = mainState.suppressTransition ? 0 : 300;
+            const duration = mainState.suppressTransition ? 0 : styles.vars.animationDuration;
             Animated.timing(this.animatedX, { toValue, duration })
                 .start(() => {
                     this.currentIndex = i;
@@ -48,6 +47,11 @@ export default class LayoutMain extends Component {
                     }
                     mainState.suppressTransition = false;
                 });
+        }, true);
+        this.leftMenuAnimation = reaction(() => mainState.isLeftMenuVisible, v => {
+            const toValue = v ? this.width * styles.vars.menuWidthRatio : 0;
+            Animated.timing(this.leftMenuAnimated, { toValue, duration: styles.vars.animationDuration })
+                .start();
         }, true);
     }
 
@@ -80,17 +84,13 @@ export default class LayoutMain extends Component {
     }
 
 
-    componentWillUpdate() {
-        // LayoutAnimation.easeInEaseOut();
-    }
-
     hideMenus() {
         mainState.isLeftMenuVisible = false;
         mainState.isRightMenuVisible = false;
     }
 
     page(control, key) {
-        const menuLeft = mainState.isLeftMenuVisible ? this.width * 0.9 : 0;
+        const menuLeft = 0;
         const s = {
             backgroundColor: '#fff',
             position: 'absolute',
@@ -111,10 +111,8 @@ export default class LayoutMain extends Component {
     }
 
     render() {
-        const transform = [{ translateX: this.animatedX }];
-        const transformOuter = [{ translateX: this.leftMenuAnimated || 0 }];
+        const transform = [{ translateX: this.animatedX }, { translateX: this.leftMenuAnimated }];
         const outerStyle = {
-            transform: transformOuter,
             backgroundColor: 'white',
             flex: 1,
             flexDirection: 'column',

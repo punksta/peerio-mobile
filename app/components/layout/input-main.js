@@ -58,6 +58,10 @@ export default class InputMain extends Component {
     }
 
     render() {
+        const tiStyle = {
+            flex: 1,
+            fontSize: 14
+        };
         return (
             <View
                 style={{
@@ -66,19 +70,21 @@ export default class InputMain extends Component {
                     alignItems: 'flex-end'
                 }}>
                 {icons.dark('control-point', this.plus, { padding: 20 })}
-                <AutoExpandingTextInput
-                    onChangeText={this.onChangeText}
-                    autoCorrect={false}
-                    value={this.value}
-                    placeholder="Enter text here"
-                    enablesReturnKeyAutomatically
-                    returnKeyType="default"
-                    minHeight={40}
-                    maxHeight={144}
-                    onChangeHeight={this._onChangeHeight}
-                    style={{ flex: 1 }}
-                    ref={ref => { this.input = ref; }}
-                />
+                <View style={{ flex: 1 }}>
+                    <AutoExpandingTextInput
+                        onChangeText={this.onChangeText}
+                        autoCorrect={false}
+                        value={this.value}
+                        placeholder="Enter text here"
+                        enablesReturnKeyAutomatically
+                        returnKeyType="default"
+                        minHeight={60}
+                        maxHeight={144}
+                        onChangeHeight={this._onChangeHeight}
+                        style={tiStyle}
+                        ref={ref => { this.input = ref; }}
+                    />
+                </View>
                 <Button
                     onPress={this.send}
                     text="SEND"

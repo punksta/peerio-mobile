@@ -5,9 +5,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 const styles = StyleSheet.create({
     default: {
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        justifyContent: 'center',
         textAlign: 'left'
     }
 });
