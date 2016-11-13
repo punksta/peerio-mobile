@@ -15,6 +15,7 @@ export default class LanguagePickerBox extends Component {
     render() {
         return (
             <PickerBox
+                name="languageSelected"
                 picker={this.picker}
                 data={state.languages}
                 style={styles.pickerBox}

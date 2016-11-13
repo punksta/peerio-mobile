@@ -29,7 +29,7 @@ export default class TextBox extends Component {
 
         const scaleFrom = 1;
         const translateFrom = 0;
-        const translateFromY = 0;
+        const translateFromY = 14;
         this.animatedHintTranslate = new Animated.Value(translateFrom);
         this.animatedHintTranslateY = new Animated.Value(translateFrom);
         this.animatedHintScale = new Animated.Value(scaleFrom);
@@ -38,14 +38,14 @@ export default class TextBox extends Component {
             const duration = 300;
             const scaleTo = 0.8;
             const width = 200;
-            const translateTo = -width * (1 - scaleTo) + 12 / scaleTo;
-            const translateToY = -16;
+            const translateTo = -width * (1 - scaleTo) / 2;
+            const translateToY = 0;
             Animated.parallel([
                 Animated.timing(this.animatedHintTranslate, { toValue: v ? translateTo : translateFrom, duration }),
                 Animated.timing(this.animatedHintTranslateY, { toValue: v ? translateToY : translateFromY, duration }),
                 Animated.timing(this.animatedHintScale, { toValue: v ? scaleTo : scaleFrom, duration })
             ]).start();
-        });
+        }, true);
 
         this.value = this.props.value;
     }
@@ -129,7 +129,12 @@ export default class TextBox extends Component {
             alignItems: 'flex-start',
             padding: 0,
             borderWidth: 0,
-            borderColor: 'yellow'
+            borderColor: 'yellow',
+            left: 8,
+            right: 0,
+            top: 4,
+            bottom: 0,
+            position: 'absolute'
         }];
         return (
             <View

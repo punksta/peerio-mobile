@@ -5,7 +5,7 @@ import state from '../layout/state';
 import icons from '../helpers/icons';
 
 @observer
-export default class PinModal extends Component {
+export default class PickerBoxIos extends Component {
     constructor(props) {
         super(props);
         this.focus = this.focus.bind(this);
@@ -22,7 +22,7 @@ export default class PinModal extends Component {
 
     render() {
         const focused = state.pickerVisible && state.picker === this.picker;
-        const { /* hint, */ shadow, background, textview, container, iconContainer, icon } =
+        const {/* hint,*/ shadow, background, textview, container, iconContainer, icon } =
             focused ? this.props.style.active : this.props.style.normal;
         return (
             <View style={shadow}>
@@ -50,10 +50,10 @@ export default class PinModal extends Component {
     }
 }
 
-PinModal.propTypes = {
+PickerBoxIos.propTypes = {
     value: React.PropTypes.any.isRequired,
     picker: React.PropTypes.any.isRequired,
     data: React.PropTypes.any.isRequired,
     style: React.PropTypes.any.isRequired,
-    hint: React.PropTypes.string.isRequired
+    hint: React.PropTypes.any.isRequired
 };
