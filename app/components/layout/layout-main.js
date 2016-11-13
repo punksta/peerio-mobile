@@ -112,6 +112,7 @@ export default class LayoutMain extends Component {
 
     render() {
         const transform = [{ translateX: this.animatedX }, { translateX: this.leftMenuAnimated }];
+        const transformAndroid = global.platform === 'android' ? [{ translateY: state.keyboardHeight }] : [];
         const outerStyle = {
             backgroundColor: 'white',
             flex: 1,
@@ -131,7 +132,7 @@ export default class LayoutMain extends Component {
         const body = mainState.currentChat ? <Chat ref={c => (this.chatControl = c)} /> : null;
         const title = mainState.title;
         return (
-            <View style={styles.container.root}>
+            <View style={[styles.container.root, {transform: transformAndroid}]}>
                 <HeaderMain title={title} />
                 <Animated.View
                     {...this.panResponder.panHandlers}

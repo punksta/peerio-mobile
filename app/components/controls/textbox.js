@@ -170,6 +170,7 @@ export default class TextBox extends Component {
                             onChangeText={this.changeText}
                             autoCapitalize={this.props.autoCapitalize || 'none'}
                             autoCorrect={false}
+                            autoComplete={false}
                         />
                     </View>
                     {showSecretIcon}

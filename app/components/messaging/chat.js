@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import mainState from '../main/main-state';
+import state from '../layout/state';
 import InputMain from '../layout/input-main';
 import Avatar from '../shared/avatar';
 
@@ -26,7 +27,6 @@ export default class Chat extends Component {
     constructor(props) {
         super(props);
         this.send = this.send.bind(this);
-        this.layoutChat = this.layoutChat.bind(this);
         this.layoutScrollView = this.layoutScrollView.bind(this);
         this.scroll = this.scroll.bind(this);
     }
@@ -74,42 +74,50 @@ export default class Chat extends Component {
     }
 
     @observable contentHeight = 0;
+    @observable scrollViewHeight = 0;
 
     layoutScrollView(event) {
-        this.scrollViewHeight = event.nativeEvent.layout.height;
+        this.scrollViewHeight = this.scrollViewHeight || event.nativeEvent.layout.height;
+        // console.log(`layout sv: ${this.scrollViewHeight}`);
         this.scroll();
     }
 
-    layoutChat(event) {
-        console.log('layout');
-        this.contentHeight = event.nativeEvent.layout.height;
-        console.log(this.contentHeight);
-        console.log(this.scrollViewHeight);
-    }
-
     scroll(contentWidth, contentHeight) {
-        this.contentHeight = contentHeight;
+        if (contentHeight) {
+            this.contentHeight = contentHeight;
+        }
         if (this.contentHeight && this.scrollViewHeight) {
-            const y = this.contentHeight - this.scrollViewHeight;
+            const y = this.contentHeight - this.scrollViewHeight + state.keyboardHeight;
             const animated = !this.props.hideInput && !mainState.suppressChatScroll;
             this.scrollView.scrollTo({ y, animated });
             mainState.suppressChatScroll = false;
         } else {
-            setTimeout(() => this.scroll(), 100);
+            setTimeout(() => this.scroll(), 1000);
         }
     }
 
     render() {
         const items = (mainState.currentChat && mainState.currentChat.messages) || [];
+        const shift = this.contentHeight - (this.scrollViewHeight - state.keyboardHeight);
+        const paddingTop = !!this.scrollViewHeight &&
+            (global.platform === 'android') && (shift < 0) ? -shift : 0;
+        const scrollEnabled = !!this.scrollViewHeight && (shift > 0);
+        // console.log('render');
+        // console.log(`content height: ${this.contentHeight}`);
+        // console.log(`sv height: ${this.scrollViewHeight}`);
+        // console.log(scrollEnabled);
+        const body = this.scrollViewHeight ? items.map(this.item) : null;
         return (
-            <View style={{ flex: 1 }}>
+            <View
+                style={{ flex: 1, paddingTop }}>
                 <ScrollView
+                    scrollEnabled={scrollEnabled}
                     onLayout={this.layoutScrollView}
                     onContentSizeChange={this.scroll}
                     ref={sv => (this.scrollView = sv)}
                     >
-                    <View onLayout={this.layoutChat}>
-                        { items.map(this.item) }
+                    <View style={{ flex: 0 }}>
+                        {body}
                     </View>
                 </ScrollView>
                 {this.props.hideInput ? null : this.renderInput()}

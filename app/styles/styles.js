@@ -19,6 +19,8 @@ const branding = {
 
 const { bg } = branding[EN];
 
+const statusBarHeight = global.platform === 'android' ? 0 : 10;
+
 const vars = {
     circle: 8,
     bg,
@@ -38,10 +40,11 @@ const vars = {
     subtleTextBold: '#181c1f',
     inputBgInactive: '#c2e0ef',
     inputBgInactiveText: '#7c8e98',
-    layoutPaddingTop: 24,
+    layoutPaddingTop: statusBarHeight * 2,
     footerMarginX: 24,
+    statusBarHeight,
     headerHeight: 48,
-    headerSpacing: 66,
+    headerSpacing: 58 + statusBarHeight,
     iconSize: 24,
     iconPadding: 10,
     menuWidthRatio: 0.9,

@@ -109,8 +109,17 @@ Keyboard.addListener('keyboardWillShow', (e) => {
     state.keyboardHeight = e.endCoordinates.height;
 });
 
+Keyboard.addListener('keyboardDidShow', (e) => {
+    state.keyboardHeight = e.endCoordinates.height;
+});
+
 Keyboard.addListener('keyboardWillHide', () => {
     state.keyboardHeight = 0;
 });
+
+Keyboard.addListener('keyboardDidHide', () => {
+    state.keyboardHeight = 0;
+});
+
 
 export default state;

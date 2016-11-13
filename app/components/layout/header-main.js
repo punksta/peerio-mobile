@@ -38,14 +38,15 @@ export default class HeaderMain extends Component {
             color: styles.vars.highlight,
             fontWeight: 'bold',
             lineHeight: 20,
-            flex: 1
+            flex: 1,
+            textAlign: 'center'
         };
         const containerStyle = {
             flex: 0,
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingTop: 10,
+            paddingTop: styles.vars.statusBarHeight,
             height: styles.vars.headerHeight
         };
         return (
