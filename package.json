@@ -43,7 +43,7 @@
     "react": "^15.3.1-rc.2",
     "react-addons-pure-render-mixin": "^15.3.2",
     "react-dom": "^15.3.1-rc.2",
-    "react-native": "0.34.1",
+    "react-native": "0.35.0",
     "react-native-animatable": "^0.6.1",
     "react-native-cli": "*",
     "react-native-crypto": "^2.0.1",
@@ -59,7 +59,7 @@
     "vm-browserify": "0.0.4"
   },
   "peerDependencies": {
-    "react-native": "0.34.1",
+    "react-native": "0.35.0",
     "buffer": "^5.0.0"
   },
   "devDependencies": {
