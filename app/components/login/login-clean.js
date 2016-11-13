@@ -29,9 +29,9 @@ export default class LoginClean extends Component {
     }
 
     componentDidMount() {
-        loginState.username = '';
+        loginState.username = 'anritest7';
         loginState.passphrase = 'icebear';
-        // loginState.login();
+        loginState.login();
     }
 
     languagePicker() {

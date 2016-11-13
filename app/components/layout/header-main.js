@@ -37,7 +37,8 @@ export default class HeaderMain extends Component {
         const textStyle = {
             color: styles.vars.highlight,
             fontWeight: 'bold',
-            lineHeight: 20
+            lineHeight: 20,
+            flex: 1
         };
         const containerStyle = {
             flex: 0,
@@ -53,7 +54,10 @@ export default class HeaderMain extends Component {
                     <View style={{ flexDirection: 'row', paddingLeft: 6, backgroundColor: 'transparent' }}>
                         {leftIcon}
                     </View>
-                    <Text style={textStyle}>{this.props.title}</Text>
+                    <Text
+                        ellipsizeMode="tail"
+                        numberOfLines={1}
+                        style={textStyle}>{this.props.title}</Text>
                     <View style={{ flexDirection: 'row', backgroundColor: 'transparent' }}>
                         {icons.white('more-vert', this.rightMenu)}
                     </View>
