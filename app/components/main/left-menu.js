@@ -105,10 +105,9 @@ export default class LeftMenu extends Component {
         const containerStyle = {
             position: 'absolute',
             left: 0,
-            // left: (mainState.isLeftMenuVisible ? 0 : -width),
             top: styles.vars.headerSpacing,
             bottom: 0,
-            width
+            right: 0
         };
 
         const innerContainerStyle = {
@@ -138,6 +137,7 @@ export default class LeftMenu extends Component {
                 state={mainState}
                 visible="isLeftMenuVisible"
                 style={containerStyle}
+                width={width}
                 {...this.props}
                 rightToLeft>
                 <Hider onHide={this.hideAnimated} isLeft>

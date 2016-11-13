@@ -112,7 +112,7 @@ export default class App extends Component {
         if (!state.locale) return null;
         return (
             <View
-                style={{ flex: 1 }}>
+                style={{ flex: 1, backgroundColor: styles.vars.bg }}>
                 <View
                     pointerEvents="auto"
                     style={{ flex: 1, borderWidth: 0, borderColor: 'red' }}>

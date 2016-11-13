@@ -3,7 +3,7 @@ import state from '../layout/state';
 
 const mainState = observable({
     isBackVisible: false,
-    isLeftMenuVisible: true,
+    isLeftMenuVisible: false,
     isRightMenuVisible: false,
     isInputVisible: false,
     blackStatusBar: false,

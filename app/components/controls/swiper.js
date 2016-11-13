@@ -13,16 +13,23 @@ export default class Swiper extends Component {
         this.setPosition = this.setPosition.bind(this);
         this.resetPosition = this.resetPosition.bind(this);
         this.layout = this.layout.bind(this);
-        this.animatedX = new Animated.Value(this.x);
         this._onStartShouldSetResponder = this._onStartShouldSetResponder.bind(this);
         this._onMoveShouldSetResponder = this._onMoveShouldSetResponder.bind(this);
         this._onMoveShouldSetResponderCapture = this._onMoveShouldSetResponderCapture.bind(this);
         this.state = props.state;
-        if (props.visible) {
-            reaction(() => this.state[props.visible], () => {
-                this.state[props.visible] ? this.show() : this.hide();
-            }, true);
-        }
+        this.width = props.width;
+        this.animatedX = new Animated.Value(this.visible ? 0 : this.shift);
+        reaction(() => this.visible, () => {
+            this.visible ? this.show() : this.hide();
+        }, true);
+    }
+
+    get visible() {
+        return this.props.visible && this.state && this.state[this.props.visible];
+    }
+
+    get shift() {
+        return this.props.rightToLeft ? -this.width : this.width;
     }
 
     layout(e) {
@@ -39,7 +46,7 @@ export default class Swiper extends Component {
     }
 
     hide() {
-        this.animate(this.props.rightToLeft ? -this.width : this.width);
+        this.animate(this.shift);
     }
 
     setPosition(e) {
@@ -136,7 +143,8 @@ Swiper.propTypes = {
     state: React.PropTypes.any,
     visible: React.PropTypes.string.isRequired,
     rightToLeft: React.PropTypes.bool,
-    leftToRight: React.PropTypes.bool
+    leftToRight: React.PropTypes.bool,
+    width: React.PropTypes.integer
     // topToBottom: React.PropTypes.bool,
     // bottomToTop: React.PropTypes.bool,
 };

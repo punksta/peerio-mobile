@@ -45,12 +45,12 @@ export default class RightMenu extends Component {
     }
 
     render() {
-        const ratio = 0.8;
+        const ratio = styles.vars.menuWidthRatio;
         const width = Dimensions.get('window').width * ratio;
         const containerStyle = {
             position: 'absolute',
-            right: mainState.isRightMenuVisible ? 0 : -width,
-            left: mainState.isRightMenuVisible ? 0 : undefined,
+            left: 0,
+            right: 0,
             top: styles.vars.headerSpacing,
             bottom: 0
         };
@@ -77,6 +77,7 @@ export default class RightMenu extends Component {
 
         return (
             <Swiper
+                width={width}
                 state={mainState}
                 visible="isRightMenuVisible"
                 style={containerStyle}
