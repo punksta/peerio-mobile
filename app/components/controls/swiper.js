@@ -29,7 +29,8 @@ export default class Swiper extends Component {
     }
 
     get shift() {
-        return this.props.rightToLeft ? -this.width : this.width;
+        // 100 is to prevent strange bug with not hiding the swiper completely off screen
+        return (this.props.rightToLeft ? -1 : 1) * (this.width + 100);
     }
 
     layout(e) {
