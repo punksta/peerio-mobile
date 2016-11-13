@@ -41,7 +41,7 @@ const vars = {
     layoutPaddingTop: 24,
     footerMarginX: 24,
     headerHeight: 48,
-    headerSpacing: 56,
+    headerSpacing: 66,
     iconSize: 24,
     iconPadding: 10,
     menuWidthRatio: 0.9,

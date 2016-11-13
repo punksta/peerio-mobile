@@ -38,6 +38,12 @@ const itemStyle = {
     backgroundColor: 'white'
 };
 
+const textStyle = {
+    flex: 1,
+    color: '#000000CF',
+    marginLeft: 14
+};
+
 const headerTextStyle = {
     color: '#000000CF'
 };
@@ -85,12 +91,6 @@ export default class LeftMenu extends Component {
         const action = () => messagingState.chat(i);
         const text = i.chatName;
         const online = true;
-
-        const textStyle = {
-            flex: 1,
-            color: '#000000CF',
-            marginLeft: 14
-        };
 
         return (
             <View style={{ backgroundColor: styles.vars.bg }} key={key}>

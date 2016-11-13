@@ -1,6 +1,6 @@
 import { observable, action, when } from 'mobx';
 import mainState from '../main/main-state';
-import { chatStore, contactStore } from '../../lib/icebear';
+import { chatStore } from '../../lib/icebear';
 
 const messagingState = observable({
     @action chat(v) {

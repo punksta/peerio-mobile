@@ -29,9 +29,9 @@ export default class LoginClean extends Component {
     }
 
     componentDidMount() {
-        loginState.username = 'anritest6';
+        loginState.username = '';
         loginState.passphrase = 'icebear';
-        loginState.login();
+        // loginState.login();
     }
 
     languagePicker() {
@@ -45,7 +45,7 @@ export default class LoginClean extends Component {
     render() {
         const style = styles.wizard;
         const activityIndicator = <ActivityIndicator color={styles.vars.highlight} style={{ height: 14 }} />;
-        const loginButton = <Button text={t('login')} caps bold onPress={this.signIn} style={{ height: 14 }} />;
+        const loginButton = <Button text={t('login')} caps bold onPress={this.signIn} />;
         const button = loginState.isInProgress ? activityIndicator : loginButton;
         const centerItem = loginState.error ? <ErrorText>{t(loginState.error)}</ErrorText> : button;
         const body = (
@@ -62,9 +62,11 @@ export default class LoginClean extends Component {
                         {...this.tb('passphrase', t('passphrase'))} />
                     <LanguagePickerBox {...this.tb('language', t('language'))} />
                 </View>
-                <Center>
-                    {centerItem}
-                </Center>
+                <View style={{ height: 24, alignItems: 'center' }}>
+                    <Center>
+                        {centerItem}
+                    </Center>
+                </View>
                 <LoginTermsSignup />
                 <View />
             </View>

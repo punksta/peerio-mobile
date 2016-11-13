@@ -48,7 +48,7 @@ export default class HeaderMain extends Component {
             height: styles.vars.headerHeight
         };
         return (
-            <View style={{ height: 56, flex: 0, justifyContent: 'center' }}>
+            <View style={{ height: styles.vars.headerSpacing, flex: 0, justifyContent: 'center' }}>
                 <View style={containerStyle}>
                     <View style={{ flexDirection: 'row', paddingLeft: 6, backgroundColor: 'transparent' }}>
                         {leftIcon}
