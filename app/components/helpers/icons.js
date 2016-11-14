@@ -7,11 +7,13 @@ const icons = {
     basic(name, color, onPress, style) {
         return (
             <TouchableOpacity onPress={onPress}>
-                <Icon
-                    style={[{ padding: styles.vars.iconPadding }, style]}
-                    name={name}
-                    size={styles.vars.iconSize}
-                    color={color} />
+                <View style={{ padding: styles.vars.iconPadding }}>
+                    <Icon
+                        style={style}
+                        name={name}
+                        size={styles.vars.iconSize}
+                        color={color} />
+                </View>
             </TouchableOpacity>
         );
     },
@@ -22,6 +24,10 @@ const icons = {
 
     dark(name, onPress, style) {
         return icons.basic(name, styles.vars.darkIcon, onPress, style);
+    },
+
+    colored(name, onPress, colorFg, backgroundColor) {
+        return icons.basic(name, colorFg, onPress, { backgroundColor });
     },
 
     placeholder() {

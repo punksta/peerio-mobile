@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {
     View, Text, TouchableOpacity, ActivityIndicator
 } from 'react-native';
+import { observer } from 'mobx-react/native';
+import { computed } from 'mobx';
 import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 
@@ -18,7 +20,13 @@ const avatarStyle = {
 const itemStyle = {
     flex: 1,
     flexDirection: 'row',
-    padding: 8,
+    alignItems: 'center',
+    backgroundColor: 'white'
+};
+
+const itemContainerStyle = {
+    flex: 1,
+    flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#EFEFEF',
@@ -34,6 +42,7 @@ const nameContainerStyle = {
 const nameMessageContainerStyle = {
     flex: 1,
     flexDirection: 'column',
+    padding: 8,
     marginLeft: 6
 };
 
@@ -72,7 +81,14 @@ const circleStyleOff = {
     margin: 4
 };
 
+@observer
 export default class Avatar extends Component {
+    @computed get checked() {
+        const cs = this.props.checkedState;
+        const ck = this.props.checkedKey;
+        return cs && ck && !!cs.has(ck);
+    }
+
     hashCode(str) { // java String#hashCode
         let hash = 0;
         for (let i = 0; i < str.length; i++) {
@@ -91,6 +107,24 @@ export default class Avatar extends Component {
         return `#${this.intToRGB(this.hashCode(s))}`;
     }
 
+    checkbox() {
+        const v = styles.vars;
+        const color = this.checked ? v.checkboxActive : v.checkboxInactive;
+        const iconColor = this.checked ? 'white' : v.checkboxIconInactive;
+        const iconBgColor = this.checked ? v.checkboxActive : v.checkboxInactive;
+        const icon = this.checked ? 'check-box' : 'check-box-outline-blank';
+        const outer = {
+            backgroundColor: color,
+            padding: 10,
+            marginRight: 6
+        };
+        return (
+            <View style={outer} pointerEvents="none">
+                {icons.colored(icon, null, iconColor, iconBgColor)}
+            </View>
+        );
+    }
+
     render() {
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
         const date = this.props.date ? <Text style={dateTextStyle}>{this.props.date}</Text> : null;
@@ -100,20 +134,24 @@ export default class Avatar extends Component {
         const avatar = <View style={coloredAvatarStyle} />;
         const loader = <ActivityIndicator style={{ height: avatarRadius, margin: 4 }} />;
         const avatarPlaceholder = this.props.loading ? loader : avatar;
+        const checkbox = this.props.checkbox ? this.checkbox() : null;
         return (
             <View style={{ backgroundColor: styles.vars.bg }}>
                 <TouchableOpacity onPress={this.props.onPress}>
                     <View style={itemStyle}>
-                        {avatarPlaceholder}
-                        <View style={nameMessageContainerStyle}>
-                            <View style={nameContainerStyle}>
-                                <Text ellipsizeMode="tail" style={nameTextStyle}>{this.props.name}</Text>
-                                {date}
+                        {checkbox}
+                        <View style={itemContainerStyle}>
+                            {avatarPlaceholder}
+                            <View style={nameMessageContainerStyle}>
+                                <View style={nameContainerStyle}>
+                                    <Text ellipsizeMode="tail" style={nameTextStyle}>{this.props.name}</Text>
+                                    {date}
+                                </View>
+                                <Text style={lastMessageTextStyle}>{this.props.message}</Text>
                             </View>
-                            <Text style={lastMessageTextStyle}>{this.props.message}</Text>
+                            {icon}
+                            {online}
                         </View>
-                        {icon}
-                        {online}
                     </View>
                 </TouchableOpacity>
             </View>
@@ -129,6 +167,9 @@ Avatar.propTypes = {
     message: React.PropTypes.string,
     online: React.PropTypes.bool,
     loading: React.PropTypes.bool,
+    checkbox: React.PropTypes.bool,
+    checkedKey: React.PropTypes.string,
+    checkedState: React.PropTypes.any,
     hideOnline: React.PropTypes.bool
 };
 

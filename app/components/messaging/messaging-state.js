@@ -1,4 +1,4 @@
-import { observable, action, when } from 'mobx';
+import { observable, action, when, asMap } from 'mobx';
 import mainState from '../main/main-state';
 import { chatStore } from '../../lib/icebear';
 
@@ -10,7 +10,7 @@ const messagingState = observable({
     },
 
     @action transition() {
-        mainState.currentChat = null;
+        // mainState.currentChat = null;
         mainState.showCompose = true;
     },
 
@@ -23,6 +23,35 @@ const messagingState = observable({
     findUserText: '',
     loading: false,
     recipients: [],
+    recipientsMap: asMap(),
+
+    findByUsername(username) {
+        return this.recipients.filter(i => i.username === username);
+    },
+
+    exists(c) {
+        return !!this.findByUsername(c.username).length;
+    },
+
+    @action add(c) {
+        if (this.exists(c)) return;
+        this.recipients.push(c);
+        this.recipientsMap.set(c.username, c);
+    },
+
+    @action remove(c) {
+        const existing = this.findByUsername(c.username);
+        existing.forEach(e => {
+            const i = this.recipients.indexOf(e);
+            if (i === -1) return;
+            this.recipients.splice(i, 1);
+        });
+        this.recipientsMap.delete(c.username);
+    },
+
+    @action toggle(c) {
+        this.exists(c) ? this.remove(c) : this.add(c);
+    },
 
     @action clear() {
         this.loading = false;

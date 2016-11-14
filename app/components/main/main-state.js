@@ -29,6 +29,10 @@ const mainState = observable({
             if (!c && chatStore.chats.length) {
                 c = chatStore.chats[chatStore.chats.length - 1];
             }
+
+            this.showCompose = true;
+            return;
+
             if (c) {
                 this.chat(c);
             } else {

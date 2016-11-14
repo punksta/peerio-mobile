@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TextInput, ActivityIndicator
+    View, Text, TextInput, ActivityIndicator, TouchableOpacity
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, when } from 'mobx';
+import { when } from 'mobx';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import Avatar from '../shared/avatar';
@@ -11,9 +11,7 @@ import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 import InputMain from '../layout/input-main';
 import messagingState from './messaging-state';
-import mainState from '../main/main-state';
-import Chat from './chat';
-import { chatStore, contactStore } from '../../lib/icebear';
+import { contactStore } from '../../lib/icebear';
 
 @observer
 export default class ComposeMessage extends Component {
@@ -23,13 +21,12 @@ export default class ComposeMessage extends Component {
         this.send = this.send.bind(this);
     }
 
-    componentDidMount() {
-        // setTimeout(() => this.textInput.focus(), 100);
-        // this.searchAddUser('anritest7');
-    }
-
     exit() {
         messagingState.exit();
+    }
+
+    removeRecipient(c) {
+        messagingState.remove(c);
     }
 
     userbox(contact, i) {
@@ -44,9 +41,11 @@ export default class ComposeMessage extends Component {
             color: 'white'
         };
         return (
-            <View key={i} style={style}>
-                <Text style={textStyle}>{contact.username}</Text>
-            </View>
+            <TouchableOpacity key={i} onPress={() => this.removeRecipient(contact)}>
+                <View style={style}>
+                    <Text style={textStyle}>{contact.username}</Text>
+                </View>
+            </TouchableOpacity>
         );
     }
 
@@ -59,7 +58,7 @@ export default class ComposeMessage extends Component {
             paddingLeft: 8,
             flexWrap: 'wrap'
         };
-        const boxes = messagingState.recipients.map(this.userbox);
+        const boxes = messagingState.recipients.map((c, i) => this.userbox(c, i));
 
         return (
             <View style={container}>
@@ -124,37 +123,20 @@ export default class ComposeMessage extends Component {
         );
     }
 
-    addRecipient(contact) {
-        const recipients = messagingState.recipients;
-        if (recipients.indexOf(contact) === -1) {
-            this.found = [];
-            messagingState.findUserText = '';
-            recipients.push(contact);
-            const chat = chatStore.findChatWithParticipants(recipients);
-            if (chat) {
-                messagingState.currentChat = chat;
-                mainState.currentChat = chat;
-                chat.loadMessages();
-            }
-        }
-    }
-
     item(contact, i) {
         const { username /* , message */ } = contact;
         return (
-            <Avatar key={i} name={username} message={username} hideOnline onPress={() => this.addRecipient(contact)} />
+            <Avatar
+                checkbox
+                checkedKey={username}
+                checkedState={messagingState.recipientsMap}
+                key={i}
+                name={username}
+                message={username}
+                hideOnline
+                onPress={() => messagingState.toggle(contact)} />
         );
     }
-
-    // listBlock(header, items) {
-    //     return (
-    //         <View>
-    //             <Text>Your contacts:</Text>
-    //         </View>
-    //     );
-    // }
-
-    @observable found = [];
 
     searchUser(username) {
         const c = contactStore.getContact(username);
@@ -167,23 +149,10 @@ export default class ComposeMessage extends Component {
         });
     }
 
-    searchAddUser(username) {
-        const c = contactStore.getContact(username);
-        this.loading = true;
-        when(() => !c.loading, () => {
-            this.loading = false;
-            if (!c.notFound) {
-                // this.addRecipient(c);
-            }
-        });
-    }
-
     body() {
-        const found = [{ username: 'anritest9' }];
+        const found = contactStore.contacts;
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator />;
-        const chat = messagingState.chat ? <Chat hideInput /> : null;
-        const findUserText = messagingState.findUserText;
         // const result = findUserText && findUserText.length ? mockItems : chat;
         const result = mockItems;
         const body = messagingState.loading ? activityIndicator : result;
@@ -198,8 +167,8 @@ export default class ComposeMessage extends Component {
         const s = {
             paddingLeft: 14,
             paddingRight: 14,
-            paddingBottom: 8,
-            marginBottom: 8,
+            paddingBottom: 4,
+            paddingTop: 4,
             borderBottomWidth: 1,
             borderBottomColor: '#EAEAEA'
         };
@@ -246,13 +215,11 @@ export default class ComposeMessage extends Component {
         const layoutStyle = {
             backgroundColor: 'white'
         };
-        const footer = messagingState.recipients.length ? this.renderInput() : null;
         return (
             <Layout1
                 defaultBar
                 noFitHeight
                 body={body}
-                footer={footer}
                 header={header}
                 style={layoutStyle} />
         );
