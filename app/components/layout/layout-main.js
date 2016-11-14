@@ -4,7 +4,8 @@ import {
     PanResponder,
     StatusBar,
     Animated,
-    Dimensions
+    Dimensions,
+    ActivityIndicator
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { reaction } from 'mobx';
@@ -15,6 +16,7 @@ import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
 // import TextIpsum from './text-ipsum';
 // import RecentList from '../main/recent-list';
+import { chatStore } from '../../lib/icebear';
 import Chat from '../messaging/chat';
 import ComposeMessage from '../messaging/compose-message';
 import styles from '../../styles/styles';
@@ -129,7 +131,9 @@ export default class LayoutMain extends Component {
             bottom: 0,
             right: 0
         };
-        const body = mainState.currentChat ? <Chat ref={c => (this.chatControl = c)} /> : null;
+        const placeholder = (mainState.loading || chatStore.loading) ?
+            <ActivityIndicator style={{ paddingTop: 10 }} /> : null;
+        const body = mainState.currentChat ? <Chat ref={c => (this.chatControl = c)} /> : placeholder;
         const title = mainState.title;
         return (
             <View style={[styles.container.root, { transform: transformAndroid }]}>

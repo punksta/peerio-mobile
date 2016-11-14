@@ -179,11 +179,13 @@ export default class ComposeMessage extends Component {
     }
 
     body() {
-        const mockItems = this.found.map((item, i) => this.item(item, i));
+        const found = [{ username: 'anritest9' }];
+        const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator />;
         const chat = messagingState.chat ? <Chat hideInput /> : null;
         const findUserText = messagingState.findUserText;
-        const result = findUserText && findUserText.length ? mockItems : chat;
+        // const result = findUserText && findUserText.length ? mockItems : chat;
+        const result = mockItems;
         const body = messagingState.loading ? activityIndicator : result;
         return (
             <View>

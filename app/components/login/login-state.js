@@ -47,15 +47,16 @@ const loginState = observable({
             })
             .finally(() => {
                 User.current = user;
+                store.openUserDb(user.username);
                 this.isInProgress = false;
                 chatStore.loadAllChats();
                 when(() => !chatStore.loading, () => {
                     console.log('when loaded');
                     console.log(chatStore.chats.length);
-                    chatStore.chats.forEach(c => {
-                        console.log(c);
-                        console.log(c.participants);
-                    });
+                    // chatStore.chats.forEach(c => {
+                        // console.log(c);
+                        // console.log(c.participants);
+                    // });
                 });
                 return null;
             });

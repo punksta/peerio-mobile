@@ -1,5 +1,7 @@
 import { observable, action, when, reaction, computed } from 'mobx';
 import state from '../layout/state';
+import { chatStore } from '../../lib/icebear';
+import store from '../../store/local-storage';
 
 const mainState = observable({
     isBackVisible: false,
@@ -13,6 +15,7 @@ const mainState = observable({
     showCompose: false,
     suppressTransition: false,
     suppressChatScroll: false,
+    loading: false,
 
     @action initial() {
         state.hideKeyboard();
@@ -20,10 +23,19 @@ const mainState = observable({
         this.route = 'recent';
         this.currentIndex = 0;
         this.isBackVisible = false;
+        this.load();
+        when(() => !this.loading && !chatStore.loading, () => {
+            let c = this.saved && chatStore.chatMap[this.saved.currentChat];
+            if (!c && chatStore.chats.length) {
+                c = chatStore.chats[chatStore.chats.length - 1];
+            }
+            if (c) {
+                this.chat(c);
+            } else {
+                this.showCompose = true;
+            }
+        });
         //
-        if (!this.currentChat) {
-            this.showCompose = true;
-        }
     },
 
     @action chat(i) {
@@ -36,11 +48,27 @@ const mainState = observable({
         this.suppressChatScroll = true;
         // this.isBackVisible = true;
         this.currentChat = i;
-        when(() => !i.loadingMeta, () => (this.currentChat.loadMessages()));
+        when(() => !i.loadingMeta, () => {
+            this.currentChat.loadMessages();
+            this.save();
+        });
     },
 
     @action back() {
         this.recent();
+    },
+
+    @action async load() {
+        this.loading = true;
+        const s = await store.user.get('main-state');
+        if (s) {
+            this.saved = s;
+        }
+        this.loading = false;
+    },
+
+    @action async save() {
+        await store.user.set('main-state', { currentChat: this.currentChat.id });
     },
 
     @computed get title() {

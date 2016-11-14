@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View
+    ScrollView, View, ActivityIndicator
 } from 'react-native';
 import _ from 'lodash';
 import { observer } from 'mobx-react/native';
@@ -106,7 +106,8 @@ export default class Chat extends Component {
         // console.log(`content height: ${this.contentHeight}`);
         // console.log(`sv height: ${this.scrollViewHeight}`);
         // console.log(scrollEnabled);
-        const body = this.scrollViewHeight ? items.map(this.item) : null;
+        const body = (this.scrollViewHeight && !mainState.currentChat.loadingMessages) ?
+            items.map(this.item) : <ActivityIndicator style={{ paddingBottom: 10 }} />;
         return (
             <View
                 style={{ flex: 1, paddingTop }}>

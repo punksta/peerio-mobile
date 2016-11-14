@@ -145,7 +145,7 @@ Swiper.propTypes = {
     visible: React.PropTypes.string.isRequired,
     rightToLeft: React.PropTypes.bool,
     leftToRight: React.PropTypes.bool,
-    width: React.PropTypes.integer
+    width: React.PropTypes.any
     // topToBottom: React.PropTypes.bool,
     // bottomToTop: React.PropTypes.bool,
 };
