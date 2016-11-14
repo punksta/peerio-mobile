@@ -13,6 +13,8 @@ module.exports = {
         'no-mixed-operators': 0
     },
     globals: {
-        'requestAnimationFrame': false
+        'requestAnimationFrame': false,
+        '__DEV__': false,
+        '__PROD__': false
     }
 };
