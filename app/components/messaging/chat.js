@@ -37,7 +37,7 @@ export default class Chat extends Component {
 
     send(v) {
         const message = v || _.sample(randomMessages);
-        // console.log(v);
+        this.enableNextScroll = true;
         mainState.addMessage(message);
     }
 
@@ -75,6 +75,7 @@ export default class Chat extends Component {
 
     @observable contentHeight = 0;
     @observable scrollViewHeight = 0;
+    @observable enableNextScroll = false;
 
     layoutScrollView(event) {
         this.scrollViewHeight = this.scrollViewHeight || event.nativeEvent.layout.height;
@@ -88,9 +89,9 @@ export default class Chat extends Component {
         }
         if (this.contentHeight && this.scrollViewHeight) {
             const y = this.contentHeight - this.scrollViewHeight + state.keyboardHeight;
-            const animated = !this.props.hideInput && !mainState.suppressChatScroll;
+            const animated = !this.props.hideInput && this.enableNextScroll;
             this.scrollView.scrollTo({ y, animated });
-            mainState.suppressChatScroll = false;
+            this.enableNextScroll = false;
         } else {
             setTimeout(() => this.scroll(), 1000);
         }
@@ -106,7 +107,7 @@ export default class Chat extends Component {
         // console.log(`content height: ${this.contentHeight}`);
         // console.log(`sv height: ${this.scrollViewHeight}`);
         // console.log(scrollEnabled);
-        const body = (this.scrollViewHeight && !mainState.currentChat.loadingMessages) ?
+        const body = (this.scrollViewHeight && mainState.canSend) ?
             items.map(this.item) : <ActivityIndicator style={{ paddingBottom: 10 }} />;
         return (
             <View

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../../styles/styles';
 
@@ -38,6 +38,17 @@ const icons = {
         };
         return (
             <View style={s} />
+        );
+    },
+
+    text(text, onPress, style) {
+        const size = styles.vars.iconPadding * 2 + styles.vars.iconSize;
+        return (
+            <TouchableOpacity onPress={onPress}>
+                <View style={{ height: size, width: size, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={style}>{text}</Text>
+                </View>
+            </TouchableOpacity>
         );
     }
 };

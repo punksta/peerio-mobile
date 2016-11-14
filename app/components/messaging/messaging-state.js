@@ -10,7 +10,6 @@ const messagingState = observable({
     },
 
     @action transition() {
-        // mainState.currentChat = null;
         mainState.showCompose = true;
     },
 
@@ -19,7 +18,6 @@ const messagingState = observable({
         this.clear();
     },
 
-    currentChat: null,
     findUserText: '',
     loading: false,
     recipients: [],
@@ -55,18 +53,18 @@ const messagingState = observable({
 
     @action clear() {
         this.loading = false;
-        this.currentChat = null;
         this.findUserText = '';
         this.recipients = [];
+        this.recipientsMap.clear();
     },
 
     @action send(text, recipient) {
         mainState.suppressTransition = true;
         when(() => !mainState.suppressTransition, () => this.clear());
         const chat = chatStore.startChat(recipient ? [recipient] : this.recipients);
+        this.chat(chat);
         when(() => chat.id, () => {
             text && chat.sendMessage(text);
-            messagingState.chat(chat);
         });
     },
 

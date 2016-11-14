@@ -9,7 +9,7 @@ import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
 import Button from '../controls/button';
 import styles from '../../styles/styles';
 import icons from '../helpers/icons';
-// import state from '../layout/state';
+import mainState from '../main/main-state';
 
 @observer
 export default class InputMain extends Component {
@@ -78,7 +78,7 @@ export default class InputMain extends Component {
                         placeholder="Enter text here"
                         enablesReturnKeyAutomatically
                         returnKeyType="default"
-                        minHeight={60}
+                        minHeight={40}
                         maxHeight={144}
                         onChangeHeight={this._onChangeHeight}
                         style={tiStyle}
@@ -88,7 +88,7 @@ export default class InputMain extends Component {
                 <Button
                     onPress={this.send}
                     text="SEND"
-                    textStyle={{ color: styles.vars.bg }}
+                    textStyle={{ color: mainState.canSend ? styles.vars.bg : '#EFEFEF' }}
                     style={{ padding: 20 }}
                 />
             </View>

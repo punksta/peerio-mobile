@@ -30,7 +30,8 @@ const itemContainerStyle = {
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#EFEFEF',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    paddingLeft: 8
 };
 
 const nameContainerStyle = {
@@ -84,6 +85,7 @@ const circleStyleOff = {
 @observer
 export default class Avatar extends Component {
     @computed get checked() {
+        // console.log('avatar.js: computed checked');
         const cs = this.props.checkedState;
         const ck = this.props.checkedKey;
         return cs && ck && !!cs.has(ck);
@@ -115,8 +117,7 @@ export default class Avatar extends Component {
         const icon = this.checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
             backgroundColor: color,
-            padding: 10,
-            marginRight: 6
+            padding: 10
         };
         return (
             <View style={outer} pointerEvents="none">

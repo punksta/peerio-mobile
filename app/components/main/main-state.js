@@ -14,7 +14,6 @@ const mainState = observable({
     currentIndex: 0,
     showCompose: false,
     suppressTransition: false,
-    suppressChatScroll: false,
     loading: false,
 
     @action initial() {
@@ -30,11 +29,11 @@ const mainState = observable({
                 c = chatStore.chats[chatStore.chats.length - 1];
             }
 
-            this.showCompose = true;
-            return;
-
             if (c) {
                 this.chat(c);
+                if (__DEV__) {
+                    this.showCompose = true;
+                }
             } else {
                 this.showCompose = true;
             }
@@ -49,7 +48,6 @@ const mainState = observable({
         this.route = 'chat';
         this.currentIndex = 0;
         this.showCompose = false;
-        this.suppressChatScroll = true;
         // this.isBackVisible = true;
         this.currentChat = i;
         when(() => !i.loadingMeta, () => {
@@ -78,6 +76,11 @@ const mainState = observable({
     @computed get title() {
         const i = this.currentChat;
         return i && i.participants && i.participants.length ? i.participants.map(p => p.username).join(', ') : '';
+    },
+
+    @computed get canSend() {
+        return this.currentChat && this.currentChat.id &&
+                      !this.currentChat.loadingMessages;
     },
 
     @action addMessage(msg) {

@@ -9,7 +9,6 @@ import Center from '../controls/center';
 import Avatar from '../shared/avatar';
 import icons from '../helpers/icons';
 import styles from '../../styles/styles';
-import InputMain from '../layout/input-main';
 import messagingState from './messaging-state';
 import { contactStore } from '../../lib/icebear';
 
@@ -18,7 +17,6 @@ export default class ComposeMessage extends Component {
     constructor(props) {
         super(props);
         this.exit = this.exit.bind(this);
-        this.send = this.send.bind(this);
     }
 
     exit() {
@@ -112,13 +110,18 @@ export default class ComposeMessage extends Component {
             fontSize: 16,
             fontWeight: 'bold',
             color: '#000000AA'
-
+        };
+        const goStyle = {
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: styles.vars.bg
         };
         return (
             <View style={container}>
                 {icons.dark('close', this.exit)}
                 <Center style={style}><Text style={textStyle}>New message</Text></Center>
-                {icons.placeholder()}
+                {messagingState.recipients.length ?
+                    icons.text('GO', () => messagingState.send(), goStyle) : icons.placeholder()}
             </View>
         );
     }
@@ -130,7 +133,7 @@ export default class ComposeMessage extends Component {
                 checkbox
                 checkedKey={username}
                 checkedState={messagingState.recipientsMap}
-                key={i}
+                key={username || i}
                 name={username}
                 message={username}
                 hideOnline
@@ -189,24 +192,6 @@ export default class ComposeMessage extends Component {
                 {this.lineBlock(tbSearch)}
             </View>
         );
-    }
-
-    renderInput() {
-        const s = {
-            flex: 0,
-            borderTopColor: '#EFEFEF',
-            borderTopWidth: 1,
-            backgroundColor: '#fff'
-        };
-        return (
-            <View style={s}>
-                <InputMain send={this.send} />
-            </View>
-        );
-    }
-
-    send(text) {
-        messagingState.send(text);
     }
 
     render() {
