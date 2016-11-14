@@ -67,9 +67,11 @@ export default class InputMain extends Component {
                 style={{
                     flex: 1,
                     flexDirection: 'row',
-                    alignItems: 'flex-end'
+                    alignItems: 'center'
                 }}>
-                {icons.dark('control-point', this.plus, { padding: 20 })}
+                {icons.dark('control-point', this.plus, {
+                    paddingRight: 24
+                })}
                 <View style={{ flex: 1 }}>
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
@@ -78,7 +80,7 @@ export default class InputMain extends Component {
                         placeholder="Enter text here"
                         enablesReturnKeyAutomatically
                         returnKeyType="default"
-                        minHeight={24}
+                        minHeight={56}
                         maxHeight={144}
                         onChangeHeight={this._onChangeHeight}
                         style={tiStyle}
@@ -86,10 +88,15 @@ export default class InputMain extends Component {
                     />
                 </View>
                 <Button
+                    // TODO change to send airplane icon
                     onPress={this.send}
                     text="SEND"
                     textStyle={{ color: mainState.canSend ? styles.vars.bg : '#EFEFEF' }}
-                    style={{ padding: 20 }}
+                    style={{
+                        padding: 0,
+                        paddingLeft: 8,
+                        paddingRight: 8
+                    }}
                 />
             </View>
         );

@@ -30,10 +30,14 @@ export default class ComposeMessage extends Component {
     userbox(contact, i) {
         const style = {
             backgroundColor: styles.vars.bg,
-            borderRadius: 4,
+            borderRadius: 16,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
             margin: 4,
             padding: 4,
-            height: 24
+            paddingLeft: 12,
+            height: 32
         };
         const textStyle = {
             color: 'white'
@@ -42,6 +46,7 @@ export default class ComposeMessage extends Component {
             <TouchableOpacity key={i} onPress={() => this.removeRecipient(contact)}>
                 <View style={style}>
                     <Text style={textStyle}>{contact.username}</Text>
+                    {/* TODO: add cancel icon*/}
                 </View>
             </TouchableOpacity>
         );
@@ -101,19 +106,20 @@ export default class ComposeMessage extends Component {
         const container = {
             flex: 1,
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            height: 48
         };
         const style = {
             flex: 1
         };
         const textStyle = {
-            fontSize: 16,
-            fontWeight: 'bold',
-            color: '#000000AA'
+            fontSize: 14,
+            fontWeight: styles.vars.font.weight.semiBold,
+            color: 'rgba(0, 0, 0, .54)'
         };
         const goStyle = {
-            fontSize: 16,
-            fontWeight: 'bold',
+            fontSize: 14,
+            fontWeight: styles.vars.font.weight.semiBold,
             color: styles.vars.bg
         };
         return (
@@ -169,12 +175,8 @@ export default class ComposeMessage extends Component {
 
     lineBlock(content) {
         const s = {
-            paddingLeft: 14,
-            paddingRight: 14,
-            paddingBottom: 4,
-            paddingTop: 4,
             borderBottomWidth: 1,
-            borderBottomColor: '#EAEAEA'
+            borderBottomColor: 'rgba(0, 0, 0, .12)'
         };
         return (
             <View style={s}>{content}</View>
@@ -189,6 +191,7 @@ export default class ComposeMessage extends Component {
         return (
             <View>
                 {this.lineBlock(exitRow)}
+                {/*TODO combine recipients and search */}
                 {recipients.length ? this.lineBlock(userRow) : null}
                 {this.lineBlock(tbSearch)}
             </View>

@@ -35,16 +35,17 @@ export default class HeaderMain extends Component {
             icons.white('keyboard-arrow-left', this.back) :
             icons.white('menu', this.leftMenu);
         const textStyle = {
-            color: styles.vars.highlight,
-            fontWeight: 'bold',
-            lineHeight: 20,
+            color: styles.vars.white,
+            fontWeight: styles.vars.font.weight.regular,
             flex: 1,
-            textAlign: 'center'
+            fontSize: 16,
+            display: 'flex',
+            alignItems: 'center',
+            marginLeft: 20
         };
         const containerStyle = {
             flex: 0,
             flexDirection: 'row',
-            justifyContent: 'space-between',
             alignItems: 'center',
             paddingTop: styles.vars.statusBarHeight,
             height: styles.vars.headerHeight
@@ -52,14 +53,14 @@ export default class HeaderMain extends Component {
         return (
             <View style={{ height: styles.vars.headerSpacing, flex: 0, justifyContent: 'center' }}>
                 <View style={containerStyle}>
-                    <View style={{ flexDirection: 'row', paddingLeft: 6, backgroundColor: 'transparent' }}>
+                    <View style={{ paddingLeft: 6, backgroundColor: 'transparent' }}>
                         {leftIcon}
                     </View>
                     <Text
                         ellipsizeMode="tail"
                         numberOfLines={1}
                         style={textStyle}>{this.props.title}</Text>
-                    <View style={{ flexDirection: 'row', backgroundColor: 'transparent' }}>
+                    <View style={{ backgroundColor: 'transparent' }}>
                         {icons.white('more-vert', this.rightMenu)}
                     </View>
                 </View>

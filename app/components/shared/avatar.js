@@ -29,7 +29,7 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#EFEFEF',
+    borderBottomColor: 'rgba(0, 0, 0, .12)',
     backgroundColor: 'white',
     paddingLeft: 8
 };
@@ -37,30 +37,31 @@ const itemContainerStyle = {
 const nameContainerStyle = {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    fontSize: 14
 };
 
 const nameMessageContainerStyle = {
     flex: 1,
     flexDirection: 'column',
     padding: 8,
+    paddingLeft: 16,
     marginLeft: 6
 };
 
 const nameTextStyle = {
-    fontWeight: '500',
-    flex: 1
+    color: 'rgba(0, 0, 0, .54)',
+    fontWeight: styles.vars.font.weight.bold
 };
 
 const dateTextStyle = {
-    fontSize: 11,
-    color: '#0000009A',
-    marginLeft: 6
+    color: 'rgba(0, 0, 0, .38)',
+    marginLeft: 8
 };
 
 const lastMessageTextStyle = {
-    fontWeight: '300',
-    color: '#000000AA',
+    fontWeight: styles.vars.font.weight.regular,
+    color: 'rgba(0,0,0, .54)',
     lineHeight: 22
 };
 
@@ -118,7 +119,7 @@ export default class Avatar extends Component {
         const icon = this.checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
             backgroundColor: color,
-            padding: 10
+            padding: 8
         };
         return (
             <View style={outer} pointerEvents="none">

@@ -33,23 +33,23 @@ const vars = {
     txtAlert: '#ff0000aa',
     txtDark: 'black',
     inputBg: 'white',
-    pickerBg: '#ffffff10',
+    pickerBg: 'rgba(255, 255, 255, .12)',
     pickerText: 'white',
     subtleBg: '#c3dfee',
-    subtleText: '#7b8c95',
-    subtleTextBold: '#181c1f',
-    inputBgInactive: '#c2e0ef',
-    inputBgInactiveText: '#7c8e98',
+    subtleText: 'rgba(0, 0, 0, .54)',
+    subtleTextBold: 'rgba(0, 0, 0, .54',
+    inputBgInactive: 'rgba(255, 255, 255, .5)',
+    inputBgInactiveText: 'rgba(0,0,0, .54)',
     checkboxInactive: '#EFEFEF',
     checkboxIconInactive: 'gray',
     checkboxActive: '#23d089',
     layoutPaddingTop: statusBarHeight * 2,
     footerMarginX: 24,
     statusBarHeight,
-    headerHeight: 48,
-    headerSpacing: 58 + statusBarHeight,
+    headerHeight: 56,
+    headerSpacing: 56 + statusBarHeight,
     iconSize: 24,
-    iconPadding: 10,
+    iconPadding: 12,
     menuWidthRatio: 0.9,
     animationDuration: 200,
     font: {
@@ -59,6 +59,11 @@ const vars = {
             small: 10,
             big: 18,
             bigger: 16
+        },
+        weight: {
+            bold: '700',
+            semiBold: '600',
+            regular: '400'
         }
     },
     inputHeight: 48
@@ -117,7 +122,7 @@ const styles = {
             },
             bold: {
                 color: vars.highlight,
-                fontWeight: 'bold'
+                fontWeight: vars.font.weight.bold
             }
         }
     },
@@ -349,7 +354,7 @@ const styles = {
         },
         textSubTitle: {
             color: vars.txtLight,
-            fontWeight: '400',
+            fontWeight: vars.font.weight.regular,
             fontSize: 22,
             marginTop: 12,
             marginBottom: 30
@@ -359,7 +364,7 @@ const styles = {
         text: {
             title: inherit('text-inverse'),
             subTitle: inherit('text-inverse', {
-                fontWeight: '400',
+                fontWeight: vars.font.weight.regular,
                 fontSize: 22,
                 marginTop: 12,
                 marginBottom: 30

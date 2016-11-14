@@ -7,7 +7,7 @@ import styles from '../../styles/styles';
 export default class Bold extends Component {
     render() {
         let style = {
-            fontWeight: 'bold'
+            fontWeight: styles.vars.font.weight.bold
         };
         if (this.props.style) {
             style = styles.inherit(style, this.props.style);
