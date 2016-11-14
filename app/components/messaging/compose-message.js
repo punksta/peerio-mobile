@@ -191,7 +191,7 @@ export default class ComposeMessage extends Component {
         return (
             <View>
                 {this.lineBlock(exitRow)}
-                {/*TODO combine recipients and search */}
+                {/* TODO combine recipients and search */}
                 {recipients.length ? this.lineBlock(userRow) : null}
                 {this.lineBlock(tbSearch)}
             </View>
