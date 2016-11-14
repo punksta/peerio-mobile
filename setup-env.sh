@@ -9,7 +9,7 @@ fi
 if [ ! -f env-expandoo.sh ]; then
   echo "Creating env-expandoo.sh"
   echo "export PEERIO_SOCKET_SERVER=$PEERIO_SOCKET_SERVER" > env-expandoo.sh
-  echo "export EXECUTABLE_NAME=expandoo" > env-expandoo.sh
+  echo "export EXECUTABLE_NAME=expandoo" >> env-expandoo.sh
 fi
 echo "Checking icebear lib existence"
 if [ ! -d app/lib/peerio-icebear ]; then
