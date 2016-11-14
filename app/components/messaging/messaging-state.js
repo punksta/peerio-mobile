@@ -1,6 +1,6 @@
-import { observable, action, when, asMap } from 'mobx';
+import { observable, action, when, asMap, computed } from 'mobx';
 import mainState from '../main/main-state';
-import { chatStore } from '../../lib/icebear';
+import { chatStore, contactStore } from '../../lib/icebear';
 
 const messagingState = observable({
     @action chat(v) {
@@ -31,8 +31,15 @@ const messagingState = observable({
         return !!this.findByUsername(c.username).length;
     },
 
+    @computed get filtered() {
+        return contactStore.contacts.filter(
+            c => !c.loading && !c.notFound && c.username.startsWith(this.findUserText)
+        );
+    },
+
     @action add(c) {
         if (this.exists(c)) return;
+        this.findUserText = '';
         this.recipients.push(c);
         this.recipientsMap.set(c.username, c);
     },

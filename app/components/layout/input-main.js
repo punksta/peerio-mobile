@@ -78,7 +78,7 @@ export default class InputMain extends Component {
                         placeholder="Enter text here"
                         enablesReturnKeyAutomatically
                         returnKeyType="default"
-                        minHeight={40}
+                        minHeight={24}
                         maxHeight={144}
                         onChangeHeight={this._onChangeHeight}
                         style={tiStyle}

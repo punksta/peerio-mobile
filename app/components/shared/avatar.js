@@ -60,7 +60,8 @@ const dateTextStyle = {
 
 const lastMessageTextStyle = {
     fontWeight: '300',
-    color: '#000000AA'
+    color: '#000000AA',
+    lineHeight: 22
 };
 
 const circleRadius = 6;
@@ -131,7 +132,7 @@ export default class Avatar extends Component {
         const date = this.props.date ? <Text style={dateTextStyle}>{this.props.date}</Text> : null;
         const online = this.props.hideOnline ? null : <View style={this.props.online ? circleStyle : circleStyleOff} />;
         const color = this.props.name ? this.stringColor(this.props.name) : 'green';
-        const coloredAvatarStyle = [avatarStyle, { backgroundColor: color }];
+        const coloredAvatarStyle = [avatarStyle, { backgroundColor: this.props.color || color }];
         const avatar = <View style={coloredAvatarStyle} />;
         const loader = <ActivityIndicator style={{ height: avatarRadius, margin: 4 }} />;
         const avatarPlaceholder = this.props.loading ? loader : avatar;
@@ -165,6 +166,7 @@ Avatar.propTypes = {
     name: React.PropTypes.string,
     date: React.PropTypes.string,
     icon: React.PropTypes.string,
+    color: React.PropTypes.string,
     message: React.PropTypes.string,
     online: React.PropTypes.bool,
     loading: React.PropTypes.bool,

@@ -127,10 +127,11 @@ export default class ComposeMessage extends Component {
     }
 
     item(contact, i) {
-        const { username /* , message */ } = contact;
+        const { username, color /* , message */ } = contact;
         return (
             <Avatar
                 checkbox
+                color={color}
                 checkedKey={username}
                 checkedState={messagingState.recipientsMap}
                 key={username || i}
@@ -153,7 +154,7 @@ export default class ComposeMessage extends Component {
     }
 
     body() {
-        const found = contactStore.contacts;
+        const found = messagingState.filtered;
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator />;
         // const result = findUserText && findUserText.length ? mockItems : chat;
