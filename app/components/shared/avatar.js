@@ -115,11 +115,12 @@ export default class Avatar extends Component {
         const v = styles.vars;
         const color = this.checked ? v.checkboxActive : v.checkboxInactive;
         const iconColor = this.checked ? 'white' : v.checkboxIconInactive;
-        const iconBgColor = this.checked ? v.checkboxActive : v.checkboxInactive;
+        // Is iconBgColor needed?
+        const iconBgColor = 'transparent';
         const icon = this.checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
             backgroundColor: color,
-            padding: 8
+            padding: 4
         };
         return (
             <View style={outer} pointerEvents="none">

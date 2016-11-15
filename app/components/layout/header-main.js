@@ -39,7 +39,6 @@ export default class HeaderMain extends Component {
             fontWeight: styles.vars.font.weight.regular,
             flex: 1,
             fontSize: 16,
-            display: 'flex',
             alignItems: 'center',
             marginLeft: 20
         };

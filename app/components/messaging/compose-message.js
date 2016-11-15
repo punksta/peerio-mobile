@@ -31,22 +31,26 @@ export default class ComposeMessage extends Component {
         const style = {
             backgroundColor: styles.vars.bg,
             borderRadius: 16,
-            display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
             margin: 4,
-            padding: 4,
+            padding: 0,
             paddingLeft: 12,
-            height: 32
+            height: 32,
+            overflow: 'hidden'
         };
         const textStyle = {
-            color: 'white'
+            color: 'white',
         };
+
         return (
-            <TouchableOpacity key={i} onPress={() => this.removeRecipient(contact)}>
+            <TouchableOpacity key={i} onPress={() => this.removeRecipient(contact)} style={{alignItems: 'center'}}>
                 <View style={style}>
                     <Text style={textStyle}>{contact.username}</Text>
-                    {/* TODO: add cancel icon*/}
+                    {icons.white('cancel', null, {
+                        marginTop: -8,
+                        marginRight: -8,
+                    })}
                 </View>
             </TouchableOpacity>
         );
@@ -81,7 +85,10 @@ export default class ComposeMessage extends Component {
         const container = {
             flex: 1,
             flexDirection: 'row',
-            alignItems: 'center'
+            alignItems: 'center',
+            padding: 4,
+            paddingTop: 0,
+            paddingBottom: 0
         };
         const style = {
             flex: 1,
@@ -107,7 +114,10 @@ export default class ComposeMessage extends Component {
             flex: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            height: 48
+            height: 48,
+            padding: 4,
+            paddingTop: 0,
+            paddingBottom: 0
         };
         const style = {
             flex: 1
