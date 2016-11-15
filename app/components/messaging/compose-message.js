@@ -40,16 +40,16 @@ export default class ComposeMessage extends Component {
             overflow: 'hidden'
         };
         const textStyle = {
-            color: 'white',
+            color: 'white'
         };
 
         return (
-            <TouchableOpacity key={i} onPress={() => this.removeRecipient(contact)} style={{alignItems: 'center'}}>
+            <TouchableOpacity key={i} onPress={() => this.removeRecipient(contact)}>
                 <View style={style}>
                     <Text style={textStyle}>{contact.username}</Text>
-                    {icons.white('cancel', null, {
+                    {icons.white('cancel', {
                         marginTop: -8,
-                        marginRight: -8,
+                        marginRight: -8
                     })}
                 </View>
             </TouchableOpacity>
@@ -61,7 +61,7 @@ export default class ComposeMessage extends Component {
         const container = {
             flex: 1,
             flexDirection: 'row',
-            alignItems: 'center',
+            alignItems: 'flex-start',
             paddingLeft: 8,
             flexWrap: 'wrap'
         };
