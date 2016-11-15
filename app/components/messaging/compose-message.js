@@ -44,10 +44,10 @@ export default class ComposeMessage extends Component {
         };
 
         return (
-            <TouchableOpacity key={i} onPress={() => this.removeRecipient(contact)}>
+            <TouchableOpacity key={i} onPress={() => this.removeRecipient(contact)} >
                 <View style={style}>
                     <Text style={textStyle}>{contact.username}</Text>
-                    {icons.white('cancel', {
+                    {icons.white('cancel', null, {
                         marginTop: -8,
                         marginRight: -8
                     })}
