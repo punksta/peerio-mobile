@@ -102,7 +102,7 @@ export default class App extends Component {
     }
 
     configureScene(route /* , routeStack */) {
-        if (route.index < 2 || route.Index > 3) {
+        if (route.index < 2 || route.index > 3) {
             return Navigator.SceneConfigs.FadeAndroid;
         }
         return Navigator.SceneConfigs.PushFromRight;

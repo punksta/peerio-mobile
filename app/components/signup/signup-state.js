@@ -73,6 +73,9 @@ const signupState = observable({
         user.lastName = lastName;
         user.localeCode = localeCode;
         return user.createAccountAndLogin()
+            .then(() => {
+                User.current = user;
+            })
             .then(state.routes.main.transition)
             .catch((e) => {
                 console.log(e);
