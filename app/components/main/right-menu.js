@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
+import loginState from '../login/login-state';
 import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 import Swiper from '../controls/swiper';
@@ -34,7 +35,7 @@ export default class RightMenu extends Component {
     item(i, key) {
         return (
             <View style={{ backgroundColor: styles.vars.bg }} key={key}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={i.action}>
                     <View style={itemStyle}>
                         { icons.dark(i.icon) }
                         <Text style={textStyle}>{i.name}</Text>
@@ -72,7 +73,8 @@ export default class RightMenu extends Component {
 
         const signOut = {
             name: 'Sign out',
-            icon: 'power-settings-new'
+            icon: 'power-settings-new',
+            action: () => loginState.signOut()
         };
 
         return (
