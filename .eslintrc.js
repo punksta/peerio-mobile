@@ -10,7 +10,8 @@ module.exports = {
         'react/prefer-stateless-function': 0,
         'react/jsx-filename-extension': 0,
         'react/sort-comp': 0,
-        'no-mixed-operators': 0
+        'no-mixed-operators': 0,
+        'new-cap': 0
     },
     globals: {
         'requestAnimationFrame': false,

@@ -6,6 +6,7 @@ import {
 import { observer } from 'mobx-react/native';
 import TextBox from '../controls/textbox';
 import Link from '../controls/link';
+import Bold from '../controls/bold';
 import LanguagePickerBox from '../controls/language-picker-box';
 import SignupFooter from '../controls/signup-footer';
 import Layout1 from '../layout/layout1';
@@ -24,6 +25,10 @@ export default class SignupStep1 extends Component {
 
     render() {
         const style = styles.wizard;
+        const tosParser = {
+            emphasis: text => <Bold>{text}</Bold>,
+            tosLink: text => <Link url={this.url}>{text}</Link>
+        };
         const body = (
             <View style={style.containerFlex}>
                 <Text style={style.text.title}>{t('signup')}</Text>
@@ -49,9 +54,7 @@ export default class SignupStep1 extends Component {
                 </View>
                 <LanguagePickerBox {...this.tb('language', t('language'))} />
                 <Text style={style.text.info}>
-                    <T k="signup_TOSRequestText">
-                        {{ tosLink: text => <Link url={this.url}>{text}</Link> }}
-                    </T>
+                    <T k="signup_TOSRequestText">{tosParser}</T>
                 </Text>
                 <View style={{ flex: 1 }} />
             </View>

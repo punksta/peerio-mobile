@@ -60,7 +60,7 @@ export default class App extends Component {
             console.error = console._errorOriginal;
         }
 
-        global.ErrorUtils && global.ErrorUtils.setGlobalHandler((...args) => {
+        !__DEV__ && global.ErrorUtils && global.ErrorUtils.setGlobalHandler((...args) => {
             console.error('App.js: unhandled error');
             console.error(args);
         });
@@ -72,9 +72,11 @@ export default class App extends Component {
     componentDidMount() {
         // navigating to initial route
         // timeout is needed for router to properly initialize
-        // setTimeout(() => {
-        //     state.routes.signupStep1.transition();
-        // }, 1000);
+        if (__DEV__) {
+            // setTimeout(() => {
+            //     state.routes.signupStep1.transition();
+            // }, 1000);
+        }
     }
 
     route(key, component, replace, type) {
@@ -102,7 +104,7 @@ export default class App extends Component {
     }
 
     configureScene(route /* , routeStack */) {
-        if (route.index < 2 || route.Index > 3) {
+        if (route.index < 2 || route.index > 3) {
             return Navigator.SceneConfigs.FadeAndroid;
         }
         return Navigator.SceneConfigs.PushFromRight;

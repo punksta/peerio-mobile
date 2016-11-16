@@ -38,8 +38,7 @@ const itemContainerStyle = {
 const nameContainerStyle = {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
-    fontSize: 14
+    alignItems: 'center'
 };
 
 const nameMessageContainerStyle = {
@@ -52,7 +51,8 @@ const nameMessageContainerStyle = {
 
 const nameTextStyle = {
     color: 'rgba(0, 0, 0, .54)',
-    fontWeight: styles.vars.font.weight.bold
+    fontWeight: styles.vars.font.weight.bold,
+    fontSize: 14
 };
 
 const dateTextStyle = {
