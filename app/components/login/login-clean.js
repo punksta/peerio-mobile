@@ -9,11 +9,11 @@ import Layout1 from '../layout/layout1';
 import LanguagePicker from '../controls/language-picker';
 import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
-import Button from '../controls/button';
 import Center from '../controls/center';
 import ErrorText from '../controls/error-text';
 import Logo from '../controls/logo';
-import LoginTermsSignup from './login-terms-signup';
+import LoginSignup from './login-signup';
+import Terms from './terms';
 import loginState from './login-state';
 import styles from '../../styles/styles';
 import forms from '../helpers/forms';
@@ -23,7 +23,6 @@ export default class LoginClean extends Component {
     constructor(props) {
         super(props);
         forms.mixin(this, loginState);
-        this.signIn = this.signIn.bind(this);
 
         if (!__DEV__) {
             loginState.load();
@@ -42,14 +41,10 @@ export default class LoginClean extends Component {
         return <LanguagePicker />;
     }
 
-    signIn() {
-        loginState.login();
-    }
-
     render() {
         const style = styles.wizard;
         const activityIndicator = <ActivityIndicator color={styles.vars.highlight} style={{ height: 14 }} />;
-        const loginButton = <Button text={t('login')} caps bold onPress={this.signIn} />;
+        const loginButton = <LoginSignup />;
         const button = loginState.isInProgress ? activityIndicator : loginButton;
         const centerItem = loginState.error ? <ErrorText>{t(loginState.error)}</ErrorText> : button;
         const body = (
@@ -66,12 +61,12 @@ export default class LoginClean extends Component {
                         {...this.tb('passphrase', t('passphrase'))} />
                     <LanguagePickerBox {...this.tb('language', t('language'))} />
                 </View>
-                <View style={{ height: 24, alignItems: 'center' }}>
+                <View style={{ height: 40, marginBottom: 42 }}>
                     <Center>
                         {centerItem}
                     </Center>
                 </View>
-                <LoginTermsSignup />
+                <Terms />
                 <View />
             </View>
         );
