@@ -1,4 +1,5 @@
 import { when, observable, action, reaction } from 'mobx';
+import RNRestart from 'react-native-restart';
 import state from '../layout/state';
 import store from '../../store/local-storage';
 import Util from '../helpers/util';
@@ -22,6 +23,13 @@ const loginState = observable({
 
     @action clean() {
         console.log('transitioning to clean');
+        this.username = '';
+        this.usernameValid = null;
+        this.passphrase = '';
+        this.savedPassphrase = '';
+        this.savedUserInfo = false;
+        this.isInProgress = false;
+        this.pin = false;
         state.routes.loginClean.transition();
     },
 
@@ -68,6 +76,11 @@ const loginState = observable({
         user.passphrase = this.passphrase || this.savedPassphrase || 'such a secret passphrase';
         this.isInProgress = true;
         when(() => socket.connected, () => this._login(user));
+    },
+
+    @action async signOut() {
+        await store.user.set('userData', null);
+        RNRestart.Restart();
     },
 
     @action async load() {

@@ -60,7 +60,7 @@ export default class App extends Component {
             console.error = console._errorOriginal;
         }
 
-        global.ErrorUtils && global.ErrorUtils.setGlobalHandler((...args) => {
+        !__DEV__ && global.ErrorUtils && global.ErrorUtils.setGlobalHandler((...args) => {
             console.error('App.js: unhandled error');
             console.error(args);
         });
