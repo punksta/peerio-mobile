@@ -51,7 +51,7 @@ const vars = {
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconPadding: 12,
-    menuWidthRatio: .8,
+    menuWidthRatio: 0.8,
     animationDuration: 200,
     font: {
         size: {

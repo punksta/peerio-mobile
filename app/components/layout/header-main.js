@@ -47,8 +47,7 @@ export default class HeaderMain extends Component {
             flexDirection: 'row',
             alignItems: 'center',
             paddingTop: styles.vars.statusBarHeight,
-            height: styles.vars.headerHeight,
-
+            height: styles.vars.headerHeight
         };
         return (
             <View style={{

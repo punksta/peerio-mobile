@@ -145,9 +145,9 @@ export default class LayoutMain extends Component {
                     behavior="padding"
                     style={outerStyle}>
 
-                    <Animated.View style={{ flex: 1,  transform }}>
+                    <Animated.View style={{ flex: 1, transform }}>
                         <HeaderMain title={title} />
-                        <View style={{ flex: 1}}>
+                        <View style={{ flex: 1 }}>
                             {this.pages([body])}
                         </View>
                     </Animated.View>
