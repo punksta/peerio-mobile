@@ -20,6 +20,7 @@ const branding = {
 const { bg } = branding[EN];
 
 const statusBarHeight = global.platform === 'android' ? 0 : 10;
+const layoutPaddingTop = statusBarHeight * 2;
 
 const vars = {
     circle: 8,
@@ -43,11 +44,11 @@ const vars = {
     checkboxInactive: 'rgba(0, 0, 0, .12)',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
     checkboxActive: '#23d089',
-    layoutPaddingTop: statusBarHeight * 2,
     footerMarginX: 24,
     statusBarHeight,
+    layoutPaddingTop,
     headerHeight: 56,
-    headerSpacing: 56 + statusBarHeight,
+    headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconPadding: 12,
     menuWidthRatio: .8,

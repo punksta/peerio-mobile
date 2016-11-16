@@ -139,13 +139,17 @@ export default class LayoutMain extends Component {
 
         return (
             <View style={[styles.container.root, { transform: transformAndroid }]}>
-                <HeaderMain title={title} />
+
                 <Animated.View
                     {...this.panResponder.panHandlers}
                     behavior="padding"
                     style={outerStyle}>
-                    <Animated.View style={{ flex: 1, transform }}>
-                        {this.pages([body])}
+
+                    <Animated.View style={{ flex: 1,  transform }}>
+                        <HeaderMain title={title} />
+                        <View style={{ flex: 1}}>
+                            {this.pages([body])}
+                        </View>
                     </Animated.View>
                 </Animated.View>
                 <LeftMenu />
@@ -155,8 +159,7 @@ export default class LayoutMain extends Component {
                 </Animated.View>
                 <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'}
                            hidden={menuState && !mainState.showCompose}
-                           // TODO: set animation to 'fade' and 'slide'
-
+                           // TODO: set show hide animation to 'fade' and 'slide'
                 />
             </View>
         );

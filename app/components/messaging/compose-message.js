@@ -117,7 +117,6 @@ export default class ComposeMessage extends Component {
             flex: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            height: 48,
             padding: 4,
             paddingTop: 0,
             paddingBottom: 0
