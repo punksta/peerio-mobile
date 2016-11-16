@@ -18,7 +18,7 @@ class T extends Component {
     }
 
     render() {
-        const translated = t(this.props.k, this.props.children);
+        let translated = t(this.props.k, this.props.children);
         if (Array.isArray(translated)) {
             return (
                 <Text>
@@ -26,18 +26,25 @@ class T extends Component {
                 </Text>
             );
         }
+        if (this.props.uppercase) {
+            translated = translated.toUpperCase();
+        }
         return <Text>{translated}</Text>;
     }
 }
 
 T.propTypes = {
     children: React.PropTypes.any,
-    k: React.PropTypes.string
+    k: React.PropTypes.string,
+    uppercase: React.PropTypes.bool
 };
 
 module.exports = {
     T,
     t(k, params) {
         return React.createElement(T, { k }, params);
+    },
+    tu(k, params) {
+        return React.createElement(T, { k, uppercase: true }, params);
     }
 };
