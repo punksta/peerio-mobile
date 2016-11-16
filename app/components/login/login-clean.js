@@ -32,8 +32,8 @@ export default class LoginClean extends Component {
 
     componentDidMount() {
         if (__DEV__) {
-            loginState.username = 'anritest7';
-            loginState.passphrase = 'icebear';
+            // loginState.username = 'anritest7';
+            // loginState.passphrase = 'icebear';
             // loginState.login();
         }
     }
@@ -60,7 +60,7 @@ export default class LoginClean extends Component {
                     <TextBox
                         lowerCase
                         valid={loginState.usernameValid}
-                        {...this.tb('username', t('name'))} />
+                        {...this.tb('username', t('username'))} />
                     <TextBox
                         secureTextEntry
                         {...this.tb('passphrase', t('passphrase'))} />
