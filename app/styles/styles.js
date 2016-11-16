@@ -26,12 +26,12 @@ const vars = {
     bg,
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',
-    white: '#FFF',
+    white: '#fff',
     whiteIcon: '#fff',
     darkIcon: '#00000070',
     txtLight: '#bfdfef',
     txtAlert: '#ff0000aa',
-    txtDark: 'black',
+    txtDark: 'rgba(0, 0, 0, .87)',
     inputBg: 'white',
     pickerBg: 'rgba(255, 255, 255, .12)',
     pickerText: 'white',
@@ -50,7 +50,7 @@ const vars = {
     headerSpacing: 56 + statusBarHeight,
     iconSize: 24,
     iconPadding: 12,
-    menuWidthRatio: 0.9,
+    menuWidthRatio: .8,
     animationDuration: 200,
     font: {
         size: {

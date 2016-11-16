@@ -62,6 +62,7 @@ export default class InputMain extends Component {
             flex: 1,
             fontSize: 14
         };
+
         return (
             <View
                 style={{
@@ -69,10 +70,10 @@ export default class InputMain extends Component {
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}>
-                {icons.dark('control-point', this.plus, {
+                {icons.dark('add-circle-outline', this.plus, {
                     paddingRight: 24
                 })}
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, alignItems: 'center' }}>
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
                         autoCorrect={false}
@@ -87,17 +88,16 @@ export default class InputMain extends Component {
                         ref={ref => { this.input = ref; }}
                     />
                 </View>
-                <Button
-                    // TODO change to send airplane icon
-                    onPress={this.send}
-                    text="SEND"
-                    textStyle={{ color: mainState.canSend ? styles.vars.bg : '#EFEFEF' }}
-                    style={{
-                        padding: 0,
-                        paddingLeft: 8,
-                        paddingRight: 8
-                    }}
-                />
+                <View style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    marginRight: 8,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    backgroundColor: styles.vars.checkboxActive }}>
+                    {icons.white('send', this.send, { width: 24, height: 24 })}
+                </View>
             </View>
         );
     }

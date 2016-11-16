@@ -13,15 +13,13 @@ const itemStyle = {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 20,
-    paddingTop: 4,
-    paddingBottom: 4,
+    paddingLeft: 4,
     backgroundColor: 'white'
 };
 
 const textStyle = {
-    color: '#000000CF',
-    marginLeft: 4
+    color: 'rgba(0, 0, 0, .87)',
+    marginLeft: 20
 };
 
 @observer
@@ -33,7 +31,7 @@ export default class RightMenu extends Component {
 
     item(i, key) {
         return (
-            <View style={{ backgroundColor: styles.vars.bg }} key={key}>
+            <View style={{ backgroundColor: styles.vars.bg, height: 48 }} key={key}>
                 <TouchableOpacity>
                     <View style={itemStyle}>
                         { icons.dark(i.icon) }
@@ -51,18 +49,20 @@ export default class RightMenu extends Component {
             position: 'absolute',
             left: 0,
             right: 0,
-            top: styles.vars.headerSpacing,
+            top: 0,
             bottom: 0
         };
 
         const menuContainerStyle = {
             width,
             justifyContent: 'space-between',
-            backgroundColor: '#FFFFFF'
+            backgroundColor: '#fff',
+            paddingTop: 8
+
         };
 
         const items = [
-            { name: 'Messages', icon: 'message' },
+            { name: 'Messages', icon: 'chat-bubble' },
             { name: 'Files', icon: 'folder' },
             { name: 'Profile', icon: 'person' },
             { name: 'Settings', icon: 'settings' },
@@ -76,6 +76,7 @@ export default class RightMenu extends Component {
         };
 
         return (
+            //TODO add overlay when open
             <Swiper
                 width={width}
                 state={mainState}

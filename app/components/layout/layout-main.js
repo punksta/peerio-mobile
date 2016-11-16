@@ -135,6 +135,8 @@ export default class LayoutMain extends Component {
             <ActivityIndicator style={{ paddingTop: 10 }} /> : null;
         const body = mainState.currentChat ? <Chat ref={c => (this.chatControl = c)} /> : placeholder;
         const title = mainState.title;
+        const menuState = mainState.isLeftMenuVisible || mainState.isRightMenuVisible;
+
         return (
             <View style={[styles.container.root, { transform: transformAndroid }]}>
                 <HeaderMain title={title} />
@@ -151,7 +153,11 @@ export default class LayoutMain extends Component {
                 <Animated.View style={composeStyle}>
                     <ComposeMessage />
                 </Animated.View>
-                <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'} />
+                <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'}
+                           hidden={menuState && !mainState.showCompose}
+                           // TODO: set animation to 'fade' and 'slide'
+
+                />
             </View>
         );
     }

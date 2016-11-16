@@ -50,6 +50,7 @@ export default class HeaderMain extends Component {
             height: styles.vars.headerHeight
         };
         return (
+            // FIXME: headerSpacing is rendering 8px too short on iOS. Based on code it should be 76 it's rendering 68
             <View style={{ height: styles.vars.headerSpacing, flex: 0, justifyContent: 'center' }}>
                 <View style={containerStyle}>
                     <View style={{ paddingLeft: 6, backgroundColor: 'transparent' }}>

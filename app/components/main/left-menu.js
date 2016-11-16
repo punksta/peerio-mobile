@@ -11,20 +11,20 @@ import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
 import { chatStore } from '../../lib/icebear';
 
-const circleRadius = 6;
+const circleDiameter = 8;
 const circleStyle = {
-    width: circleRadius,
-    height: circleRadius,
-    borderRadius: circleRadius / 2,
+    width: circleDiameter,
+    height: circleDiameter,
+    borderRadius: circleDiameter / 2,
     backgroundColor: '#7ed321'
 };
 
 const circleStyleOff = {
-    width: circleRadius,
-    height: circleRadius,
-    borderRadius: circleRadius / 2,
+    width: circleDiameter,
+    height: circleDiameter,
+    borderRadius: circleDiameter / 2,
     borderWidth: 1,
-    borderColor: '#00000050',
+    borderColor: 'rgba(0, 0, 0, .54)',
     backgroundColor: 'transparent'
 };
 
@@ -40,12 +40,14 @@ const itemStyle = {
 
 const textStyle = {
     flex: 1,
-    color: '#000000CF',
-    marginLeft: 14
+    color: 'rgba(0, 0, 0, .87)',
+    marginLeft: 14,
+    paddingRight: 12
 };
 
 const headerTextStyle = {
-    color: '#000000CF'
+    color: 'rgba(0, 0, 0, .54)',
+    fontWeight: styles.vars.font.weight.semiBold
 };
 
 const headerContainer = {
@@ -54,8 +56,7 @@ const headerContainer = {
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 50,
-    paddingLeft: 20,
-    paddingRight: 20
+    paddingLeft: 16
 };
 
 @observer
@@ -82,7 +83,7 @@ export default class LeftMenu extends Component {
                         {i}
                     </Text>
                 </View>
-                {icons.dark('control-point', () => { this.hideAnimated(); action(); })}
+                {icons.dark('add-circle-outline', () => { action(); })}
             </View>
         );
     }
@@ -113,7 +114,7 @@ export default class LeftMenu extends Component {
         const containerStyle = {
             position: 'absolute',
             left: 0,
-            top: styles.vars.headerSpacing,
+            top: 0,
             bottom: 0,
             right: 0
         };
@@ -122,12 +123,13 @@ export default class LeftMenu extends Component {
             width,
             backgroundColor: 'white',
             borderRightWidth: 1,
-            borderRightColor: '#efefef'
+            borderRightColor: 'rgba(0,0,0,.12)'
         };
 
         const chats = chatStore.chats;
 
         return (
+            // TODO push main header when open.
             <Swiper
                 state={mainState}
                 visible="isLeftMenuVisible"

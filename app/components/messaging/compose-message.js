@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text, TextInput, ActivityIndicator, TouchableOpacity
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
 import { when } from 'mobx';
 import Layout1 from '../layout/layout1';
@@ -47,10 +48,12 @@ export default class ComposeMessage extends Component {
             <TouchableOpacity key={i} onPress={() => this.removeRecipient(contact)} >
                 <View style={style}>
                     <Text style={textStyle}>{contact.username}</Text>
-                    {icons.white('cancel', null, {
-                        marginTop: -8,
-                        marginRight: -8
-                    })}
+                    <Icon
+                        style={{ paddingRight: 4, marginLeft: 8 }}
+                        name="cancel"
+                        size={styles.vars.iconSize}
+                        color="white"
+                    />
                 </View>
             </TouchableOpacity>
         );

@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
     default: {
         textAlign: 'left',
         padding: 0,
-        paddingBottom: 8,
-        marginTop: 8
+        paddingBottom: 6,
+        marginTop: 6
     }
 });
 

@@ -7,14 +7,15 @@ import { computed } from 'mobx';
 import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 
-const avatarRadius = 36;
+const avatarDiameter = 36;
 
 const avatarStyle = {
-    width: avatarRadius,
-    height: avatarRadius,
-    borderRadius: avatarRadius / 2,
+    width: avatarDiameter,
+    height: avatarDiameter,
+    borderRadius: avatarDiameter / 2,
     backgroundColor: '#CFCFCF',
-    margin: 4
+    margin: 4,
+    marginTop: 10
 };
 
 const itemStyle = {
@@ -27,7 +28,7 @@ const itemStyle = {
 const itemContainerStyle = {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, .12)',
     backgroundColor: 'white',
@@ -61,25 +62,25 @@ const dateTextStyle = {
 
 const lastMessageTextStyle = {
     fontWeight: styles.vars.font.weight.regular,
-    color: 'rgba(0,0,0, .54)',
-    lineHeight: 22
+    color: 'rgba(0, 0, 0, .54)',
+    lineHeight: 19
 };
 
-const circleRadius = 6;
+const circleDiameter = 6;
 const circleStyle = {
-    width: circleRadius,
-    height: circleRadius,
-    borderRadius: circleRadius / 2,
+    width: circleDiameter,
+    height: circleDiameter,
+    borderRadius: circleDiameter / 2,
     backgroundColor: '#7ed321',
     margin: 4
 };
 
 const circleStyleOff = {
-    width: circleRadius,
-    height: circleRadius,
-    borderRadius: circleRadius / 2,
+    width: circleDiameter,
+    height: circleDiameter,
+    borderRadius: circleDiameter / 2,
     borderWidth: 1,
-    borderColor: '#00000050',
+    borderColor: 'rgba(0, 0, 0, .54)',
     backgroundColor: 'transparent',
     margin: 4
 };
@@ -115,7 +116,6 @@ export default class Avatar extends Component {
         const v = styles.vars;
         const color = this.checked ? v.checkboxActive : v.checkboxInactive;
         const iconColor = this.checked ? 'white' : v.checkboxIconInactive;
-        // Is iconBgColor needed?
         const iconBgColor = 'transparent';
         const icon = this.checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
@@ -136,7 +136,7 @@ export default class Avatar extends Component {
         const color = this.props.name ? this.stringColor(this.props.name) : 'green';
         const coloredAvatarStyle = [avatarStyle, { backgroundColor: this.props.color || color }];
         const avatar = <View style={coloredAvatarStyle} />;
-        const loader = <ActivityIndicator style={{ height: avatarRadius, margin: 4 }} />;
+        const loader = <ActivityIndicator style={{ height: avatarDiameter, margin: 4 }} />;
         const avatarPlaceholder = this.props.loading ? loader : avatar;
         const checkbox = this.props.checkbox ? this.checkbox() : null;
         return (
@@ -175,6 +175,7 @@ Avatar.propTypes = {
     checkbox: React.PropTypes.bool,
     checkedKey: React.PropTypes.string,
     checkedState: React.PropTypes.any,
-    hideOnline: React.PropTypes.bool
+    hideOnline: React.PropTypes.bool,
+    borderBottom: React.PropTypes.bool
 };
 

@@ -48,7 +48,7 @@ export default class Chat extends Component {
     renderInput() {
         const s = {
             flex: 0,
-            borderTopColor: '#EFEFEF',
+            borderTopColor: 'rgba(0, 0, 0, .12)',
             borderTopWidth: 1,
             backgroundColor: '#fff'
         };
@@ -71,7 +71,9 @@ export default class Chat extends Component {
                 date={'12:00'}
                 name={name}
                 message={text}
-                key={key} />
+                key={key}
+                borderBottom="false"
+            />
         );
     }
 
