@@ -96,10 +96,8 @@ const loginState = observable({
                 const { passphrase, pin } = userRegData;
                 this.savedPassphrase = passphrase;
                 this.pin = pin;
-                // this.savedUserInfo = true;
-                if (!this.changeUserAction) {
-                    this.saved();
-                }
+                this.savedUserInfo = true;
+                this.saved();
             }
         }
     },

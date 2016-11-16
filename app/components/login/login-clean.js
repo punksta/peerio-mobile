@@ -24,9 +24,9 @@ export default class LoginClean extends Component {
         super(props);
         forms.mixin(this, loginState);
 
-        if (!__DEV__) {
-            loginState.load();
-        }
+        // if (!__DEV__) {
+        loginState.load();
+        // }
     }
 
     componentDidMount() {
