@@ -32,12 +32,16 @@ export default class SignupFooter extends Component {
     }
     render() {
         const style = styles.wizard.footer;
-        const next = signupState.nextAvailable ?
-            <TouchableOpacity style={style.button.right} onPress={this.next}>
-                <Text style={style.button.text}>
+        const nextStyle = signupState.nextAvailable ? { opacity: 1 } : { opacity: 0.7 };
+        const next = (
+            <TouchableOpacity
+                style={[style.button.right, nextStyle]}
+                onPress={signupState.nextAvailable ? this.next : null}>
+                <Text style={[style.button.text, nextStyle]}>
                     {signupState.isLast ? tu('button_finish') : tu('continue')}
                 </Text>
-            </TouchableOpacity> : null;
+            </TouchableOpacity>
+        );
         return (
             <View style={styles.container.footer}>
                 <View style={style.row}>
