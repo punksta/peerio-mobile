@@ -86,9 +86,10 @@ const loginState = observable({
     @action async load() {
         const userData = await store.system.get('userData');
         if (userData) {
-            const { username, name, touchIdSaved } = userData;
+            const { username, firstName, lastName, touchIdSaved } = userData;
             this.username = username;
-            this.name = name;
+            this.firstName = firstName;
+            this.lastName = lastName;
             this.touchIdSaved = touchIdSaved;
             store.openUserDb(this.username);
             const userRegData = await store.user.get('registration');

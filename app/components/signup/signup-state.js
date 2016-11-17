@@ -79,10 +79,15 @@ const signupState = observable({
             .then(state.routes.main.transition)
             .catch((e) => {
                 console.log(e);
-                if (e && e.code === 406) {
-                    this.emailValid = false;
-                    this.emailValidationMessage = 'email is taken. try another one';
-                }
+                // if (e && e.code) {
+                //     switch(e.code) {
+                //         case 430:
+                //             this.emailValid = false;
+                //             this.emailValidationMessage = 'email is taken. try another one';
+                //             break;
+                //         case 433:
+                //     }
+                // }
                 this.reset();
             })
             .then(() => {

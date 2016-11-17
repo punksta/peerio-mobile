@@ -46,7 +46,7 @@ export default class LoginSaved extends Component {
                     marginTop: 6,
                     marginBottom: 18
                 }}>
-                    <Big style={styles.text.inverse}>{t('login_welcomeBack')} <Bold>{loginState.username}</Bold></Big>
+                    <Big style={styles.text.inverse}>{t('login_welcomeBack')} <Bold>{loginState.firstName}</Bold></Big>
                 </Center>
                 <Pin
                     messageEnter={' '}
