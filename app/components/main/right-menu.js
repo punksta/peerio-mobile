@@ -6,6 +6,7 @@ import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
 import loginState from '../login/login-state';
 import icons from '../helpers/icons';
+import imagePicker from '../helpers/imagepicker';
 import styles from '../../styles/styles';
 import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
@@ -44,6 +45,10 @@ export default class RightMenu extends Component {
         );
     }
 
+    files() {
+        imagePicker.test();
+    }
+
     render() {
         const ratio = styles.vars.menuWidthRatio;
         const width = Dimensions.get('window').width * ratio;
@@ -65,7 +70,7 @@ export default class RightMenu extends Component {
 
         const items = [
             { name: 'Messages', icon: 'chat-bubble' },
-            { name: 'Files', icon: 'folder' },
+            { name: 'Files', icon: 'folder', action: () => this.files() },
             { name: 'Profile', icon: 'person' },
             { name: 'Settings', icon: 'settings' },
             { name: 'Upgrade', icon: 'cloud-upload' },

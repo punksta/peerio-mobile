@@ -24,15 +24,15 @@ export default class LoginClean extends Component {
         super(props);
         forms.mixin(this, loginState);
 
-        // if (!__DEV__) {
-        loginState.load();
-        // }
+        if (!__DEV__) {
+            loginState.load();
+        }
     }
 
     componentDidMount() {
         if (__DEV__) {
-            // loginState.username = 'anritest7';
-            // loginState.passphrase = 'icebear';
+            loginState.username = 'anritest7';
+            loginState.passphrase = 'icebear';
             // loginState.login();
         }
     }

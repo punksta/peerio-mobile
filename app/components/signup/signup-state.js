@@ -131,13 +131,15 @@ signupState.count = signupWizardRoutes.length;
 
 state.persistentFooter.signup = (i) => (signupState.isActive ? <SignupCircles key={i} /> : null);
 
+
 reaction(() => signupState.username, username => {
     signupState.usernameValid = Util.isValidUsername(username);
     if (username.length && !signupState.usernameValid) {
         signupState.usernameValidationMessage = 'username not valid';
+        return;
     }
     if (username.length && signupState.usernameValid) {
-        User.validateUsername(username)
+        User.validate('signup', 'username', username)
             .then(available => {
                 signupState.usernameValid = available;
                 if (!available) {
@@ -151,8 +153,22 @@ reaction(() => signupState.email, email => {
     signupState.emailValid = Util.isValidEmail(email);
     if (!signupState.emailValid) {
         signupState.emailValidationMessage = 'email should contain @';
+        return;
+    }
+    if (email.length && signupState.emailValid) {
+        User.validate('signup', 'email', email)
+            .then(available => {
+                signupState.emailValid = available;
+                if (!available) {
+                    signupState.emailValidationMessage = 'email is already taken';
+                }
+            });
     }
 });
+
+function addValidation(state, name) {
+
+}
 
 autorun(() => {
     if (signupState.isActive) {
