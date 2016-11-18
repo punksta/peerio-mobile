@@ -79,13 +79,13 @@ export default class TextBox extends Component {
     }
 
     changeText(text) {
-        const t = this.props.lowerCase ? text.toLowerCase() : text;
+        const tx = this.props.lowerCase ? text.toLowerCase() : text;
         if (this.props.state) {
-            this.props.state[this.props.name] = t;
+            this.props.state[this.props.name] = tx;
         } else {
-            this.props.value = t;
+            this.props.value = tx;
         }
-        this.props.onChangeText && this.props.onChangeText(this.props.name, this.value);
+        this.props.onChangeText && this.props.onChangeText(this.props.name, tx);
     }
 
     focus() {
@@ -180,7 +180,7 @@ export default class TextBox extends Component {
                             { height: 56, top: 0 }]}
                             underlineColorAndroid={'transparent'}
                             secureTextEntry={this.props.secureTextEntry && !this.showSecret}
-                            ref={t => { this.textinput = t; }}
+                            ref={ti => { this.textinput = ti; }}
                             value={this.value}
                             onFocus={this.focus}
                             onBlur={this.blur}

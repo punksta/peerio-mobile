@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-    Animated
-} from 'react-native';
+import { Animated } from 'react-native';
 import { reaction } from 'mobx';
 
 export default class Swiper extends Component {

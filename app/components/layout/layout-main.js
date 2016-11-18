@@ -19,6 +19,7 @@ import HeaderMain from './header-main';
 import { chatStore } from '../../lib/icebear';
 import Chat from '../messaging/chat';
 import ComposeMessage from '../messaging/compose-message';
+import Placeholder from './placeholder';
 import styles from '../../styles/styles';
 
 // const routes = ({
@@ -131,20 +132,16 @@ export default class LayoutMain extends Component {
             bottom: 0,
             right: 0
         };
-        const placeholder = (mainState.loading || chatStore.loading) ?
-            <ActivityIndicator style={{ paddingTop: 10 }} /> : null;
-        const body = mainState.currentChat ? <Chat ref={c => (this.chatControl = c)} /> : placeholder;
+        const body = mainState.currentChat ? <Chat ref={c => (this.chatControl = c)} /> : <Placeholder />;
         const title = mainState.title;
         const menuState = mainState.isLeftMenuVisible || mainState.isRightMenuVisible;
 
         return (
             <View style={[styles.container.root, { transform: transformAndroid }]}>
-
                 <Animated.View
                     {...this.panResponder.panHandlers}
                     behavior="padding"
                     style={outerStyle}>
-
                     <Animated.View style={{ flex: 1, transform }}>
                         <HeaderMain title={title} />
                         <View style={{ flex: 1 }}>

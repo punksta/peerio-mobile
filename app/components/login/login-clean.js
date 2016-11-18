@@ -16,7 +16,6 @@ import LoginSignup from './login-signup';
 import Terms from './terms';
 import loginState from './login-state';
 import styles from '../../styles/styles';
-import forms from '../helpers/forms';
 
 @observer
 export default class LoginClean extends Component {
@@ -30,7 +29,7 @@ export default class LoginClean extends Component {
 
     componentDidMount() {
         if (__DEV__) {
-            loginState.username = 'anritest7';
+            loginState.username = 'anritest9';
             loginState.passphrase = 'icebear';
             // loginState.login();
         }

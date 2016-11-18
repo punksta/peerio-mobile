@@ -9,6 +9,7 @@ import mainState from '../main/main-state';
 import state from '../layout/state';
 import InputMain from '../layout/input-main';
 import Avatar from '../shared/avatar';
+import SnackBar from '../snackbars/snackbar';
 
 const randomMessages = [
     'I did not know what to say so I wrote this',
@@ -126,6 +127,7 @@ export default class Chat extends Component {
                         {body}
                     </View>
                 </ScrollView>
+                <SnackBar />
                 {this.props.hideInput ? null : this.renderInput()}
             </View>
         );

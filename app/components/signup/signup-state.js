@@ -4,6 +4,7 @@ import SignupCircles from './signup-circles';
 import state from '../layout/state';
 import store from '../../store/local-storage';
 import touchid from '../touchid/touchid-bridge';
+import snackbarState from '../snackbars/snackbar-state';
 import { User, PhraseDictionary, validation } from '../../lib/icebear';
 import { t } from '../utils/translator';
 import locales from '../../lib/locales';
@@ -75,6 +76,9 @@ const signupState = observable({
                 User.current = user;
             })
             .then(state.routes.main.transition)
+            .then(() => {
+                snackbarState.push('Email confirmation has been sent');
+            })
             .catch((e) => {
                 console.log(e);
                 this.reset();

@@ -32,7 +32,7 @@ const mainState = observable({
             if (c) {
                 this.chat(c);
                 if (__DEV__) {
-                    this.showCompose = true;
+                    // this.showCompose = true;
                 }
             } else {
                 this.showCompose = true;
