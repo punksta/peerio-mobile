@@ -12,14 +12,12 @@ import SignupFooter from '../controls/signup-footer';
 import Layout1 from '../layout/layout1';
 import styles from '../../styles/styles';
 import signupState from './signup-state';
-import forms from '../helpers/forms';
 import { t, T } from '../utils/translator';
 
 @observer
 export default class SignupStep1 extends Component {
     constructor(props) {
         super(props);
-        forms.mixin(this, signupState);
         this.url = 'https://www.peerio.com/';
     }
 
@@ -35,24 +33,18 @@ export default class SignupStep1 extends Component {
                 <Text style={style.text.subTitle}>{t('profile')}</Text>
                 <TextBox
                     lowerCase
-                    valid={signupState.usernameValid}
-                    validationMessage={signupState.usernameValidationMessage}
-                    {...this.tb('username', t('username'))} />
+                    state={signupState} name="username" hint={t('username')} />
                 <TextBox
-                    valid={signupState.emailValid}
-                    validationMessage={signupState.emailValidationMessage}
-                    {...this.tb('email', t('email'))} />
+                    state={signupState} name="email" hint={t('email')} />
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1 }}>
-                        <TextBox
-                            {...this.tb('firstName', t('firstName'))} />
+                        <TextBox state={signupState} name="firstName" hint={t('firstName')} />
                     </View>
                     <View style={{ flex: 1 }}>
-                        <TextBox
-                            {...this.tb('lastName', t('lastName'))} />
+                        <TextBox state={signupState} name="lastName" hint={t('lastName')} />
                     </View>
                 </View>
-                <LanguagePickerBox {...this.tb('language', t('language'))} />
+                <LanguagePickerBox />
                 <Text style={style.text.info}>
                     <T k="signup_TOSRequestText">{tosParser}</T>
                 </Text>

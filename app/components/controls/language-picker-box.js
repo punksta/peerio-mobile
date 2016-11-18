@@ -19,15 +19,9 @@ export default class LanguagePickerBox extends Component {
                 picker={this.picker}
                 data={state.languages}
                 style={styles.pickerBox}
-                hint={this.props.hint}
                 value={state.languageSelected}
+                hint=""
                 />
         );
     }
 }
-
-LanguagePickerBox.propTypes = {
-    onChangeText: React.PropTypes.func.isRequired,
-    hint: React.PropTypes.any.isRequired,
-    name: React.PropTypes.string.isRequired
-};

@@ -72,7 +72,7 @@ export default class Chat extends Component {
                 name={name}
                 message={text}
                 key={key}
-                borderBottom="false"
+                noBorderBottom
             />
         );
     }

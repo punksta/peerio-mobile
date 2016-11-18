@@ -6,8 +6,9 @@ import {
     TouchableOpacity,
     Animated
 } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
+import { t } from '../utils/translator';
 import state from '../layout/state';
 import styles from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -16,12 +17,21 @@ import icons from '../helpers/icons';
 export default class TextBox extends Component {
     @observable focused = false;
     @observable showSecret = false;
-    @observable value = '';
-    @observable validationMessage = '';
+
+    @computed get value() {
+        return this.props.state ? this.props.state[this.props.name] : this.props.value;
+    }
+
+    @computed get valid() {
+        return this.props.state ? this.props.state[`${this.props.name}Valid`] : this.props.valid;
+    }
+
+    @computed get validationMessage() {
+        return this.props.state ? this.props.state[`${this.props.name}ValidationMessage`] : this.props.validationMessage;
+    }
 
     constructor(props) {
         super(props);
-        this.validationMessage = this.props.validationMessage;
         this.blur = this.blur.bind(this);
         this.focus = this.focus.bind(this);
         this.changeText = this.changeText.bind(this);
@@ -46,8 +56,6 @@ export default class TextBox extends Component {
                 Animated.timing(this.animatedHintScale, { toValue: v ? scaleTo : scaleFrom, duration })
             ]).start();
         }, true);
-
-        this.value = this.props.value;
     }
 
     componentWillUnmount() {
@@ -55,8 +63,12 @@ export default class TextBox extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.value = nextProps.value;
-        this.validationMessage = nextProps.validationMessage;
+        if (!this.props.state) {
+            // Object.assign(this.props, nextProps);
+            this.forceUpdate();
+            // this.value = nextProps.value;
+            // this.validationMessage = nextProps.validationMessage;
+        }
     }
 
     blur() {
@@ -67,8 +79,13 @@ export default class TextBox extends Component {
     }
 
     changeText(text) {
-        this.value = this.props.lowerCase ? text.toLowerCase() : text;
-        this.props.onChangeText(this.props.name, this.value);
+        const t = this.props.lowerCase ? text.toLowerCase() : text;
+        if (this.props.state) {
+            this.props.state[this.props.name] = t;
+        } else {
+            this.props.value = t;
+        }
+        this.props.onChangeText && this.props.onChangeText(this.props.name, this.value);
     }
 
     focus() {
@@ -102,7 +119,7 @@ export default class TextBox extends Component {
                         color: styles.vars.txtAlert,
                         fontSize: 12,
                         backgroundColor: 'transparent'
-                    }}>{this.validationMessage}</Text>
+                    }}>{t(this.validationMessage)}</Text>
             </View>
         ) : null;
         const infoControl = this.props.info ? (
@@ -190,8 +207,9 @@ export default class TextBox extends Component {
 }
 
 TextBox.propTypes = {
-    onChangeText: React.PropTypes.func.isRequired,
-    value: React.PropTypes.any.isRequired,
+    onChangeText: React.PropTypes.func,
+    value: React.PropTypes.any,
+    state: React.PropTypes.any,
     valid: React.PropTypes.bool,
     validationMessage: React.PropTypes.string,
     hint: React.PropTypes.any.isRequired,

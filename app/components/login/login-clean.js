@@ -22,7 +22,6 @@ import forms from '../helpers/forms';
 export default class LoginClean extends Component {
     constructor(props) {
         super(props);
-        forms.mixin(this, loginState);
 
         if (!__DEV__) {
             loginState.load();
@@ -52,14 +51,9 @@ export default class LoginClean extends Component {
                 style={style.containerFlex}>
                 <Logo />
                 <View>
-                    <TextBox
-                        lowerCase
-                        valid={loginState.usernameValid}
-                        {...this.tb('username', t('username'))} />
-                    <TextBox
-                        secureTextEntry
-                        {...this.tb('passphrase', t('passphrase'))} />
-                    <LanguagePickerBox {...this.tb('language', t('language'))} />
+                    <TextBox lowerCase state={loginState} name="username" hint={t('username')} />
+                    <TextBox state={loginState} name="passphrase" hint={t('passphrase')} secureTextEntry />
+                    <LanguagePickerBox />
                 </View>
                 <View style={{ height: 40, marginBottom: 42 }}>
                     <Center>

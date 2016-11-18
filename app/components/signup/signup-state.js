@@ -1,24 +1,22 @@
 import React from 'react';
-import { observable, action, computed, autorun, reaction } from 'mobx';
+import { observable, action, computed, autorun, reaction, extendObservable } from 'mobx';
 import SignupCircles from './signup-circles';
 import state from '../layout/state';
 import store from '../../store/local-storage';
 import touchid from '../touchid/touchid-bridge';
-import Util from '../helpers/util';
-import { User, PhraseDictionary } from '../../lib/icebear';
+import { User, PhraseDictionary, validation } from '../../lib/icebear';
+import { t } from '../utils/translator';
 import locales from '../../lib/locales';
 
+const { validate } = validation;
+
 const signupState = observable({
-    username: '',
-    usernameValid: null,
-    usernameValidationMessage: '',
-    email: '',
-    emailValid: null,
-    emailValidationMessage: '',
+    @validate(validation.username) username: '',
+    @validate(validation.email) email: '',
+    @validate(validation.firstName) firstName: '',
+    @validate(validation.lastName) lastName: '',
     pin: '',
     pinSaved: false,
-    firstName: '',
-    lastName: '',
     current: 0,
     count: 0,
     isActive() {
@@ -27,7 +25,7 @@ const signupState = observable({
 
     @computed get nextAvailable() {
         switch (signupState.current) {
-            case 0: return this.usernameValid && this.email && this.emailValid && this.firstName && this.lastName;
+            case 0: return this.isValid();
             case 1: return this.pinSaved;
             default: return false;
         }
@@ -79,15 +77,6 @@ const signupState = observable({
             .then(state.routes.main.transition)
             .catch((e) => {
                 console.log(e);
-                // if (e && e.code) {
-                //     switch(e.code) {
-                //         case 430:
-                //             this.emailValid = false;
-                //             this.emailValidationMessage = 'email is taken. try another one';
-                //             break;
-                //         case 433:
-                //     }
-                // }
                 this.reset();
             })
             .then(() => {
@@ -130,45 +119,6 @@ const signupWizardRoutes = [
 signupState.count = signupWizardRoutes.length;
 
 state.persistentFooter.signup = (i) => (signupState.isActive ? <SignupCircles key={i} /> : null);
-
-
-reaction(() => signupState.username, username => {
-    signupState.usernameValid = Util.isValidUsername(username);
-    if (username.length && !signupState.usernameValid) {
-        signupState.usernameValidationMessage = 'username not valid';
-        return;
-    }
-    if (username.length && signupState.usernameValid) {
-        User.validate('signup', 'username', username)
-            .then(available => {
-                signupState.usernameValid = available;
-                if (!available) {
-                    signupState.usernameValidationMessage = 'username not available';
-                }
-            });
-    }
-});
-
-reaction(() => signupState.email, email => {
-    signupState.emailValid = Util.isValidEmail(email);
-    if (!signupState.emailValid) {
-        signupState.emailValidationMessage = 'email should contain @';
-        return;
-    }
-    if (email.length && signupState.emailValid) {
-        User.validate('signup', 'email', email)
-            .then(available => {
-                signupState.emailValid = available;
-                if (!available) {
-                    signupState.emailValidationMessage = 'email is already taken';
-                }
-            });
-    }
-});
-
-function addValidation(state, name) {
-
-}
 
 autorun(() => {
     if (signupState.isActive) {

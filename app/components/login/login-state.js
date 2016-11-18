@@ -125,7 +125,7 @@ const loginState = observable({
 });
 
 reaction(() => loginState.username, username => {
-    loginState.usernameValid = Util.isValidUsername(username);
+    // loginState.usernameValid = Util.isValidUsername(username);
 });
 
 export default loginState;

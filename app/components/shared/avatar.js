@@ -35,6 +35,14 @@ const itemContainerStyle = {
     paddingLeft: 8
 };
 
+const itemContainerStyleNoBorder = {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    backgroundColor: 'white',
+    paddingLeft: 8
+};
+
 const nameContainerStyle = {
     flex: 1,
     flexDirection: 'row',
@@ -139,12 +147,13 @@ export default class Avatar extends Component {
         const loader = <ActivityIndicator style={{ height: avatarDiameter, margin: 4 }} />;
         const avatarPlaceholder = this.props.loading ? loader : avatar;
         const checkbox = this.props.checkbox ? this.checkbox() : null;
+        const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
         return (
             <View style={{ backgroundColor: styles.vars.bg }}>
                 <TouchableOpacity onPress={this.props.onPress}>
                     <View style={itemStyle}>
                         {checkbox}
-                        <View style={itemContainerStyle}>
+                        <View style={ics}>
                             {avatarPlaceholder}
                             <View style={nameMessageContainerStyle}>
                                 <View style={nameContainerStyle}>
@@ -176,6 +185,6 @@ Avatar.propTypes = {
     checkedKey: React.PropTypes.string,
     checkedState: React.PropTypes.any,
     hideOnline: React.PropTypes.bool,
-    borderBottom: React.PropTypes.bool
+    noBorderBottom: React.PropTypes.bool
 };
 
