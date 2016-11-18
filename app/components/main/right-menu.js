@@ -58,7 +58,8 @@ export default class RightMenu extends Component {
             left: 0,
             right: 0,
             top: 0,
-            bottom: 0
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, .2)'
         };
 
         const menuContainerStyle = {
@@ -66,7 +67,6 @@ export default class RightMenu extends Component {
             justifyContent: 'space-between',
             backgroundColor: '#fff',
             paddingTop: 8
-
         };
 
         const items = [

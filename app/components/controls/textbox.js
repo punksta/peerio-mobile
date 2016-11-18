@@ -163,9 +163,9 @@ export default class TextBox extends Component {
         }];
         return (
             <View
-                style={style.shadow}>
+                style={[style.shadow, { }]}>
                 <View
-                    style={{ backgroundColor: styles.vars.inputBg }}>
+                    style={{ backgroundColor: styles.vars.inputBg, overflow: 'hidden', borderRadius: 2 }}>
                     <TouchableOpacity
                         onPress={() => { this.focus(); this.textinput.focus(); }}>
                         <View
@@ -182,7 +182,8 @@ export default class TextBox extends Component {
                             top: 0,
                             right: 0,
                             bottom: 0,
-                            backgroundColor: 'transparent' }}>
+                            backgroundColor: 'transparent'
+                        }}>
                         <TextInput
                             style={[style.textbox,
                             { height: 56, top: 0 }]}

@@ -157,7 +157,7 @@ export default class Pin extends Component {
                 <View style={{ flex: 1, marginTop: 26, opacity: this.isSpinner ? 0.5 : 1 }}>
                     {this.row(0, [p(1), p(2, 'ABC'), p(3, 'DEF')])}
                     {this.row(1, [p(4, 'GHI'), p(5, 'JKL'), p(6, 'MNO')])}
-                    {this.row(2, [p(7, 'PQR'), p(8, 'STU'), p(9, 'WXYZ')])}
+                    {this.row(2, [p(7, 'PQRS'), p(8, 'TUV'), p(9, 'WXYZ')])}
                     {this.row(3, [p(0)])}
                 </View>
             </View>

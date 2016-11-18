@@ -144,6 +144,7 @@ const styles = {
     inputContainer: baseclass('input-container', {
         height: vars.inputHeight,
         opacity: 1
+
     }),
     input: {
         base: {
@@ -158,8 +159,7 @@ const styles = {
                 borderColor: 'yellow',
                 borderWidth: 0,
                 color: vars.inputBgInactiveText,
-                fontSize: 14,
-                borderRadius: 2
+                fontSize: 14
             }),
             active: baseclass('input-active', inherit('input-base', {
                 color: vars.txtDark
@@ -171,7 +171,7 @@ const styles = {
                 top: 24
             }),
             shadow: inherit('shadow-normal', {
-                backgroundColor: vars.inputBgInactive
+                backgroundColor: 'transparent'
             }),
             background: {
                 backgroundColor: vars.inputBg
@@ -195,7 +195,7 @@ const styles = {
                 top: 24
             }),
             shadow: inherit('shadow-active', {
-                backgroundColor: vars.inputBg
+                backgroundColor: 'transparent'
             }),
             background: {
                 backgroundColor: vars.inputBg
@@ -240,13 +240,15 @@ const styles = {
                 top: 16
             }),
             shadow: inherit('shadow-normal', {
-                backgroundColor: vars.pickerBg
+                backgroundColor: 'transparent'
             }),
             background: {
-                backgroundColor: vars.pickerBg
+                backgroundColor: 'transparent'
             },
             container: inherit('input-container', {
-                backgroundColor: vars.pickerBg
+                backgroundColor: vars.pickerBg,
+                borderRadius: 2,
+                overflow: 'hidden'
             }),
             iconContainer: {
                 position: 'absolute',
@@ -263,10 +265,12 @@ const styles = {
                 top: 16
             }),
             shadow: inherit('shadow-active', {
-                backgroundColor: vars.inputBg
+                backgroundColor: 'transparent'
             }),
             background: {
-                backgroundColor: vars.inputBg
+                backgroundColor: vars.inputBg,
+                borderRadius: 2,
+                overflow: 'hidden'
             },
             hint: inherit('hint'),
             container: inherit('input-container', {
@@ -378,24 +382,28 @@ const styles = {
         },
         footer: {
             row: {
-                height: 40,
-                flexDirection: 'row'
+                height: 48,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingBottom: 20
             },
             button: {
-                left: {
-                    position: 'absolute',
-                    left: vars.footerMarginX,
-                    top: 0,
-                    height: 40
+                base: {
+                    height: 36,
+                    margin: 0,
+                    marginLeft: 8,
+                    marginRight: 8,
+                    padding: 0,
+                    paddingLeft: 16,
+                    paddingRight: 16
                 },
-                right: {
-                    position: 'absolute',
-                    right: vars.footerMarginX,
-                    top: 0,
-                    height: 40
-                },
+
+                left: {},
+                right: {},
                 text: {
-                    color: 'white'
+                    color: 'white',
+                    textTransform: 'uppercase'
                 }
             }
         }

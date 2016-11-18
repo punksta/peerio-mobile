@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import {
-    Text,
-    TouchableOpacity,
-    View
-} from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
 import { tu } from 'peerio-translator';
 import signupState from '../signup/signup-state';
@@ -35,22 +32,21 @@ export default class SignupFooter extends Component {
         const nextStyle = signupState.nextAvailable ? { opacity: 1 } : { opacity: 0.7 };
         const next = (
             <TouchableOpacity
-                style={[style.button.right, nextStyle]}
+                style={[style.button.base, nextStyle]}
                 onPress={signupState.nextAvailable ? this.next : null}>
                 <Text style={[style.button.text, nextStyle]}>
-                    {signupState.isLast ? tu('button_finish') : tu('continue')}
+                    {signupState.isLast ? tu('button_finish') : tu('next')}
                 </Text>
             </TouchableOpacity>
         );
         return (
-            <View style={styles.container.footer}>
-                <View style={style.row}>
-                    <TouchableOpacity style={style.button.left} onPress={this.prev}>
+            <View style={style.row}>
+                <TouchableOpacity style={style.button.base} onPress={this.prev}>
+                    {signupState.isFirst ?
                         <Text style={style.button.text}>
-                            {signupState.isFirst ? tu('button_exit') : tu('button_back')}
-                        </Text>
-                    </TouchableOpacity>
-                </View>
+                            {tu('button_exit')}
+                        </Text> : <Icon name="arrow-back" size={24} color="#fff" />}
+                </TouchableOpacity>
                 {next}
             </View>
         );
