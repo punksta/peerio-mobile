@@ -44,6 +44,8 @@ const vars = {
     checkboxInactive: 'rgba(0, 0, 0, .12)',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
     checkboxActive: '#23d089',
+    snackbarBg: '#4a4a4a',
+    snackbarHeight: 48,
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
