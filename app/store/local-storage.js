@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { setTinyDbEngine, db } from '../lib/icebear';
+import { setTinyDbEngine } from '../lib/icebear';
 
 const engine = {
     getValue(name) {
@@ -34,13 +34,15 @@ class LocalDb {
 
 setTinyDbEngine(engine);
 
-db.open = (name) => {
-    return new LocalDb(name);
-};
+const db = {
+    open(name) {
+        return new LocalDb(name);
+    },
 
-db.openUserDb = (name) => {
-    db.user = db.open(name);
-    return db.user;
+    openUserDb(name) {
+        db.user = db.open(name);
+        return db.user;
+    }
 };
 
 db.system = db.open('system');
