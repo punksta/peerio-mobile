@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
+import { observer } from 'mobx-react/native';
 import { tu } from 'peerio-translator';
 import Button from '../controls/button';
 import Center from '../controls/center';
 import signupState from '../signup/signup-state';
 import loginState from '../login/login-state';
-import { observer } from 'mobx-react/native';
 
 @observer
 export default class LoginSignup extends Component {

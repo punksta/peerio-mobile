@@ -118,7 +118,7 @@ export default class TextBox extends Component {
                     this.showSecret ? 'visibility-off' : 'visibility',
                     this.toggleSecret, style.icon)}
             </View>;
-        const validationControl = (this.value && this.value.length && !this.props.valid) ? (
+        const validationControl = !this.props.valid ? (
             <View
                 pointerEvents="none"
                 style={{ position: 'absolute', top: 0, right: 4 }}>
