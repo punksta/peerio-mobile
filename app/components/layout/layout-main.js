@@ -4,8 +4,7 @@ import {
     PanResponder,
     StatusBar,
     Animated,
-    Dimensions,
-    ActivityIndicator
+    Dimensions
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { reaction } from 'mobx';
@@ -14,24 +13,23 @@ import mainState from '../main/main-state';
 import LeftMenu from '../main/left-menu';
 import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
-// import TextIpsum from './text-ipsum';
-// import RecentList from '../main/recent-list';
-import { chatStore } from '../../lib/icebear';
 import Chat from '../messaging/chat';
+import Files from '../files/files';
+import FileView from '../files/file-view';
 import ComposeMessage from '../messaging/compose-message';
 import Placeholder from './placeholder';
 import styles from '../../styles/styles';
 
-// const routes = ({
-//     recent: () => <RecentList />,
-//     chat: () => <Chat />
-// });
+const routes = {
+    recent: [<Placeholder />],
+    files: [<Files />],
+    chat: [<Chat />]
+};
 
 @observer
 export default class LayoutMain extends Component {
     constructor(props) {
         super(props);
-        this.hideMenus = this.hideMenus.bind(this);
         this.width = Dimensions.get('window').width;
         this.height = Dimensions.get('window').height;
         this.currentIndex = mainState.currentIndex;
@@ -46,7 +44,7 @@ export default class LayoutMain extends Component {
                 .start(() => {
                     this.currentIndex = i;
                     if (this.currentIndex === 1) {
-                        mainState.suppressTransition && this.chatControl.setFocus();
+                        // mainState.suppressTransition; // && this.chatControl.setFocus();
                     }
                     mainState.suppressTransition = false;
                 });
@@ -61,7 +59,7 @@ export default class LayoutMain extends Component {
     componentWillMount() {
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (/* evt, gestureState */) => {
-                this.hideMenus();
+                mainState.resetMenus();
                 return false;
             }
         });
@@ -87,11 +85,6 @@ export default class LayoutMain extends Component {
     }
 
 
-    hideMenus() {
-        mainState.isLeftMenuVisible = false;
-        mainState.isRightMenuVisible = false;
-    }
-
     page(control, key) {
         const menuLeft = 0;
         const s = {
@@ -113,6 +106,14 @@ export default class LayoutMain extends Component {
         return controls.map((item, index) => this.page(item, index));
     }
 
+    body() {
+        const r = mainState.route;
+        if (routes[r]) {
+            return routes[r];
+        }
+        return [];
+    }
+
     render() {
         const transform = [{ translateX: this.animatedX }, { translateX: this.leftMenuAnimated }];
         const transformAndroid = global.platform === 'android' ? [{ translateY: state.keyboardHeight }] : [];
@@ -132,7 +133,7 @@ export default class LayoutMain extends Component {
             bottom: 0,
             right: 0
         };
-        const body = mainState.currentChat ? <Chat ref={c => (this.chatControl = c)} /> : <Placeholder />;
+        // const body = mainState.currentChat ? <Chat ref={c => (this.chatControl = c)} /> : <Placeholder />;
         const title = mainState.title;
         const menuState = mainState.isLeftMenuVisible || mainState.isRightMenuVisible;
 
@@ -145,7 +146,7 @@ export default class LayoutMain extends Component {
                     <Animated.View style={{ flex: 1, transform }}>
                         <HeaderMain title={title} />
                         <View style={{ flex: 1 }}>
-                            {this.pages([body])}
+                            {this.pages(this.body())}
                         </View>
                     </Animated.View>
                 </Animated.View>

@@ -31,7 +31,7 @@ export default class LoginClean extends Component {
         if (__DEV__) {
             loginState.username = 'anritest9';
             loginState.passphrase = 'icebear';
-            // loginState.login();
+            loginState.login();
         }
     }
 

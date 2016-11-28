@@ -46,7 +46,8 @@ export default class RightMenu extends Component {
     }
 
     files() {
-        imagePicker.test();
+        mainState.files();
+        // imagePicker.test();
     }
 
     render() {

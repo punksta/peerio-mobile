@@ -1,4 +1,4 @@
-import { observable, action, when, reaction, computed } from 'mobx';
+import { observable, action, when, reaction, computed, asReference } from 'mobx';
 import state from '../layout/state';
 import { chatStore } from '../../lib/icebear';
 import store from '../../store/local-storage';
@@ -11,10 +11,17 @@ const mainState = observable({
     blackStatusBar: false,
     route: null,
     currentChat: null,
+    currentFile: null,
     currentIndex: 0,
     showCompose: false,
     suppressTransition: false,
     loading: false,
+
+    titles: asReference({
+        recent: () => '',
+        files: () => 'Files',
+        chat: (s) => (s.currentChat ? s.currentChat.chatName : '')
+    }),
 
     @action initial() {
         state.hideKeyboard();
@@ -31,24 +38,42 @@ const mainState = observable({
 
             if (c) {
                 this.chat(c);
-                if (__DEV__) {
-                    // this.showCompose = true;
-                }
             } else {
                 this.showCompose = true;
+            }
+
+            if (__DEV__) {
+                this.files();
+                // this.showCompose = true;
             }
         });
         //
     },
 
+    @action resetMenus() {
+        this.isLeftMenuVisible = false;
+        this.isRightMenuVisible = false;
+        this.showCompose = false;
+    },
+
+    @action files() {
+        this.resetMenus();
+        this.route = 'files';
+        this.currentIndex = 0;
+        this.currentFile = null;
+    },
+
+    @action file(i) {
+        this.route = 'files';
+        this.currentFile = i;
+        this.currentIndex = 1;
+    },
+
     @action chat(i) {
-        this.isLeftMenuVisible = false;
-        this.isLeftMenuVisible = false;
+        this.resetMenus();
         this.isInputVisible = true;
         this.route = 'chat';
         this.currentIndex = 0;
-        this.showCompose = false;
-        // this.isBackVisible = true;
         this.currentChat = i;
         when(() => !i.loadingMeta, () => {
             this.currentChat.loadMessages();
@@ -74,8 +99,10 @@ const mainState = observable({
     },
 
     @computed get title() {
-        const i = this.currentChat;
-        return i && i.participants && i.participants.length ? i.participants.map(p => p.username).join(', ') : '';
+        const t = this.titles[this.route];
+        // console.log(`main-state.js: ${this.titles}, ${this.route}, ${t}`);
+        // console.log(this.titles);
+        return t && t(this);
     },
 
     @computed get canSend() {
