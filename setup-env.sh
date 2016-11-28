@@ -12,7 +12,5 @@ if [ ! -f env-expandoo.sh ]; then
   echo "export EXECUTABLE_NAME=expandoo" > env-expandoo.sh
 fi
 echo "Checking icebear lib existence"
-if [ ! -d app/lib/peerio-icebear ]; then
-  echo "Copying icebear lib"
-  cp -r node_modules/peerio-icebear app/lib/peerio-icebear
-fi
+echo "Copying icebear lib"
+cp -r node_modules/peerio-icebear app/lib/peerio-icebear

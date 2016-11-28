@@ -43,7 +43,7 @@ const mainState = observable({
             }
 
             if (__DEV__) {
-                this.files();
+                // this.files();
                 // this.showCompose = true;
             }
         });
