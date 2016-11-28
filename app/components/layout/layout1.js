@@ -3,6 +3,7 @@ import {
     View, ScrollView, PanResponder
 } from 'react-native';
 import { observer } from 'mobx-react/native';
+import SnackBarConnection from '../snackbars/snackbar-connection';
 import styles from '../../styles/styles';
 import state from './state';
 
@@ -77,6 +78,7 @@ export default class Layout1 extends Component {
                     {this.props.body}
                 </ScrollView>
                 {this.props.footer}
+                <SnackBarConnection />
             </View>
         );
     }

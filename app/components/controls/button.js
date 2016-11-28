@@ -10,13 +10,14 @@ export default class Button extends Component {
         const style = styles.button;
         let textStyle = this.props.bold ?
             style.text.bold : style.text.normal;
+        const opacity = { opacity: this.props.disabled ? 0.5 : 1 };
         if (this.props.textStyle) {
-            textStyle = styles.inherit(textStyle, this.props.textStyle);
+            textStyle = [textStyle, this.props.textStyle];
         }
         const text = this.props.text || '';
         return (
-            <TouchableOpacity style={this.props.style} onPress={this.props.onPress}>
-                <Text style={textStyle}>
+            <TouchableOpacity style={this.props.style} onPress={this.props.disabled ? null : this.props.onPress}>
+                <Text style={[textStyle, opacity]}>
                     {text}
                 </Text>
             </TouchableOpacity>
@@ -30,5 +31,6 @@ Button.propTypes = {
     textStyle: React.PropTypes.any,
     text: React.PropTypes.any.isRequired,
     caps: React.PropTypes.bool,
+    disabled: React.PropTypes.bool,
     bold: React.PropTypes.bool
 };

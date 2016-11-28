@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, PanResponder, Navigator } from 'react-native';
+import { View, PanResponder, Navigator, AppState } from 'react-native';
 import { reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import Login from './login/login';
@@ -10,7 +10,7 @@ import LayoutMain from './layout/layout-main';
 import ModalContainer from './layout/modal-container';
 import state from './layout/state';
 import styles from './../styles/styles';
-import '../lib/icebear';
+import icebear from '../lib/icebear';
 import './utils/bridge';
 import './touchid/touchid-bridge';
 
@@ -35,6 +35,8 @@ export default class App extends Component {
                 return false;
             }
         });
+
+        state.route = state.routesList[0];
 
         this.bindRouteState = reaction(() => state.route, route => {
             console.log('reaction: %s => %s', state.prevRoute, route);
@@ -64,12 +66,17 @@ export default class App extends Component {
             console.error('App.js: unhandled error');
             console.error(args);
         });
+
+        this._handleAppStateChange = this._handleAppStateChange.bind(this);
+        this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
     }
 
     componentWillMount() {
     }
 
     componentDidMount() {
+        AppState.addEventListener('change', this._handleAppStateChange);
+        AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
         // navigating to initial route
         // timeout is needed for router to properly initialize
         if (__DEV__) {
@@ -77,6 +84,19 @@ export default class App extends Component {
             //     state.routes.main.transition();
             // }, 1000);
         }
+    }
+
+    _handleAppStateChange(appState) {
+        console.log(`App.js: AppState change: ${appState}`);
+        if (appState !== 'active') {
+            icebear.socket.close();
+        } else {
+            icebear.socket.open();
+        }
+    }
+
+    _handleMemoryWarning() {
+        console.log(`App.js: AppState memory warning`);
     }
 
     route(key, component, replace, type) {

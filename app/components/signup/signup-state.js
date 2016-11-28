@@ -1,21 +1,20 @@
 import React from 'react';
-import { observable, action, computed, autorun, reaction, extendObservable } from 'mobx';
+import { observable, action, computed, autorun } from 'mobx';
 import SignupCircles from './signup-circles';
 import state from '../layout/state';
 import store from '../../store/local-storage';
 import touchid from '../touchid/touchid-bridge';
 import snackbarState from '../snackbars/snackbar-state';
-import { User, PhraseDictionary, validation } from '../../lib/icebear';
-import { t } from '../utils/translator';
+import { User, PhraseDictionary, validation, socket } from '../../lib/icebear';
 import locales from '../../lib/locales';
 
-const { validate } = validation;
+const { validators, validateField } = validation;
 
 const signupState = observable({
-    @validate(validation.username) username: '',
-    @validate(validation.email) email: '',
-    @validate(validation.firstName) firstName: '',
-    @validate(validation.lastName) lastName: '',
+    @validateField(validators.username, 0) username: '',
+    @validateField(validators.email, 1) email: '',
+    @validateField(validators.firstName, 2) firstName: '',
+    @validateField(validators.lastName, 3) lastName: '',
     pin: '',
     pinSaved: false,
     current: 0,
@@ -26,8 +25,8 @@ const signupState = observable({
 
     @computed get nextAvailable() {
         switch (signupState.current) {
-            case 0: return this.isValid();
-            case 1: return this.pinSaved;
+            case 0: return this.isValid() && socket.connected;
+            case 1: return this.pinSaved && socket.connected;
             default: return false;
         }
     },

@@ -1,9 +1,9 @@
-import { when, observable, action, reaction } from 'mobx';
+import { when, observable, action, reaction, computed } from 'mobx';
 import RNRestart from 'react-native-restart';
 import state from '../layout/state';
 import store from '../../store/local-storage';
-import Util from '../helpers/util';
 import { User, chatStore, socket } from '../../lib/icebear';
+import snackbarState from '../snackbars/snackbar-state';
 import touchid from '../touchid/touchid-bridge';
 
 const loginState = observable({
@@ -20,6 +20,14 @@ const loginState = observable({
     isInProgress: false,
     pin: false,
     error: null,
+
+    @computed get isActive() {
+        return state.route.startsWith('login');
+    },
+
+    @computed get isConnected() {
+        return !!socket.connected;
+    },
 
     @action clean() {
         console.log('transitioning to clean');
@@ -121,12 +129,38 @@ const loginState = observable({
                 this.passphrase = passphrase;
                 this.login();
             });
+    },
+
+    @action mount() {
+        this._checkConnection();
+    },
+
+    @action unmount() {
+        snackbarState.reset();
+    },
+
+    @action _checkConnection() {
+        this._counter = 30;
+        this._checkConnectionStep();
+    },
+
+    @action _checkConnectionStep() {
+        if (this._counter < 0) return;
+        snackbarState.set(`Not connected, trying to connect ${this._counter}`);
+        this._counter--;
+        this._timer = setTimeout(() => this._checkConnectionStep(), 1000);
     }
 });
 
-reaction(() => loginState.username, username => {
-    // loginState.usernameValid = Util.isValidUsername(username);
-});
+reaction(() => loginState.isActive, () => {
+    if (loginState.isActive) {
+        loginState.mount();
+    } else {
+        loginState.unmount();
+    }
+}, true);
+
+// loginState.mount();
 
 export default loginState;
 

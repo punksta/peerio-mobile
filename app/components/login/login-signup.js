@@ -4,7 +4,9 @@ import Button from '../controls/button';
 import Center from '../controls/center';
 import signupState from '../signup/signup-state';
 import loginState from '../login/login-state';
+import { observer } from 'mobx-react/native';
 
+@observer
 export default class LoginSignup extends Component {
     constructor(props) {
         super(props);
@@ -22,17 +24,27 @@ export default class LoginSignup extends Component {
     }
 
     render() {
+        console.log(`login-signup.js: ${loginState.isConnected}`);
         const bStyle = {
-            marginLeft: 24,
-            marginRight: 24
+            padding: 24
         };
         const textStyle = {
             fontWeight: 'bold'
         };
         return (
             <Center>
-                <Button style={bStyle} textStyle={textStyle} text={tu('signup')} onPress={this.signUp} />
-                <Button style={bStyle} textStyle={textStyle} text={tu('login')} onPress={this.login} />
+                <Button
+                    style={bStyle}
+                    disabled={!loginState.isConnected}
+                    textStyle={textStyle}
+                    text={tu('signup')}
+                    onPress={this.signUp} />
+                <Button
+                    style={bStyle}
+                    disabled={!loginState.isConnected}
+                    textStyle={textStyle}
+                    text={tu('login')}
+                    onPress={this.login} />
             </Center>
         );
     }

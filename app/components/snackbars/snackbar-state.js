@@ -14,6 +14,14 @@ const snackbarState = observable({
         this.messages.length && this.messages.splice(-1);
     },
 
+    @action set(text) {
+        this.messages = [text];
+    },
+
+    @action reset() {
+        this.messages = [];
+    },
+
     messages: []
 });
 

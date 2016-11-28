@@ -71,7 +71,14 @@ export default class TextBox extends Component {
         }
     }
 
+    _callState(name, value) {
+        const s = this.props.state;
+        const n = `${this.props.name}${name}`;
+        s && s[n] && s[n](value);
+    }
+
     blur() {
+        this._callState('OnBlur');
         state.focusedTextBox = null;
         requestAnimationFrame(() => {
             this.focused = false;
@@ -85,6 +92,7 @@ export default class TextBox extends Component {
         } else {
             this.props.value = tx;
         }
+        this._callState('OnChange', tx);
         this.props.onChangeText && this.props.onChangeText(this.props.name, tx);
     }
 
