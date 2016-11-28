@@ -13,5 +13,5 @@ if [ ! -f env-expandoo.sh ]; then
 fi
 if [ ! -d app/lib/peerio-icebear/.git ]; then
   echo "Copying icebear lib"
-  cp -r node_modules/peerio-icebear/* app/lib/peerio-icebear/
+  cp -fr node_modules/peerio-icebear app/lib/peerio-icebear
 fi
