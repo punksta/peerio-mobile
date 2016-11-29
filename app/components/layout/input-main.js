@@ -14,6 +14,7 @@ import mainState from '../main/main-state';
 @observer
 export default class InputMain extends Component {
     @observable value = '';
+    @observable hasText = false;
     constructor(props) {
         super(props);
         this.value = this.props.value;
@@ -39,6 +40,7 @@ export default class InputMain extends Component {
 
     onChangeText(text) {
         this.value = text;
+        this.value.length ? this.hasText = true : this.hasText = false;
     }
 
     plus() {
@@ -47,6 +49,7 @@ export default class InputMain extends Component {
     send() {
         this.props.send(this.value);
         this.value = '';
+        this.hasText = false;
     }
 
     setFocus() {
@@ -73,7 +76,7 @@ export default class InputMain extends Component {
                 {icons.dark('add-circle-outline', this.plus, {
                     paddingRight: 24
                 })}
-                <View style={{ flex: 1, alignItems: 'center' }}>
+                <View style={{ flex: 1, alignItems: 'center'}}>
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
                         autoCorrect={false}
@@ -89,14 +92,19 @@ export default class InputMain extends Component {
                     />
                 </View>
                 <View style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                    marginRight: 8,
                     alignItems: 'center',
+                    backgroundColor: styles.vars.checkboxActive,
+                    borderRadius: 20,
                     justifyContent: 'center',
-                    backgroundColor: styles.vars.checkboxActive }}>
-                    {icons.white('send', this.send, { width: 24, height: 24 })}
+                    height: 40,
+                    marginRight: 8,
+                    width: 40
+                     }}>
+                    {//this.hasText ?
+                        // negative margins because of icon padding set in icons component.
+                        icons.white('send', this.send, { width: 24, height: 24, margin: -12 })
+                        //: icons.white('thumb-up', this.send, { width: 24, height: 24, margin: -12 })
+                    }
                 </View>
             </View>
         );

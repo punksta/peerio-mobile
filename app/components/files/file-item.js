@@ -19,10 +19,11 @@ const itemStyle = {
 const itemContainerStyle = {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, .12)',
     backgroundColor: 'white',
+    height: 64,
     paddingLeft: 8
 };
 
@@ -35,8 +36,17 @@ export default class FileItem extends Component {
                 <TouchableOpacity onPress={this.props.onPress}>
                     <View style={itemContainerStyle} pointerEvents="none">
                         {iconLeft}
-                        <View style={{ flex: 1 }}>
-                            <Text>file name something</Text>
+                        <View style={{ flex: 1, marginLeft: 16 }}>
+                            <Text style={{
+                                color: styles.vars.txtDark,
+                                fontSize: 14,
+                                fontWeight: styles.vars.font.weight.bold
+                            }}>file name something</Text>
+                            <Text style={{
+                                color: styles.vars.subtleText,
+                                fontSize: 12,
+                                fontWeight: styles.vars.font.weight.regular
+                            }}>Date - owner</Text>
                         </View>
                         {iconRight}
                     </View>

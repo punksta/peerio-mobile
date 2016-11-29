@@ -54,6 +54,7 @@ export default class HeaderMain extends Component {
                 height: styles.vars.headerSpacing,
                 flex: 0,
                 justifyContent: 'flex-end',
+                paddingBottom: 6,
                 backgroundColor: styles.branding.peeriomobile.bg
             }}>
                 <View style={containerStyle}>
