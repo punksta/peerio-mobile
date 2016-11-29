@@ -5,3 +5,4 @@ misc/
 webpack.config.js
 karma.conf.js
 rn-cli.config.js
+app/lib/peerio-icebear
