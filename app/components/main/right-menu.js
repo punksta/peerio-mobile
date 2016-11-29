@@ -92,13 +92,13 @@ export default class RightMenu extends Component {
                 style={containerStyle}
                 leftToRight>
                 <Hider onHide={this.hideAnimated}>
-                    <View style={[menuContainerStyle, {shadowColor: "#000000",
+                    <View style={[menuContainerStyle, { shadowColor: "#000000",
                         shadowOpacity: 0.8,
                         shadowRadius: 5,
                         shadowOffset: {
                         height: 3,
                         width: 3
-                    }}]}>
+                    } }]}>
                         <View>
                             { items.map(this.item) }
                         </View>
