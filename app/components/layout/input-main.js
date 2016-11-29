@@ -76,7 +76,7 @@ export default class InputMain extends Component {
                 {icons.dark('add-circle-outline', this.plus, {
                     paddingRight: 24
                 })}
-                <View style={{ flex: 1, alignItems: 'center'}}>
+                <View style={{ flex: 1, alignItems: 'center' }}>
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
                         autoCorrect={false}
@@ -98,9 +98,8 @@ export default class InputMain extends Component {
                     justifyContent: 'center',
                     height: 40,
                     marginRight: 8,
-                    width: 40
-                     }}>
-                    {//this.hasText ?
+                    width: 40 }}>
+                    {// this.hasText ?
                         // negative margins because of icon padding set in icons component.
                         icons.white('send', this.send, { width: 24, height: 24, margin: -12 })
                         //: icons.white('thumb-up', this.send, { width: 24, height: 24, margin: -12 })
