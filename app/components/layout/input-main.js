@@ -102,7 +102,7 @@ export default class InputMain extends Component {
                     {// this.hasText ?
                         // negative margins because of icon padding set in icons component.
                         icons.white('send', this.send, { width: 24, height: 24, margin: -12 })
-                        //: icons.white('thumb-up', this.send, { width: 24, height: 24, margin: -12 })
+                        // : icons.white('thumb-up', this.send, { width: 24, height: 24, margin: -12 })
                     }
                 </View>
             </View>
