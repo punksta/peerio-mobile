@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated } from 'react-native';
+import { Animated, Easing } from 'react-native';
 import { reaction } from 'mobx';
 
 export default class Swiper extends Component {
@@ -37,7 +37,7 @@ export default class Swiper extends Component {
     }
 
     animate(toValue, fast, cb) {
-        Animated.timing(this.animatedX, { toValue, duration: fast ? 0 : 200 }).start(cb);
+        Animated.timing(this.animatedX, { toValue, duration: fast ? 0 : 200, easing: Easing.bezier(0.4, 0.0, 1, 1) }).start(cb);
     }
 
     show() {
