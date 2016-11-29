@@ -58,8 +58,7 @@ export default class RightMenu extends Component {
             left: 0,
             right: 0,
             top: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, .2)'
+            bottom: 0
         };
 
         const menuContainerStyle = {
@@ -93,7 +92,13 @@ export default class RightMenu extends Component {
                 style={containerStyle}
                 leftToRight>
                 <Hider onHide={this.hideAnimated}>
-                    <View style={menuContainerStyle}>
+                    <View style={[menuContainerStyle, {shadowColor: "#000000",
+                        shadowOpacity: 0.8,
+                        shadowRadius: 5,
+                        shadowOffset: {
+                        height: 3,
+                        width: 3
+                    }}]}>
                         <View>
                             { items.map(this.item) }
                         </View>
