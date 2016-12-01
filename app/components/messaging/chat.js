@@ -62,6 +62,7 @@ export default class Chat extends Component {
 
     item(i, key) {
         const msg = i.text || '';
+        const timestamp = i.timestamp;
         const name = i.sender.username;
         const color = i.sender.color;
         const text = msg.replace(/\n[ ]+/g, '\n');
@@ -69,7 +70,7 @@ export default class Chat extends Component {
             <Avatar
                 color={color}
                 hideOnline
-                date={'12:00'}
+                date={timestamp}
                 name={name}
                 message={text}
                 key={key}

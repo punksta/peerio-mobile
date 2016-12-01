@@ -19,7 +19,7 @@ const signupState = observable({
     pinSaved: false,
     current: 0,
     count: 0,
-    isActive() {
+    @computed get isActive() {
         return state.route.startsWith('signup');
     },
 

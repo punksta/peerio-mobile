@@ -35,6 +35,7 @@
     "lodash": "4.17.2",
     "mobx": "2.6.3",
     "mobx-react": "^3.5.9",
+    "moment": "^2.17.0",
     "nacl-stream": "0.3.3",
     "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#icebear",
     "peerio-icebear": "git@github.com:PeerioTechnologies/peerio-icebear.git",

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text, TouchableOpacity, ActivityIndicator
 } from 'react-native';
+import moment from 'moment';
 import { observer } from 'mobx-react/native';
 import { computed } from 'mobx';
 import icons from '../helpers/icons';
@@ -139,7 +140,7 @@ export default class Avatar extends Component {
 
     render() {
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
-        const date = this.props.date ? <Text style={dateTextStyle}>{this.props.date}</Text> : null;
+        const date = this.props.date ? <Text style={dateTextStyle}>{moment(this.props.date).format('LT')}</Text> : null;
         const online = this.props.hideOnline ? null : <View style={this.props.online ? circleStyle : circleStyleOff} />;
         const color = this.props.name ? this.stringColor(this.props.name) : 'green';
         const coloredAvatarStyle = [avatarStyle, { backgroundColor: this.props.color || color }];
@@ -175,7 +176,7 @@ export default class Avatar extends Component {
 Avatar.propTypes = {
     onPress: React.PropTypes.func,
     name: React.PropTypes.string,
-    date: React.PropTypes.string,
+    date: React.PropTypes.any,
     icon: React.PropTypes.string,
     color: React.PropTypes.string,
     message: React.PropTypes.string,
