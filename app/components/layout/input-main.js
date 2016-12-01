@@ -35,7 +35,9 @@ export default class InputMain extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.value = nextProps.value;
+        if (nextProps.value) {
+            this.value = nextProps.value;
+        }
     }
 
     onChangeText(text) {
