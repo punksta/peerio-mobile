@@ -48,7 +48,6 @@ const state = observable({
 
     @action hidePicker(/* picker */) {
         state.hideKeyboard();
-        setTimeout(() => { state.pickerVisible = false; }, 0);
     },
 
     @action hideKeyboard() {
@@ -57,6 +56,7 @@ const state = observable({
             state.focusedTextBox = null;
         }
         dismissKeyboard();
+        setTimeout(() => { state.pickerVisible = false; }, 0);
     },
 
     @action hideAll() {

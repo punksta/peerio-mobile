@@ -44,6 +44,7 @@ export default class App extends Component {
             const oldIndex = state.routesList.indexOf(state.prevRoute);
             state.prevRoute = route;
             const rInfo = state.routes[route];
+            requestAnimationFrame(state.hideKeyboard);
             if (rInfo.replace) {
                 this.nav.resetTo(rInfo);
                 return;
@@ -55,7 +56,6 @@ export default class App extends Component {
             } else {
                 this.nav.push(rInfo);
             }
-            requestAnimationFrame(state.hideKeyboard);
         });
 
         if (console._errorOriginal) {

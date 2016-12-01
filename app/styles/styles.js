@@ -402,8 +402,7 @@ const styles = {
                 left: {},
                 right: {},
                 text: {
-                    color: 'white',
-                    textTransform: 'uppercase'
+                    color: 'white'
                 }
             }
         }
