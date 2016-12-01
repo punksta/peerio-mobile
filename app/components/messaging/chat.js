@@ -37,7 +37,8 @@ export default class Chat extends Component {
     }
 
     send(v) {
-        const message = v || _.sample(randomMessages);
+        const message = v || (__DEV__ && _.sample(randomMessages));
+        if (!message) return;
         this.enableNextScroll = true;
         mainState.addMessage(message);
     }
