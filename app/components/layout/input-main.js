@@ -79,7 +79,6 @@ export default class InputMain extends Component {
                 <View style={{ flex: 1, alignItems: 'center' }}>
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
-                        autoCorrect={false}
                         value={this.value}
                         placeholder="Enter text here"
                         enablesReturnKeyAutomatically
