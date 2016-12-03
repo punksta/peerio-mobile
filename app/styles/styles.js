@@ -111,7 +111,8 @@ const styles = {
         }),
         active: baseclass('shadow-active', inherit('shadow-normal', {
             shadowColor: '#000000',
-            shadowOpacity: 0.2,
+            shadowOpacity: 0.4,
+            shadowRadius: 5,
             shadowOffset: {
                 height: 1,
                 width: 1
