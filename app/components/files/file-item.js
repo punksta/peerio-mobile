@@ -2,19 +2,10 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    TouchableOpacity,
-    ScrollView
+    TouchableOpacity
 } from 'react-native';
-import SnackBar from '../snackbars/snackbar';
 import styles from '../../styles/styles';
 import icons from '../helpers/icons';
-
-const itemStyle = {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white'
-};
 
 const itemContainerStyle = {
     flex: 1,

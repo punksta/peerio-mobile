@@ -15,7 +15,7 @@ import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
 import Chat from '../messaging/chat';
 import Files from '../files/files';
-import FileView from '../files/file-view';
+// import FileView from '../files/file-view';
 import ComposeMessage from '../messaging/compose-message';
 import Placeholder from './placeholder';
 import styles from '../../styles/styles';

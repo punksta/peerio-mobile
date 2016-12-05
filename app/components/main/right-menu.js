@@ -6,7 +6,7 @@ import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
 import loginState from '../login/login-state';
 import icons from '../helpers/icons';
-import imagePicker from '../helpers/imagepicker';
+// import imagePicker from '../helpers/imagepicker';
 import styles from '../../styles/styles';
 import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';

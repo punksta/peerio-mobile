@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import {
-    Text,
     View,
     ScrollView
 } from 'react-native';
 import SnackBar from '../snackbars/snackbar';
-import styles from '../../styles/styles';
+// import styles from '../../styles/styles';
 import FileItem from './file-item';
 
 export default class Files extends Component {

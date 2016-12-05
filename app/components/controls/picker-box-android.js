@@ -21,7 +21,7 @@ export default class PickerBoxAndroid extends Component {
 
     render() {
         // const s = this.props.style.normal;
-        const {/* hint,*/ shadow, background, textview, container, iconContainer, icon } =
+        const {/* hint,*/ shadow, background } =
             this.props.style.normal;
         const items = _.values(_.mapValues(this.props.data, (value, key) =>
             <Picker.Item label={value} value={key} key={key} />));

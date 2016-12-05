@@ -6,10 +6,8 @@ import {
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
-import Button from '../controls/button';
 import styles from '../../styles/styles';
 import icons from '../helpers/icons';
-import mainState from '../main/main-state';
 
 @observer
 export default class InputMain extends Component {
