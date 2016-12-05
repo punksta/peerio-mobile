@@ -51,16 +51,16 @@ def ios_basic():
         'automationName': 'XCUITest',
         'platformName': 'iOS',
         'platform': 'iOS',
-        'app': 'com.peerio',
+        'bundleId': 'com.peerio',
         'launchTimeout': 90000,
         'platformVersion': '10.0',
         'deviceName': 'iPhone 6',
         # 'autoAcceptAlerts': False, # so that system dialogs are accepted
         # 'autoDismissAlerts': True, # so that system dialogs are accepted
-        'autoLaunch': False,
+        'autoLaunch': True,
         'noReset': True,
         'newCommandTimeout': 12000,
-        'nativeInstrumentsLib': False
+        'nativeInstrumentsLib': True
     }
 
 def ios_10(config):

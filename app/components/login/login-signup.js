@@ -34,12 +34,14 @@ export default class LoginSignup extends Component {
         return (
             <Center>
                 <Button
+                    testID="signupButton"
                     style={bStyle}
                     disabled={!loginState.isConnected}
                     textStyle={textStyle}
                     text={tu('signup')}
                     onPress={this.signUp} />
                 <Button
+                    testID="loginButton"
                     style={bStyle}
                     disabled={!loginState.isConnected}
                     textStyle={textStyle}

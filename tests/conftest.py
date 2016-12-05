@@ -23,7 +23,7 @@ def execute_before_any_test(extra = {}):
         pytest.exit('platform not found: ' + platform)
         return
     connect(extra)
-    driver().restartPlatform = restart_platform
+    getDriver().restartPlatform = restart_platform
 
 def restart_platform(extra):
     print "Restarting platform"

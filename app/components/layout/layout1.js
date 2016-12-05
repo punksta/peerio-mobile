@@ -65,6 +65,7 @@ export default class Layout1 extends Component {
 
         return (
             <View
+                testID="layout1"
                 {...this.panResponder.panHandlers}
                 style={[boxStyle, this.props.style]}>
                 {this.props.header}

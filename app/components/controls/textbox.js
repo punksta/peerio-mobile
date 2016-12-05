@@ -188,6 +188,7 @@ export default class TextBox extends Component {
                             backgroundColor: 'transparent'
                         }}>
                         <TextInput
+                            testID={this.props.name}
                             style={[style.textbox,
                             { height: 56, top: 0 }]}
                             underlineColorAndroid={'transparent'}

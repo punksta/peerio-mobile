@@ -6,16 +6,12 @@ import common.platforms
 import sys
 from settings.settings import *
 from websocket import create_connection
-from browserdriver import BrowserDriver
+from common.browserdriver import BrowserDriver
 
-global driver
-
+driver = None
 __defaultTimeout = 30
 __defaultAnimationTimeout = 5
 __animationClasses = ['.animate-enter']
-
-def driver():
-    return driver
 
 def connect(extra = {}):
     global driver
@@ -23,6 +19,10 @@ def connect(extra = {}):
     driver.device = common.platforms.get_platform()['device']
     driver.platform = common.platforms.get_platform()['type']
     driver.connect()
+
+def getDriver():
+    return driver
+
 
 def create_driver(extra = {}):
     global driver
