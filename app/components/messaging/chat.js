@@ -28,6 +28,7 @@ export default class Chat extends Component {
     constructor(props) {
         super(props);
         this.send = this.send.bind(this);
+        this.sendAck = this.sendAck.bind(this);
         this.layoutScrollView = this.layoutScrollView.bind(this);
         this.scroll = this.scroll.bind(this);
     }
@@ -43,9 +44,14 @@ export default class Chat extends Component {
         mainState.addMessage(message);
     }
 
-    setFocus() {
-        this.input && this.input.setFocus();
+    sendAck() {
+        this.enableNextScroll = true;
+        mainState.addAck();
     }
+
+    // setFocus() {
+    //     this.input && this.input.setFocus();
+    // }
 
     renderInput() {
         const s = {
@@ -56,13 +62,16 @@ export default class Chat extends Component {
         };
         return (
             <View style={s}>
-                <InputMain ref={i => (this.input = i)} send={this.send} />
+                <InputMain
+                    sendAck={this.sendAck}
+                    send={this.send} />
             </View>
         );
     }
 
     item(i, key) {
         const msg = i.text || '';
+        const isAck = i.isAck;
         const timestamp = i.timestamp;
         const name = i.sender.username;
         const color = i.sender.color;
@@ -70,6 +79,7 @@ export default class Chat extends Component {
         return (
             <Avatar
                 color={color}
+                isAck={isAck}
                 hideOnline
                 date={timestamp}
                 name={name}

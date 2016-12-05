@@ -5,6 +5,7 @@ import {
 import moment from 'moment';
 import { observer } from 'mobx-react/native';
 import { computed } from 'mobx';
+import Ack from './ack';
 import icons from '../helpers/icons';
 import styles from '../../styles/styles';
 
@@ -149,6 +150,8 @@ export default class Avatar extends Component {
         const avatarPlaceholder = this.props.loading ? loader : avatar;
         const checkbox = this.props.checkbox ? this.checkbox() : null;
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
+        const message = this.props.isAck ?
+            <Ack /> : <Text style={lastMessageTextStyle}>{this.props.message}</Text>;
         return (
             <View style={{ backgroundColor: styles.vars.bg }}>
                 <TouchableOpacity onPress={this.props.onPress}>
@@ -161,7 +164,7 @@ export default class Avatar extends Component {
                                     <Text ellipsizeMode="tail" style={nameTextStyle}>{this.props.name}</Text>
                                     {date}
                                 </View>
-                                <Text style={lastMessageTextStyle}>{this.props.message}</Text>
+                                {message}
                             </View>
                             {icon}
                             {online}
@@ -186,6 +189,7 @@ Avatar.propTypes = {
     checkedKey: React.PropTypes.string,
     checkedState: React.PropTypes.any,
     hideOnline: React.PropTypes.bool,
+    isAck: React.PropTypes.bool,
     noBorderBottom: React.PropTypes.bool
 };
 

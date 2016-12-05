@@ -33,6 +33,7 @@ export default class SignupStep1 extends Component {
                 <Text style={style.text.subTitle}>{t('profile')}</Text>
                 <TextBox
                     lowerCase
+                    returnKeyType="go"
                     state={signupState} name="username" hint={t('username')} />
                 <TextBox
                     state={signupState} name="email" hint={t('email')} />

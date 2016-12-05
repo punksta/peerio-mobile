@@ -4,7 +4,7 @@ import {
     PanResponder
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable } from 'mobx';
+import { observable, computed } from 'mobx';
 import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
 import styles from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -12,12 +12,15 @@ import icons from '../helpers/icons';
 @observer
 export default class InputMain extends Component {
     @observable value = '';
-    @observable hasText = false;
+    @computed get hasText() {
+        return this.value && this.value.length;
+    }
     constructor(props) {
         super(props);
         this.value = this.props.value;
         this.plus = this.plus.bind(this);
         this.send = this.send.bind(this);
+        this.sendAck = this.sendAck.bind(this);
         this.onChangeText = this.onChangeText.bind(this);
     }
 
@@ -40,7 +43,6 @@ export default class InputMain extends Component {
 
     onChangeText(text) {
         this.value = text;
-        this.value.length ? this.hasText = true : this.hasText = false;
     }
 
     plus() {
@@ -49,7 +51,10 @@ export default class InputMain extends Component {
     send() {
         this.props.send(this.value);
         this.value = '';
-        this.hasText = false;
+    }
+
+    sendAck() {
+        this.props.sendAck();
     }
 
     setFocus() {
@@ -65,6 +70,11 @@ export default class InputMain extends Component {
             flex: 1,
             fontSize: 14
         };
+
+        const iconStyle = { width: 24, height: 24, margin: -12 };
+        const icon = this.hasText ?
+            icons.white('send', this.send, iconStyle) :
+            icons.white('thumb-up', this.sendAck, iconStyle);
 
         return (
             <View
@@ -98,11 +108,7 @@ export default class InputMain extends Component {
                     height: 40,
                     marginRight: 8,
                     width: 40 }}>
-                    {// this.hasText ?
-                        // negative margins because of icon padding set in icons component.
-                        icons.white('send', this.send, { width: 24, height: 24, margin: -12 })
-                        // : icons.white('thumb-up', this.send, { width: 24, height: 24, margin: -12 })
-                    }
+                    {icon}
                 </View>
             </View>
         );
@@ -112,5 +118,6 @@ export default class InputMain extends Component {
 
 InputMain.propTypes = {
     value: React.PropTypes.any,
-    send: React.PropTypes.func.isRequired
+    send: React.PropTypes.func.isRequired,
+    sendAck: React.PropTypes.func.isRequired
 };

@@ -18,6 +18,15 @@ const icons = {
         );
     },
 
+    plaindark(name) {
+        return (
+            <Icon
+                name={name}
+                size={styles.vars.iconSize}
+                color={styles.vars.darkIcon} />
+        );
+    },
+
     white(name, onPress, style) {
         return icons.basic(name, styles.vars.whiteIcon, onPress, style);
     },

@@ -19,15 +19,18 @@ export default class TextBox extends Component {
     @observable showSecret = false;
 
     @computed get value() {
-        return this.props.state ? this.props.state[this.props.name] : this.props.value;
+        return this.props.state ?
+            this.props.state[this.props.name] : this.props.value;
     }
 
     @computed get valid() {
-        return this.props.state ? this.props.state[`${this.props.name}Valid`] : this.props.valid;
+        return this.props.state ?
+            this.props.state[`${this.props.name}Valid`] : this.props.valid;
     }
 
     @computed get validationMessage() {
-        return this.props.state ? this.props.state[`${this.props.name}ValidationMessage`] : this.props.validationMessage;
+        return this.props.state ?
+            this.props.state[`${this.props.name}ValidationMessage`] : this.props.validationMessage;
     }
 
     constructor(props) {
@@ -62,7 +65,7 @@ export default class TextBox extends Component {
         state.focusedTextBox = null;
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(/* nextProps */) {
         if (!this.props.state) {
             // Object.assign(this.props, nextProps);
             this.forceUpdate();
@@ -188,6 +191,7 @@ export default class TextBox extends Component {
                             style={[style.textbox,
                             { height: 56, top: 0 }]}
                             underlineColorAndroid={'transparent'}
+                            returnKeyType={this.props.returnKeyType}
                             secureTextEntry={this.props.secureTextEntry && !this.showSecret}
                             ref={ti => { this.textinput = ti; }}
                             value={this.value}
@@ -224,6 +228,7 @@ TextBox.propTypes = {
     hint: React.PropTypes.any.isRequired,
     info: React.PropTypes.any,
     name: React.PropTypes.string.isRequired,
+    returnKeyType: React.PropTypes.any,
     secureTextEntry: React.PropTypes.bool,
     lowerCase: React.PropTypes.bool,
     autoCapitalize: React.PropTypes.oneOf(['none', 'sentences', 'words', 'characters']),

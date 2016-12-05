@@ -111,8 +111,11 @@ const mainState = observable({
     },
 
     @action addMessage(msg) {
-        // this.chatItems.push(msg);
         mainState.currentChat && mainState.currentChat.sendMessage(msg);
+    },
+
+    @action addAck() {
+        mainState.currentChat && mainState.currentChat.sendAck();
     },
 
     @action toggleLeftMenu() {
