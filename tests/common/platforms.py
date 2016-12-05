@@ -38,7 +38,7 @@ def platform_ios():
         'type': 'ios',
         'device': False,
         'driver': lambda extra: IosDriverFast(
-            settings.executor, settings.ios_93(settings.ios_basic()), extra)
+            settings.executor, settings.ios_10(settings.ios_basic()), extra)
     }
 
 def platform_iosdevice():

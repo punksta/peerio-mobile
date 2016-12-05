@@ -27,8 +27,6 @@ class IosDriver(AbstractDriver):
         print self.capabilities
         self.appium = appium.webdriver.Remote(command_executor=self.executor,
                             desired_capabilities=self.capabilities)
-        self.wait_for_view_origin(self.appium, '//UIAWebView')
-        self.switch_to_webview()
         self.devicePixelRatio = self.appium.execute_script('return window.devicePixelRatio')
         print "View origin: %s, device pixel ratio: %d" % (self.viewOrigin, self.devicePixelRatio)
 

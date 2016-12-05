@@ -6,7 +6,7 @@ from appium import webdriver
 from time import sleep
 
 executor = 'http://127.0.0.1:4723/wd/hub'
-ios_dir = '../../ios/build/peeriomobile/Build/Products/Debug-iphoneos'
+ios_dir = '../../ios/build/Build/Products/Debug-iphoneos'
 ios_appname = 'peeriomobile.app'
 ios_bundle = 'com.peerio'
 
@@ -48,11 +48,13 @@ def android_path():
 
 def ios_basic():
     return {
+        'automationName': 'XCUITest',
         'platformName': 'iOS',
-        'app': ios_path(),
+        'platform': 'iOS',
+        'app': 'com.peerio',
         'launchTimeout': 90000,
-        'platformVersion': '9.3',
-        'deviceName': 'iPhone 6s Plus',
+        'platformVersion': '10.0',
+        'deviceName': 'iPhone 6',
         # 'autoAcceptAlerts': False, # so that system dialogs are accepted
         # 'autoDismissAlerts': True, # so that system dialogs are accepted
         'autoLaunch': False,
@@ -61,19 +63,8 @@ def ios_basic():
         'nativeInstrumentsLib': False
     }
 
-def ios_92(config):
+def ios_10(config):
     config = config.copy()
-    config.update({
-        'platform': 'iOS',
-        'platformVersion': '9.2',
-    })
-    return config
-
-def ios_93(config):
-    config = ios_92(config.copy())
-    config.update({
-        'platformVersion': '9.3'
-    })
     return config
 
 def ios_device(udid):

@@ -1,4 +1,7 @@
 echo "checking test environment"
+brew install ideviceinstaller
+brew install carthage
+npm install -g ios-deploy
 if ! [ -x "$(command -v virtualenv)" ]; then
   echo 'virtualenv is not installed.' >&2
   sudo pip install virtualenv

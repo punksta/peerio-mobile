@@ -12,7 +12,7 @@ def start_platform(platform, extra):
         exit()
     connect(extra)
 
-starter = lambda extra: start_platform('browser', extra)
+starter = lambda extra: start_platform('ios', extra)
 connect()
 # starter({})
 # t = AppleAdvertisement()
