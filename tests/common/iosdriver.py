@@ -6,6 +6,7 @@ from abstractdriver import AbstractDriver
 import selenium
 import appium
 from selenium.common.exceptions import NoSuchElementException
+
 import common.processes
 
 class IosDriver(AbstractDriver):
@@ -29,7 +30,8 @@ class IosDriver(AbstractDriver):
                             desired_capabilities=self.capabilities)
         # self.devicePixelRatio = self.appium.execute_script('return window.devicePixelRatio')
         # print "View origin: %s, device pixel ratio: %d" % (self.viewOrigin, self.devicePixelRatio)
-        print "Connected"
+        print "Connected, waiting 3 seconds for app to launch"
+        time.sleep(3)
 
     def text(self, selector):
         return selector.text

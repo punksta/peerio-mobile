@@ -49,7 +49,7 @@ android/keystores/debug.keystore
 testrun.log
 tests/.cache
 tests/console.py
-tests/env
+.pyenv
 *.pyc
 misc
 

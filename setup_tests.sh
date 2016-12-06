@@ -6,6 +6,6 @@ if ! [ -x "$(command -v virtualenv)" ]; then
   echo 'virtualenv is not installed.' >&2
   sudo pip install virtualenv
 fi
-virtualenv tests/env
-source tests/env/bin/activate
+virtualenv .pyenv
+source .pyenv/bin/activate
 pip install -r tests/requirements.txt
