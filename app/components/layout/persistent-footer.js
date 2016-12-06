@@ -6,6 +6,13 @@ import { observer } from 'mobx-react/native';
 import _ from 'lodash';
 import state from '../layout/state';
 
+const s = {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0
+};
+
 @observer
 export default class PersistentFooter extends Component {
     render() {
@@ -16,8 +23,8 @@ export default class PersistentFooter extends Component {
         });
         return (
             <View
-                pointerEvents="none"
-                style={{ position: 'absolute', bottom: state.keyboardHeight, left: 0, right: 0 }}>
+                style={s}
+                pointerEvents="none">
                 {items}
             </View>
         );

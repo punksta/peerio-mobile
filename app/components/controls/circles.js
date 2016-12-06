@@ -5,6 +5,13 @@ import {
 import { observer } from 'mobx-react/native';
 import styles from '../../styles/styles';
 
+const s = {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 20
+};
+
 @observer
 export default class Circles extends Component {
     circle(i, current) {
@@ -19,7 +26,7 @@ export default class Circles extends Component {
             circles.push(this.circle(i, this.props.current));
         }
         return (
-            <View style={styles.circle.container}>
+            <View style={s}>
                 {circles}
             </View>
         );

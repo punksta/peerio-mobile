@@ -33,16 +33,26 @@ export default class SignupStep1 extends Component {
                 <Text style={style.text.subTitle}>{t('profile')}</Text>
                 <TextBox
                     lowerCase
-                    returnKeyType="go"
-                    state={signupState} name="username" hint={t('username')} />
+                    state={signupState}
+                    name="username"
+                    hint={t('username')} />
                 <TextBox
-                    state={signupState} name="email" hint={t('email')} />
+                    state={signupState}
+                    name="email"
+                    hint={t('email')} />
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1 }}>
-                        <TextBox state={signupState} name="firstName" hint={t('firstName')} />
+                        <TextBox
+                            state={signupState}
+                            name="firstName"
+                            hint={t('firstName')} />
                     </View>
                     <View style={{ flex: 1 }}>
-                        <TextBox state={signupState} name="lastName" hint={t('lastName')} />
+                        <TextBox
+                            onSubmit={() => signupState.next()}
+                            state={signupState}
+                            name="lastName"
+                            hint={t('lastName')} />
                     </View>
                 </View>
                 <LanguagePickerBox />

@@ -8,13 +8,13 @@ import snackbarState from '../snackbars/snackbar-state';
 import { User, PhraseDictionary, validation, socket } from '../../lib/icebear';
 import locales from '../../lib/locales';
 
-const { validators, validateField } = validation;
+const { validators, addValidation } = validation;
 
 const signupState = observable({
-    @validateField(validators.username, 0) username: '',
-    @validateField(validators.email, 1) email: '',
-    @validateField(validators.firstName, 2) firstName: '',
-    @validateField(validators.lastName, 3) lastName: '',
+    username: '',
+    email: '',
+    firstName: '',
+    lastName: '',
     pin: '',
     pinSaved: false,
     current: 0,
@@ -55,6 +55,23 @@ const signupState = observable({
         const dictString = await locales.loadDictFile(state.locale);
         const dict = new PhraseDictionary(dictString);
         return dict.getPassphrase(5);
+    },
+
+    @action next() {
+        if (!this.nextAvailable) return;
+        if (this.current < this.count - 1) {
+            signupState.current++;
+        } else {
+            this.finish();
+        }
+    },
+
+    @action prev() {
+        if (this.current > 0) {
+            this.current--;
+        } else {
+            this.exit();
+        }
     },
 
     @action async finish() {
@@ -113,6 +130,11 @@ const signupState = observable({
             });
     }
 });
+
+addValidation(signupState, 'username', validators.username, 0);
+addValidation(signupState, 'email', validators.email, 1);
+addValidation(signupState, 'firstName', validators.firstName, 2);
+addValidation(signupState, 'lastName', validators.lastName, 3);
 
 const signupWizardRoutes = [
     'signupStep1',

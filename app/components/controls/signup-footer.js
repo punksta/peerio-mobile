@@ -8,25 +8,14 @@ import styles from '../../styles/styles';
 
 @observer
 export default class SignupFooter extends Component {
-    constructor(props) {
-        super(props);
-        this.next = this.next.bind(this);
-        this.prev = this.prev.bind(this);
-    }
     next() {
-        if (signupState.current < signupState.count - 1) {
-            signupState.current++;
-        } else {
-            signupState.finish();
-        }
+        signupState.next();
     }
+
     prev() {
-        if (signupState.current > 0) {
-            signupState.current--;
-        } else {
-            signupState.exit();
-        }
+        signupState.prev();
     }
+
     render() {
         const style = styles.wizard.footer;
         const nextStyle = signupState.nextAvailable ? { opacity: 1 } : { opacity: 0.7 };

@@ -17,6 +17,13 @@ import icons from '../helpers/icons';
 export default class TextBox extends Component {
     @observable focused = false;
     @observable showSecret = false;
+    @computed get nextField() {
+        const byOrder = this.props.state.byOrder;
+        const byName = this.props.state.byName;
+        if (!byOrder || !byName) return null;
+        const name = this.props.name;
+        return byOrder[byName[name] + 1];
+    }
 
     @computed get value() {
         return this.props.state ?
@@ -39,6 +46,7 @@ export default class TextBox extends Component {
         this.focus = this.focus.bind(this);
         this.changeText = this.changeText.bind(this);
         this.toggleSecret = this.toggleSecret.bind(this);
+        this.submit = this.submit.bind(this);
 
         const scaleFrom = 1;
         const translateFrom = 0;
@@ -59,6 +67,13 @@ export default class TextBox extends Component {
                 Animated.timing(this.animatedHintScale, { toValue: v ? scaleTo : scaleFrom, duration })
             ]).start();
         }, true);
+        const s = this.props.state;
+        if (s) {
+            // add focus callback so that we can be focused on "Next" action
+            const focus = s.focus || {};
+            focus[this.props.name] = () => this.focus();
+            s.focus = focus;
+        }
     }
 
     componentWillUnmount() {
@@ -81,6 +96,7 @@ export default class TextBox extends Component {
     }
 
     blur() {
+        console.log('textbox.js: blur');
         this._callState('OnBlur');
         state.focusedTextBox = null;
         requestAnimationFrame(() => {
@@ -101,6 +117,7 @@ export default class TextBox extends Component {
 
     focus() {
         state.focusedTextBox = this.textinput;
+        this.textinput.focus();
         requestAnimationFrame(() => {
             this.focused = true;
         });
@@ -111,7 +128,29 @@ export default class TextBox extends Component {
         this.showSecret = true;
     }
 
+    submit() {
+        const s = this.props.state;
+        if (!s) return;
+        // if no next field, we are the last one in form
+        const nextField = this.nextField;
+        if (!this.nextField) {
+            this.props.onSubmit && this.props.onSubmit();
+            return;
+        }
+        // we hope that other textbox actually added "focus" handler
+        const focuser = s.focus[nextField];
+        focuser && focuser();
+    }
+
     render() {
+        let returnKeyType = null;
+        if (this.props.onSubmit) {
+            returnKeyType = 'done';
+        }
+        if (this.nextField) {
+            console.log(`textbox.js: render: ${this.nextField}`);
+            returnKeyType = 'next';
+        }
         const style = this.focused ? styles.input.active : styles.input.normal;
         const hint = this.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
@@ -121,7 +160,7 @@ export default class TextBox extends Component {
                     this.showSecret ? 'visibility-off' : 'visibility',
                     this.toggleSecret, style.icon)}
             </View>;
-        const validationControl = !this.props.valid ? (
+        const validationControl = !this.valid ? (
             <View
                 pointerEvents="none"
                 style={{ position: 'absolute', top: 0, right: 4 }}>
@@ -170,7 +209,7 @@ export default class TextBox extends Component {
                 <View
                     style={{ backgroundColor: styles.vars.inputBg, overflow: 'hidden', borderRadius: 2 }}>
                     <TouchableOpacity
-                        onPress={() => { this.focus(); this.textinput.focus(); }}>
+                        onPress={() => { this.focus(); }}>
                         <View
                             pointerEvents="none"
                             style={{
@@ -192,13 +231,14 @@ export default class TextBox extends Component {
                             style={[style.textbox,
                             { height: 56, top: 0 }]}
                             underlineColorAndroid={'transparent'}
-                            returnKeyType={this.props.returnKeyType}
+                            returnKeyType={this.props.returnKeyType || returnKeyType}
                             secureTextEntry={this.props.secureTextEntry && !this.showSecret}
                             ref={ti => { this.textinput = ti; }}
                             value={this.value}
                             onFocus={this.focus}
                             onBlur={this.blur}
                             onChangeText={this.changeText}
+                            onSubmitEditing={this.submit}
                             autoCapitalize={this.props.autoCapitalize || 'none'}
                             autoCorrect={false}
                             autoComplete={false}
@@ -222,6 +262,7 @@ export default class TextBox extends Component {
 
 TextBox.propTypes = {
     onChangeText: React.PropTypes.func,
+    onSubmit: React.PropTypes.func,
     value: React.PropTypes.any,
     state: React.PropTypes.any,
     valid: React.PropTypes.bool,
