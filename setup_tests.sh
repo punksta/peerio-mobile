@@ -9,4 +9,3 @@ fi
 virtualenv tests/env
 source tests/env/bin/activate
 pip install -r tests/requirements.txt
-py.test --platform=ios -s -x tests/test_sample.py
