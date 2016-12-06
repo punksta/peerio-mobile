@@ -2,8 +2,10 @@ import { when, observable, action, computed } from 'mobx';
 import RNRestart from 'react-native-restart';
 import state from '../layout/state';
 import store from '../../store/local-storage';
-import { User, chatStore, socket } from '../../lib/icebear';
+import { User, chatStore, socket, validation } from '../../lib/icebear';
 import touchid from '../touchid/touchid-bridge';
+
+const { isValidLoginUsername } = validation.validators;
 
 const loginState = observable({
     username: '',
@@ -53,17 +55,18 @@ const loginState = observable({
     },
 
     @action _login(user) {
-        return user.login()
-            .then(state.routes.main.transition)
-            .catch(e => {
-                console.error(e);
-                this.error = 'loginFailed';
-                setTimeout(() => (this.error = null), 1000);
+        return isValidLoginUsername(user.username)
+            .then(valid => {
+                if (valid) {
+                    return user.login();
+                }
+                this.error = 'badUsername';
+                return Promise.reject(new Error('Bad username'));
             })
-            .finally(() => {
+            .then(state.routes.main.transition)
+            .then(() => {
                 User.current = user;
                 store.openUserDb(user.username);
-                this.isInProgress = false;
                 chatStore.loadAllChats();
                 when(() => !chatStore.loading, () => {
                     console.log('when loaded');
@@ -74,6 +77,14 @@ const loginState = observable({
                     // });
                 });
                 return null;
+            })
+            .catch(e => {
+                console.error(e);
+                if (!this.error) this.error = 'loginFailed';
+            })
+            .finally(() => {
+                this.isInProgress = false;
+                setTimeout(() => (this.error = null), 1000);
             });
     },
 
