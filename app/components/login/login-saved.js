@@ -17,7 +17,6 @@ export default class LoginSaved extends Component {
     constructor(props) {
         super(props);
         forms.mixin(this, loginState);
-        this.signIn = this.signIn.bind(this);
         this.checkPin = this.checkPin.bind(this);
     }
 
@@ -26,16 +25,11 @@ export default class LoginSaved extends Component {
     }
 
     checkPin(pin, pinControl) {
-        if (pin !== loginState.pin) {
-            pinControl.shake();
-        } else {
-            pinControl.spinner(true);
-            this.signIn();
-        }
-    }
-
-    signIn() {
-        loginState.login();
+        pinControl.spinner(true);
+        loginState.login(pin)
+            .catch(() => {
+                pinControl.shake();
+            });
     }
 
     render() {
@@ -50,8 +44,7 @@ export default class LoginSaved extends Component {
                 </Center>
                 <Pin
                     messageEnter={' '}
-                    checkPin={this.checkPin}
-                    onConfirm={pin => this.usePin(pin)} />
+                    checkPin={this.checkPin} />
             </View>
         );
         return <Layout2 body={body} footer={<LoginSavedFooter />} />;

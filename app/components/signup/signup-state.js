@@ -91,6 +91,7 @@ const signupState = observable({
             .then(() => {
                 User.current = user;
             })
+            .then(() => User.current.setPasscode(pin))
             .then(state.routes.main.transition)
             .then(() => {
                 snackbarState.push('Email confirmation has been sent');
@@ -102,12 +103,10 @@ const signupState = observable({
             .then(() => {
                 store.openUserDb(username);
                 return store.user.set('registration', {
-                    pin,
                     username,
                     firstName,
                     lastName,
-                    localeCode,
-                    passphrase
+                    localeCode
                 }).then(() => store.system.set('userData', {
                     username,
                     firstName,

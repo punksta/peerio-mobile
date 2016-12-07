@@ -51,6 +51,7 @@ const loginState = observable({
     },
 
     @action saved() {
+        this.savedUserInfo = true;
         state.routes.loginSaved.transition();
     },
 
@@ -81,6 +82,7 @@ const loginState = observable({
             .catch(e => {
                 console.error(e);
                 if (!this.error) this.error = 'loginFailed';
+                return Promise.reject(new Error(this.error));
             })
             .finally(() => {
                 this.isInProgress = false;
@@ -88,12 +90,14 @@ const loginState = observable({
             });
     },
 
-    @action login() {
+    @action login(pin) {
         const user = new User();
         user.username = this.username;
-        user.passphrase = this.passphrase || this.savedPassphrase || 'such a secret passphrase';
+        user.passphrase = pin || this.passphrase || this.savedPassphrase || 'such a secret passphrase';
         this.isInProgress = true;
-        when(() => socket.connected, () => this._login(user));
+        return new Promise(resolve => {
+            when(() => socket.connected, () => resolve(this._login(user)));
+        });
     },
 
     @action async signOut() {
@@ -102,23 +106,25 @@ const loginState = observable({
     },
 
     @action async load() {
+        console.log(`login-state.js: loading`);
         const userData = await store.system.get('userData');
         if (userData) {
+            console.log(`login-state.js: loaded ${userData}`);
             const { username, firstName, lastName, touchIdSaved } = userData;
             this.username = username;
             this.firstName = firstName;
             this.lastName = lastName;
             this.touchIdSaved = touchIdSaved;
             store.openUserDb(this.username);
-            const userRegData = await store.user.get('registration');
-            if (userRegData) {
-                const { passphrase, pin } = userRegData;
-                this.savedPassphrase = passphrase;
-                this.pin = pin;
-                this.savedUserInfo = true;
-                this.saved();
-            }
+            const user = new User();
+            user.username = username;
+            return user.hasPasscode()
+                .then(result => {
+                    console.log(`login-state.js: ${result}`);
+                    result && this.saved();
+                });
         }
+        return false;
     },
 
     @action async save() {

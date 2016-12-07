@@ -59,6 +59,7 @@ export default class Pin extends Component {
     initial() {
         this.enteredPin = '';
         this.pin = '';
+        this.isSpinner = false;
         this.isConfirm = false;
         this.message = this.props.messageEnter || t('passcode_inputPlaceholder');
     }
@@ -174,7 +175,7 @@ export default class Pin extends Component {
 
 
 Pin.propTypes = {
-    onConfirm: React.PropTypes.func.isRequired,
+    onConfirm: React.PropTypes.func,
     checkPin: React.PropTypes.func,
     messageEnter: React.PropTypes.string,
     messageWrong: React.PropTypes.string,
