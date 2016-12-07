@@ -94,7 +94,7 @@
   },
   "config": {
     "ghooks": {
-      "post-checkout": "",
+      "post-checkout": "git ctags",
       "pre-push": "opt --out pre-push --exec \"npm run lint\"",
       "post-merge": "opt --out post-merge --exec \"npm update\"",
       "commit-msg": "validate-commit-msg"
