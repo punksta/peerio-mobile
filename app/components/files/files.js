@@ -3,15 +3,17 @@ import {
     View,
     ScrollView
 } from 'react-native';
+import { fileStore } from '../../lib/icebear';
 import SnackBar from '../snackbars/snackbar';
 // import styles from '../../styles/styles';
 import FileItem from './file-item';
 
 export default class Files extends Component {
     render() {
+        const files = fileStore.files;
         const items = [];
-        for (let i = 0; i < 30; ++i) {
-            items.push(<FileItem key={i} />);
+        for (let i = 0; i < files.length; ++i) {
+            items.push(<FileItem key={i} file={files[i]} />);
         }
         return (
             <View

@@ -20,6 +20,7 @@ const itemContainerStyle = {
 
 export default class FileItem extends Component {
     render() {
+        const file = this.props.file;
         const iconLeft = icons.dark('image');
         const iconRight = icons.dark('keyboard-arrow-right');
         return (
@@ -32,7 +33,7 @@ export default class FileItem extends Component {
                                 color: styles.vars.txtDark,
                                 fontSize: 14,
                                 fontWeight: styles.vars.font.weight.bold
-                            }}>file name something</Text>
+                            }}>{file.name}</Text>
                             <Text style={{
                                 color: styles.vars.subtleText,
                                 fontSize: 12,
@@ -48,5 +49,6 @@ export default class FileItem extends Component {
 }
 
 FileItem.propTypes = {
-    onPress: React.PropTypes.func
+    onPress: React.PropTypes.func,
+    file: React.PropTypes.any.isRequired
 };

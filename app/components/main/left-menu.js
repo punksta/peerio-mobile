@@ -93,7 +93,18 @@ export default class LeftMenu extends Component {
         const text = i.chatName;
         const online = true;
         const unread = i.unreadCount;
-        const unreadText = unread ? <Text style={{ marginRight: 6 }}>{`(${unread})`}</Text> : null;
+        const notificationStyle = {
+            backgroundColor: styles.vars.bg,
+            borderRadius: 14,
+            paddingLeft: 8,
+            paddingRight: 8,
+            marginRight: 10
+        };
+        const unreadText = unread ? (
+            <View style={notificationStyle}>
+                <Text style={{ textAlign: 'center', color: 'white' }}>{`${unread}`} </Text>
+            </View>
+        ) : null;
 
         return (
             <View style={{ backgroundColor: styles.vars.bg }} key={key}>

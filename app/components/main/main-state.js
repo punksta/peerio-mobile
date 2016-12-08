@@ -1,6 +1,6 @@
 import { observable, action, when, reaction, computed, asReference } from 'mobx';
 import state from '../layout/state';
-import { User, chatStore } from '../../lib/icebear';
+import { User, chatStore, fileStore } from '../../lib/icebear';
 import store from '../../store/local-storage';
 
 const mainState = observable({
@@ -28,6 +28,7 @@ const mainState = observable({
         User.current = user;
         store.openUserDb(user.username);
         chatStore.loadAllChats();
+        fileStore.loadAllFiles();
     },
 
     @action initial() {
