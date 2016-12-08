@@ -82,6 +82,7 @@ const mainState = observable({
         this.route = 'chat';
         this.currentIndex = 0;
         this.currentChat = i;
+        chatStore.activate(i.id);
         when(() => !i.loadingMeta, () => {
             this.currentChat.loadMessages();
             this.save();

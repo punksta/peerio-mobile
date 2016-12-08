@@ -92,6 +92,8 @@ export default class LeftMenu extends Component {
         const action = () => messagingState.chat(i);
         const text = i.chatName;
         const online = true;
+        const unread = i.unreadCount;
+        const unreadText = unread ? <Text style={{ marginRight: 6 }}>{`(${unread})`}</Text> : null;
 
         return (
             <View style={{ backgroundColor: styles.vars.bg }} key={key}>
@@ -101,7 +103,7 @@ export default class LeftMenu extends Component {
                         <Text
                             ellipsizeMode="tail"
                             numberOfLines={1}
-                            style={textStyle}>{text}</Text>
+                            style={textStyle}>{text}</Text>{unreadText}
                     </View>
                 </TouchableOpacity>
             </View>
