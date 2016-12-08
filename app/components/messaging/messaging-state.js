@@ -34,9 +34,9 @@ const messagingState = observable({
 
     @computed get filtered() {
         const result = contactStore.contacts.filter(
-            c => !c.loading && !c.notFound && c.username.startsWith(this.findUserText) 
+            c => !c.loading && !c.notFound && c.username.startsWith(this.findUserText)
         );
-        return result.length ? result : this.found.filter( c => !c.loading && !c.notFound );
+        return result.length ? result : this.found.filter(c => !c.loading && !c.notFound);
     },
 
     @action add(c) {
