@@ -144,11 +144,11 @@ state.persistentFooter.signup = (i) => (signupState.isActive ? <SignupCircles ke
 
 
 if (__DEV__) {
-    const s = signupState;
-    s.username = `anritest1`;
-    s.email = `seavan+${new Date().getTime()}@gmail.com`;
-    s.firstName = 's';
-    s.lastName = 's';
+    // const s = signupState;
+    // s.username = `anritest1`;
+    // s.email = `seavan+${new Date().getTime()}@gmail.com`;
+    // s.firstName = 's';
+    // s.lastName = 's';
 }
 
 autorun(() => {
