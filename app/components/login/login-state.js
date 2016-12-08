@@ -1,6 +1,7 @@
 import { when, observable, action, computed } from 'mobx';
 import RNRestart from 'react-native-restart';
 import state from '../layout/state';
+import mainState from '../main/main-state';
 import store from '../../store/local-storage';
 import { User, chatStore, socket, validation } from '../../lib/icebear';
 import touchid from '../touchid/touchid-bridge';
@@ -64,21 +65,7 @@ const loginState = observable({
                 this.error = 'badUsername';
                 return Promise.reject(new Error('Bad username'));
             })
-            .then(state.routes.main.transition)
-            .then(() => {
-                User.current = user;
-                store.openUserDb(user.username);
-                chatStore.loadAllChats();
-                when(() => !chatStore.loading, () => {
-                    console.log('when loaded');
-                    console.log(chatStore.chats.length);
-                    // chatStore.chats.forEach(c => {
-                        // console.log(c);
-                        // console.log(c.participants);
-                    // });
-                });
-                return null;
-            })
+            .then(() => mainState.activateAndTransition(user))
             .catch(e => {
                 console.error(e);
                 if (!this.error) this.error = 'loginFailed';

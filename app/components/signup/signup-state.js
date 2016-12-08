@@ -2,6 +2,7 @@ import React from 'react';
 import { observable, action, computed, autorun } from 'mobx';
 import SignupCircles from './signup-circles';
 import state from '../layout/state';
+import mainState from '../main/main-state';
 import store from '../../store/local-storage';
 import touchid from '../touchid/touchid-bridge';
 import snackbarState from '../snackbars/snackbar-state';
@@ -88,11 +89,8 @@ const signupState = observable({
         user.lastName = lastName;
         user.localeCode = localeCode;
         return user.createAccountAndLogin()
-            .then(() => {
-                User.current = user;
-            })
+            .then(() => mainState.activateAndTransition(user))
             .then(() => User.current.setPasscode(pin))
-            .then(state.routes.main.transition)
             .then(() => {
                 snackbarState.push('Email confirmation has been sent');
             })
@@ -143,6 +141,15 @@ const signupWizardRoutes = [
 signupState.count = signupWizardRoutes.length;
 
 state.persistentFooter.signup = (i) => (signupState.isActive ? <SignupCircles key={i} /> : null);
+
+
+if (__DEV__) {
+    const s = signupState;
+    s.username = `anritest1`;
+    s.email = `seavan+${new Date().getTime()}@gmail.com`;
+    s.firstName = 's';
+    s.lastName = 's';
+}
 
 autorun(() => {
     if (signupState.isActive) {

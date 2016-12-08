@@ -1,6 +1,6 @@
 import { observable, action, when, reaction, computed, asReference } from 'mobx';
 import state from '../layout/state';
-import { chatStore } from '../../lib/icebear';
+import { User, chatStore } from '../../lib/icebear';
 import store from '../../store/local-storage';
 
 const mainState = observable({
@@ -22,6 +22,13 @@ const mainState = observable({
         files: () => 'Files',
         chat: (s) => (s.currentChat ? s.currentChat.chatName : '')
     }),
+
+    @action activateAndTransition(user) {
+        state.routes.main.transition();
+        User.current = user;
+        store.openUserDb(user.username);
+        chatStore.loadAllChats();
+    },
 
     @action initial() {
         state.hideKeyboard();
