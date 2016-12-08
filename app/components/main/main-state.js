@@ -86,12 +86,14 @@ const mainState = observable({
     },
 
     @action async load() {
+        console.log('main-state.js: loading');
         this.loading = true;
         const s = await store.user.get('main-state');
         if (s) {
             this.saved = s;
         }
         this.loading = false;
+        console.log('main-state.js: loaded');
     },
 
     @action async save() {

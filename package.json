@@ -25,7 +25,8 @@
     "test": "bash setup_tests.sh && npm run ios && npm run testrun",
     "tf-peerio": "fastlane ios beta --env=peerio",
     "tf-expandoo": "fastlane ios beta --env=expandoo",
-    "appium": "appium"
+    "appium": "appium",
+    "ctags": "if [ -f .git/hooks/ctags-all ]; then .git/hooks/ctags-all; fi"
   },
   "dependencies": {
     "bluebird": "3.4.6",
@@ -94,7 +95,8 @@
   },
   "config": {
     "ghooks": {
-      "post-checkout": "git ctags",
+      "post-checkout": "npm run ctags",
+      "post-commit": "npm run ctags",
       "pre-push": "opt --out pre-push --exec \"npm run lint\"",
       "post-merge": "opt --out post-merge --exec \"npm update\"",
       "commit-msg": "validate-commit-msg"

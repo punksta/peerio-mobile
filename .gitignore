@@ -66,3 +66,7 @@ app/lib/peerio-icebear
 *.ipa
 *.dSYM*
 fastlane/report.xml
+
+# ctags
+tags
+cscope.*

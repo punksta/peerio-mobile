@@ -20,6 +20,7 @@ const messagingState = observable({
 
     findUserText: '',
     loading: false,
+    found: [],
     recipients: [],
     recipientsMap: asMap(),
 
@@ -32,9 +33,10 @@ const messagingState = observable({
     },
 
     @computed get filtered() {
-        return contactStore.contacts.filter(
-            c => !c.loading && !c.notFound && c.username.startsWith(this.findUserText)
+        const result = contactStore.contacts.filter(
+            c => !c.loading && !c.notFound && c.username.startsWith(this.findUserText) 
         );
+        return result.length ? result : this.found.filter( c => !c.loading && !c.notFound );
     },
 
     @action add(c) {
@@ -62,6 +64,7 @@ const messagingState = observable({
         this.loading = false;
         this.findUserText = '';
         this.recipients = [];
+        this.found = [];
         this.recipientsMap.clear();
     },
 

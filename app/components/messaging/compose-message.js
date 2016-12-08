@@ -161,12 +161,18 @@ export default class ComposeMessage extends Component {
     }
 
     searchUser(username) {
+        console.log(`compose-message.js: searching for ${username}`);
         const c = contactStore.getContact(username);
-        this.loading = true;
+        messagingState.loading = true;
         when(() => !c.loading, () => {
-            this.loading = false;
+            console.log(`compose-message.js: search done for ${username}, not found: ${c.notFound}`);
+            messagingState.loading = false;
             if (!c.notFound) {
-                this.found = [c];
+                console.log(`compose-message.js: adding contact`);
+                console.log(c);
+                messagingState.found = [c];
+            } else {
+                messagingState.found = [];
             }
         });
     }
@@ -174,10 +180,10 @@ export default class ComposeMessage extends Component {
     body() {
         const found = messagingState.filtered;
         const mockItems = found.map((item, i) => this.item(item, i));
-        const activityIndicator = <ActivityIndicator />;
+        const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
         // const result = findUserText && findUserText.length ? mockItems : chat;
         const result = mockItems;
-        const body = messagingState.loading ? activityIndicator : result;
+        const body = !found.length && messagingState.loading ? activityIndicator : result;
         return (
             <View>
                 {body}

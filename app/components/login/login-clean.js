@@ -24,14 +24,14 @@ export default class LoginClean extends Component {
 
         // if (!__DEV__) {
         console.log('login-clean.js: constructor');
-        loginState.load();
+        // loginState.load();
         // }
     }
 
     componentDidMount() {
         if (__DEV__) {
-            // loginState.username = 'anritest9';
-            // loginState.passphrase = 'icebear';
+            loginState.username = 'anritest9';
+            loginState.passphrase = 'icebear';
             // loginState.login();
         }
     }
