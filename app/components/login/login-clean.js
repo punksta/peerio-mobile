@@ -23,8 +23,7 @@ export default class LoginClean extends Component {
         super(props);
 
         // if (!__DEV__) {
-        console.log('login-clean.js: constructor');
-        // loginState.load();
+        loginState.load();
         // }
     }
 
