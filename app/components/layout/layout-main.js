@@ -17,11 +17,12 @@ import Chat from '../messaging/chat';
 import Files from '../files/files';
 // import FileView from '../files/file-view';
 import ComposeMessage from '../messaging/compose-message';
-import Placeholder from './placeholder';
+// import Placeholder from './placeholder';
+import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import styles from '../../styles/styles';
 
 const routes = {
-    recent: [<Placeholder />],
+    recent: [<MessagingPlaceholder />],
     files: [<Files />],
     chat: [<Chat />]
 };
