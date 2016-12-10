@@ -6,7 +6,7 @@ import {
 import { t } from 'peerio-translator';
 import Button from '../controls/button';
 import Center from '../controls/center';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 import signupState from '../signup/signup-state';
 import loginState from '../login/login-state';
 
@@ -31,7 +31,7 @@ export default class LoginTermsSignup extends Component {
         return (
             <Center>
                 <Button text={t('terms')} onPress={this.terms} />
-                <Text style={{ color: styles.vars.highlight }}> | </Text>
+                <Text style={{ color: vars.highlight }}> | </Text>
                 <Button text={t('signup')} onPress={this.signUp} />
             </Center>
         );

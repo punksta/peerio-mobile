@@ -6,7 +6,7 @@ import {
 import { observer } from 'mobx-react/native';
 import { observable, computed } from 'mobx';
 import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 
 @observer
@@ -102,7 +102,7 @@ export default class InputMain extends Component {
                 </View>
                 <View style={{
                     alignItems: 'center',
-                    backgroundColor: styles.vars.checkboxActive,
+                    backgroundColor: vars.checkboxActive,
                     borderRadius: 20,
                     justifyContent: 'center',
                     height: 40,

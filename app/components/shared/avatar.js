@@ -7,7 +7,7 @@ import { observer } from 'mobx-react/native';
 import { computed } from 'mobx';
 import Ack from './ack';
 import icons from '../helpers/icons';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 
 const avatarDiameter = 36;
 
@@ -61,7 +61,7 @@ const nameMessageContainerStyle = {
 
 const nameTextStyle = {
     color: 'rgba(0, 0, 0, .54)',
-    fontWeight: styles.vars.font.weight.bold,
+    fontWeight: vars.font.weight.bold,
     fontSize: 14
 };
 
@@ -71,7 +71,7 @@ const dateTextStyle = {
 };
 
 const lastMessageTextStyle = {
-    fontWeight: styles.vars.font.weight.regular,
+    fontWeight: vars.font.weight.regular,
     color: 'rgba(0, 0, 0, .54)',
     lineHeight: 19
 };
@@ -123,7 +123,7 @@ export default class Avatar extends Component {
     }
 
     checkbox() {
-        const v = styles.vars;
+        const v = vars;
         const color = this.checked ? v.checkboxActive : v.checkboxInactive;
         const iconColor = this.checked ? 'white' : v.checkboxIconInactive;
         const iconBgColor = 'transparent';
@@ -153,7 +153,7 @@ export default class Avatar extends Component {
         const message = this.props.isAck ?
             <Ack /> : <Text style={lastMessageTextStyle}>{this.props.message}</Text>;
         return (
-            <View style={{ backgroundColor: styles.vars.bg }}>
+            <View style={{ backgroundColor: vars.bg }}>
                 <TouchableOpacity onPress={this.props.onPress}>
                     <View style={itemStyle}>
                         {checkbox}

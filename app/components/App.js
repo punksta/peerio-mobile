@@ -9,7 +9,7 @@ import PersistentFooter from './layout/persistent-footer';
 import LayoutMain from './layout/layout-main';
 import ModalContainer from './layout/modal-container';
 import state from './layout/state';
-import styles from './../styles/styles';
+import styles, { vars } from './../styles/styles';
 import icebear from '../lib/icebear';
 import './utils/bridge';
 import './touchid/touchid-bridge';
@@ -134,12 +134,12 @@ export default class App extends Component {
         if (!state.locale) return null;
         return (
             <View
-                style={{ flex: 1, backgroundColor: styles.vars.bg }}>
+                style={{ flex: 1, backgroundColor: vars.bg }}>
                 <View
                     pointerEvents="auto"
                     style={{ flex: 1, borderWidth: 0, borderColor: 'red' }}>
                     <Navigator
-                        style={{ backgroundColor: styles.vars.bg }}
+                        style={{ backgroundColor: vars.bg }}
                         ref={nav => (this.nav = nav)}
                         initialRoute={this.routes[0]}
                         configureScene={(route, routeStack) => this.configureScene(route, routeStack)}

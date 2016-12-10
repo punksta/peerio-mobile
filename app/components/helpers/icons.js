@@ -1,17 +1,17 @@
 import React from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 
 const icons = {
     basic(name, color, onPress, style) {
         return (
             <TouchableOpacity onPress={onPress}>
-                <View style={{ padding: styles.vars.iconPadding }}>
+                <View style={{ padding: vars.iconPadding }}>
                     <Icon
                         style={style}
                         name={name}
-                        size={styles.vars.iconSize}
+                        size={vars.iconSize}
                         color={color} />
                 </View>
             </TouchableOpacity>
@@ -22,17 +22,17 @@ const icons = {
         return (
             <Icon
                 name={name}
-                size={styles.vars.iconSize}
-                color={styles.vars.darkIcon} />
+                size={vars.iconSize}
+                color={vars.darkIcon} />
         );
     },
 
     white(name, onPress, style) {
-        return icons.basic(name, styles.vars.whiteIcon, onPress, style);
+        return icons.basic(name, vars.whiteIcon, onPress, style);
     },
 
     dark(name, onPress, style) {
-        return icons.basic(name, styles.vars.darkIcon, onPress, style);
+        return icons.basic(name, vars.darkIcon, onPress, style);
     },
 
     colored(name, onPress, colorFg, backgroundColor) {
@@ -40,7 +40,7 @@ const icons = {
     },
 
     placeholder() {
-        const d = styles.vars.iconSize + styles.vars.iconPadding * 2;
+        const d = vars.iconSize + vars.iconPadding * 2;
         const s = {
             height: d,
             width: d
@@ -51,7 +51,7 @@ const icons = {
     },
 
     text(text, onPress, style) {
-        const size = styles.vars.iconPadding * 2 + styles.vars.iconSize;
+        const size = vars.iconPadding * 2 + vars.iconSize;
         return (
             <TouchableOpacity onPress={onPress}>
                 <View style={{ height: size, width: size, flex: 1, alignItems: 'center', justifyContent: 'center' }}>

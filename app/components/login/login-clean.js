@@ -15,12 +15,13 @@ import Logo from '../controls/logo';
 import LoginSignup from './login-signup';
 import Terms from './terms';
 import loginState from './login-state';
-import styles from '../../styles/styles';
+import styles, { vars } from '../../styles/styles';
 
 @observer
 export default class LoginClean extends Component {
     constructor(props) {
         super(props);
+        this.dummy = 'dummy';
 
         // if (!__DEV__) {
         // loginState.load();
@@ -41,7 +42,7 @@ export default class LoginClean extends Component {
 
     render() {
         const style = styles.wizard;
-        const activityIndicator = <ActivityIndicator color={styles.vars.highlight} style={{ height: 14 }} />;
+        const activityIndicator = <ActivityIndicator color={vars.highlight} style={{ height: 14 }} />;
         const loginButton = <LoginSignup />;
         const button = loginState.isInProgress ? activityIndicator : loginButton;
         const centerItem = loginState.error ? <ErrorText>{t(loginState.error)}</ErrorText> : button;

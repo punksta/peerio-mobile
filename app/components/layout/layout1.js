@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SnackBarConnection from '../snackbars/snackbar-connection';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 import state from './state';
 
 @observer
@@ -36,7 +36,7 @@ export default class Layout1 extends Component {
 
     render() {
         const offset = state.pickerVisible ? state.pickerHeight : state.keyboardHeight;
-        const paddingTop = styles.vars.layoutPaddingTop;
+        const paddingTop = vars.layoutPaddingTop;
 
         const boxStyle = {
             flex: 1,

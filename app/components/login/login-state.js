@@ -3,7 +3,7 @@ import RNRestart from 'react-native-restart';
 import state from '../layout/state';
 import mainState from '../main/main-state';
 import store from '../../store/local-storage';
-import { User, chatStore, socket, validation } from '../../lib/icebear';
+import { User, socket, validation } from '../../lib/icebear';
 import touchid from '../touchid/touchid-bridge';
 
 const { isValidLoginUsername } = validation.validators;

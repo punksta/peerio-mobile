@@ -8,7 +8,7 @@ import { vars } from '../../styles/styles';
 import SnackBar from '../snackbars/snackbar';
 import Fab from '../shared/fab';
 import FilesPlaceholder from './files-placeholder';
-// import styles from '../../styles/styles';
+// import styles, { vars } from '../../styles/styles';
 import FileItem from './file-item';
 
 export default class Files extends Component {

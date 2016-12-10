@@ -10,7 +10,7 @@ import { observable, reaction, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
 import state from '../layout/state';
-import styles from '../../styles/styles';
+import styles, { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 
 @observer
@@ -166,7 +166,7 @@ export default class TextBox extends Component {
                 style={{ position: 'absolute', top: 0, right: 4 }}>
                 <Text
                     style={{
-                        color: styles.vars.txtAlert,
+                        color: vars.txtAlert,
                         fontSize: 12,
                         backgroundColor: 'transparent'
                     }}>{t(this.validationMessage)}</Text>
@@ -175,7 +175,7 @@ export default class TextBox extends Component {
         const infoControl = this.props.info ? (
             <Text style={{
                 backgroundColor: 'transparent',
-                color: styles.vars.midlight,
+                color: vars.midlight,
                 position: 'absolute',
                 fontSize: 10,
                 marginTop: 2
@@ -207,14 +207,14 @@ export default class TextBox extends Component {
             <View
                 style={[style.shadow, { }]}>
                 <View
-                    style={{ backgroundColor: styles.vars.inputBg, overflow: 'hidden', borderRadius: 2 }}>
+                    style={{ backgroundColor: vars.inputBg, overflow: 'hidden', borderRadius: 2 }}>
                     <TouchableOpacity
                         onPress={() => { this.focus(); }}>
                         <View
                             pointerEvents="none"
                             style={{
-                                height: styles.vars.inputHeight,
-                                backgroundColor: this.focused ? 'transparent' : styles.vars.subtleBg }} />
+                                height: vars.inputHeight,
+                                backgroundColor: this.focused ? 'transparent' : vars.subtleBg }} />
                     </TouchableOpacity>
                     <View
                         pointerEvents="none"

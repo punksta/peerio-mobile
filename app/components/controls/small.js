@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import {
     Text
 } from 'react-native';
-import styles from '../../styles/styles';
+import styles, { vars } from '../../styles/styles';
 
 export default class Small extends Component {
     render() {
         let style = {
-            fontSize: styles.vars.font.size.smaller
+            fontSize: vars.font.size.smaller
         };
         if (this.props.style) {
             style = styles.inherit(style, this.props.style);

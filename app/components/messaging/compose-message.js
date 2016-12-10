@@ -9,7 +9,7 @@ import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import Avatar from '../shared/avatar';
 import icons from '../helpers/icons';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 import messagingState from './messaging-state';
 import { contactStore } from '../../lib/icebear';
 
@@ -30,7 +30,7 @@ export default class ComposeMessage extends Component {
 
     userbox(contact, i) {
         const style = {
-            backgroundColor: styles.vars.bg,
+            backgroundColor: vars.bg,
             borderRadius: 16,
             flexDirection: 'row',
             alignItems: 'center',
@@ -51,7 +51,7 @@ export default class ComposeMessage extends Component {
                     <Icon
                         style={{ paddingRight: 4, marginLeft: 8 }}
                         name="cancel"
-                        size={styles.vars.iconSize}
+                        size={vars.iconSize}
                         color="white"
                     />
                 </View>
@@ -126,13 +126,13 @@ export default class ComposeMessage extends Component {
         };
         const textStyle = {
             fontSize: 14,
-            fontWeight: styles.vars.font.weight.semiBold,
+            fontWeight: vars.font.weight.semiBold,
             color: 'rgba(0, 0, 0, .54)'
         };
         const goStyle = {
             fontSize: 14,
-            fontWeight: styles.vars.font.weight.semiBold,
-            color: styles.vars.bg
+            fontWeight: vars.font.weight.semiBold,
+            color: vars.bg
         };
         return (
             <View style={container}>

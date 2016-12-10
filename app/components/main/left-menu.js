@@ -6,7 +6,7 @@ import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
 import messagingState from '../messaging/messaging-state';
 import icons from '../helpers/icons';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
 import { chatStore } from '../../lib/icebear';
@@ -47,7 +47,7 @@ const textStyle = {
 
 const headerTextStyle = {
     color: 'rgba(0, 0, 0, .54)',
-    fontWeight: styles.vars.font.weight.semiBold
+    fontWeight: vars.font.weight.semiBold
 };
 
 const headerContainer = {
@@ -94,7 +94,7 @@ export default class LeftMenu extends Component {
         const online = true;
         const unread = i.unreadCount;
         const notificationStyle = {
-            backgroundColor: styles.vars.bg,
+            backgroundColor: vars.bg,
             borderRadius: 14,
             paddingLeft: 8,
             paddingRight: 8,
@@ -107,7 +107,7 @@ export default class LeftMenu extends Component {
         ) : null;
 
         return (
-            <View style={{ backgroundColor: styles.vars.bg }} key={key}>
+            <View style={{ backgroundColor: vars.bg }} key={key}>
                 <TouchableOpacity onPress={action}>
                     <View style={itemStyle}>
                         <View style={online ? circleStyle : circleStyleOff} />
@@ -122,7 +122,7 @@ export default class LeftMenu extends Component {
     }
 
     render() {
-        const ratio = styles.vars.menuWidthRatio;
+        const ratio = vars.menuWidthRatio;
         const width = Dimensions.get('window').width * ratio;
         const containerStyle = {
             position: 'absolute',

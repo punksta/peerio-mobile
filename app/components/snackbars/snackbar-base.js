@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class SnackbarBase extends Component {
@@ -37,7 +37,7 @@ export default class SnackbarBase extends Component {
         }
         if (this._timer) {
             this._timer = null;
-            this.animate(styles.vars.snackbarHeight);
+            this.animate(vars.snackbarHeight);
             this.visible = true;
             return;
         }
@@ -57,22 +57,22 @@ export default class SnackbarBase extends Component {
     }
 
     animate(toValue, cb) {
-        const duration = styles.vars.animatedDuration;
+        const duration = vars.animatedDuration;
         Animated.timing(this.animatedHeight, { toValue, duration })
             .start(cb);
     }
 
     render() {
         const s = {
-            backgroundColor: styles.vars.snackbarBg,
+            backgroundColor: vars.snackbarBg,
             justifyContent: 'center',
-            paddingLeft: styles.vars.iconPadding,
-            paddingRight: styles.vars.iconPadding,
+            paddingLeft: vars.iconPadding,
+            paddingRight: vars.iconPadding,
             overflow: 'hidden',
             height: this.animatedHeight
         };
         const textStyle = {
-            color: styles.vars.highlight
+            color: vars.highlight
         };
         return (
             <TouchableWithoutFeedback onPress={() => this.tap()}>

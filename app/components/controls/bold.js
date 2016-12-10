@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import {
     Text
 } from 'react-native';
-import styles from '../../styles/styles';
+import styles, { vars } from '../../styles/styles';
 
 export default class Bold extends Component {
     render() {
         let style = {
-            fontWeight: styles.vars.font.weight.bold
+            fontWeight: vars.font.weight.bold
         };
         if (this.props.style) {
             style = styles.inherit(style, this.props.style);

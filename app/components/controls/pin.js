@@ -11,7 +11,7 @@ import { observer } from 'mobx-react/native';
 import * as Animatable from 'react-native-animatable';
 import Circles from '../controls/circles';
 import Center from '../controls/center';
-import styles from '../../styles/styles';
+import styles, { vars } from '../../styles/styles';
 import Util from '../helpers/util';
 
 @observer
@@ -67,21 +67,21 @@ export default class Pin extends Component {
     circle(index, text, subText) {
         const r = this.circleW || 60;
         const circle = styles.circle.create(r, {
-            backgroundColor: styles.vars.bg,
-            borderColor: styles.vars.highlight,
+            backgroundColor: vars.bg,
+            borderColor: vars.highlight,
             borderWidth: 1,
             justifyContent: 'center',
             alignItems: 'center'
         });
         const circleHl = styles.circle.create(r, {
-            backgroundColor: styles.vars.midlight
+            backgroundColor: vars.midlight
         });
         return (
             <View style={circleHl} key={index}>
                 <TouchableOpacity onPress={() => this.enter(text)}>
                     <View style={circle}>
-                        <Text style={{ color: styles.vars.highlight, fontSize: r / 3 }}>{text}</Text>
-                        <Text style={{ color: styles.vars.midlight, fontSize: r / 6 }}>{subText}</Text>
+                        <Text style={{ color: vars.highlight, fontSize: r / 3 }}>{text}</Text>
+                        <Text style={{ color: vars.midlight, fontSize: r / 6 }}>{subText}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -151,7 +151,7 @@ export default class Pin extends Component {
                 <View style={{ height: 40, marginBottom: 12 }}>
                     { this.isSpinner ?
                         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                            <ActivityIndicator color={styles.vars.highlight} />
+                            <ActivityIndicator color={vars.highlight} />
                         </View> :
                             <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
                 </View>

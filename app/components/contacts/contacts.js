@@ -5,7 +5,6 @@ import {
 } from 'react-native';
 import { contactStore } from '../../lib/icebear';
 import messagingState from '../messaging/messaging-state';
-
 import styles from '../../styles/styles';
 
 export default class Contacts extends Component {

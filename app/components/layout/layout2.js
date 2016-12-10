@@ -3,7 +3,7 @@ import {
     View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class Layout2 extends Component {
@@ -27,7 +27,7 @@ export default class Layout2 extends Component {
                 flex: 1,
                 borderColor: 'yellow',
                 borderWidth: 0,
-                paddingTop: styles.vars.layoutPaddingTop
+                paddingTop: vars.layoutPaddingTop
             }}>
                 {this.props.body}
                 {this.props.footer}

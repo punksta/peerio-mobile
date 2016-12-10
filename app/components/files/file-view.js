@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import {
     Text,
-    View,
-    TouchableOpacity
+    View
 } from 'react-native';
-import { observable, reaction } from 'mobx';
+// import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 
 const firstRowStyle = {

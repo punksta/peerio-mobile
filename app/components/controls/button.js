@@ -16,7 +16,10 @@ export default class Button extends Component {
         }
         const text = this.props.text || '';
         return (
-            <TouchableOpacity testID={this.props.testID} style={this.props.style} onPress={this.props.disabled ? null : this.props.onPress}>
+            <TouchableOpacity
+                testID={this.props.testID}
+                style={this.props.style}
+                onPress={this.props.disabled ? null : this.props.onPress}>
                 <Text style={[textStyle, opacity]}>
                     {text}
                 </Text>

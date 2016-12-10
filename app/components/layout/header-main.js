@@ -5,7 +5,7 @@ import {
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
 import mainState from '../main/main-state';
-import styles from '../../styles/styles';
+import styles, { vars } from '../../styles/styles';
 
 @observer
 export default class HeaderMain extends Component {
@@ -35,8 +35,8 @@ export default class HeaderMain extends Component {
             icons.white('keyboard-arrow-left', this.back) :
             icons.white('menu', this.leftMenu);
         const textStyle = {
-            color: styles.vars.white,
-            fontWeight: styles.vars.font.weight.regular,
+            color: vars.white,
+            fontWeight: vars.font.weight.regular,
             flex: 1,
             fontSize: 16,
             alignItems: 'center',
@@ -46,12 +46,12 @@ export default class HeaderMain extends Component {
             flex: 0,
             flexDirection: 'row',
             alignItems: 'center',
-            paddingTop: styles.vars.statusBarHeight,
-            height: styles.vars.headerHeight
+            paddingTop: vars.statusBarHeight,
+            height: vars.headerHeight
         };
         return (
             <View style={{
-                height: styles.vars.headerSpacing,
+                height: vars.headerSpacing,
                 flex: 0,
                 justifyContent: 'flex-end',
                 paddingBottom: 6,
