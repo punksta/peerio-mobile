@@ -41,7 +41,7 @@ const vars = {
     subtleTextBold: 'rgba(0, 0, 0, .54',
     inputBgInactive: 'rgba(255, 255, 255, .5)',
     inputBgInactiveText: 'rgba(0,0,0, .54)',
-    checkboxInactive: 'rgba(0, 0, 0, .12)',
+    checkboxInactive: '#e0e0e0',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
     checkboxActive: '#23d089',
     snackbarBg: '#4a4a4a',
@@ -69,7 +69,10 @@ const vars = {
             regular: '400'
         }
     },
-    inputHeight: 48
+    inputHeight: 48,
+    fabSize: 50,
+    fabRight: 26,
+    fabBottom: 50
 };
 
 const styleCache = {};
@@ -427,5 +430,15 @@ styles.inherit = inherit;
 styles.vars = vars;
 styles.branding = branding;
 
+const helpers = {
+    circle(size) {
+        return {
+            width: size,
+            height: size,
+            borderRadius: size / 2
+        };
+    }
+};
 
+export { vars, helpers };
 export default styles;

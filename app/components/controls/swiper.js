@@ -6,13 +6,11 @@ export default class Swiper extends Component {
     constructor(props) {
         super(props);
         this.x = 0;
-        this.y = 0;
         this.drag = { x: 0, y: 0 };
         this.setPosition = this.setPosition.bind(this);
         this.resetPosition = this.resetPosition.bind(this);
         this.layout = this.layout.bind(this);
         this._onStartShouldSetResponder = this._onStartShouldSetResponder.bind(this);
-        this._onMoveShouldSetResponder = this._onMoveShouldSetResponder.bind(this);
         this._onMoveShouldSetResponderCapture = this._onMoveShouldSetResponderCapture.bind(this);
         this.state = props.state;
         this.width = props.width;
@@ -28,7 +26,8 @@ export default class Swiper extends Component {
 
     get shift() {
         // 100 is to prevent strange bug with not hiding the swiper completely off screen
-        return (this.props.rightToLeft ? -1 : 1) * (this.width + 100);
+        const w = this.props.shift || (this.width + 100);
+        return (this.props.rightToLeft ? -1 : 1) * w;
     }
 
     layout(e) {
@@ -49,6 +48,10 @@ export default class Swiper extends Component {
         this.animate(this.shift);
     }
 
+    setVisible(value) {
+        this.state && (this.state[this.props.visible] = value);
+    }
+
     setPosition(e) {
         let x = this.x;
         let y = this.y;
@@ -57,8 +60,13 @@ export default class Swiper extends Component {
         x += tx;
         y += ty;
         if ((this.props.rightToLeft && x > 0) || (this.props.leftToRight && x < 0)) {
-            x = 0;
+            return;
+            // x = 0;
         }
+        if (this.props.leftToRight && x > this.shift) {
+            x = this.shift;
+        }
+
         this.animate(x, true);
         this.x = x;
         this.y = y;
@@ -68,31 +76,35 @@ export default class Swiper extends Component {
     }
 
     resetPosition(/* e */) {
-        if (this.x !== 0) {
-            this.animatedX.setValue(this.x);
-            let toValue = 0;
-            if (this.props.rightToLeft) {
-                toValue = this.x < -100 ? -this.width : 0;
-            }
-            if (this.props.leftToRight) {
-                toValue = this.x > 100 ? this.width : 0;
-            }
-            toValue !== 0 && (this.state[this.props.visible] = false);
-            this.animate(toValue);
+        const x = Math.abs(this.x);
+        const shift = Math.abs(this.shift) * (this.props.threshold || 0.1);
+        if (x > shift) {
+            this.hide();
+            this.setVisible(false);
+            this.props.onSwipeOut && this.props.onSwipeOut();
+        } else {
+            this.show();
+            this.setVisible(true);
+            this.props.onSwipeReset && this.props.onSwipeReset();
         }
         this.x = 0;
         this.y = 0;
+        this.drag = { x: 0, y: 0 };
     }
 
     _onMoveShouldSetResponderCapture(e) {
+        if (!this.visible) {
+            return false;
+        }
         // console.log('swiper.js: getting capture offer');
         const { x, y } = { x: e.nativeEvent.pageX, y: e.nativeEvent.pageY };
         const dx = Math.abs(x - this.drag.x);
         const dy = Math.abs(y - this.drag.y);
-        if (dx > dy || dx > 100) {
+        if (dx > dy || dx > 20) {
             this.drag = { x, y };
             return true;
         }
+        this.resetPosition();
         return false;
         // return this._onStartShouldSetResponder(e);
     }
@@ -104,13 +116,6 @@ export default class Swiper extends Component {
         };
         // console.log('swiper.js: captured grag');
         return true;
-    }
-
-    _onMoveShouldSetResponder(/* e */) {
-        return false;
-    }
-
-    getCardStyle() {
     }
 
     render() {
@@ -127,8 +132,8 @@ export default class Swiper extends Component {
                 onResponderMove={this.setPosition}
                 onResponderRelease={this.resetPosition}
                 onStartShouldSetResponder={this._onStartShouldSetResponder}
+                onResponderTerminate={this.resetPosition}
                 onMoveShouldSetResponderCapture={this._onMoveShouldSetResponderCapture}
-                onMoveShouldSetResponder={this._onMoveShouldSetResponder}
                 style={[containerStyle, s]}>
                 { this.props.children }
             </Animated.View>
@@ -143,7 +148,9 @@ Swiper.propTypes = {
     visible: React.PropTypes.string.isRequired,
     rightToLeft: React.PropTypes.bool,
     leftToRight: React.PropTypes.bool,
-    width: React.PropTypes.any
-    // topToBottom: React.PropTypes.bool,
-    // bottomToTop: React.PropTypes.bool,
+    width: React.PropTypes.any,
+    shift: React.PropTypes.any,
+    threshold: React.PropTypes.any,
+    onSwipeOut: React.PropTypes.func,
+    onSwipeReset: React.PropTypes.func
 };

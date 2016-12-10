@@ -15,15 +15,15 @@ import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
 import Chat from '../messaging/chat';
 import Files from '../files/files';
-// import FileView from '../files/file-view';
+import FileView from '../files/file-view';
 import ComposeMessage from '../messaging/compose-message';
 // import Placeholder from './placeholder';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
-import styles from '../../styles/styles';
+import styles, { vars } from '../../styles/styles';
 
 const routes = {
     recent: [<MessagingPlaceholder />],
-    files: [<Files />],
+    files: [<Files />, <FileView />],
     chat: [<Chat />]
 };
 
@@ -40,7 +40,7 @@ export default class LayoutMain extends Component {
         this.indexAnimation = reaction(() => mainState.currentIndex, i => {
             console.log('layout-main.js: index animation');
             const toValue = -i * this.width;
-            const duration = mainState.suppressTransition ? 0 : styles.vars.animationDuration;
+            const duration = mainState.suppressTransition ? 0 : vars.animationDuration;
             Animated.timing(this.animatedX, { toValue, duration })
                 .start(() => {
                     this.currentIndex = i;
@@ -51,8 +51,8 @@ export default class LayoutMain extends Component {
                 });
         }, true);
         this.leftMenuAnimation = reaction(() => mainState.isLeftMenuVisible, v => {
-            const toValue = v ? this.width * styles.vars.menuWidthRatio : 0;
-            Animated.timing(this.leftMenuAnimated, { toValue, duration: styles.vars.animationDuration })
+            const toValue = v ? this.width * vars.menuWidthRatio : 0;
+            Animated.timing(this.leftMenuAnimated, { toValue, duration: vars.animationDuration })
                 .start();
         }, true);
     }
@@ -116,7 +116,8 @@ export default class LayoutMain extends Component {
     }
 
     render() {
-        const transform = [{ translateX: this.animatedX }, { translateX: this.leftMenuAnimated }];
+        const transform = [{ translateX: this.animatedX }];
+        const transformMenu = [{ translateX: this.leftMenuAnimated }];
         const transformAndroid = global.platform === 'android' ? [{ translateY: state.keyboardHeight }] : [];
         const outerStyle = {
             backgroundColor: 'white',
@@ -144,11 +145,13 @@ export default class LayoutMain extends Component {
                     {...this.panResponder.panHandlers}
                     behavior="padding"
                     style={outerStyle}>
-                    <Animated.View style={{ flex: 1, transform }}>
+                    <Animated.View style={{ flex: 1, transform: transformMenu }}>
                         <HeaderMain title={title} />
-                        <View style={{ flex: 1 }}>
-                            {this.pages(this.body())}
-                        </View>
+                        <Animated.View style={{ flex: 1, transform }}>
+                            <View style={{ flex: 1 }}>
+                                {this.pages(this.body())}
+                            </View>
+                        </Animated.View>
                     </Animated.View>
                 </Animated.View>
                 <LeftMenu />

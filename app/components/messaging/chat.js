@@ -101,6 +101,7 @@ export default class Chat extends Component {
     }
 
     scroll(contentWidth, contentHeight) {
+        if (!this.scrollView) return;
         if (contentHeight) {
             this.contentHeight = contentHeight;
         }

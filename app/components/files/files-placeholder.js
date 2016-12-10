@@ -3,7 +3,6 @@ import {
     View, ActivityIndicator, Text, Dimensions, Image
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import SnackBar from '../snackbars/snackbar';
 import mainState from '../main/main-state';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
@@ -47,13 +46,6 @@ export default class FilesPlaceholder extends Component {
             paddingBottom: 75
 
         };
-        const textHintContainer = {
-            flex: 0,
-            alignItems: 'center',
-            marginTop: 20,
-            marginBottom: 40,
-            justifyContent: 'space-between'
-        };
         return (
             <View style={outerContainerStyle}>
                 <View style={{ flex: 1,
@@ -90,14 +82,10 @@ export default class FilesPlaceholder extends Component {
         };
         const ind = mainState.loading ?
             <ActivityIndicator style={{ paddingTop: 10 }} /> : this.messaging();
-        const sb = mainState.loading ? null : <SnackBar />;
         return (
             <View style={s}>
                 {ind}
-                {sb}
             </View>
         );
     }
 }
-
-

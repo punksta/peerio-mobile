@@ -7,7 +7,7 @@ import mainState from '../main/main-state';
 import loginState from '../login/login-state';
 import icons from '../helpers/icons';
 // import imagePicker from '../helpers/imagepicker';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
 
@@ -34,8 +34,8 @@ export default class RightMenu extends Component {
     item(i, key) {
         return (
 
-            <View style={{ backgroundColor: styles.vars.bg }} key={key}>
-                <TouchableOpacity onPress={i.action}>
+            <View style={{ backgroundColor: vars.bg }} key={key}>
+                <TouchableOpacity onPress={() => i.action()}>
                     <View style={itemStyle}>
                         { icons.dark(i.icon) }
                         <Text style={textStyle}>{i.name}</Text>
@@ -45,13 +45,8 @@ export default class RightMenu extends Component {
         );
     }
 
-    files() {
-        mainState.files();
-        // imagePicker.test();
-    }
-
     render() {
-        const ratio = styles.vars.menuWidthRatio;
+        const ratio = vars.menuWidthRatio;
         const width = Dimensions.get('window').width * ratio;
         const containerStyle = {
             position: 'absolute',
@@ -69,8 +64,8 @@ export default class RightMenu extends Component {
         };
 
         const items = [
-            { name: 'Messages', icon: 'chat-bubble' },
-            { name: 'Files', icon: 'folder', action: () => this.files() },
+            { name: 'Messages', icon: 'chat-bubble', action: () => mainState.messages() },
+            { name: 'Files', icon: 'folder', action: () => mainState.files() },
             { name: 'Profile', icon: 'person' },
             { name: 'Settings', icon: 'settings' },
             { name: 'Upgrade', icon: 'cloud-upload' },

@@ -4,22 +4,12 @@ import {
     ScrollView
 } from 'react-native';
 import { fileStore } from '../../lib/icebear';
+import { vars } from '../../styles/styles';
 import SnackBar from '../snackbars/snackbar';
+import Fab from '../shared/fab';
 import FilesPlaceholder from './files-placeholder';
 // import styles from '../../styles/styles';
 import FileItem from './file-item';
-
-const plusSize = 50;
-
-const plusButtonStyle = {
-    position: 'absolute',
-    right: plusSize / 2,
-    bottom: plusSize,
-    width: plusSize,
-    height: plusSize,
-    backgroundColor: 'orange',
-    borderRadius: plusSize / 2
-};
 
 export default class Files extends Component {
     render() {
@@ -29,9 +19,17 @@ export default class Files extends Component {
             items.push(<FileItem key={i} file={files[i]} />);
         }
 
+        for (let i = 30; i < 60; ++i) {
+            const f = {
+                name: `file sample ${i}.gif`,
+                fileId: i
+            };
+            items.push(<FileItem key={i} file={f} />);
+        }
+
         const body = fileStore.files.length ? (
             <ScrollView>
-                <View style={{ flex: 0 }}>
+                <View style={{ flex: 0, backgroundColor: vars.bg }}>
                     {items}
                 </View>
             </ScrollView>
@@ -41,7 +39,7 @@ export default class Files extends Component {
             <View
                 style={{ flex: 1 }}>
                 {body}
-                <View style={plusButtonStyle} />
+                <Fab />
                 <SnackBar />
             </View>
         );

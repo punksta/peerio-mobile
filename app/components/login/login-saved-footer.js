@@ -30,10 +30,10 @@ export default class LoginSavedFooter extends Component {
             <View style={styles.container.footer}>
                 <View style={style.row}>
                     {/*
-                    <TouchableOpacity style={[style.button.left} onPress={this.touchID}>
+                    <TouchableOpacity style={style.button.left} onPress={this.touchID}>
                         <Text style={style.button.text}>{t('touchId')}</Text>
                     </TouchableOpacity> */}
-                    <TouchableOpacity style={style.button.right} onPress={this.changeUser}>
+                    <TouchableOpacity style={style.button.base} onPress={this.changeUser}>
                         <Text style={style.button.text}>{t('login_changeUserButton')}</Text>
                     </TouchableOpacity>
                 </View>

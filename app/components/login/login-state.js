@@ -88,7 +88,7 @@ const loginState = observable({
     },
 
     @action async signOut() {
-        await store.user.set('userData', null);
+        // await store.user.set('userData', null);
         RNRestart.Restart();
     },
 

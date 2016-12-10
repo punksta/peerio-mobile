@@ -33,10 +33,7 @@ const mainState = observable({
 
     @action initial() {
         state.hideKeyboard();
-        this.isInputVisible = false;
-        this.route = 'recent';
-        this.currentIndex = 0;
-        this.isBackVisible = false;
+        this.messages();
         this.load();
         when(() => !this.loading && !chatStore.loading, () => {
             let c = this.saved && chatStore.chatMap[this.saved.currentChat];
@@ -58,7 +55,15 @@ const mainState = observable({
         //
     },
 
+    @action messages() {
+        this.resetMenus();
+        this.route = 'recent';
+        this.currentIndex = 0;
+        this.isBackVisible = false;
+    },
+
     @action resetMenus() {
+        this.isInputVisible = false;
         this.isLeftMenuVisible = false;
         this.isRightMenuVisible = false;
         this.showCompose = false;
@@ -69,12 +74,14 @@ const mainState = observable({
         this.route = 'files';
         this.currentIndex = 0;
         this.currentFile = null;
+        this.isBackVisible = false;
     },
 
     @action file(i) {
         this.route = 'files';
         this.currentFile = i;
         this.currentIndex = 1;
+        this.isBackVisible = true;
     },
 
     @action chat(i) {
@@ -91,7 +98,8 @@ const mainState = observable({
     },
 
     @action back() {
-        this.recent();
+        this.currentIndex = 0;
+        this.isBackVisible = false;
     },
 
     @action async load() {
