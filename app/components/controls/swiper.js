@@ -54,12 +54,11 @@ export default class Swiper extends Component {
         let y = this.y;
         const tx = e.nativeEvent.pageX - this.drag.x;
         const ty = e.nativeEvent.pageY - this.drag.y;
-        if (x === 0) {
-            if (this.props.rightToLeft && tx > 0) return;
-            if (this.props.leftToRight && tx < 0) return;
-        }
         x += tx;
         y += ty;
+        if ((this.props.rightToLeft && x > 0) || (this.props.leftToRight && x < 0)) {
+            x = 0;
+        }
         this.animate(x, true);
         this.x = x;
         this.y = y;
