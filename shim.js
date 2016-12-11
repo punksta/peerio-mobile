@@ -21,3 +21,15 @@ process.env['NODE_ENV'] = isDev ? 'development' : 'production'
 if (typeof localStorage !== 'undefined') {
   localStorage.debug = isDev ? '*' : ''
 }
+
+// global.WebSocket = global.originalWebSocket;
+const rnWebSocket = global.WebSocket;
+global.WebSocket = function() {
+  const r = new rnWebSocket(...arguments);
+  r.binaryType = 'blob';
+  return r;
+};
+
+const ws = new WebSocket('ws://localhost:8081')
+console.log('shim.js binaryType: ', ws.binaryType);
+// console.log('shim.js: ', global.originalWebSocket);
