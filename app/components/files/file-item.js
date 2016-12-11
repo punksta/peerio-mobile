@@ -4,6 +4,7 @@ import {
     View,
     TouchableOpacity
 } from 'react-native';
+import RNFS from 'react-native-fs';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
@@ -78,6 +79,13 @@ export default class FileItem extends Component {
         if (!this.store.checkBoxHidden) {
             this.checked = !this.checked;
         } else {
+            const file = this.props.file;
+            if (file.download) {
+                const path = `${RNFS.DocumentDirectoryPath}/${file.name}`;
+                console.log(path);
+                this.props.file.download(path);
+                return;
+            }
             mainState.file(this.props.file);
         }
     }

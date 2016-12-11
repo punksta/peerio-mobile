@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
+import imagePicker from '../helpers/imagepicker';
 
 const fabStyle = {
     position: 'absolute',
@@ -18,10 +19,14 @@ const fabStyle = {
 };
 
 export default class Fab extends Component {
+    fabAction() {
+        imagePicker.test();
+    }
+
     render() {
         const s = [fabStyle, helpers.circle(vars.fabSize)];
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => imagePicker.test()}>
                 <View style={s} pointerEvents="box-only">
                     {icons.white('add')}
                 </View>

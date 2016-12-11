@@ -7,6 +7,7 @@ import App from './app/components/App';
 
 global.platform = 'ios';
 
+
 const nicebear = () => (
     <App />
 );
