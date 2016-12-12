@@ -4,14 +4,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
 
 const icons = {
-    basic(name, color, onPress, style) {
+    basic(name, color, onPress, style, size) {
         return (
             <TouchableOpacity onPress={onPress}>
                 <View style={{ padding: vars.iconPadding }}>
                     <Icon
                         style={style}
                         name={name}
-                        size={vars.iconSize}
+                        size={size || vars.iconSize}
                         color={color} />
                 </View>
             </TouchableOpacity>
@@ -27,12 +27,12 @@ const icons = {
         );
     },
 
-    white(name, onPress, style) {
-        return icons.basic(name, vars.whiteIcon, onPress, style);
+    white(name, onPress, style, size) {
+        return icons.basic(name, vars.whiteIcon, onPress, style, size);
     },
 
-    dark(name, onPress, style) {
-        return icons.basic(name, vars.darkIcon, onPress, style);
+    dark(name, onPress, style, size) {
+        return icons.basic(name, vars.darkIcon, onPress, style, size);
     },
 
     colored(name, onPress, colorFg, backgroundColor) {

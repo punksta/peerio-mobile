@@ -15,11 +15,19 @@ const mainState = observable({
     currentIndex: 0,
     showCompose: false,
     suppressTransition: false,
-    loading: false,
+    _loading: false,
+
+    @computed get loading() {
+        return this._loading || chatStore.loading || fileStore.loading;
+    },
+
+    set loading(v) {
+        this._loading = v;
+    },
 
     titles: asReference({
         recent: () => '',
-        files: () => 'Files',
+        files: (s) => (s.currentFile ? s.currentFile.name : 'All files'),
         chat: (s) => (s.currentChat ? s.currentChat.chatName : '')
     }),
 
@@ -35,7 +43,7 @@ const mainState = observable({
         state.hideKeyboard();
         this.messages();
         this.load();
-        when(() => !this.loading && !chatStore.loading, () => {
+        when(() => !this.loading, () => {
             let c = this.saved && chatStore.chatMap[this.saved.currentChat];
             if (!c && chatStore.chats.length) {
                 c = chatStore.chats[chatStore.chats.length - 1];
@@ -84,6 +92,18 @@ const mainState = observable({
         this.isBackVisible = true;
     },
 
+    @action downloadFile(i) {
+        const file = i || this.currentFile;
+        if (!file) return;
+        if (file.downloading || file.uploading) return;
+        file.download();
+    },
+
+    @action deleteFile(i) {
+        fileStore.remove(i || this.currentFile);
+        this.back();
+    },
+
     @action chat(i) {
         this.resetMenus();
         this.isInputVisible = true;
@@ -99,6 +119,8 @@ const mainState = observable({
 
     @action back() {
         this.currentIndex = 0;
+        this.currentFile = null;
+        this.currentChat = null;
         this.isBackVisible = false;
     },
 
@@ -145,28 +167,7 @@ const mainState = observable({
     @action toggleRightMenu() {
         this.isRightMenuVisible = !this.isRightMenuVisible;
         this.isLeftMenuVisible = false;
-    },
-
-    chatItems: [
-        { name: 'Alice', date: '2:23PM', message: 'Whoever sent me this prank box will suffer in hell, for sure' },
-        { name: 'Bob', date: '2:24PM', message: 'That was not me' },
-        { name: 'Alice',
-            date: '2:25PM',
-            message: `Are you sure?
-            Because if it was you,
-            I will find you,
-            I will make you suffer,
-            I will make you listen to
-            Justin Bieber all your miserable
-            remaining piece of life`
-        },
-        {
-            name: 'Bob',
-            date: '2:27PM',
-            message: `Stop making a scene,
-            darling. You do know I love Justin!`
-        }
-    ]
+    }
 });
 
 reaction(() => mainState.isLeftMenuVisible, () => {

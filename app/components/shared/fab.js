@@ -18,13 +18,23 @@ const fabStyle = {
     backgroundColor: '#FF7D00'
 };
 
+const shadowStyle = {
+    shadowColor: '#000000',
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    shadowOffset: {
+        height: 0,
+        width: 0
+    }
+};
+
 export default class Fab extends Component {
     fabAction() {
         imagePicker.test();
     }
 
     render() {
-        const s = [fabStyle, helpers.circle(vars.fabSize)];
+        const s = [fabStyle, helpers.circle(vars.fabSize), shadowStyle];
         return (
             <TouchableOpacity onPress={() => imagePicker.test()}>
                 <View style={s} pointerEvents="box-only">

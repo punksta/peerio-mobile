@@ -63,6 +63,16 @@ export default class RightMenu extends Component {
             paddingTop: 8
         };
 
+        const shadowStyle = {
+            shadowColor: '#000000',
+            shadowOpacity: 0.8,
+            shadowRadius: 5,
+            shadowOffset: {
+                height: 3,
+                width: 3
+            }
+        };
+
         const items = [
             { name: 'Messages', icon: 'chat-bubble', action: () => mainState.messages() },
             { name: 'Files', icon: 'folder', action: () => mainState.files() },
@@ -87,14 +97,7 @@ export default class RightMenu extends Component {
                 style={containerStyle}
                 leftToRight>
                 <Hider onHide={this.hideAnimated}>
-                    <View style={[menuContainerStyle, { shadowColor: '#000000',
-                        shadowOpacity: 0.8,
-                        shadowRadius: 5,
-                        shadowOffset: {
-                            height: 3,
-                            width: 3
-                        }
-                    }]}>
+                    <View style={[menuContainerStyle, shadowStyle]}>
                         <View>
                             { items.map(this.item) }
                         </View>
