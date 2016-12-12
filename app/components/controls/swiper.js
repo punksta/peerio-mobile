@@ -115,8 +115,8 @@ export default class Swiper extends Component {
             y: e.nativeEvent.pageY
         };
         // console.log('swiper.js: captured grag');
-        return false;
-        // return true;
+        this.resetPosition();
+        return true;
     }
 
     render() {
