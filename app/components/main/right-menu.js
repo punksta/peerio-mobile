@@ -37,7 +37,7 @@ export default class RightMenu extends Component {
 
             <View style={{ backgroundColor: vars.bg }} key={key}>
                 <TouchableOpacity onPress={() => i.action()}>
-                    <View style={itemStyle}>
+                    <View style={itemStyle} pointerEvents="box-only">
                         { icons.dark(i.icon) }
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={textStyle}>{i.name}</Text>

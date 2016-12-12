@@ -11,6 +11,7 @@ export default class Swiper extends Component {
         this.resetPosition = this.resetPosition.bind(this);
         this.layout = this.layout.bind(this);
         this._onStartShouldSetResponder = this._onStartShouldSetResponder.bind(this);
+        this._onStartShouldSetResponderCapture = this._onStartShouldSetResponderCapture.bind(this);
         this._onMoveShouldSetResponderCapture = this._onMoveShouldSetResponderCapture.bind(this);
         this.state = props.state;
         this.width = props.width;
@@ -41,10 +42,12 @@ export default class Swiper extends Component {
     }
 
     show() {
+        this.x = 0;
         this.animate(0);
     }
 
     hide() {
+        this.x = this.shift;
         this.animate(this.shift);
     }
 
@@ -79,6 +82,7 @@ export default class Swiper extends Component {
         const x = Math.abs(this.x);
         const shift = Math.abs(this.shift) * (this.props.threshold || 0.1);
         if (x > shift) {
+            console.log('swiper.js: hiding ${this.x}');
             this.hide();
             this.setVisible(false);
             this.props.onSwipeOut && this.props.onSwipeOut();
@@ -87,26 +91,46 @@ export default class Swiper extends Component {
             this.setVisible(true);
             this.props.onSwipeReset && this.props.onSwipeReset();
         }
-        this.x = 0;
         this.y = 0;
-        this.drag = { x: 0, y: 0 };
+        this.clearResetTimeout();
+        // this.drag = { x: 0, y: 0 };
+    }
+
+    _onStartShouldSetResponderCapture(e) {
+        this.drag = { x: e.nativeEvent.pageX, y: e.nativeEvent.pageY };
+        this.setPosition(e);
+        return false;
+    }
+
+    clearResetTimeout() {
+        if (this.releaseTimeout) {
+            clearTimeout(this.releaseTimeout);
+            this.releaseTimeout = null;
+        }
+    }
+
+    setResetTimeout() {
+        this.clearResetTimeout();
+        this.releaseTimeout = setTimeout(this.resetPosition, 1000);
     }
 
     _onMoveShouldSetResponderCapture(e) {
         if (!this.visible) {
             return false;
         }
-        // console.log('swiper.js: getting capture offer');
         const { x, y } = { x: e.nativeEvent.pageX, y: e.nativeEvent.pageY };
         const dx = Math.abs(x - this.drag.x);
         const dy = Math.abs(y - this.drag.y);
-        if (dx > dy && dx > 50) {
-            this.drag = { x, y };
+        this.setPosition(e);
+        if (Math.abs(this.x) > 30) {
+            console.log(`swiper.js: taking capture offer ${this.x}, ${dy}`);
+            this.clearResetTimeout();
+            // this.resetPosition();
             return true;
         }
-        this.resetPosition();
+        // so that if somebody dragged a bit and pressed a button, it will move back
+        this.setResetTimeout();
         return false;
-        // return this._onStartShouldSetResponder(e);
     }
 
     _onStartShouldSetResponder(e) {
@@ -134,6 +158,7 @@ export default class Swiper extends Component {
                 onStartShouldSetResponder={this._onStartShouldSetResponder}
                 onResponderTerminate={this.resetPosition}
                 onMoveShouldSetResponderCapture={this._onMoveShouldSetResponderCapture}
+                onStartShouldSetResponderCapture={this._onStartShouldSetResponderCapture}
                 style={[containerStyle, s]}>
                 { this.props.children }
             </Animated.View>
