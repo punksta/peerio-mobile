@@ -82,7 +82,7 @@ export default class Swiper extends Component {
         const x = Math.abs(this.x);
         const shift = Math.abs(this.shift) * (this.props.threshold || 0.1);
         if (x > shift) {
-            console.log('swiper.js: hiding ${this.x}');
+            // console.log('swiper.js: hiding ${this.x}');
             this.hide();
             this.setVisible(false);
             this.props.onSwipeOut && this.props.onSwipeOut();
