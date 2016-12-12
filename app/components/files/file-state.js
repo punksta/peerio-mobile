@@ -12,11 +12,12 @@ const fileState = observable({
     },
 
     @action delete() {
-        mainState.back();
         const f = mainState.currentFile ? [mainState.currentFile] : this.selected;
+        console.log('file-state.js: ', f);
         f.forEach(item => {
             fileStore.remove(item);
         });
+        mainState.back();
     },
 
     @action download() {

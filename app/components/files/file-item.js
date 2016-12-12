@@ -46,13 +46,6 @@ const swipeLeftToRightStyle = {
 
 @observer
 export default class FileItem extends Component {
-    constructor(props) {
-        super(props);
-        // reaction(() => this.checked, value => {
-        //     fileState.select(this.fileId, value ? this.props.file : null);
-        // });
-    }
-
     get fileId() {
         const file = this.props.file;
         if (!file || !file.fileId) {
