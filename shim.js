@@ -24,8 +24,8 @@ if (typeof localStorage !== 'undefined') {
 
 // global.WebSocket = global.originalWebSocket;
 const rnWebSocket = global.WebSocket;
-global.WebSocket = function() {
-  const r = new rnWebSocket(...arguments);
+global.WebSocket = function(url) {
+  const r = new rnWebSocket(url);
   r.binaryType = 'blob';
   return r;
 };

@@ -52,7 +52,7 @@
     "react-native-cli": "*",
     "react-native-crypto": "^2.0.1",
     "react-native-fetch-blob": "^0.10.0",
-    "react-native-file-opener": "^0.2.0",
+    "react-native-file-opener": "git@github.com:PeerioTechnologies/react-native-file-opener.git",
     "react-native-fs": "https://github.com/calvium/react-native-fs#android_assets_support_plus_exists",
     "react-native-image-picker": "^0.23.0",
     "react-native-picker": "3.0.5",
