@@ -7,14 +7,14 @@ import icons from '../helpers/icons';
 import imagePicker from '../helpers/imagepicker';
 
 const fabStyle = {
-    position: 'absolute',
-    right: vars.fabRight,
-    bottom: vars.fabBottom,
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // right: vars.fabRight,
+    // bottom: vars.fabBottom,
+    flex: 0,
     width: 40,
     height: 40,
+    margin: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#FF7D00'
 };
 
@@ -37,8 +37,11 @@ export default class Fab extends Component {
         const s = [fabStyle, helpers.circle(vars.fabSize), shadowStyle];
         return (
             <TouchableOpacity onPress={() => imagePicker.test()}>
-                <View style={s} pointerEvents="box-only">
-                    {icons.white('add')}
+                <View style={{ flex: 1, flexDirection: 'row', borderColor: 'red', borderWidth: 0 }}>
+                    <View style={{ flex: 1 }} />
+                    <View style={s} pointerEvents="none">
+                        {icons.white('add')}
+                    </View>
                 </View>
             </TouchableOpacity>
         );

@@ -100,7 +100,7 @@ export default class Swiper extends Component {
         const { x, y } = { x: e.nativeEvent.pageX, y: e.nativeEvent.pageY };
         const dx = Math.abs(x - this.drag.x);
         const dy = Math.abs(y - this.drag.y);
-        if (dx > dy || dx > 20) {
+        if (dx > dy && dx > 50) {
             this.drag = { x, y };
             return true;
         }
@@ -115,7 +115,8 @@ export default class Swiper extends Component {
             y: e.nativeEvent.pageY
         };
         // console.log('swiper.js: captured grag');
-        return true;
+        return false;
+        // return true;
     }
 
     render() {

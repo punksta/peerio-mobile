@@ -24,15 +24,15 @@ export default class LoginClean extends Component {
         this.dummy = 'dummy';
 
         // if (!__DEV__) {
-        // loginState.load();
+        loginState.load();
         // }
     }
 
     componentDidMount() {
         if (__DEV__) {
-            loginState.username = 'anritest7';
+            loginState.username = 'eren';
             loginState.passphrase = 'icebear';
-            loginState.login();
+            // loginState.login();
         }
     }
 

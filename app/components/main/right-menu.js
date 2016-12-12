@@ -83,10 +83,10 @@ export default class RightMenu extends Component {
                 icon: 'chat-bubble',
                 action: () => mainState.messages() },
             { name: 'Files', bubble: mainState.fileCount, icon: 'folder', action: () => mainState.files() },
-            { name: 'Profile', icon: 'person' },
-            { name: 'Settings', icon: 'settings' },
-            { name: 'Upgrade', icon: 'cloud-upload' },
-            { name: 'Help and support', icon: 'help' }
+            { name: 'Profile', icon: 'person', action: () => null },
+            { name: 'Settings', icon: 'settings', action: () => null },
+            { name: 'Upgrade', icon: 'cloud-upload', action: () => null },
+            { name: 'Help and support', icon: 'help', action: () => null }
         ];
 
         const signOut = {

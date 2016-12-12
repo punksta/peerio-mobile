@@ -56,8 +56,8 @@ export default class Files extends Component {
             <View
                 style={{ flex: 1 }}>
                 {body}
-                {actions}
                 <Fab />
+                {actions}
                 <SnackBar />
             </View>
         );
