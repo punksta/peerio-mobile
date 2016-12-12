@@ -6,11 +6,13 @@ import {
 } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
+import moment from 'moment';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import Swiper from '../controls/swiper';
 import mainState from '../main/main-state';
 import fileState from './file-state';
+import FileProgress from './file-progress';
 
 const height = 64;
 const checkBoxWidth = height;
@@ -46,9 +48,9 @@ const swipeLeftToRightStyle = {
 export default class FileItem extends Component {
     constructor(props) {
         super(props);
-        reaction(() => this.checked, value => {
-            fileState.select(this.fileId, value ? this.props.file : null);
-        });
+        // reaction(() => this.checked, value => {
+        //     fileState.select(this.fileId, value ? this.props.file : null);
+        // });
     }
 
     get fileId() {
@@ -59,7 +61,17 @@ export default class FileItem extends Component {
         return file.fileId;
     }
 
-    @observable checked = false
+    get checked() {
+        const f = this.props.file;
+        return f && f.selected;
+    }
+
+    set checked(v) {
+        const f = this.props.file;
+        if (f) {
+            f.selected = v;
+        }
+    }
 
     @observable store = {
         get checkBoxHidden() {
@@ -116,7 +128,6 @@ export default class FileItem extends Component {
 
     render() {
         const file = this.props.file;
-        const iconLeft = icons.dark('image');
         const iconRight = icons.dark('keyboard-arrow-right');
         const nameStyle = {
             color: vars.txtDark,
@@ -128,32 +139,43 @@ export default class FileItem extends Component {
             fontSize: 12,
             fontWeight: vars.font.weight.regular
         };
+        let icon = 'image';
+        if (file.downloading) icon = 'file-download';
+        if (file.uploading) icon = 'file-upload';
+        let opacity = 1;
+        if (file.uploading) {
+            opacity = 0.5;
+        }
+        const iconLeft = icons.dark(icon);
         return (
-            <Swiper
-                state={this.store}
-                visible="checkBoxHidden"
-                style={swipeLeftToRightStyle}
-                shift={checkBoxWidth}
-                onSwipeOut={() => this.select()}
-                threshold={0.5}
-                leftToRight>
-                <TouchableOpacity onPress={() => this.onPress()}>
-                    {/* <View style={itemBgStyle} pointerEvents="none">
-                        <Text>HIDDEN UNDER</Text>
-                    </View> */}
-                    <View style={fileInfoContainerStyle}>
-                        {this.checkbox()}
-                        <View style={itemContainerStyle} pointerEvents="none">
-                            {iconLeft}
-                            <View style={{ flex: 1, marginLeft: 16 }}>
-                                <Text style={nameStyle}>{file.name}</Text>
-                                <Text style={infoStyle}>Date - owner</Text>
+            <View style={{ backgroundColor: 'white' }}>
+                <Swiper
+                    state={this.store}
+                    visible="checkBoxHidden"
+                    style={[swipeLeftToRightStyle, { opacity }]}
+                    shift={checkBoxWidth}
+                    onSwipeOut={() => this.select()}
+                    threshold={0.5}
+                    leftToRight>
+                    <TouchableOpacity onPress={() => this.onPress()}>
+                        {/* <View style={itemBgStyle} pointerEvents="none">
+                            <Text>HIDDEN UNDER</Text>
+                        </View> */}
+                        <View style={fileInfoContainerStyle}>
+                            {this.checkbox()}
+                            <View style={itemContainerStyle} pointerEvents="none">
+                                {iconLeft}
+                                <View style={{ flex: 1, marginLeft: 16 }}>
+                                    <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
+                                    <Text style={infoStyle}>{moment(file.uploadedAt).format('MMMM Do YYYY, hh:mm a')}</Text>
+                                </View>
+                                {iconRight}
                             </View>
-                            {iconRight}
                         </View>
-                    </View>
-                </TouchableOpacity>
-            </Swiper>
+                    </TouchableOpacity>
+                </Swiper>
+                <FileProgress file={file} />
+            </View>
         );
     }
 }

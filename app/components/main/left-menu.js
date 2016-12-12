@@ -93,18 +93,7 @@ export default class LeftMenu extends Component {
         const text = i.chatName;
         const online = true;
         const unread = i.unreadCount;
-        const notificationStyle = {
-            backgroundColor: vars.bg,
-            borderRadius: 14,
-            paddingLeft: 8,
-            paddingRight: 8,
-            marginRight: 10
-        };
-        const unreadText = unread ? (
-            <View style={notificationStyle}>
-                <Text style={{ textAlign: 'center', color: 'white' }}>{`${unread}`} </Text>
-            </View>
-        ) : null;
+        const unreadText = unread ? icons.bubble(unread) : null;
 
         return (
             <View style={{ backgroundColor: vars.bg }} key={key}>

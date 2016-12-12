@@ -1,14 +1,31 @@
 import { observable, asMap, action, computed } from 'mobx';
+import mainState from '../main/main-state';
+import { fileStore } from '../../lib/icebear';
 
 const fileState = observable({
     @computed get showSelection() {
-        return this.selected.size > 0;
+        return !!this.selected.length;
     },
 
-    selected: asMap({}),
+    @computed get selected() {
+        return fileStore.files.filter(f => f.selected);
+    },
 
-    @action select(fileId, value) {
-        value ? this.selected.set(fileId, value) : this.selected.delete(fileId);
+    @action delete() {
+        mainState.back();
+        const f = mainState.currentFile ? [mainState.currentFile] : this.selected;
+        f.forEach(item => {
+            fileStore.remove(item);
+        });
+    },
+
+    @action download() {
+        const f = mainState.currentFile ? [mainState.currentFile] : this.selected;
+        f.forEach(file => {
+            if (file.downloading || file.uploading) return;
+            file.download();
+            file.selected = false;
+        });
     }
 });
 

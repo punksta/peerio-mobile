@@ -59,6 +59,21 @@ const icons = {
                 </View>
             </TouchableOpacity>
         );
+    },
+
+    bubble(text) {
+        const notificationStyle = {
+            backgroundColor: vars.bg,
+            borderRadius: 14,
+            paddingLeft: 8,
+            paddingRight: 8,
+            marginRight: 10
+        };
+        return (
+            <View style={notificationStyle}>
+                <Text style={{ textAlign: 'center', color: 'white' }}>{`${text}`} </Text>
+            </View>
+        );
     }
 };
 

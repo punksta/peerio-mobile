@@ -1,0 +1,67 @@
+import React, { Component } from 'react';
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    Animated
+} from 'react-native';
+import { autorun, observable, computed } from 'mobx';
+import { observer } from 'mobx-react/native';
+import mainState from '../main/main-state';
+import fileState from '../files/file-state';
+import icons from '../helpers/icons';
+
+const actionCellStyle = {
+    flex: 1,
+    alignItems: 'center',
+    paddingBottom: 10
+};
+
+const actionTextStyle = {
+    color: '#00000060'
+};
+
+const bottomRowStyle = {
+    flex: 0,
+    flexDirection: 'row',
+    backgroundColor: '#00000030'
+};
+
+@observer
+export default class FileActions extends Component {
+
+    action(text, icon, onPress) {
+        return (
+            <TouchableOpacity
+                style={actionCellStyle}
+                onPress={onPress}
+                pointerEvents={onPress ? null : 'none'}>
+                <View pointerEvents="none" style={{ alignItems: 'center' }}>
+                    {onPress ? icons.dark(icon) : icons.white(icon)}
+                    <Text style={actionTextStyle}>{text}</Text>
+                </View>
+            </TouchableOpacity>
+        );
+    }
+
+    render() {
+        const file = this.props.file;
+
+        const leftAction = file && file.cacheExists ?
+            this.action('Open', 'open-in-new', () => file.launchViewer()) :
+            this.action('Download', 'file-download', () => fileState.download());
+
+        return (
+            <View style={bottomRowStyle}>
+                {leftAction}
+                {this.action('Share', 'screen-share')}
+                {this.action('Delete', 'delete', () => fileState.delete())}
+                {this.action('More', 'more-horiz')}
+            </View>
+        );
+    }
+}
+
+FileActions.propTypes = {
+    file: React.PropTypes.any
+};

@@ -22,7 +22,6 @@ if (typeof localStorage !== 'undefined') {
   localStorage.debug = isDev ? '*' : ''
 }
 
-// global.WebSocket = global.originalWebSocket;
 const rnWebSocket = global.WebSocket;
 global.WebSocket = function(url) {
   const r = new rnWebSocket(url);
@@ -30,6 +29,7 @@ global.WebSocket = function(url) {
   return r;
 };
 
+// global.WebSocket = global.originalWebSocket;
 const ws = new WebSocket('ws://localhost:8081')
 console.log('shim.js binaryType: ', ws.binaryType);
 // console.log('shim.js: ', global.originalWebSocket);

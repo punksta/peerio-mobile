@@ -70,6 +70,12 @@ const mainState = observable({
         this.isBackVisible = false;
     },
 
+    @computed get unreadMessages() {
+        let r = 0;
+        chatStore.chats.forEach(c => (r += c.unreadCount));
+        return r;
+    },
+
     @action resetMenus() {
         this.isInputVisible = false;
         this.isLeftMenuVisible = false;
@@ -83,6 +89,10 @@ const mainState = observable({
         this.currentIndex = 0;
         this.currentFile = null;
         this.isBackVisible = false;
+    },
+
+    @computed get fileCount() {
+        return fileStore.files.length;
     },
 
     @action file(i) {
@@ -100,8 +110,9 @@ const mainState = observable({
     },
 
     @action deleteFile(i) {
-        fileStore.remove(i || this.currentFile);
+        const f = i || this.currentFile;
         this.back();
+        fileStore.remove(f);
     },
 
     @action chat(i) {

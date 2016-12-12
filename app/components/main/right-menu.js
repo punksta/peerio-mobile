@@ -32,13 +32,17 @@ export default class RightMenu extends Component {
     }
 
     item(i, key) {
+        const bubble = i.bubble ? icons.bubble(i.bubble) : null;
         return (
 
             <View style={{ backgroundColor: vars.bg }} key={key}>
                 <TouchableOpacity onPress={() => i.action()}>
                     <View style={itemStyle}>
                         { icons.dark(i.icon) }
-                        <Text style={textStyle}>{i.name}</Text>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <Text style={textStyle}>{i.name}</Text>
+                            {bubble}
+                        </View>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -74,8 +78,11 @@ export default class RightMenu extends Component {
         };
 
         const items = [
-            { name: 'Messages', icon: 'chat-bubble', action: () => mainState.messages() },
-            { name: 'Files', icon: 'folder', action: () => mainState.files() },
+            { name: 'Messages',
+                bubble: mainState.unreadMessages,
+                icon: 'chat-bubble',
+                action: () => mainState.messages() },
+            { name: 'Files', bubble: mainState.fileCount, icon: 'folder', action: () => mainState.files() },
             { name: 'Profile', icon: 'person' },
             { name: 'Settings', icon: 'settings' },
             { name: 'Upgrade', icon: 'cloud-upload' },
