@@ -17,7 +17,7 @@ const actionCellStyle = {
 
 const actionTextStyle = {
     color: 'rgba(0,0,0,.54)'
-}
+};
 
 const bottomRowStyle = {
     flex: 0,
@@ -60,7 +60,7 @@ export default class FileActions extends Component {
                 {leftAction}
                 {this.action('Share', 'reply')}
                 {this.action('Delete', 'delete', () => fileState.delete())}
-                {/*{this.action('More', 'more-horiz')}*/}
+                {/* {this.action('More', 'more-horiz')} */}
             </Animated.View>
         );
     }
