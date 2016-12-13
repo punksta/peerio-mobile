@@ -13,7 +13,8 @@ import FileActions from './file-actions';
 
 const firstRowStyle = {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: 12
 };
 
 const secondRowStyle = {
@@ -24,7 +25,7 @@ const secondRowStyle = {
 
 const firstColumnStyle = {
     flex: 1,
-    paddingTop: vars.iconPadding + 6
+    paddingTop: vars.iconPadding
 };
 
 const hintStyle = {
@@ -40,15 +41,23 @@ export default class FileView extends Component {
         let icon = 'image';
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
-        icon = icons.dark(icon, null, null, vars.iconFileViewSize);
+        icon = icons.plaindark(icon, vars.iconFileViewSize);
         // icon = file.downloading || file.uploading ?
             // icons.jumpy(icon) : icon;
         return (
             <View
-                style={{ flex: 1, justifyContent: 'space-between' }}>
-                <View>
+                style={{
+                    flex: 1,
+                    justifyContent: 'space-between'
+                }}>
+                <View style={{
+                    paddingRight: 16
+                }}>
                     <View style={firstRowStyle}>
-                        <View>
+                        <View style={{
+                            marginLeft: 4,
+                            marginRight: 12
+                        }}>
                             {icon}
                         </View>
                         <View style={firstColumnStyle}>
@@ -58,15 +67,12 @@ export default class FileView extends Component {
                             <View style={secondRowStyle}>
                                 <View style={{ flex: 1 }}>
                                     <Text style={hintStyle}>File size</Text>
-                                    <Text>{file.sizeFormatted}</Text>
+                                    <Text>{file.sizeFormatted} {file.ext}</Text>
                                 </View>
-                                <View style={{ flex: 1 }}>
-                                    <Text style={hintStyle}>Type</Text>
-                                    <Text>{file.ext}</Text>
-                                </View>
+
                                 <View style={{ flex: 1 }}>
                                     <Text style={hintStyle}>Uploaded</Text>
-                                    <Text>{moment(file.uploadedAt).format('MMMM Do YYYY, hh:mm a')}</Text>
+                                    <Text>{moment(file.uploadedAt).format('MMMM DD YYYY')}</Text>
                                 </View>
                             </View>
                             {/*
