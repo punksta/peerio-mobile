@@ -29,8 +29,8 @@ const shadowStyle = {
     shadowOpacity: 0.5,
     shadowRadius: 5,
     shadowOffset: {
-        height: 0,
-        width: 0
+        height: 2,
+        width: 1
     }
 };
 
