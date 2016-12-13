@@ -105,14 +105,18 @@ export default class Chat extends Component {
         if (contentHeight) {
             this.contentHeight = contentHeight;
         }
-        if (this.contentHeight && this.scrollViewHeight) {
-            const y = this.contentHeight - this.scrollViewHeight + state.keyboardHeight;
-            const animated = !this.props.hideInput && this.enableNextScroll;
-            this.scrollView.scrollTo({ y, animated });
-            this.enableNextScroll = false;
-        } else {
-            setTimeout(() => this.scroll(), 1000);
-        }
+
+        if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
+        this.scrollTimeout = setTimeout(() => {
+            if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
+                const y = this.contentHeight - this.scrollViewHeight + state.keyboardHeight;
+                const animated = true; // !this.props.hideInput && this.enableNextScroll;
+                this.scrollView.scrollTo({ y, animated });
+                this.enableNextScroll = false;
+            } else {
+                // setTimeout(() => this.scroll(), 1000);
+            }
+        }, 100);
     }
 
     listView() {
