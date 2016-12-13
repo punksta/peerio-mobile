@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View, ActivityIndicator
+    ListView, View, ActivityIndicator
 } from 'react-native';
 import _ from 'lodash';
 import { observer } from 'mobx-react/native';
-import { observable } from 'mobx';
+import { observable, reaction } from 'mobx';
 import mainState from '../main/main-state';
 import state from '../layout/state';
+import ChatItem from './chat-item';
 import InputMain from '../layout/input-main';
-import Avatar from '../shared/avatar';
 import SnackBar from '../snackbars/snackbar';
 
 const randomMessages = [
@@ -21,7 +21,8 @@ const randomMessages = [
     'Wordly debates on otherworldly problems',
     'I would love some beer',
     'I would love some wine',
-    'Okay I\'ll fetch some'];
+    'Okay I\'ll fetch some'
+];
 
 @observer
 export default class Chat extends Component {
@@ -31,10 +32,26 @@ export default class Chat extends Component {
         this.sendAck = this.sendAck.bind(this);
         this.layoutScrollView = this.layoutScrollView.bind(this);
         this.scroll = this.scroll.bind(this);
+        this.dataSource = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
+    }
+
+    get data() {
+        return (mainState.currentChat && mainState.currentChat.messages) || [];
     }
 
     componentWillMount() {
-        // when(() => mainState.chat != null, () => mainState.chat.loadMessages());
+        this.reaction = reaction(() => (mainState.route === 'chat') && this.data && this.data.length, () => {
+            console.log(`chat.js update reaction ${this.data.length}`);
+            this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
+            this.forceUpdate();
+        }, true);
+    }
+
+    componentWillUnmount() {
+        this.reaction && this.reaction();
+        this.reaction = null;
     }
 
     send(v) {
@@ -69,23 +86,8 @@ export default class Chat extends Component {
         );
     }
 
-    item(i, key) {
-        const msg = i.text || '';
-        const timestamp = i.timestamp;
-        const name = i.sender.username;
-        const color = i.sender.color;
-        const text = msg.replace(/\n[ ]+/g, '\n');
-        return (
-            <Avatar
-                color={color}
-                hideOnline
-                date={timestamp}
-                name={name}
-                message={text}
-                key={key}
-                noBorderBottom
-            />
-        );
+    item(chat) {
+        return <ChatItem chat={chat} />;
     }
 
     @observable contentHeight = 0;
@@ -113,31 +115,38 @@ export default class Chat extends Component {
         }
     }
 
+    listView() {
+        return (
+            <ListView
+                initialListSize={1}
+                dataSource={this.dataSource}
+                renderRow={this.item}
+                onContentSizeChange={this.scroll}
+                enableEmptySections
+                ref={sv => (this.scrollView = sv)}
+            />
+        );
+    }
+
     render() {
-        const items = (mainState.currentChat && mainState.currentChat.messages) || [];
         const shift = this.contentHeight - (this.scrollViewHeight - state.keyboardHeight);
         const paddingTop = !!this.scrollViewHeight &&
             (global.platform === 'android') && (shift < 0) ? -shift : 0;
-        const scrollEnabled = !!this.scrollViewHeight && (shift > 0);
+        // const scrollEnabled = !!this.scrollViewHeight && (shift > 0);
         // console.log('render');
         // console.log(`content height: ${this.contentHeight}`);
         // console.log(`sv height: ${this.scrollViewHeight}`);
         // console.log(scrollEnabled);
-        const body = (this.scrollViewHeight && mainState.canSend) ?
-            items.map(this.item) : <ActivityIndicator style={{ paddingBottom: 10 }} />;
+        const body = this.scrollViewHeight && mainState.canSend ?
+            this.listView() : <ActivityIndicator style={{ paddingBottom: 10 }} />;
         return (
             <View
                 style={{ flex: 1, paddingTop }}>
-                <ScrollView
-                    scrollEnabled={scrollEnabled}
-                    onLayout={this.layoutScrollView}
-                    onContentSizeChange={this.scroll}
-                    ref={sv => (this.scrollView = sv)}
-                    >
-                    <View style={{ flex: 0 }}>
-                        {body}
-                    </View>
-                </ScrollView>
+                <View
+                    style={{ flex: 1 }}
+                    onLayout={this.layoutScrollView}>
+                    {body}
+                </View>
                 <SnackBar />
                 {this.props.hideInput ? null : this.renderInput()}
             </View>

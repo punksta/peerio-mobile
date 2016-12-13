@@ -69,7 +69,7 @@ const mainState = observable({
 
     @action messages() {
         this.resetMenus();
-        this.route = 'recent';
+        this.route = this.currentChat ? 'chat' : 'recent';
         this.currentIndex = 0;
         this.isBackVisible = false;
     },
