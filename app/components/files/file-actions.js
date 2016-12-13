@@ -28,6 +28,7 @@ const bottomRowStyle = {
     padding: 0
 };
 
+
 @observer
 export default class FileActions extends Component {
 
@@ -38,7 +39,7 @@ export default class FileActions extends Component {
                 onPress={onPress}
                 pointerEvents={onPress ? null : 'none'}>
                 <View pointerEvents="none" style={{ alignItems: 'center' }}>
-                    {onPress ? icons.plaindark(icon) : icons.plaindark(icon)}
+                    {onPress ? icons.plaindark(icon) : icons.plain(icon, null, 'rgba(0, 0, 0, .38)')}
                     <Text style={actionTextStyle}>{text}</Text>
                 </View>
             </TouchableOpacity>
