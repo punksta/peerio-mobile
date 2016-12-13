@@ -11,18 +11,20 @@ import icons from '../helpers/icons';
 
 const actionCellStyle = {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    height: 56
 };
 
 const actionTextStyle = {
     color: 'rgba(0,0,0,.54)'
-};
+}
 
 const bottomRowStyle = {
     flex: 0,
     flexDirection: 'row',
     backgroundColor: 'rgba(0, 0, 0, .12)',
-    height: 56
+    height: 56,
+    padding: 0
 };
 
 @observer
@@ -58,7 +60,7 @@ export default class FileActions extends Component {
                 {leftAction}
                 {this.action('Share', 'reply')}
                 {this.action('Delete', 'delete', () => fileState.delete())}
-                {this.action('More', 'more-horiz')}
+                {/*{this.action('More', 'more-horiz')}*/}
             </Animated.View>
         );
     }
