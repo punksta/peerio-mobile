@@ -5,9 +5,7 @@ import {
     TouchableOpacity,
     Animated
 } from 'react-native';
-import { autorun, observable, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
-import mainState from '../main/main-state';
 import fileState from '../files/file-state';
 import icons from '../helpers/icons';
 
@@ -45,23 +43,30 @@ export default class FileActions extends Component {
     }
 
     render() {
+        const height = this.props.height || 80;
+        const animation = {
+            overflow: 'hidden',
+            height: this.props.height
+        };
         const file = this.props.file;
 
-        const leftAction = file && file.cacheExists ?
+        const leftAction = false && file && file.cacheExists ?
             this.action('Open', 'open-in-new', () => file.launchViewer()) :
             this.action('Download', 'file-download', () => fileState.download());
 
         return (
-            <View style={bottomRowStyle}>
+            <Animated.View style={[bottomRowStyle, animation]}>
                 {leftAction}
                 {this.action('Share', 'screen-share')}
                 {this.action('Delete', 'delete', () => fileState.delete())}
                 {this.action('More', 'more-horiz')}
-            </View>
+            </Animated.View>
         );
     }
 }
 
 FileActions.propTypes = {
-    file: React.PropTypes.any
+    file: React.PropTypes.any,
+    // {Animated.Value} height
+    height: React.PropTypes.any
 };

@@ -71,7 +71,6 @@ export default class Chat extends Component {
 
     item(i, key) {
         const msg = i.text || '';
-        const isAck = i.isAck;
         const timestamp = i.timestamp;
         const name = i.sender.username;
         const color = i.sender.color;
@@ -79,7 +78,6 @@ export default class Chat extends Component {
         return (
             <Avatar
                 color={color}
-                isAck={isAck}
                 hideOnline
                 date={timestamp}
                 name={name}

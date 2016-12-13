@@ -60,6 +60,7 @@ export default class FileProgress extends Component {
         }
 
         const pbContainer = {
+            marginTop: -height,
             height,
             backgroundColor: '#CFCFCF',
             flex: 1
