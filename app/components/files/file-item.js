@@ -139,7 +139,9 @@ export default class FileItem extends Component {
         if (file.uploading /* || !file.readyForDownload */) {
             opacity = 0.5;
         }
-        const iconLeft = icons.dark(icon);
+        icon = icons.dark(icon);
+        const animatedIcon = file.uploading || file.downloading ?
+           icons.jumpy(icon) : icon;
         return (
             <View style={{ backgroundColor: 'white' }}>
                 <Swiper
@@ -157,7 +159,7 @@ export default class FileItem extends Component {
                         <View style={[fileInfoContainerStyle, { opacity }]}>
                             {this.checkbox()}
                             <View style={itemContainerStyle} pointerEvents="none">
-                                {iconLeft}
+                                {animatedIcon}
                                 <View style={{ flex: 1, marginLeft: 16 }}>
                                     <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                     <Text style={infoStyle}>

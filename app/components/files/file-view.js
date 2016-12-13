@@ -40,13 +40,16 @@ export default class FileView extends Component {
         let icon = 'image';
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
+        icon = icons.dark(icon, null, null, vars.iconFileViewSize);
+        icon = file.downloading || file.uploading ?
+            icons.jumpy(icon) : icon;
         return (
             <View
                 style={{ flex: 1, justifyContent: 'space-between' }}>
                 <View>
                     <View style={firstRowStyle}>
                         <View>
-                            {icons.dark(icon, null, null, vars.iconFileViewSize)}
+                            {icon}
                         </View>
                         <View style={firstColumnStyle}>
                             <View>

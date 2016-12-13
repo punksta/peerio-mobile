@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Jumpy from '../shared/jumpy';
 import { vars } from '../../styles/styles';
 
 const icons = {
@@ -73,6 +74,12 @@ const icons = {
             <View style={notificationStyle}>
                 <Text style={{ textAlign: 'center', color: 'white' }}>{`${text}`} </Text>
             </View>
+        );
+    },
+
+    jumpy(icon) {
+        return (
+            <Jumpy>{icon}</Jumpy>
         );
     }
 };
