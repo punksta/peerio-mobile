@@ -66,13 +66,20 @@ const icons = {
         const notificationStyle = {
             backgroundColor: vars.bg,
             borderRadius: 14,
-            paddingLeft: 8,
-            paddingRight: 8,
-            marginRight: 10
+            overflow: 'hidden',
+            width: 32,
+            height: 24,
+            marginRight: 8
         };
         return (
             <View style={notificationStyle}>
-                <Text style={{ textAlign: 'center', color: 'white' }}>{`${text}`} </Text>
+                <Text style={{
+                    color: 'white',
+                    fontSize: 14,
+                    fontWeight: vars.font.weight.semiBold,
+                    lineHeight: 24,
+                    textAlign: 'center'
+                }}>{`${text}`} </Text>
             </View>
         );
     },
