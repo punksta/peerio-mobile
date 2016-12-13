@@ -12,11 +12,12 @@ import icons from '../helpers/icons';
 const actionCellStyle = {
     flex: 1,
     alignItems: 'center',
-    height: 56
+    height: 56,
+    justifyContent: 'center',
 };
 
 const actionTextStyle = {
-    color: 'rgba(0,0,0,.54)'
+    color: 'rgba(0,0,0,.38)'
 };
 
 const bottomRowStyle = {
@@ -37,7 +38,7 @@ export default class FileActions extends Component {
                 onPress={onPress}
                 pointerEvents={onPress ? null : 'none'}>
                 <View pointerEvents="none" style={{ alignItems: 'center' }}>
-                    {onPress ? icons.dark(icon) : icons.white(icon)}
+                    {onPress ? icons.plaindark(icon) : icons.plaindark(icon)}
                     <Text style={actionTextStyle}>{text}</Text>
                 </View>
             </TouchableOpacity>
