@@ -72,8 +72,8 @@ const vars = {
     },
     inputHeight: 48,
     fabSize: 50,
-    fabRight: 26,
-    fabBottom: 50
+    fabRight: 16,
+    fabBottom: 32
 };
 
 const styleCache = {};

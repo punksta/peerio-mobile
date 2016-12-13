@@ -10,7 +10,6 @@ const fabContainer = {
     position: 'absolute',
     right: vars.fabRight,
     bottom: vars.fabBottom,
-    padding: 20,
     borderColor: 'red',
     borderWidth: 0
 };
@@ -26,10 +25,10 @@ const fabStyle = {
 
 const shadowStyle = {
     shadowColor: '#000000',
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
     shadowOffset: {
-        height: 2,
+        height: 6,
         width: 1
     }
 };
