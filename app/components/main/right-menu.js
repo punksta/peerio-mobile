@@ -96,9 +96,7 @@ export default class RightMenu extends Component {
         };
 
         return (
-            // TODO add overlay when open
             <Swiper
-                width={width}
                 state={mainState}
                 visible="isRightMenuVisible"
                 style={containerStyle}

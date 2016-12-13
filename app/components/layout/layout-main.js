@@ -4,6 +4,7 @@ import {
     PanResponder,
     StatusBar,
     Animated,
+    TouchableWithoutFeedback,
     Dimensions
 } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -117,7 +118,10 @@ export default class LayoutMain extends Component {
 
     render() {
         const transform = [{ translateX: this.animatedX }];
-        const transformMenu = [{ translateX: this.leftMenuAnimated }];
+        const transformMenu = [
+            { translateX: mainState.animatedLeftMenu },
+            { translateX: mainState.animatedLeftMenuWidth }
+        ];
         const transformAndroid = global.platform === 'android' ? [{ translateY: state.keyboardHeight }] : [];
         const outerStyle = {
             backgroundColor: 'white',
@@ -140,20 +144,24 @@ export default class LayoutMain extends Component {
         const menuState = mainState.isLeftMenuVisible || mainState.isRightMenuVisible;
 
         return (
-            <View style={[styles.container.root, { transform: transformAndroid }]}>
-                <Animated.View
-                    {...this.panResponder.panHandlers}
-                    behavior="padding"
-                    style={outerStyle}>
-                    <Animated.View style={{ flex: 1, transform: transformMenu }}>
-                        <HeaderMain title={title} />
-                        <Animated.View style={{ flex: 1, transform }}>
-                            <View style={{ flex: 1 }}>
-                                {this.pages(this.body())}
-                            </View>
+            <View
+                style={[styles.container.root, { transform: transformAndroid }]}>
+                <TouchableWithoutFeedback
+                    onPress={menuState ? () => mainState.resetMenus() : null}>
+                    <Animated.View
+                        pointerEvents={menuState ? 'box-only' : null}
+                        {...this.panResponder.panHandlers}
+                        style={outerStyle}>
+                        <Animated.View style={{ flex: 1, transform: transformMenu }}>
+                            <HeaderMain title={title} />
+                            <Animated.View style={{ flex: 1, transform }}>
+                                <View style={{ flex: 1 }}>
+                                    {this.pages(this.body())}
+                                </View>
+                            </Animated.View>
                         </Animated.View>
                     </Animated.View>
-                </Animated.View>
+                </TouchableWithoutFeedback>
                 <LeftMenu />
                 <RightMenu />
                 <Animated.View style={composeStyle}>

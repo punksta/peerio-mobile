@@ -1,3 +1,4 @@
+import { Animated } from 'react-native';
 import { observable, action, when, reaction, computed, asReference } from 'mobx';
 import state from '../layout/state';
 import { User, chatStore, fileStore } from '../../lib/icebear';
@@ -36,7 +37,10 @@ const mainState = observable({
         User.current = user;
         store.openUserDb(user.username);
         chatStore.loadAllChats();
-        fileStore.loadAllFiles();
+        when(() => !chatStore.loading, () => {
+            console.log('main-state.js: load all files');
+            fileStore.loadAllFiles();
+        });
     },
 
     @action initial() {
@@ -180,6 +184,9 @@ const mainState = observable({
         this.isLeftMenuVisible = false;
     }
 });
+
+mainState.animatedLeftMenu = new Animated.Value(0);
+mainState.animatedLeftMenuWidth = new Animated.Value(0);
 
 reaction(() => mainState.isLeftMenuVisible, () => {
     if (mainState.isLeftMenuVisible) state.hideKeyboard();

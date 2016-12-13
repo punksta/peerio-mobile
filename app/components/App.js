@@ -120,7 +120,15 @@ export default class App extends Component {
     renderScene(route) {
         const inner = React.createElement(route.component);
         this.scene = inner;
-        return <View key={route.key} style={styles.navigator.card}>{inner}</View>;
+        const hidden = { overflow: 'hidden' };
+        return (
+            <View
+                removeClippedSubviews
+                key={route.key}
+                style={[styles.navigator.card, hidden]}>
+                {inner}
+            </View>
+        );
     }
 
     configureScene(route /* , routeStack */) {

@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import { Animated, Easing } from 'react-native';
-import { reaction } from 'mobx';
+import { observable, reaction, when } from 'mobx';
+import { observer } from 'mobx-react/native';
 
+@observer
 export default class Swiper extends Component {
+    @observable width = 0;
+
     constructor(props) {
         super(props);
         this.x = 0;
         this.drag = { x: 0, y: 0 };
-        this.setPosition = this.setPosition.bind(this);
-        this.resetPosition = this.resetPosition.bind(this);
-        this.layout = this.layout.bind(this);
-        this._onStartShouldSetResponder = this._onStartShouldSetResponder.bind(this);
-        this._onStartShouldSetResponderCapture = this._onStartShouldSetResponderCapture.bind(this);
-        this._onMoveShouldSetResponderCapture = this._onMoveShouldSetResponderCapture.bind(this);
         this.state = props.state;
-        this.width = props.width;
-        this.animatedX = new Animated.Value(this.visible ? 0 : this.shift);
-        reaction(() => this.visible, () => {
+        this.animatedX = this.props.animated ? this.state[this.props.animated] : new Animated.Value(0);
+
+        when(() => this.width, () => {
+            this.animatedX.setValue(this.visible ? 0 : this.shift);
+        });
+
+        reaction(() => this.width && this.visible, () => {
             this.visible ? this.show() : this.hide();
         }, true);
     }
@@ -27,13 +29,15 @@ export default class Swiper extends Component {
 
     get shift() {
         // 100 is to prevent strange bug with not hiding the swiper completely off screen
-        const w = this.props.shift || (this.width + 100);
+        const w = this.props.shift || (this.width);
         return (this.props.rightToLeft ? -1 : 1) * w;
     }
 
     layout(e) {
         this.width = e.nativeEvent.layout.width;
-        this.height = e.nativeEvent.layout.width;
+        if (this.props.width) {
+            this.state[this.props.width].setValue(this.width);
+        }
     }
 
     animate(toValue, fast, cb) {
@@ -109,23 +113,21 @@ export default class Swiper extends Component {
         }
     }
 
-    setResetTimeout() {
+    setResetTimeout(timeout) {
         this.clearResetTimeout();
-        this.releaseTimeout = setTimeout(this.resetPosition, 1000);
+        this.releaseTimeout = setTimeout(
+            () => this.resetPosition(), timeout !== undefined ? timeout : 1000);
     }
 
     _onMoveShouldSetResponderCapture(e) {
         if (!this.visible) {
             return false;
         }
-        const { x, y } = { x: e.nativeEvent.pageX, y: e.nativeEvent.pageY };
-        const dx = Math.abs(x - this.drag.x);
-        const dy = Math.abs(y - this.drag.y);
         this.setPosition(e);
         if (Math.abs(this.x) > 30) {
-            console.log(`swiper.js: taking capture offer ${this.x}, ${dy}`);
+            // we grabbed the responder, no need to be gentle anymore
+            console.log('swiper.js: captured responder');
             this.clearResetTimeout();
-            // this.resetPosition();
             return true;
         }
         // so that if somebody dragged a bit and pressed a button, it will move back
@@ -148,17 +150,21 @@ export default class Swiper extends Component {
         if (this.animatedX) {
             t = [{ translateX: this.animatedX }];
         }
-        const s = { transform: t };
+        const s = { transform: t, opacity: this.width ? 1 : 0 };
+        const handlers = {
+            onLayout: (e) => this.layout(e),
+            onResponderMove: (e) => this.setPosition(e),
+            onResponderReject: () => this.setResetTimeout(100),
+            onResponderRelease: () => this.resetPosition(),
+            onStartShouldSetResponder: (e) => this._onStartShouldSetResponder(e),
+            onResponderTerminate: () => this.resetPosition(),
+            onMoveShouldSetResponderCapture: (e) => this._onMoveShouldSetResponderCapture(e),
+            onStartShouldSetResponderCapture: (e) => this._onStartShouldSetResponderCapture(e)
+        };
 
         return (
             <Animated.View
-                onLayout={this.layout}
-                onResponderMove={this.setPosition}
-                onResponderRelease={this.resetPosition}
-                onStartShouldSetResponder={this._onStartShouldSetResponder}
-                onResponderTerminate={this.resetPosition}
-                onMoveShouldSetResponderCapture={this._onMoveShouldSetResponderCapture}
-                onStartShouldSetResponderCapture={this._onStartShouldSetResponderCapture}
+                {...handlers}
                 style={[containerStyle, s]}>
                 { this.props.children }
             </Animated.View>
@@ -169,13 +175,23 @@ export default class Swiper extends Component {
 Swiper.propTypes = {
     children: React.PropTypes.any.isRequired,
     style: React.PropTypes.any,
+    // {observable({})} observable state
     state: React.PropTypes.any,
+    // {Animated.Value} property in state which corresponds to swiper width
+    width: React.PropTypes.string,
+    // {Animated.Value} property in state which corresponds to swiper animation X
+    animated: React.PropTypes.string,
+    // {boolean} property in state which corresponds to swiper state
     visible: React.PropTypes.string.isRequired,
+    // swipe right to left
     rightToLeft: React.PropTypes.bool,
+    // or left to right
     leftToRight: React.PropTypes.bool,
-    width: React.PropTypes.any,
+    // expected swiper shift (if not present, will be width + extra
     shift: React.PropTypes.any,
     threshold: React.PropTypes.any,
+    // when swipe action is finished successfully
     onSwipeOut: React.PropTypes.func,
+    // when swipe action is reset mid-swipe
     onSwipeReset: React.PropTypes.func
 };

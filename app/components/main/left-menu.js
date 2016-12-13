@@ -8,7 +8,6 @@ import messagingState from '../messaging/messaging-state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import Swiper from '../controls/swiper';
-import Hider from '../controls/hider';
 import { chatStore } from '../../lib/icebear';
 
 const circleDiameter = 8;
@@ -118,11 +117,10 @@ export default class LeftMenu extends Component {
             left: 0,
             top: 0,
             bottom: 0,
-            right: 0
+            width
         };
 
         const innerContainerStyle = {
-            width,
             backgroundColor: 'white',
             borderRightWidth: 1,
             borderRightColor: 'rgba(0,0,0,.12)'
@@ -131,27 +129,23 @@ export default class LeftMenu extends Component {
         const chats = chatStore.chats;
 
         return (
-            // TODO push main header when open.
             <Swiper
                 state={mainState}
+                width="animatedLeftMenuWidth"
+                animated="animatedLeftMenu"
                 visible="isLeftMenuVisible"
+                threshold={0.5}
                 style={containerStyle}
-                width={width}
                 {...this.props}
                 rightToLeft>
-                <Hider onHide={this.hideAnimated} isLeft>
-                    <View style={innerContainerStyle}>
-                        {/* <View>
-                            { this.header('Channels') }
-                    </View> */}
-                        <View>
-                            { this.header('Conversations', () => messagingState.transition()) }
-                        </View>
-                        <ScrollView>
-                            { chats.map(this.item) }
-                        </ScrollView>
+                <View style={innerContainerStyle}>
+                    <View>
+                        { this.header('Conversations', () => messagingState.transition()) }
                     </View>
-                </Hider>
+                    <ScrollView>
+                        { chats.map(this.item) }
+                    </ScrollView>
+                </View>
             </Swiper>
         );
     }
