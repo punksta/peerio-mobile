@@ -3,61 +3,56 @@ import {
     View,
     Animated
 } from 'react-native';
-import { reaction, autorun, observable, computed } from 'mobx';
+import { observable, autorun, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
-import mainState from '../main/main-state';
 import { vars } from '../../styles/styles';
 
 @observer
 export default class FileProgress extends Component {
     @observable width = 0;
+    prevFile = null;
 
-    @computed get file() {
-        return this.props.file || mainState.currentFile;
+    get hidden() {
+        const file = this.props.file;
+        return !file || (!file.downloading && !file.uploading);
     }
 
-    // constructor(props) {
-    //     super(props);
-    //     // autorun(() => {
-    //     //     const file = this.file;
-    //     //     if (!file) return;
-    //     //     if (!file.animatedProgress) {
-    //     //         file.animatedProgress = new Animated.Value(0);
-    //     //     }
-    //     //     if (!file.downloading && !file.uploading) {
-    //     //         return;
-    //     //     }
-    //     //     const animatedProgress = file.animatedProgress;
-    //     //     const progress = this.width * file.progress / (file.size | 1) | 0;
-    //     //     if (!progress) return;
-    //     //     const complete = progress === this.width;
-    //     //     const duration = complete ? 100 : 3000;
-    //     //     console.log('file-view.js: ', progress);
-    //     //     Animated.timing(animatedProgress, {
-    //     //         toValue: progress, duration }).start(complete ? () => {
-    //     //             file.animatedProgress = null;
-    //     //         } : null);
-    //     // });
-    // }
-
-    componentWillReceiveProps() {
-        this.forceUpdate();
+    get value() {
+        const file = this.props.file;
+        if (!file) return 0;
+        let max = 0;
+        if (file.downloading) {
+            max = file.size | 1;
+        }
+        if (file.uploading) {
+            max = file.progressMax | 1;
+        }
+        return (this.width * file.progress / max) | 0;
     }
+
+    progress = new Animated.Value(0);
 
     layout(evt) {
-        const { width } = evt.nativeEvent.layout;
-        this.width = width;
+        this.width = evt.nativeEvent.layout.width;
+        reaction(() => this.props.file, file => {
+            if (file !== this.prevFile) {
+                this.prevFile = file;
+                this.progress.setValue(this.value);
+            }
+        }, true);
+        autorun(() => {
+            if (this.hidden) return;
+            const toValue = this.value;
+            const duration = 3000;
+            console.log(this.progress);
+            toValue < this.progress._toValue ?
+                this.progress.setValue(0) :
+                Animated.timing(this.progress, { toValue, duration }).start();
+        });
     }
 
     render() {
-        const file = this.file;
-        let height = 4;
-        if (!file || !file.downloading && !file.uploading) height = 0;
-        let progress = 0;
-        if (file) {
-            progress = this.width * file.progress / (file.size | 1) | 0;
-            // progress = file.animatedProgress || 0;
-        }
+        const height = this.hidden ? 0 : 4;
 
         const pbContainer = {
             marginTop: -height,
@@ -68,7 +63,7 @@ export default class FileProgress extends Component {
         const pbProgress = {
             height,
             backgroundColor: vars.bg,
-            width: progress
+            width: this.progress
         };
 
         return (

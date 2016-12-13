@@ -89,13 +89,14 @@ export default class LeftMenu extends Component {
 
     item(i, key) {
         const action = () => messagingState.chat(i);
+        const id = i.id || key;
         const text = i.chatName;
         const online = true;
         const unread = i.unreadCount;
         const unreadText = unread ? icons.bubble(unread) : null;
 
         return (
-            <View style={{ backgroundColor: vars.bg }} key={key}>
+            <View style={{ backgroundColor: vars.bg }} key={id}>
                 <TouchableOpacity onPress={action}>
                     <View style={itemStyle}>
                         <View style={online ? circleStyle : circleStyleOff} />

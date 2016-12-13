@@ -85,7 +85,7 @@ export default class FileView extends Component {
                         </View>
                     </View>
                     <View style={secondRowStyle}>
-                        <FileProgress />
+                        <FileProgress file={mainState.currentFile} />
                     </View>
                 </View>
                 <FileActions file={file} />

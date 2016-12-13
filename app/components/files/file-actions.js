@@ -43,14 +43,13 @@ export default class FileActions extends Component {
     }
 
     render() {
-        const height = this.props.height || 80;
         const animation = {
             overflow: 'hidden',
             height: this.props.height
         };
         const file = this.props.file;
 
-        const leftAction = false && file && file.cacheExists ?
+        const leftAction = file && file.cacheExists ?
             this.action('Open', 'open-in-new', () => file.launchViewer()) :
             this.action('Download', 'file-download', () => fileState.download());
 

@@ -4,7 +4,7 @@ import {
     View,
     TouchableOpacity
 } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import moment from 'moment';
 import { vars } from '../../styles/styles';
@@ -136,7 +136,7 @@ export default class FileItem extends Component {
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
         let opacity = 1;
-        if (file.uploading) {
+        if (file.uploading /* || !file.readyForDownload */) {
             opacity = 0.5;
         }
         const iconLeft = icons.dark(icon);
@@ -145,7 +145,7 @@ export default class FileItem extends Component {
                 <Swiper
                     state={this.store}
                     visible="checkBoxHidden"
-                    style={[swipeLeftToRightStyle, { opacity }]}
+                    style={[swipeLeftToRightStyle]}
                     shift={checkBoxWidth}
                     onSwipeOut={() => this.select()}
                     threshold={0.5}
@@ -154,13 +154,15 @@ export default class FileItem extends Component {
                         {/* <View style={itemBgStyle} pointerEvents="none">
                             <Text>HIDDEN UNDER</Text>
                         </View> */}
-                        <View style={fileInfoContainerStyle}>
+                        <View style={[fileInfoContainerStyle, { opacity }]}>
                             {this.checkbox()}
                             <View style={itemContainerStyle} pointerEvents="none">
                                 {iconLeft}
                                 <View style={{ flex: 1, marginLeft: 16 }}>
                                     <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
-                                    <Text style={infoStyle}>{moment(file.uploadedAt).format('MMMM Do YYYY, hh:mm a')}</Text>
+                                    <Text style={infoStyle}>
+                                        {moment(file.uploadedAt).format('MMMM Do YYYY, hh:mm a')}
+                                    </Text>
                                 </View>
                                 {iconRight}
                             </View>

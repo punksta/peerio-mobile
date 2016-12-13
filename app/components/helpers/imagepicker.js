@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { reaction } from 'mobx';
 import ImagePicker from 'react-native-image-picker';
 import { fileStore } from '../../lib/icebear';
 
@@ -28,6 +29,12 @@ export default {
                 }
                 console.log('imagepicker.js: ', source);
                 fileStore.upload(source.uri);
+                // console.log(`imagepicker.js: id ${file.id}`);
+                // console.log(`imagepicker.js: fileId ${file.fileId}`);
+                // global.currentFile = file;
+                // reaction(() => file.progress, progress => {
+                //     console.log(`imagepicker.js: progress ${progress}`);
+                // });
 
                 // RNFetchBlob.fs.readStream(source.uri, 'base64', 4095)
                 //     .then((ifstream) => {

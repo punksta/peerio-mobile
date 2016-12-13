@@ -53,7 +53,7 @@ export default class Files extends Component {
         const body = files.length ? (
             <ScrollView refreshControl={refreshControl}>
                 <View style={{ flex: 0, backgroundColor: vars.bg }}>
-                    {fileStore.files.map(file => <FileItem key={file.id} file={file} />)}
+                    {fileStore.files.map(file => <FileItem key={file.fileId} file={file} />)}
                 </View>
             </ScrollView>
         ) : <FilesPlaceholder />;
