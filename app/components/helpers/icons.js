@@ -19,13 +19,21 @@ const icons = {
         );
     },
 
-    plaindark(name) {
+    plain(name, size, color) {
         return (
             <Icon
                 name={name}
-                size={vars.iconSize}
-                color={vars.darkIcon} />
+                size={size || vars.iconSize}
+                color={color} />
         );
+    },
+
+    plaindark(name, size) {
+        return icons.plain(name, size, vars.darkIcon);
+    },
+
+    plainWhite(name, size) {
+        return icons.plain(name, size, vars.whiteIcon);
     },
 
     white(name, onPress, style, size) {
