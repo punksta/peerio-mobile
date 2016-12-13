@@ -217,7 +217,6 @@ export default class TextBox extends Component {
                                 backgroundColor: this.focused ? 'transparent' : vars.subtleBg }} />
                     </TouchableOpacity>
                     <View
-                        pointerEvents="none"
                         style={{
                             position: 'absolute',
                             left: 0,
