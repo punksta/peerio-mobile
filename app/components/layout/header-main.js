@@ -32,7 +32,7 @@ export default class HeaderMain extends Component {
 
     render() {
         const leftIcon = mainState.isBackVisible ?
-            icons.white('keyboard-arrow-left', this.back) :
+            icons.white('arrow-back', this.back) :
             icons.white('menu', this.leftMenu);
         const textStyle = {
             color: vars.white,
