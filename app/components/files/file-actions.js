@@ -13,7 +13,7 @@ const actionCellStyle = {
     flex: 1,
     alignItems: 'center',
     height: 56,
-    justifyContent: 'center',
+    justifyContent: 'center'
 };
 
 const actionTextStyle = {
