@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
-import { tu } from 'peerio-translator';
+import { tu } from '../utils/translator';
 import Button from '../controls/button';
 import Center from '../controls/center';
 import signupState from '../signup/signup-state';
