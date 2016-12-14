@@ -29,7 +29,7 @@ export default class SignupFooter extends Component {
             signupState.nextAvailable,
             () => signupState.next()
         );
-        const backIcon = <Icon name="arrow-back" size={24} color="#fff" />
+        const backIcon = <Icon name="arrow-back" size={24} color="#fff" />;
         const prev = this.button(
             signupState.isFirst ? tu('button_exit') : backIcon,
             !signupState.inProgress,
