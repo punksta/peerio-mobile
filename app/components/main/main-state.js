@@ -141,7 +141,7 @@ const mainState = observable({
     @action back() {
         this.currentIndex = 0;
         this.currentFile = null;
-        this.currentChat = null;
+        // this.currentChat = null;
         this.isBackVisible = false;
     },
 
