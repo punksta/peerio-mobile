@@ -32,7 +32,7 @@ export default class LoginClean extends Component {
         if (__DEV__) {
             loginState.username = 'anritest7';
             loginState.passphrase = 'icebear';
-            loginState.login();
+            // loginState.login();
         }
     }
 

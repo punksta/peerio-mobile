@@ -463,7 +463,6 @@
 		13B07FAE1A68108700A75B9A /* peeriomobile */ = {
 			isa = PBXGroup;
 			children = (
-				02210A831E0191BA006D7AC0 /* sounds */,
 				02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */,
 				02321C5C1D80558E00282EB1 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -553,6 +552,7 @@
 		EE3B3AB15A814B41A0267C44 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				02210A831E0191BA006D7AC0 /* sounds */,
 				02E096DB1DAE50E100641B85 /* dict */,
 				02E096B21DAE398B00641B85 /* locales */,
 				02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */,
