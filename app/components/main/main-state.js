@@ -54,10 +54,10 @@ const mainState = observable({
             }
 
             if (c) {
-                this.chat(c);
-            } else {
-                this.showCompose = true;
+                this.currentChat = c;
             }
+
+            this.messages();
 
             if (__DEV__) {
                 // this.files();
@@ -65,6 +65,19 @@ const mainState = observable({
             }
         });
         //
+    },
+
+    @action chat(i) {
+        this.resetMenus();
+        this.isInputVisible = true;
+        this.route = 'chat';
+        this.currentIndex = 0;
+        this.currentChat = i;
+        chatStore.activate(i.id);
+        when(() => !i.loadingMeta, () => {
+            this.currentChat.loadMessages();
+            this.save();
+        });
     },
 
     @action messages() {
@@ -117,19 +130,6 @@ const mainState = observable({
         const f = i || this.currentFile;
         this.back();
         fileStore.remove(f);
-    },
-
-    @action chat(i) {
-        this.resetMenus();
-        this.isInputVisible = true;
-        this.route = 'chat';
-        this.currentIndex = 0;
-        this.currentChat = i;
-        chatStore.activate(i.id);
-        when(() => !i.loadingMeta, () => {
-            this.currentChat.loadMessages();
-            this.save();
-        });
     },
 
     @action back() {
