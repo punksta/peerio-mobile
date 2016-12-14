@@ -138,15 +138,23 @@ export default class Avatar extends Component {
         );
     }
 
+    avatar() {
+        const { username, firstName, color } = this.props.contact;
+        const coloredAvatarStyle = [avatarStyle, { backgroundColor: color }];
+        return (
+            <View style={coloredAvatarStyle} />
+        );
+    }
+
+    loader() {
+        return <ActivityIndicator style={{ height: avatarDiameter, margin: 4 }} />;
+    }
+
     render() {
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
         const date = this.props.date ? <Text style={dateTextStyle}>{moment(this.props.date).format('LT')}</Text> : null;
         const online = this.props.hideOnline ? null : <View style={this.props.online ? circleStyle : circleStyleOff} />;
-        const color = this.props.name ? this.stringColor(this.props.name) : 'green';
-        const coloredAvatarStyle = [avatarStyle, { backgroundColor: this.props.color || color }];
-        const avatar = <View style={coloredAvatarStyle} />;
-        const loader = <ActivityIndicator style={{ height: avatarDiameter, margin: 4 }} />;
-        const avatarPlaceholder = this.props.loading ? loader : avatar;
+        const avatarPlaceholder = this.props.loading ? this.loader() : this.avatar();
         const checkbox = this.props.checkbox ? this.checkbox() : null;
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
         const message = <Text style={lastMessageTextStyle}>{this.props.message}</Text>;
@@ -159,7 +167,7 @@ export default class Avatar extends Component {
                             {avatarPlaceholder}
                             <View style={nameMessageContainerStyle}>
                                 <View style={nameContainerStyle}>
-                                    <Text ellipsizeMode="tail" style={nameTextStyle}>{this.props.name}</Text>
+                                    <Text ellipsizeMode="tail" style={nameTextStyle}>{this.props.contact.username}</Text>
                                     {date}
                                 </View>
                                 {message}
@@ -176,10 +184,9 @@ export default class Avatar extends Component {
 
 Avatar.propTypes = {
     onPress: React.PropTypes.func,
-    name: React.PropTypes.string,
+    contact: React.PropTypes.any.isRequired,
     date: React.PropTypes.any,
     icon: React.PropTypes.string,
-    color: React.PropTypes.string,
     message: React.PropTypes.string,
     online: React.PropTypes.bool,
     loading: React.PropTypes.bool,

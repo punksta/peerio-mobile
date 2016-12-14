@@ -19,7 +19,7 @@ const mainState = observable({
     _loading: false,
 
     @computed get loading() {
-        return this._loading || chatStore.loading || fileStore.loading;
+        return this._loading || chatStore.loading; // || fileStore.loading;
     },
 
     set loading(v) {
@@ -54,7 +54,7 @@ const mainState = observable({
             }
 
             if (c) {
-                this.currentChat = c;
+                this.chat(c);
             }
 
             this.messages();

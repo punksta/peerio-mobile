@@ -148,12 +148,11 @@ export default class ComposeMessage extends Component {
         const { username, color /* , message */ } = contact;
         return (
             <Avatar
+                contact={contact}
                 checkbox
-                color={color}
                 checkedKey={username}
                 checkedState={messagingState.recipientsMap}
                 key={username || i}
-                name={username}
                 message={username}
                 hideOnline
                 onPress={() => messagingState.toggle(contact)} />

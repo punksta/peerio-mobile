@@ -6,18 +6,16 @@ import Avatar from '../shared/avatar';
 export default class ChatItem extends Component {
     render() {
         const i = this.props.chat;
+        if (!i.sender) return null;
         const key = i.id;
         const msg = i.text || '';
         const timestamp = i.timestamp;
-        const name = i.sender.username;
-        const color = i.sender.color;
         const text = msg.replace(/\n[ ]+/g, '\n');
         return (
             <Avatar
-                color={color}
+                contact={i.sender}
                 hideOnline
                 date={timestamp}
-                name={name}
                 message={text}
                 key={key}
                 noBorderBottom

@@ -110,7 +110,7 @@ export default class Chat extends Component {
         this.scrollTimeout = setTimeout(() => {
             if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
                 const y = this.contentHeight - this.scrollViewHeight + state.keyboardHeight;
-                const animated = true; // !this.props.hideInput && this.enableNextScroll;
+                const animated = false; // !this.props.hideInput && this.enableNextScroll;
                 this.scrollView.scrollTo({ y, animated });
                 this.enableNextScroll = false;
             } else {
@@ -141,8 +141,10 @@ export default class Chat extends Component {
         // console.log(`content height: ${this.contentHeight}`);
         // console.log(`sv height: ${this.scrollViewHeight}`);
         // console.log(scrollEnabled);
-        const body = this.scrollViewHeight && mainState.canSend ?
-            this.listView() : <ActivityIndicator style={{ paddingBottom: 10 }} />;
+        const visible = this.scrollViewHeight && mainState.canSend;
+        const body = visible ? this.listView() : (
+            <ActivityIndicator style={{ paddingTop: 10 }} />
+        );
         return (
             <View
                 style={{ flex: 1, paddingTop }}>
