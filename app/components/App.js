@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, PanResponder, Navigator, AppState } from 'react-native';
 import { reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import Sound from 'react-native-sound';
 import Login from './login/login';
 import Signup from './signup/signup';
 import PersistentFooter from './layout/persistent-footer';
@@ -12,17 +11,9 @@ import ModalContainer from './layout/modal-container';
 import state from './layout/state';
 import styles, { vars } from './../styles/styles';
 import icebear from '../lib/icebear';
+import '../lib/sounds';
 import './utils/bridge';
 import './touchid/touchid-bridge';
-
-const whoosh = new Sound('sounds/ack.mp3', Sound.MAIN_BUNDLE, (error) => {
-    if (error) {
-        console.log('failed to load the sound', error);
-    } else { // loaded successfully
-        console.log(`duration in seconds: ${whoosh.getDuration()
-        }number of channels: ${whoosh.getNumberOfChannels()}`);
-    }
-});
 
 @observer
 export default class App extends Component {

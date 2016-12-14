@@ -3,6 +3,7 @@ import { observable, action, when, reaction, computed, asReference } from 'mobx'
 import state from '../layout/state';
 import { User, chatStore, fileStore } from '../../lib/icebear';
 import store from '../../store/local-storage';
+import sounds from '../../lib/sounds';
 
 const mainState = observable({
     isBackVisible: false,
@@ -47,6 +48,11 @@ const mainState = observable({
         state.hideKeyboard();
         this.messages();
         this.load();
+
+        chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, () => {
+            sounds.received();
+        });
+
         when(() => !this.loading, () => {
             let c = this.saved && chatStore.chatMap[this.saved.currentChat];
             if (!c && chatStore.chats.length) {
@@ -167,11 +173,15 @@ const mainState = observable({
     },
 
     @action addMessage(msg) {
-        mainState.currentChat && mainState.currentChat.sendMessage(msg);
+        sounds.sending();
+        mainState.currentChat && mainState.currentChat
+            .sendMessage(msg).then(sounds.sent).catch(sounds.destroy);
     },
 
     @action addAck() {
-        mainState.currentChat && mainState.currentChat.sendAck();
+        sounds.ack();
+        mainState.currentChat && mainState.currentChat
+            .sendAck().then(sounds.sent).catch(sounds.destroy);
     },
 
     @action toggleLeftMenu() {

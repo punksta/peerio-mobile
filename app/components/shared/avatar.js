@@ -140,7 +140,7 @@ export default class Avatar extends Component {
 
     avatar() {
         const { username, firstName, color } = this.props.contact;
-        const coloredAvatarStyle = [avatarStyle, { backgroundColor: color }];
+        const coloredAvatarStyle = [avatarStyle, { backgroundColor: color || '#fff' }];
         return (
             <View style={coloredAvatarStyle} />
         );
