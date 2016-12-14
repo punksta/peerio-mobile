@@ -6,36 +6,38 @@ import { tu } from 'peerio-translator';
 import signupState from '../signup/signup-state';
 import styles from '../../styles/styles';
 
+const style = styles.wizard.footer;
+
 @observer
 export default class SignupFooter extends Component {
-    next() {
-        signupState.next();
-    }
-
-    prev() {
-        signupState.prev();
-    }
-
-    render() {
-        const style = styles.wizard.footer;
-        const nextStyle = signupState.nextAvailable ? { opacity: 1 } : { opacity: 0.7 };
-        const next = (
+    button(text, active, onPress) {
+        const s = { opacity: active ? 1 : 0.7 };
+        return (
             <TouchableOpacity
-                style={[style.button.base, nextStyle]}
-                onPress={signupState.nextAvailable ? this.next : null}>
-                <Text style={[style.button.text, nextStyle]}>
-                    {signupState.isLast ? tu('button_finish') : tu('next')}
+                style={style.button.base}
+                onPress={active ? onPress : null}>
+                <Text style={[style.button.text, s]}>
+                    {text}
                 </Text>
             </TouchableOpacity>
         );
+    }
+
+    render() {
+        const next = this.button(
+            signupState.isLast ? tu('button_finish') : tu('next'),
+            signupState.nextAvailable,
+            () => signupState.next()
+        );
+        const backIcon = <Icon name="arrow-back" size={24} color="#fff" />
+        const prev = this.button(
+            signupState.isFirst ? tu('button_exit') : backIcon,
+            !signupState.inProgress,
+            () => signupState.prev());
+
         return (
             <View style={style.row}>
-                <TouchableOpacity style={style.button.base} onPress={this.prev}>
-                    {signupState.isFirst ?
-                        <Text style={style.button.text}>
-                            {tu('button_exit')}
-                        </Text> : <Icon name="arrow-back" size={24} color="#fff" />}
-                </TouchableOpacity>
+                {prev}
                 {next}
             </View>
         );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable, action, computed, autorun } from 'mobx';
+import { observable, action, autorun } from 'mobx';
 import SignupCircles from './signup-circles';
 import state from '../layout/state';
 import mainState from '../main/main-state';
@@ -20,11 +20,13 @@ const signupState = observable({
     pinSaved: false,
     current: 0,
     count: 0,
-    @computed get isActive() {
+    inProgress: false,
+
+    get isActive() {
         return state.route.startsWith('signup');
     },
 
-    @computed get nextAvailable() {
+    get nextAvailable() {
         switch (signupState.current) {
             case 0: return this.isValid() && socket.connected;
             case 1: return this.pinSaved && socket.connected;
@@ -32,11 +34,11 @@ const signupState = observable({
         }
     },
 
-    @computed get isLast() {
+    get isLast() {
         return this.current === this.count - 1;
     },
 
-    @computed get isFirst() {
+    get isFirst() {
         return this.current === 0;
     },
 
@@ -76,6 +78,7 @@ const signupState = observable({
     },
 
     @action async finish() {
+        this.inProgress = true;
         this.passphrase = await this.generatePassphrase();
         console.log(this.passphrase);
         const user = new User();
@@ -124,7 +127,8 @@ const signupState = observable({
                     }
                     return false;
                 });
-            });
+            })
+            .finally(() => (this.inProgress = false));
     }
 });
 
