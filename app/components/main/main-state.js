@@ -185,11 +185,13 @@ const mainState = observable({
     },
 
     @action toggleLeftMenu() {
+        state.hideKeyboard();
         this.isLeftMenuVisible = !this.isLeftMenuVisible;
         this.isRightMenuVisible = false;
     },
 
     @action toggleRightMenu() {
+        state.hideKeyboard();
         this.isRightMenuVisible = !this.isRightMenuVisible;
         this.isLeftMenuVisible = false;
     }
