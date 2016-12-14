@@ -72,7 +72,8 @@ const dateTextStyle = {
 const lastMessageTextStyle = {
     fontWeight: vars.font.weight.regular,
     color: 'rgba(0, 0, 0, .54)',
-    lineHeight: 19
+    fontSize: 14,
+    lineHeight: 22
 };
 
 const circleDiameter = 6;
@@ -140,9 +141,17 @@ export default class Avatar extends Component {
 
     avatar() {
         const { username, firstName, color } = this.props.contact;
-        const coloredAvatarStyle = [avatarStyle, { backgroundColor: color || '#fff' }];
+        const letter = (firstName || username || ' ')[0].toUpperCase();
+        const coloredAvatarStyle = [avatarStyle, {
+            overflow: 'hidden',
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: color || '#fff'
+        }];
         return (
-            <View style={coloredAvatarStyle} />
+            <View style={coloredAvatarStyle}>
+                <Text style={{ color: 'white' }}>{letter}</Text>
+            </View>
         );
     }
 
