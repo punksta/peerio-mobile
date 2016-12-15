@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    ListView, View, ActivityIndicator
+    ScrollView, ListView, View, ActivityIndicator
 } from 'react-native';
 import _ from 'lodash';
 import { observer } from 'mobx-react/native';
@@ -42,11 +42,11 @@ export default class Chat extends Component {
     }
 
     componentWillMount() {
-        this.reaction = reaction(() => (mainState.route === 'chat') && this.data && this.data.length, () => {
-            console.log(`chat.js update reaction ${this.data.length}`);
-            this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
-            this.forceUpdate();
-        }, true);
+        // this.reaction = reaction(() => (mainState.route === 'chat') && this.data && this.data.length, () => {
+        //     console.log(`chat.js update reaction ${this.data.length}`);
+        //     this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
+        //     this.forceUpdate();
+        // }, true);
     }
 
     componentWillUnmount() {
@@ -114,12 +114,22 @@ export default class Chat extends Component {
                 this.scrollView.scrollTo({ y, animated });
                 this.enableNextScroll = false;
             } else {
-                // setTimeout(() => this.scroll(), 1000);
+                setTimeout(() => this.scroll(), 1000);
             }
         }, 100);
     }
 
     listView() {
+        return (
+            <ScrollView
+                initialListSize={1}
+                onContentSizeChange={this.scroll}
+                enableEmptySections
+                ref={sv => (this.scrollView = sv)}>
+                {this.data.map(this.item)}
+            </ScrollView>
+        );
+
         return (
             <ListView
                 initialListSize={1}
@@ -133,14 +143,15 @@ export default class Chat extends Component {
     }
 
     render() {
-        const shift = this.contentHeight - (this.scrollViewHeight - state.keyboardHeight);
-        const paddingTop = !!this.scrollViewHeight &&
-            (global.platform === 'android') && (shift < 0) ? -shift : 0;
+        // const shift = this.contentHeight - (this.scrollViewHeight - state.keyboardHeight);
+        // const paddingTop = !!this.scrollViewHeight &&
+        //     (global.platform === 'android') && (shift < 0) ? -shift : 0;
         // const scrollEnabled = !!this.scrollViewHeight && (shift > 0);
         // console.log('render');
         // console.log(`content height: ${this.contentHeight}`);
         // console.log(`sv height: ${this.scrollViewHeight}`);
         // console.log(scrollEnabled);
+        const paddingTop = 0;
         const visible = this.scrollViewHeight && mainState.canSend;
         const body = visible ? this.listView() : (
             <ActivityIndicator style={{ paddingTop: 10 }} />

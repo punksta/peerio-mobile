@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
     View,
-    PanResponder
+    PanResponder,
+    TouchableOpacity
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, computed } from 'mobx';
@@ -100,16 +101,18 @@ export default class InputMain extends Component {
                         ref={ref => { this.input = ref; }}
                     />
                 </View>
-                <View style={{
-                    alignItems: 'center',
-                    backgroundColor: vars.checkboxActive,
-                    borderRadius: 20,
-                    justifyContent: 'center',
-                    height: 40,
-                    marginRight: 8,
-                    width: 40 }}>
-                    {icon}
-                </View>
+                <TouchableOpacity onPress={this.send}>
+                    <View style={{
+                          alignItems: 'center',
+                          backgroundColor: vars.checkboxActive,
+                          borderRadius: 20,
+                          justifyContent: 'center',
+                          height: 40,
+                          marginRight: 8,
+                          width: 40 }}>
+                        {icon}
+                    </View>
+                </TouchableOpacity>
             </View>
         );
     }
