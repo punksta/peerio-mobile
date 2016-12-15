@@ -914,7 +914,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "export NODE_BINARY=node\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\nsource env.sh\n# clean up\nrm -f ios/main.jsbundle\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n    ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n# check that command was successful\n\nif [ ! -f ios/main.jsbundle ]; then\n    echo \"JS compilation failed. Please check the sources\"\n    exit 1\nfi\n";
+			shellScript = "export NODE_BINARY=node\n\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\nsource env.sh\n# clean up\nrm -f ios/main.jsbundle\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n    ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n# check that command was successful\n\nif [ ! -f ios/main.jsbundle ]; then\n    echo \"JS compilation failed. Please check the sources\"\n    exit 1\nfi\n";
 		};
 		02DB415B1DCD1DB000E04176 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1067,7 +1067,7 @@
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 149;
+				CURRENT_PROJECT_VERSION = 151;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
 				HEADER_SEARCH_PATHS = (
@@ -1120,7 +1120,7 @@
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 149;
+				CURRENT_PROJECT_VERSION = 151;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

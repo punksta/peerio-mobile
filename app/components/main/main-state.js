@@ -129,7 +129,7 @@ const mainState = observable({
         const file = i || this.currentFile;
         if (!file) return;
         if (file.downloading || file.uploading) return;
-        file.download();
+        file.download().catch(e => console.error(e));
     },
 
     @action deleteFile(i) {

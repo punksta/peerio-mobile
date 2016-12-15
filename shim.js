@@ -30,6 +30,5 @@ global.WebSocket = function(url) {
 };
 
 // global.WebSocket = global.originalWebSocket;
-const ws = new WebSocket('ws://localhost:8081')
-console.log('shim.js binaryType: ', ws.binaryType);
+// console.log('shim.js binaryType: ', ws.binaryType);
 // console.log('shim.js: ', global.originalWebSocket);

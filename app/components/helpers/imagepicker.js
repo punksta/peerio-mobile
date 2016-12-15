@@ -27,7 +27,7 @@ export default {
                 } else {
                     source = { uri: response.uri, isStatic: true };
                 }
-                console.log('imagepicker.js: ', source);
+                // console.log('imagepicker.js: ', source);
                 fileStore.upload(source.uri);
                 // console.log(`imagepicker.js: id ${file.id}`);
                 // console.log(`imagepicker.js: fileId ${file.fileId}`);

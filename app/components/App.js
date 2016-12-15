@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, PanResponder, Navigator, AppState } from 'react-native';
-import { reaction, action } from 'mobx';
+import { reaction, action, spy } from 'mobx';
 import { observer } from 'mobx-react/native';
 import Login from './login/login';
 import Signup from './signup/signup';
@@ -63,7 +63,7 @@ export default class App extends Component {
             console.error = console._errorOriginal;
         }
 
-        !__DEV__ && global.ErrorUtils && global.ErrorUtils.setGlobalHandler((...args) => {
+        global.ErrorUtils && global.ErrorUtils.setGlobalHandler((...args) => {
             console.error('App.js: unhandled error');
             console.error(args);
         });
@@ -92,7 +92,11 @@ export default class App extends Component {
         if (appState !== 'active') {
             icebear.socket.close();
         } else {
-            icebear.socket.open();
+            // spy((event) => {
+            //     console.log('app.js spy');
+            //     console.log(event);
+            // });
+            setTimeout(() => icebear.socket.open(), 2000);
         }
     }
 

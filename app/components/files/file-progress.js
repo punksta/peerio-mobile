@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import {
     View,
+    Dimensions,
     Animated
 } from 'react-native';
 import { observable, autorun, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
 
-@observer
+const width = Dimensions.get('window').width;
+
 export default class FileProgress extends Component {
-    @observable width = 0;
+    // @observable width = 0;
     prevFile = null;
 
     get hidden() {
@@ -27,13 +29,14 @@ export default class FileProgress extends Component {
         if (file.uploading) {
             max = file.progressMax | 1;
         }
-        return (this.width * file.progress / max) | 0;
+        // console.log(`file-progress.js: ${file.progress}, ${file.progressMax}`);
+        return (width * file.progress / max);
     }
 
     progress = new Animated.Value(0);
 
     layout(evt) {
-        this.width = evt.nativeEvent.layout.width;
+        // this.width = evt.nativeEvent.layout.width;
         reaction(() => this.props.file, file => {
             if (file !== this.prevFile) {
                 this.prevFile = file;
@@ -41,13 +44,15 @@ export default class FileProgress extends Component {
             }
         }, true);
         autorun(() => {
-            if (this.hidden) return;
+            if (this.hidden) {
+                this.progress.setValue(0);
+                return;
+            }
             const toValue = this.value;
-            const duration = 3000;
-            console.log(this.progress);
-            toValue < this.progress._toValue ?
-                this.progress.setValue(0) :
-                Animated.timing(this.progress, { toValue, duration }).start();
+            // console.log(`file-progress.js: ${toValue}`);
+            const duration = 100;
+            // this.progress.setValue(toValue);
+            Animated.timing(this.progress, { toValue, duration }).start();
         });
     }
 
@@ -58,7 +63,7 @@ export default class FileProgress extends Component {
             marginTop: -height,
             height,
             backgroundColor: '#CFCFCF',
-            flex: 1
+            width
         };
         const pbProgress = {
             height,

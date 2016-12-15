@@ -51,10 +51,10 @@ const state = observable({
     },
 
     @action hideKeyboard() {
-        if (state.focusedTextBox) {
-            state.focusedTextBox.blur();
-            state.focusedTextBox = null;
-        }
+        // if (state.focusedTextBox) {
+        //     // state.focusedTextBox.blur();
+        //     state.focusedTextBox = null;
+        // }
         dismissKeyboard();
         setTimeout(() => { state.pickerVisible = false; }, 0);
     },
