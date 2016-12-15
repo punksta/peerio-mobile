@@ -53,7 +53,7 @@ export default class Files extends Component {
     componentDidMount() {
         reaction(() => fileState.showSelection, v => {
             const duration = 200;
-            const toValue = v ? 80 : 0;
+            const toValue = v ? 56 : 0;
             Animated.timing(this.actionsHeight, { toValue, duration }).start();
         });
     }
@@ -107,4 +107,3 @@ export default class Files extends Component {
         );
     }
 }
-
