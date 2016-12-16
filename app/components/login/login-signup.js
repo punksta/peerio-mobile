@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { View, ActivityIndicator } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { tu } from '../utils/translator';
+import { t, tu } from '../utils/translator';
 import Button from '../controls/button';
-import Center from '../controls/center';
+import ErrorText from '../controls/error-text';
 import signupState from '../signup/signup-state';
 import loginState from '../login/login-state';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class LoginSignup extends Component {
@@ -23,8 +25,7 @@ export default class LoginSignup extends Component {
         loginState.login();
     }
 
-    render() {
-        console.log(`login-signup.js: ${loginState.isConnected}`);
+    button(text, testId, action) {
         const bStyle = {
             padding: 24
         };
@@ -32,22 +33,28 @@ export default class LoginSignup extends Component {
             fontWeight: 'bold'
         };
         return (
-            <Center>
-                <Button
-                    testID="signupButton"
-                    style={bStyle}
-                    disabled={!loginState.isConnected}
-                    textStyle={textStyle}
-                    text={tu('signup')}
-                    onPress={this.signUp} />
-                <Button
-                    testID="loginButton"
-                    style={bStyle}
-                    disabled={!loginState.isConnected}
-                    textStyle={textStyle}
-                    text={tu('login')}
-                    onPress={this.login} />
-            </Center>
+            <Button
+                key={text}
+                testID={testId}
+                style={bStyle}
+                disabled={!loginState.isConnected}
+                textStyle={textStyle}
+                text={tu(text)}
+                onPress={action} />
+        );
+    }
+
+    render() {
+        const activityIndicator = <ActivityIndicator color={vars.highlight} style={{ height: 14 }} />;
+        let item = loginState.isInProgress ? activityIndicator : [
+            this.button('signup', 'signupButton', this.signUp),
+            this.button('login', 'loginButton', this.login)
+        ];
+        item = loginState.error ? <ErrorText>{t(loginState.error)}</ErrorText> : item;
+        return (
+            <View style={{ flexDirection: 'row', height: 50 }}>
+                {item}
+            </View>
         );
     }
 }

@@ -72,7 +72,7 @@ export default class Chat extends Component {
 
     renderInput() {
         const s = {
-            flex: 0,
+            minHeight: 80,
             borderTopColor: 'rgba(0, 0, 0, .12)',
             borderTopWidth: 1,
             backgroundColor: '#fff'

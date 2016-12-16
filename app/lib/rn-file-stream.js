@@ -1,5 +1,5 @@
 import RNFS from 'react-native-fs';
-import RNFetchBlob from 'react-native-fetch-blob';
+import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
 import { fromByteArray, toByteArray } from 'base64-js';
 

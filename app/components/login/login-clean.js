@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View,
-    ActivityIndicator
+    View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
@@ -10,12 +9,11 @@ import LanguagePicker from '../controls/language-picker';
 import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
 import Center from '../controls/center';
-import ErrorText from '../controls/error-text';
 import Logo from '../controls/logo';
 import LoginSignup from './login-signup';
 import Terms from './terms';
 import loginState from './login-state';
-import styles, { vars } from '../../styles/styles';
+import styles from '../../styles/styles';
 
 @observer
 export default class LoginClean extends Component {
@@ -42,26 +40,23 @@ export default class LoginClean extends Component {
 
     render() {
         const style = styles.wizard;
-        const activityIndicator = <ActivityIndicator color={vars.highlight} style={{ height: 14 }} />;
         const loginButton = <LoginSignup />;
-        const button = loginState.isInProgress ? activityIndicator : loginButton;
-        const centerItem = loginState.error ? <ErrorText>{t(loginState.error)}</ErrorText> : button;
         const body = (
             <View
                 style={style.containerFlex}>
                 <Logo />
-                <View>
+                <View style={{ flexGrow: 1 }}>
                     <TextBox lowerCase state={loginState} name="username" hint={t('username')} />
                     <TextBox state={loginState} name="passphrase" hint={t('passphrase')} secureTextEntry />
                     <LanguagePickerBox />
                 </View>
-                <View style={{ height: 40, marginBottom: 42 }}>
+                <View style={{ flexGrow: 1 }}>
                     <Center>
-                        {centerItem}
+                        {loginButton}
                     </Center>
                 </View>
                 <Terms />
-                <View />
+                <View style={{ flexGrow: 1 }} />
             </View>
         );
         return <Layout1 body={body} footer={null} />;

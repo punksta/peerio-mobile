@@ -12,7 +12,7 @@ import FileProgress from './file-progress';
 import FileActions from './file-actions';
 
 const firstRowStyle = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     marginTop: 12
 };
@@ -24,7 +24,7 @@ const secondRowStyle = {
 };
 
 const firstColumnStyle = {
-    flex: 1,
+    flexGrow: 1,
     paddingTop: vars.iconPadding
 };
 
@@ -47,7 +47,7 @@ export default class FileView extends Component {
         return (
             <View
                 style={{
-                    flex: 1,
+                    flexGrow: 1,
                     justifyContent: 'space-between'
                 }}>
                 <View style={{
@@ -65,23 +65,23 @@ export default class FileView extends Component {
                                 <Text>{file.name}</Text>
                             </View>
                             <View style={secondRowStyle}>
-                                <View style={{ flex: 1 }}>
+                                <View style={{ flexGrow: 1 }}>
                                     <Text style={hintStyle}>File size</Text>
                                     <Text>{file.sizeFormatted} {file.ext}</Text>
                                 </View>
 
-                                <View style={{ flex: 1 }}>
+                                <View style={{ flexGrow: 1 }}>
                                     <Text style={hintStyle}>Uploaded</Text>
                                     <Text>{moment(file.uploadedAt).format('MMMM DD YYYY')}</Text>
                                 </View>
                             </View>
                             {/*
                             <View style={secondRowStyle}>
-                                <View style={{ flex: 1 }}>
+                                <View style={{ flexGrow: 1 }}>
                                     <Text style={hintStyle}>Progress</Text>
                                     <Text>{file.progress}</Text>
                                 </View>
-                                <View style={{ flex: 1 }}>
+                                <View style={{ flexGrow: 1 }}>
                                     <Text style={hintStyle}>Progress buffer</Text>
                                     <Text>{file.progressBuffer}</Text>
                                 </View>

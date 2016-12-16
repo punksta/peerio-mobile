@@ -57,6 +57,7 @@ const loginState = observable({
     },
 
     @action _login(user) {
+        console.log(`login-state.js: logging in ${user.username}`);
         return isValidLoginUsername(user.username)
             .then(valid => {
                 if (valid) {
@@ -69,7 +70,7 @@ const loginState = observable({
             .catch(e => {
                 console.error(e);
                 if (!this.error) this.error = 'loginFailed';
-                return Promise.reject(new Error(this.error));
+                // return Promise.reject(new Error(this.error));
             })
             .finally(() => {
                 this.isInProgress = false;

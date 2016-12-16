@@ -12,7 +12,7 @@ import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
 
 const itemStyle = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
     paddingLeft: 4,

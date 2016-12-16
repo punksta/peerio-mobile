@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
-import { reaction } from 'mobx';
+import { reaction, when } from 'mobx';
 import ImagePicker from 'react-native-image-picker';
-import { fileStore } from '../../lib/icebear';
+import { socket, fileStore } from '../../lib/icebear';
 
 const options = {
     noData: 'true',
@@ -28,7 +28,7 @@ export default {
                     source = { uri: response.uri, isStatic: true };
                 }
                 // console.log('imagepicker.js: ', source);
-                fileStore.upload(source.uri);
+                when(() => socket.authenticated, () => fileStore.upload(source.uri));
                 // console.log(`imagepicker.js: id ${file.id}`);
                 // console.log(`imagepicker.js: fileId ${file.fileId}`);
                 // global.currentFile = file;

@@ -62,7 +62,7 @@ export default class ComposeMessage extends Component {
 
     userboxline() {
         const container = {
-            flex: 1,
+            flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'flex-start',
             paddingLeft: 8,
@@ -86,7 +86,7 @@ export default class ComposeMessage extends Component {
 
     textbox() {
         const container = {
-            flex: 1,
+            flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
             padding: 4,
@@ -94,7 +94,7 @@ export default class ComposeMessage extends Component {
             paddingBottom: 0
         };
         const style = {
-            flex: 1,
+            flexGrow: 1,
             marginLeft: 8
         };
 
@@ -114,7 +114,7 @@ export default class ComposeMessage extends Component {
 
     exitRow() {
         const container = {
-            flex: 1,
+            flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
             padding: 4,
@@ -122,7 +122,7 @@ export default class ComposeMessage extends Component {
             paddingBottom: 0
         };
         const style = {
-            flex: 1
+            flexGrow: 1
         };
         const textStyle = {
             fontSize: 14,

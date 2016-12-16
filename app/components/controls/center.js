@@ -7,6 +7,7 @@ import styles from '../../styles/styles';
 export default class Center extends Component {
     render() {
         let style = {
+            flexGrow: 1,
             flexDirection: 'row',
             justifyContent: 'center'
         };

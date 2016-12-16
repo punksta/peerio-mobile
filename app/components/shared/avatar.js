@@ -19,14 +19,14 @@ const avatarStyle = {
 };
 
 const itemStyle = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'white'
 };
 
 const itemContainerStyle = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
     borderBottomWidth: 1,
@@ -36,7 +36,7 @@ const itemContainerStyle = {
 };
 
 const itemContainerStyleNoBorder = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
     backgroundColor: 'white',
@@ -44,13 +44,13 @@ const itemContainerStyleNoBorder = {
 };
 
 const nameContainerStyle = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center'
 };
 
 const nameMessageContainerStyle = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'column',
     padding: 8,
     paddingLeft: 16,

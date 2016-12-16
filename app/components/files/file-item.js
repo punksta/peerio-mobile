@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     Text,
+    Dimensions,
     View,
     TouchableOpacity
 } from 'react-native';
@@ -14,16 +15,17 @@ import mainState from '../main/main-state';
 import fileState from './file-state';
 import FileProgress from './file-progress';
 
+const width = Dimensions.get('window').width;
 const height = 64;
 const checkBoxWidth = height;
 const itemContainerStyle = {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, .12)',
     backgroundColor: 'white',
     height,
+    width,
     paddingLeft: 8
 };
 
@@ -34,7 +36,7 @@ const itemContainerStyle = {
 // };
 
 const fileInfoContainerStyle = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     marginLeft: -checkBoxWidth
 };
@@ -159,14 +161,18 @@ export default class FileItem extends Component {
                         <View style={[fileInfoContainerStyle, { opacity }]}>
                             {this.checkbox()}
                             <View style={itemContainerStyle} pointerEvents="none">
-                                {icon}
-                                <View style={{ flex: 1, marginLeft: 16 }}>
+                                <View style={{ flexGrow: 1 }}>
+                                    {icon}
+                                </View>
+                                <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: 16 }}>
                                     <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                     <Text style={infoStyle}>
                                         {moment(file.uploadedAt).format('MMMM Do YYYY, hh:mm a')}
                                     </Text>
                                 </View>
-                                {iconRight}
+                                <View style={{ flexGrow: 1 }}>
+                                    {iconRight}
+                                </View>
                             </View>
                         </View>
                     </TouchableOpacity>

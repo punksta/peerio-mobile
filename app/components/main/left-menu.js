@@ -50,7 +50,7 @@ const headerTextStyle = {
 };
 
 const headerContainer = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -124,7 +124,7 @@ export default class LeftMenu extends Component {
         };
 
         const innerContainerStyle = {
-            flex: 1,
+            flexGrow: 1,
             backgroundColor: 'white',
             borderRightWidth: 1,
             borderRightColor: 'rgba(0,0,0,.12)'
@@ -146,7 +146,7 @@ export default class LeftMenu extends Component {
                     <View>
                         { this.header('Conversations', () => messagingState.transition()) }
                     </View>
-                    <ScrollView style={{ flex: 1, borderColor: 'green', borderWidth: 0 }}>
+                    <ScrollView style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
                         { chats.map(this.item) }
                     </ScrollView>
                 </View>
