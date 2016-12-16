@@ -1,7 +1,7 @@
-import { observable, computed, action } from 'mobx';
+import { observable, action } from 'mobx';
 
 const snackbarState = observable({
-    @computed get text() {
+    get text() {
         return this.messages.length ?
             this.messages[this.messages.length - 1] : null;
     },

@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import moment from 'moment';
 import { observer } from 'mobx-react/native';
-import { computed } from 'mobx';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 
@@ -97,8 +96,7 @@ const circleStyleOff = {
 
 @observer
 export default class Avatar extends Component {
-    @computed get checked() {
-        // console.log('avatar.js: computed checked');
+    get checked() {
         const cs = this.props.checkedState;
         const ck = this.props.checkedKey;
         return cs && ck && !!cs.has(ck);

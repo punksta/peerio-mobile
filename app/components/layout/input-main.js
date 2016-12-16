@@ -5,7 +5,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, computed } from 'mobx';
+import { observable } from 'mobx';
 import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -13,7 +13,7 @@ import icons from '../helpers/icons';
 @observer
 export default class InputMain extends Component {
     @observable value = '';
-    @computed get hasText() {
+    get hasText() {
         return this.value && this.value.length;
     }
     constructor(props) {

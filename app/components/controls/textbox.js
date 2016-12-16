@@ -6,7 +6,7 @@ import {
     TouchableOpacity,
     Animated
 } from 'react-native';
-import { observable, reaction, computed } from 'mobx';
+import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
 import state from '../layout/state';
@@ -17,7 +17,7 @@ import icons from '../helpers/icons';
 export default class TextBox extends Component {
     @observable focused = false;
     @observable showSecret = false;
-    @computed get nextField() {
+    get nextField() {
         const byOrder = this.props.state.byOrder;
         const byName = this.props.state.byName;
         if (!byOrder || !byName) return null;
@@ -25,17 +25,17 @@ export default class TextBox extends Component {
         return byOrder[byName[name] + 1];
     }
 
-    @computed get value() {
+    get value() {
         return this.props.state ?
             this.props.state[this.props.name] : this.props.value;
     }
 
-    @computed get valid() {
+    get valid() {
         return this.props.state ?
             this.props.state[`${this.props.name}Valid`] : this.props.valid;
     }
 
-    @computed get validationMessage() {
+    get validationMessage() {
         return this.props.state ?
             this.props.state[`${this.props.name}ValidationMessage`] : this.props.validationMessage;
     }

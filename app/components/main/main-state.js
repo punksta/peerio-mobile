@@ -1,5 +1,5 @@
 import { Animated } from 'react-native';
-import { observable, action, when, reaction, computed, asReference } from 'mobx';
+import { observable, action, when, reaction, asReference } from 'mobx';
 import state from '../layout/state';
 import { User, chatStore, fileStore } from '../../lib/icebear';
 import store from '../../store/local-storage';
@@ -19,7 +19,7 @@ const mainState = observable({
     suppressTransition: false,
     _loading: false,
 
-    @computed get loading() {
+    get loading() {
         return this._loading || chatStore.loading; // || fileStore.loading;
     },
 
@@ -93,7 +93,7 @@ const mainState = observable({
         this.isBackVisible = false;
     },
 
-    @computed get unreadMessages() {
+    get unreadMessages() {
         let r = 0;
         chatStore.chats.forEach(c => (r += c.unreadCount));
         return r;
@@ -114,7 +114,7 @@ const mainState = observable({
         this.isBackVisible = false;
     },
 
-    @computed get fileCount() {
+    get fileCount() {
         return fileStore.files.length;
     },
 
@@ -160,14 +160,14 @@ const mainState = observable({
         await store.user.set('main-state', { currentChat: this.currentChat.id });
     },
 
-    @computed get title() {
+    get title() {
         const t = this.titles[this.route];
         // console.log(`main-state.js: ${this.titles}, ${this.route}, ${t}`);
         // console.log(this.titles);
         return t && t(this);
     },
 
-    @computed get canSend() {
+    get canSend() {
         return this.currentChat && this.currentChat.id &&
                       !this.currentChat.loadingMessages;
     },

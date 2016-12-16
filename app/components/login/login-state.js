@@ -1,4 +1,4 @@
-import { when, observable, action, computed } from 'mobx';
+import { when, observable, action } from 'mobx';
 import RNRestart from 'react-native-restart';
 import state from '../layout/state';
 import mainState from '../main/main-state';
@@ -23,11 +23,11 @@ const loginState = observable({
     pin: false,
     error: null,
 
-    @computed get isActive() {
+    get isActive() {
         return state.route.startsWith('login');
     },
 
-    @computed get isConnected() {
+    get isConnected() {
         return !!socket.connected;
     },
 

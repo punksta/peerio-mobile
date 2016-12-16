@@ -1,13 +1,13 @@
-import { observable, asMap, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import mainState from '../main/main-state';
 import { fileStore } from '../../lib/icebear';
 
 const fileState = observable({
-    @computed get showSelection() {
+    get showSelection() {
         return !!this.selected.length;
     },
 
-    @computed get selected() {
+    get selected() {
         return fileStore.files.filter(f => f.selected);
     },
 
