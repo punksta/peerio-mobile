@@ -6,6 +6,8 @@ import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
 import mainState from '../main/main-state';
 import styles, { vars } from '../../styles/styles';
+import MessageIcon from './message-icon';
+import BackIcon from './back-icon';
 
 @observer
 export default class HeaderMain extends Component {
@@ -32,8 +34,7 @@ export default class HeaderMain extends Component {
 
     render() {
         const leftIcon = mainState.isBackVisible ?
-            icons.white('arrow-back', this.back) :
-            icons.white('menu', this.leftMenu);
+            <BackIcon /> : <MessageIcon />;
         const textStyle = {
             color: vars.white,
             fontWeight: vars.font.weight.regular,
@@ -58,9 +59,7 @@ export default class HeaderMain extends Component {
                 backgroundColor: styles.branding.peeriomobile.bg
             }}>
                 <View style={containerStyle}>
-                    <View style={{ paddingLeft: 6, backgroundColor: 'transparent' }}>
-                        {leftIcon}
-                    </View>
+                    {leftIcon}
                     <Text
                         ellipsizeMode="tail"
                         numberOfLines={1}
