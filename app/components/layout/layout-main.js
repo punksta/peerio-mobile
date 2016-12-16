@@ -124,7 +124,7 @@ export default class LayoutMain extends Component {
         ];
         const transformAndroid = global.platform === 'android' ? [{ translateY: state.keyboardHeight }] : [];
         const outerStyle = {
-            backgroundColor: 'white',
+            backgroundColor: '#fff',
             flex: 1,
             flexDirection: 'column',
             justifyContent: 'space-between',
