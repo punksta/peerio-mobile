@@ -103,13 +103,13 @@ export default class InputMain extends Component {
                 </View>
                 <TouchableOpacity onPress={this.send}>
                     <View style={{
-                          alignItems: 'center',
-                          backgroundColor: vars.checkboxActive,
-                          borderRadius: 20,
-                          justifyContent: 'center',
-                          height: 40,
-                          marginRight: 8,
-                          width: 40 }}>
+                        alignItems: 'center',
+                        backgroundColor: vars.checkboxActive,
+                        borderRadius: 20,
+                        justifyContent: 'center',
+                        height: 40,
+                        marginRight: 8,
+                        width: 40 }}>
                         {icon}
                     </View>
                 </TouchableOpacity>
