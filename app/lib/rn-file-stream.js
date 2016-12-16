@@ -3,7 +3,7 @@ import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
 import { fromByteArray, toByteArray } from 'base64-js';
 
-module.exports = (fileStream) => {
+export default (fileStream) => {
     class RNFileStream extends fileStream {
         constructor(filePath, mode, bufferSize) {
             super(filePath, mode, bufferSize);
