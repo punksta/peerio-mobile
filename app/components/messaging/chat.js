@@ -87,7 +87,7 @@ export default class Chat extends Component {
     }
 
     item(chat) {
-        return <ChatItem chat={chat} />;
+        return <ChatItem key={chat.id} chat={chat} />;
     }
 
     @observable contentHeight = 0;
@@ -130,16 +130,16 @@ export default class Chat extends Component {
             </ScrollView>
         );
 
-        return (
-            <ListView
-                initialListSize={1}
-                dataSource={this.dataSource}
-                renderRow={this.item}
-                onContentSizeChange={this.scroll}
-                enableEmptySections
-                ref={sv => (this.scrollView = sv)}
-            />
-        );
+//         return (
+//             <ListView
+//                 initialListSize={1}
+//                 dataSource={this.dataSource}
+//                 renderRow={this.item}
+//                 onContentSizeChange={this.scroll}
+//                 enableEmptySections
+//                 ref={sv => (this.scrollView = sv)}
+//             />
+//         );
     }
 
     render() {

@@ -118,10 +118,13 @@ export default class LeftMenu extends Component {
             left: 0,
             top: 0,
             bottom: 0,
+            borderColor: 'yellow',
+            borderWidth: 0,
             width
         };
 
         const innerContainerStyle = {
+            flex: 1,
             backgroundColor: 'white',
             borderRightWidth: 1,
             borderRightColor: 'rgba(0,0,0,.12)'
@@ -135,7 +138,7 @@ export default class LeftMenu extends Component {
                 width="animatedLeftMenuWidth"
                 animated="animatedLeftMenu"
                 visible="isLeftMenuVisible"
-                threshold={0.5}
+                threshold={0.2}
                 style={containerStyle}
                 {...this.props}
                 rightToLeft>
@@ -143,7 +146,7 @@ export default class LeftMenu extends Component {
                     <View>
                         { this.header('Conversations', () => messagingState.transition()) }
                     </View>
-                    <ScrollView>
+                    <ScrollView style={{ flex: 1, borderColor: 'green', borderWidth: 0 }}>
                         { chats.map(this.item) }
                     </ScrollView>
                 </View>
