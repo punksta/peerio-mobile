@@ -29,6 +29,9 @@ global.WebSocket = function(url) {
   return r;
 };
 
+const cryptoShim = require('react-native-crypto');
+global.cryptoShim = cryptoShim;
+
 // global.WebSocket = global.originalWebSocket;
 // console.log('shim.js binaryType: ', ws.binaryType);
 // console.log('shim.js: ', global.originalWebSocket);

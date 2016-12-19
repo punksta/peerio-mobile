@@ -4,7 +4,6 @@ import rnFileStream from './rn-file-stream';
 
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'react-native';
-global.cryptoShim = require('react-native-crypto');
 
 const Promise = require('bluebird');
 
