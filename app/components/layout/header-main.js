@@ -40,8 +40,7 @@ export default class HeaderMain extends Component {
             fontWeight: vars.font.weight.regular,
             flex: 1,
             fontSize: 16,
-            alignItems: 'center',
-            marginLeft: 20
+            alignItems: 'center'
         };
         const containerStyle = {
             flex: 0,

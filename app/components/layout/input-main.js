@@ -85,6 +85,7 @@ export default class InputMain extends Component {
                     alignItems: 'center'
                 }}>
                 {icons.dark('add-circle-outline', this.plus, {
+                    paddingLeft: 4,
                     paddingRight: 24
                 })}
                 <View style={{ flex: 1, alignItems: 'center' }}>
