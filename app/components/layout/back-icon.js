@@ -11,8 +11,16 @@ import { helpers } from '../../styles/styles';
 export default class BackIcon extends Component {
     render() {
         return (
-            <TouchableOpacity onPress={() => mainState.back()}>                
-                <View style={{ flexDirection: 'row', marginLeft: 16, backgroundColor: 'transparent', width: 56 }}>
+            <TouchableOpacity onPress={() => mainState.back()}>
+                <View style={{
+                    alignItems: 'center',
+                    backgroundColor: 'transparent',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    marginRight: 16,
+                    width: 56,
+                    height: 56
+                }}>
                     {icons.plainWhite('arrow-back')}
                 </View>
             </TouchableOpacity>

@@ -12,9 +12,10 @@ import FileProgress from './file-progress';
 import FileActions from './file-actions';
 
 const firstRowStyle = {
-    flexGrow: 1,
+    flex: 0,
     flexDirection: 'row',
-    marginTop: 12
+    marginTop: 12,
+    paddingRight: 16
 };
 
 const secondRowStyle = {
@@ -29,7 +30,7 @@ const firstColumnStyle = {
 };
 
 const hintStyle = {
-    color: '#00000060'
+    color: 'rgba(0,0,0,.54)'
 };
 
 
@@ -62,7 +63,9 @@ export default class FileView extends Component {
                         </View>
                         <View style={firstColumnStyle}>
                             <View>
-                                <Text>{file.name}</Text>
+                                <Text
+                                    ellipsizeMode="tail"
+                                    numberOfLines={1}>{file.name}</Text>
                             </View>
                             <View style={secondRowStyle}>
                                 <View style={{ flexGrow: 1 }}>

@@ -46,7 +46,7 @@ export default class HeaderMain extends Component {
             flex: 0,
             flexDirection: 'row',
             alignItems: 'center',
-            paddingTop: vars.statusBarHeight,
+            // paddingTop: vars.statusBarHeight,
             height: vars.headerHeight
         };
         return (
@@ -54,7 +54,6 @@ export default class HeaderMain extends Component {
                 height: vars.headerSpacing,
                 flex: 0,
                 justifyContent: 'flex-end',
-                paddingBottom: 6,
                 backgroundColor: styles.branding.peeriomobile.bg
             }}>
                 <View style={containerStyle}>

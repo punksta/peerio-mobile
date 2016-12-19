@@ -28,14 +28,23 @@ export default class MessageIcon extends Component {
     render() {
         const dotStyle = {
             left: -4,
-            top: -4,
+            top: -8,
             backgroundColor: '#d0021b',
             opacity: this.unread ? 1 : 0
         };
 
         return (
             <TouchableOpacity onPress={() => this.press()}>
-                <View style={{ flexDirection: 'row', marginLeft: 16, backgroundColor: 'transparent', width: 56 }}>
+                <View style={{
+                    alignItems: 'center',
+                    backgroundColor: 'transparent',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    marginRight: 16,
+                    paddingLeft: 16,
+                    width: 56,
+                    height: 56
+                }}>
                     {icons.plainWhite('menu')}
                     <View style={[helpers.circle(10), dotStyle]} />
                 </View>
