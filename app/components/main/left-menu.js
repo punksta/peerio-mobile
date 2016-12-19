@@ -38,7 +38,7 @@ const itemStyle = {
 };
 
 const textStyle = {
-    flex: 1,
+    flexGrow: 1,
     color: 'rgba(0, 0, 0, .87)',
     marginLeft: 14,
     paddingRight: 12
