@@ -28,7 +28,7 @@ const circleStyleOff = {
 };
 
 const itemStyle = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
     paddingLeft: 20,
@@ -146,7 +146,9 @@ export default class LeftMenu extends Component {
                     <View>
                         { this.header('Conversations', () => messagingState.transition()) }
                     </View>
-                    <ScrollView style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
+                    <ScrollView
+                        removeClippedSubviews={false}
+                        style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
                         { chats.map(this.item) }
                     </ScrollView>
                 </View>
