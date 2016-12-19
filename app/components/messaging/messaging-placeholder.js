@@ -20,7 +20,7 @@ export default class MessagingPlaceholder extends Component {
     messaging() {
         const headerStyle = {
             textAlign: 'center',
-            fontSize: 20
+            fontSize: 18
         };
         const infoStyle = {
             flex: 1,

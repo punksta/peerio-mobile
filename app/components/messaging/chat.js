@@ -24,8 +24,16 @@ const randomMessages = [
     'Okay I\'ll fetch some'
 ];
 
+// max new items which are scrolled animated
+const maxScrollableLength = 3;
+
 @observer
 export default class Chat extends Component {
+    @observable contentHeight = 0;
+    @observable scrollViewHeight = 0;
+    enableNextScroll = false;
+    lastLength = 0;
+
     constructor(props) {
         super(props);
         this.send = this.send.bind(this);
@@ -42,6 +50,10 @@ export default class Chat extends Component {
     }
 
     componentWillMount() {
+        reaction(() => this.data.length, (l) => {
+            this.enableNextScroll = (l - this.lastLength) < maxScrollableLength;
+            this.lastLength = l;
+        });
         // this.reaction = reaction(() => (mainState.route === 'chat') && this.data && this.data.length, () => {
         //     console.log(`chat.js update reaction ${this.data.length}`);
         //     this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
@@ -90,14 +102,10 @@ export default class Chat extends Component {
         return <ChatItem key={chat.id} chat={chat} />;
     }
 
-    @observable contentHeight = 0;
-    @observable scrollViewHeight = 0;
-    @observable enableNextScroll = false;
-
     layoutScrollView(event) {
         this.scrollViewHeight = this.scrollViewHeight || event.nativeEvent.layout.height;
         // console.log(`layout sv: ${this.scrollViewHeight}`);
-        this.scroll();
+        this.scroll(0, 1);
     }
 
     scroll(contentWidth, contentHeight) {
@@ -110,7 +118,8 @@ export default class Chat extends Component {
         this.scrollTimeout = setTimeout(() => {
             if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
                 const y = this.contentHeight - this.scrollViewHeight + state.keyboardHeight;
-                const animated = false; // !this.props.hideInput && this.enableNextScroll;
+                if (y < 0) return;
+                const animated = this.enableNextScroll;
                 this.scrollView.scrollTo({ y, animated });
                 this.enableNextScroll = false;
             } else {
@@ -122,6 +131,8 @@ export default class Chat extends Component {
     listView() {
         return (
             <ScrollView
+                onLayout={this.layoutScrollView}
+                style={{ flexGrow: 1 }}
                 initialListSize={1}
                 onContentSizeChange={this.scroll}
                 enableEmptySections
@@ -152,20 +163,16 @@ export default class Chat extends Component {
         // console.log(`sv height: ${this.scrollViewHeight}`);
         // console.log(scrollEnabled);
         const paddingTop = 0;
-        const visible = this.scrollViewHeight && mainState.canSend;
+        const visible = true; // this.scrollViewHeight && mainState.canSend;
         const body = visible ? this.listView() : (
             <ActivityIndicator style={{ paddingTop: 10 }} />
         );
         return (
             <View
-                style={{ flex: 1, paddingTop }}>
-                <View
-                    style={{ flex: 1 }}
-                    onLayout={this.layoutScrollView}>
-                    {body}
-                </View>
+                style={{ flexGrow: 1, paddingTop }}>
+                {body}
                 <SnackBar />
-                {this.props.hideInput ? null : this.renderInput()}
+                {visible ? this.renderInput() : null}
             </View>
         );
     }
