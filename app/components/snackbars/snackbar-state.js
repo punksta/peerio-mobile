@@ -1,28 +1,43 @@
-import { observable, action } from 'mobx';
+import { observable, action, reaction, asFlat } from 'mobx';
+import { serverWarnings } from '../../lib/icebear';
 
 const snackbarState = observable({
     get text() {
-        return this.messages.length ?
-            this.messages[this.messages.length - 1] : null;
+        return this.items.length ?
+            this.items[this.items.length - 1].text : null;
     },
 
-    @action push(text) {
-        this.messages.push(text);
+    @action push(text, callback) {
+        this.items.push({ text, callback });
     },
 
     @action pop() {
-        this.messages.length && this.messages.splice(-1);
+        if (!this.items.length) return;
+        const i = this.items[this.items.length - 1];
+        const _pop = () => (this.items.length && this.items.splice(-1));
+        i.action ? i.action().then(_pop) : _pop();
     },
 
     @action set(text) {
-        this.messages = [text];
+        this.items = [text];
     },
 
     @action reset() {
-        this.messages = [];
+        this.items = [];
     },
 
-    messages: []
+    items: asFlat([])
+});
+
+reaction(() => serverWarnings.collection.length, (l) => {
+    console.log('snackbar-state.js: server warning update');
+    if (l) {
+        const sw = serverWarnings.collection[l - 1];
+        snackbarState.push(sw.content, () => {
+            console.log('snackbar-state.js: server warning cleared');
+            sw && sw.action && sw.action();
+        });
+    }
 });
 
 export default snackbarState;
