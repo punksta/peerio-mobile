@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
 import { tu } from 'peerio-translator';
+import SignupCircles from '../signup/signup-circles';
 import signupState from '../signup/signup-state';
 import styles from '../../styles/styles';
 
@@ -36,9 +37,12 @@ export default class SignupFooter extends Component {
             () => signupState.prev());
 
         return (
-            <View style={style.row}>
-                {prev}
-                {next}
+            <View>
+                <View style={style.row}>
+                    {prev}
+                    {next}
+                </View>
+                <SignupCircles />
             </View>
         );
     }

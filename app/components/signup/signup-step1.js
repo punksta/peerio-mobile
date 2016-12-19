@@ -59,12 +59,13 @@ export default class SignupStep1 extends Component {
                 <Text style={style.text.info}>
                     <T k="signup_TOSRequestText">{tosParser}</T>
                 </Text>
-                <View style={{ flex: 1 }} />
+                <View style={{ flexGrow: 1 }} />
+                <SignupFooter />
             </View>
         );
 
         return (
-            <Layout1 body={body} footer={<SignupFooter />} />
+            <Layout1 body={body} />
         );
     }
 }

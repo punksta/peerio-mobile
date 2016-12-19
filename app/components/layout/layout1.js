@@ -77,7 +77,7 @@ export default class Layout1 extends Component {
                     onScroll={this.onScroll}
                     onLayout={this.layout}>
                     {this.props.body}
-                    {this.props.footer}
+                {this.props.footer}
                 </ScrollView>
                 <SnackBarConnection />
             </View>

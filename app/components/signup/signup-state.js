@@ -144,7 +144,7 @@ const signupWizardRoutes = [
 
 signupState.count = signupWizardRoutes.length;
 
-state.persistentFooter.signup = (i) => (signupState.isActive ? <SignupCircles key={i} /> : null);
+// state.persistentFooter.signup = (i) => (signupState.isActive ? <SignupCircles key={i} /> : null);
 
 
 if (__DEV__) {

@@ -395,13 +395,9 @@ const styles = {
             },
             button: {
                 base: {
-                    height: 36,
+                    height: 60,
                     margin: 0,
-                    marginLeft: 8,
-                    marginRight: 8,
-                    padding: 0,
-                    paddingLeft: 16,
-                    paddingRight: 16
+                    padding: 20
                 },
 
                 left: {},
