@@ -226,6 +226,7 @@ export default class TextBox extends Component {
                             backgroundColor: 'transparent'
                         }}>
                         <TextInput
+                            keyboardType={this.props.keyboardType}
                             testID={this.props.name}
                             style={[style.textbox,
                             { height: 56, top: 0 }]}
@@ -270,6 +271,7 @@ TextBox.propTypes = {
     info: React.PropTypes.any,
     name: React.PropTypes.string.isRequired,
     returnKeyType: React.PropTypes.any,
+    keyboardType: React.PropTypes.any,
     secureTextEntry: React.PropTypes.bool,
     lowerCase: React.PropTypes.bool,
     autoCapitalize: React.PropTypes.oneOf(['none', 'sentences', 'words', 'characters']),

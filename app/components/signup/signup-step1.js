@@ -37,6 +37,7 @@ export default class SignupStep1 extends Component {
                     name="username"
                     hint={t('username')} />
                 <TextBox
+                    keyboardType="email-address"
                     state={signupState}
                     name="email"
                     hint={t('email')} />
