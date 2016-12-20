@@ -6,11 +6,11 @@ import { observer } from 'mobx-react/native';
 import styles from '../../styles/styles';
 
 const s = {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
-    marginBottom: 20
+    marginTop: -34,
+    height: 30
 };
 
 @observer

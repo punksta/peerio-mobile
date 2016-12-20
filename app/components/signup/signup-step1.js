@@ -61,7 +61,9 @@ export default class SignupStep1 extends Component {
                     <T k="signup_TOSRequestText">{tosParser}</T>
                 </Text>
                 <View style={{ flexGrow: 1 }} />
-                <SignupFooter />
+                <View style={{ marginLeft: -40, marginRight: -40 }}>
+                    <SignupFooter />
+                </View>
             </View>
         );
 
