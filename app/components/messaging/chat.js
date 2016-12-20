@@ -124,7 +124,7 @@ export default class Chat extends Component {
             if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
                 const y = this.contentHeight - this.scrollViewHeight; // + state.keyboardHeight;
                 console.log(y);
-                if (y < 0) return;
+                if (y < 0) y = 0;
                 const animated = this.enableNextScroll;
                 this.scrollView.scrollTo({ y, animated });
                 this.enableNextScroll = false;
