@@ -120,7 +120,7 @@ export default class Chat extends Component {
         if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
         this.scrollTimeout = setTimeout(() => {
             if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
-                const y = this.contentHeight - this.scrollViewHeight + state.keyboardHeight;
+                const y = this.contentHeight - this.scrollViewHeight; // + state.keyboardHeight;
                 if (y < 0) return;
                 const animated = this.enableNextScroll;
                 this.scrollView.scrollTo({ y, animated });
