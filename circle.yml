@@ -1,6 +1,11 @@
+general:
+  build_dir: ios
+
 machine:
   node:
-    version: 6.3.1
+    version: 7.2.1
+  xcode:
+    version: 8.0
 test:
   override:
     - npm run bundle
