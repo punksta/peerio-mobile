@@ -1,5 +1,6 @@
 import { observable, action, reaction, asFlat } from 'mobx';
 import { serverWarnings } from '../../lib/icebear';
+import { t } from '../utils/translator';
 
 const snackbarState = observable({
     get text() {
@@ -33,7 +34,7 @@ reaction(() => serverWarnings.collection.length, (l) => {
     console.log('snackbar-state.js: server warning update');
     if (l) {
         const sw = serverWarnings.collection[l - 1];
-        snackbarState.push(sw.content, () => {
+        snackbarState.push(t(sw.content), () => {
             console.log('snackbar-state.js: server warning cleared');
             sw && sw.action && sw.action();
         });

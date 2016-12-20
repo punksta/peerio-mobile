@@ -205,7 +205,7 @@ export default class TextBox extends Component {
         }];
         return (
             <View
-                style={[style.shadow, { }]}>
+                style={[style.shadow, { borderColor: 'green', borderWidth: 0 }]}>
                 <View
                     style={{ backgroundColor: vars.inputBg, overflow: 'hidden', borderRadius: 2 }}>
                     <TouchableOpacity

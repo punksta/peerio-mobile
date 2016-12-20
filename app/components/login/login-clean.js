@@ -28,7 +28,7 @@ export default class LoginClean extends Component {
 
     componentDidMount() {
         if (__DEV__) {
-            loginState.username = 'anritest7';
+            loginState.username = 'anritest41';
             loginState.passphrase = 'icebear';
             // loginState.login();
         }
@@ -45,16 +45,14 @@ export default class LoginClean extends Component {
             <View
                 style={style.containerFlex}>
                 <Logo />
-                <View style={{ flexGrow: 1 }}>
+                <View style={{ flexGrow: 0.5, flexShrink: 2 }}>
                     <TextBox lowerCase state={loginState} name="username" hint={t('username')} />
                     <TextBox state={loginState} name="passphrase" hint={t('passphrase')} secureTextEntry />
                     <LanguagePickerBox />
                 </View>
-                <View style={{ flexGrow: 1 }}>
-                    <Center>
-                        {loginButton}
-                    </Center>
-                </View>
+                <Center>
+                    {loginButton}
+                </Center>
                 <Terms />
                 <View style={{ flexGrow: 1 }} />
             </View>

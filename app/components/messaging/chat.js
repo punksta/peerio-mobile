@@ -67,8 +67,11 @@ export default class Chat extends Component {
     }
 
     send(v) {
-        const message = v || (__DEV__ && _.sample(randomMessages));
-        if (!message) return;
+        const message = v;
+        if (!message || !message.length) {
+            this.sendAck();
+            return;
+        }
         this.enableNextScroll = true;
         mainState.addMessage(message);
     }
@@ -98,12 +101,12 @@ export default class Chat extends Component {
         );
     }
 
-    item(chat) {
-        return <ChatItem key={chat.id} chat={chat} />;
+    item(chat, i) {
+        return <ChatItem key={chat.id || i} chat={chat} />;
     }
 
     layoutScrollView(event) {
-        this.scrollViewHeight = this.scrollViewHeight || event.nativeEvent.layout.height;
+        this.scrollViewHeight = event.nativeEvent.layout.height;
         // console.log(`layout sv: ${this.scrollViewHeight}`);
         this.scroll(0, 1);
     }

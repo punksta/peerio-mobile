@@ -45,15 +45,17 @@ export default class LoginSignup extends Component {
     }
 
     render() {
-        const activityIndicator = <ActivityIndicator color={vars.highlight} style={{ height: 14 }} />;
+        const activityIndicator = <ActivityIndicator color={vars.highlight} />;
         let item = loginState.isInProgress ? activityIndicator : [
             this.button('signup', 'signupButton', this.signUp),
             this.button('login', 'loginButton', this.login)
         ];
         item = loginState.error ? <ErrorText>{t(loginState.error)}</ErrorText> : item;
         return (
-            <View style={{ flexDirection: 'row', height: 50 }}>
-                {item}
+            <View style={{ flexGrow: 1, borderColor: 'yellow', borderWidth: 0, justifyContent: 'flex-start' }}>
+                <View style={{ height: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    {item}
+                </View>
             </View>
         );
     }

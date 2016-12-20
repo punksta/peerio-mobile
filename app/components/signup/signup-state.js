@@ -87,7 +87,7 @@ const signupState = observable({
 
         user.username = username;
         user.email = email;
-        user.passphrase = passphrase;
+        user.passphrase = __DEV__ ? 'icebear' : passphrase;
         user.firstName = firstName;
         user.lastName = lastName;
         user.localeCode = localeCode;
