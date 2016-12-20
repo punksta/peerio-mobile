@@ -106,9 +106,11 @@ export default class Chat extends Component {
     }
 
     layoutScrollView(event) {
+        console.log('chat.js: layout scroll view');
         this.scrollViewHeight = event.nativeEvent.layout.height;
+        console.log(this.scrollViewHeight);
         // console.log(`layout sv: ${this.scrollViewHeight}`);
-        this.scroll(0, 1);
+        this.scroll();
     }
 
     scroll(contentWidth, contentHeight) {
@@ -121,6 +123,7 @@ export default class Chat extends Component {
         this.scrollTimeout = setTimeout(() => {
             if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
                 const y = this.contentHeight - this.scrollViewHeight; // + state.keyboardHeight;
+                console.log(y);
                 if (y < 0) return;
                 const animated = this.enableNextScroll;
                 this.scrollView.scrollTo({ y, animated });
