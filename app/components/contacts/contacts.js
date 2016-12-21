@@ -4,7 +4,7 @@ import {
     View
 } from 'react-native';
 import { contactStore } from '../../lib/icebear';
-import messagingState from '../messaging/messaging-state';
+import contactState from './contact-state';
 import styles from '../../styles/styles';
 
 export default class Contacts extends Component {
@@ -16,7 +16,7 @@ export default class Contacts extends Component {
                 id: i.username,
                 online: true,
                 action: () => {
-                    messagingState.sendTo(i);
+                    contactState.sendTo(i);
                 }
             };
         });
