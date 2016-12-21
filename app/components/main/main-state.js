@@ -15,7 +15,7 @@ const mainState = observable({
     currentChat: null,
     currentFile: null,
     currentIndex: 0,
-    showCompose: false,
+    modalRoute: null,
     suppressTransition: false,
     _loading: false,
 
@@ -66,8 +66,8 @@ const mainState = observable({
             this.messages();
 
             if (__DEV__) {
+                // this.showModal('selectFiles');
                 // this.files();
-                // this.showCompose = true;
             }
         });
         //
@@ -103,7 +103,7 @@ const mainState = observable({
         this.isInputVisible = false;
         this.isLeftMenuVisible = false;
         this.isRightMenuVisible = false;
-        this.showCompose = false;
+        this.modalRoute = null;
     },
 
     @action files() {
@@ -194,6 +194,14 @@ const mainState = observable({
         state.hideKeyboard();
         this.isRightMenuVisible = !this.isRightMenuVisible;
         this.isLeftMenuVisible = false;
+    },
+
+    @action showModal(route) {
+        this.modalRoute = route;
+    },
+
+    @action discardModal() {
+        this.modalRoute = null;
     }
 });
 

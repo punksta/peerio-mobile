@@ -4,17 +4,18 @@ import { chatStore, contactStore } from '../../lib/icebear';
 
 const messagingState = observable({
     @action chat(v) {
-        mainState.showCompose = false;
+        mainState.discardModal();
         mainState.chat(v);
         this.exit();
     },
 
     @action transition() {
+        mainState.showModal('compose');
         mainState.showCompose = true;
     },
 
     @action exit() {
-        mainState.showCompose = false;
+        mainState.discardModal();
         this.clear();
     },
 

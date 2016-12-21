@@ -2,27 +2,13 @@ import React, { Component } from 'react';
 import {
     ScrollView, ListView, View, ActivityIndicator
 } from 'react-native';
-import _ from 'lodash';
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
 import mainState from '../main/main-state';
-import state from '../layout/state';
+import fileState from '../files/file-state';
 import ChatItem from './chat-item';
 import InputMain from '../layout/input-main';
 import SnackBar from '../snackbars/snackbar';
-
-const randomMessages = [
-    'I did not know what to say so I wrote this',
-    'Who do you think will win?',
-    'How do you think Putin is going to be saving his wealth?',
-    'Poison',
-    'Power and domination',
-    'Useless icecream',
-    'Wordly debates on otherworldly problems',
-    'I would love some beer',
-    'I would love some wine',
-    'Okay I\'ll fetch some'
-];
 
 // max new items which are scrolled animated
 const maxScrollableLength = 3;
@@ -38,6 +24,7 @@ export default class Chat extends Component {
         super(props);
         this.send = this.send.bind(this);
         this.sendAck = this.sendAck.bind(this);
+        this.addFiles = this.addFiles.bind(this);
         this.layoutScrollView = this.layoutScrollView.bind(this);
         this.scroll = this.scroll.bind(this);
         this.dataSource = new ListView.DataSource({
@@ -81,6 +68,18 @@ export default class Chat extends Component {
         mainState.addAck();
     }
 
+    addFiles() {
+        fileState.selectFiles()
+            .then(files => {
+                files.forEach(f => {
+                    this.send(`chat.js: file added: ${f.name}`);
+                });
+            })
+            .catch(() => {
+                this.send('chat.js: user cancelled file selection');
+            });
+    }
+
     // setFocus() {
     //     this.input && this.input.setFocus();
     // }
@@ -95,6 +94,7 @@ export default class Chat extends Component {
         return (
             <View style={s}>
                 <InputMain
+                    plus={this.addFiles}
                     sendAck={this.sendAck}
                     send={this.send} />
             </View>

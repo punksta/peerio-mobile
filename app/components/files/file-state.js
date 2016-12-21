@@ -27,6 +27,33 @@ const fileState = observable({
             file.download();
             file.selected = false;
         });
+    },
+
+    @action resetSelection() {
+        this.selected.forEach(f => (f.selected = false));
+    },
+
+    @action selectFiles() {
+        this.resetSelection();
+        return new Promise((resolve, reject) => {
+            this.resolveFileSelection = resolve;
+            this.rejectFileSelection = reject;
+            mainState.showModal('selectFiles');
+        });
+    },
+
+    @action exitSelectFiles() {
+        this.resetSelection();
+        mainState.discardModal();
+        this.rejectFileSelection && this.rejectFileSelection(new Error(`file-state.js: user cancel`));
+        this.rejectFileSelection = null;
+    },
+
+    @action submitSelectFiles() {
+        this.resolveFileSelection(this.selected.slice());
+        this.resolveFileSelection = null;
+        this.resetSelection();
+        mainState.discardModal();
     }
 });
 

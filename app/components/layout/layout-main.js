@@ -8,7 +8,7 @@ import {
     Dimensions
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { reaction } from 'mobx';
+import { reaction, observable } from 'mobx';
 import state from './state';
 import mainState from '../main/main-state';
 import LeftMenu from '../main/left-menu';
@@ -18,6 +18,7 @@ import Chat from '../messaging/chat';
 import Files from '../files/files';
 import FileView from '../files/file-view';
 import ComposeMessage from '../messaging/compose-message';
+import SelectFiles from '../files/select-files';
 // import Placeholder from './placeholder';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import styles, { vars } from '../../styles/styles';
@@ -28,8 +29,15 @@ const routes = {
     chat: [<Chat />]
 };
 
+const modalRoutes = {
+    compose: <ComposeMessage />,
+    selectFiles: <SelectFiles />
+};
+
 @observer
 export default class LayoutMain extends Component {
+    @observable modalRoute = null;
+
     constructor(props) {
         super(props);
         this.width = Dimensions.get('window').width;
@@ -37,7 +45,7 @@ export default class LayoutMain extends Component {
         this.currentIndex = mainState.currentIndex;
         this.animatedX = new Animated.Value(0);
         this.leftMenuAnimated = new Animated.Value(0);
-        this.composeAnimated = new Animated.Value(this.height);
+        this.modalAnimated = new Animated.Value(this.height);
         this.indexAnimation = reaction(() => mainState.currentIndex, i => {
             console.log('layout-main.js: index animation');
             const toValue = -i * this.width;
@@ -69,13 +77,16 @@ export default class LayoutMain extends Component {
     }
 
     componentDidMount() {
-        reaction(() => mainState.showCompose, () => {
-            if (mainState.showCompose) {
-                console.log('layout-main.js: show compose');
-                Animated.timing(this.composeAnimated, { toValue: 0, duration: 300 })
-                    .start(() => (mainState.blackStatusBar = true));
+        reaction(() => mainState.modalRoute, route => {
+            if (route) {
+                this.modalRoute = route;
+                Animated.timing(
+                    this.modalAnimated, { toValue: 0, duration: 300 }
+                ).start(() => (mainState.blackStatusBar = true));
             } else {
-                Animated.timing(this.composeAnimated, { toValue: this.height, duration: 300 }).start();
+                Animated.timing(
+                    this.modalAnimated, { toValue: this.height, duration: 300 }
+                ).start(() => (this.modalRoute = route));
                 mainState.blackStatusBar = false;
             }
         }, true);
@@ -108,6 +119,10 @@ export default class LayoutMain extends Component {
         return controls.map((item, index) => this.page(item, index));
     }
 
+    modal() {
+        return modalRoutes[this.modalRoute] || null;
+    }
+
     body() {
         const r = mainState.route;
         if (routes[r]) {
@@ -130,9 +145,9 @@ export default class LayoutMain extends Component {
             justifyContent: 'space-between',
             paddingBottom: state.keyboardHeight
         };
-        const transformCompose = [{ translateY: this.composeAnimated || 0 }];
+        const transformModal = [{ translateY: this.modalAnimated || 0 }];
         const composeStyle = {
-            transform: transformCompose,
+            transform: transformModal,
             position: 'absolute',
             left: 0,
             top: 0,
@@ -165,10 +180,10 @@ export default class LayoutMain extends Component {
                 <LeftMenu />
                 <RightMenu />
                 <Animated.View style={composeStyle}>
-                    <ComposeMessage />
+                    {this.modal()}
                 </Animated.View>
                 <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'}
-                           hidden={menuState && !mainState.showCompose}
+                           hidden={menuState && !mainState.modalRoute}
                            // TODO: set show hide animation to 'fade' and 'slide'
                 />
             </View>

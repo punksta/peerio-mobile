@@ -47,6 +47,7 @@ export default class InputMain extends Component {
     }
 
     plus() {
+        this.props.plus();
     }
 
     send() {
@@ -122,6 +123,7 @@ export default class InputMain extends Component {
 
 InputMain.propTypes = {
     value: React.PropTypes.any,
+    plus: React.PropTypes.func.isRequired,
     send: React.PropTypes.func.isRequired,
     sendAck: React.PropTypes.func.isRequired
 };
