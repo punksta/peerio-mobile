@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import fileState from '../files/file-state';
+import contactState from '../contacts/contact-state';
 import icons from '../helpers/icons';
 
 const actionCellStyle = {
@@ -60,7 +61,7 @@ export default class FileActions extends Component {
         return (
             <Animated.View style={[bottomRowStyle, animation]}>
                 {leftAction}
-                {this.action('Share', 'reply')}
+                {this.action('Share', 'reply', () => contactState.shareFile())}
                 {this.action('Delete', 'delete', () => fileState.delete())}
                 {/* {this.action('More', 'more-horiz')} */}
             </Animated.View>

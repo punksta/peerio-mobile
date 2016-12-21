@@ -19,6 +19,7 @@ import Files from '../files/files';
 import FileView from '../files/file-view';
 import ComposeMessage from '../messaging/compose-message';
 import SelectFiles from '../files/select-files';
+import FileShare from '../files/file-share';
 // import Placeholder from './placeholder';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import styles, { vars } from '../../styles/styles';
@@ -31,6 +32,7 @@ const routes = {
 
 const modalRoutes = {
     compose: <ComposeMessage />,
+    shareFileTo: <FileShare />,
     selectFiles: <SelectFiles />
 };
 

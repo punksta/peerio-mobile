@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
-import messagingState from '../messaging/messaging-state';
+import contactState from '../contacts/contact-state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import Swiper from '../controls/swiper';
@@ -88,7 +88,7 @@ export default class LeftMenu extends Component {
     }
 
     item(i, key) {
-        const action = () => messagingState.chat(i);
+        const action = () => mainState.chat(i);
         const id = i.id || key;
         const text = i.chatName;
         const online = true;
@@ -144,7 +144,7 @@ export default class LeftMenu extends Component {
                 rightToLeft>
                 <View style={innerContainerStyle}>
                     <View>
-                        { this.header('Conversations', () => messagingState.transition()) }
+                        { this.header('Conversations', () => contactState.composeMessage()) }
                     </View>
                     <ScrollView
                         removeClippedSubviews={false}

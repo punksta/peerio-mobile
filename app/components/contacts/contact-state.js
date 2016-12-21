@@ -2,16 +2,13 @@ import { observable, action, when, asMap } from 'mobx';
 import mainState from '../main/main-state';
 import { chatStore, contactStore } from '../../lib/icebear';
 
-const messagingState = observable({
-    @action chat(v) {
-        mainState.discardModal();
-        mainState.chat(v);
-        this.exit();
+const contactState = observable({
+    @action composeMessage() {
+        mainState.showModal('compose');
     },
 
-    @action transition() {
-        mainState.showModal('compose');
-        mainState.showCompose = true;
+    @action shareFile() {
+        mainState.showModal('shareFileTo');
     },
 
     @action exit() {
@@ -73,7 +70,8 @@ const messagingState = observable({
         mainState.suppressTransition = true;
         when(() => !mainState.suppressTransition, () => this.clear());
         const chat = chatStore.startChat(recipient ? [recipient] : this.recipients);
-        this.chat(chat);
+        mainState.chat(chat);
+        this.exit();
         when(() => chat.id, () => {
             text && chat.sendMessage(text);
         });
@@ -81,11 +79,16 @@ const messagingState = observable({
 
     @action sendTo(contact) {
         this.send(null, contact);
+    },
+
+    @action share() {
+        // TODO
+        this.exit();
     }
 });
 
-export default messagingState;
+export default contactState;
 
 this.Peerio = this.Peerio || {};
-this.Peerio.messagingState = messagingState;
+this.Peerio.contactState = contactState;
 
