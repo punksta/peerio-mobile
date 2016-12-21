@@ -1,9 +1,9 @@
 general:
   build_dir: ios
-
+  
 machine:
-  node:
-    version: 7.2.1
+  environment:
+    XCODE_SCHEME: peeriomobile
   xcode:
     version: 8.0
 test:
