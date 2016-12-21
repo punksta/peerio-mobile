@@ -8,8 +8,9 @@ import { observable, autorun, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
 
-const width = Dimensions.get('window').width;
+// const width = Dimensions.get('window').width;
 
+@observer
 export default class FileProgress extends Component {
     // @observable width = 0;
     prevFile = null;
@@ -29,14 +30,14 @@ export default class FileProgress extends Component {
         if (file.uploading) {
             max = file.progressMax | 1;
         }
-        // console.log(`file-progress.js: ${file.progress}, ${file.progressMax}`);
-        return (width * file.progress / max);
+        console.log(`file-progress.js: ${file.progress}, ${file.progressMax}`);
+        return (this.width * file.progress / max);
     }
 
     progress = new Animated.Value(0);
 
     layout(evt) {
-        // this.width = evt.nativeEvent.layout.width;
+        this.width = evt.nativeEvent.layout.width;
         reaction(() => this.props.file, file => {
             if (file !== this.prevFile) {
                 this.prevFile = file;
@@ -57,13 +58,14 @@ export default class FileProgress extends Component {
     }
 
     render() {
-        const height = this.hidden ? 0 : 4;
+        const height = 4;
 
         const pbContainer = {
+            flexGrow: 1,
             marginTop: -height,
             height,
             backgroundColor: '#CFCFCF',
-            width
+            opacity: this.hidden ? 0 : 1
         };
         const pbProgress = {
             height,

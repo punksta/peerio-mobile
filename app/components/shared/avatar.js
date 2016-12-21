@@ -6,6 +6,7 @@ import moment from 'moment';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
+import FileInlineProgress from '../files/file-inline-progress';
 
 const avatarDiameter = 36;
 
@@ -51,6 +52,8 @@ const nameContainerStyle = {
 
 const nameMessageContainerStyle = {
     flexGrow: 1,
+    borderWidth: 0,
+    borderColor: 'red',
     flexDirection: 'column',
     padding: 8,
     paddingLeft: 16,
@@ -158,13 +161,15 @@ export default class Avatar extends Component {
     }
 
     render() {
+        const message = this.props.message || '';
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
         const date = this.props.date ? <Text style={dateTextStyle}>{moment(this.props.date).format('LT')}</Text> : null;
         const online = this.props.hideOnline ? null : <View style={this.props.online ? circleStyle : circleStyleOff} />;
         const avatarPlaceholder = this.props.loading ? this.loader() : this.avatar();
         const checkbox = this.props.checkbox ? this.checkbox() : null;
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
-        const message = <Text style={lastMessageTextStyle}>{this.props.message}</Text>;
+        const text = <Text style={lastMessageTextStyle}>{message}</Text>;
+        const file = message.indexOf(':file:') !== -1 ? <FileInlineProgress /> : null;
         return (
             <View style={{ backgroundColor: vars.bg }}>
                 <TouchableOpacity onPress={this.props.onPress}>
@@ -174,10 +179,13 @@ export default class Avatar extends Component {
                             {avatarPlaceholder}
                             <View style={nameMessageContainerStyle}>
                                 <View style={nameContainerStyle}>
-                                    <Text ellipsizeMode="tail" style={nameTextStyle}>{this.props.contact.username}</Text>
+                                    <Text ellipsizeMode="tail" style={nameTextStyle}>
+                                        {this.props.contact.username}
+                                    </Text>
                                     {date}
                                 </View>
-                                {message}
+                                {text}
+                                {file}
                             </View>
                             {icon}
                             {online}

@@ -66,7 +66,7 @@ const mainState = observable({
             this.messages();
 
             if (__DEV__) {
-                this.showModal('shareFileTo');
+                // this.showModal('shareFileTo');
                 // this.showModal('selectFiles');
                 // this.files();
             }
