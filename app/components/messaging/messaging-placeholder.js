@@ -60,7 +60,7 @@ export default class MessagingPlaceholder extends Component {
                                    resizeMode="contain"
                                    style={imageStyle} />
                         </View>
-                        <View style={{ flex: 1, alignItems: 'center' }}>
+                        <View style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
                             <Text style={headerStyle}>Have a{'\n'}conversation</Text>
                         </View>
                         <View style={{ flex: 1 }} />
