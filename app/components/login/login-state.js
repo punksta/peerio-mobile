@@ -109,7 +109,7 @@ const loginState = observable({
             return user.hasPasscode()
                 .then(result => {
                     console.log(`login-state.js: ${result}`);
-                    result && this.saved();
+                    // result && this.saved();
                 });
         }
         return false;
