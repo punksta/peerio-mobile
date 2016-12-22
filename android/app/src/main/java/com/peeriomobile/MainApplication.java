@@ -4,6 +4,10 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.zmxv.RNSound.RNSoundPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+import com.fileopener.FileOpenerPackage;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -29,6 +33,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNSoundPackage(),
+            new ReactNativePushNotificationPackage(),
+            new FileOpenerPackage(),
+            new RNFetchBlobPackage(),
             new ReactNativeRestartPackage(),
             new ImagePickerPackage(),
             new VectorIconsPackage(),

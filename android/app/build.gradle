@@ -127,6 +127,10 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-sound')
+    compile project(':react-native-push-notification')
+    compile project(':react-native-file-opener')
+    compile project(':peerio-react-native-fetch-blob')
     compile project(':react-native-restart')
     compile project(':react-native-image-picker')
     compile project(':react-native-vector-icons')
