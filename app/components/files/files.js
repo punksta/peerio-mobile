@@ -11,8 +11,6 @@ import { observable, when, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { fileStore } from '../../lib/icebear';
 // import { vars } from '../../styles/styles';
-import SnackBar from '../snackbars/snackbar';
-import Fab from '../shared/fab';
 import FilesPlaceholder from './files-placeholder';
 // import styles, { vars } from '../../styles/styles';
 import FileItem from './file-item';
@@ -28,6 +26,8 @@ export default class Files extends Component {
             rowHasChanged: (r1, r2) => r1 !== r2
         });
     }
+    get isFabVisible() { return true; }
+
     @observable dataSource = null;
     @observable refreshing = false
     actionsHeight = new Animated.Value(0)
@@ -99,10 +99,8 @@ export default class Files extends Component {
                 style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
                     {body}
-                    <Fab />
                 </View>
                 <FileActions height={this.actionsHeight} />
-                <SnackBar />
             </View>
         );
     }

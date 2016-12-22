@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text } from 'react-native';
-import { t } from 'peerio-translator';
+import { t, has } from 'peerio-translator';
 import { reaction } from 'mobx';
 import state from '../layout/state';
 
@@ -18,7 +18,10 @@ class T extends Component {
     }
 
     render() {
-        let translated = t(this.props.k, this.props.children);
+        let name = `${this.props.k}_mobile`;
+        name = has(name) ? name : this.props.k;
+
+        let translated = t(name, this.props.children);
         if (Array.isArray(translated)) {
             return (
                 <Text>

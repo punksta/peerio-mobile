@@ -89,11 +89,9 @@ export default class MessagingPlaceholder extends Component {
         };
         const ind = mainState.loading ?
             <ActivityIndicator style={{ paddingTop: 10 }} /> : this.messaging();
-        const sb = mainState.loading ? null : <SnackBar />;
         return (
             <View style={s}>
                 {ind}
-                {sb}
             </View>
         );
     }
