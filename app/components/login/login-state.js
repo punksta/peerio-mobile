@@ -3,8 +3,9 @@ import RNRestart from 'react-native-restart';
 import state from '../layout/state';
 import mainState from '../main/main-state';
 import store from '../../store/local-storage';
-import { User, socket, validation } from '../../lib/icebear';
+import { User, socket, validation, fileStore } from '../../lib/icebear';
 import touchid from '../touchid/touchid-bridge';
+import { rnAlertYesNo } from '../../lib/alerts';
 
 const { isValidLoginUsername } = validation.validators;
 
@@ -89,8 +90,10 @@ const loginState = observable({
     },
 
     @action async signOut() {
-        // await store.user.set('userData', null);
-        RNRestart.Restart();
+        const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
+        (inProgress ? rnAlertYesNo('Are you sure?', 'File tasks are not completed') : Promise.resolve(true))
+            .then(() => RNRestart.Restart())
+            .catch(() => null);
     },
 
     @action async load() {
