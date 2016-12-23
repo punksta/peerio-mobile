@@ -17,3 +17,5 @@ dependencies:
     - "rm -f \"$HOME/node/node-v7.3.0-darwin-x64.tar.gz\""
     - "ls \"$HOME/node/node-v7.3.0-darwin-x64\""
     - "echo $PATH"
+    - "pwd"
+    - "cd .. && npm install && cd ios"
