@@ -2,7 +2,7 @@ general:
   build_dir: ios
   
 machine:
-  pre:	
+  pre:
     - pip install --user --ignore-installed --upgrade --verbose virtualenv
     - ln -s ~/Library/Python/2.7/bin/virtualenv /usr/local/bin/virtualenv
   environment:
