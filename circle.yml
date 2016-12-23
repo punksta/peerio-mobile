@@ -7,3 +7,6 @@ machine:
   xcode:
     version: 8.0
 
+test:
+  override:
+    npm test
