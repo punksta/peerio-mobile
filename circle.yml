@@ -7,6 +7,7 @@ machine:
     PATH: '$PATH:$HOME/node/node-v7.3.0-darwin-x64/bin'
   xcode:
     version: 8.0
+
 dependencies:
   cache_directories:
     - "$HOME/node"
@@ -19,3 +20,8 @@ dependencies:
     - "echo $PATH"
     - "pwd"
     - "cd .. && npm install && cd ios"
+    
+test:
+  post:
+    - "cd .. && npm test"
+    
