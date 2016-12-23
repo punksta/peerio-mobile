@@ -364,6 +364,17 @@ const styles = {
             flexDirection: 'column',
             justifyContent: 'space-between'
         },
+        containerFlexGrow: {
+            flexGrow: 1,
+            padding: 50,
+            paddingTop: 0,
+            paddingBottom: 0,
+            borderColor: 'violet',
+            borderWidth: 0,
+            backgroundColor: 'transparent',
+            flexDirection: 'column',
+            justifyContent: 'space-between'
+        },
         textSubTitle: {
             color: vars.txtLight,
             fontWeight: vars.font.weight.regular,

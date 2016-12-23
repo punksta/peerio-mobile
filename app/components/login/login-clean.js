@@ -27,9 +27,10 @@ export default class LoginClean extends Component {
     }
 
     componentDidMount() {
+        loginState.load();
         if (__DEV__) {
-            loginState.username = '';
-            loginState.passphrase = '';
+            // loginState.username = 'anritest8';
+            // loginState.passphrase = 'icebear';
             // loginState.login();
         }
     }

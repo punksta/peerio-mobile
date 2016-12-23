@@ -140,7 +140,7 @@ export default class Pin extends Component {
         const style = styles.pin;
         const p = (text, subText) => ({ text, subText });
         const body = (
-            <View style={{ flexGrow: 1 }}>
+            <View style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
                 <Animatable.View ref={v => { this.shaker = v; }}>
                     <Center style={style.message.container}>
                         <Text style={[style.message.text, { marginBottom: 14 }]}>
@@ -148,10 +148,10 @@ export default class Pin extends Component {
                         </Text>
                     </Center>
                 </Animatable.View>
-                <View style={{ height: 40 }}>
+                <View style={{ height: 40, flexDirection: 'column' }}>
                     { this.isSpinner ?
-                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                            <ActivityIndicator color={vars.highlight} />
+                        <View style={{ flex: 1, alignSelf: 'center' }}>
+                            <ActivityIndicator style={{ marginTop: -6 }} color={vars.highlight} />
                         </View> :
                             <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
                 </View>

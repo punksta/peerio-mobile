@@ -37,6 +37,7 @@ const mainState = observable({
     @action activateAndTransition(user) {
         state.routes.main.transition();
         User.current = user;
+        this.saveUser();
         store.openUserDb(user.username);
         chatStore.loadAllChats();
         when(() => !chatStore.loading, () => {
@@ -161,6 +162,10 @@ const mainState = observable({
         }
         this.loading = false;
         console.log('main-state.js: loaded');
+    },
+
+    @action async saveUser() {
+        await store.system.set('lastUsername', User.current.username);
     },
 
     @action async save() {

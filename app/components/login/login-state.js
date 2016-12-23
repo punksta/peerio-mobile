@@ -70,7 +70,7 @@ const loginState = observable({
             .catch(e => {
                 console.error(e);
                 if (!this.error) this.error = 'loginFailed';
-                // return Promise.reject(new Error(this.error));
+                return Promise.reject(new Error(this.error));
             })
             .finally(() => {
                 this.isInProgress = false;
@@ -109,9 +109,10 @@ const loginState = observable({
             return user.hasPasscode()
                 .then(result => {
                     console.log(`login-state.js: ${result}`);
-                    // result && this.saved();
+                    result && this.saved();
                 });
         }
+        this.username = await store.system.get('lastUsername');
         return false;
     },
 

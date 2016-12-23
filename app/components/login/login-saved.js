@@ -35,8 +35,9 @@ export default class LoginSaved extends Component {
     render() {
         const style = styles.wizard;
         const body = (
-            <View style={style.containerFlex}>
+            <View style={style.containerFlexGrow}>
                 <Center style={{
+                    flexGrow: 0,
                     marginTop: 6,
                     marginBottom: 18
                 }}>
