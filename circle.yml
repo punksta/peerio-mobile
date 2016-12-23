@@ -6,7 +6,3 @@ machine:
     XCODE_SCHEME: peeriomobile
   xcode:
     version: 8.0
-
-test:
-  override:
-    npm test
