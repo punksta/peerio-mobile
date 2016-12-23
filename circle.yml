@@ -9,9 +9,11 @@ machine:
     version: 8.0
 dependencies:
   cache_directories:
-    - $HOME/node
+    - "$HOME/node"
   pre:
     - "ls \"$HOME/node/node-v7.3.0-darwin-x64\" || mkdir \"$HOME/node\""
     - "ls \"$HOME/node/node-v7.3.0-darwin-x64\" || curl -L \"https://nodejs.org/dist/v7.3.0/node-v7.3.0-darwin-x64.tar.gz\" -o \"$HOME/node/node-v7.3.0-darwin-x64.tar.gz\""
     - "ls \"$HOME/node/node-v7.3.0-darwin-x64\" || tar -xzf \"$HOME/node/node-v7.3.0-darwin-x64.tar.gz\" -C \"$HOME/node/\""
     - "rm -f \"$HOME/node/node-v7.3.0-darwin-x64.tar.gz\""
+    - "ls \"$HOME/node/node-v7.3.0-darwin-x64\""
+    - "echo $PATH"
