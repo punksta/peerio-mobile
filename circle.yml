@@ -20,16 +20,16 @@ dependencies:
     - "echo $PATH"
     - "pwd"
     - "cd .. && npm install && cd ios"
-    - pip install Appium-Python-Client==0.22
-    - pip install jsonpickle==0.9.3
-    - pip install macholib==1.5.1
-    - pip install pyparsing==2.0.1
-    - pip install pytest==2.9.1
-    - pip install selenium==2.53.1
-    - pip install tornado==4.3
-    - pip install websocket-client==0.37.0
-    - pip install pycurl==7.43.0
-    - pip install termcolor==1.1.0
+    - pip install --user Appium-Python-Client==0.22
+    - pip install --user jsonpickle==0.9.3
+    - pip install --user macholib==1.5.1
+    - pip install --user pyparsing==2.0.1
+    - pip install --user pytest==2.9.1
+    - pip install --user selenium==2.53.1
+    - pip install --user tornado==4.3
+    - pip install --user websocket-client==0.37.0
+    - pip install --user pycurl==7.43.0
+    - pip install --user termcolor==1.1.0
 
     
 test:
