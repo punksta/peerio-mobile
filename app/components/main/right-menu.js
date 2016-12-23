@@ -82,7 +82,7 @@ export default class RightMenu extends Component {
                 bubble: mainState.unreadMessages,
                 icon: 'chat-bubble',
                 action: () => mainState.messages() },
-            { name: 'Files', bubble: mainState.fileCount, icon: 'folder', action: () => mainState.files() },
+            { name: 'Files', icon: 'folder', action: () => mainState.files() },
             { name: 'Profile', icon: 'person', action: () => null },
             { name: 'Settings', icon: 'settings', action: () => null },
             { name: 'Upgrade', icon: 'cloud-upload', action: () => null },

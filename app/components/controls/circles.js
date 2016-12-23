@@ -9,7 +9,6 @@ const s = {
     flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: -34,
     height: 30
 };
 
