@@ -89,6 +89,7 @@ export default class App extends Component {
 
     _handleAppStateChange(appState) {
         console.log(`App.js: AppState change: ${appState}`);
+        state.appState = appState;
         if (appState !== 'active') {
             icebear.socket.close();
         } else {
@@ -96,7 +97,8 @@ export default class App extends Component {
             //     console.log('app.js spy');
             //     console.log(event);
             // });
-            setTimeout(() => icebear.socket.open(), 2000);
+            icebear.socket.open();
+            // setTimeout(() => icebear.socket.open(), 2000);
         }
     }
 

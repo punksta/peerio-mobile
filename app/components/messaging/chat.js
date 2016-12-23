@@ -5,10 +5,7 @@ import {
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
 import mainState from '../main/main-state';
-import fileState from '../files/file-state';
 import ChatItem from './chat-item';
-import InputMain from '../layout/input-main';
-import SnackBar from '../snackbars/snackbar';
 
 // max new items which are scrolled animated
 const maxScrollableLength = 3;
@@ -22,18 +19,19 @@ export default class Chat extends Component {
 
     constructor(props) {
         super(props);
-        this.send = this.send.bind(this);
-        this.sendAck = this.sendAck.bind(this);
-        this.addFiles = this.addFiles.bind(this);
         this.layoutScrollView = this.layoutScrollView.bind(this);
         this.scroll = this.scroll.bind(this);
-        this.dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
+        // this.dataSource = new ListView.DataSource({
+        //     rowHasChanged: (r1, r2) => r1 !== r2
+        // });
     }
 
     get data() {
         return (mainState.currentChat && mainState.currentChat.messages) || [];
+    }
+
+    get showInput() {
+        return true;
     }
 
     componentWillMount() {
@@ -48,58 +46,10 @@ export default class Chat extends Component {
         // }, true);
     }
 
-    componentWillUnmount() {
-        this.reaction && this.reaction();
-        this.reaction = null;
-    }
-
-    send(v) {
-        const message = v;
-        if (!message || !message.length) {
-            this.sendAck();
-            return;
-        }
-        this.enableNextScroll = true;
-        mainState.addMessage(message);
-    }
-
-    sendAck() {
-        this.enableNextScroll = true;
-        mainState.addAck();
-    }
-
-    addFiles() {
-        fileState.selectFiles()
-            .then(files => {
-                files.forEach(f => {
-                    this.send(`chat.js: file added: ${f.name}`);
-                });
-            })
-            .catch(() => {
-                this.send('chat.js: user cancelled file selection');
-            });
-    }
-
-    // setFocus() {
-    //     this.input && this.input.setFocus();
+    // componentWillUnmount() {
+    //     this.reaction && this.reaction();
+    //     this.reaction = null;
     // }
-
-    renderInput() {
-        const s = {
-            minHeight: 80,
-            borderTopColor: 'rgba(0, 0, 0, .12)',
-            borderTopWidth: 1,
-            backgroundColor: '#fff'
-        };
-        return (
-            <View style={s}>
-                <InputMain
-                    plus={this.addFiles}
-                    sendAck={this.sendAck}
-                    send={this.send} />
-            </View>
-        );
-    }
 
     item(chat, i) {
         return <ChatItem key={chat.id || i} chat={chat} />;
@@ -160,25 +110,10 @@ export default class Chat extends Component {
     }
 
     render() {
-        // const shift = this.contentHeight - (this.scrollViewHeight - state.keyboardHeight);
-        // const paddingTop = !!this.scrollViewHeight &&
-        //     (global.platform === 'android') && (shift < 0) ? -shift : 0;
-        // const scrollEnabled = !!this.scrollViewHeight && (shift > 0);
-        // console.log('render');
-        // console.log(`content height: ${this.contentHeight}`);
-        // console.log(`sv height: ${this.scrollViewHeight}`);
-        // console.log(scrollEnabled);
-        const paddingTop = 0;
-        const visible = true; // this.scrollViewHeight && mainState.canSend;
-        const body = visible ? this.listView() : (
-            <ActivityIndicator style={{ paddingTop: 10 }} />
-        );
         return (
             <View
-                style={{ flexGrow: 1, paddingTop }}>
-                {body}
-                <SnackBar />
-                {visible ? this.renderInput() : null}
+                style={{ flexGrow: 1 }}>
+                {this.listView()}
             </View>
         );
     }

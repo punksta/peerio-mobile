@@ -4,6 +4,7 @@ import state from '../layout/state';
 import { User, chatStore, fileStore } from '../../lib/icebear';
 import store from '../../store/local-storage';
 import sounds from '../../lib/sounds';
+import { enablePushNotifications } from '../../lib/push';
 
 const mainState = observable({
     isBackVisible: false,
@@ -70,6 +71,11 @@ const mainState = observable({
                 // this.showModal('selectFiles');
                 // this.files();
             }
+
+            // make sure we loaded everything before requesting push permission
+            when(() => !c || (!c.loadingMeta && !c.loadingMessages), () => {
+                enablePushNotifications();
+            });
         });
         //
     },

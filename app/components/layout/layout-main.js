@@ -9,6 +9,7 @@ import {
 import { observer } from 'mobx-react/native';
 import { reaction, observable } from 'mobx';
 import state from './state';
+import InputMainContainer from './input-main-container';
 import mainState from '../main/main-state';
 import Bottom from '../controls/bottom';
 import LeftMenu from '../main/left-menu';
@@ -81,6 +82,8 @@ export default class LayoutMain extends Component {
                 mainState.blackStatusBar = false;
             }
         }, true);
+
+        reaction(() => state.appState, () => this.forceUpdate());
     }
 
     componentWillUnmount() {
@@ -149,6 +152,8 @@ export default class LayoutMain extends Component {
         const pages = this.body();
         const currentPage = pages[mainState.currentIndex] || {};
         const currentComponent = currentPage.type && currentPage.type.prototype || {};
+        const snackBar = !menuState &&
+            !mainState.modalRoute && !currentComponent.suppressMainSnackBar && <SnackBar />;
 
         return (
             <View
@@ -166,9 +171,10 @@ export default class LayoutMain extends Component {
                                 </View>
                                 <Bottom>
                                     {currentComponent.isFabVisible && <Fab />}
-                                    {!menuState && !mainState.modalRoute && <SnackBar />}
+                                    {snackBar}
                                 </Bottom>
                             </Animated.View>
+                            { currentComponent.showInput && <InputMainContainer /> }
                         </Animated.View>
                     </Animated.View>
                 </TouchableWithoutFeedback>

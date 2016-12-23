@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-    View, ActivityIndicator, Text, Dimensions, Image
+    View, Text, Dimensions, Image
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import SnackBar from '../snackbars/snackbar';
+import MainStateLoading from '../main/main-state-loading';
 import mainState from '../main/main-state';
 
 const chatZeroState = require('../../assets/chat-zero-state.png');
@@ -15,6 +15,10 @@ export default class MessagingPlaceholder extends Component {
         super(props);
         this.width = Dimensions.get('window').width;
         this.height = Dimensions.get('window').height;
+    }
+
+    get suppressMainSnackBar() {
+        return mainState.loading;
     }
 
     messaging() {
@@ -87,11 +91,11 @@ export default class MessagingPlaceholder extends Component {
             flex: 1,
             justifyContent: 'space-between'
         };
-        const ind = mainState.loading ?
-            <ActivityIndicator style={{ paddingTop: 10 }} /> : this.messaging();
         return (
             <View style={s}>
-                {ind}
+                <MainStateLoading>
+                    {this.messaging()}
+                </MainStateLoading>
             </View>
         );
     }

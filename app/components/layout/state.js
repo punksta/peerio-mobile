@@ -23,6 +23,7 @@ const state = observable({
     locale: null,
     pickerHeight: 200,
     languageSelected: 'en',
+    appState: 'active',
     languages: {
         en: 'English',
         fr: 'French',
