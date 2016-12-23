@@ -11,6 +11,7 @@ import { observer } from 'mobx-react/native';
 import * as Animatable from 'react-native-animatable';
 import Circles from '../controls/circles';
 import Center from '../controls/center';
+import icons from '../helpers/icons';
 import styles, { vars } from '../../styles/styles';
 import Util from '../helpers/util';
 
@@ -64,8 +65,16 @@ export default class Pin extends Component {
         this.message = this.props.messageEnter || t('passcode_inputPlaceholder');
     }
 
-    circle(index, text, subText) {
+    circle(index, text, subText, action) {
         const r = this.circleW || 60;
+        if (!text) {
+            const s = { width: r, height: r, alignItems: 'center', justifyContent: 'center' };
+            return (
+                <View style={s}>
+                    { subText && icons.white(subText, action) }
+                </View>
+            );
+        }
         const circle = styles.circle.create(r, {
             backgroundColor: vars.bg,
             borderColor: vars.highlight,
@@ -108,13 +117,19 @@ export default class Pin extends Component {
         }
     }
 
+    backspace() {
+        const l = this.pin.length;
+        if (!l) return;
+        this.pin = this.pin.substring(0, l - 1);
+    }
+
     layout(e) {
         const w = e.nativeEvent.layout.width;
         this.circleW = w / 3.6;
     }
 
     row(index, items) {
-        const circles = items.map((i, ci) => this.circle(ci, i.text, i.subText));
+        const circles = items.map((i, ci) => this.circle(ci, i.text, i.subText, i.action));
         return (
             <View key={index} style={{
                 flex: 1,
@@ -138,7 +153,8 @@ export default class Pin extends Component {
 
     render() {
         const style = styles.pin;
-        const p = (text, subText) => ({ text, subText });
+        const p = (text, subText, action) => ({ text, subText, action });
+        const bs = this.pin.length ? p(null, 'backspace', () => this.backspace()) : p();
         const body = (
             <View style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
                 <Animatable.View ref={v => { this.shaker = v; }}>
@@ -159,7 +175,7 @@ export default class Pin extends Component {
                     {this.row(0, [p(1), p(2, 'ABC'), p(3, 'DEF')])}
                     {this.row(1, [p(4, 'GHI'), p(5, 'JKL'), p(6, 'MNO')])}
                     {this.row(2, [p(7, 'PQRS'), p(8, 'TUV'), p(9, 'WXYZ')])}
-                    {this.row(3, [p(0)])}
+                    {this.row(3, [p(), p('0'), bs])}
                 </View>
             </View>
         );
