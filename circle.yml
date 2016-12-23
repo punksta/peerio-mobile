@@ -2,6 +2,9 @@ general:
   build_dir: ios
   
 machine:
+  pre:	
+    - pip install --user --ignore-installed --upgrade --verbose virtualenv
+    - ln -s ~/Library/Python/2.7/bin/virtualenv /usr/local/bin/virtualenv
   environment:
     XCODE_SCHEME: peeriomobile
     PATH: '$PATH:$HOME/node/node-v7.3.0-darwin-x64/bin'
@@ -20,16 +23,6 @@ dependencies:
     - "echo $PATH"
     - "pwd"
     - "cd .. && npm install && cd ios"
-    - pip install --user Appium-Python-Client==0.22
-    - pip install --user jsonpickle==0.9.3
-    - pip install --user macholib==1.5.1
-    - pip install --user pyparsing==2.0.1
-    - pip install --user pytest==2.9.1
-    - pip install --user selenium==2.53.1
-    - pip install --user tornado==4.3
-    - pip install --user websocket-client==0.37.0
-    - pip install --user pycurl==7.43.0
-    - pip install --user termcolor==1.1.0
 
     
 test:
