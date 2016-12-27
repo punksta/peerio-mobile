@@ -14,19 +14,26 @@ const width = Dimensions.get('window').width;
 const height = 64;
 const checkBoxWidth = height;
 const itemContainerStyle = {
+    flex: 1,
+    flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, .12)',
     backgroundColor: 'white',
     height,
     width,
+    borderWidth: 0,
+    borderColor: 'red',
     paddingLeft: 8
 };
 
 const fileInfoContainerStyle = {
     flexGrow: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    borderWidth: 0,
+    borderColor: 'green'
 };
 
 @observer
@@ -82,7 +89,7 @@ export default class FileInnerItem extends Component {
         icon = icons.dark(icon);
         const marginLeft = this.props.checkbox === 'always' ? 0 : -checkBoxWidth;
         const arrow = this.props.hideArrow ? null : (
-            <View style={{ flexGrow: 1 }}>
+            <View style={{ flex: 0 }}>
                 {iconRight}
             </View>
         );
@@ -92,13 +99,13 @@ export default class FileInnerItem extends Component {
                     <View style={[fileInfoContainerStyle, { opacity, marginLeft }]}>
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]} pointerEvents="none">
-                            <View style={{ flexGrow: 0 }}>
+                            <View style={{ flex: 0 }}>
                                 {icon}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: 16 }}>
                                 <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                 <Text style={infoStyle}>
-                                    {moment(file.uploadedAt).format('MMMM Do YYYY, hh:mm a')}
+                                    {moment(file.uploadedAt).format('MMM Do YYYY, hh:mm a')}
                                 </Text>
                             </View>
                             {arrow}

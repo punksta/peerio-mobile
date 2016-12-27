@@ -6,6 +6,7 @@ import { socket, fileStore } from '../../lib/icebear';
 const options = {
     noData: 'true',
     storageOptions: {
+        skipBackup: true,
         waitUntilSaved: true
     }
 };
@@ -28,7 +29,8 @@ export default {
                     source = { uri: response.uri, isStatic: true };
                 }
                 // console.log('imagepicker.js: ', source);
-                when(() => socket.authenticated, () => fileStore.upload(source.uri));
+                when(() => socket.authenticated,
+                     () => fileStore.upload(source.uri, response.fileName));
                 // console.log(`imagepicker.js: id ${file.id}`);
                 // console.log(`imagepicker.js: fileId ${file.fileId}`);
                 // global.currentFile = file;

@@ -51,9 +51,7 @@ export default class FileView extends Component {
                     flexGrow: 1,
                     justifyContent: 'space-between'
                 }}>
-                <View style={{
-                    paddingRight: 16
-                }}>
+                <View>
                     <View style={firstRowStyle}>
                         <View style={{
                             marginLeft: 4,
@@ -62,7 +60,7 @@ export default class FileView extends Component {
                             {icon}
                         </View>
                         <View style={firstColumnStyle}>
-                            <View>
+                            <View style={{ flexGrow: 1, flexShrink: 1 }}>
                                 <Text
                                     ellipsizeMode="tail"
                                     numberOfLines={1}>{file.name}</Text>

@@ -30,30 +30,34 @@ export default class FileProgress extends Component {
         if (file.uploading) {
             max = file.progressMax | 1;
         }
-        console.log(`file-progress.js: ${file.progress}, ${file.progressMax}`);
+        // console.log(`file-progress.js: ${file.progress}, ${file.progressMax}`);
         return (this.width * file.progress / max);
     }
 
-    progress = new Animated.Value(0);
+    @observable progress = 0;
 
     layout(evt) {
         this.width = evt.nativeEvent.layout.width;
         reaction(() => this.props.file, file => {
             if (file !== this.prevFile) {
                 this.prevFile = file;
-                this.progress.setValue(this.value);
+                // this.progress.setValue(this.value);
+                this.progress = 0;
             }
         }, true);
         autorun(() => {
             if (this.hidden) {
-                this.progress.setValue(0);
+                // this.progress.setValue(0);
+                this.progress = 0;
                 return;
             }
             const toValue = this.value;
+            this.progress = toValue;
+            // this.forceUpdate();
             // console.log(`file-progress.js: ${toValue}`);
-            const duration = 100;
+            // const duration = 100;
             // this.progress.setValue(toValue);
-            Animated.timing(this.progress, { toValue, duration }).start();
+            // Animated.timing(this.progress, { toValue, duration }).start();
         });
     }
 
@@ -65,17 +69,21 @@ export default class FileProgress extends Component {
             marginTop: -height,
             height,
             backgroundColor: '#CFCFCF',
+            borderWidth: 0,
+            borderColor: 'green',
             opacity: this.hidden ? 0 : 1
         };
         const pbProgress = {
             height,
             backgroundColor: vars.bg,
+            borderWidth: 0,
+            borderColor: 'red',
             width: this.progress
         };
 
         return (
             <View style={pbContainer} onLayout={evt => this.layout(evt)}>
-                <Animated.View style={pbProgress} />
+                <View style={pbProgress} />
             </View>
         );
     }

@@ -56,7 +56,7 @@
     "react-native-crypto": "^2.0.1",
     "react-native-file-opener": "git@github.com:PeerioTechnologies/react-native-file-opener.git",
     "react-native-fs": "https://github.com/calvium/react-native-fs#android_assets_support_plus_exists",
-    "react-native-image-picker": "^0.23.0",
+    "react-native-image-picker": "https://github.com/PeerioTechnologies/react-native-image-picker",
     "react-native-picker": "3.0.5",
     "react-native-push-notification": "^2.2.1",
     "react-native-randombytes": "^2.1.0",
