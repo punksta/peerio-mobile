@@ -13,19 +13,21 @@ export default (fileStream) => {
 
         open() {
             if (this.mode === 'read') {
-                return RNFS.readFile(this.filePath, 'base64')
-                    .then((contents) => {
-                        this.fileDescriptor = { mock: this.filePath, position: 0 };
-                        return new Promise((resolve) => {
-                            setTimeout(() => {
-                                this.contents = Buffer.from(toByteArray(contents));
-                                const size = this.contents.byteLength;
-                                this.fileDescriptor.size = size;
-                                console.log(`imagepicker.js: file size ${size}`);
-                                return resolve(size);
-                            });
-                        });
-                    });
+                this.fileDescriptor = { mock: this.filePath, position: 0 };
+                return RNFS.stat(this.filePath).then(s => s.size);
+                // return RNFS.readFile(this.filePath, 'base64')
+                //     .then((contents) => {
+                //         this.fileDescriptor = { mock: this.filePath, position: 0 };
+                //         return new Promise((resolve) => {
+                //             setTimeout(() => {
+                //                 this.contents = Buffer.from(toByteArray(contents));
+                //                 const size = this.contents.byteLength;
+                //                 this.fileDescriptor.size = size;
+                //                 console.log(`imagepicker.js: file size ${size}`);
+                //                 return resolve(size);
+                //             });
+                //         });
+                //     });
             }
             // this.contents = ''; // this.fileDescriptor = 1; // return Promise.resolve();
             return RNFetchBlob.fs.writeStream(this.filePath, 'base64', false)
@@ -60,18 +62,16 @@ export default (fileStream) => {
         readInternal() {
             const fd = this.fileDescriptor;
             const chunkSize = this._buffer.byteLength;
-            const sourceSize = fd.size;
-            const count = Math.min(chunkSize, sourceSize - fd.position);
-            console.log(`imagepicker.js: chunkSize ${chunkSize}, position ${fd.position}, sent ${count}`);
-            if (count < 0) {
-                console.error('imagepicker.js: error reading next chunk. count is less than zero');
-            }
-            const copiedCount = this.contents.copy(this._buffer, 0, fd.position, fd.position + count);
-            if (count !== copiedCount) {
-                console.error('imagepicker.js: error reading next chunk. count is not equal to copied count');
-            }
-            fd.position += count;
-            return Promise.resolve(count);
+
+            return RNFS.readFileChunk(this.filePath, fd.position, chunkSize)
+                .then(contents => {
+                    const chunk = Buffer.from(toByteArray(contents));
+                    const size = chunk.byteLength;
+                    chunk.copy(this._buffer, 0, 0, size);
+                    fd.position += size;
+                    // console.log(`rn-file-stream.js: ${fd.position}`);
+                    return size;
+                });
         }
 
         /**
@@ -80,11 +80,12 @@ export default (fileStream) => {
          */
         writeInternal(buffer) {
             this.contents += buffer.byteLength;
-            console.log('imagepicker.js: next block', this.contents);
+            // console.log('imagepicker.js: next block', this.contents);
             return this.fileDescriptor.write(fromByteArray(buffer));
         }
 
         static useCache = true
+        static chunkSize = 100 * 1024
 
         static cachePath(name) {
             return `${RNFS.CachesDirectoryPath}/${name}`;
@@ -98,6 +99,7 @@ export default (fileStream) => {
          * Launch external viewer
          */
         static launchViewer(path) {
+            console.log(`rn-file-stream.js: opening viewer for ${path}`);
             FileOpener.open(path, 'image/jpeg');
         }
 

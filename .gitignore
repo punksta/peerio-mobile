@@ -23,6 +23,7 @@ DerivedData
 ios/assets
 ios/main.jsbundle
 ios/main.jsbundle.*
+ios/peeriomobile.xcodeproj/project.xcworkspace/xcshareddata
 
 # Android/IJ
 #
