@@ -20,12 +20,12 @@ export default class LoginClean extends Component {
     componentDidMount() {
         const load = process.env.PEERIO_SKIPLOGINLOAD ? Promise.resolve(true) : loginState.load();
         load.then(() => {
-                if (__DEV__) {
-                    loginState.username = process.env.PEERIO_USERNAME;
-                    loginState.passphrase = process.env.PEERIO_PASSPHRASE;
-                    process.env.PEERIO_AUTOLOGIN && loginState.login();
-                }
-            });
+            if (__DEV__) {
+                loginState.username = process.env.PEERIO_USERNAME;
+                loginState.passphrase = process.env.PEERIO_PASSPHRASE;
+                process.env.PEERIO_AUTOLOGIN && loginState.login();
+            }
+        });
     }
 
     languagePicker() {

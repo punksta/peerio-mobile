@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, ListView, View, ActivityIndicator
+    ScrollView, ListView, View, ActivityIndicator, RefreshControl
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
-import mainState from '../main/main-state';
+import Paging from '../shared/paging';
 import ChatItem from './chat-item';
 
 // max new items which are scrolled animated
@@ -14,8 +14,11 @@ const maxScrollableLength = 3;
 export default class Chat extends Component {
     @observable contentHeight = 0;
     @observable scrollViewHeight = 0;
+    @observable refreshing = false;
     enableNextScroll = false;
     lastLength = 0;
+
+    paging = new Paging();
 
     constructor(props) {
         super(props);
@@ -27,7 +30,7 @@ export default class Chat extends Component {
     }
 
     get data() {
-        return (mainState.currentChat && mainState.currentChat.messages) || [];
+        return this.paging.data;
     }
 
     get showInput() {
@@ -59,22 +62,37 @@ export default class Chat extends Component {
         console.log('chat.js: layout scroll view');
         this.scrollViewHeight = event.nativeEvent.layout.height;
         console.log(this.scrollViewHeight);
+        this.paging.hasMore && this.paging.updateFrame();
         // console.log(`layout sv: ${this.scrollViewHeight}`);
         this.scroll();
     }
 
     scroll(contentWidth, contentHeight) {
         if (!this.scrollView) return;
+
+        if (this.refreshing) {
+            let y = (contentHeight - this.contentHeight) / 2;
+            if (y < 0) y = 0;
+            this.scrollView.scrollTo({ y, animated: false });
+            this.refreshing = false;
+            this.contentHeight = contentHeight;
+            return;
+        }
+
         if (contentHeight) {
             this.contentHeight = contentHeight;
         }
 
         if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
+
         this.scrollTimeout = setTimeout(() => {
             if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
                 let y = this.contentHeight - this.scrollViewHeight; // + state.keyboardHeight;
-                console.log(y);
-                if (y < 0) y = 0;
+                if (y < 0) {
+                    // console.log('chat.js: less content than fit');
+                    this.paging.hasMore && this.paging.loadNext();
+                    y = 0;
+                }
                 const animated = this.enableNextScroll;
                 this.scrollView.scrollTo({ y, animated });
                 this.enableNextScroll = false;
@@ -84,10 +102,23 @@ export default class Chat extends Component {
         }, 100);
     }
 
+    _onRefresh() {
+        this.refreshing = true;
+        this.paging.hasMore && setTimeout(() => this.paging.loadNext(), 500);
+        setTimeout(() => (this.refreshing = false), 1000);
+    }
+
     listView() {
+        const refreshControl = (
+            <RefreshControl
+                refreshing={this.refreshing}
+                onRefresh={() => this._onRefresh()}
+            />
+        );
         return (
             <ScrollView
                 onLayout={this.layoutScrollView}
+                refreshControl={refreshControl}
                 style={{ flexGrow: 1 }}
                 initialListSize={1}
                 onContentSizeChange={this.scroll}

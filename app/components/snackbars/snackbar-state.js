@@ -16,7 +16,8 @@ const snackbarState = observable({
         if (!this.items.length) return;
         const i = this.items[this.items.length - 1];
         const _pop = () => (this.items.length && this.items.splice(-1));
-        i.action ? i.action().then(_pop) : _pop();
+        i.callback && i.callback();
+        _pop();
     },
 
     @action set(text) {
