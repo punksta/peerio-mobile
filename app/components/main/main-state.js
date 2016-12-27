@@ -73,9 +73,10 @@ const mainState = observable({
                 // this.files();
             }
 
+            enablePushNotifications();
             // make sure we loaded everything before requesting push permission
             when(() => !c || (!c.loadingMeta && !c.loadingMessages), () => {
-                enablePushNotifications();
+                // enablePushNotifications();
             });
         });
         //

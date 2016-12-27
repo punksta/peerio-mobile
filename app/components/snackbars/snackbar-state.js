@@ -41,6 +41,6 @@ reaction(() => serverWarnings.collection.length, (l) => {
     }
 });
 
-snackbarState.push(t('address_confirmationSent'));
+// snackbarState.push(t('address_confirmationSent'));
 
 export default snackbarState;
