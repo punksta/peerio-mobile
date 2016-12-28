@@ -38,7 +38,7 @@ export default class Pin extends Component {
 
     check() {
         if (this.pin === this.enteredPin) {
-            this.message = 'Confirmed!';
+            this.message = t('wait');
             this.props.onConfirm && this.props.onConfirm(this.enteredPin);
         } else {
             this.shake();
