@@ -89,7 +89,7 @@ export default class Chat extends Component {
             if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
                 let y = this.contentHeight - this.scrollViewHeight; // + state.keyboardHeight;
                 if (y < 0) {
-                    // console.log('chat.js: less content than fit');
+                    console.log('chat.js: less content than fit');
                     this.paging.hasMore && this.paging.loadNext();
                     y = 0;
                 }
@@ -109,7 +109,7 @@ export default class Chat extends Component {
     }
 
     listView() {
-        const refreshControl = (
+        const refreshControl = this.paging.hasMore && (
             <RefreshControl
                 refreshing={this.refreshing}
                 onRefresh={() => this._onRefresh()}
