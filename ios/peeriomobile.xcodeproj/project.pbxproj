@@ -83,7 +83,6 @@
 		86F7F88564164E3CA0B1265B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0F64612EAF249BC98CB3DE2 /* Entypo.ttf */; };
 		B73DC4B1F0BD4E63BE1B4BD5 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B836295CD1B344EBB035E1B6 /* Foundation.ttf */; };
 		CF69BA63107E428598B08410 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21D883CDAA7C4E718E6EE873 /* EvilIcons.ttf */; };
-		E1B6CDFA1E0CC6C50042F2A8 /* PeerioTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1B6CDF91E0CC6C50042F2A8 /* PeerioTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -290,13 +289,6 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		E1B6CDFC1E0CC6C50042F2A8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = peeriomobile;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -305,8 +297,6 @@
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
 		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
-		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* peeriomobileTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = peeriomobileTests.m; sourceTree = "<group>"; };
 		021071081E03965C00687D5E /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/peerio-react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		02210A6A1E01902A006D7AC0 /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		02210A831E0191BA006D7AC0 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = ../app/sounds; sourceTree = "<group>"; };
@@ -345,9 +335,6 @@
 		A7DDFAC6A6F74107A3D45471 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		B836295CD1B344EBB035E1B6 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		DE216B2DFB25438F8922A621 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
-		E1B6CDF71E0CC6C40042F2A8 /* PeerioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PeerioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E1B6CDF91E0CC6C50042F2A8 /* PeerioTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeerioTests.m; sourceTree = "<group>"; };
-		E1B6CDFB1E0CC6C50042F2A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED79A42A8D3144739CE4C04B /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -410,13 +397,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E1B6CDF41E0CC6C40042F2A8 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -460,23 +440,6 @@
 				00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		00E356EF1AD99517003FC87E /* peeriomobileTests */ = {
-			isa = PBXGroup;
-			children = (
-				00E356F21AD99517003FC87E /* peeriomobileTests.m */,
-				00E356F01AD99517003FC87E /* Supporting Files */,
-			);
-			path = peeriomobileTests;
-			sourceTree = "<group>";
-		};
-		00E356F01AD99517003FC87E /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				00E356F11AD99517003FC87E /* Info.plist */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		021071091E03965C00687D5E /* Products */ = {
@@ -663,8 +626,6 @@
 				02277B141D6AEDC50020B31A /* StoreKit.framework */,
 				13B07FAE1A68108700A75B9A /* peeriomobile */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* peeriomobileTests */,
-				E1B6CDF81E0CC6C50042F2A8 /* PeerioTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				EE3B3AB15A814B41A0267C44 /* Resources */,
 				02BCD72B1DFE1606000B8FCF /* Frameworks */,
@@ -678,18 +639,8 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* peeriomobile.app */,
 				02DB417F1DCD1DB000E04176 /* expandoo.app */,
-				E1B6CDF71E0CC6C40042F2A8 /* PeerioTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		E1B6CDF81E0CC6C50042F2A8 /* PeerioTests */ = {
-			isa = PBXGroup;
-			children = (
-				E1B6CDF91E0CC6C50042F2A8 /* PeerioTests.m */,
-				E1B6CDFB1E0CC6C50042F2A8 /* Info.plist */,
-			);
-			path = PeerioTests;
 			sourceTree = "<group>";
 		};
 		EE3B3AB15A814B41A0267C44 /* Resources */ = {
@@ -749,24 +700,6 @@
 			productReference = 13B07F961A680F5B00A75B9A /* peeriomobile.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E1B6CDF61E0CC6C40042F2A8 /* PeerioTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E1B6CE1D1E0CC6C50042F2A8 /* Build configuration list for PBXNativeTarget "PeerioTests" */;
-			buildPhases = (
-				E1B6CDF31E0CC6C40042F2A8 /* Sources */,
-				E1B6CDF41E0CC6C40042F2A8 /* Frameworks */,
-				E1B6CDF51E0CC6C40042F2A8 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E1B6CDFD1E0CC6C50042F2A8 /* PBXTargetDependency */,
-			);
-			name = PeerioTests;
-			productName = PeerioTests;
-			productReference = E1B6CDF71E0CC6C40042F2A8 /* PeerioTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -794,12 +727,6 @@
 								enabled = 1;
 							};
 						};
-					};
-					E1B6CDF61E0CC6C40042F2A8 = {
-						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = 7L45B96YPK;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 				};
 			};
@@ -900,7 +827,6 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* peeriomobile */,
 				02DB415A1DCD1DB000E04176 /* expandoo */,
-				E1B6CDF61E0CC6C40042F2A8 /* PeerioTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1152,13 +1078,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E1B6CDF51E0CC6C40042F2A8 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1213,23 +1132,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E1B6CDF31E0CC6C40042F2A8 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1B6CDFA1E0CC6C50042F2A8 /* PeerioTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E1B6CDFD1E0CC6C50042F2A8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* peeriomobile */;
-			targetProxy = E1B6CDFC1E0CC6C50042F2A8 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		02DB417D1DCD1DB000E04176 /* Debug */ = {
@@ -1554,44 +1457,6 @@
 			};
 			name = Release;
 		};
-		E1B6CDFE1E0CC6C50042F2A8 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 7L45B96YPK;
-				INFOPLIST_FILE = PeerioTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.peerio.PeerioTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYMROOT = build/Build/Products;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/peeriomobile.app/peeriomobile";
-			};
-			name = Debug;
-		};
-		E1B6CDFF1E0CC6C50042F2A8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 7L45B96YPK;
-				INFOPLIST_FILE = PeerioTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.peerio.PeerioTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYMROOT = build/Build/Products;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/peeriomobile.app/peeriomobile";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1618,15 +1483,6 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E1B6CE1D1E0CC6C50042F2A8 /* Build configuration list for PBXNativeTarget "PeerioTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E1B6CDFE1E0CC6C50042F2A8 /* Debug */,
-				E1B6CDFF1E0CC6C50042F2A8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
