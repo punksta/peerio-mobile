@@ -22,10 +22,7 @@ dependencies:
     - "ls \"$HOME/node/node-v7.3.0-darwin-x64\""
     - "echo $PATH"
     - "pwd"
-    - "cd .. && npm install && cd ios"
-
     
 test:
-  post:
-    - "cd .. && npm test"
-    
+  override:
+    - "npm test"
