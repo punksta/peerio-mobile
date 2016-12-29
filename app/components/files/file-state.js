@@ -1,6 +1,8 @@
 import { observable, action } from 'mobx';
 import mainState from '../main/main-state';
 import { fileStore } from '../../lib/icebear';
+import { tx } from '../utils/translator';
+import { rnAlertYesNo } from '../../lib/alerts';
 
 const fileState = observable({
     get showSelection() {
@@ -13,11 +15,16 @@ const fileState = observable({
 
     @action delete() {
         const f = mainState.currentFile ? [mainState.currentFile] : this.selected;
-        console.log('file-state.js: ', f);
-        f.forEach(item => {
-            fileStore.remove(item);
-        });
-        mainState.back();
+        const count = f.length;
+        const t = tx((count > 1) ? 'confirm_deleteFiles' : 'confirm_deleteFile', { count });
+        rnAlertYesNo(t)
+            .then(() => {
+                f.forEach(item => {
+                    fileStore.remove(item);
+                });
+                mainState.files();
+            })
+            .catch(() => null);
     },
 
     @action download() {

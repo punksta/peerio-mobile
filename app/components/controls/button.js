@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+    View,
     Text,
     TouchableOpacity
 } from 'react-native';
@@ -15,14 +16,20 @@ export default class Button extends Component {
             textStyle = [textStyle, this.props.textStyle];
         }
         const text = this.props.text || '';
+        const press = () => {
+            !this.props.disabled && this.props.onPress && this.props.onPress();
+            return false;
+        };
         return (
-            <TouchableOpacity
-                testID={this.props.testID}
-                style={this.props.style}
-                onPress={this.props.disabled ? null : this.props.onPress}>
-                <Text style={[textStyle, opacity]}>
-                    {text}
-                </Text>
+            <TouchableOpacity>
+                <View
+                    testID={this.props.testID}
+                    style={this.props.style}
+                    onStartShouldSetResponderCapture={press}>
+                    <Text style={[textStyle, opacity]}>
+                        {text}
+                    </Text>
+                </View>
             </TouchableOpacity>
         );
     }

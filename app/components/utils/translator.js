@@ -49,5 +49,6 @@ module.exports = {
     },
     tu(k, params) {
         return React.createElement(T, { k, uppercase: true }, params);
-    }
+    },
+    tx: (k, params) => t(k, params)
 };

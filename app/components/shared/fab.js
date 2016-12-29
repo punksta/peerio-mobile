@@ -6,6 +6,8 @@ import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
 import imagePicker from '../helpers/imagepicker';
 
+const fabSize = vars.fabSize;
+
 const fabContainer = {
     position: 'absolute',
     right: vars.fabRight,
@@ -16,8 +18,9 @@ const fabContainer = {
 
 const fabStyle = {
     flex: 0,
-    width: 40,
-    height: 40,
+    width: fabSize,
+    height: fabSize,
+    marginRight: fabSize * 0.25,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FF7D00'
@@ -39,11 +42,11 @@ export default class Fab extends Component {
     }
 
     render() {
-        const s = [fabStyle, helpers.circle(vars.fabSize), shadowStyle];
+        const s = [fabStyle, helpers.circle(fabSize), shadowStyle];
         return (
-            <TouchableOpacity
-                onPress={() => imagePicker.test()}>
+            <TouchableOpacity>
                 <View
+                    onStartShouldSetResponderCapture={() => { imagePicker.test(); return false; }}
                     style={fabContainer} pointerEvents="box-only">
                     <View style={s}>
                         {icons.white('add')}

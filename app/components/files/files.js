@@ -26,7 +26,7 @@ export default class Files extends Component {
             rowHasChanged: (r1, r2) => r1 !== r2
         });
     }
-    get isFabVisible() { return true; }
+    get isFabVisible() { return !fileState.showSelection; }
 
     @observable dataSource = null;
     @observable refreshing = false

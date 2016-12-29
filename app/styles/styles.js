@@ -71,7 +71,7 @@ const vars = {
         }
     },
     inputHeight: 48,
-    fabSize: 50,
+    fabSize: 60,
     fabRight: 16,
     fabBottom: 32
 };
