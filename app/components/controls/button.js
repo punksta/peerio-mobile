@@ -21,9 +21,8 @@ export default class Button extends Component {
             return false;
         };
         return (
-            <TouchableOpacity>
+            <TouchableOpacity testID={this.props.testID}>
                 <View
-                    testID={this.props.testID}
                     style={this.props.style}
                     onStartShouldSetResponderCapture={press}>
                     <Text style={[textStyle, opacity]}>
