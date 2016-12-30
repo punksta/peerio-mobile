@@ -1,5 +1,5 @@
 import { observable, action, reaction, asFlat } from 'mobx';
-import { serverWarnings } from '../../lib/icebear';
+import { systemWarnings } from '../../lib/icebear';
 import { t } from '../utils/translator';
 
 const snackbarState = observable({
