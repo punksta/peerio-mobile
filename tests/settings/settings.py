@@ -60,7 +60,7 @@ def ios_basic():
         'autoLaunch': True,
         'noReset': True,
         'newCommandTimeout': 12000,
-        'nativeInstrumentsLib': True
+        'nativeInstrumentsLib': False
     }
 
 def ios_10(config):
