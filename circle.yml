@@ -20,10 +20,11 @@ dependencies:
     - "ls \"$HOME/node/node-v7.3.0-darwin-x64\""
     - "echo $PATH"
     - "pwd"
+    - npm install
 
 compile:
   override:
-    - npm install
+    - pwd && npm update
     - pwd && ./node_modules/.bin/react-native run-ios --simulator="iPhone 7"
     
 test:
