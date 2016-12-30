@@ -12,8 +12,6 @@ machine:
     version: 8.0
 
 dependencies:
-  cache_directories:
-    - "$HOME/node"
   pre:
     - "ls \"$HOME/node/node-v7.3.0-darwin-x64\" || mkdir \"$HOME/node\""
     - "ls \"$HOME/node/node-v7.3.0-darwin-x64\" || curl -L \"https://nodejs.org/dist/v7.3.0/node-v7.3.0-darwin-x64.tar.gz\" -o \"$HOME/node/node-v7.3.0-darwin-x64.tar.gz\""
@@ -22,7 +20,16 @@ dependencies:
     - "ls \"$HOME/node/node-v7.3.0-darwin-x64\""
     - "echo $PATH"
     - "pwd"
+
+compile:
+  override:
+    - npm install
+    - ./node_modules/.bin/react-native run-ios --simulator="iPhone 7"
     
 test:
   override:
-    - "npm test"
+    - virtualenv .pyenv
+    - source .pyenv/bin/activate
+    - mkdir -p $CIRCLE_TEST_REPORTS/py.test
+    - py.test --platform=ios -s -x tests --junitxml=$CIRCLE_TEST_REPORTS/py.test/junit.xml
+    - deactivate
