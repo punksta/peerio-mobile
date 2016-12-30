@@ -1,6 +1,3 @@
-general:
-  build_dir: ios
-  
 machine:
   pre:
     - pip install --user --ignore-installed --upgrade --verbose virtualenv
