@@ -24,7 +24,7 @@ dependencies:
 compile:
   override:
     - npm install
-    - ./node_modules/.bin/react-native run-ios --simulator="iPhone 7"
+    - pwd && ./node_modules/.bin/react-native run-ios --simulator="iPhone 7"
     
 test:
   override:
