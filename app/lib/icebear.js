@@ -16,7 +16,7 @@ Promise.config({
 
 const icebear = require('./peerio-icebear/src');
 
-const { socket, config, FileStreamAbstract, serverWarnings } = icebear;
+const { socket, config, FileStreamAbstract, systemWarnings } = icebear;
 
 config.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://app.peerio.com';
 socket.start();
