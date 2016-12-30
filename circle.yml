@@ -27,8 +27,5 @@ compile:
     
 test:
   override:
-    - virtualenv .pyenv
-    - source .pyenv/bin/activate
     - mkdir -p $CIRCLE_TEST_REPORTS/py.test
-    - py.test --platform=ios -s -x tests --junitxml=$CIRCLE_TEST_REPORTS/py.test/junit.xml
-    - deactivate
+    - virtualenv .pyenv && source .pyenv/bin/activate && py.test --platform=ios -s -x tests --junitxml=$CIRCLE_TEST_REPORTS/py.test/junit.xml
