@@ -53,8 +53,8 @@ def ios_basic():
         'platform': 'iOS',
         'bundleId': 'com.peerio',
         'launchTimeout': 90000,
-        'platformVersion': '10.0',
-        'deviceName': 'iPhone 7',
+        'deviceName': os.environ['PEERIO_IOS_SIM'],
+        'platformVersion': os.environ['PEERIO_IOS_VERSION'],
         # 'autoAcceptAlerts': False, # so that system dialogs are accepted
         # 'autoDismissAlerts': True, # so that system dialogs are accepted
         'autoLaunch': True,
