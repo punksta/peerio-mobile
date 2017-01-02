@@ -31,10 +31,10 @@ const snackbarState = observable({
     items: asFlat([])
 });
 
-reaction(() => serverWarnings.collection.length, (l) => {
+reaction(() => systemWarnings.collection.length, (l) => {
     console.log('snackbar-state.js: server warning update');
     if (l) {
-        const sw = serverWarnings.collection[l - 1];
+        const sw = systemWarnings.collection[l - 1];
         snackbarState.push(t(sw.content), () => {
             console.log('snackbar-state.js: server warning cleared');
             sw && sw.action && sw.action();
