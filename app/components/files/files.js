@@ -60,7 +60,7 @@ export default class Files extends Component {
 
     _onRefresh() {
         this.refreshing = true;
-        //fileStore.reloadAllFiles();
+        // fileStore.reloadAllFiles();
         when(() => !fileStore.loading, () => (this.refreshing = false));
     }
 

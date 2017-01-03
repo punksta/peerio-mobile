@@ -209,6 +209,7 @@ Avatar.propTypes = {
     checkedKey: React.PropTypes.string,
     checkedState: React.PropTypes.any,
     hideOnline: React.PropTypes.bool,
-    noBorderBottom: React.PropTypes.bool
+    noBorderBottom: React.PropTypes.bool,
+    noTap: React.PropTypes.bool
 };
 

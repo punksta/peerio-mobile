@@ -109,12 +109,12 @@ export default class Chat extends Component {
     }
 
     listView() {
-        const refreshControl = this.paging.hasMore && (
+        const refreshControl = this.paging.hasMore ? (
             <RefreshControl
                 refreshing={this.refreshing}
                 onRefresh={() => this._onRefresh()}
             />
-        );
+        ) : null;
         return (
             <ScrollView
                 onLayout={this.layoutScrollView}

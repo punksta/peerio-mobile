@@ -54,7 +54,7 @@ export default class FileActions extends Component {
         };
         const file = this.props.file;
 
-        const leftAction = file && file.cacheExists ?
+        const leftAction = file && !file.isPartialDownload && file.cacheExists ?
             this.action('Open', 'open-in-new', () => file.launchViewer()) :
             this.action('Download', 'file-download', () => fileState.download());
 

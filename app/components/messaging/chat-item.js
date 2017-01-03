@@ -18,6 +18,7 @@ export default class ChatItem extends Component {
                 date={timestamp}
                 message={text}
                 key={key}
+                noTap
                 noBorderBottom
             />
         );

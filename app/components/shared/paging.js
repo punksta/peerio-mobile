@@ -26,7 +26,7 @@ export default class Paging {
                     const delta = l - this.lastLength;
                     if (delta) {
                         console.log(`paging.js: ${this.renderCount}`);
-                        this.renderCount += delta;
+                        this.renderCount += Math.min(delta, 10);
                     }
                     this.lastLength = l;
                     this.updateFrame();

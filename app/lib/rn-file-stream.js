@@ -2,6 +2,7 @@ import RNFS from 'react-native-fs';
 import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
 import { fromByteArray, toByteArray } from 'base64-js';
+import { AsyncStorage } from 'react-native';
 
 export default (fileStream) => {
     class RNFileStream extends fileStream {
@@ -15,21 +16,7 @@ export default (fileStream) => {
             if (this.mode === 'read') {
                 this.fileDescriptor = { mock: this.filePath, position: 0 };
                 return RNFS.stat(this.filePath).then(s => s.size);
-                // return RNFS.readFile(this.filePath, 'base64')
-                //     .then((contents) => {
-                //         this.fileDescriptor = { mock: this.filePath, position: 0 };
-                //         return new Promise((resolve) => {
-                //             setTimeout(() => {
-                //                 this.contents = Buffer.from(toByteArray(contents));
-                //                 const size = this.contents.byteLength;
-                //                 this.fileDescriptor.size = size;
-                //                 console.log(`imagepicker.js: file size ${size}`);
-                //                 return resolve(size);
-                //             });
-                //         });
-                //     });
             }
-            // this.contents = ''; // this.fileDescriptor = 1; // return Promise.resolve();
             return RNFetchBlob.fs.writeStream(this.filePath, 'base64', false)
                 .then(fd => {
                     this.fileDescriptor = fd;

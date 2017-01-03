@@ -18,13 +18,12 @@ export default class Button extends Component {
         const text = this.props.text || '';
         const press = () => {
             !this.props.disabled && this.props.onPress && this.props.onPress();
-            return false;
+            return true;
         };
         return (
-            <TouchableOpacity testID={this.props.testID}>
+            <TouchableOpacity onPress={press} testID={this.props.testID}>
                 <View
-                    style={this.props.style}
-                    onStartShouldSetResponderCapture={press}>
+                    style={this.props.style}>
                     <Text style={[textStyle, opacity]}>
                         {text}
                     </Text>

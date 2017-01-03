@@ -8,6 +8,10 @@ const engine = {
 
     setValue(name, value) {
         return AsyncStorage.setItem(name, JSON.stringify(value));
+    },
+
+    removeValue(name) {
+        return AsyncStorage.removeItem(name);
     }
 };
 
