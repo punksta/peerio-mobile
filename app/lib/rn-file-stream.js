@@ -67,12 +67,12 @@ export default (fileStream) => {
          */
          // eslint-disable-next-line
          seekInternal(pos) {
-            const fd = this.fileDescriptor;
-            if (fd)  {
-                fd.position = pos;
-                return fd.position;
-            }
-            throw new Error('rn-file-stream.js: stream is not initialized');
+             const fd = this.fileDescriptor;
+             if (fd) {
+                 fd.position = pos;
+                 return fd.position;
+             }
+             throw new Error('rn-file-stream.js: stream is not initialized');
          }
 
         /**
