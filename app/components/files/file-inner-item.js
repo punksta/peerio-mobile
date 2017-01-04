@@ -87,6 +87,14 @@ export default class FileInnerItem extends Component {
             opacity = 0.5;
         }
         icon = icons.dark(icon);
+        let loadingStyle = null;
+        // if (file.downloading || file.uploading) {
+        //     loadingStyle = {
+        //         borderWidth: 2,
+        //         borderRadius: 32,
+        //         borderColor: 'green'
+        //     };
+        // }
         const marginLeft = this.props.checkbox === 'always' ? 0 : -checkBoxWidth;
         const arrow = this.props.hideArrow ? null : (
             <View style={{ flex: 0 }}>
@@ -99,7 +107,7 @@ export default class FileInnerItem extends Component {
                     <View style={[fileInfoContainerStyle, { opacity, marginLeft }]}>
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]} pointerEvents="none">
-                            <View style={{ flex: 0 }}>
+                            <View style={[loadingStyle, { flex: 0 }]}>
                                 {icon}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: 16 }}>
@@ -123,4 +131,3 @@ FileInnerItem.propTypes = {
     checkbox: React.PropTypes.string,
     hideArrow: React.PropTypes.bool
 };
-
