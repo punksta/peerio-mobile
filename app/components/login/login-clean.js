@@ -18,11 +18,11 @@ import styles from '../../styles/styles';
 @observer
 export default class LoginClean extends Component {
     componentDidMount() {
-        const load = process.env.PEERIO_SKIPLOGINLOAD ? Promise.resolve(true) : loginState.load();
+        const load = __DEV__ && process.env.PEERIO_SKIPLOGINLOAD ? Promise.resolve(true) : loginState.load();
         load.then(() => {
             if (__DEV__) {
-                loginState.username = process.env.PEERIO_USERNAME;
-                loginState.passphrase = process.env.PEERIO_PASSPHRASE;
+                loginState.username = process.env.PEERIO_USERNAME || loginState.username;
+                loginState.passphrase = process.env.PEERIO_PASSPHRASE || loginState.passphrase;
                 process.env.PEERIO_AUTOLOGIN && loginState.login();
             }
         });

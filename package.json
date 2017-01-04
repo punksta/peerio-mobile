@@ -16,7 +16,6 @@
     "localize": "tx pull -af",
     "release": "standard-version && git push --follow-tags origin master",
     "link": "react-native link",
-    "bundle": "echo stub",
     "build-ios": "cd ios && xcodebuild -scheme peeriomobile -configuration Debug build",
     "build-ios-expandoo": "cd ios && xcodebuild -scheme expandoo -configuration Debug build",
     "build-ios-nocodesign": "cd ios && xcodebuild -scheme peeriomobile -configuration Debug build -sdk iphonesimulator PLATFORM_NAME=iphonesimulator",

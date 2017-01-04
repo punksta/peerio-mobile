@@ -99,7 +99,6 @@ const loginState = observable({
     @action async load() {
         console.log(`login-state.js: loading`);
         const userData = await store.system.get('userData');
-        this.username = await store.system.get('lastUsername');
         if (userData) {
             console.log(`login-state.js: loaded ${userData}`);
             const { username, firstName, lastName, touchIdSaved } = userData;
@@ -116,6 +115,7 @@ const loginState = observable({
                     result && this.saved();
                 });
         }
+        this.username = await store.system.get('lastUsername');
         return false;
     },
 
