@@ -84,17 +84,21 @@ export default class Pin extends Component {
             borderColor: vars.highlight,
             borderWidth: 1,
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            width: 64,
+            height: 64
         });
         const circleHl = styles.circle.create(r, {
-            backgroundColor: vars.midlight
+            backgroundColor: vars.midlight,
+            width: 64,
+            height: 64
         });
         return (
             <View style={circleHl} key={key}>
                 <TouchableOpacity testID={`pin${text}`} onPress={() => this.enter(text)}>
                     <View style={circle}>
-                        <Text style={{ color: vars.highlight, fontSize: r / 3 }}>{text}</Text>
-                        <Text style={{ color: vars.midlight, fontSize: r / 6 }}>{subText}</Text>
+                        <Text style={{ color: vars.highlight, fontSize: 24 }}>{text}</Text>
+                        <Text style={{ color: vars.midlight, fontSize: 12 }}>{subText}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -192,7 +196,12 @@ export default class Pin extends Component {
                         </View> :
                             <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
                 </View>
-                <View style={{ flexGrow: 1, opacity: inProgress ? 0.5 : 1 }}>
+
+                <View style={{ flexGrow: 1,
+                               maxHeight: 352,
+                               opacity: inProgress ? 0.5 : 1,
+                               marginLeft: 16,
+                               marginRight: 16 }}>
                     {this.row(0, [p(1), p(2, 'ABC'), p(3, 'DEF')])}
                     {this.row(1, [p(4, 'GHI'), p(5, 'JKL'), p(6, 'MNO')])}
                     {this.row(2, [p(7, 'PQRS'), p(8, 'TUV'), p(9, 'WXYZ')])}

@@ -33,7 +33,7 @@ export default class LoginSaved extends Component {
     render() {
         const style = styles.wizard;
         const body = (
-            <View style={style.containerFlexGrow}>
+            <View style={[style.containerFlexGrow, { marginTop: 44 }]}>
                 <Center style={{
                     flexGrow: 0,
                     marginTop: 6,
@@ -50,4 +50,3 @@ export default class LoginSaved extends Component {
         return <Layout2 body={body} footer={<LoginSavedFooter />} />;
     }
 }
-

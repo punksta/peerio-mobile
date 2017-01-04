@@ -325,7 +325,9 @@ const styles = {
                 borderRadius: vars.circle / 2,
                 marginLeft: vars.circle,
                 marginRight: vars.circle,
-                backgroundColor: vars.midlight
+                backgroundColor: branding.peeriomobile.bg,
+                borderWidth: 1,
+                borderColor: 'rgba(255, 255, 255, 0.5)'
             }),
             normal: inherit('small-circle'),
             active: inherit('small-circle', {
@@ -398,9 +400,9 @@ const styles = {
             title: inherit('text-inverse'),
             subTitle: inherit('text-inverse', {
                 fontWeight: vars.font.weight.regular,
-                fontSize: 22,
+                fontSize: 24,
                 marginTop: 12,
-                marginBottom: 30
+                marginBottom: 32
             }),
             info: inherit('text-inverse', {
                 fontSize: 12

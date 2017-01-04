@@ -22,9 +22,9 @@ export default class SignupPin extends Component {
     render() {
         const style = styles.wizard;
         const body = (
-            <View style={style.containerFlex}>
+            <View style={[style.containerFlex, { marginTop: 12 }]}>
                 <Text style={style.text.title}>{t('signup')}</Text>
-                <Text style={style.text.subTitle}>{t('passcode_inputPlaceholder')}</Text>
+                <Text style={style.text.subTitle}>{t('devicePin')}</Text>
                 <Pin
                     preventSimplePin
                     ref={pin => (this.pin = pin)}
@@ -37,4 +37,3 @@ export default class SignupPin extends Component {
         );
     }
 }
-
