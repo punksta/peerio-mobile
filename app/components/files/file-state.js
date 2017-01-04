@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action, when } from 'mobx';
 import mainState from '../main/main-state';
 import { fileStore } from '../../lib/icebear';
 import { tx } from '../utils/translator';
@@ -31,7 +31,7 @@ const fileState = observable({
         const f = mainState.currentFile ? [mainState.currentFile] : this.selected;
         f.forEach(file => {
             if (file.downloading || file.uploading) return;
-            file.download();
+            when(() => file.readyForDownload, () => file.download());
             file.selected = false;
         });
     },

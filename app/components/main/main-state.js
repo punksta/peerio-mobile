@@ -43,6 +43,7 @@ const mainState = observable({
         when(() => !chatStore.loading, () => {
             console.log('main-state.js: load all files');
             fileStore.loadAllFiles();
+            fileStore.resume();
         });
     },
 

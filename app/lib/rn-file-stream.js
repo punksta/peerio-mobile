@@ -17,7 +17,7 @@ export default (fileStream) => {
                 this.fileDescriptor = { mock: this.filePath, position: 0 };
                 return RNFS.stat(this.filePath).then(s => s.size);
             }
-            return RNFetchBlob.fs.writeStream(this.filePath, 'base64', false)
+            return RNFetchBlob.fs.writeStream(this.filePath, 'base64', this.mode === 'append')
                 .then(fd => {
                     this.fileDescriptor = fd;
                     this.contents = 0;
@@ -60,6 +60,20 @@ export default (fileStream) => {
                     return size;
                 });
         }
+
+        /**
+         * Move file position pointer
+         * @param {long} pos
+         */
+         // eslint-disable-next-line
+         seekInternal(pos) {
+            const fd = this.fileDescriptor;
+            if (fd)  {
+                fd.position = pos;
+                return fd.position;
+            }
+            throw new Error('rn-file-stream.js: stream is not initialized');
+         }
 
         /**
          * @param {Uint8Array} buffer
