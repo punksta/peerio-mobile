@@ -104,7 +104,7 @@ const loginState = observable({
             console.log(`login-state.js: loaded ${userData}`);
             const { username, firstName, lastName, touchIdSaved } = userData;
             // we logged in with someone else
-            if (this.username && this.username !=== username) return;
+            if (this.username && this.username !== username) return;
             this.username = username;
             this.firstName = firstName;
             this.lastName = lastName;

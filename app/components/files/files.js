@@ -80,7 +80,6 @@ export default class Files extends Component {
         return (
             <ListView
                 initialListSize={1}
-                refreshControl={refreshControl}
                 dataSource={this.dataSource}
                 renderRow={this.item}
                 onContentSizeChange={this.scroll}
