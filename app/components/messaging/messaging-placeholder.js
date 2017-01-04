@@ -24,12 +24,14 @@ export default class MessagingPlaceholder extends Component {
     messaging() {
         const headerStyle = {
             textAlign: 'center',
-            fontSize: 18
+            fontSize: 24,
+            whiteSpace: 'nowrap'
         };
         const infoStyle = {
-            flex: 1,
+            flexShrink: 1,
             textAlign: 'left',
-            fontSize: 16
+            fontSize: 16,
+            height: 48
         };
         const outerContainerStyle = {
             flex: 1,
@@ -56,23 +58,32 @@ export default class MessagingPlaceholder extends Component {
         return (
             <View style={outerContainerStyle}>
                 <View style={{ flex: 1,
-                      width: this.width,
-                      justifyContent: 'space-between' }}>
-                    <View style={titleBlockStyle}>
-                        <View style={{ flex: 1 }}>
+                      width: this.width }}>
+                    <View style={[titleBlockStyle, { marginTop: 16 }]}>
+                        <View style={{ flex: 1, marginLeft: 32 }}>
                             <Image source={arrowUpZeroState}
                                    resizeMode="contain"
                                    style={imageStyle} />
                         </View>
-                        <View style={{ flex: 1, alignItems: 'center', alignSelf: 'center' }}>
+                        <View style={{ flexGrow: 1, flexShrink: 0, alignItems: 'center', alignSelf: 'center', marginTop: 52, marginLeft: -32 }}>
                             <Text style={headerStyle}>Have a{'\n'}conversation</Text>
                         </View>
                         <View style={{ flex: 1 }} />
                     </View>
-                    <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: 20, paddingRight: 20 }}>
+                    <View style={{
+                        borderColor: 'red',
+                        borderWidth: 0,
+                        flexGrow: 0,
+                        alignSelf: 'center',
+                        justifyContent: 'center',
+                        paddingLeft: 20,
+                        paddingRight: 20,
+                        width: 245,
+                        height: 232,
+                        marginTop: 32 }}>
                         <Image source={chatZeroState}
                                resizeMode="contain"
-                               style={{ flex: 1, width: null, height: null }} />
+                               style={{ flexGrow: 1, width: null, height: null }} />
                     </View>
                     <View style={textHintContainer}>
                         <View style={{ flex: 1 }}>
@@ -100,4 +111,3 @@ export default class MessagingPlaceholder extends Component {
         );
     }
 }
-
