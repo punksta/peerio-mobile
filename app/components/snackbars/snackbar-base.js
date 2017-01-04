@@ -66,8 +66,8 @@ export default class SnackbarBase extends Component {
         const s = {
             backgroundColor: vars.snackbarBg,
             justifyContent: 'center',
-            paddingLeft: vars.iconPadding,
-            paddingRight: vars.iconPadding,
+            paddingLeft: 24,
+            paddingRight: 24,
             overflow: 'hidden',
             height: this.animatedHeight
         };
