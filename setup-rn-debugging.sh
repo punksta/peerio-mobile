@@ -5,3 +5,4 @@ echo "Patching RN to enable device debugging"
 ip="$(ifconfig $(route -n get default | awk '/interface: / {print $NF}') | awk '/inet / {print $2}')"
 echo "Local ip: $ip"
 sed -i.bak "s/host = @.*/host = @\"$ip\";/" node_modules/react-native/Libraries/WebSocket/RCTWebSocketExecutor.m
+sed -i.bak "s/host = ipGuess \?: @.*/host = ipGuess ?: @\"$ip\";/" node_modules/react-native/React/Base/RCTBundleURLProvider.m
