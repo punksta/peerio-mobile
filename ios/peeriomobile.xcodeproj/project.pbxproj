@@ -34,9 +34,9 @@
 		02BCD72A1DFDE9B3000B8FCF /* libRNFileOpener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD7281DFDE9A2000B8FCF /* libRNFileOpener.a */; };
 		02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD72C1DFE1606000B8FCF /* QuickLook.framework */; };
 		02BCD72E1DFE1610000B8FCF /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD72C1DFE1606000B8FCF /* QuickLook.framework */; };
+		02CC88781E1E8988002BB078 /* libRNTouchIDValue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CC88771E1E87D7002BB078 /* libRNTouchIDValue.a */; };
 		02D764D31D9B13B300E7E57C /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D763F21D9918E800E7E57C /* libRNVectorIcons.a */; };
 		02DB41591DCD1B1C00E04176 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		02DB415D1DCD1DB000E04176 /* TouchId.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E096B01DAD8E2A00641B85 /* TouchId.m */; };
 		02DB415E1DCD1DB000E04176 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		02DB415F1DCD1DB000E04176 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		02DB41611DCD1DB000E04176 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
@@ -65,7 +65,6 @@
 		02DB41791DCD1DB000E04176 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		02DB417A1DCD1DB000E04176 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE216B2DFB25438F8922A621 /* Octicons.ttf */; };
 		02DB417B1DCD1DB000E04176 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A7F1F7CA2F44844A0FC718E /* Zocial.ttf */; };
-		02E096B11DAD8E2A00641B85 /* TouchId.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E096B01DAD8E2A00641B85 /* TouchId.m */; };
 		02E096B31DAE398B00641B85 /* locales in Resources */ = {isa = PBXBuildFile; fileRef = 02E096B21DAE398B00641B85 /* locales */; };
 		02E096DA1DAE3B7600641B85 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E096D11DAE3B3B00641B85 /* libRNFS.a */; };
 		02E096DC1DAE50E100641B85 /* dict in Resources */ = {isa = PBXBuildFile; fileRef = 02E096DB1DAE50E100641B85 /* dict */; };
@@ -233,6 +232,13 @@
 			remoteGlobalIDString = DB8F70EF1CD3047700E71D6D;
 			remoteInfo = RNFileOpener;
 		};
+		02CC88761E1E87D7002BB078 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02CC88721E1E87D7002BB078 /* RNTouchIDValue.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
+			remoteInfo = RNTouchIDValue;
+		};
 		02D763F11D9918E800E7E57C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 53F9542E76844F59917732EA /* RNVectorIcons.xcodeproj */;
@@ -304,14 +310,13 @@
 		0222C3701E0C989D0084C586 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		02277B141D6AEDC50020B31A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		02321C5C1D80558E00282EB1 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
+		02321C5C1D80558E00282EB1 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.jsbundle; sourceTree = "<group>"; };
 		026B0DA01E0384D600B24721 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		02BCD7231DFDE9A2000B8FCF /* RNFileOpener.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFileOpener.xcodeproj; path = "../node_modules/react-native-file-opener/ios/RNFileOpener.xcodeproj"; sourceTree = "<group>"; };
 		02BCD72C1DFE1606000B8FCF /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		02CC88721E1E87D7002BB078 /* RNTouchIDValue.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNTouchIDValue.xcodeproj; path = "../node_modules/react-native-touch-id-value/RNTouchIDValue.xcodeproj"; sourceTree = "<group>"; };
 		02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = peeriomobile.entitlements; path = peeriomobile/peeriomobile.entitlements; sourceTree = "<group>"; };
 		02DB417F1DCD1DB000E04176 /* expandoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = expandoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		02E096AF1DAD8DEC00641B85 /* TouchId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchId.h; path = peeriomobile/TouchId.h; sourceTree = "<group>"; };
-		02E096B01DAD8E2A00641B85 /* TouchId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchId.m; path = peeriomobile/TouchId.m; sourceTree = "<group>"; };
 		02E096B21DAE398B00641B85 /* locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = locales; path = ../locales; sourceTree = "<group>"; };
 		02E096DB1DAE50E100641B85 /* dict */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dict; path = "../node_modules/peerio-copy/phrase/dict"; sourceTree = "<group>"; };
 		081BA9E7BB014EC9A1CF87BA /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
@@ -394,6 +399,7 @@
 				026B0DA91E0384EF00B24721 /* libRCTAnimation.a in Frameworks */,
 				0210710E1E03967000687D5E /* libRNFetchBlob.a in Frameworks */,
 				0222C3941E0C98B40084C586 /* libRCTPushNotification.a in Frameworks */,
+				02CC88781E1E8988002BB078 /* libRNTouchIDValue.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +514,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		02CC88731E1E87D7002BB078 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02CC88771E1E87D7002BB078 /* libRNTouchIDValue.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		02D763E11D9918E800E7E57C /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -560,8 +574,6 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				02E096AF1DAD8DEC00641B85 /* TouchId.h */,
-				02E096B01DAD8E2A00641B85 /* TouchId.m */,
 			);
 			name = peeriomobile;
 			sourceTree = "<group>";
@@ -587,6 +599,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				02CC88721E1E87D7002BB078 /* RNTouchIDValue.xcodeproj */,
 				0222C3701E0C989D0084C586 /* RCTPushNotification.xcodeproj */,
 				021071081E03965C00687D5E /* RNFetchBlob.xcodeproj */,
 				026B0DA01E0384D600B24721 /* RCTAnimation.xcodeproj */,
@@ -819,6 +832,10 @@
 					ProjectRef = 02210A6A1E01902A006D7AC0 /* RNSound.xcodeproj */;
 				},
 				{
+					ProductGroup = 02CC88731E1E87D7002BB078 /* Products */;
+					ProjectRef = 02CC88721E1E87D7002BB078 /* RNTouchIDValue.xcodeproj */;
+				},
+				{
 					ProductGroup = 02D763E11D9918E800E7E57C /* Products */;
 					ProjectRef = 53F9542E76844F59917732EA /* RNVectorIcons.xcodeproj */;
 				},
@@ -979,6 +996,13 @@
 			remoteRef = 02BCD7271DFDE9A2000B8FCF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		02CC88771E1E87D7002BB078 /* libRNTouchIDValue.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNTouchIDValue.a;
+			remoteRef = 02CC88761E1E87D7002BB078 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		02D763F21D9918E800E7E57C /* libRNVectorIcons.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1093,7 +1117,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "if [ \"$PLATFORM_NAME\" == \"iphonesimulator\" ]; then\n    if lsof -Pi :8081 -sTCP:LISTEN -t >/dev/null ; then\n        echo \"Bundle RN: running sim and packager. skipping bundler.\"\n        exit 0\n    fi\nfi\n\nexport NODE_BINARY=node\n\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\nsource env.sh\n# clean up\nrm -f ios/main.jsbundle\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n   ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n# check that command was successful\n\nif [ ! -f ios/main.jsbundle ]; then\n    echo \"JS compilation failed. Please check the sources\"\n    exit 1\nfi\n";
+			shellScript = "cd $SRCROOT/..\nsource env.sh\n\nif [ \"$CONFIGURATION\" == \"Debug\" ] && [ -f \"ios/main.jsbundle\" ]; then\n    if lsof -Pi :8081 -sTCP:LISTEN -t >/dev/null ; then\n        echo \"Bundle RN: running sim and packager. skipping bundler.\"\n        exit 0\n    fi\nfi\n\nexport NODE_BINARY=node\n\n# clean up\nrm -f ios/main.jsbundle\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n   ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n# check that command was successful\n\nif [ ! -f ios/main.jsbundle ]; then\n    echo \"JS compilation failed. Please check the sources\"\n    exit 1\nfi\n";
 		};
 		02DB415B1DCD1DB000E04176 /* Bundle React Native code and images */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1116,7 +1140,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02DB415D1DCD1DB000E04176 /* TouchId.m in Sources */,
 				02DB415E1DCD1DB000E04176 /* AppDelegate.m in Sources */,
 				02DB415F1DCD1DB000E04176 /* main.m in Sources */,
 			);
@@ -1126,7 +1149,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02E096B11DAD8E2A00641B85 /* TouchId.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
