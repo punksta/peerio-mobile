@@ -34,6 +34,9 @@ class AbstractDriver:
     def wait_for_find(self, xpath):
         return self.wait_for(30, lambda: self.find_except(xpath))
 
+    def wait_for_not_find(self, xpath):
+        return self.wait_for(30, lambda: self.find_not_except(xpath))
+
     def connect(self, extra = None):
         print "stub"
 
@@ -42,6 +45,12 @@ class AbstractDriver:
         if not el:
             raise Exception('no such element: %s' % xpath)
         return el
+
+    def find_not_except(self, xpath):
+        el = self.find(xpath)
+        if el:
+            raise Exception('element still there: %s' % xpath)
+        return True
 
     def text_by_css(self, selector, text, slow=False):
         el = self.find(selector)

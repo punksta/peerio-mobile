@@ -12,3 +12,8 @@ class Login(common.testcase.TestCase):
         d.tap('logo')
         d.tap('loginButton')
         d.wait_for_find('mainLayout')
+        # waiting for push notification popup
+        # may have locale issues
+        d.wait_for_find('Allow')
+        d.tap('Allow')
+        d.wait_for_not_find('Allow')
