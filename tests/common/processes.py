@@ -6,13 +6,11 @@ import subprocess
 import commands
 import re
 
-global appiumProcess
-global chromedriverProcess
-
 def startAppium():
-    global appiumProcess
     atexit.register(killAppium)
-    appiumProcess = subprocess.Popen(['node_modules/.bin/appium'], stdout=subprocess.PIPE)
+    path = ['node_modules/.bin/appium']
+    appiumProcess = subprocess.Popen(path,
+                                     stdout=subprocess.PIPE)
     while True:
         line = appiumProcess.stdout.readline()
         if line != '':
@@ -28,10 +26,11 @@ def restartAppium():
     startAppium()
 
 def startChromedriver():
-    global chromedriverProcess
     atexit.register(killChromedriver)
-    chromedriverPath = os.path.join(os.path.dirname(__file__), '../../tools/chromedriver')
-    chromedriverProcess = subprocess.Popen([chromedriverPath], stdout=subprocess.PIPE)
+    chromedriverPath = os.path.join(os.path.dirname(__file__),
+                                    '../../tools/chromedriver')
+    chromedriverProcess = subprocess.Popen([chromedriverPath],
+                                           stdout=subprocess.PIPE)
     while True:
         line = chromedriverProcess.stdout.readline()
         if line != '':
@@ -47,23 +46,24 @@ def restartChromedriver():
     killChromedriver()
     startChromedriver()
 
-global browserAutomationProcess
 def startBrowserAutomation():
     # do not kill browser automation server on exit so that there are
-    # no noisy messages about not able to connect to automation socket in browser
-    print "waiting for browser automation server to start and for browser to connect"
-    automationServerPath = os.path.join(os.path.dirname(__file__), '../browserautomationserver.py')
+    # no noisy messages about not being able
+    # to connect to automation socket in browser
+    print "processes.py: waiting for browser automation server"
+    automationServerPath = os.path.join(os.path.dirname(__file__),
+                                        '../browserautomationserver.py')
     os.system("python " + automationServerPath + "&")
     return True
 
 def killBrowserAutomation():
-    os.system("ps -A | grep [b]rowserautomationserver.py | awk '{print $1}' | xargs kill -9")
+    os.system("""ps -A | grep [b]rowserautomationserver.py |
+              awk '{print $1}' | xargs kill -9""")
 
 def restartBrowserAutomation():
     killBrowserAutomation()
     startBrowserAutomation()
 
-global iosDebugProxyProcess
 def startIosDebugProxy():
     atexit.register(killIosDebugProxy)
     print "waiting for ios debug proxy to start"
@@ -74,7 +74,8 @@ def startIosDebugProxy():
     return True
 
 def killIosDebugProxy():
-    os.system("ps -A | grep [i]os_webkit_debug_proxy | awk '{print $1}' | xargs kill -9")
+    os.system("""ps -A | grep [i]os_webkit_debug_proxy |
+              awk '{print $1}' | xargs kill -9""")
 
 def restartIosDebugProxy():
     killIosDebugProxy()
@@ -121,5 +122,7 @@ def getFirstGenyMotionAndroidDeviceID():
         raise Exception("No GenyMotion Android devices connected")
 
 def enableSimulatorTouchID():
-    path = os.path.join(os.path.dirname(__file__), '../../tools/enable-simulator-touchid.app')
+    path = os.path.join(os.path.dirname(__file__),
+                        '../../tools/enable-simulator-touchid.app')
     res = commands.getstatusoutput("open %s" % path)
+    print "processes.py: touchid result %s" % res

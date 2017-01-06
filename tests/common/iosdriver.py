@@ -1,8 +1,7 @@
 import time
 import random
-from settings.settings import *
 from websocket import create_connection
-from abstractdriver import AbstractDriver
+from common.abstractdriver import AbstractDriver
 import selenium
 import appium
 from selenium.common.exceptions import NoSuchElementException
@@ -10,11 +9,13 @@ from selenium.common.exceptions import NoSuchElementException
 import common.processes
 
 class IosDriver(AbstractDriver):
-    def __init__(self, executor, capabilities, extra = {}):
+    def __init__(self, executor, capabilities, extra = None):
+        AbstractDriver.__init__(self)
         self.appium = None
         self.executor = executor
         self.capabilities = capabilities
-        self.capabilities.update(extra)
+        if extra:
+            self.capabilities.update(extra)
 
     def __exit__(self):
         self.disconnect()
@@ -23,14 +24,12 @@ class IosDriver(AbstractDriver):
         if self.appium:
             self.appium.quit()
 
-    def connect(self):
+    def connect(self, extra = None):
         self.disconnect()
         print self.capabilities
         self.appium = appium.webdriver.Remote(command_executor=self.executor,
                             desired_capabilities=self.capabilities)
-        # self.devicePixelRatio = self.appium.execute_script('return window.devicePixelRatio')
-        # print "View origin: %s, device pixel ratio: %d" % (self.viewOrigin, self.devicePixelRatio)
-        print "Connected, waiting 3 seconds for app to launch"
+        print "iosdriver.py: connected, waiting 3 seconds for app to launch"
         time.sleep(3)
 
     def text(self, selector):
@@ -65,5 +64,15 @@ class IosDriver(AbstractDriver):
 
     def enable_touchid(self):
         common.processes.enableSimulatorTouchID()
+
+    def reset(self):
+        self.appium.remove_app(self.capabilities["bundleId"])
+        self.appium.install_app(self.capabilities["app"])
+        self.appium.launch_app()
+
+    def restart(self):
+        self.appium.close_app()
+        self.appium.launch_app()
+
 
 

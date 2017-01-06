@@ -9,7 +9,6 @@ from websocket import create_connection
 from common.browserdriver import BrowserDriver
 from common.androiddriver import AndroidDriver
 from common.iosdriver import IosDriver
-from common.iosdriverfast import IosDriverFast
 
 def launchPlatform(platform):
     method = getattr(sys.modules[__name__], 'platform_' + platform)
@@ -37,7 +36,7 @@ def platform_ios():
         'appium': True,
         'type': 'ios',
         'device': False,
-        'driver': lambda extra: IosDriverFast(
+        'driver': lambda extra: IosDriver(
             settings.executor, settings.ios_10(settings.ios_basic()), extra)
     }
 
@@ -50,7 +49,7 @@ def platform_iosdevice():
         'device': True,
         'appium': True,
         'ios_webkit_debug_proxy': True,
-        'driver': lambda extra: IosDriverFast(
+        'driver': lambda extra: IosDriver(
             settings.executor, settings.ios_device(udid), extra)
     }
 

@@ -51,6 +51,7 @@ def ios_basic():
         'automationName': 'XCUITest',
         'platformName': 'iOS',
         'platform': 'iOS',
+        'app': 'ios/build/Build/Products/Debug-iphonesimulator/peeriomobile.app',
         'bundleId': 'com.peerio',
         'launchTimeout': 90000,
         'deviceName': os.environ['PEERIO_IOS_SIM'],
