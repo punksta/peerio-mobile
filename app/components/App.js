@@ -130,6 +130,7 @@ export default class App extends Component {
         const hidden = { overflow: 'hidden' };
         return (
             <View
+                testID={`route${route.key}Scene`}
                 removeClippedSubviews
                 key={route.key}
                 style={[styles.navigator.card, hidden]}>
@@ -149,11 +150,14 @@ export default class App extends Component {
         if (!state.locale) return null;
         return (
             <View
+                testID="appOuterViewBackground"
                 style={{ flex: 1, backgroundColor: vars.bg }}>
                 <View
+                    testID="navigatorContainer"
                     pointerEvents="auto"
                     style={{ flex: 1, borderWidth: 0, borderColor: 'red' }}>
                     <Navigator
+                        testID="navigator"
                         style={{ backgroundColor: vars.bg }}
                         ref={nav => (this.nav = nav)}
                         initialRoute={this.routes[0]}

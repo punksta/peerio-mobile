@@ -11,3 +11,4 @@ class Login(common.testcase.TestCase):
         d.send_keys('passphrase', 'icebear')
         d.tap('logo')
         d.tap('loginButton')
+        d.wait_for_find('mainLayout')

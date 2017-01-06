@@ -31,17 +31,17 @@ class AbstractDriver:
             time.sleep(1)
         raise Exception('timeout waiting for: %s, %s' % (func, msg))
 
-    def wait_for_view_origin(self, driver, xpath):
-        print 'Waiting for webview'
-        viewElement = self.wait_for(30, lambda: driver.find_element_by_xpath(xpath))
-        self.viewOrigin = viewElement.location
-        print '...success'
+    def wait_for_find(self, xpath):
+        return self.wait_for(30, lambda: self.find_except(xpath))
 
-    def connect(self, extra = {}):
+    def connect(self, extra = None):
         print "stub"
 
-    def reload(self):
-        self.connect();
+    def find_except(self, xpath):
+        el = self.find(xpath)
+        if not el:
+            raise Exception('no such element: %s' % xpath)
+        return el
 
     def text_by_css(self, selector, text, slow=False):
         el = self.find(selector)

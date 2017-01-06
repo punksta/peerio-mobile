@@ -10,6 +10,7 @@ export default class ModalContainer extends Component {
     render() {
         const container = state.modals && state.modals.length ?
             <View
+                testID="modalContainer"
                 style={{
                     flex: 1,
                     position: 'absolute',

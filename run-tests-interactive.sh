@@ -4,6 +4,6 @@ export PEERIO_IOS_VERSION='10.2'
 
 virtualenv .pyenv
 source .pyenv/bin/activate
-# ./node_modules/.bin/react-native run-ios --simulator="$PEERIO_IOS_SIM"
+npm run build-ios-sim-debug
 python -i tests/interactive.py 
 deactivate
