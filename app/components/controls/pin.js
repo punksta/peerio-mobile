@@ -87,7 +87,7 @@ export default class Pin extends Component {
         });
         return (
             <View style={circleHl} key={index}>
-                <TouchableOpacity onPress={() => this.enter(text)}>
+                <TouchableOpacity testID={`pin${text}`} onPress={() => this.enter(text)}>
                     <View style={circle}>
                         <Text style={{ color: vars.highlight, fontSize: r / 3 }}>{text}</Text>
                         <Text style={{ color: vars.midlight, fontSize: r / 6 }}>{subText}</Text>
