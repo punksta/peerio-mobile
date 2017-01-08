@@ -143,7 +143,7 @@ export default class TextBox extends Component {
     }
 
     render() {
-        let returnKeyType = this.props.returnKeyType || 'default';
+        const returnKeyType = this.props.returnKeyType || 'default';
         // if (this.props.onSubmit) {
         //     returnKeyType = 'done';
         // }
