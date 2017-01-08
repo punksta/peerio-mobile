@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
@@ -89,7 +90,8 @@ export default (fileStream) => {
         static chunkSize = 100 * 1024
 
         static cachePath(name) {
-            return `${RNFS.CachesDirectoryPath}/${name}`;
+            const path = Platform.OS === 'ios' ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
+            return `${path}/${name}`;
         }
 
         static exists(path) {
