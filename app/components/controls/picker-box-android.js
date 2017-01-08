@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Picker } from 'react-native';
 import { observer } from 'mobx-react/native';
 import _ from 'lodash';
 import state from '../layout/state';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class PickerBoxAndroid extends Component {
@@ -27,18 +28,15 @@ export default class PickerBoxAndroid extends Component {
             <Picker.Item label={value} value={key} key={key} />));
         return (
             <View style={shadow}>
-                <View
-                    style={background}>
-                    <TouchableOpacity style={{ paddingRight: 10 }}>
-                        <Picker
-                            onLayout={this.layout}
-                            selectedValue={this.props.value}
-                            onValueChange={this.onValueChange}
-                            style={{ color: 'white' }}>
-                            {items}
-                        </Picker>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity>
+                    <Picker
+                        onLayout={this.layout}
+                        selectedValue={this.props.value}
+                        onValueChange={this.onValueChange}
+                        style={{ color: 'white', backgroundColor: vars.pickerBg }}>
+                        {items}
+                    </Picker>
+                </TouchableOpacity>
             </View>
         );
     }
