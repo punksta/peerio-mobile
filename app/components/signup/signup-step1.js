@@ -32,11 +32,13 @@ export default class SignupStep1 extends Component {
                 <Text style={style.text.title}>{t('signup')}</Text>
                 <Text style={style.text.subTitle}>{t('profile')}</Text>
                 <TextBox
+                    returnKeyType="next"
                     lowerCase
                     state={signupState}
                     name="username"
                     hint={t('username')} />
                 <TextBox
+                    returnKeyType="next"
                     keyboardType="email-address"
                     state={signupState}
                     name="email"
@@ -44,12 +46,14 @@ export default class SignupStep1 extends Component {
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1 }}>
                         <TextBox
+                            returnKeyType="next"
                             state={signupState}
                             name="firstName"
                             hint={t('firstName')} />
                     </View>
                     <View style={{ flex: 1 }}>
                         <TextBox
+                            returnKeyType="submit"
                             onSubmit={() => signupState.next()}
                             state={signupState}
                             name="lastName"

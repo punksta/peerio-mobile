@@ -143,14 +143,14 @@ export default class TextBox extends Component {
     }
 
     render() {
-        let returnKeyType = null;
-        if (this.props.onSubmit) {
-            returnKeyType = 'done';
-        }
-        if (this.nextField) {
-            console.log(`textbox.js: render: ${this.nextField}`);
-            returnKeyType = 'next';
-        }
+        let returnKeyType = this.props.returnKeyType || 'default';
+        // if (this.props.onSubmit) {
+        //     returnKeyType = 'done';
+        // }
+        // if (this.nextField) {
+        //     console.log(`textbox.js: render: ${this.nextField}`);
+        //     returnKeyType = 'next';
+        // }
         const style = this.focused ? styles.input.active : styles.input.normal;
         const hint = this.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
@@ -231,7 +231,7 @@ export default class TextBox extends Component {
                             style={[style.textbox,
                             { height: 56, top: 0 }]}
                             underlineColorAndroid={'transparent'}
-                            returnKeyType={this.props.returnKeyType || returnKeyType}
+                            returnKeyType={returnKeyType}
                             secureTextEntry={this.props.secureTextEntry && !this.showSecret}
                             ref={ti => { this.textinput = ti; }}
                             value={this.value}
