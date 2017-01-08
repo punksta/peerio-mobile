@@ -18,6 +18,8 @@ const icebear = require('./peerio-icebear/src');
 
 const { socket, config, FileStreamAbstract, systemWarnings } = icebear;
 
+config.chunkSize = 100 * 1024;
+config.isMobile = true;
 config.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://app.peerio.com';
 socket.start();
 

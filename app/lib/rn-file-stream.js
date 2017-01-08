@@ -85,9 +85,6 @@ export default (fileStream) => {
             return this.fileDescriptor.write(fromByteArray(buffer));
         }
 
-        static useCache = true
-        static chunkSize = 100 * 1024
-
         static cachePath(name) {
             const path = Platform.OS === 'ios' ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
             return `${path}/${name}`;
