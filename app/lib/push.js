@@ -1,7 +1,7 @@
 import PushNotification from 'react-native-push-notification';
 import { Platform } from 'react-native';
-import { socket } from '../lib/icebear';
 import { when } from 'mobx';
+import { socket } from '../lib/icebear';
 
 function enablePushNotifications() {
     PushNotification.configure({

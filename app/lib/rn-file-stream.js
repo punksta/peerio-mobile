@@ -1,9 +1,8 @@
-import { Platform } from 'react-native';
+import { Platform, AsyncStorage } from 'react-native';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
 import { fromByteArray, toByteArray } from 'base64-js';
-import { AsyncStorage } from 'react-native';
 
 export default (fileStream) => {
     class RNFileStream extends fileStream {
