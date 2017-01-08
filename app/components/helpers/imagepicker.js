@@ -4,7 +4,7 @@ import ImagePicker from 'react-native-image-picker';
 import { socket, fileStore } from '../../lib/icebear';
 
 const options = {
-    noData: 'true',
+    noData: true,
     storageOptions: {
         skipBackup: true,
         waitUntilSaved: true
