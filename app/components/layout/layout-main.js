@@ -92,12 +92,11 @@ export default class LayoutMain extends Component {
     }
 
     page(control, key) {
-        const menuLeft = 0;
         const s = {
             backgroundColor: '#fff',
             position: 'absolute',
-            left: key * this.width + menuLeft,
-            right: -(key) * this.width - menuLeft,
+            left: key * this.width,
+            width: this.width,
             bottom: 0,
             top: 0
         };
@@ -155,6 +154,8 @@ export default class LayoutMain extends Component {
         const snackBar = !menuState &&
             !mainState.modalRoute && !currentComponent.suppressMainSnackBar && <SnackBar />;
 
+        const width = this.width * pages.length;
+
         return (
             <View
                 testID="mainLayout"
@@ -162,19 +163,18 @@ export default class LayoutMain extends Component {
                 <TouchableWithoutFeedback
                     onPress={menuState ? () => mainState.resetMenus() : null}>
                     <Animated.View
-                        pointerEvents={menuState ? 'box-only' : null}
                         style={outerStyle}>
                         <Animated.View style={{ flex: 1, transform: transformMenu }}>
                             <HeaderMain title={title} />
-                            <Animated.View style={{ flex: 1, transform }}>
-                                <View style={{ flex: 1 }}>
+                            <Animated.View style={{ flex: 1, transform, width }}>
+                                <View style={{ flex: 1, width }}>
                                     {this.pages(pages)}
                                 </View>
-                                <Bottom>
-                                    {currentComponent.isFabVisible && <Fab />}
-                                    {snackBar}
-                                </Bottom>
                             </Animated.View>
+                            <Bottom>
+                                {currentComponent.isFabVisible && <Fab />}
+                                {snackBar}
+                            </Bottom>
                             { currentComponent.showInput && <InputMainContainer /> }
                         </Animated.View>
                     </Animated.View>

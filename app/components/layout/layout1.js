@@ -44,8 +44,8 @@ export default class Layout1 extends Component {
             justifyContent: 'space-between',
             borderColor: 'yellow',
             borderWidth: 0,
-            paddingTop,
-            paddingBottom: this.props.noKeyboard ? 0 : offset
+            paddingTop // ,
+            // paddingBottom: this.props.noKeyboard ? 0 : offset
         };
 
         const scrollViewStyle = {

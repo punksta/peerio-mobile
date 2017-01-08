@@ -9,9 +9,7 @@ import imagePicker from '../helpers/imagepicker';
 const fabSize = vars.fabSize;
 
 const fabContainer = {
-    position: 'absolute',
-    right: vars.fabRight,
-    bottom: vars.fabBottom,
+    alignItems: 'flex-end',
     borderColor: 'red',
     borderWidth: 0
 };
@@ -20,7 +18,8 @@ const fabStyle = {
     flex: 0,
     width: fabSize,
     height: fabSize,
-    marginRight: fabSize * 0.25,
+    marginRight: fabSize * 0.5,
+    marginBottom: fabSize,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FF7D00'
@@ -44,15 +43,16 @@ export default class Fab extends Component {
     render() {
         const s = [fabStyle, helpers.circle(fabSize), shadowStyle];
         return (
-            <TouchableOpacity>
-                <View
-                    onStartShouldSetResponderCapture={() => { imagePicker.test(); return false; }}
-                    style={fabContainer} pointerEvents="box-only">
-                    <View style={s}>
+            <View
+                style={fabContainer}>
+                <TouchableOpacity>
+                    <View style={s}
+                          onStartShouldSetResponderCapture={() => { imagePicker.test(); return false; }}
+                          >
                         {icons.white('add')}
                     </View>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
         );
     }
 }
