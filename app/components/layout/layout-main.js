@@ -4,6 +4,7 @@ import {
     StatusBar,
     Animated,
     TouchableWithoutFeedback,
+    Platform,
     Dimensions
 } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -185,7 +186,7 @@ export default class LayoutMain extends Component {
                     {this.modal()}
                 </Animated.View>
                 <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'}
-                           hidden={menuState && !mainState.modalRoute}
+                           hidden={Platform.OS !== 'android' && menuState && !mainState.modalRoute}
                            // TODO: set show hide animation to 'fade' and 'slide'
                 />
             </View>

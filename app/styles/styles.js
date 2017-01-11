@@ -1,5 +1,5 @@
 import {
-    StyleSheet
+    Platform, StyleSheet
 } from 'react-native';
 
 import _ from 'lodash';
@@ -19,7 +19,7 @@ const branding = {
 
 const { bg } = branding[EN];
 
-const statusBarHeight = global.platform === 'android' ? 0 : 10;
+const statusBarHeight = Platform.OS === 'android' ? 0 : 10;
 const layoutPaddingTop = statusBarHeight * 2;
 
 const vars = {
