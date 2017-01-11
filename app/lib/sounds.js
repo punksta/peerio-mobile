@@ -1,9 +1,10 @@
 import Sound from 'react-native-sound';
+import { Platform } from 'react-native';
 
 const soundStorage = {};
 
 const load = (name) => {
-    const path = `sounds/${name}.mp3`;
+    const path = Platform.OS === 'android' ? `${name}.mp3` : `sounds/${name}.mp3`;
     soundStorage[name] = () => {
         console.warn(`sounds.js: file ${path} not loaded`);
     };

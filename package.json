@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "private": true,
   "scripts": {
-    "postinstall": "sh setup-env.sh && rn-nodeify --install 'crypto, stream, process, events, vm' --hack && bash setup-rn-debugging.sh",
+    "postinstall": "sh setup-env.sh && rn-nodeify --install 'crypto, stream, process, events, vm' --hack && bash setup-rn-debugging.sh && bash copy-android-resources.sh",
     "commit": "git-cz",
     "start": "source env.sh && ./node_modules/react-native/packager/packager.sh --reset-cache",
     "expandoo": "source env-expandoo.sh && ./node_modules/react-native/packager/packager.sh --reset-cache",
@@ -41,7 +41,7 @@
     "moment": "^2.17.0",
     "nacl-stream": "0.3.3",
     "peerio-copy": "https://github.com/PeerioTechnologies/peerio-copy.git#icebear",
-    "peerio-icebear": "https://github.com/PeerioTechnologies/peerio-icebear.git",
+    "peerio-icebear": "git@github.com:PeerioTechnologies/peerio-icebear.git",
     "peerio-react-native-fetch-blob": "https://github.com/PeerioTechnologies/react-native-fetch-blob",
     "peerio-translator": "https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
     "process": "^0.11.9",
