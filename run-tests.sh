@@ -8,7 +8,12 @@ echo "Logs located:"
 ls $SIM_LOG
 virtualenv .pyenv && source .pyenv/bin/activate
 npm run build-ios-sim-debug
-echo > "$SIM_LOG"
 py.test --platform=ios -s -x tests
 deactivate
-# cat $SIM_LOG
+
+if [ -z $"$CIRCLE_TEST_REPORTS" ]; then
+  exit 0
+else
+  mkdir -p $CIRCLE_TEST_REPORTS/py.test/
+  cp $SIM_LOG $CIRCLE_TEST_REPORTS/py.test/
+fi
