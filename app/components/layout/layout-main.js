@@ -160,7 +160,7 @@ export default class LayoutMain extends Component {
         return (
             <View
                 testID="mainLayout"
-                style={[styles.container.root, { transform: transformAndroid }]}>
+                style={[styles.container.root]}>
                 <TouchableWithoutFeedback
                     onPress={menuState ? () => mainState.resetMenus() : null}>
                     <Animated.View
