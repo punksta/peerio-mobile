@@ -53,7 +53,7 @@ export default class SignupStep1 extends Component {
                     </View>
                     <View style={{ flex: 1 }}>
                         <TextBox
-                            returnKeyType="submit"
+                            returnKeyType="go"
                             onSubmit={() => signupState.next()}
                             state={signupState}
                             name="lastName"

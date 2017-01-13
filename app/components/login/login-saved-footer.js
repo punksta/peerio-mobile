@@ -20,6 +20,7 @@ export default class LoginSavedFooter extends Component {
     }
 
     changeUser() {
+        if (loginState.isInProgress) return;
         loginState.changeUser = true;
         loginState.clean();
     }

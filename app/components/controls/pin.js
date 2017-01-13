@@ -36,6 +36,10 @@ export default class Pin extends Component {
         this.initial();
     }
 
+    get loading() {
+        return this.isSpinner || this.props.inProgress;
+    }
+
     check() {
         if (this.pin === this.enteredPin) {
             this.message = t('wait');
@@ -98,6 +102,7 @@ export default class Pin extends Component {
     }
 
     enter(num) {
+        if (this.loading) return;
         if (this.pin.length >= this.maxPinLength) return;
         const pin = this.pin + num;
         this.pin = pin;
@@ -155,6 +160,7 @@ export default class Pin extends Component {
         const style = styles.pin;
         const p = (text, subText, action) => ({ text, subText, action });
         const bs = this.pin.length ? p(null, 'backspace', () => this.backspace()) : p();
+        const inProgress = this.loading;
         const body = (
             <View style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
                 <Animatable.View ref={v => { this.shaker = v; }}>
@@ -165,13 +171,13 @@ export default class Pin extends Component {
                     </Center>
                 </Animatable.View>
                 <View style={{ height: 40, flexDirection: 'column' }}>
-                    { this.isSpinner ?
+                    { inProgress ?
                         <View style={{ flex: 1, alignSelf: 'center' }}>
                             <ActivityIndicator style={{ marginTop: -6 }} color={vars.highlight} />
                         </View> :
                             <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
                 </View>
-                <View style={{ flexGrow: 1, opacity: this.isSpinner ? 0.5 : 1 }}>
+                <View style={{ flexGrow: 1, opacity: inProgress ? 0.5 : 1 }}>
                     {this.row(0, [p(1), p(2, 'ABC'), p(3, 'DEF')])}
                     {this.row(1, [p(4, 'GHI'), p(5, 'JKL'), p(6, 'MNO')])}
                     {this.row(2, [p(7, 'PQRS'), p(8, 'TUV'), p(9, 'WXYZ')])}
@@ -196,5 +202,6 @@ Pin.propTypes = {
     messageEnter: React.PropTypes.string,
     messageWrong: React.PropTypes.string,
     messageConfirm: React.PropTypes.string,
-    preventSimplePin: React.PropTypes.bool
+    preventSimplePin: React.PropTypes.bool,
+    inProgress: React.PropTypes.bool
 };

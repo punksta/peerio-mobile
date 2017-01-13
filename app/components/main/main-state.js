@@ -5,6 +5,9 @@ import { User, chatStore, fileStore } from '../../lib/icebear';
 import store from '../../store/local-storage';
 import sounds from '../../lib/sounds';
 import { enablePushNotifications } from '../../lib/push';
+import touchid from '../touchid/touchid-bridge';
+import { rnAlertYesNo } from '../../lib/alerts';
+import { tx } from '../utils/translator';
 
 const mainState = observable({
     isBackVisible: false,
@@ -167,7 +170,25 @@ const mainState = observable({
     },
 
     @action async saveUser() {
-        await store.system.set('lastUsername', User.current.username);
+        const user = User.current;
+        await store.system.set('lastUsername', user.username);
+        const skipTouchID = `${user.username}::skipTouchID`;
+        const skipTouchIDValue = await store.system.get(skipTouchID);
+        await touchid.load();
+        !skipTouchIDValue && touchid.available && touchid.get(`user::${user.username}`)
+            .then(passphrase => {
+                if (!passphrase) {
+                    console.log('main-state.js: touch id available but value not set');
+                    console.log('main-state.js: saving');
+                    rnAlertYesNo(tx('touchId'), tx('setup_touchTitle'))
+                        .then(() => touchid.save(`user::${user.username}`, user.passphrase))
+                        .catch(() => {
+                            console.log('main-state.js: user cancel touch id');
+                            return store.system.set(skipTouchID, true);
+                        });
+                }
+                console.log('main-state.js: touch id available and value is set');
+            });
     },
 
     @action async save() {

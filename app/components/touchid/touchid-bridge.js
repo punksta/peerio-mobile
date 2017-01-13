@@ -1,28 +1,28 @@
-import { observable, action } from 'mobx';
+import { observable, action, when } from 'mobx';
 import TouchID from 'react-native-touch-id-value';
+import store from '../../store/local-storage';
 
 const touchid = observable({
-    available: false,
+    available: null,
 
     @action async load() {
         this.available = await TouchID.isFeatureAvailable();
+        console.log(`touchid-bridge.js: ${touchid.available}`);
     },
 
     @action save(key, value) {
-        return TouchID.save(value, key);
+        console.log(`touchdid-bridge.js: saving ${key}:${value}`);
+        return TouchID.save(key, value);
     },
 
     @action get(key) {
-        return TouchID.get(key);
+        console.log(`touchdid-bridge.js: requesting ${key}`);
+        return TouchID.get(key).catch(e => {
+            console.log(`touchdid-bridge.js: returned error`);
+            console.log(e);
+            return Promise.resolve(null);
+        });
     }
 });
 
 export default touchid;
-
-TouchID.isFeatureAvailable()
-    .then(result => {
-        console.log(`touchid-bridge.js: ${result}`);
-    });
-
-this.Peerio = this.Peerio || {};
-this.Peerio.touchid = touchid;

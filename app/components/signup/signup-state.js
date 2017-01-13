@@ -1,10 +1,7 @@
-import React from 'react';
 import { observable, action, autorun } from 'mobx';
-import SignupCircles from './signup-circles';
 import state from '../layout/state';
 import mainState from '../main/main-state';
 import store from '../../store/local-storage';
-import touchid from '../touchid/touchid-bridge';
 import snackbarState from '../snackbars/snackbar-state';
 import { User, PhraseDictionary, validation, socket } from '../../lib/icebear';
 import locales from '../../lib/locales';
@@ -112,21 +109,7 @@ const signupState = observable({
                     username,
                     firstName,
                     lastName
-                })).then(() => {
-                    if (touchid.available) {
-                        return touchid.save(`user::${user.username}`, passphrase)
-                            .then(() => {
-                                store.system.set('userData', {
-                                    username,
-                                    firstName,
-                                    lastName,
-                                    touchIdSaved: true
-                                });
-                            })
-                            .catch(e => console.log(e));
-                    }
-                    return false;
-                });
+                }));
             })
             .finally(() => (this.inProgress = false));
     }

@@ -14,7 +14,6 @@ const loginState = observable({
     usernameValid: null,
     firstName: 'Peerio',
     lastName: 'Test',
-    touchIdSaved: false,
     passphrase: '',
     savedPassphrase: '',
     language: 'English',
@@ -92,6 +91,8 @@ const loginState = observable({
     @action async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         (inProgress ? rnAlertYesNo('Are you sure?', 'File tasks are not completed') : Promise.resolve(true))
+            .then(() => store.system.set('userData', null))
+            .then(() => store.system.set('lastUsername', null))
             .then(() => RNRestart.Restart())
             .catch(() => null);
     },
@@ -100,15 +101,15 @@ const loginState = observable({
         console.log(`login-state.js: loading`);
         const userData = await store.system.get('userData');
         this.username = await store.system.get('lastUsername');
+        this.username && this.triggerTouchId();
         if (userData) {
             console.log(`login-state.js: loaded ${userData}`);
-            const { username, firstName, lastName, touchIdSaved } = userData;
+            const { username, firstName, lastName } = userData;
             // we logged in with someone else
             if (this.username && this.username !== username) return false;
             this.username = username;
             this.firstName = firstName;
             this.lastName = lastName;
-            this.touchIdSaved = touchIdSaved;
             store.openUserDb(this.username);
             const user = new User();
             user.username = username;
@@ -136,8 +137,10 @@ const loginState = observable({
         await touchid.load();
         touchid.available && touchid.get(`user::${this.username}`)
             .then(passphrase => {
-                this.passphrase = passphrase;
-                this.login();
+                if (passphrase) {
+                    this.passphrase = passphrase;
+                    this.login();
+                }
             });
     }
 });
