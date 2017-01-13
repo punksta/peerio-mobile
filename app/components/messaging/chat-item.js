@@ -14,6 +14,7 @@ export default class ChatItem extends Component {
         return (
             <Avatar
                 contact={i.sender}
+                files={i.files}
                 hideOnline
                 date={timestamp}
                 message={text}

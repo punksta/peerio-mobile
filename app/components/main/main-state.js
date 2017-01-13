@@ -207,10 +207,10 @@ const mainState = observable({
                       !this.currentChat.loadingMessages;
     },
 
-    @action addMessage(msg) {
+    @action addMessage(msg, files) {
         sounds.sending();
         mainState.currentChat && mainState.currentChat
-            .sendMessage(msg).then(sounds.sent).catch(sounds.destroy);
+            .sendMessage(msg, files).then(sounds.sent).catch(sounds.destroy);
     },
 
     @action addAck() {

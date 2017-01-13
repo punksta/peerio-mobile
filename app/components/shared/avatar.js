@@ -169,7 +169,8 @@ export default class Avatar extends Component {
         const checkbox = this.props.checkbox ? this.checkbox() : null;
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
         const text = <Text style={lastMessageTextStyle}>{message}</Text>;
-        const file = message.indexOf(':file:') !== -1 ? <FileInlineProgress /> : null;
+        const files = this.props.files ?
+            this.props.files.map( (file, i) => <FileInlineProgress key={i} file={file} /> ) : null;
         return (
             <View style={{ backgroundColor: vars.bg }}>
                 <TouchableOpacity onPress={this.props.onPress}>
@@ -185,7 +186,7 @@ export default class Avatar extends Component {
                                     {date}
                                 </View>
                                 {text}
-                                {file}
+                                {files}
                             </View>
                             {icon}
                             {online}
@@ -201,6 +202,7 @@ Avatar.propTypes = {
     onPress: React.PropTypes.func,
     contact: React.PropTypes.any.isRequired,
     date: React.PropTypes.any,
+    files: React.PropTypes.any,
     icon: React.PropTypes.string,
     message: React.PropTypes.string,
     online: React.PropTypes.bool,

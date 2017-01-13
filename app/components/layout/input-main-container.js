@@ -34,12 +34,12 @@ export default class InputMainContainer extends Component {
     addFiles() {
         fileState.selectFiles()
             .then(files => {
-                files.forEach(f => {
-                    this.send(`chat.js: file added: ${f.name}`);
-                });
+                if (files.length) {
+                    mainState.addMessage('', files);
+                }
             })
             .catch(() => {
-                this.send('user cancelled file selection');
+                // this.send('user cancelled file selection');
             });
     }
 
