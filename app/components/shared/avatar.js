@@ -173,7 +173,7 @@ export default class Avatar extends Component {
             this.props.files.map( (file, i) => <FileInlineProgress key={i} file={file} /> ) : null;
         return (
             <View style={{ backgroundColor: vars.bg }}>
-                <TouchableOpacity onPress={this.props.onPress}>
+                <TouchableOpacity onPress={this.props.onPress} activeOpacity={this.props.noTap ? 1 : 0.2}>
                     <View style={itemStyle}>
                         {checkbox}
                         <View style={ics}>

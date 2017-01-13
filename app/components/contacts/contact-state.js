@@ -66,14 +66,14 @@ const contactState = observable({
         this.recipientsMap.clear();
     },
 
-    @action send(text, recipient) {
+    @action send(text, recipient, files) {
         mainState.suppressTransition = true;
         when(() => !mainState.suppressTransition, () => this.clear());
         const chat = chatStore.startChat(recipient ? [recipient] : this.recipients);
         mainState.chat(chat);
         this.exit();
         when(() => chat.id, () => {
-            text && chat.sendMessage(text);
+            text && chat.sendMessage(text, files);
         });
     },
 
@@ -82,7 +82,11 @@ const contactState = observable({
     },
 
     @action share() {
-        // TODO
+        if (!mainState.currentFile) return;
+        // todo replace this with new sharing api when server implements it
+        const chat = chatStore.startChat(this.recipients);
+        mainState.chat(chat);
+        when(() => !chat.loadingMeta, () => chat.sendMessage('', [mainState.currentFile]));
         this.exit();
     }
 });
