@@ -170,7 +170,7 @@ export default class Avatar extends Component {
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
         const text = <Text style={lastMessageTextStyle}>{message}</Text>;
         const files = this.props.files ?
-            this.props.files.map( (file, i) => <FileInlineProgress key={i} file={file} /> ) : null;
+            this.props.files.map((file, i) => <FileInlineProgress key={i} file={file} />) : null;
         return (
             <View style={{ backgroundColor: vars.bg }}>
                 <TouchableOpacity onPress={this.props.onPress} activeOpacity={this.props.noTap ? 1 : 0.2}>
