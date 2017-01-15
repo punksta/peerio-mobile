@@ -1,30 +1,27 @@
-import { reaction } from 'mobx';
 import './btoa-shim';
 import rnFileStream from './rn-file-stream';
+import { engine } from '../store/local-storage';
 
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'react-native';
 
-const Promise = require('bluebird');
-
-Promise.config({
-    // Enables all warnings except forgotten return statements.
-    warnings: {
-        wForgottenReturn: false
-    }
-});
-
 const icebear = require('./peerio-icebear/src');
 
-const { socket, config, FileStreamAbstract, systemWarnings } = icebear;
+const { socket, config, FileStreamAbstract } = icebear;
 
-config.chunkSize = 100 * 1024;
+config.upload = {
+    chunkSize: 1024 * 100,
+    maxReadQueue: 2, // max amount of chunks to pre-buffer for upload
+    maxSendQueue: 2, // max amount of chunks to pre-encrypt for sending
+    maxParallelUploadingChunks: 2 // max amount of uploaded chunks waiting for server response
+};
+
 config.isMobile = true;
 config.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://app.peerio.com';
+config.FileStream = rnFileStream(FileStreamAbstract);
+config.TinyDb = engine;
+
 socket.start();
 
-rnFileStream(FileStreamAbstract);
-
 module.exports = icebear;
-
 global.icebear = icebear;

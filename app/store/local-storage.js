@@ -36,8 +36,6 @@ class LocalDb {
     }
 }
 
-setTinyDbEngine(engine);
-
 const db = {
     open(name) {
         return new LocalDb(name);
@@ -52,3 +50,4 @@ const db = {
 db.system = db.open('system');
 
 export default db;
+export { engine };
