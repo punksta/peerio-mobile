@@ -74,6 +74,7 @@
   },
   "devDependencies": {
     "appium": "1.6.3",
+    "authorize-ios": "^1.0.4",
     "babel-eslint": "^6.1.2",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-inline-environment-variables": "^6.8.0",
@@ -83,6 +84,7 @@
     "chai": "3.5.0",
     "commitizen": "2.8.5",
     "cz-conventional-changelog": "1.1.7",
+    "detect-indent-cli": "^1.0.1",
     "eslint": "3.7.1",
     "eslint-config-peerio": "*",
     "eslint-plugin-flowtype": "^2.20.0",
@@ -92,9 +94,11 @@
     "ghooks": "1.3.2",
     "mocha": "3.0.2",
     "opt-cli": "^1.5.1",
+    "repeating-cli": "^2.0.0",
     "rn-nodeify": "github:mvayngrib/rn-nodeify",
     "semantic-release": "4.3.5",
     "standard-version": "^2.4.0",
+    "user-home-cli": "^1.0.1",
     "validate-commit-message": "3.0.1"
   },
   "config": {
