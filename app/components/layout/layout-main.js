@@ -130,13 +130,12 @@ export default class LayoutMain extends Component {
             { translateX: mainState.animatedLeftMenu },
             { translateX: mainState.animatedLeftMenuWidth }
         ];
-        const transformAndroid = global.platform === 'android' ? [{ translateY: state.keyboardHeight }] : [];
         const outerStyle = {
             backgroundColor: '#fff',
             flex: 1,
             flexDirection: 'column',
             justifyContent: 'space-between',
-            paddingBottom: state.keyboardHeight
+            paddingBottom: global.platform === 'android' ? 0 : state.keyboardHeight
         };
         const transformModal = [{ translateY: this.modalAnimated || 0 }];
         const composeStyle = {

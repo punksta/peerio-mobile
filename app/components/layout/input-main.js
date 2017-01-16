@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     View,
+    TextInput,
     PanResponder,
     TouchableOpacity
 } from 'react-native';
@@ -69,7 +70,8 @@ export default class InputMain extends Component {
 
     render() {
         const tiStyle = {
-            flex: 1,
+            borderWidth: 0,
+            borderColor: 'red',
             fontSize: 14
         };
 
@@ -82,6 +84,7 @@ export default class InputMain extends Component {
             <View
                 style={{
                     flex: 1,
+                    flexGrow: 1,
                     flexDirection: 'row',
                     alignItems: 'center'
                 }}>
@@ -89,7 +92,7 @@ export default class InputMain extends Component {
                     paddingLeft: 4,
                     paddingRight: 24
                 })}
-                <View style={{ flex: 1, alignItems: 'center' }}>
+                <View style={{ flex: 1, flexGrow: 1, borderWidth: 0, borderColor: 'yellow', alignItems: 'stretch' }}>
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
                         value={this.value}
