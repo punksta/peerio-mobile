@@ -6,6 +6,9 @@ import {
 } from 'react-native';
 import styles from '../../styles/styles';
 
+const r = 30;
+const offset = { top: r, left: r, bottom: r, right: r };
+
 export default class Button extends Component {
     render() {
         const style = styles.button;
@@ -21,7 +24,11 @@ export default class Button extends Component {
             return true;
         };
         return (
-            <TouchableOpacity onPress={press} testID={this.props.testID}>
+            <TouchableOpacity
+                pressRetentionOffset={offset}
+                hitSlop={offset}
+                onPress={press}
+                testID={this.props.testID}>
                 <View
                     style={this.props.style}>
                     <Text style={[textStyle, opacity]}>

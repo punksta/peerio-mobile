@@ -1,49 +1,44 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
-import state from '../layout/state';
-import icons from '../helpers/icons';
+import Pin from './pin';
+import Center from '../controls/center';
+import Big from '../controls/big';
+import Button from './button';
+import styles, { vars } from '../../styles/styles';
+import { t, tu } from '../utils/translator';
+import { User } from '../../lib/icebear';
 
 @observer
 export default class PinModal extends Component {
     constructor(props) {
         super(props);
-        this.focus = this.focus.bind(this);
-        this.picker = this.props.picker;
+        this.checkPin = this.checkPin.bind(this);
     }
 
-    focus() {
-        if (state.pickerVisible) {
-            state.hidePicker();
-            return;
-        }
-        state.showPicker(this.picker);
+    checkPin(pin) {
+        return User.current.validatePasscode(pin);
     }
 
     render() {
-        const focused = state.pickerVisible && state.picker === this.picker;
-        const { /* hint, */ shadow, background, textview, container, iconContainer, icon } =
-            focused ? this.props.style.active : this.props.style.normal;
+        const container = {
+            flexGrow: 1,
+            flex: 1,
+            backgroundColor: vars.bg,
+            paddingVertical: vars.modalPaddingVertical,
+            paddingHorizontal: vars.modalPaddingHorizontal
+        };
         return (
-            <View style={shadow}>
-                <View
-                    style={background}>
-                    <TouchableOpacity onPress={this.focus} activeOpacity={1}>
-                        <View
-                            pointerEvents="none"
-                            style={container}>
-                            <Text style={textview}>
-                                {this.props.data[this.props.value]}
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                    <View
-                        pointerEvents="none"
-                        style={iconContainer}>
-                        {focused ?
-                        icons.dark('arrow-drop-down', () => {}, icon) :
-                        icons.white('arrow-drop-down', () => {}, icon)}
-                    </View>
+            <View style={container}>
+                <Center style={{ flexGrow: 0, flex: 0 }}>
+                    <Big style={styles.text.inverse}>{t('devicePIN_required')}</Big>
+                </Center>
+                <Pin
+                    onSuccess={this.props.onSuccess}
+                    onEnter={this.checkPin}
+                    messageEnter={' '} />
+                <View style={{ flexGrow: 0, flex: 0, flexDirection: 'row', justifyContent: 'flex-start' }}>
+                    <Button text={tu('cancel')} onPress={this.props.onCancel} />
                 </View>
             </View>
         );
@@ -51,9 +46,6 @@ export default class PinModal extends Component {
 }
 
 PinModal.propTypes = {
-    value: React.PropTypes.any.isRequired,
-    picker: React.PropTypes.any.isRequired,
-    data: React.PropTypes.any.isRequired,
-    style: React.PropTypes.any.isRequired,
-    hint: React.PropTypes.string.isRequired
+    onCancel: React.PropTypes.func.isRequired,
+    onSuccess: React.PropTypes.func.isRequired
 };

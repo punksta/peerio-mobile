@@ -24,6 +24,8 @@ import SelectFiles from '../files/select-files';
 import FileShare from '../files/file-share';
 import SnackBar from '../snackbars/snackbar';
 import Fab from '../shared/fab';
+import SettingsLevel1 from '../settings/settings-level-1';
+import SettingsLevel2 from '../settings/settings-level-2';
 // import Placeholder from './placeholder';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import styles, { vars } from '../../styles/styles';
@@ -31,7 +33,8 @@ import styles, { vars } from '../../styles/styles';
 const routes = {
     recent: [<MessagingPlaceholder />],
     files: [<Files />, <FileView />],
-    chat: [<Chat />]
+    chat: [<Chat />],
+    settings: [<SettingsLevel1 />, <SettingsLevel2 />]
 };
 
 const modalRoutes = {
@@ -138,14 +141,22 @@ export default class LayoutMain extends Component {
             paddingBottom: global.platform === 'android' ? 0 : state.keyboardHeight
         };
         const transformModal = [{ translateY: this.modalAnimated || 0 }];
-        const composeStyle = {
-            transform: transformModal,
+
+        const modalStyle = {
             position: 'absolute',
             left: 0,
             top: 0,
             bottom: 0,
             right: 0
         };
+
+        const modalAnimatedStyle = [modalStyle, { transform: transformModal }];
+        const modalControl = !mainState.modalControl ? null : (
+            <View style={modalStyle}>
+                {mainState.modalControl}
+            </View>
+        );
+
         const title = mainState.title;
         const menuState = mainState.isLeftMenuVisible || mainState.isRightMenuVisible;
         const pages = this.body();
@@ -181,9 +192,10 @@ export default class LayoutMain extends Component {
                 </TouchableWithoutFeedback>
                 <LeftMenu />
                 <RightMenu />
-                <Animated.View style={composeStyle}>
+                <Animated.View style={modalAnimatedStyle}>
                     {this.modal()}
                 </Animated.View>
+                {modalControl}
                 <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'}
                            hidden={Platform.OS !== 'android' && menuState && !mainState.modalRoute}
                            // TODO: set show hide animation to 'fade' and 'slide'

@@ -69,12 +69,12 @@ export default class Pin extends Component {
         this.message = this.props.messageEnter || t('passcode_inputPlaceholder');
     }
 
-    circle(index, text, subText, action) {
+    circle(key, text, subText, action) {
         const r = this.circleW || 60;
         if (!text) {
             const s = { width: r, height: r, alignItems: 'center', justifyContent: 'center' };
             return (
-                <View style={s}>
+                <View style={s} key={key}>
                     { subText && icons.white(subText, action) }
                 </View>
             );
@@ -90,7 +90,7 @@ export default class Pin extends Component {
             backgroundColor: vars.midlight
         });
         return (
-            <View style={circleHl} key={index}>
+            <View style={circleHl} key={key}>
                 <TouchableOpacity testID={`pin${text}`} onPress={() => this.enter(text)}>
                     <View style={circle}>
                         <Text style={{ color: vars.highlight, fontSize: r / 3 }}>{text}</Text>
@@ -107,6 +107,21 @@ export default class Pin extends Component {
         const pin = this.pin + num;
         this.pin = pin;
         if (this.pin.length === this.maxPinLength) {
+            if (this.props.onEnter) {
+                this.isSpinner = true;
+                this.props.onEnter(pin)
+                    .then(r => {
+                        console.log(`returned ${r}`);
+                        this.props.onSuccess && this.props.onSuccess(r);
+                    })
+                    .catch(e => {
+                        console.log(`pin.js: error ${e}`);
+                        this.error();
+                        this.shake();
+                    })
+                    .finally(() => (this.isSpinner = false));
+                return;
+            }
             if (this.isConfirm) {
                 this.check();
             } else {
@@ -134,7 +149,7 @@ export default class Pin extends Component {
     }
 
     row(index, items) {
-        const circles = items.map((i, ci) => this.circle(ci, i.text, i.subText, i.action));
+        const circles = items.map((i, ci) => this.circle(`${index}${ci}`, i.text, i.subText, i.action));
         return (
             <View key={index} style={{
                 flex: 1,
@@ -165,7 +180,7 @@ export default class Pin extends Component {
             <View style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
                 <Animatable.View ref={v => { this.shaker = v; }}>
                     <Center style={style.message.container}>
-                        <Text style={[style.message.text, { marginBottom: 14 }]}>
+                        <Text style={[style.message.text, { marginBottom: 10, marginTop: 10 }]}>
                             {this.message}
                         </Text>
                     </Center>
@@ -198,6 +213,8 @@ export default class Pin extends Component {
 
 Pin.propTypes = {
     onConfirm: React.PropTypes.func,
+    onEnter: React.PropTypes.func,
+    onSuccess: React.PropTypes.func,
     checkPin: React.PropTypes.func,
     messageEnter: React.PropTypes.string,
     messageWrong: React.PropTypes.string,

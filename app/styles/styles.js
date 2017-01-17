@@ -46,6 +46,7 @@ const vars = {
     checkboxActive: 'rgba(35, 208, 137, 1)',
     snackbarBg: '#4a4a4a',
     snackbarHeight: 48,
+    settingsBg: 'rgba(0, 0, 0, 0.06)',
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
@@ -56,6 +57,11 @@ const vars = {
     iconPadding: 12,
     menuWidthRatio: 0.8,
     animationDuration: 200,
+    listItemHeight: 64,
+    listViewPaddingVertical: 36,
+    listViewPaddingHorizontal: 8,
+    modalPaddingVertical: 40,
+    modalPaddingHorizontal: 40,
     font: {
         size: {
             normal: 14,

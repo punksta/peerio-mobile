@@ -5,6 +5,7 @@ import {
 import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
 import loginState from '../login/login-state';
+import settingsState from '../settings/settings-state';
 import icons from '../helpers/icons';
 // import imagePicker from '../helpers/imagepicker';
 import { vars } from '../../styles/styles';
@@ -84,7 +85,7 @@ export default class RightMenu extends Component {
                 action: () => mainState.messages() },
             { name: 'Files', icon: 'folder', action: () => mainState.files() },
             { name: 'Profile', icon: 'person', action: () => null },
-            { name: 'Settings', icon: 'settings', action: () => null },
+            { name: 'Settings', icon: 'settings', action: () => settingsState.transition() },
             { name: 'Upgrade', icon: 'cloud-upload', action: () => null },
             { name: 'Help and support', icon: 'help', action: () => null }
         ];

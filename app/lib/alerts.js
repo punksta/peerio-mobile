@@ -13,4 +13,10 @@ function rnAlertYesNo(title, message) {
     });
 }
 
-module.exports = { rnAlertYesNo };
+function rnAlertYes(title, message) {
+    return new Promise((resolve) => {
+        Alert.alert(title, message, [ok(resolve)]);
+    });
+}
+
+module.exports = { rnAlertYesNo, rnAlertYes };

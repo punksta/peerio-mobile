@@ -20,6 +20,7 @@ const mainState = observable({
     currentFile: null,
     currentIndex: 0,
     modalRoute: null,
+    modalControl: null,
     suppressTransition: false,
     _loading: false,
 
@@ -34,7 +35,8 @@ const mainState = observable({
     titles: asReference({
         recent: () => '',
         files: (s) => (s.currentFile ? s.currentFile.name : 'All files'),
-        chat: (s) => (s.currentChat ? s.currentChat.chatName : '')
+        chat: (s) => (s.currentChat ? s.currentChat.chatName : ''),
+        settings: (s) => 'Settings'
     }),
 
     @action activateAndTransition(user) {
