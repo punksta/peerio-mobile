@@ -30,9 +30,9 @@ const fileState = observable({
     @action download() {
         const f = mainState.currentFile ? [mainState.currentFile] : this.selected;
         f.forEach(file => {
-            if (file.downloading || file.uploading) return;
-            when(() => file.readyForDownload, () => file.download());
             file.selected = false;
+            if (file.downloading || file.uploading) return;
+            file.readyForDownload && file.download();
         });
     },
 
