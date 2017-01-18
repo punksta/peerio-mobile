@@ -1,4 +1,4 @@
-import { Platform, AsyncStorage } from 'react-native';
+import { Platform, AsyncStorage, NativeModules } from 'react-native';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
@@ -101,8 +101,25 @@ export default (fileStream) => {
             console.log(`rn-file-stream.js: opening viewer for ${path}`);
             FileOpener.open(path, 'image/jpeg');
         }
-
     }
 
     fileStream.FileStream = RNFileStream;
 };
+
+
+/**
+ * Get encryption status of the filesystem
+ * For iOS we assume it's always active
+ * For Android:
+ * @return {int} 0 - inactive, 1 - active with default pin, 2 - active
+ */
+function getEncryptionStatus() {
+    const api = NativeModules.RNFSManager.getEncryptionStatus;
+    if (!api) return Promise.resolve(2); // we are on iOS
+    return api();
+}
+
+getEncryptionStatus().then(status => {
+    console.log(`rn-file-stream.js: encryption ${status}`);
+    global.fileEncryptionStatus = status;
+});
