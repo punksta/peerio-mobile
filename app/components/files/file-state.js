@@ -31,9 +31,9 @@ const fileState = observable({
 
     @action remindAboutEncryption() {
         let text = null;
-        switch(global.fileEncryptionStatus) {
+        switch (global.fileEncryptionStatus) {
             case undefined: case 2: break;
-            case 1: text = 'androidEncryptionStatusPartial'
+            case 1: text = 'androidEncryptionStatusPartial'; break;
             default: text = 'androidEncryptionStatusOff';
         }
         return text ? db.system.get('fileEncryptionStatusShown')
@@ -49,7 +49,7 @@ const fileState = observable({
             db.system.get('saved_toExternalShown')
                 .then(shown => shown ? Promise.reject(new Error('Already shown')) : Promise.resolve())
                 .then(() => rnAlertYesNo(null, tx('saved_toExternal')))
-                .then(() => { 
+                .then(() => {
                     db.system.set('saved_toExternalShown', true);
                     return Promise.resolve(true);
                 })
