@@ -177,13 +177,16 @@ const mainState = observable({
         const skipTouchID = `${user.username}::skipTouchID`;
         const skipTouchIDValue = await store.system.get(skipTouchID);
         await touchid.load();
-        !skipTouchIDValue && touchid.available && touchid.get(`user::${user.username}`)
-            .then(passphrase => {
-                if (!passphrase) {
+        !skipTouchIDValue && touchid.available && store.system.get(`user::${user.username}::touchid`)
+            .then(result => {
+                if (!result) {
                     console.log('main-state.js: touch id available but value not set');
                     console.log('main-state.js: saving');
                     rnAlertYesNo(tx('touchId'), tx('setup_touchTitle'))
-                        .then(() => touchid.save(`user::${user.username}`, user.passphrase))
+                        .then(() => {
+                            store.system.set(`user::${user.username}::touchid`, true);
+                            return touchid.save(`user::${user.username}`, user.passphrase);
+                        })
                         .catch(() => {
                             console.log('main-state.js: user cancel touch id');
                             return store.system.set(skipTouchID, true);
