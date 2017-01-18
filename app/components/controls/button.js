@@ -4,10 +4,7 @@ import {
     Text,
     TouchableOpacity
 } from 'react-native';
-import styles from '../../styles/styles';
-
-const r = 30;
-const offset = { top: r, left: r, bottom: r, right: r };
+import styles, { vars } from '../../styles/styles';
 
 export default class Button extends Component {
     render() {
@@ -23,6 +20,7 @@ export default class Button extends Component {
             !this.props.disabled && this.props.onPress && this.props.onPress();
             return true;
         };
+        const offset = vars.retentionOffset;
         return (
             <TouchableOpacity
                 pressRetentionOffset={offset}

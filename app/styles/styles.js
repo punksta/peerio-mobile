@@ -22,6 +22,9 @@ const { bg } = branding[EN];
 const statusBarHeight = Platform.OS === 'android' ? 0 : 10;
 const layoutPaddingTop = statusBarHeight * 2;
 
+const r = 30;
+const retentionOffset = { top: r, left: r, bottom: r, right: r };
+
 const vars = {
     circle: 8,
     bg,
@@ -79,7 +82,8 @@ const vars = {
     inputHeight: 48,
     fabSize: 60,
     fabRight: 16,
-    fabBottom: 32
+    fabBottom: 32,
+    retentionOffset
 };
 
 const styleCache = {};

@@ -26,8 +26,12 @@ export default class SettingsItem extends Component {
     }
 
     render() {
+        const offset = vars.retentionOffset;
         return (
-            <TouchableOpacity onPress={() => !this.props.disabled && this.press()}>
+            <TouchableOpacity
+                pressRetentionOffset={offset}
+                hitSlop={offset}
+                onPress={() => !this.props.disabled && this.press()}>
                 <View style={[itemContainerStyle]} pointerEvents="none">
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text style={{ color: this.props.disabled ? vars.txtLight : vars.txtDark }}>
