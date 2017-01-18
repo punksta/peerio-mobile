@@ -61,7 +61,7 @@ export default class Chat extends Component {
     layoutScrollView(event) {
         console.log('chat.js: layout scroll view');
         this.scrollViewHeight = event.nativeEvent.layout.height;
-        console.log(this.scrollViewHeight);
+        // console.log(this.scrollViewHeight);
         this.paging.hasMore && this.paging.updateFrame();
         // console.log(`layout sv: ${this.scrollViewHeight}`);
         this.scroll();
