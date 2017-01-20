@@ -9,12 +9,10 @@ const icebear = require('./peerio-icebear/src');
 
 const { socket, config, FileStreamAbstract } = icebear;
 
-config.upload = {
-    chunkSize: 1024 * 100,
-    maxReadQueue: 2, // max amount of chunks to pre-buffer for upload
-    maxSendQueue: 2, // max amount of chunks to pre-encrypt for sending
-    maxParallelUploadingChunks: 2 // max amount of uploaded chunks waiting for server response
-};
+config.download.maxDownloadChunkSize = 1024 * 1024;
+config.download.maxDecryptBufferSize = 1024 * 1024 * 2;
+config.upload.encryptBufferSize = 1024 * 1024;
+config.upload.uploadBufferSize = 1024 * 1024;
 
 config.isMobile = true;
 config.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://app.peerio.com';

@@ -6,23 +6,20 @@ import { fromByteArray, toByteArray } from 'base64-js';
 
 export default (fileStream) => {
     class RNFileStream extends fileStream {
-        constructor(filePath, mode, bufferSize) {
-            super(filePath, mode, bufferSize);
-            // private buffer based on same chunk of RAM (ArrayBuffer) as public buffer
-            if (this.buffer) this._buffer = Buffer.from(this.buffer.buffer);
-        }
 
         open() {
             if (this.mode === 'read') {
-                this.fileDescriptor = { mock: this.filePath, position: 0 };
-                return RNFS.stat(this.filePath).then(s => s.size);
+                this.fileDescriptor = this.filePath; // read stream doesn't really have descriptor
+                return RNFS.stat(this.filePath)
+                    .then(s => {
+                        this.size = s.size;
+                        return this;
+                    });
             }
             return RNFetchBlob.fs.writeStream(this.filePath, 'base64', this.mode === 'append')
                 .then(fd => {
                     this.fileDescriptor = fd;
-                    this.contents = 0;
-                    // resolve with filesize
-                    return 0;
+                    return this;
                 });
         }
 
@@ -30,14 +27,12 @@ export default (fileStream) => {
             if (this.fileDescriptor == null) return Promise.resolve();
             if (this.mode === 'read') {
                 this.fileDescriptor = null;
-                this.contents = null;
                 console.log('imagepicker.js successfully read: ', this.filePath);
                 return Promise.resolve();
             }
             return this.fileDescriptor.close()
                 .then(() => {
                     console.log('imagepicker.js successfully written: ', this.filePath);
-                    this.contents = null;
                     this.fileDescriptor = null;
                 });
         }
@@ -46,46 +41,33 @@ export default (fileStream) => {
          *
          * @return {Promise<number>}
          */
-        readInternal() {
-            const fd = this.fileDescriptor;
-            const chunkSize = this._buffer.byteLength;
-
-            return RNFS.readFileChunk(this.filePath, fd.position, chunkSize)
-                .then(contents => {
-                    const chunk = Buffer.from(toByteArray(contents));
-                    const size = chunk.byteLength;
-                    chunk.copy(this._buffer, 0, 0, size);
-                    fd.position += size;
-                    // console.log(`rn-file-stream.js: ${fd.position}`);
-                    return size;
-                });
+        readInternal(size) {
+            return RNFS.readFileChunk(this.filePath, this.pos, size)
+                        .then(contents => toByteArray(contents));
         }
 
         /**
          * Move file position pointer
-         * @param {long} pos
+         * @param {number} pos
          */
-         // eslint-disable-next-line
-         seekInternal(pos) {
-             const fd = this.fileDescriptor;
-             if (fd) {
-                 fd.position = pos;
-                 return fd.position;
-             }
-             throw new Error('rn-file-stream.js: stream is not initialized');
-         }
+        seekInternal(pos) {
+            const fd = this.fileDescriptor;
+            if (fd) {
+                fd.position = pos;
+                return fd.position;
+            }
+            throw new Error('rn-file-stream.js: stream is not initialized');
+        }
 
         /**
          * @param {Uint8Array} buffer
          * @return {Promise}
          */
         writeInternal(buffer) {
-            this.contents += buffer.byteLength;
-            // console.log('imagepicker.js: next block', this.contents);
-            return this.fileDescriptor.write(fromByteArray(buffer));
+            return this.fileDescriptor.write(fromByteArray(buffer)).return(buffer);
         }
 
-        static cachePath(name) {
+        static getFullPath(name) {
             const path = Platform.OS === 'ios' ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
             return `${path}/${name}`;
         }
@@ -103,7 +85,7 @@ export default (fileStream) => {
         }
     }
 
-    fileStream.FileStream = RNFileStream;
+    return RNFileStream;
 };
 
 

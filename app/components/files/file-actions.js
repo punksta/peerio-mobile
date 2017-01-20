@@ -55,9 +55,10 @@ export default class FileActions extends Component {
         const file = this.props.file;
         const enabled = file && file.readyForDownload;
 
-        const leftAction = file && !file.isPartialDownload && file.cacheExists ?
+        const leftAction = file && !file.isPartialDownload && file.cached ?
             this.action('Open', 'open-in-new', () => file.launchViewer(), enabled) :
             this.action('Download', 'file-download', () => fileState.download(), enabled);
+
 
         return (
             <Animated.View style={[bottomRowStyle, animation]}>
