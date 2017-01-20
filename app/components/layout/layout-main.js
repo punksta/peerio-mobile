@@ -150,8 +150,9 @@ export default class LayoutMain extends Component {
         };
 
         const modalAnimatedStyle = [modalStyle, { transform: transformModal }];
+        const modalControl = mainState.modalControl && mainState.modalControl();
         const modalNonAnimatedStyle = [modalStyle, {
-            transform: [{ translateY: mainState.modalControl ? 0 : this.height }]
+            transform: [{ translateY: modalControl ? 0 : this.height }]
         }];
 
         const title = mainState.title;
@@ -193,7 +194,7 @@ export default class LayoutMain extends Component {
                     {this.modal()}
                 </Animated.View>
                 <View style={modalNonAnimatedStyle}>
-                    {mainState.modalControl}
+                    {modalControl}
                 </View>
                 <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'}
                            hidden={Platform.OS !== 'android' && menuState && !mainState.modalRoute}

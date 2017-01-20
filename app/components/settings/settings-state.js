@@ -29,7 +29,7 @@ const settingsState = observable({
             rnAlertYes(passphrase);
             mainState.modalControl = null;
         };
-        const pinModal = (
+        const pinModal = () => (
             <PinModal
                 onSuccess={success}
                 onCancel={() => (mainState.modalControl = null)} />
