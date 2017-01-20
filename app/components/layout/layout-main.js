@@ -87,6 +87,7 @@ export default class LayoutMain extends Component {
             }
         }, true);
 
+        reaction(() => mainState.modalControl, () => this.forceUpdate());
         reaction(() => state.appState, () => this.forceUpdate());
     }
 
