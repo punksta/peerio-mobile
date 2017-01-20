@@ -1,5 +1,4 @@
 import { AsyncStorage } from 'react-native';
-import { setTinyDbEngine } from '../lib/icebear';
 
 const engine = {
     getValue(name) {
@@ -12,6 +11,10 @@ const engine = {
 
     removeValue(name) {
         return AsyncStorage.removeItem(name);
+    },
+
+    getAllKeys() {
+        return AsyncStorage.getAllKeys();
     }
 };
 
