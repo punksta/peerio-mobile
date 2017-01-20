@@ -86,8 +86,6 @@ export default class LayoutMain extends Component {
                 mainState.blackStatusBar = false;
             }
         }, true);
-
-        reaction(() => mainState.modalControl, () => this.forceUpdate());
         reaction(() => state.appState, () => this.forceUpdate());
     }
 
@@ -152,11 +150,9 @@ export default class LayoutMain extends Component {
         };
 
         const modalAnimatedStyle = [modalStyle, { transform: transformModal }];
-        const modalControl = !mainState.modalControl ? null : (
-            <View style={modalStyle}>
-                {mainState.modalControl}
-            </View>
-        );
+        const modalNonAnimatedStyle = [modalStyle, {
+            transform: [{ translateY: mainState.modalControl ? 0 : this.height }]
+        }];
 
         const title = mainState.title;
         const menuState = mainState.isLeftMenuVisible || mainState.isRightMenuVisible;
@@ -196,7 +192,9 @@ export default class LayoutMain extends Component {
                 <Animated.View style={modalAnimatedStyle}>
                     {this.modal()}
                 </Animated.View>
-                {modalControl}
+                <View style={modalNonAnimatedStyle}>
+                    {mainState.modalControl}
+                </View>
                 <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'}
                            hidden={Platform.OS !== 'android' && menuState && !mainState.modalRoute}
                            // TODO: set show hide animation to 'fade' and 'slide'
