@@ -14,6 +14,7 @@ const settingsState = observable({
         console.log(`settings-state.js: transition ${subroute}`);
         mainState.route = 'settings';
         mainState.isRightMenuVisible = false;
+        mainState.isLeftHamburgerVisible = false;
         if (subroute) {
             this.subroute = subroute;
             mainState.isBackVisible = true;

@@ -40,7 +40,8 @@ export default class HeaderMain extends Component {
             fontWeight: vars.font.weight.regular,
             flex: 1,
             fontSize: 16,
-            alignItems: 'center'
+            alignItems: 'center',
+            marginLeft: mainState.isLeftHamburgerVisible ? 0 : vars.iconSize
         };
         const containerStyle = {
             flex: 0,
@@ -57,7 +58,7 @@ export default class HeaderMain extends Component {
                 backgroundColor: styles.branding.peeriomobile.bg
             }}>
                 <View style={containerStyle}>
-                    {leftIcon}
+                    {mainState.isLeftHamburgerVisible && leftIcon}
                     <Text
                         ellipsizeMode="tail"
                         numberOfLines={1}

@@ -10,6 +10,7 @@ import { rnAlertYesNo } from '../../lib/alerts';
 import { tx } from '../utils/translator';
 
 const mainState = observable({
+    isLeftHamburgerVisible: true,
     isBackVisible: false,
     isLeftMenuVisible: false,
     isRightMenuVisible: false,
@@ -118,6 +119,7 @@ const mainState = observable({
         this.isInputVisible = false;
         this.isLeftMenuVisible = false;
         this.isRightMenuVisible = false;
+        this.isLeftHamburgerVisible = true;
         this.modalRoute = null;
     },
 
