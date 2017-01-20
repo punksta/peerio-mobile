@@ -33,13 +33,13 @@ const bottomRowStyle = {
 @observer
 export default class FileActions extends Component {
 
-    action(text, icon, onPress) {
+    action(text, icon, onPress, enabled) {
         return (
             <TouchableOpacity
                 style={actionCellStyle}
-                onPress={onPress}
+                onPress={onPress && enabled ? onPress : null}
                 pointerEvents={onPress ? null : 'none'}>
-                <View pointerEvents="none" style={{ alignItems: 'center' }}>
+                <View pointerEvents="none" style={{ alignItems: 'center', opacity: enabled ? 1 : 0.5 }}>
                     {onPress ? icons.plaindark(icon) : icons.plain(icon, null, 'rgba(0, 0, 0, .38)')}
                     <Text style={actionTextStyle}>{text}</Text>
                 </View>
@@ -53,16 +53,17 @@ export default class FileActions extends Component {
             height: this.props.height
         };
         const file = this.props.file;
+        const enabled = file && file.readyForDownload;
 
         const leftAction = file && !file.isPartialDownload && file.cacheExists ?
-            this.action('Open', 'open-in-new', () => file.launchViewer()) :
-            this.action('Download', 'file-download', () => fileState.download());
+            this.action('Open', 'open-in-new', () => file.launchViewer(), enabled) :
+            this.action('Download', 'file-download', () => fileState.download(), enabled);
 
         return (
             <Animated.View style={[bottomRowStyle, animation]}>
                 {leftAction}
-                {this.action('Share', 'reply', () => contactState.shareFile())}
-                {this.action('Delete', 'delete', () => fileState.delete())}
+                {this.action('Share', 'reply', () => contactState.shareFile(), enabled)}
+                {this.action('Delete', 'delete', () => fileState.delete(), enabled)}
                 {/* {this.action('More', 'more-horiz')} */}
             </Animated.View>
         );
