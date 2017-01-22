@@ -11,6 +11,7 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
+import { t } from '../utils/translator';
 
 const itemStyle = {
     flexGrow: 1,
@@ -79,15 +80,16 @@ export default class RightMenu extends Component {
         };
 
         const items = [
-            { name: 'Messages',
+            { name: t('messages'),
                 bubble: mainState.unreadMessages,
                 icon: 'chat-bubble',
                 action: () => mainState.messages() },
-            { name: 'Files', icon: 'folder', action: () => mainState.files() },
-            { name: 'Profile', icon: 'person', action: () => null },
-            { name: 'Settings', icon: 'settings', action: () => settingsState.transition() },
-            { name: 'Upgrade', icon: 'cloud-upload', action: () => null },
-            { name: 'Help and support', icon: 'help', action: () => null }
+            { name: t('files'), icon: 'folder', action: () => mainState.files() },
+            { name: t('ghosts'), icon: 'ghost', action: () => mainState.files() },
+            { name: t('profile'), icon: 'person', action: () => null },
+            { name: t('settings'), icon: 'settings', action: () => settingsState.transition() },
+            { name: t('upgrade'), icon: 'cloud-upload', action: () => null },
+            { name: t('help'), icon: 'help', action: () => null }
         ];
 
         const signOut = {

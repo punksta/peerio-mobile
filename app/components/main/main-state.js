@@ -37,7 +37,7 @@ const mainState = observable({
         recent: () => '',
         files: (s) => (s.currentFile ? s.currentFile.name : 'All files'),
         chat: (s) => (s.currentChat ? s.currentChat.chatName : ''),
-        settings: (s) => 'Settings'
+        settings: (s) => tx('settings')
     }),
 
     @action activateAndTransition(user) {
@@ -75,6 +75,9 @@ const mainState = observable({
             this.messages();
 
             if (__DEV__) {
+                if (process.env.PEERIO_DEFAULT_ROUTE) {
+                    mainState.route = process.env.PEERIO_DEFAULT_ROUTE;
+                }
                 // this.showModal('shareFileTo');
                 // this.showModal('selectFiles');
                 // this.files();

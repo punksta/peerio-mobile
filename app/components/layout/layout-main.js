@@ -28,11 +28,14 @@ import SettingsLevel1 from '../settings/settings-level-1';
 import SettingsLevel2 from '../settings/settings-level-2';
 // import Placeholder from './placeholder';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
+import Ghosts from '../ghosts/ghosts';
+import GhostView from '../ghosts/ghost-view';
 import styles, { vars } from '../../styles/styles';
 
 const routes = {
     recent: [<MessagingPlaceholder />],
     files: [<Files />, <FileView />],
+    ghosts: [<Ghosts />, <GhostView />],
     chat: [<Chat />],
     settings: [<SettingsLevel1 />, <SettingsLevel2 />]
 };
