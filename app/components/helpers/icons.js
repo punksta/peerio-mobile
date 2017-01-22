@@ -45,7 +45,7 @@ const icons = {
     },
 
     colored(name, onPress, colorFg, backgroundColor) {
-        return icons.basic(name, colorFg, onPress, { backgroundColor });
+        return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {});
     },
 
     placeholder() {

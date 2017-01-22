@@ -6,6 +6,7 @@ import { observer } from 'mobx-react/native';
 import mainState from '../main/main-state';
 import loginState from '../login/login-state';
 import settingsState from '../settings/settings-state';
+import ghostState from '../ghosts/ghost-state';
 import icons from '../helpers/icons';
 // import imagePicker from '../helpers/imagepicker';
 import { vars } from '../../styles/styles';
@@ -21,11 +22,6 @@ const itemStyle = {
     backgroundColor: 'white'
 };
 
-const textStyle = {
-    color: 'rgba(0, 0, 0, .87)',
-    marginLeft: 20
-};
-
 @observer
 export default class RightMenu extends Component {
 
@@ -35,12 +31,17 @@ export default class RightMenu extends Component {
 
     item(i, key) {
         const bubble = i.bubble ? icons.bubble(i.bubble) : null;
+        const selected = mainState.route === i.route;
+        const textStyle = {
+            color: selected ? vars.bg : 'rgba(0, 0, 0, .87)',
+            fontWeight: selected ? 'bold' : 'normal',
+            marginLeft: 20
+        };
         return (
-
             <View style={{ backgroundColor: vars.bg }} key={key}>
                 <TouchableOpacity onPress={() => i.action()}>
                     <View style={itemStyle} pointerEvents="box-only">
-                        { icons.dark(i.icon) }
+                        { selected ? icons.colored(i.icon, null, vars.bg) : icons.dark(i.icon) }
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={textStyle}>{i.name}</Text>
                             {bubble}
@@ -80,16 +81,46 @@ export default class RightMenu extends Component {
         };
 
         const items = [
-            { name: t('messages'),
+            {
+                name: t('messages'),
+                route: 'chat',
                 bubble: mainState.unreadMessages,
                 icon: 'chat-bubble',
-                action: () => mainState.messages() },
-            { name: t('files'), icon: 'folder', action: () => mainState.files() },
-            { name: t('ghosts'), icon: 'ghost', action: () => mainState.files() },
-            { name: t('profile'), icon: 'person', action: () => null },
-            { name: t('settings'), icon: 'settings', action: () => settingsState.transition() },
-            { name: t('upgrade'), icon: 'cloud-upload', action: () => null },
-            { name: t('help'), icon: 'help', action: () => null }
+                action: () => mainState.messages()
+            },
+            {
+                name: t('files'),
+                route: 'files',
+                icon: 'folder',
+                action: () => mainState.files()
+            },
+            {
+                name: t('ghosts'),
+                route: 'ghosts',
+                icon: 'rowing',
+                action: () => ghostState.transition()
+            },
+            {
+                name: t('profile'),
+                icon: 'person',
+                action: () => null
+            },
+            {
+                name: t('settings'),
+                route: 'settings',
+                icon: 'settings',
+                action: () => settingsState.transition()
+            },
+            {
+                name: t('upgrade'),
+                icon: 'cloud-upload',
+                action: () => null
+            },
+            {
+                name: t('help'),
+                icon: 'help',
+                action: () => null
+            }
         ];
 
         const signOut = {

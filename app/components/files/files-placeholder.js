@@ -62,7 +62,7 @@ export default class FilesPlaceholder extends Component {
                     <View style={{ flex: 0.5 }}>
                         <Text style={headerStyle}>Upload something.</Text>
                         <View style={titleBlockStyle}>
-                            <View style={{ flex: 1, borderWidth: 0, borderColor: 'red' }} />
+                            <View style={{ flex: 1, flexGrow: 0.5, borderWidth: 0, borderColor: 'red' }} />
                             <View style={{ flex: 1, borderWidth: 0, borderColor: 'green', justifyContent: 'flex-end' }}>
                                 <Image source={arrowDownZeroState}
                                        resizeMode="contain"
