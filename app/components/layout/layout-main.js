@@ -30,6 +30,7 @@ import SettingsLevel2 from '../settings/settings-level-2';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import Ghosts from '../ghosts/ghosts';
 import GhostView from '../ghosts/ghost-view';
+import GhostCompose from '../ghosts/ghost-compose';
 import styles, { vars } from '../../styles/styles';
 
 const routes = {
@@ -43,7 +44,8 @@ const routes = {
 const modalRoutes = {
     compose: <ComposeMessage />,
     shareFileTo: <FileShare />,
-    selectFiles: <SelectFiles />
+    selectFiles: <SelectFiles />,
+    ghostCompose: <GhostCompose />
 };
 
 @observer
