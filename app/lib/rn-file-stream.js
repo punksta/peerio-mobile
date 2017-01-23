@@ -91,10 +91,13 @@ export default (fileStream) => {
             return RNFetchBlob.fs.stat(path);
         }
 
+        /**
+         * @returns {Promise<string[]>}
+         */
         static getCacheList() {
             return RNFS.readDir(ROOT)
                 .then(items => {
-                    return items.filter(i => i.isFile());
+                    return items.filter(i => i.isFile()).map(i => i.path);
                 });
         }
     }
