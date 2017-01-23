@@ -100,6 +100,11 @@ export default (fileStream) => {
                     return items.filter(i => i.isFile()).map(i => i.path);
                 });
         }
+
+        static delete(path) {
+            return RNFS.unlink(path);
+        }
+
     }
 
     return RNFileStream;
