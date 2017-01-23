@@ -1,10 +1,9 @@
 import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
 import mainState from '../main/main-state';
-import { fileStore } from '../../lib/icebear';
+import { fileStore, TinyDb } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo, rnAlertYes } from '../../lib/alerts';
-import db from '../../store/local-storage';
 
 const fileState = observable({
     get showSelection() {
@@ -36,21 +35,21 @@ const fileState = observable({
             case 1: text = 'androidEncryptionStatusPartial'; break;
             default: text = 'androidEncryptionStatusOff';
         }
-        return text ? db.system.get('fileEncryptionStatusShown')
+        return text ? TinyDb.system.getValue('fileEncryptionStatusShown')
             .then(shown => shown ? Promise.reject(new Error('Already shown')) : Promise.resolve())
             .then(() => rnAlertYesNo(null, tx(text)))
             .then(() => Linking.openURL('https://support.google.com/nexus/answer/2844831?hl=en'))
             .catch(e => console.log(e))
-            .finally(() => db.system.set('fileEncryptionStatusShown', true)) : Promise.resolve();
+            .finally(() => TinyDb.system.setValue('fileEncryptionStatusShown', true)) : Promise.resolve();
     },
 
     @action remindAboutExternal() {
         return Platform.OS === 'android' ?
-            db.system.get('saved_toExternalShown')
+            TinyDb.system.getValue('saved_toExternalShown')
                 .then(shown => shown ? Promise.reject(new Error('Already shown')) : Promise.resolve())
                 .then(() => rnAlertYesNo(null, tx('saved_toExternal')))
                 .then(() => {
-                    db.system.set('saved_toExternalShown', true);
+                    TinyDb.system.setValue('saved_toExternalShown', true);
                     return Promise.resolve(true);
                 })
                 .catch(() => Promise.resolve(false)) : Promise.resolve(true);

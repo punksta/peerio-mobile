@@ -2,9 +2,8 @@ import { when, observable, action } from 'mobx';
 import RNRestart from 'react-native-restart';
 import state from '../layout/state';
 import mainState from '../main/main-state';
-import store from '../../store/local-storage';
-import { User, socket, validation, fileStore } from '../../lib/icebear';
-import touchid from '../touchid/touchid-bridge';
+import { User, TinyDb, validation, fileStore, socket } from '../../lib/icebear';
+import touchId from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 
 const { isValidLoginUsername } = validation.validators;
@@ -28,7 +27,7 @@ const loginState = observable({
     },
 
     get isConnected() {
-        return !!socket.connected;
+        return socket.connected;
     },
 
     @action clean() {
@@ -44,7 +43,7 @@ const loginState = observable({
     },
 
     @action async changeUserAction() {
-        await store.system.set('userData', null);
+        await TinyDb.system.setValue('userData', null);
         this.username = null;
         this.usernameValid = null;
         this.passphrase = '';
@@ -91,16 +90,16 @@ const loginState = observable({
     @action async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         (inProgress ? rnAlertYesNo('Are you sure?', 'File tasks are not completed') : Promise.resolve(true))
-            .then(() => store.system.set('userData', null))
-            .then(() => store.system.set('lastUsername', null))
+            .then(() => TinyDb.system.setValue('userData', null))
+            .then(() => TinyDb.system.setValue('lastUsername', null))
             .then(() => RNRestart.Restart())
             .catch(() => null);
     },
 
     @action async load() {
         console.log(`login-state.js: loading`);
-        const userData = await store.system.get('userData');
-        this.username = await store.system.get('lastUsername');
+        const userData = await TinyDb.system.getValue('userData');
+        this.username = await TinyDb.system.getValue('lastUsername');
         this.username && this.triggerTouchId();
         if (userData) {
             console.log(`login-state.js: loaded ${userData}`);
@@ -110,7 +109,6 @@ const loginState = observable({
             this.username = username;
             this.firstName = firstName;
             this.lastName = lastName;
-            store.openUserDb(this.username);
             const user = new User();
             user.username = username;
             return user.hasPasscode()
@@ -123,19 +121,19 @@ const loginState = observable({
     },
 
     @action async save() {
-        const { username, firstName, lastName } = this;
-        store.openUserDb(username);
-        await store.user.set('userData', {
-            username,
-            firstName,
-            lastName
-        });
-        await store.user.set('registration', {});
+        // const { username, firstName, lastName } = this;
+        // TinyDb.openUserDb(username);
+        // await TinyDb.user.set('userData', {
+        //     username,
+        //     firstName,
+        //     lastName
+        // });
+        // await TinyDb.user.set('registration', {});
     },
 
     @action async triggerTouchId() {
-        await touchid.load();
-        touchid.available && touchid.get(`user::${this.username}`)
+        await touchId.load();
+        touchId.available && touchId.get(`user::${this.username}`)
             .then(passphrase => {
                 if (passphrase) {
                     this.passphrase = passphrase;

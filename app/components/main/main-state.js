@@ -1,8 +1,7 @@
 import { Animated } from 'react-native';
 import { observable, action, when, reaction, asReference } from 'mobx';
 import state from '../layout/state';
-import { User, chatStore, fileStore } from '../../lib/icebear';
-import store from '../../store/local-storage';
+import { User, chatStore, fileStore, TinyDb } from '../../lib/icebear';
 import sounds from '../../lib/sounds';
 import { enablePushNotifications } from '../../lib/push';
 import touchid from '../touchid/touchid-bridge';
@@ -44,7 +43,7 @@ const mainState = observable({
         state.routes.main.transition();
         User.current = user;
         this.saveUser();
-        store.openUserDb(user.username);
+        // store.openUserDb(user.username);
         chatStore.loadAllChats();
         when(() => !chatStore.loading, () => {
             console.log('main-state.js: load all files');
@@ -168,7 +167,7 @@ const mainState = observable({
     @action async load() {
         console.log('main-state.js: loading');
         this.loading = true;
-        const s = await store.user.get('main-state');
+        const s = await TinyDb.user.getValue('main-state');
         if (s) {
             this.saved = s;
         }
@@ -178,23 +177,23 @@ const mainState = observable({
 
     @action async saveUser() {
         const user = User.current;
-        await store.system.set('lastUsername', user.username);
+        await TinyDb.system.setValue('lastUsername', user.username);
         const skipTouchID = `${user.username}::skipTouchID`;
-        const skipTouchIDValue = await store.system.get(skipTouchID);
+        const skipTouchIDValue = await TinyDb.system.getValue(skipTouchID);
         await touchid.load();
-        !skipTouchIDValue && touchid.available && store.system.get(`user::${user.username}::touchid`)
+        !skipTouchIDValue && touchid.available && TinyDb.system.getValue(`user::${user.username}::touchid`)
             .then(result => {
                 if (!result) {
                     console.log('main-state.js: touch id available but value not set');
                     console.log('main-state.js: saving');
                     rnAlertYesNo(tx('touchId'), tx('setup_touchTitle'))
                         .then(() => {
-                            store.system.set(`user::${user.username}::touchid`, true);
+                            TinyDb.system.setValue(`user::${user.username}::touchid`, true);
                             return touchid.save(`user::${user.username}`, user.passphrase);
                         })
                         .catch(() => {
                             console.log('main-state.js: user cancel touch id');
-                            return store.system.set(skipTouchID, true);
+                            return TinyDb.system.setValue(skipTouchID, true);
                         });
                 }
                 console.log('main-state.js: touch id available and value is set');
@@ -202,7 +201,7 @@ const mainState = observable({
     },
 
     @action async save() {
-        await store.user.set('main-state', { currentChat: this.currentChat.id });
+        await TinyDb.user.setValue('main-state', { currentChat: this.currentChat.id });
     },
 
     get title() {

@@ -1,6 +1,6 @@
 import './btoa-shim';
 import rnFileStream from './rn-file-stream';
-import { engine } from '../store/local-storage';
+import KeyValueStorage from '../store/key-value-storage';
 
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'react-native';
@@ -17,7 +17,7 @@ config.upload.uploadBufferSize = 1024 * 1024;
 config.isMobile = true;
 config.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://app.peerio.com';
 config.FileStream = rnFileStream(FileStreamAbstract);
-config.TinyDb = engine;
+config.StorageEngine = KeyValueStorage;
 
 socket.start();
 

@@ -1,6 +1,5 @@
 import { observable, action, when } from 'mobx';
 import TouchID from 'react-native-touch-id-value';
-import store from '../../store/local-storage';
 
 const touchid = observable({
     available: null,

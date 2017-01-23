@@ -1,4 +1,4 @@
-import { Platform, AsyncStorage, NativeModules } from 'react-native';
+import { Platform, NativeModules } from 'react-native';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
@@ -51,6 +51,7 @@ export default (fileStream) => {
          * @param {number} pos
          */
         seekInternal(pos) {
+            this.pos = pos;
             const fd = this.fileDescriptor;
             if (fd) {
                 fd.position = pos;
@@ -82,6 +83,10 @@ export default (fileStream) => {
         static launchViewer(path) {
             console.log(`rn-file-stream.js: opening viewer for ${path}`);
             FileOpener.open(path, 'image/jpeg');
+        }
+
+        static getStat(path){
+            return RNFetchBlob.fs.stat(path);
         }
     }
 

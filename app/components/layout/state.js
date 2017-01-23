@@ -5,7 +5,7 @@ import moment from 'moment';
 import { observable, action, reaction, autorun } from 'mobx';
 import translator from 'peerio-translator';
 import locales from '../../lib/locales';
-import store from '../../store/local-storage';
+import { TinyDb } from '../../lib/icebear';
 
 const state = observable({
     isFirstLogin: false,
@@ -78,7 +78,7 @@ const state = observable({
     },
 
     @action async load() {
-        const s = await store.system.get('state');
+        const s = await TinyDb.system.getValue('state');
         let locale = 'en';
         if (s) {
             locale = s.locale;
@@ -88,7 +88,7 @@ const state = observable({
 
     @action async save() {
         const locale = this.locale || 'en';
-        await store.system.set('state', { locale });
+        await TinyDb.system.setValue('state', { locale });
     }
 });
 
