@@ -31,7 +31,7 @@ export default class PinModal extends Component {
         return (
             <View style={container}>
                 <Center style={{ flexGrow: 0, flex: 0 }}>
-                    <Big style={styles.text.inverse}>{t('devicePIN_required')}</Big>
+                    <Big style={styles.text.inverse}>{t('passphrase_enterpin')}</Big>
                 </Center>
                 <Pin
                     onSuccess={this.props.onSuccess}

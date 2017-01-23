@@ -5,6 +5,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
 import { when } from 'mobx';
+import { t } from 'peerio-translator';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import Avatar from '../shared/avatar';
@@ -144,7 +145,7 @@ export default class ContactSelector extends Component {
                 {icons.dark('close', this.exit)}
                 <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
                 {contactState.recipients.length ?
-                    icons.text('GO', () => this.action(), goStyle) : icons.placeholder()}
+                    icons.text(t('go'), () => this.action(), goStyle) : icons.placeholder()}
             </View>
         );
     }
