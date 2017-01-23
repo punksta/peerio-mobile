@@ -14,7 +14,7 @@ const fileState = observable({
         return fileStore.files.filter(f => f.selected);
     },
 
-    @action delete() {
+    delete: action.bound(function() {
         const f = mainState.currentFile ? [mainState.currentFile] : this.selected;
         const count = f.length;
         const t = tx((count > 1) ? 'confirm_deleteFiles' : 'confirm_deleteFile', { count });
@@ -26,9 +26,9 @@ const fileState = observable({
                 mainState.files();
             })
             .catch(() => null);
-    },
+    }),
 
-    @action remindAboutEncryption() {
+    remindAboutEncryption() {
         let text = null;
         switch (global.fileEncryptionStatus) {
             case undefined: case 2: break;
@@ -36,17 +36,17 @@ const fileState = observable({
             default: text = 'androidEncryptionStatusOff';
         }
         return text ? TinyDb.system.getValue('fileEncryptionStatusShown')
-            .then(shown => shown ? Promise.reject(new Error('Already shown')) : Promise.resolve())
+            .then(shown => (shown ? Promise.reject(new Error('Already shown')) : Promise.resolve()))
             .then(() => rnAlertYesNo(null, tx(text)))
             .then(() => Linking.openURL('https://support.google.com/nexus/answer/2844831?hl=en'))
             .catch(e => console.log(e))
             .finally(() => TinyDb.system.setValue('fileEncryptionStatusShown', true)) : Promise.resolve();
     },
 
-    @action remindAboutExternal() {
+    remindAboutExternal() {
         return Platform.OS === 'android' ?
             TinyDb.system.getValue('saved_toExternalShown')
-                .then(shown => shown ? Promise.reject(new Error('Already shown')) : Promise.resolve())
+                .then(shown => (shown ? Promise.reject(new Error('Already shown')) : Promise.resolve()))
                 .then(() => rnAlertYesNo(null, tx('saved_toExternal')))
                 .then(() => {
                     TinyDb.system.setValue('saved_toExternalShown', true);
@@ -55,44 +55,44 @@ const fileState = observable({
                 .catch(() => Promise.resolve(false)) : Promise.resolve(true);
     },
 
-    @action download() {
+    download: action.bound(function() {
         this.remindAboutEncryption().then(() => this.remindAboutExternal()).then(r => {
             if (!r) return;
             const f = mainState.currentFile ? [mainState.currentFile] : this.selected;
             f.forEach(file => {
                 file.selected = false;
                 if (file.downloading || file.uploading) return;
-                file.readyForDownload && file.download();
+                file.readyForDownload && file.download(file.cachePath);
             });
         });
-    },
+    }),
 
-    @action resetSelection() {
+    resetSelection: action.bound(function() {
         this.selected.forEach(f => (f.selected = false));
-    },
+    }),
 
-    @action selectFiles() {
+    selectFiles: action.bound(function() {
         this.resetSelection();
         return new Promise((resolve, reject) => {
             this.resolveFileSelection = resolve;
             this.rejectFileSelection = reject;
             mainState.showModal('selectFiles');
         });
-    },
+    }),
 
-    @action exitSelectFiles() {
+    exitSelectFiles: action.bound(function() {
         this.resetSelection();
         mainState.discardModal();
         this.rejectFileSelection && this.rejectFileSelection(new Error(`file-state.js: user cancel`));
         this.rejectFileSelection = null;
-    },
+    }),
 
-    @action submitSelectFiles() {
+    submitSelectFiles: action.bound(function() {
         this.resolveFileSelection(this.selected.slice());
         this.resolveFileSelection = null;
         this.resetSelection();
         mainState.discardModal();
-    }
+    })
 });
 
 export default fileState;

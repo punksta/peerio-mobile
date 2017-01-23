@@ -30,7 +30,7 @@ const loginState = observable({
         return socket.connected;
     },
 
-    @action clean() {
+    clean: action.bound(function() {
         console.log('transitioning to clean');
         this.username = '';
         this.usernameValid = null;
@@ -40,22 +40,22 @@ const loginState = observable({
         this.isInProgress = false;
         this.pin = false;
         state.routes.loginClean.transition();
-    },
+    }),
 
-    @action async changeUserAction() {
+    changeUserAction: action.bound(async function() {
         await TinyDb.system.setValue('userData', null);
         this.username = null;
         this.usernameValid = null;
         this.passphrase = '';
         this.savedPassphrase = '';
-    },
+    }),
 
-    @action saved() {
+    saved: action.bound(function() {
         this.savedUserInfo = true;
         state.routes.loginSaved.transition();
-    },
+    }),
 
-    @action _login(user) {
+    _login: action.bound(function(user) {
         console.log(`login-state.js: logging in ${user.username}`);
         return isValidLoginUsername(user.username)
             .then(valid => {
@@ -65,6 +65,7 @@ const loginState = observable({
                 this.error = 'badUsername';
                 return Promise.reject(new Error('Bad username'));
             })
+            .then(() => console.log('login-state.js: logged in'))
             .then(() => mainState.activateAndTransition(user))
             .catch(e => {
                 console.error(e);
@@ -75,9 +76,9 @@ const loginState = observable({
                 this.isInProgress = false;
                 setTimeout(() => (this.error = null), 1000);
             });
-    },
+    }),
 
-    @action login(pin) {
+    login: action.bound(function(pin) {
         const user = new User();
         user.username = this.username;
         user.passphrase = pin || this.passphrase || this.savedPassphrase || 'such a secret passphrase';
@@ -85,18 +86,18 @@ const loginState = observable({
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
         });
-    },
+    }),
 
-    @action async signOut() {
+    async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
-        (inProgress ? rnAlertYesNo('Are you sure?', 'File tasks are not completed') : Promise.resolve(true))
+        return (inProgress ? rnAlertYesNo('Are you sure?', 'File tasks are not completed') : Promise.resolve(true))
             .then(() => TinyDb.system.setValue('userData', null))
             .then(() => TinyDb.system.setValue('lastUsername', null))
             .then(() => RNRestart.Restart())
             .catch(() => null);
     },
 
-    @action async load() {
+    load: action.bound(async function() {
         console.log(`login-state.js: loading`);
         const userData = await TinyDb.system.getValue('userData');
         this.username = await TinyDb.system.getValue('lastUsername');
@@ -118,9 +119,9 @@ const loginState = observable({
                 });
         }
         return false;
-    },
+    }),
 
-    @action async save() {
+    save: action.bound(async function() {
         // const { username, firstName, lastName } = this;
         // TinyDb.openUserDb(username);
         // await TinyDb.user.set('userData', {
@@ -129,9 +130,9 @@ const loginState = observable({
         //     lastName
         // });
         // await TinyDb.user.set('registration', {});
-    },
+    }),
 
-    @action async triggerTouchId() {
+    triggerTouchId: action.bound(async function() {
         await touchId.load();
         touchId.available && touchId.get(`user::${this.username}`)
             .then(passphrase => {
@@ -140,7 +141,7 @@ const loginState = observable({
                     this.login();
                 }
             });
-    }
+    })
 });
 
 // loginState.mount();

@@ -11,11 +11,20 @@ class KeyValueStorage {
 
     // should return null if value doesn't exist
     getValue(key) {
-        return AsyncStorage.getItem(this._getKey(key));
+        return AsyncStorage.getItem(this._getKey(key))
+            .then(v => {
+                console.log(`key-value-storage.js: ${key}:${v}`);
+                return v || null;
+            })
+            .catch(e => {
+                console.error(`key-value-storage.js: error reading`);
+                console.error(e);
+                return null;
+            });
     }
 
     setValue(key, value) {
-        return AsyncStorage.getItem(this._getKey(key), value);
+        return AsyncStorage.setItem(this._getKey(key), value);
     }
 
     removeValue(key) {

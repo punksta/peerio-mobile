@@ -19,6 +19,11 @@ config.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://app.peerio.c
 config.FileStream = rnFileStream(FileStreamAbstract);
 config.StorageEngine = KeyValueStorage;
 
+config.FileStream.getCacheList()
+    .then(r => {
+        console.log(r);
+    });
+
 socket.start();
 
 module.exports = icebear;

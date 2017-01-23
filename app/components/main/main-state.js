@@ -1,5 +1,5 @@
 import { Animated } from 'react-native';
-import { observable, action, when, reaction, asReference } from 'mobx';
+import { observable, action, when, reaction } from 'mobx';
 import state from '../layout/state';
 import { User, chatStore, fileStore, TinyDb } from '../../lib/icebear';
 import sounds from '../../lib/sounds';
@@ -32,14 +32,14 @@ const mainState = observable({
         this._loading = v;
     },
 
-    titles: asReference({
+    titles: observable.ref({
         recent: () => '',
         files: (s) => (s.currentFile ? s.currentFile.name : 'All files'),
         chat: (s) => (s.currentChat ? s.currentChat.chatName : ''),
-        settings: (s) => tx('settings')
+        settings: (/* s */) => tx('settings')
     }),
 
-    @action activateAndTransition(user) {
+    activateAndTransition: action.bound(function(user) {
         state.routes.main.transition();
         User.current = user;
         this.saveUser();
@@ -48,11 +48,10 @@ const mainState = observable({
         when(() => !chatStore.loading, () => {
             console.log('main-state.js: load all files');
             fileStore.loadAllFiles();
-            fileStore.resume();
         });
-    },
+    }),
 
-    @action initial() {
+    initial: action.bound(function() {
         state.hideKeyboard();
         this.messages();
         this.load();
@@ -89,9 +88,9 @@ const mainState = observable({
             });
         });
         //
-    },
+    }),
 
-    @action chat(i) {
+    chat: action.bound(function(i) {
         this.resetMenus();
         this.isInputVisible = true;
         this.route = 'chat';
@@ -102,14 +101,14 @@ const mainState = observable({
             this.currentChat.loadMessages();
             this.save();
         });
-    },
+    }),
 
-    @action messages() {
+    messages: action(function() {
         this.resetMenus();
         this.route = this.currentChat ? 'chat' : 'recent';
         this.currentIndex = 0;
         this.isBackVisible = false;
-    },
+    }),
 
     get unreadMessages() {
         let r = 0;
@@ -117,54 +116,54 @@ const mainState = observable({
         return r;
     },
 
-    @action resetMenus() {
+    resetMenus: action.bound(function() {
         this.isInputVisible = false;
         this.isLeftMenuVisible = false;
         this.isRightMenuVisible = false;
         this.isLeftHamburgerVisible = true;
         this.modalRoute = null;
-    },
+    }),
 
-    @action files() {
+    files: action.bound(function() {
         this.resetMenus();
         this.route = 'files';
         this.currentIndex = 0;
         this.currentFile = null;
         this.isBackVisible = false;
-    },
+    }),
 
     get fileCount() {
         return fileStore.files.length;
     },
 
-    @action file(i) {
+    file: action.bound(function(i) {
         this.route = 'files';
         this.currentFile = i;
         this.currentIndex = 1;
         this.isBackVisible = true;
-    },
+    }),
 
-    @action downloadFile(i) {
+    downloadFile: action.bound(function(i) {
         const file = i || this.currentFile;
         if (!file) return;
         if (file.downloading || file.uploading) return;
         file.download().catch(e => console.error(e));
-    },
+    }),
 
-    @action deleteFile(i) {
+    deleteFile: action.bound(function(i) {
         const f = i || this.currentFile;
         this.back();
         fileStore.remove(f);
-    },
+    }),
 
-    @action back() {
+    back: action.bound(function() {
         this.currentIndex = 0;
         this.currentFile = null;
         // this.currentChat = null;
         this.isBackVisible = false;
-    },
+    }),
 
-    @action async load() {
+    load: action.bound(async function() {
         console.log('main-state.js: loading');
         this.loading = true;
         const s = await TinyDb.user.getValue('main-state');
@@ -173,9 +172,9 @@ const mainState = observable({
         }
         this.loading = false;
         console.log('main-state.js: loaded');
-    },
+    }),
 
-    @action async saveUser() {
+    saveUser: action.bound(async function() {
         const user = User.current;
         await TinyDb.system.setValue('lastUsername', user.username);
         const skipTouchID = `${user.username}::skipTouchID`;
@@ -198,11 +197,11 @@ const mainState = observable({
                 }
                 console.log('main-state.js: touch id available and value is set');
             });
-    },
+    }),
 
-    @action async save() {
+    save: action.bound(async function() {
         await TinyDb.user.setValue('main-state', { currentChat: this.currentChat.id });
-    },
+    }),
 
     get title() {
         const t = this.titles[this.route];
@@ -216,37 +215,37 @@ const mainState = observable({
                       !this.currentChat.loadingMessages;
     },
 
-    @action addMessage(msg, files) {
+    addMessage: action.bound(function(msg, files) {
         sounds.sending();
-        mainState.currentChat && mainState.currentChat
+        this.currentChat && this.currentChat
             .sendMessage(msg, files).then(sounds.sent).catch(sounds.destroy);
-    },
+    }),
 
-    @action addAck() {
+    addAck: action.bound(function() {
         sounds.ack();
-        mainState.currentChat && mainState.currentChat
+        this.currentChat && this.currentChat
             .sendAck().then(sounds.sent).catch(sounds.destroy);
-    },
+    }),
 
-    @action toggleLeftMenu() {
+    toggleLeftMenu: action.bound(function() {
         state.hideKeyboard();
         this.isLeftMenuVisible = !this.isLeftMenuVisible;
         this.isRightMenuVisible = false;
-    },
+    }),
 
-    @action toggleRightMenu() {
+    toggleRightMenu: action.bound(function() {
         state.hideKeyboard();
         this.isRightMenuVisible = !this.isRightMenuVisible;
         this.isLeftMenuVisible = false;
-    },
+    }),
 
-    @action showModal(route) {
+    showModal: action.bound(function(route) {
         this.modalRoute = route;
-    },
+    }),
 
-    @action discardModal() {
+    discardModal: action.bound(function() {
         this.modalRoute = null;
-    }
+    })
 });
 
 mainState.animatedLeftMenu = new Animated.Value(0);

@@ -1,26 +1,26 @@
-import { observable, action, when, asMap } from 'mobx';
+import { observable, action, when } from 'mobx';
 import mainState from '../main/main-state';
 import { chatStore, contactStore } from '../../lib/icebear';
 
 const contactState = observable({
-    @action composeMessage() {
+    composeMessage() {
         mainState.showModal('compose');
     },
 
-    @action shareFile() {
+    shareFile() {
         mainState.showModal('shareFileTo');
     },
 
-    @action exit() {
+    exit: action.bound(function() {
         mainState.discardModal();
         this.clear();
-    },
+    }),
 
     findUserText: '',
     loading: false,
     found: [],
     recipients: [],
-    recipientsMap: asMap(),
+    recipientsMap: observable.shallowMap(),
 
     findByUsername(username) {
         return this.recipients.filter(i => i.username === username);
@@ -37,14 +37,14 @@ const contactState = observable({
         return result.length ? result : this.found.filter(c => !c.loading && !c.notFound);
     },
 
-    @action add(c) {
+    add: action.bound(function(c) {
         if (this.exists(c)) return;
         this.findUserText = '';
         this.recipients.push(c);
         this.recipientsMap.set(c.username, c);
-    },
+    }),
 
-    @action remove(c) {
+    remove: action.bound(function(c) {
         const existing = this.findByUsername(c.username);
         existing.forEach(e => {
             const i = this.recipients.indexOf(e);
@@ -52,21 +52,21 @@ const contactState = observable({
             this.recipients.splice(i, 1);
         });
         this.recipientsMap.delete(c.username);
-    },
+    }),
 
-    @action toggle(c) {
+    toggle: action.bound(function(c) {
         this.exists(c) ? this.remove(c) : this.add(c);
-    },
+    }),
 
-    @action clear() {
+    clear: action.bound(function() {
         this.loading = false;
         this.findUserText = '';
         this.recipients = [];
         this.found = [];
         this.recipientsMap.clear();
-    },
+    }),
 
-    @action send(text, recipient, files) {
+    send: action.bound(function(text, recipient, files) {
         mainState.suppressTransition = true;
         when(() => !mainState.suppressTransition, () => this.clear());
         const chat = chatStore.startChat(recipient ? [recipient] : this.recipients);
@@ -75,20 +75,20 @@ const contactState = observable({
         when(() => chat.id, () => {
             text && chat.sendMessage(text, files);
         });
-    },
+    }),
 
-    @action sendTo(contact) {
+    sendTo: action.bound(function(contact) {
         this.send(null, contact);
-    },
+    }),
 
-    @action share() {
+    share: action.bound(function() {
         if (!mainState.currentFile) return;
         // todo replace this with new sharing api when server implements it
         const chat = chatStore.startChat(this.recipients);
         mainState.chat(chat);
         when(() => !chat.loadingMeta, () => chat.sendMessage('', [mainState.currentFile]));
         this.exit();
-    }
+    })
 });
 
 export default contactState;

@@ -10,7 +10,7 @@ import { tx } from '../utils/translator';
 const settingsState = observable({
     subroute: null,
 
-    @action transition(subroute) {
+    transition: action.bound(function(subroute) {
         console.log(`settings-state.js: transition ${subroute}`);
         mainState.route = 'settings';
         mainState.isRightMenuVisible = false;
@@ -23,9 +23,9 @@ const settingsState = observable({
             mainState.isBackVisible = false;
             mainState.currentIndex = 0;
         }
-    },
+    }),
 
-    @action showPassphrase() {
+    showPassphrase() {
         const success = passphrase => {
             rnAlertYes(passphrase);
             mainState.modalControl = null;

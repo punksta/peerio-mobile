@@ -4,6 +4,9 @@ import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
 import { fromByteArray, toByteArray } from 'base64-js';
 
+
+const ROOT = Platform.OS === 'ios' ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
+
 export default (fileStream) => {
     class RNFileStream extends fileStream {
 
@@ -69,8 +72,7 @@ export default (fileStream) => {
         }
 
         static getFullPath(name) {
-            const path = Platform.OS === 'ios' ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
-            return `${path}/${name}`;
+            return `${ROOT}/${name}`;
         }
 
         static exists(path) {
@@ -87,6 +89,13 @@ export default (fileStream) => {
 
         static getStat(path) {
             return RNFetchBlob.fs.stat(path);
+        }
+
+        static getCacheList() {
+            return RNFS.readDir(ROOT)
+                .then(items => {
+                    return items.filter(i => i.isFile());
+                });
         }
     }
 

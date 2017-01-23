@@ -1,4 +1,4 @@
-import { observable, action, reaction, asFlat } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 import { systemWarnings } from '../../lib/icebear';
 import { t } from '../utils/translator';
 
@@ -8,27 +8,27 @@ const snackbarState = observable({
             this.items[this.items.length - 1].text : null;
     },
 
-    @action push(text, callback) {
+    push: action.bound(function(text, callback) {
         this.items.push({ text, callback });
-    },
+    }),
 
-    @action pop() {
+    pop: action.bound(function() {
         if (!this.items.length) return;
         const i = this.items[this.items.length - 1];
         const _pop = () => (this.items.length && this.items.splice(-1));
         i.callback && i.callback();
         _pop();
-    },
+    }),
 
-    @action set(text) {
+    set: action.bound(function(text) {
         this.items = [text];
-    },
+    }),
 
-    @action reset() {
+    reset: action.bound(function() {
         this.items = [];
-    },
+    }),
 
-    items: asFlat([])
+    items: observable.shallow([])
 });
 
 reaction(() => systemWarnings.collection.length, (l) => {

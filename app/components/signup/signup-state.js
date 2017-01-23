@@ -38,42 +38,42 @@ const signupState = observable({
         return this.current === 0;
     },
 
-    @action transition() {
+    transition() {
         state.route = 'signupStep1';
     },
 
-    @action exit() {
+    exit() {
         state.route = 'loginClean';
     },
 
-    @action reset() {
+    reset: action.bound(function() {
         this.current = 0;
-    },
+    }),
 
-    @action async generatePassphrase() {
+    generatePassphrase: action.bound(async function() {
         const dictString = await locales.loadDictFile(state.locale);
         const dict = new PhraseDictionary(dictString);
         return dict.getPassphrase(5);
-    },
+    }),
 
-    @action next() {
+    next: action.bound(function() {
         if (!this.nextAvailable) return;
         if (this.current < this.count - 1) {
             signupState.current++;
         } else {
             this.finish();
         }
-    },
+    }),
 
-    @action prev() {
+    prev: action.bound(function() {
         if (this.current > 0) {
             this.current--;
         } else {
             this.exit();
         }
-    },
+    }),
 
-    @action async finish() {
+    finish: action.bound(async function() {
         this.inProgress = true;
         this.passphrase = await this.generatePassphrase();
         console.log(this.passphrase);
@@ -116,7 +116,7 @@ const signupState = observable({
                 });
             })
             .finally(() => (this.inProgress = false));
-    }
+    })
 });
 
 addValidation(signupState, 'username', validators.username, 0);

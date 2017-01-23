@@ -37,59 +37,52 @@ const state = observable({
         return this.keyboardHeight || pickerHeight;
     },
 
-    @action focusTextBox(textbox) {
-        state.focusedTextBox = textbox;
-    },
+    focusTextBox: action.bound(function(textbox) {
+        this.focusedTextBox = textbox;
+    }),
 
-    @action showPicker(picker) {
-        state.hideKeyboard();
-        state.picker = picker;
-        setTimeout(() => { state.pickerVisible = true; }, 0);
-    },
+    showPicker: action.bound(function(picker) {
+        this.hideKeyboard();
+        this.picker = picker;
+        setTimeout(() => { this.pickerVisible = true; }, 0);
+    }),
 
-    @action hidePicker(/* picker */) {
-        state.hideKeyboard();
-    },
+    hidePicker: action.bound(function() {
+        this.hideKeyboard();
+    }),
 
-    @action hideKeyboard() {
-        // if (state.focusedTextBox) {
-        //     // state.focusedTextBox.blur();
-        //     state.focusedTextBox = null;
-        // }
+    hideKeyboard: action.bound(function() {
         dismissKeyboard();
-        setTimeout(() => { state.pickerVisible = false; }, 0);
-    },
+        setTimeout(() => { this.pickerVisible = false; }, 0);
+    }),
 
-    @action hideAll() {
+    hideAll: action.bound(function() {
         this.hideKeyboard();
         this.hidePicker();
-    },
+    }),
 
-    @action setLocale(lc) {
+    setLocale: action.bound(function(lc) {
         return locales.loadLocaleFile(lc)
             .then(locale => {
-                // console.log(locale);
+                console.log(`state.js: ${lc}`);
+                console.log(lc);
                 translator.setLocale(lc, locale);
-                state.locale = lc;
-                state.languageSelected = lc;
+                this.locale = lc;
+                this.languageSelected = lc;
                 this.save();
-                moment.locale(lc);
+                // moment.locale(lc);
             });
-    },
+    }),
 
-    @action async load() {
-        const s = await TinyDb.system.getValue('state');
-        let locale = 'en';
-        if (s) {
-            locale = s.locale;
-        }
-        this.setLocale(locale);
-    },
+    load: action.bound(function() {
+        return TinyDb.system.getValue('state')
+            .then(s => this.setLocale(s && s.locale || 'en'));
+    }),
 
-    @action async save() {
+    save: action.bound(function() {
         const locale = this.locale || 'en';
-        await TinyDb.system.setValue('state', { locale });
-    }
+        return TinyDb.system.setValue('state', { locale });
+    })
 });
 
 reaction(() => state.languageSelected, ls => state.setLocale(ls));
