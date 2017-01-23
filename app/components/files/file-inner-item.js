@@ -87,7 +87,7 @@ export default class FileInnerItem extends Component {
             opacity = 0.5;
         }
         icon = icons.dark(icon);
-        let loadingStyle = null;
+        const loadingStyle = null;
         // if (file.downloading || file.uploading) {
         //     loadingStyle = {
         //         borderWidth: 2,

@@ -85,7 +85,7 @@ export default (fileStream) => {
             FileOpener.open(path, 'image/jpeg');
         }
 
-        static getStat(path){
+        static getStat(path) {
             return RNFetchBlob.fs.stat(path);
         }
     }
