@@ -18,7 +18,7 @@ dependencies:
     - echo $PATH
     - pwd
     - npm install
-    - bash setup_tests.sh
+    - bash scripts/setup_tests.sh
 
 compile:
   override:
