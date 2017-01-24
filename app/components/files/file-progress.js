@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View,
-    Dimensions,
-    Animated
+    View
 } from 'react-native';
 import { observable, autorun, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
@@ -23,13 +21,7 @@ export default class FileProgress extends Component {
     get value() {
         const file = this.props.file;
         if (!file) return 0;
-        let max = 0;
-        if (file.downloading) {
-            max = file.size | 1;
-        }
-        if (file.uploading) {
-            max = file.progressMax | 1;
-        }
+        const max = file.progressMax || 1;
         // console.log(`file-progress.js: ${file.progress}, ${file.progressMax}`);
         return (this.width * file.progress / max);
     }
