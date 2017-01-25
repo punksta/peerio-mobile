@@ -18,7 +18,8 @@ const fabStyle = {
     flex: 0,
     width: fabSize,
     height: fabSize,
-    marginRight: 0,
+    marginRight: fabSize/2,
+    marginBottom: fabSize,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FF7D00'
