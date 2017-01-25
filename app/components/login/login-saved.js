@@ -26,6 +26,7 @@ export default class LoginSaved extends Component {
         pinControl.spinner(true);
         loginState.login(pin)
             .catch(() => {
+                pinControl.spinner(false);
                 pinControl.shake();
             });
     }

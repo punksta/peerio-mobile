@@ -121,6 +121,7 @@ export default class Pin extends Component {
                     .catch(e => {
                         console.log(`pin.js: error ${e}`);
                         this.error();
+                        this.isSpinner = false;
                         this.shake();
                     })
                     .finally(() => (this.isSpinner = false));
@@ -188,15 +189,14 @@ export default class Pin extends Component {
                             {this.message}
                         </Text>
                     </Center>
-                </Animatable.View>
-                <View style={{ height: 40, flexDirection: 'column' }}>
-                    { inProgress ?
+                    <View style={{ height: 40, flexDirection: 'column' }}>
+                        { inProgress ?
                         <View style={{ flex: 1, alignSelf: 'center' }}>
                             <ActivityIndicator style={{ marginTop: -6 }} color={vars.highlight} />
                         </View> :
-                            <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
-                </View>
-
+                        <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
+                    </View>
+                </Animatable.View>
                 <View style={{ flexGrow: 1,
                                maxHeight: 352,
                                opacity: inProgress ? 0.5 : 1,
