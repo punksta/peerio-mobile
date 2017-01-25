@@ -24,7 +24,7 @@ export default class SignupPin extends Component {
         const body = (
             <View style={[style.containerFlex, { marginTop: 12 }]}>
                 <Text style={style.text.title}>{t('signup')}</Text>
-                <Text style={style.text.subTitle}>{t('devicePin')}</Text>
+                <Text style={style.text.subTitle}>{t('peerioPINForThisDevice')}</Text>
                 <Pin
                     preventSimplePin
                     ref={pin => (this.pin = pin)}
