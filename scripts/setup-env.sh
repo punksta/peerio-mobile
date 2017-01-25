@@ -11,7 +11,4 @@ if [ ! -f env-expandoo.sh ]; then
   echo "export PEERIO_SOCKET_SERVER=$PEERIO_SOCKET_SERVER" > env-expandoo.sh
   echo "export EXECUTABLE_NAME=expandoo" > env-expandoo.sh
 fi
-if [ ! -d app/lib/peerio-icebear/.git ]; then
-  echo "Copying icebear lib"
-  cp -fr node_modules/peerio-icebear app/lib/
-fi
+mkdir -p app/lib/peerio-icebear

@@ -5,7 +5,7 @@ import KeyValueStorage from '../store/key-value-storage';
 global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'react-native';
 
-const icebear = require('./peerio-icebear/src');
+const icebear = require('./peerio-icebear');
 
 const { socket, config, FileStreamAbstract } = icebear;
 
