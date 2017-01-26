@@ -22,12 +22,17 @@ export default class LoginSaved extends Component {
         this.checkPin = this.checkPin.bind(this);
     }
 
+    count = 0;
+
     checkPin(pin, pinControl) {
         pinControl.spinner(true);
         loginState.login(pin)
+            .then(() => (this.count = 0))
             .catch(() => {
-                pinControl.spinner(false);
-                pinControl.shake();
+                setTimeout(() => {
+                    pinControl.spinner(false);
+                    pinControl.shake();
+                }, ++this.count < 3 ? 0 : 10000);
             });
     }
 
