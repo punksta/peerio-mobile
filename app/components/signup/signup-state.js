@@ -2,7 +2,7 @@ import { observable, action, autorun } from 'mobx';
 import state from '../layout/state';
 import mainState from '../main/main-state';
 import snackbarState from '../snackbars/snackbar-state';
-import { User, PhraseDictionary, validation, socket, TinyDb } from '../../lib/icebear';
+import { User, PhraseDictionary, validation, socket } from '../../lib/icebear';
 import locales from '../../lib/locales';
 
 const { validators, addValidation } = validation;
@@ -96,24 +96,6 @@ const signupState = observable({
             .catch((e) => {
                 console.log(e);
                 this.reset();
-            })
-            .then(() => {
-                // store.openUserDb(username);
-                // return store.user.set('registration', {
-                //     username,
-                //     firstName,
-                //     lastName,
-                //     localeCode
-                // }).then(() => store.system.set('userData', {
-                //     username,
-                //     firstName,
-                //     lastName
-                // }));
-                return TinyDb.system.setValue('userData', {
-                    username,
-                    firstName,
-                    lastName
-                });
             })
             .finally(() => (this.inProgress = false));
     })

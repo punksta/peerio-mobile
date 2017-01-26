@@ -24,8 +24,7 @@ export default class MessagingPlaceholder extends Component {
     messaging() {
         const headerStyle = {
             textAlign: 'center',
-            fontSize: 24,
-            whiteSpace: 'nowrap'
+            fontSize: 24
         };
         const infoStyle = {
             flexShrink: 1,

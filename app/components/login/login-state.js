@@ -2,7 +2,7 @@ import { when, observable, action } from 'mobx';
 import RNRestart from 'react-native-restart';
 import state from '../layout/state';
 import mainState from '../main/main-state';
-import { User, TinyDb, validation, fileStore, socket } from '../../lib/icebear';
+import { User, validation, fileStore, socket } from '../../lib/icebear';
 import touchId from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 
@@ -14,7 +14,6 @@ const loginState = observable({
     firstName: 'Peerio',
     lastName: 'Test',
     passphrase: '',
-    savedPassphrase: '',
     language: 'English',
     changeUser: false,
     savedUserInfo: false,
@@ -35,7 +34,6 @@ const loginState = observable({
         this.username = '';
         this.usernameValid = null;
         this.passphrase = '';
-        this.savedPassphrase = '';
         this.savedUserInfo = false;
         this.isInProgress = false;
         this.pin = false;
@@ -43,11 +41,10 @@ const loginState = observable({
     }),
 
     changeUserAction: action.bound(async function() {
-        await TinyDb.system.setValue('userData', null);
+        await User.removeLastAuthenticated();
         this.username = null;
         this.usernameValid = null;
         this.passphrase = '';
-        this.savedPassphrase = '';
     }),
 
     saved: action.bound(function() {
@@ -81,7 +78,7 @@ const loginState = observable({
     login: action.bound(function(pin) {
         const user = new User();
         user.username = this.username;
-        user.passphrase = pin || this.passphrase || this.savedPassphrase || 'such a secret passphrase';
+        user.passphrase = pin || this.passphrase || 'such a secret passphrase';
         this.isInProgress = true;
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
@@ -91,22 +88,21 @@ const loginState = observable({
     async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         return (inProgress ? rnAlertYesNo('Are you sure?', 'File tasks are not completed') : Promise.resolve(true))
-            .then(() => TinyDb.system.setValue('userData', null))
-            .then(() => TinyDb.system.setValue('lastUsername', null))
+            .then(() => User.removeLastAuthenticated())
             .then(() => RNRestart.Restart())
             .catch(() => null);
     },
 
     load: action.bound(async function() {
         console.log(`login-state.js: loading`);
-        const userData = await TinyDb.system.getValue('userData');
-        this.username = await TinyDb.system.getValue('lastUsername');
-        this.username && this.triggerTouchId();
+        const userData = await User.getLastAuthenticated();
         if (userData) {
-            console.log(`login-state.js: loaded ${userData}`);
             const { username, firstName, lastName } = userData;
-            // we logged in with someone else
             if (this.username && this.username !== username) return false;
+            this.username = username;
+            this.username && this.triggerTouchId();
+            console.log(`login-state.js: loaded ${userData}`);
+            // we logged in with someone else
             this.username = username;
             this.firstName = firstName;
             this.lastName = lastName;
