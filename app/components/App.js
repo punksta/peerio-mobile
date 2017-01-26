@@ -91,13 +91,13 @@ export default class App extends Component {
         console.log(`App.js: AppState change: ${appState}`);
         state.appState = appState;
         if (appState !== 'active') {
-            icebear.socket.close();
+            // icebear.socket.close();
         } else {
             // spy((event) => {
             //     console.log('app.js spy');
             //     console.log(event);
             // });
-            icebear.socket.open();
+            // icebear.socket.open();
             // setTimeout(() => icebear.socket.open(), 2000);
         }
     }
