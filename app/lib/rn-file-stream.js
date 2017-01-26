@@ -2,8 +2,9 @@ import { Platform, NativeModules } from 'react-native';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
-import { fromByteArray, toByteArray } from 'base64-js';
+import icebear from './peerio-icebear';
 
+const { bytesToB64, b64ToBytes } = icebear.crypto.cryptoUtil;
 
 const ROOT = Platform.OS === 'ios' ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
 
@@ -46,7 +47,7 @@ export default (fileStream) => {
          */
         readInternal(size) {
             return RNFS.readFileChunk(this.filePath, this.pos, size)
-                        .then(contents => toByteArray(contents));
+                        .then(contents => b64ToBytes(contents));
         }
 
         /**
@@ -68,7 +69,7 @@ export default (fileStream) => {
          * @return {Promise}
          */
         writeInternal(buffer) {
-            return this.fileDescriptor.write(fromByteArray(buffer)).return(buffer);
+            return this.fileDescriptor.write(bytesToB64(buffer)).return(buffer);
         }
 
         static getFullPath(name) {
