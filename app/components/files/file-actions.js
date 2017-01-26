@@ -53,7 +53,7 @@ export default class FileActions extends Component {
             height: this.props.height
         };
         const file = this.props.file;
-        const enabled = file && file.readyForDownload;
+        const enabled = file && file.readyForDownload || fileState.showSelection;
 
         const leftAction = file && !file.isPartialDownload && file.cached ?
             this.action('Open', 'open-in-new', () => file.launchViewer(), enabled) :

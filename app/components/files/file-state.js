@@ -1,17 +1,17 @@
 import { Linking, Platform } from 'react-native';
-import { observable, action, when } from 'mobx';
+import { observable, action } from 'mobx';
 import mainState from '../main/main-state';
 import { fileStore, TinyDb } from '../../lib/icebear';
 import { tx } from '../utils/translator';
-import { rnAlertYesNo, rnAlertYes } from '../../lib/alerts';
+import { rnAlertYesNo } from '../../lib/alerts';
 
 const fileState = observable({
     get showSelection() {
-        return !!this.selected.length;
+        return fileStore.hasSelectedFiles;
     },
 
     get selected() {
-        return fileStore.files.filter(f => f.selected);
+        return fileStore.getSelectedFiles();
     },
 
     delete: action.bound(function() {
