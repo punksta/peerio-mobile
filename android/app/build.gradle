@@ -90,11 +90,11 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
-        applicationId "com.peeriomobile"
-        minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        applicationId "com.peerio"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 1000470
+        versionName "3.0.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

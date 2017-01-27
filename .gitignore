@@ -67,7 +67,11 @@ app/lib/peerio-icebear
 *.ipa
 *.dSYM*
 fastlane/report.xml
+fastlane/metadata
 
 # ctags
 tags
 cscope.*
+
+*.keystore
+gp-service.json
