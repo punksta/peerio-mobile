@@ -79,7 +79,7 @@ apply from: "../../node_modules/react-native/react.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
@@ -91,15 +91,19 @@ android {
     buildToolsVersion "23.0.1"
 
     def code = 1000000
+    def minor = 0
     def Properties versionProps = new Properties()
     // ~/android/version.properties
     def versionPropsFile = file('../version.properties')
     versionProps['VERSION_CODE']=code.toString()
+    versionProps['VERSION_MINOR']=minor.toString()
     if (versionPropsFile.canRead()) {
         versionProps.load(new FileInputStream(versionPropsFile))
     }
     code = versionProps['VERSION_CODE'].toInteger() + 1
+    minor = versionProps['VERSION_MINOR'].toInteger() + 1
     versionProps['VERSION_CODE']=code.toString()
+    versionProps['VERSION_MINOR']=minor.toString()
     versionProps.store(versionPropsFile.newWriter(), null)
     code *= 10
     defaultConfig {
@@ -107,7 +111,7 @@ android {
         minSdkVersion 19
         targetSdkVersion 23
         versionCode code
-        versionName "3.0.1"
+        versionName "3.0." + minor.toString()
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
