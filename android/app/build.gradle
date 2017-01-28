@@ -65,7 +65,8 @@ import com.android.build.OutputFile
  * ]
  */
 project.ext.react = [
-    bundleInDebug: true
+    bundleInDebug: true,
+    nodeExecutableAndArgs: ["scripts/node-env-peerio.sh"]
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
@@ -89,11 +90,22 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
+    def code = 1000000
+    def Properties versionProps = new Properties()
+    // ~/android/version.properties
+    def versionPropsFile = file('../version.properties')
+    versionProps['VERSION_CODE']=code.toString()
+    if (versionPropsFile.canRead()) {
+        versionProps.load(new FileInputStream(versionPropsFile))
+    }
+    code = versionProps['VERSION_CODE'].toInteger() + 10
+    versionProps.store(versionPropsFile.newWriter(), null)
+
     defaultConfig {
         applicationId "com.peerio"
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 1000470
+        versionCode code
         versionName "3.0.1"
         ndk {
             abiFilters "armeabi-v7a", "x86"
