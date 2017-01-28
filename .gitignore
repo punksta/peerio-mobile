@@ -73,5 +73,5 @@ fastlane/metadata
 tags
 cscope.*
 
-*.keystore
+*.keystore*
 gp-service.json

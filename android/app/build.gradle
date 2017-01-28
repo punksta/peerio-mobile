@@ -79,7 +79,7 @@ apply from: "../../node_modules/react-native/react.gradle"
  * Upload all the APKs to the Play Store and people will download
  * the correct one based on the CPU architecture of their device.
  */
-def enableSeparateBuildPerCPUArchitecture = false
+def enableSeparateBuildPerCPUArchitecture = true
 
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
@@ -98,9 +98,9 @@ android {
     if (versionPropsFile.canRead()) {
         versionProps.load(new FileInputStream(versionPropsFile))
     }
-    code = versionProps['VERSION_CODE'].toInteger() + 10
+    code = versionProps['VERSION_CODE'].toInteger() + 1
     versionProps.store(versionPropsFile.newWriter(), null)
-
+    code *= 10
     defaultConfig {
         applicationId "com.peerio"
         minSdkVersion 19
@@ -135,7 +135,7 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+                        versionCodes.get(abi) + defaultConfig.versionCode
             }
         }
     }

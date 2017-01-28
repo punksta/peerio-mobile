@@ -67,12 +67,15 @@ platform :android do
   lane :alpha do
   supply(
     track: "alpha",
-    apk: "android/app/build/outputs/apk/app-release-signed.apk",
+    apk_paths: [
+    "android/app/build/outputs/apk/app-armeabi-v7a-release-signed.apk",
+    "android/app/build/outputs/apk/app-x86-release-signed.apk" ],
     json_key: "gp-service.json",
     package_name: "com.peerio",
     skip_upload_metadata: true,
     skip_upload_screenshots: true,
-    skip_upload_images: true
+    skip_upload_images: true,
+    validate_only: false
   )
   end
 end
