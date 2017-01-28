@@ -1,4 +1,4 @@
-package com.peeriomobile;
+package com.peerio;
 
 import com.facebook.react.ReactActivity;
 
