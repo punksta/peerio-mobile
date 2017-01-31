@@ -53,7 +53,7 @@ export default class Pin extends Component {
         this.enteredPin = this.pin;
         this.pin = '';
         this.isConfirm = true;
-        this.message = this.props.messageConfirm || t('passcode_confirm');
+        this.message = ' ';
     }
 
     error(msg) {
@@ -66,7 +66,7 @@ export default class Pin extends Component {
         this.pin = '';
         this.isSpinner = false;
         this.isConfirm = false;
-        this.message = this.props.messageEnter || t('passcode_inputPlaceholder');
+        this.message = ' ';
     }
 
     circle(key, text, subText, action) {
