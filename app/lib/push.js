@@ -33,4 +33,12 @@ function enablePushNotifications() {
     });
 }
 
-module.exports = { enablePushNotifications };
+function enableServerSide() {
+    return socket.send('/auth/push/enable');
+}
+
+function disableServerSide() {
+    return socket.send('/auth/push/disable');
+}
+
+module.exports = { enablePushNotifications, enableServerSide, disableServerSide };

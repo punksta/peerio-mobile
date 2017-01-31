@@ -2,7 +2,8 @@ import { Platform, NativeModules } from 'react-native';
 import RNFS from 'react-native-fs';
 import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
-import icebear from './peerio-icebear';
+
+const icebear = require('./peerio-icebear');
 
 const { bytesToB64, b64ToBytes } = icebear.crypto.cryptoUtil;
 

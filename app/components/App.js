@@ -11,6 +11,7 @@ import ModalContainer from './layout/modal-container';
 import state from './layout/state';
 import styles, { vars } from './../styles/styles';
 import icebear from '../lib/icebear';
+import push from '../lib/push';
 import '../lib/sounds';
 import './utils/bridge';
 import './touchid/touchid-bridge';
@@ -91,8 +92,10 @@ export default class App extends Component {
         console.log(`App.js: AppState change: ${appState}`);
         state.appState = appState;
         if (appState !== 'active') {
+            push.enableServerSide();
             // icebear.socket.close();
         } else {
+            push.disableServerSide();
             // spy((event) => {
             //     console.log('app.js spy');
             //     console.log(event);

@@ -26,5 +26,5 @@ config.FileStream.getCacheList()
 
 socket.start();
 
-module.exports = icebear;
 global.icebear = icebear;
+module.exports = icebear;

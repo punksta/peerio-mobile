@@ -1,7 +1,7 @@
 import { Animated } from 'react-native';
 import { observable, action, when, reaction } from 'mobx';
 import state from '../layout/state';
-import { User, chatStore, fileStore, TinyDb } from '../../lib/icebear';
+import { User, chatStore, fileStore, TinyDb, socket } from '../../lib/icebear';
 import sounds from '../../lib/sounds';
 import { enablePushNotifications } from '../../lib/push';
 import touchid from '../touchid/touchid-bridge';
@@ -85,6 +85,7 @@ const mainState = observable({
             // make sure we loaded everything before requesting push permission
             when(() => !c || (!c.loadingMeta && !c.loadingMessages), () => {
                 enablePushNotifications();
+                socket.send('/auth/dev/test-push').then(console.log.bind(console));
             });
         });
         //

@@ -7,7 +7,7 @@
     "commit": "git-cz",
     "code:packager": "./node_modules/react-native/packager/packager.sh --reset-cache",
     "icebear:compile": "babel node_modules/peerio-icebear/src -d app/lib/peerio-icebear",
-    "icebear:watch": "npm run icebear:compile -- -w --skip-initial-build",
+    "icebear:watch": "npm run icebear:compile -- -w",
     "start": "source env.sh && npm-run-all -l -p icebear:watch code:packager",
     "expandoo": "source env-expandoo.sh && ./node_modules/react-native/packager/packager.sh --reset-cache",
     "clean": "rm -rf ios/build",
