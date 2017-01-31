@@ -26,7 +26,7 @@ const r = 30;
 const retentionOffset = { top: r, left: r, bottom: r, right: r };
 
 const vars = {
-    circle: 8,
+    circle: 10,
     bg,
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',
@@ -313,7 +313,7 @@ const styles = {
     }),
     circle: {
         container: {
-            height: 40,
+            height: 10,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center'

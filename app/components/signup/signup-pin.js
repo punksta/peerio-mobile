@@ -22,9 +22,9 @@ export default class SignupPin extends Component {
     render() {
         const style = styles.wizard;
         const body = (
-            <View style={[style.containerFlex, { marginTop: 12 }]}>
+            <View style={[style.containerFlex, { marginTop: 32 }]}>
                 <Text style={style.text.title}>{t('signup')}</Text>
-                <Text style={style.text.subTitle}>{t('peerioPINForThisDevice')}</Text>
+                <Text style={[style.text.subTitle, { marginBottom: 24 }]}>{t('peerioPINForThisDevice')}</Text>
                 <Pin
                     preventSimplePin
                     ref={pin => (this.pin = pin)}

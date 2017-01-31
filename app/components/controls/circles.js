@@ -9,7 +9,8 @@ const s = {
     flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'center',
-    height: 30
+    height: 10,
+    marginBottom: 32
 };
 
 @observer

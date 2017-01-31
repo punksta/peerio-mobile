@@ -185,16 +185,16 @@ export default class Pin extends Component {
             <View style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
                 <Animatable.View ref={v => { this.shaker = v; }}>
                     <Center style={style.message.container}>
-                        <Text style={[style.message.text, { marginBottom: 10, marginTop: 10 }]}>
+                        <Text style={[style.message.text, { marginBottom: 8 }]}>
                             {this.message}
                         </Text>
                     </Center>
                     <View style={{ height: 40, flexDirection: 'column' }}>
                         { inProgress ?
-                        <View style={{ flex: 1, alignSelf: 'center' }}>
-                            <ActivityIndicator style={{ marginTop: -6 }} color={vars.highlight} />
-                        </View> :
-                        <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
+                            <View style={{ flex: 1, alignSelf: 'center' }}>
+                                <ActivityIndicator style={{ marginTop: -6 }} color={vars.highlight} />
+                            </View> :
+                                <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
                     </View>
                 </Animatable.View>
                 <View style={{ flexGrow: 1,

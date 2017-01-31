@@ -28,7 +28,7 @@ export default class SignupStep1 extends Component {
             tosLink: text => <Link url={this.url}>{text}</Link>
         };
         const body = (
-            <View style={[style.containerFlex, { marginTop: 12 }]}>
+            <View style={[style.containerFlex, { marginTop: 32 }]}>
                 <Text style={style.text.title}>{t('signup', { current: 1, max: 2 })}</Text>
                 <Text style={style.text.subTitle}>{t('profile')}</Text>
                 <TextBox
