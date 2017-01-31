@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import {
-    View
+    View, Text
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
 import Layout1 from '../layout/layout1';
 import LanguagePicker from '../controls/language-picker';
-import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
 import Center from '../controls/center';
 import Logo from '../controls/logo';
 import LoginSignup from './login-signup';
-import Terms from './terms';
 import loginState from './login-state';
 import styles from '../../styles/styles';
 
@@ -39,15 +37,14 @@ export default class LoginClean extends Component {
             <View
                 style={style.containerFlex}>
                 <Logo />
-                <View style={{ flexGrow: 0.5, flexShrink: 2 }}>
+                <Text style={{ color: 'rgba(255, 255, 255, 1)', fontSize: 24, marginBottom: 16 }}>{t('login')}</Text>
+                <View style={{ flexGrow: 1, flexShrink: 2, justifyContent: 'flex-start', maxHeight: 192 }}>
                     <TextBox lowerCase state={loginState} name="username" hint={t('username')} />
                     <TextBox state={loginState} name="passphrase" hint={t('passphrase')} secureTextEntry />
-                    <LanguagePickerBox />
                 </View>
                 <Center>
                     {loginButton}
                 </Center>
-                <Terms />
                 <View style={{ flexGrow: 1 }} />
             </View>
         );
