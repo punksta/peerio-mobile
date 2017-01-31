@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
 import { tu } from 'peerio-translator';
-import SignupCircles from '../signup/signup-circles';
+
 import signupState from '../signup/signup-state';
 import styles from '../../styles/styles';
 
@@ -30,9 +29,9 @@ export default class SignupFooter extends Component {
             signupState.nextAvailable,
             () => signupState.next()
         );
-        const backIcon = <Icon name="arrow-back" size={24} color="#fff" />;
+
         const prev = this.button(
-            signupState.isFirst ? tu('button_exit') : backIcon,
+            signupState.isFirst ? tu('cancel') : tu('back'),
             !signupState.inProgress,
             () => signupState.prev());
 
@@ -42,9 +41,7 @@ export default class SignupFooter extends Component {
                     {prev}
                     {next}
                 </View>
-                <SignupCircles />
             </View>
         );
     }
 }
-

@@ -14,11 +14,10 @@ export default class Logo extends Component {
     render() {
         const logo = styles.branding.name === 'expandoo' ? expandooLogo : peerioLogo;
         return (
-            <Center style={{ padding: 10 }}>
-                <Image testID="logo" style={{ height: 100 }} resizeMode="contain"
+            <Center style={{ marginBottom: 32, marginTop: 48, flexGrow: 0 }}>
+                <Image testID="logo" style={{ height: 120 }} resizeMode="contain"
                        source={logo} />
             </Center>
         );
     }
 }
-
