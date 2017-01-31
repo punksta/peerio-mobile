@@ -11,7 +11,10 @@ function enablePushNotifications() {
             payload[Platform.OS] = token.token || token;
             when(() => socket.authenticated, () =>
                  socket.send('/auth/registerMobileDevice', payload)
-                     .then(r => console.log('push.js: register result success', r))
+                     .then(r => {
+                         console.log('push.js: register result success', r);
+                         PushNotification.localNotification({ title: 'test', message: 'testmessage' });
+                     })
                      .catch(e => console.error('push.js: error registering', e)));
         },
 

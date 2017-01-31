@@ -85,7 +85,10 @@ const mainState = observable({
             // make sure we loaded everything before requesting push permission
             when(() => !c || (!c.loadingMeta && !c.loadingMessages), () => {
                 enablePushNotifications();
-                socket.send('/auth/dev/test-push').then(console.log.bind(console)).catch(e => console.log(e));
+                socket.send('/auth/dev/test-push', {
+                    icon: 'push',
+                    text: 'blah'
+                }).then(console.log.bind(console)).catch(e => console.log(e));
             });
         });
         //
