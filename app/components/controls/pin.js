@@ -185,7 +185,7 @@ export default class Pin extends Component {
             <View style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
                 <Animatable.View ref={v => { this.shaker = v; }}>
                     <Center style={style.message.container}>
-                        <Text style={[style.message.text, { marginBottom: 8 }]}>
+                        <Text style={style.message.text}>
                             {this.message}
                         </Text>
                     </Center>

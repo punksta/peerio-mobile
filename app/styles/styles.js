@@ -347,7 +347,8 @@ const styles = {
         message: {
             text: inherit('text-inverse'),
             container: {
-                marginBottom: 0
+                height: 22,
+                alignItems: 'flex-start'
             }
         }
     },
