@@ -124,7 +124,7 @@ export default class RightMenu extends Component {
         ];
 
         const signOut = {
-            name: 'Sign out',
+            name: t('signOut'),
             icon: 'power-settings-new',
             action: () => loginState.signOut()
         };
