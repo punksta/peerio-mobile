@@ -15,7 +15,7 @@ export default class Logo extends Component {
         const logo = styles.branding.name === 'expandoo' ? expandooLogo : peerioLogo;
         return (
             <Center style={{ marginBottom: 32, marginTop: 48, flexGrow: 0 }}>
-                <Image testID="logo" style={{ height: 120 }} resizeMode="contain"
+                <Image testID="logo" style={{ height: 120, width: width - 50, flexGrow: 1 }} resizeMode="contain"
                        source={logo} />
             </Center>
         );
