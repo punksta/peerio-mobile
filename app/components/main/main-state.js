@@ -245,7 +245,12 @@ const mainState = observable({
 
     discardModal: action.bound(function() {
         this.modalRoute = null;
-    })
+    }),
+
+    logs: action.bound(function() {
+        this.resetMenus();
+        this.route = "logs";
+    }),
 });
 
 mainState.animatedLeftMenu = new Animated.Value(0);

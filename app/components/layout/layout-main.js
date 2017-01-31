@@ -31,6 +31,7 @@ import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import Ghosts from '../ghosts/ghosts';
 import GhostView from '../ghosts/ghost-view';
 import GhostCompose from '../ghosts/ghost-compose';
+import Logs from '../logs/logs';
 import styles, { vars } from '../../styles/styles';
 
 const routes = {
@@ -38,7 +39,8 @@ const routes = {
     files: [<Files />, <FileView />],
     ghosts: [<Ghosts />, <GhostView />],
     chat: [<Chat />],
-    settings: [<SettingsLevel1 />, <SettingsLevel2 />]
+    settings: [<SettingsLevel1 />, <SettingsLevel2 />],
+    logs: [<Logs />]
 };
 
 const modalRoutes = {

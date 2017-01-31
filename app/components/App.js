@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, PanResponder, Navigator, AppState } from 'react-native';
-import { reaction, action, spy } from 'mobx';
+import { reaction, action, spy, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import Login from './login/login';
 import Signup from './signup/signup';
@@ -68,6 +68,26 @@ export default class App extends Component {
             console.error('App.js: unhandled error');
             console.error(args);
         });
+
+        console.stack = observable([]);
+        console.stackPush = (i) => {
+            const MAX = 1000;
+            const index = console.stack.length;
+            const delta = index - MAX;
+            console.stack.splice(index, delta > 0 ? delta : 0, i);
+        };
+
+        const log = console.log;
+        console.log = function() {
+            log.apply(console, arguments);
+            Array.from(arguments).forEach(console.stackPush);
+        };
+
+        const error = console.error;
+        console.error = function() {
+            error.apply(console, arguments);
+            Array.from(arguments).forEach(console.stackPush);
+        };
 
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);

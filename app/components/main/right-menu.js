@@ -120,6 +120,11 @@ export default class RightMenu extends Component {
                 name: t('help'),
                 icon: 'help',
                 action: () => null
+            },
+            {
+                name: t('Logs'),
+                icon: 'help',
+                action: () => mainState.logs()
             }
         ];
 

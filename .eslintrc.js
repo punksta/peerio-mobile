@@ -11,7 +11,8 @@ module.exports = {
         'react/jsx-filename-extension': 0,
         'react/sort-comp': 0,
         'no-mixed-operators': 0,
-        'new-cap': 0
+        'new-cap': 0,
+        'prefer-rest-params': 0
     },
     globals: {
         'requestAnimationFrame': false,
