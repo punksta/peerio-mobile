@@ -53,7 +53,8 @@ const signupState = observable({
     generatePassphrase: action.bound(async function() {
         const dictString = await locales.loadDictFile(state.locale);
         PhraseDictionaryCollection.addDictionary(state.locale, dictString);
-        const dict = PhraseDictionaryCollection.current();
+        PhraseDictionaryCollection.selectDictionary(state.locale);
+        const dict = PhraseDictionaryCollection.current;
         return dict.getPassphrase(5);
     }),
 
