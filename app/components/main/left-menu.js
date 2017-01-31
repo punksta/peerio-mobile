@@ -9,6 +9,7 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import Swiper from '../controls/swiper';
 import { chatStore } from '../../lib/icebear';
+import { t } from '../utils/translator';
 
 const circleDiameter = 8;
 const circleStyle = {
@@ -144,7 +145,7 @@ export default class LeftMenu extends Component {
                 rightToLeft>
                 <View style={innerContainerStyle}>
                     <View>
-                        { this.header('Conversations', () => contactState.composeMessage()) }
+                        { this.header(t('directMessages'), () => contactState.composeMessage()) }
                     </View>
                     <ScrollView
                         removeClippedSubviews={false}
