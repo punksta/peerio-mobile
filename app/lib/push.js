@@ -13,8 +13,15 @@ function enablePushNotifications() {
                  socket.send('/auth/registerMobileDevice', payload)
                      .then(r => {
                          console.log('push.js: register result success', r);
-                         PushNotification.localNotification({ title: 'test', message: 'testmessage' });
+                         // PushNotification.localNotification({ title: 'test', message: 'testmessage' });
                      })
+                     .then(() => {
+                         return socket.send('/auth/dev/test-push', {
+                             icon: 'push',
+                             text: 'blah'
+                         });
+                     })
+                     .then(console.log.bind(console))
                      .catch(e => console.error('push.js: error registering', e)));
         },
 
