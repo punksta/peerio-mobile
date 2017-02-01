@@ -22,7 +22,7 @@ function enablePushNotifications() {
                          });
                      })
                      .then(console.log.bind(console))
-                     .catch(e => console.error('push.js: error registering', e)));
+                     .catch(e => console.log('push.js: error registering', e)));
         },
 
         onNotification(notification) {

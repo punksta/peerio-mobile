@@ -83,11 +83,11 @@ export default class App extends Component {
             Array.from(arguments).forEach(console.stackPush);
         };
 
-        const error = console.error;
-        console.error = function() {
-            error.apply(console, arguments);
-            Array.from(arguments).forEach(console.stackPush);
-        };
+        // const error = console.error;
+        // console.error = function() {
+        //     error.apply(console, arguments);
+        //     Array.from(arguments).forEach(console.stackPush);
+        // };
 
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);

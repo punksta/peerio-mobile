@@ -17,7 +17,7 @@ export default class Logs extends Component {
     render() {
         const items = console.stack.map((i, k) => (
             <TouchableOpacity key={k}>
-                <Text>{i}</Text>
+                <Text>{i ? i.toString() : null}</Text>
             </TouchableOpacity>
         ));
         return (
