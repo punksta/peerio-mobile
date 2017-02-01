@@ -1,7 +1,6 @@
 import { observable, action, autorun } from 'mobx';
 import state from '../layout/state';
 import mainState from '../main/main-state';
-import snackbarState from '../snackbars/snackbar-state';
 import { User, PhraseDictionaryCollection, validation, socket } from '../../lib/icebear';
 import locales from '../../lib/locales';
 
@@ -92,9 +91,6 @@ const signupState = observable({
         return user.createAccountAndLogin()
             .then(() => mainState.activateAndTransition(user))
             .then(() => User.current.setPasscode(pin))
-            .then(() => {
-                snackbarState.push('Email confirmation has been sent');
-            })
             .catch((e) => {
                 console.log(e);
                 this.reset();
