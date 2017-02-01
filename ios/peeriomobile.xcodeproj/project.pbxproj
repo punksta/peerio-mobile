@@ -30,6 +30,7 @@
 		023A731F1DA6D58B00E47992 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FDD4B41DA6457E004E1D5A /* libRNRandomBytes.a */; };
 		026B0DA91E0384EF00B24721 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026B0DA61E0384D700B24721 /* libRCTAnimation.a */; };
 		026B0DAA1E0384F300B24721 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026B0DA61E0384D700B24721 /* libRCTAnimation.a */; };
+		02BB9BCC1E416954004AF2AC /* libRNTouchIDValue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CC88771E1E87D7002BB078 /* libRNTouchIDValue.a */; };
 		02BCD7291DFDE9AF000B8FCF /* libRNFileOpener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD7281DFDE9A2000B8FCF /* libRNFileOpener.a */; };
 		02BCD72A1DFDE9B3000B8FCF /* libRNFileOpener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD7281DFDE9A2000B8FCF /* libRNFileOpener.a */; };
 		02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD72C1DFE1606000B8FCF /* QuickLook.framework */; };
@@ -370,6 +371,7 @@
 				026B0DAA1E0384F300B24721 /* libRCTAnimation.a in Frameworks */,
 				0210710F1E03967600687D5E /* libRNFetchBlob.a in Frameworks */,
 				0222C3951E0C98B90084C586 /* libRCTPushNotification.a in Frameworks */,
+				02BB9BCC1E416954004AF2AC /* libRNTouchIDValue.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1270,7 +1272,7 @@
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 229;
+				CURRENT_PROJECT_VERSION = 231;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
 				HEADER_SEARCH_PATHS = (
@@ -1324,7 +1326,7 @@
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
-				CURRENT_PROJECT_VERSION = 229;
+				CURRENT_PROJECT_VERSION = 231;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
