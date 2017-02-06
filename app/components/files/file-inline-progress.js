@@ -6,17 +6,12 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { fileStore } from '../../lib/icebear';
+import fileState from '../files/file-state';
 import icons from '../helpers/icons';
 import FileProgress from './file-progress';
 
 @observer
 export default class FileInlineProgress extends Component {
-    get file() {
-        const file = fileStore.files.length ?
-            fileStore.files[fileStore.files.length - 1] : null;
-        return file;
-    }
-
     render() {
         const rowStyle = {
             flexGrow: 1,
@@ -25,11 +20,11 @@ export default class FileInlineProgress extends Component {
             borderWidth: 0,
             marginBottom: 8
         };
-        const file = this.file;
+        const file = fileStore.getById(this.props.file);
         if (file === null) return null;
-        const exists = file && !file.isPartialDownload && file.cacheExists;
+        const exists = file && !file.isPartialDownload && file.cached;
         return (
-            <TouchableOpacity onPress={() => (exists ? file.launchViewer() : file.download())}>
+            <TouchableOpacity onPress={() => (exists ? file.launchViewer() : fileState.download(file))}>
                 <View style={{ flexDirection: 'column' }}>
                     <View style={rowStyle}>
                         <Text
@@ -52,7 +47,7 @@ export default class FileInlineProgress extends Component {
     }
 }
 
-FileProgress.propTypes = {
-    file: React.PropTypes.any
+FileInlineProgress.propTypes = {
+    file: React.PropTypes.string
 };
 

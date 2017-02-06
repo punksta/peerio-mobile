@@ -55,10 +55,11 @@ const fileState = observable({
                 .catch(() => Promise.resolve(false)) : Promise.resolve(true);
     },
 
-    download: action.bound(function() {
+    download: action.bound(function(fp) {
         this.remindAboutEncryption().then(() => this.remindAboutExternal()).then(r => {
             if (!r) return;
-            const f = mainState.currentFile ? [mainState.currentFile] : this.selected;
+            const singleFile = fp || mainState.currentFile;
+            const f = singleFile ? [singleFile] : this.selected;
             f.forEach(file => {
                 file.selected = false;
                 if (file.downloading || file.uploading) return;
