@@ -346,9 +346,17 @@ const styles = {
     pin: {
         message: {
             text: inherit('text-inverse'),
+            subTitle: inherit('text-inverse', {
+                fontWeight: vars.font.weight.regular,
+                fontSize: 22,
+				marginTop: 12,
+				marginBottom: 10,
+
+
+            }),
             container: {
-                height: 22,
-                alignItems: 'flex-start'
+                height: 50,
+                justifyContent: 'space-between'
             }
         }
     },

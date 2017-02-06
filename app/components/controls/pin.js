@@ -53,7 +53,7 @@ export default class Pin extends Component {
         this.enteredPin = this.pin;
         this.pin = '';
         this.isConfirm = true;
-        this.message = ' ';
+        this.message = this.props.messageConfirm || t('passcode_confirm');
     }
 
     error(msg) {
@@ -66,8 +66,8 @@ export default class Pin extends Component {
         this.pin = '';
         this.isSpinner = false;
         this.isConfirm = false;
-        this.message = ' ';
-    }
+        this.message = this.props.messageEnter || t('passcode_inputPlaceholder');
+	}
 
     circle(key, text, subText, action) {
         const r = this.circleW || 60;
@@ -185,7 +185,7 @@ export default class Pin extends Component {
             <View style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
                 <Animatable.View ref={v => { this.shaker = v; }}>
                     <Center style={style.message.container}>
-                        <Text style={style.message.text}>
+                        <Text style={style.message.subTitle}>
                             {this.message}
                         </Text>
                     </Center>
