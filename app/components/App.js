@@ -112,10 +112,10 @@ export default class App extends Component {
         console.log(`App.js: AppState change: ${appState}`);
         state.appState = appState;
         if (appState !== 'active') {
-            icebear.socket.authenticated && push.enableServerSide().catch(e => console.log(e));
+            push.enableServerSide();
             // icebear.socket.close();
         } else {
-            icebear.socket.authenticated && push.disableServerSide().catch(e => console.log(e));
+            push.disableServerSide();
             // spy((event) => {
             //     console.log('app.js spy');
             //     console.log(event);

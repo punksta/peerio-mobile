@@ -44,11 +44,19 @@ function enablePushNotifications() {
 }
 
 function enableServerSide() {
-    return socket.send('/auth/push/enable');
+    when(() => socket.authenticated, () =>
+         socket.send('/auth/push/enable')
+             .then(r => console.log(`push.js: enabled server ${r}`))
+             .catch(e => console.error(e))
+        );
 }
 
 function disableServerSide() {
-    return socket.send('/auth/push/disable');
+    when(() => socket.authenticated, () =>
+         socket.send('/auth/push/disable')
+             .then(r => console.log(`push.js: enabled server ${r}`))
+             .catch(e => console.error(e))
+        );
 }
 
 module.exports = { enablePushNotifications, enableServerSide, disableServerSide };
