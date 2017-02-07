@@ -23,7 +23,7 @@ export default class SignupPin extends Component {
         const style = styles.wizard;
         const body = (
             <View style={[style.containerFlex, { marginTop: 32 }]}>
-                <Text style={style.text.title}>{t('signup')}</Text>
+                <Text style={style.text.title}>{t('signupStep2')}</Text>
                 <Pin
                     preventSimplePin
                     ref={pin => (this.pin = pin)}
