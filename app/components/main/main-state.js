@@ -8,6 +8,8 @@ import touchid from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { tx } from '../utils/translator';
 
+const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
+
 const mainState = observable({
     isLeftHamburgerVisible: true,
     isBackVisible: false,
@@ -84,7 +86,7 @@ const mainState = observable({
             // enablePushNotifications();
             // make sure we loaded everything before requesting push permission
             when(() => !c || (!c.loadingMeta && !c.loadingMessages), () => {
-                enablePushNotifications();
+                (EN === 'peeriomobile') && enablePushNotifications();
             });
         });
         //
