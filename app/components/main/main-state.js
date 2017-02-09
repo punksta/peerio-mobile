@@ -190,7 +190,7 @@ const mainState = observable({
                     rnAlertYesNo(tx('touchId'), tx('setup_touchTitle'))
                         .then(() => {
                             TinyDb.system.setValue(`user::${user.username}::touchid`, true);
-                            return touchid.save(`user::${user.username}`, user.passphrase);
+                            return touchid.save(`user::${user.username}`, user.serializeAuthData());
                         })
                         .catch(() => {
                             console.log('main-state.js: user cancel touch id');

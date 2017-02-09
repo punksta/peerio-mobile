@@ -85,6 +85,15 @@ const loginState = observable({
         });
     }),
 
+    loginCached: action.bound(function(data) {
+        const user = new User();
+        user.deserializeAuthData(data);
+        this.isInProgress = true;
+        return new Promise(resolve => {
+            when(() => socket.connected, () => resolve(this._login(user)));
+        });
+    }),
+
     async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         return (inProgress ? rnAlertYesNo('Are you sure?', 'File tasks are not completed') : Promise.resolve(true))
@@ -131,10 +140,9 @@ const loginState = observable({
     triggerTouchId: action.bound(async function() {
         await touchId.load();
         touchId.available && touchId.get(`user::${this.username}`)
-            .then(passphrase => {
-                if (passphrase) {
-                    this.passphrase = passphrase;
-                    this.login();
+            .then(data => {
+                if (data) {
+                    this.loginCached(JSON.parse(data));
                 }
             });
     })

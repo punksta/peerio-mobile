@@ -13,12 +13,12 @@ class KeyValueStorage {
     getValue(key) {
         return AsyncStorage.getItem(this._getKey(key))
             .then(v => {
-                console.log(`key-value-storage.js: ${key}:${v}`);
+                // console.log(`key-value-storage.js: ${key}:${v}`);
                 return v || null;
             })
             .catch(e => {
-                console.error(`key-value-storage.js: error reading`);
-                console.error(e);
+                // console.error(`key-value-storage.js: error reading`);
+                // console.error(e);
                 return null;
             });
     }
