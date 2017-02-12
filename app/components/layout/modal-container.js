@@ -9,7 +9,7 @@ import state from './state';
 export default class ModalContainer extends Component {
     render() {
         const container = state.modals && state.modals.length ?
-            <View
+            (<View
                 testID="modalContainer"
                 style={{
                     flex: 1,
@@ -18,7 +18,7 @@ export default class ModalContainer extends Component {
                     left: 0,
                     top: 0,
                     right: 0,
-                    bottom: 0 }}>{state.modals[state.modals.length - 1]}</View> : null;
+                    bottom: 0 }}>{state.modals[state.modals.length - 1]}</View>) : null;
         return container;
     }
 }

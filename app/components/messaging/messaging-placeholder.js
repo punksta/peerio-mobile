@@ -57,7 +57,7 @@ export default class MessagingPlaceholder extends Component {
         return (
             <View style={outerContainerStyle}>
                 <View style={{ flex: 1,
-                      width: this.width }}>
+                    width: this.width }}>
                     <View style={[titleBlockStyle, { marginTop: 16 }]}>
                         <View style={{ flex: 1, marginLeft: 32 }}>
                             <Image source={arrowUpZeroState}

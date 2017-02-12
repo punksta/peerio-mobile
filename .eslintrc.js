@@ -10,9 +10,12 @@ module.exports = {
         'react/prefer-stateless-function': 0,
         'react/jsx-filename-extension': 0,
         'react/sort-comp': 0,
+        'react/require-default-props': 0,
+        'react/no-array-index-key': 1,
         'no-mixed-operators': 0,
         'new-cap': 0,
-        'prefer-rest-params': 0
+        'prefer-rest-params': 0,
+        'no-multi-assign': 1
     },
     globals: {
         'requestAnimationFrame': false,

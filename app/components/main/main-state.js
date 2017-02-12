@@ -251,8 +251,8 @@ const mainState = observable({
 
     logs: action.bound(function() {
         this.resetMenus();
-        this.route = "logs";
-    }),
+        this.route = 'logs';
+    })
 });
 
 mainState.animatedLeftMenu = new Animated.Value(0);

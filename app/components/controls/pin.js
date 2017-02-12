@@ -67,7 +67,7 @@ export default class Pin extends Component {
         this.isSpinner = false;
         this.isConfirm = false;
         this.message = this.props.messageEnter || t('passcode_inputPlaceholder');
-	}
+    }
 
     circle(key, text, subText, action) {
         const r = this.circleW || 60;
@@ -194,14 +194,14 @@ export default class Pin extends Component {
                             <View style={{ flex: 1, alignSelf: 'center' }}>
                                 <ActivityIndicator style={{ marginTop: -6 }} color={vars.highlight} />
                             </View> :
-                                <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
+                            <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
                     </View>
                 </Animatable.View>
                 <View style={{ flexGrow: 1,
-                               maxHeight: 352,
-                               opacity: inProgress ? 0.5 : 1,
-                               marginLeft: 16,
-                               marginRight: 16 }}>
+                    maxHeight: 352,
+                    opacity: inProgress ? 0.5 : 1,
+                    marginLeft: 16,
+                    marginRight: 16 }}>
                     {this.row(0, [p(1), p(2, 'ABC'), p(3, 'DEF')])}
                     {this.row(1, [p(4, 'GHI'), p(5, 'JKL'), p(6, 'MNO')])}
                     {this.row(2, [p(7, 'PQRS'), p(8, 'TUV'), p(9, 'WXYZ')])}

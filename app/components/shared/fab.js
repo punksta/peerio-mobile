@@ -18,7 +18,7 @@ const fabStyle = {
     flex: 0,
     width: fabSize,
     height: fabSize,
-    marginRight: fabSize/2,
+    marginRight: fabSize / 2,
     marginBottom: fabSize,
     alignItems: 'center',
     justifyContent: 'center',

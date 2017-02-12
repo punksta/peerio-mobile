@@ -155,11 +155,11 @@ export default class TextBox extends Component {
         const hint = this.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
         const showSecretIcon = !this.props.secureTextEntry || this.showSecret ? null :
-            <View style={style.iconContainer}>
+            (<View style={style.iconContainer}>
                 {icons.dark(
                     this.showSecret ? 'visibility-off' : 'visibility',
                     this.toggleSecret, style.icon)}
-            </View>;
+            </View>);
         const validationControl = !this.valid ? (
             <View
                 pointerEvents="none"

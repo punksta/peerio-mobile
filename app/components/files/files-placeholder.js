@@ -49,8 +49,8 @@ export default class FilesPlaceholder extends Component {
         return (
             <View style={outerContainerStyle}>
                 <View style={{ flex: 1,
-                      width: this.width,
-                      justifyContent: 'center' }}>
+                    width: this.width,
+                    justifyContent: 'center' }}>
                     <View style={{ flex: 0, alignItems: 'center', marginTop: 40 }}>
                         <Text style={infoStyle}>Upload, share and manage</Text>
                     </View>

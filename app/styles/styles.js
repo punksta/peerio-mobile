@@ -349,8 +349,8 @@ const styles = {
             subTitle: inherit('text-inverse', {
                 fontWeight: vars.font.weight.regular,
                 fontSize: 22,
-				marginTop: 12,
-				marginBottom: 10,
+                marginTop: 12,
+                marginBottom: 10
 
 
             }),
