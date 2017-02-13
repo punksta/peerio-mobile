@@ -24,7 +24,7 @@
     "build-ios-nocodesign": "cd ios && xcodebuild -scheme peeriomobile -configuration Debug build -sdk iphonesimulator PLATFORM_NAME=iphonesimulator",
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
     "testrun": ". scripts/run-tests.sh",
-    "test": "bash scripts/setup_tests.sh && npm install && npm run testrun",
+    "test": "bash scripts/setup_tests.sh && npm run testrun",
     "tf-peerio": "fastlane ios beta --env=peerio",
     "tf-expandoo": "fastlane ios beta --env=expandoo",
     "gp-peerio": "npm run build-android && bash scripts/release_android.sh && fastlane android alpha",

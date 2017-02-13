@@ -1,7 +1,11 @@
 {
-    compact: false,
+    "compact": false,
     "presets": [ "react-native" ],
-    "plugins": ["transform-decorators-legacy", "transform-inline-environment-variables"],
+    "plugins": [
+        "transform-decorators-legacy",
+        "transform-inline-environment-variables",
+        "transform-exponentiation-operator"
+    ],
     "ignore": [
         "shim.js"
     ]
