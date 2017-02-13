@@ -15,7 +15,7 @@ module.exports = {
         'no-mixed-operators': 0,
         'new-cap': 0,
         'prefer-rest-params': 0,
-        'no-multi-assign': 1
+        'no-multi-assign': 0
     },
     globals: {
         'requestAnimationFrame': false,
