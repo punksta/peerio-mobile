@@ -5,6 +5,7 @@ import {
     View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
+import ErrorCircle from './error-circle';
 
 const avatarDiameter = 36;
 
@@ -22,22 +23,6 @@ export default class AvatarCircle extends Component {
             margin: 4,
             marginTop: 10
         };
-        const tofuStyle = {
-            position: 'absolute',
-            right: 0,
-            width: width / 2,
-            height: height / 2,
-            borderRadius: width / 4,
-            borderColor: 'white',
-            borderWidth: 1,
-            backgroundColor: 'red',
-            overflow: 'hidden',
-            justifyContent: 'center',
-            alignItems: 'center',
-            margin: 4,
-            marginTop: 10
-        };
-
         if (this.props.loading) {
             return <ActivityIndicator style={{ height, margin: 4 }} />;
         }
@@ -54,9 +39,7 @@ export default class AvatarCircle extends Component {
                 <View style={coloredAvatarStyle}>
                     <Text style={{ color: 'white', fontSize: 12 * ratio }}>{letter}</Text>
                 </View>
-                <View style={tofuStyle}>
-                    <Text style={{ color: 'white', fontSize: 10 * ratio, fontWeight: 'bold' }}>!</Text>
-                </View>
+                { tofuError && (<ErrorCircle large={this.props.large} />) }
             </View>
         );
     }
