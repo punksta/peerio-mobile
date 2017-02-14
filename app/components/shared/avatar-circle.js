@@ -26,13 +26,14 @@ export default class AvatarCircle extends Component {
         if (this.props.loading) {
             return <ActivityIndicator style={{ height, margin: 4 }} />;
         }
-        const { username, firstName, color } = this.props.contact;
-        const letter = (firstName || username || ' ')[0].toUpperCase();
+        const { username, firstName, color, tofuError } = this.props.contact;
+        const bgColor = tofuError ? 'red' : color;
+        const letter = tofuError ? '!' : (firstName || username || ' ')[0].toUpperCase();
         const coloredAvatarStyle = [avatarStyle, {
             overflow: 'hidden',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: color || '#fff'
+            backgroundColor: bgColor || '#fff'
         }];
         return (
             <View style={coloredAvatarStyle}>
@@ -44,6 +45,6 @@ export default class AvatarCircle extends Component {
 
 AvatarCircle.propTypes = {
     contact: React.PropTypes.any,
-    loading: React.PropTypes.boolean,
-    large: React.PropTypes.boolean
+    loading: React.PropTypes.bool,
+    large: React.PropTypes.bool
 };
