@@ -26,6 +26,7 @@ export default class SignupPin extends Component {
                 <Text style={style.text.title}>{t('signupStep2')}</Text>
                 <Pin
                     preventSimplePin
+                    messageInitial={t('passcode_inputPlaceholder')}
                     ref={pin => (this.pin = pin)}
                     onConfirm={pin => this.usePin(pin)} />
             </View>

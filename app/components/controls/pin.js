@@ -68,7 +68,7 @@ export default class Pin extends Component {
         this.pin = '';
         this.isSpinner = false;
         this.isConfirm = false;
-        this.subTitle = t('passcode_inputPlaceholder');
+        this.subTitle = this.props.messageInitial;
         this.message = '';
     }
 
