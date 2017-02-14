@@ -2,7 +2,7 @@ import { Keyboard } from 'react-native';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import _ from 'lodash';
 import moment from 'moment';
-import { observable, action, reaction, autorun } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 import translator from 'peerio-translator';
 import locales from '../../lib/locales';
 import { TinyDb } from '../../lib/icebear';
@@ -87,7 +87,7 @@ const state = observable({
 
 reaction(() => state.languageSelected, ls => state.setLocale(ls));
 
-autorun(() => {
+reaction(() => state.route, () => {
     const r = state.routes[state.route];
     const pages = [];
     if (r && r.states) {
@@ -96,6 +96,9 @@ autorun(() => {
         });
     }
     state.pages = pages;
+});
+
+reaction(() => state.focusedTextBox, () => {
     if (state.focusedTextBox) {
         state.pickerVisible = false;
     }

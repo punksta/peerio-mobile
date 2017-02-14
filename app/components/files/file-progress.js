@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View
 } from 'react-native';
-import { observable, autorun, reaction } from 'mobx';
+import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
 
@@ -37,7 +37,7 @@ export default class FileProgress extends Component {
                 this.progress = 0;
             }
         }, true);
-        autorun(() => {
+        reaction(() => [this.hidden, this.value], () => {
             if (this.hidden) {
                 // this.progress.setValue(0);
                 this.progress = 0;

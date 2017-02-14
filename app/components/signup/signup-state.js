@@ -1,4 +1,4 @@
-import { observable, action, autorun } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 import state from '../layout/state';
 import mainState from '../main/main-state';
 import { User, PhraseDictionaryCollection, validation, socket } from '../../lib/icebear';
@@ -122,7 +122,7 @@ if (__DEV__) {
     // s.lastName = 's';
 }
 
-autorun(() => {
+reaction(() => [signupState.current, signupState.isActive], () => {
     if (signupState.isActive) {
         state.route = signupWizardRoutes[signupState.current];
     }
