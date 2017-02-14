@@ -15,13 +15,13 @@ function enablePushNotifications() {
                          console.log('push.js: register result success', r);
                          // PushNotification.localNotification({ title: 'test', message: 'testmessage' });
                      })
-                     .then(() => {
-                         return socket.send('/auth/dev/test-push', {
-                             icon: 'push',
-                             text: 'blah'
-                         });
-                     })
-                     .then(console.log.bind(console))
+                     // .then(() => {
+                     //     return socket.send('/auth/dev/test-push', {
+                     //         icon: 'push',
+                     //         text: 'blah'
+                     //     });
+                     // })
+                     // .then(console.log.bind(console))
                      .catch(e => console.log('push.js: error registering', e)));
         },
 
@@ -54,7 +54,7 @@ function enableServerSide() {
 function disableServerSide() {
     when(() => socket.authenticated, () =>
          socket.send('/auth/push/disable')
-             .then(r => console.log(`push.js: enabled server ${r}`))
+             .then(r => console.log(`push.js: disabled server ${r}`))
              .catch(e => console.error(e))
         );
 }
