@@ -243,6 +243,6 @@ export default class ContactSelector extends Component {
 }
 
 ContactSelector.propTypes = {
-    title: React.PropTypes.string,
+    title: React.PropTypes.any,
     action: React.PropTypes.string
 };

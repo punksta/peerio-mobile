@@ -234,6 +234,7 @@ Pin.propTypes = {
     messageEnter: React.PropTypes.string,
     messageWrong: React.PropTypes.string,
     messageConfirm: React.PropTypes.string,
+    messageInitial: React.PropTypes.string,
     preventSimplePin: React.PropTypes.bool,
     inProgress: React.PropTypes.bool
 };

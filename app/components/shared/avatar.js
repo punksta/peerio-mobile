@@ -1,23 +1,13 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TouchableOpacity, ActivityIndicator
+    View, Text, TouchableOpacity
 } from 'react-native';
 import moment from 'moment';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileInlineProgress from '../files/file-inline-progress';
-
-const avatarDiameter = 36;
-
-const avatarStyle = {
-    width: avatarDiameter,
-    height: avatarDiameter,
-    borderRadius: avatarDiameter / 2,
-    backgroundColor: '#CFCFCF',
-    margin: 4,
-    marginTop: 10
-};
+import AvatarCircle from './avatar-circle';
 
 const itemStyle = {
     flexGrow: 1,
@@ -140,44 +130,23 @@ export default class Avatar extends Component {
         );
     }
 
-    avatar() {
-        const { username, firstName, color } = this.props.contact;
-        const letter = (firstName || username || ' ')[0].toUpperCase();
-        const coloredAvatarStyle = [avatarStyle, {
-            overflow: 'hidden',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: color || '#fff'
-        }];
-        return (
-            <View style={coloredAvatarStyle}>
-                <Text style={{ color: 'white' }}>{letter}</Text>
-            </View>
-        );
-    }
-
-    loader() {
-        return <ActivityIndicator style={{ height: avatarDiameter, margin: 4 }} />;
-    }
-
     render() {
         const message = this.props.message || '';
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
         const date = this.props.date ? <Text style={dateTextStyle}>{moment(this.props.date).format('LT')}</Text> : null;
         const online = this.props.hideOnline ? null : <View style={this.props.online ? circleStyle : circleStyleOff} />;
-        const avatarPlaceholder = this.props.loading ? this.loader() : this.avatar();
         const checkbox = this.props.checkbox ? this.checkbox() : null;
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
         const text = <Text style={lastMessageTextStyle}>{message}</Text>;
         const files = this.props.files ?
-            this.props.files.map((file, i) => <FileInlineProgress key={i} file={file} />) : null;
+            this.props.files.map(file => <FileInlineProgress key={file.id} file={file} />) : null;
         return (
             <View style={{ backgroundColor: vars.bg }}>
                 <TouchableOpacity onPress={this.props.onPress} activeOpacity={this.props.noTap ? 1 : 0.2}>
                     <View style={itemStyle}>
                         {checkbox}
                         <View style={ics}>
-                            {avatarPlaceholder}
+                            <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
                             <View style={nameMessageContainerStyle}>
                                 <View style={nameContainerStyle}>
                                     <Text ellipsizeMode="tail" style={nameTextStyle}>

@@ -31,6 +31,7 @@ import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import Ghosts from '../ghosts/ghosts';
 import GhostView from '../ghosts/ghost-view';
 import GhostCompose from '../ghosts/ghost-compose';
+import ContactView from '../contacts/contact-view';
 import Logs from '../logs/logs';
 import styles, { vars } from '../../styles/styles';
 
@@ -47,6 +48,7 @@ const modalRoutes = {
     compose: <ComposeMessage />,
     shareFileTo: <FileShare />,
     selectFiles: <SelectFiles />,
+    contactView: <ContactView />,
     ghostCompose: <GhostCompose />
 };
 

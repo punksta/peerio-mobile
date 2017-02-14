@@ -20,6 +20,7 @@ const mainState = observable({
     route: null,
     currentChat: null,
     currentFile: null,
+    currentContact: null,
     currentIndex: 0,
     modalRoute: null,
     modalControl: null,
@@ -252,6 +253,12 @@ const mainState = observable({
     logs: action.bound(function() {
         this.resetMenus();
         this.route = 'logs';
+    }),
+
+    contactView: action.bound(function(contact) {
+        this.resetMenus();
+        this.currentContact = contact;
+        this.showModal('contactView');
     })
 });
 
