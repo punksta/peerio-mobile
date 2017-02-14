@@ -49,7 +49,7 @@ export default class Pin extends Component {
         }
     }
 
-    confirm() {
+    confirm = () => {
         this.enteredPin = this.pin;
         this.pin = '';
         this.isConfirm = true;
@@ -139,8 +139,8 @@ export default class Pin extends Component {
                         return;
                     }
                 }
-                const callback = this.props.checkPin || this.confirm.bind(this);
-                setTimeout(() => callback(this.pin, this), 200);
+                const callback = this.props.checkPin || this.confirm;
+                callback(this.pin, this);
             }
         }
     }
