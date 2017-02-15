@@ -32,6 +32,7 @@ const itemContainerStyle = {
 
 const itemContainerStyleNoBorder = {
     flexGrow: 1,
+    paddingLeft: 8,
     flexDirection: 'row',
     alignItems: 'flex-start'
 };

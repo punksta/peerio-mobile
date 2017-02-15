@@ -5,7 +5,7 @@ import moment from 'moment';
 import { observable, action, reaction } from 'mobx';
 import translator from 'peerio-translator';
 import locales from '../../lib/locales';
-import { TinyDb } from '../../lib/icebear';
+import { TinyDb, PhraseDictionaryCollection } from '../../lib/icebear';
 
 const state = observable({
     isFirstLogin: false,
@@ -71,6 +71,11 @@ const state = observable({
                 this.languageSelected = lc;
                 this.save();
                 moment.locale(lc);
+            })
+            .then(() => locales.loadDictFile(lc))
+            .then(dictString => {
+                PhraseDictionaryCollection.addDictionary(state.locale, dictString);
+                PhraseDictionaryCollection.selectDictionary(state.locale);
             });
     }),
 

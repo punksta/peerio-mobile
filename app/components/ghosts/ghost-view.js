@@ -1,46 +1,100 @@
 import React, { Component } from 'react';
 import {
     Text,
-    View
+    View,
+    ScrollView,
+    TouchableOpacity,
+    TextInput
 } from 'react-native';
 import moment from 'moment';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
-import mainState from '../main/main-state';
+import { mailStore } from '../../lib/icebear';
+
+const padding = 8;
+const marginVertical = 4;
+
+const row = {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+};
+
+const normalText = {
+    color: vars.txtDark,
+    fontSize: 12
+};
+
+const lightText = {
+    color: vars.subtleText,
+    fontSize: 12
+};
+
+const boldText = {
+    fontWeight: 'bold',
+    fontSize: 18,
+    height: 36
+};
+
+const infoBlock = {
+    padding,
+    borderTopWidth: 1,
+    borderTopColor: '#cfcfcf',
+    backgroundColor: '#efefef'
+};
+
+const textBlock = {
+    flex: 1,
+    flexGrow: 1,
+    padding,
+    fontSize: 12,
+    marginVertical
+};
+
+const filler = {
+    flex: 1,
+    flexGrow: 1
+};
 
 @observer
 export default class Ghost extends Component {
+    get ghost() {
+        return mailStore.selectedGhost;
+    }
 
     render() {
+        const g = this.ghost;
+        if (!g) return null;
+
         return (
-            <View>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
-                <Text>ghost view</Text>
+            <View style={filler}>
+                <View style={{ padding }}>
+                    <Text style={lightText}>Passphrase</Text>
+                    <Text selectable style={boldText}>
+                        {g.passphrase}
+                    </Text>
+                </View>
+                <View style={infoBlock}>
+                    <View style={row}>
+                        <Text style={normalText}>Me</Text>
+                        <Text style={lightText}>
+                            {moment(g.timestamp).format('LLL')}
+                        </Text>
+                    </View>
+                    <View style={{ marginVertical }}>
+                        <Text style={normalText}>to {g.recipients.join(', ')}</Text>
+                    </View>
+                    <Text style={normalText}>
+                        {g.subject}
+                    </Text>
+                </View>
+                <ScrollView>
+                    <TouchableOpacity>
+                        <Text style={textBlock} selectable>
+                            {g.body}
+                        </Text>
+                    </TouchableOpacity>
+                </ScrollView>
             </View>
         );
     }

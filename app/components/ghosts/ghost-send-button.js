@@ -4,7 +4,6 @@ import {
 } from 'react-native';
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
-import ghostState from './ghost-state';
 
 const fabSize = vars.fabSize;
 
@@ -15,17 +14,6 @@ const fabContainer = {
     alignItems: 'flex-end',
     borderColor: 'red',
     borderWidth: 0
-};
-
-const fabStyle = {
-    flex: 0,
-    width: fabSize,
-    height: fabSize,
-    marginRight: fabSize / 2,
-    marginBottom: fabSize,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FF7D00'
 };
 
 const shadowStyle = {
@@ -40,14 +28,25 @@ const shadowStyle = {
 
 export default class GhostSendButton extends Component {
     render() {
+        const fabStyle = {
+            flex: 0,
+            width: fabSize,
+            height: fabSize,
+            marginRight: fabSize / 2,
+            marginBottom: fabSize,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: this.props.enabled ? vars.fabEnabled : vars.fabDisabled
+        };
         const s = [fabStyle, helpers.circle(fabSize), shadowStyle];
         return (
             <View
                 style={fabContainer}>
                 <TouchableOpacity
                     style={s}
+                    activeOpacity={this.props.enabled ? 0.2 : 1}
                     pressRetentionOffset={vars.offset}
-                    onPress={() => ghostState.send()}>
+                    onPress={() => this.props.enabled && this.props.send()}>
                     {icons.plainWhite('send')}
                 </TouchableOpacity>
             </View>
@@ -55,3 +54,7 @@ export default class GhostSendButton extends Component {
     }
 }
 
+GhostSendButton.propTypes = {
+    send: React.PropTypes.func,
+    enabled: React.PropTypes.bool
+};

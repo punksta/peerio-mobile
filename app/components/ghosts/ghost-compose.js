@@ -6,7 +6,9 @@ import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import GhostSendButton from './ghost-send-button';
 import icons from '../helpers/icons';
+import ProgressOverlay from '../shared/progress-overlay';
 import ghostState from './ghost-state';
+import { mailStore } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import { vars } from '../../styles/styles';
 
@@ -31,6 +33,16 @@ const textArea = {
     fontSize: 14,
     marginHorizontal: 10,
     color: vars.txtDark
+};
+
+const shadow = {
+    shadowColor: '#000000',
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    shadowOffset: {
+        height: 1,
+        width: 1
+    }
 };
 
 const value = `
@@ -69,9 +81,37 @@ newline into the field.
 
 @observer
 export default class ComposeMessage extends Component {
+    get ghost() {
+        return mailStore.selectedGhost;
+    }
+
+    get isValid() {
+        return !!((this.files.length || this.value.length) && this.recipient.length);
+    }
+
     @observable value = value;
     @observable recipient = 'seavan@gmail.com';
     @observable files = [];
+    @observable subject = 'test subject';
+    @observable inProgress = false;
+
+    send() {
+        const g = mailStore.createGhost();
+        g.attachFiles(this.files);
+        g.recipients.push(this.recipient);
+        g.subject = this.subject;
+        this.inProgress = true;
+        g.send(this.value)
+            .then(() => {
+                ghostState.view(g);
+            })
+            .catch(e => {
+                console.error(`ghost-compose.js: sending error`);
+                console.log(e);
+                g.remove();
+            })
+            .finally(() => (this.inProgress = false));
+    }
 
     addFiles() {
         fileState.selectFiles()
@@ -80,7 +120,7 @@ export default class ComposeMessage extends Component {
                 this.files.push(...files);
             })
             .catch(() => {
-                // this.send('user cancelled file selection');
+                console.log('ghost-compose.js: user cancelled file selection');
             });
     }
 
@@ -118,17 +158,45 @@ export default class ComposeMessage extends Component {
         );
     }
 
-    attachments() {
-        const map = f => (
-            <Text key={f.id}>{f.name}</Text>
-        );
+    subjectBlock() {
         return this.lineBlock(
             <View style={row}>
-                {this.text('Attachments:')}
-                <View style={filler}>
-                    {this.files.map(map)}
-                </View>
+                {this.text('Subject:')}
+                <TextInput
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    autoComplete={false}
+                    value={this.subject}
+                    onChangeText={text => (this.subject = text)}
+                    style={textboxInput} />
                 {icons.dark('attach-file', () => this.addFiles())}
+            </View>
+        );
+    }
+
+    attachment(f) {
+        const container = {
+            flex: 0,
+            backgroundColor: vars.bg,
+            borderRadius: 4,
+            padding: 4,
+            margin: 4
+        };
+        const text = {
+            color: 'white'
+        };
+        return (
+            <View key={f.id} style={container}>
+                <Text style={text}>{f.name}</Text>
+            </View>
+        );
+    }
+
+    attachments() {
+        if (this.files.length === 0) return null;
+        return this.lineBlock(
+            <View style={row}>
+                {this.files.map(f => this.attachment(f))}
             </View>
         );
     }
@@ -136,15 +204,20 @@ export default class ComposeMessage extends Component {
     render() {
         return (
             <View style={[filler]}>
-                {this.to()}
-                {this.attachments()}
+                <View style={shadow}>
+                    {this.to()}
+                    {this.subjectBlock()}
+                    {this.attachments()}
+                </View>
                 <TextInput
                     multiline
                     value={this.value}
                     onChangeText={text => (this.value = text)}
                     style={[filler, textArea]} />
-                <GhostSendButton />
+                <GhostSendButton enabled={this.isValid} send={() => this.send()} />
+                <ProgressOverlay enabled={this.inProgress} />
             </View>
         );
     }
 }
+

@@ -99,21 +99,21 @@ export default class RightMenu extends Component {
             {
                 name: t('ghosts'),
                 route: 'ghosts',
-                icon: 'rowing',
+                icon: 'mail',
                 action: () => ghostState.transition()
             },
-            {
+            /* {
                 name: t('profile'),
                 icon: 'person',
                 action: () => null
-            },
+                }, */
             {
                 name: t('settings'),
                 route: 'settings',
                 icon: 'settings',
                 action: () => settingsState.transition()
             },
-            {
+            /*            {
                 name: t('upgrade'),
                 icon: 'cloud-upload',
                 action: () => null
@@ -122,7 +122,7 @@ export default class RightMenu extends Component {
                 name: t('help'),
                 icon: 'help',
                 action: () => null
-            },
+                }, */
             {
                 name: t('Logs'),
                 icon: 'help',

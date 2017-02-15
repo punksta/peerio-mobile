@@ -50,6 +50,8 @@ const vars = {
     snackbarBg: '#4a4a4a',
     snackbarHeight: 48,
     settingsBg: 'rgba(0, 0, 0, 0.06)',
+    fabEnabled: '#FF7D00',
+    fabDisabled: '#CFCFCF',
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,

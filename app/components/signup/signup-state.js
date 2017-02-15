@@ -2,7 +2,6 @@ import { observable, action, reaction } from 'mobx';
 import state from '../layout/state';
 import mainState from '../main/main-state';
 import { User, PhraseDictionaryCollection, validation, socket } from '../../lib/icebear';
-import locales from '../../lib/locales';
 
 const { validators, addValidation } = validation;
 
@@ -49,13 +48,10 @@ const signupState = observable({
         this.current = 0;
     }),
 
-    generatePassphrase: action.bound(async function() {
-        const dictString = await locales.loadDictFile(state.locale);
-        PhraseDictionaryCollection.addDictionary(state.locale, dictString);
-        PhraseDictionaryCollection.selectDictionary(state.locale);
+    generatePassphrase() {
         const dict = PhraseDictionaryCollection.current;
         return dict.getPassphrase(5);
-    }),
+    },
 
     next: action.bound(function() {
         if (!this.nextAvailable) return;

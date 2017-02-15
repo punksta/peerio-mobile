@@ -1,6 +1,7 @@
 import { observable } from 'mobx';
 import mainState from '../main/main-state';
 import { tx } from '../utils/translator';
+import { mailStore } from '../../lib/icebear';
 
 const ghostState = observable({
     isComposing: false,
@@ -15,6 +16,14 @@ const ghostState = observable({
         ghostState.isComposing = true;
         mainState.currentIndex = 1;
         mainState.isBackVisible = true;
+    },
+
+    view(ghost) {
+        mainState.route = 'ghosts';
+        ghostState.isComposing = false;
+        mainState.currentIndex = 1;
+        mainState.isBackVisible = true;
+        mailStore.selectedId = ghost.ghostId;
     }
 });
 
