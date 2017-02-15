@@ -33,8 +33,10 @@ export default class HeaderMain extends Component {
     }
 
     render() {
-        const leftIcon = mainState.isBackVisible ?
-            <BackIcon /> : <MessageIcon />;
+        let leftIcon = mainState.isLeftHamburgerVisible ? <MessageIcon /> : null;
+        if (mainState.isBackVisible) {
+            leftIcon = <BackIcon />;
+        }
         const textStyle = {
             color: vars.white,
             fontWeight: vars.font.weight.regular,
@@ -58,7 +60,7 @@ export default class HeaderMain extends Component {
                 backgroundColor: styles.branding.peeriomobile.bg
             }}>
                 <View style={containerStyle}>
-                    {mainState.isLeftHamburgerVisible && leftIcon}
+                    {leftIcon}
                     <Text
                         ellipsizeMode="tail"
                         numberOfLines={1}

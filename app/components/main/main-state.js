@@ -1,7 +1,7 @@
 import { Animated } from 'react-native';
 import { observable, action, when, reaction } from 'mobx';
 import state from '../layout/state';
-import { User, chatStore, fileStore, TinyDb, socket } from '../../lib/icebear';
+import { User, chatStore, fileStore, TinyDb } from '../../lib/icebear';
 import sounds from '../../lib/sounds';
 import { enablePushNotifications } from '../../lib/push';
 import touchid from '../touchid/touchid-bridge';
@@ -24,8 +24,14 @@ const mainState = observable({
     currentIndex: 0,
     modalRoute: null,
     modalControl: null,
+    popupControls: [],
     suppressTransition: false,
     _loading: false,
+
+    get activePopup() {
+        const pc = this.popupControls;
+        return pc.length ? pc[pc.length - 1] : null;
+    },
 
     get loading() {
         return this._loading || chatStore.loading; // || fileStore.loading;
@@ -38,8 +44,7 @@ const mainState = observable({
     titles: observable.ref({
         recent: () => '',
         files: (s) => (s.currentFile ? s.currentFile.name : 'All files'),
-        chat: (s) => (s.currentChat ? s.currentChat.chatName : ''),
-        settings: (/* s */) => tx('settings')
+        chat: (s) => (s.currentChat ? s.currentChat.chatName : '')
     }),
 
     activateAndTransition: action.bound(function(user) {
@@ -250,6 +255,14 @@ const mainState = observable({
         this.modalRoute = null;
     }),
 
+    showPopup: action.bound(function(popup) {
+        this.popupControls.push(popup);
+    }),
+
+    discardPopup: action.bound(function() {
+        this.popupControls.pop();
+    }),
+
     logs: action.bound(function() {
         this.resetMenus();
         this.route = 'logs';
@@ -272,5 +285,14 @@ reaction(() => mainState.isLeftMenuVisible, () => {
 reaction(() => mainState.route === 'files', files => {
     fileStore.active = files;
 });
+
+// mainState.showPopup({
+//     title: 'Master Password',
+//     text: 'blue zeppelin runs aboard all',
+//     buttons: [
+//         { id: 'skip', text: 'Skip' },
+//         { id: 'use', text: 'Use QR' }
+//     ]
+// });
 
 export default mainState;

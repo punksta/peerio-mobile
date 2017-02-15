@@ -16,6 +16,7 @@ import Bottom from '../controls/bottom';
 import LeftMenu from '../main/left-menu';
 import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
+import PopupLayout from './popup-layout';
 import Chat from '../messaging/chat';
 import Files from '../files/files';
 import FileView from '../files/file-view';
@@ -205,6 +206,7 @@ export default class LayoutMain extends Component {
                 <View style={modalNonAnimatedStyle}>
                     {modalControl}
                 </View>
+                <PopupLayout />
                 <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'}
                            hidden={Platform.OS !== 'android' && menuState && !mainState.modalRoute}
                            // TODO: set show hide animation to 'fade' and 'slide'

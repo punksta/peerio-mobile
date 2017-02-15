@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, ListView, View, ActivityIndicator, RefreshControl
+    ScrollView, View, RefreshControl
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
@@ -42,6 +42,7 @@ export default class Chat extends Component {
             this.enableNextScroll = (l - this.lastLength) < maxScrollableLength;
             this.lastLength = l;
         });
+
         // this.reaction = reaction(() => (mainState.route === 'chat') && this.data && this.data.length, () => {
         //     console.log(`chat.js update reaction ${this.data.length}`);
         //     this.dataSource = this.dataSource.cloneWithRows(this.data.slice());

@@ -1,9 +1,10 @@
 import React from 'react';
+import { Text } from 'react-native';
 import { observable, action } from 'mobx';
 import mainState from '../main/main-state';
 import PinModal from '../controls/pin-modal';
 import { User } from '../../lib/icebear';
-import { rnAlertYes } from '../../lib/alerts';
+import { popupYes } from '../shared/popups';
 import { tx } from '../utils/translator';
 
 
@@ -27,7 +28,14 @@ const settingsState = observable({
 
     showPassphrase() {
         const success = passphrase => {
-            rnAlertYes(passphrase);
+            const mp = (
+                <Text style={{ fontWeight: 'bold', fontSize: 14 }}>
+                    {passphrase}
+                </Text>
+            );
+            popupYes(tx('passphrase'),
+                     'This is your master password. Use it wisely.',
+                     mp);
             mainState.modalControl = null;
         };
         const pinModal = () => (
@@ -37,13 +45,18 @@ const settingsState = observable({
         );
         User.current.hasPasscode().then(r => {
             if (!r) {
-                rnAlertYes(tx('passcode_notSet'));
+                popupYes(tx('passphrase'), tx('passcode_notSet'));
                 return;
             }
             mainState.modalControl = pinModal;
         });
     }
 });
+
+mainState.titles.settings = (/* s */) => {
+    const sr = settingsState.subroute;
+    return sr ? tx(sr) : tx('settings');
+};
 
 export default settingsState;
 
