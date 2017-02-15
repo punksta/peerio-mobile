@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View
+    View, Text
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import styles from '../../styles/styles';
@@ -13,14 +13,42 @@ const s = {
     marginBottom: 32
 };
 
+const style = styles.circle.small;
+
+const dash = {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 0,
+    backgroundColor: 'transparent'
+};
+
+const dashText = {
+    color: 'white',
+    fontSize: 18
+};
+
 @observer
 export default class Circles extends Component {
+    active(i) {
+        return (
+            <View key={i} style={style.active} />
+        );
+    }
+
+    normal(i) {
+        return (
+            <View key={i} style={[style.active, dash]}>
+                <Text style={dashText}>-</Text>
+            </View>
+        );
+    }
+
     circle(i, current) {
-        const style = styles.circle.small;
         const active =
             this.props.fill ? i < current : i === current;
-        return <View key={i} style={active ? style.active : style.normal} />;
+        return active ? this.active(i) : this.normal(i);
     }
+
     render() {
         const circles = [];
         for (let i = 0; i < this.props.count; ++i) {
