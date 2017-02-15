@@ -18,13 +18,13 @@ export default class ChatItem extends Component {
             <Avatar
                 contact={i.sender}
                 files={i.files}
+                receipts={i.receipts}
                 hideOnline
                 date={timestamp}
                 message={text}
                 key={key}
                 error={error}
                 onPress={onPress}
-                onPressText={() => null}
                 noTap
                 noBorderBottom
             />

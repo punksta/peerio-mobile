@@ -10,6 +10,9 @@ import { vars } from '../../styles/styles';
 import FileInlineProgress from '../files/file-inline-progress';
 import AvatarCircle from './avatar-circle';
 import ErrorCircle from './error-circle';
+import OnlineCircle from './online-circle';
+import ReadReceiptList from './read-receipt-list';
+import CorruptedMessage from './corrupted-message';
 
 const itemStyle = {
     flexGrow: 1,
@@ -69,25 +72,6 @@ const lastMessageTextStyle = {
     lineHeight: 22
 };
 
-const circleDiameter = 6;
-const circleStyle = {
-    width: circleDiameter,
-    height: circleDiameter,
-    borderRadius: circleDiameter / 2,
-    backgroundColor: '#7ed321',
-    margin: 4
-};
-
-const circleStyleOff = {
-    width: circleDiameter,
-    height: circleDiameter,
-    borderRadius: circleDiameter / 2,
-    borderWidth: 1,
-    borderColor: 'rgba(0, 0, 0, .54)',
-    backgroundColor: 'transparent',
-    margin: 4
-};
-
 @observer
 export default class Avatar extends Component {
     @observable showError = false;
@@ -115,6 +99,20 @@ export default class Avatar extends Component {
         );
     }
 
+    onPressText() {
+        console.log(`avatar.js: onPressText`);
+        if (this.props.onPressText) {
+            return this.props.onPressText();
+        }
+        if (this.props.error) {
+            this.showError = !this.showError;
+        }
+        if (this.props.onPress) {
+            return this.props.onPress();
+        }
+        return null;
+    }
+
     render() {
         const error = this.props.error;
         const errorStyle = error ? {
@@ -126,17 +124,8 @@ export default class Avatar extends Component {
         const message = this.props.message || '';
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
         const date = this.props.date ? <Text style={dateTextStyle}>{moment(this.props.date).format('LT')}</Text> : null;
-        const online = this.props.hideOnline ? null : <View style={this.props.online ? circleStyle : circleStyleOff} />;
         const checkbox = this.props.checkbox ? this.checkbox() : null;
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
-        const text = <Text style={lastMessageTextStyle}>{message}</Text>;
-        const corrupted = error && this.showError && (
-            <Text style={{ margin: 8 }}>
-                The cryptographic signature of this
-                message is invalid. This might mean
-                someone forged this message.
-            </Text>
-        );
         const files = this.props.files ?
             this.props.files.map(file => <FileInlineProgress key={file.id} file={file} />) : null;
         return (
@@ -150,7 +139,7 @@ export default class Avatar extends Component {
                                     <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    onPress={() => { this.showError = !this.showError; }}
+                                    onPress={() => this.onPressText()}
                                     style={nameMessageContainerStyle}>
                                     <View style={nameContainerStyle}>
                                         <Text ellipsizeMode="tail" style={nameTextStyle}>
@@ -158,14 +147,15 @@ export default class Avatar extends Component {
                                         </Text>
                                         {date}
                                     </View>
-                                    {text}
+                                    <Text style={lastMessageTextStyle}>{message}</Text>
                                     {files}
-                                    {error && <ErrorCircle invert />}
+                                    <ErrorCircle invert visible={!!error} />
                                 </TouchableOpacity>
                                 {icon}
-                                {online}
+                                <OnlineCircle visible={!this.props.hideOnline} online={this.props.online} />
                             </View>
-                            {corrupted}
+                            <CorruptedMessage visible={error && this.showError} />
+                            <ReadReceiptList receipts={this.props.receipts} />
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -180,6 +170,7 @@ Avatar.propTypes = {
     contact: React.PropTypes.any.isRequired,
     date: React.PropTypes.any,
     files: React.PropTypes.any,
+    receipts: React.PropTypes.any,
     icon: React.PropTypes.string,
     message: React.PropTypes.string,
     online: React.PropTypes.bool,

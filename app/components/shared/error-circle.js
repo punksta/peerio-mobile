@@ -10,6 +10,7 @@ const diameter = 18;
 @observer
 export default class ErrorCircle extends Component {
     render() {
+        if (!this.props.visible) return null;
         const ratio = this.props.large ? 2 : 1;
         const width = diameter * ratio;
         const height = width;
@@ -42,6 +43,7 @@ export default class ErrorCircle extends Component {
 }
 
 ErrorCircle.propTypes = {
+    visible: React.PropTypes.bool,
     large: React.PropTypes.bool,
     invert: React.PropTypes.bool
 };
