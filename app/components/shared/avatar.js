@@ -3,11 +3,13 @@ import {
     View, Text, TouchableOpacity
 } from 'react-native';
 import moment from 'moment';
+import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileInlineProgress from '../files/file-inline-progress';
 import AvatarCircle from './avatar-circle';
+import ErrorCircle from './error-circle';
 
 const itemStyle = {
     flexGrow: 1,
@@ -20,18 +22,15 @@ const itemContainerStyle = {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
+    paddingLeft: 8,
     borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, .12)',
-    backgroundColor: 'white',
-    paddingLeft: 8
+    borderBottomColor: 'rgba(0, 0, 0, .12)'
 };
 
 const itemContainerStyleNoBorder = {
     flexGrow: 1,
     flexDirection: 'row',
-    alignItems: 'flex-start',
-    backgroundColor: 'white',
-    paddingLeft: 8
+    alignItems: 'flex-start'
 };
 
 const nameContainerStyle = {
@@ -42,12 +41,14 @@ const nameContainerStyle = {
 
 const nameMessageContainerStyle = {
     flexGrow: 1,
+    flexShrink: 1,
     borderWidth: 0,
     borderColor: 'red',
     flexDirection: 'column',
     padding: 8,
     paddingLeft: 16,
-    marginLeft: 6
+    marginLeft: 6,
+    marginRight: 6
 };
 
 const nameTextStyle = {
@@ -89,28 +90,12 @@ const circleStyleOff = {
 
 @observer
 export default class Avatar extends Component {
+    @observable showError = false;
+
     get checked() {
         const cs = this.props.checkedState;
         const ck = this.props.checkedKey;
         return cs && ck && !!cs.has(ck);
-    }
-
-    hashCode(str) { // java String#hashCode
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            hash = str.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        return hash;
-    }
-
-    intToRGB(_i) {
-        const i = _i * _i * _i % _i;
-        const c = (i & 0x00FFFFFF).toString(16).toUpperCase();
-        return '00000'.substring(0, 6 - c.length) + c;
-    }
-
-    stringColor(s) {
-        return `#${this.intToRGB(this.hashCode(s))}`;
     }
 
     checkbox() {
@@ -131,6 +116,13 @@ export default class Avatar extends Component {
     }
 
     render() {
+        const error = this.props.error;
+        const errorStyle = error ? {
+            backgroundColor: '#ff000020',
+            borderRadius: 14,
+            marginVertical: 2,
+            marginHorizontal: 4
+        } : null;
         const message = this.props.message || '';
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
         const date = this.props.date ? <Text style={dateTextStyle}>{moment(this.props.date).format('LT')}</Text> : null;
@@ -138,6 +130,13 @@ export default class Avatar extends Component {
         const checkbox = this.props.checkbox ? this.checkbox() : null;
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
         const text = <Text style={lastMessageTextStyle}>{message}</Text>;
+        const corrupted = error && this.showError && (
+            <Text style={{ margin: 8 }}>
+                The cryptographic signature of this
+                message is invalid. This might mean
+                someone forged this message.
+            </Text>
+        );
         const files = this.props.files ?
             this.props.files.map(file => <FileInlineProgress key={file.id} file={file} />) : null;
         return (
@@ -145,20 +144,28 @@ export default class Avatar extends Component {
                 <TouchableOpacity onPress={this.props.onPress} activeOpacity={this.props.noTap ? 1 : 0.2}>
                     <View style={itemStyle}>
                         {checkbox}
-                        <View style={ics}>
-                            <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
-                            <View style={nameMessageContainerStyle}>
-                                <View style={nameContainerStyle}>
-                                    <Text ellipsizeMode="tail" style={nameTextStyle}>
-                                        {this.props.contact.username}
-                                    </Text>
-                                    {date}
-                                </View>
-                                {text}
-                                {files}
+                        <View style={[{ flexGrow: 1 }, errorStyle]}>
+                            <View style={ics}>
+                                <TouchableOpacity onPress={this.props.onPress}>
+                                    <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    onPress={() => { this.showError = !this.showError; }}
+                                    style={nameMessageContainerStyle}>
+                                    <View style={nameContainerStyle}>
+                                        <Text ellipsizeMode="tail" style={nameTextStyle}>
+                                            {this.props.contact.username}
+                                        </Text>
+                                        {date}
+                                    </View>
+                                    {text}
+                                    {files}
+                                    {error && <ErrorCircle invert />}
+                                </TouchableOpacity>
+                                {icon}
+                                {online}
                             </View>
-                            {icon}
-                            {online}
+                            {corrupted}
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -169,13 +176,16 @@ export default class Avatar extends Component {
 
 Avatar.propTypes = {
     onPress: React.PropTypes.func,
+    onPressText: React.PropTypes.func,
     contact: React.PropTypes.any.isRequired,
     date: React.PropTypes.any,
     files: React.PropTypes.any,
     icon: React.PropTypes.string,
     message: React.PropTypes.string,
     online: React.PropTypes.bool,
+    error: React.PropTypes.bool,
     loading: React.PropTypes.bool,
+    showError: React.PropTypes.bool,
     checkbox: React.PropTypes.bool,
     checkedKey: React.PropTypes.string,
     checkedState: React.PropTypes.any,

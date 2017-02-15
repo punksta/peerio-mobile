@@ -13,6 +13,7 @@ export default class ChatItem extends Component {
         const timestamp = i.timestamp;
         const text = msg.replace(/\n[ ]+/g, '\n');
         const onPress = () => mainState.contactView(i.sender);
+        const error = !!msg.signatureError;
         return (
             <Avatar
                 contact={i.sender}
@@ -21,7 +22,10 @@ export default class ChatItem extends Component {
                 date={timestamp}
                 message={text}
                 key={key}
+                error={error}
                 onPress={onPress}
+                onPressText={() => null}
+                noTap
                 noBorderBottom
             />
         );

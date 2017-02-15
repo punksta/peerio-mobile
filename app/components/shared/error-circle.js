@@ -13,15 +13,19 @@ export default class ErrorCircle extends Component {
         const ratio = this.props.large ? 2 : 1;
         const width = diameter * ratio;
         const height = width;
+        const color1 = 'red';
+        const color2 = 'white';
+        const borderColor = this.props.invert ? color1 : color2;
+        const backgroundColor = this.props.invert ? color2 : color1;
         const tofuStyle = {
             position: 'absolute',
             right: 0,
             width,
             height,
             borderRadius: width / 2,
-            borderColor: 'white',
+            borderColor,
             borderWidth: 1,
-            backgroundColor: 'red',
+            backgroundColor,
             overflow: 'hidden',
             justifyContent: 'center',
             alignItems: 'center',
@@ -31,13 +35,14 @@ export default class ErrorCircle extends Component {
 
         return (
             <View style={tofuStyle}>
-                <Text style={{ color: 'white', fontSize: 12 * ratio, fontWeight: 'bold' }}>!</Text>
+                <Text style={{ color: borderColor, fontSize: 12 * ratio, fontWeight: 'bold' }}>!</Text>
             </View>
         );
     }
 }
 
 ErrorCircle.propTypes = {
-    large: React.PropTypes.bool
+    large: React.PropTypes.bool,
+    invert: React.PropTypes.bool
 };
 
