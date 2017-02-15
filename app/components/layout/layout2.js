@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import {
     View
 } from 'react-native';
+
 import { observer } from 'mobx-react/native';
+import SnackBarConnection from '../snackbars/snackbar-connection';
 import { vars } from '../../styles/styles';
 
 @observer
@@ -31,6 +33,7 @@ export default class Layout2 extends Component {
             }}>
                 {this.props.body}
                 {this.props.footer}
+                <SnackBarConnection />
             </View>
         );
     }
