@@ -27,11 +27,9 @@ import SnackBar from '../snackbars/snackbar';
 import Fab from '../shared/fab';
 import SettingsLevel1 from '../settings/settings-level-1';
 import SettingsLevel2 from '../settings/settings-level-2';
-// import Placeholder from './placeholder';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import Ghosts from '../ghosts/ghosts';
-import GhostView from '../ghosts/ghost-view';
-import GhostCompose from '../ghosts/ghost-compose';
+import GhostsLevel1 from '../ghosts/ghosts-level-1';
 import ContactView from '../contacts/contact-view';
 import Logs from '../logs/logs';
 import styles, { vars } from '../../styles/styles';
@@ -39,7 +37,7 @@ import styles, { vars } from '../../styles/styles';
 const routes = {
     recent: [<MessagingPlaceholder />],
     files: [<Files />, <FileView />],
-    ghosts: [<Ghosts />, <GhostView />],
+    ghosts: [<Ghosts />, <GhostsLevel1 />],
     chat: [<Chat />],
     settings: [<SettingsLevel1 />, <SettingsLevel2 />],
     logs: [<Logs />]
@@ -49,8 +47,7 @@ const modalRoutes = {
     compose: <ComposeMessage />,
     shareFileTo: <FileShare />,
     selectFiles: <SelectFiles />,
-    contactView: <ContactView />,
-    ghostCompose: <GhostCompose />
+    contactView: <ContactView />
 };
 
 @observer

@@ -70,7 +70,7 @@ const state = observable({
                 this.locale = lc;
                 this.languageSelected = lc;
                 this.save();
-                // moment.locale(lc);
+                moment.locale(lc);
             });
     }),
 

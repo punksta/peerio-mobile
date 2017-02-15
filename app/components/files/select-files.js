@@ -96,6 +96,7 @@ export default class SelectFiles extends Component {
     item(file) {
         return (
             <FileInnerItem
+                key={file.id}
                 checkbox="always"
                 hideArrow
                 file={file} />

@@ -47,6 +47,8 @@ const mainState = observable({
         chat: (s) => (s.currentChat ? s.currentChat.chatName : '')
     }),
 
+    fabActions: observable.ref({}),
+
     activateAndTransition: action.bound(function(user) {
         state.routes.main.transition();
         User.current = user;
@@ -134,6 +136,7 @@ const mainState = observable({
 
     files: action.bound(function() {
         this.resetMenus();
+        this.suppressTransition = true;
         this.route = 'files';
         this.currentIndex = 0;
         this.currentFile = null;
@@ -272,6 +275,11 @@ const mainState = observable({
         this.resetMenus();
         this.currentContact = contact;
         this.showModal('contactView');
+    }),
+
+    fabAction: action.bound(function() {
+        const fa = this.fabActions[this.route];
+        fa && fa();
     })
 });
 

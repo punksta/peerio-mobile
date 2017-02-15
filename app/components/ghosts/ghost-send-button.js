@@ -4,11 +4,14 @@ import {
 } from 'react-native';
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
-import mainState from '../main/main-state';
+import ghostState from './ghost-state';
 
 const fabSize = vars.fabSize;
 
 const fabContainer = {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
     alignItems: 'flex-end',
     borderColor: 'red',
     borderWidth: 0
@@ -35,12 +38,7 @@ const shadowStyle = {
     }
 };
 
-export default class Fab extends Component {
-    fabAction() {
-        mainState.fabAction();
-        return false;
-    }
-
+export default class GhostSendButton extends Component {
     render() {
         const s = [fabStyle, helpers.circle(fabSize), shadowStyle];
         return (
@@ -49,10 +47,11 @@ export default class Fab extends Component {
                 <TouchableOpacity
                     style={s}
                     pressRetentionOffset={vars.offset}
-                    onPress={() => this.fabAction()}>
-                    {icons.plainWhite('add')}
+                    onPress={() => ghostState.send()}>
+                    {icons.plainWhite('send')}
                 </TouchableOpacity>
             </View>
         );
     }
 }
+

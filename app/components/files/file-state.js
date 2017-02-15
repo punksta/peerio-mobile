@@ -4,6 +4,7 @@ import mainState from '../main/main-state';
 import { fileStore, TinyDb } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
+import imagePicker from '../helpers/imagepicker';
 
 const fileState = observable({
     get showSelection() {
@@ -95,5 +96,9 @@ const fileState = observable({
         mainState.discardModal();
     })
 });
+
+mainState.fabActions.files = () => {
+    imagePicker.test();
+};
 
 export default fileState;

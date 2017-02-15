@@ -36,10 +36,6 @@ export default class Files extends Component {
     }
 
     componentWillMount() {
-        this.reaction = reaction(() => (mainState.route === 'files') && this.data && this.data.length, () => {
-            this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
-            this.forceUpdate();
-        }, true);
     }
 
     componentWillUnmount() {
@@ -53,6 +49,17 @@ export default class Files extends Component {
             const toValue = v ? 56 : 0;
             Animated.timing(this.actionsHeight, { toValue, duration }).start();
         });
+
+        this.reaction = reaction(() => [
+            mainState.route === 'files',
+            mainState.currentIndex === 0,
+            this.data,
+            this.data.length
+        ], () => {
+            console.log(`files.js: force update`);
+            this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
+            this.forceUpdate();
+        }, true);
     }
 
     item(file) {

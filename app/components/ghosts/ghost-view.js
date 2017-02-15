@@ -16,6 +16,31 @@ export default class Ghost extends Component {
         return (
             <View>
                 <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
+                <Text>ghost view</Text>
             </View>
         );
     }
