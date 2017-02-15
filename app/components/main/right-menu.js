@@ -13,6 +13,7 @@ import { vars } from '../../styles/styles';
 import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
 import { t } from '../utils/translator';
+import { fileStore } from '../../lib/icebear';
 
 const itemStyle = {
     flexGrow: 1,
@@ -91,6 +92,7 @@ export default class RightMenu extends Component {
             {
                 name: t('files'),
                 route: 'files',
+                bubble: fileStore.unreadFiles,
                 icon: 'folder',
                 action: () => mainState.files()
             },

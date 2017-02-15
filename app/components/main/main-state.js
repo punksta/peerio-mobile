@@ -269,4 +269,8 @@ reaction(() => mainState.isLeftMenuVisible, () => {
     if (mainState.isLeftMenuVisible) state.hideKeyboard();
 });
 
+reaction(() => mainState.route === 'files', files => {
+    fileStore.active = files;
+});
+
 export default mainState;
