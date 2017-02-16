@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TouchableOpacity
+    View, Text, TouchableOpacity, Linking
 } from 'react-native';
 import moment from 'moment';
+import * as linkify from 'linkifyjs';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
@@ -114,6 +115,26 @@ export default class Avatar extends Component {
         return null;
     }
 
+    message(m) {
+        const items = linkify.tokenize(m).map((token, i) => {
+            const p = token.isLink ? () => {
+                Linking.openURL(token.toHref());
+            } : null;
+            const t = token.toString();
+            const s = token.isLink ? {
+                textDecorationLine: 'underline',
+                color: vars.bg
+            } : null;
+            return <Text onPress={p} key={i} style={s}>{t}</Text>;
+        });
+        // console.info(items);
+        return (
+            <Text style={lastMessageTextStyle}>
+                {items}
+            </Text>
+        );
+    }
+
     render() {
         const error = this.props.error;
         const errorStyle = error ? {
@@ -124,7 +145,8 @@ export default class Avatar extends Component {
         } : null;
         const message = this.props.message || '';
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
-        const date = this.props.date ? <Text style={dateTextStyle}>{moment(this.props.date).format('MMM D, LT')}</Text> : null;
+        const date = this.props.date ?
+            <Text style={dateTextStyle}>{moment(this.props.date).format('MMM D, LT')}</Text> : null;
         const checkbox = this.props.checkbox ? this.checkbox() : null;
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
         const files = this.props.files ?
@@ -148,7 +170,7 @@ export default class Avatar extends Component {
                                         </Text>
                                         {date}
                                     </View>
-                                    <Text style={lastMessageTextStyle}>{message}</Text>
+                                    {this.message(message)}
                                     {files}
                                     <ErrorCircle invert visible={!!error} />
                                 </TouchableOpacity>
