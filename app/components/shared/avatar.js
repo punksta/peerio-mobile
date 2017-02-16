@@ -3,7 +3,7 @@ import {
     View, Text, TouchableOpacity, Linking
 } from 'react-native';
 import moment from 'moment';
-import * as linkify from 'linkifyjs';
+import * as linkify from 'linkifyjs-peerio';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
