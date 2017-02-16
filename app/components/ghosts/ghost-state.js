@@ -19,8 +19,8 @@ const ghostState = observable({
     },
 
     view(ghost) {
-        mainState.route = 'ghosts';
         ghostState.isComposing = false;
+        mainState.route = 'ghosts';
         mainState.currentIndex = 1;
         mainState.isBackVisible = true;
         mailStore.selectedId = ghost.ghostId;

@@ -1,7 +1,7 @@
 import { Animated } from 'react-native';
 import { observable, action, when, reaction } from 'mobx';
 import state from '../layout/state';
-import { User, chatStore, fileStore, TinyDb } from '../../lib/icebear';
+import { User, chatStore, fileStore, mailStore, TinyDb } from '../../lib/icebear';
 import sounds from '../../lib/sounds';
 import { enablePushNotifications } from '../../lib/push';
 import touchid from '../touchid/touchid-bridge';
@@ -58,6 +58,7 @@ const mainState = observable({
         when(() => !chatStore.loading, () => {
             console.log('main-state.js: load all files');
             fileStore.loadAllFiles();
+            when(() => !fileStore.loading, () => mailStore.loadAllGhosts());
         });
     }),
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     View,
     ListView,
+    ScrollView,
     Animated
 } from 'react-native';
 import { observable, reaction } from 'mobx';
@@ -13,6 +14,7 @@ import GhostItem from './ghost-item';
 // import FileActions from './file-actions';
 // import ghostState from './ghost-state';
 import mainState from '../main/main-state';
+import { mailStore } from '../../lib/icebear';
 
 @observer
 export default class Ghosts extends Component {
@@ -29,17 +31,21 @@ export default class Ghosts extends Component {
     actionsHeight = new Animated.Value(0)
 
     get data() {
-        return [];
-        // return fileStore.files.sort((f1, f2) => {
-        //     return f2.uploadedAt - f1.uploadedAt;
-        // });
+        return mailStore.ghosts;
     }
 
     componentWillMount() {
-        this.reaction = reaction(() => (mainState.route === 'ghosts') && this.data && this.data.length, () => {
-            this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
-            this.forceUpdate();
-        }, true);
+        // this.reaction = reaction(() => [
+        //     mainState.route === 'ghosts',
+        //     mainState.currentIndex === 0,
+        //     this.data,
+        //     this.data.length
+        // ], () => {
+        //     console.log(`ghosts.js: force update`);
+        //     this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
+        //     this.forceUpdate();
+        //     setTimeout(() => this.forceUpdate(), 1000);
+        // }, true);
     }
 
     componentWillUnmount() {
@@ -47,22 +53,22 @@ export default class Ghosts extends Component {
         this.reaction = null;
     }
 
-    item(file) {
+    item(ghost) {
         return (
-            <GhostItem key={file.fileId} file={file} />
+            <GhostItem key={ghost.ghostId} ghost={ghost} />
         );
     }
 
     listView() {
         return (
-            <ListView
+            <ScrollView
                 initialListSize={1}
                 dataSource={this.dataSource}
                 renderRow={this.item}
-                onContentSizeChange={this.scroll}
                 enableEmptySections
-                ref={sv => (this.scrollView = sv)}
-            />
+                ref={sv => (this.scrollView = sv)}>
+                {this.data.map(i => this.item(i))}
+            </ScrollView>
         );
     }
 
