@@ -1308,7 +1308,7 @@
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 251;
+				CURRENT_PROJECT_VERSION = 253;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
 				HEADER_SEARCH_PATHS = (
@@ -1349,7 +1349,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
-				PROVISIONING_PROFILE = "5845d9e1-1b93-4dfa-b427-ec5a08a1ae16";
+				PROVISIONING_PROFILE = "11459fc3-9831-41c0-bf37-53ee452af20c";
 				PROVISIONING_PROFILE_SPECIFIER = com.peerio.dev;
 				SYMROOT = build/Build/Products;
 			};
@@ -1363,7 +1363,7 @@
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
-				CURRENT_PROJECT_VERSION = 251;
+				CURRENT_PROJECT_VERSION = 253;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
