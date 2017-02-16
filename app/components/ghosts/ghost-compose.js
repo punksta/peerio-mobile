@@ -89,10 +89,10 @@ export default class ComposeMessage extends Component {
         return !!((this.files.length || this.value.length) && this.recipient.length);
     }
 
-    @observable value = value;
-    @observable recipient = 'seavan@gmail.com';
+    @observable value = __DEV__ ? value : '';
+    @observable recipient = __DEV__ ? 'seavan@gmail.com' : '';
     @observable files = [];
-    @observable subject = 'test subject';
+    @observable subject = __DEV__ ? 'test subject' : '';
     @observable inProgress = false;
 
     send() {
