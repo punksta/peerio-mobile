@@ -15,6 +15,13 @@ if (typeof process === 'undefined') {
 process.browser = false
 if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer
 
+// https://tc39.github.io/ecma262/#sec-%typedarray%.prototype.join
+if (!Uint8Array.prototype.join) {
+  Object.defineProperty(Uint8Array.prototype, 'join', {
+    value: Array.prototype.join
+  });
+}
+
 // global.location = global.location || { port: 80 }
 var isDev = typeof __DEV__ === 'boolean' && __DEV__
 process.env['NODE_ENV'] = isDev ? 'development' : 'production'
