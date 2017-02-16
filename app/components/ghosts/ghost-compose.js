@@ -147,6 +147,7 @@ export default class ComposeMessage extends Component {
             <View style={row}>
                 {this.text('To:')}
                 <TextInput
+                    underlineColorAndroid={'transparent'}
                     autoCapitalize="none"
                     autoCorrect={false}
                     autoComplete={false}
@@ -163,6 +164,7 @@ export default class ComposeMessage extends Component {
             <View style={row}>
                 {this.text('Subject:')}
                 <TextInput
+                    underlineColorAndroid={'transparent'}
                     autoCapitalize="none"
                     autoCorrect={false}
                     autoComplete={false}
@@ -210,6 +212,7 @@ export default class ComposeMessage extends Component {
                     {this.attachments()}
                 </View>
                 <TextInput
+                    underlineColorAndroid={'transparent'}
                     multiline
                     value={this.value}
                     onChangeText={text => (this.value = text)}

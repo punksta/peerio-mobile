@@ -3,12 +3,12 @@ import {
     Text,
     View,
     ScrollView,
-    TouchableOpacity,
-    TextInput
+    TouchableOpacity
 } from 'react-native';
+import Share from 'react-native-share';
 import moment from 'moment';
 import { observer } from 'mobx-react/native';
-import icons from '../helpers/icons';
+// import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import { mailStore } from '../../lib/icebear';
 
@@ -62,6 +62,17 @@ export default class Ghost extends Component {
         return mailStore.selectedGhost;
     }
 
+    share() {
+        Share.open({
+            title: 'Peerio Mail',
+            message: this.ghost.passphrase,
+            subject: 'Share Peerio Mail'
+        })
+        .catch(() => {
+            console.log(`ghost-view.js: share cancelled by user`);
+        });
+    }
+
     render() {
         const g = this.ghost;
         if (!g) return null;
@@ -70,9 +81,11 @@ export default class Ghost extends Component {
             <View style={filler}>
                 <View style={{ padding }}>
                     <Text style={lightText}>Passphrase</Text>
-                    <Text selectable style={boldText}>
-                        {g.passphrase}
-                    </Text>
+                    <TouchableOpacity onPress={() => this.share()}>
+                        <Text style={boldText}>
+                            {g.passphrase}
+                        </Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={infoBlock}>
                     <View style={row}>
