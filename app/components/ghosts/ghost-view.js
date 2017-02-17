@@ -81,7 +81,9 @@ export default class Ghost extends Component {
             <View style={filler}>
                 <View style={{ padding }}>
                     <Text style={lightText}>Passphrase</Text>
-                    <TouchableOpacity onPress={() => this.share()}>
+                    <TouchableOpacity
+                        pressRetentionOffset={vars.offset}
+                        onPress={() => this.share()}>
                         <Text style={boldText}>
                             {g.passphrase}
                         </Text>
