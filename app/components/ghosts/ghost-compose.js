@@ -101,16 +101,18 @@ export default class ComposeMessage extends Component {
         g.recipients.push(this.recipient);
         g.subject = this.subject;
         this.inProgress = true;
-        g.send(this.value)
-            .then(() => {
-                ghostState.view(g);
-            })
-            .catch(e => {
-                console.error(`ghost-compose.js: sending error`);
-                console.log(e);
-                g.remove();
-            })
-            .finally(() => (this.inProgress = false));
+        setTimeout(() => {
+            g.send(this.value)
+                .then(() => {
+                    ghostState.view(g);
+                })
+                .catch(e => {
+                    console.error(`ghost-compose.js: sending error`);
+                    console.log(e);
+                    g.remove();
+                })
+                .finally(() => (this.inProgress = false))
+        }, 100);
     }
 
     addFiles() {

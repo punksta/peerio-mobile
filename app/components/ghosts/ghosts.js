@@ -5,15 +5,14 @@ import {
     ScrollView,
     Animated
 } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { MenuContext } from 'react-native-menu';
+import { observable /* , reaction */ } from 'mobx';
 import { observer } from 'mobx-react/native';
 // import { vars } from '../../styles/styles';
 import GhostsZeroState from './ghosts-zero-state';
+import ProgressOverlay from '../shared/progress-overlay';
 // import styles, { vars } from '../../styles/styles';
 import GhostItem from './ghost-item';
-// import FileActions from './file-actions';
-// import ghostState from './ghost-state';
-import mainState from '../main/main-state';
 import { mailStore } from '../../lib/icebear';
 
 @observer
@@ -74,12 +73,15 @@ export default class Ghosts extends Component {
 
     render() {
         const body = this.data.length ?
-            this.listView() : <GhostsZeroState />;
+            this.listView() : !mailStore.loading && <GhostsZeroState />;
 
         return (
             <View
                 style={{ flex: 1, flexGrow: 1 }}>
-                {body}
+                <MenuContext>
+                    {body}
+                </MenuContext>
+                <ProgressOverlay enabled={mailStore.loading} />
             </View>
         );
     }

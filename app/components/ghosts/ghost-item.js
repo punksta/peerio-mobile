@@ -3,13 +3,21 @@ import {
     View, Text, TouchableOpacity
 } from 'react-native';
 import { observer } from 'mobx-react/native';
+import Menu, { MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
 import moment from 'moment';
 import ghostState from './ghost-state';
+import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
+import { mailStore } from '../../lib/icebear';
 
 const row = {
     flexDirection: 'row',
     justifyContent: 'space-between'
+};
+
+const rowFill = {
+    flexDirection: 'row',
+    alignItems: 'center'
 };
 
 const block = {
@@ -20,13 +28,16 @@ const block = {
 };
 
 const normalText = {
-    color: vars.txtDark,
-    fontSize: 14
+    color: vars.txtDark
 };
 
 const lightText = {
-    color: vars.subtleText,
-    fontSize: 12
+    color: vars.subtleText
+};
+
+const shrinkFill = {
+    flexGrow: 1,
+    flexShrink: 1
 };
 
 const boldText = {
@@ -37,6 +48,13 @@ const boldText = {
 
 @observer
 export default class GhostItem extends Component {
+    reloadGhosts() {
+        // TODO: remove when client lib handles updates
+        mailStore.loaded = false;
+        mailStore.ghosts.clear();
+        mailStore.loadAllGhosts();
+    }
+
     press() {
         ghostState.view(this.props.ghost);
     }
@@ -51,7 +69,22 @@ export default class GhostItem extends Component {
                         <Text style={lightText}>{moment(g.timestamp).format('L')}</Text>
                     </View>
                     <Text style={lightText}>{g.recipients.join(', ')}</Text>
-                    <Text style={lightText} ellipsizeMode="tail" numberOfLines={1}>{g.preview}</Text>
+                    <View style={rowFill}>
+                        <Text style={[lightText, shrinkFill]} ellipsizeMode="tail" numberOfLines={1}>{g.preview}</Text>
+                        <Menu onSelect={action => action().then(() => this.reloadGhosts())}>
+                            <MenuTrigger style={{ padding: vars.iconPadding }}>
+                                {icons.plaindark('more-vert')}
+                            </MenuTrigger>
+                            <MenuOptions>
+                                <MenuOption value={() => g.revoke()}>
+                                    <Text>Revoke</Text>
+                                </MenuOption>
+                                <MenuOption value={() => g.remove()}>
+                                    <Text>Delete</Text>
+                                </MenuOption>
+                            </MenuOptions>
+                        </Menu>
+                    </View>
                 </View>
             </TouchableOpacity>
         );

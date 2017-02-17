@@ -70,6 +70,7 @@
     "react-native-file-opener": "https://github.com/PeerioTechnologies/react-native-file-opener.git",
     "react-native-fs": "https://github.com/PeerioTechnologies/react-native-fs.git",
     "react-native-image-picker": "https://github.com/PeerioTechnologies/react-native-image-picker",
+    "react-native-menu": "^0.20.2",
     "react-native-picker": "3.0.5",
     "react-native-push-notification": "https://github.com/PeerioTechnologies/react-native-push-notification",
     "react-native-randombytes": "^2.1.0",
