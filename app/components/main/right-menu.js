@@ -83,6 +83,12 @@ export default class RightMenu extends Component {
 
         const items = [
             {
+                name: t('ghosts'),
+                route: 'ghosts',
+                icon: 'mail',
+                action: () => ghostState.transition()
+            },
+            {
                 name: t('messages'),
                 route: 'chat',
                 bubble: mainState.unreadMessages,
@@ -95,12 +101,6 @@ export default class RightMenu extends Component {
                 bubble: fileStore.unreadFiles,
                 icon: 'folder',
                 action: () => mainState.files()
-            },
-            {
-                name: t('ghosts'),
-                route: 'ghosts',
-                icon: 'mail',
-                action: () => ghostState.transition()
             },
             /* {
                 name: t('profile'),
