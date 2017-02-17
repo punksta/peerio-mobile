@@ -39,7 +39,7 @@ export default class AvatarCircle extends Component {
                 <View style={coloredAvatarStyle}>
                     <Text style={{ color: 'white', fontSize: 12 * ratio }}>{letter}</Text>
                 </View>
-                { tofuError && (<ErrorCircle large={this.props.large} />) }
+                <ErrorCircle large={this.props.large} visible={tofuError} />
             </View>
         );
     }
