@@ -149,6 +149,7 @@ export default class ComposeMessage extends Component {
             <View style={row}>
                 {this.text('To:')}
                 <TextInput
+                    keyboardType="email-address"
                     underlineColorAndroid={'transparent'}
                     autoCapitalize="none"
                     autoCorrect={false}
