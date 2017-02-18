@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { LayoutAnimation, Picker } from 'react-native';
+import { LayoutAnimation, Picker, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import _ from 'lodash';
 import state from '../layout/state';
+import icons from '../helpers/icons';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class PickerPopup extends Component {
@@ -11,43 +13,95 @@ export default class PickerPopup extends Component {
         this.onValueChange = this.onValueChange.bind(this);
     }
 
+    get value() {
+        return this.props.state[this.props.name];
+    }
+
+    set value(v) {
+        this.props.state[this.props.name] = v;
+    }
+
     componentWillUpdate() {
         LayoutAnimation.easeInEaseOut();
     }
 
-    onValueChange(lang) {
-        state[this.props.name] = lang;
+    onValueChange(v) {
+        this.value = v;
     }
 
-    layout(e) {
-        console.log(e.nativeEvent.layout.height);
+    close() {
+        state.pickerVisible = false;
+    }
+
+    next(shift) {
+        const keys = _.keys(this.props.data);
+        let i = keys.indexOf(this.value) + shift;
+        if (i < 0) i = 0;
+        if (i > keys.length - 1) i = keys.length - 1;
+        this.value = keys[i];
     }
 
     render() {
+        const keys = _.keys(this.props.data);
+        const i = keys.indexOf(this.value);
         const items = _.values(_.mapValues(this.props.data, (value, key) =>
             <Picker.Item label={value} value={key} key={key} />));
+        const topBox = {
+            flex: 0,
+            flexDirection: 'row',
+            borderBottomWidth: 1,
+            borderColor: '#00000040',
+            backgroundColor: '#00000010',
+            justifyContent: 'space-between'
+        };
+
+        const containerStyle = {
+            backgroundColor: '#fff',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: state.pickerVisible ? state.pickerHeight : 0
+        };
+
+        const pickerStyle = {
+        };
+
+        const up = icons.colored(
+            'keyboard-arrow-up',
+            () => this.next(-1),
+            i > 0 ? vars.bg : vars.disabled
+        );
+
+        const down = icons.colored(
+            'keyboard-arrow-down',
+            () => this.next(1),
+            (i < keys.length - 1) ? vars.bg : vars.disabled
+        );
+
+
         return (
-            <Picker
-                onLayout={this.layout}
-                selectedValue={this.props.value}
-                onValueChange={this.onValueChange}
-                style={{
-                    flex: 0,
-                    backgroundColor: '#fff',
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: state.pickerVisible ? state.pickerHeight : 0
-                }}>
-                {items}
-            </Picker>
+            <View style={containerStyle}>
+                <View style={topBox}>
+                    <View style={{ flexDirection: 'row' }}>
+                        {up}
+                        {down}
+                    </View>
+                    {icons.text('OK', () => this.close())}
+                </View>
+                <Picker
+                    style={pickerStyle}
+                    selectedValue={this.value}
+                    onValueChange={this.onValueChange}>
+                    {items}
+                </Picker>
+            </View>
         );
     }
 }
 
 PickerPopup.propTypes = {
     data: React.PropTypes.any.isRequired,
-    value: React.PropTypes.any.isRequired,
+    state: React.PropTypes.any.isRequired,
     name: React.PropTypes.string.isRequired
 };

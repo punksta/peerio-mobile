@@ -28,6 +28,7 @@ const retentionOffset = { top: r, left: r, bottom: r, right: r };
 const vars = {
     circle: 10,
     bg,
+    disabled: '#00000020',
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',
     white: '#fff',

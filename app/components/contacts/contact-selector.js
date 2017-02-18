@@ -135,17 +135,12 @@ export default class ContactSelector extends Component {
             fontWeight: vars.font.weight.semiBold,
             color: 'rgba(0, 0, 0, .54)'
         };
-        const goStyle = {
-            fontSize: 14,
-            fontWeight: vars.font.weight.semiBold,
-            color: vars.bg
-        };
         return (
             <View style={container}>
                 {icons.dark('close', this.exit)}
                 <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
                 {contactState.recipients.length ?
-                    icons.text(t('go'), () => this.action(), goStyle) : icons.placeholder()}
+                    icons.text(t('go'), () => this.action()) : icons.placeholder()}
             </View>
         );
     }

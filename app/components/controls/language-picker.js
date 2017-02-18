@@ -21,7 +21,7 @@ export default class LanguagePicker extends Component {
                 name="languageSelected"
                 onValueChange={this.onValueChange}
                 data={this.data}
-                value={state.languageSelected} />
+                state={state} />
         );
     }
 }

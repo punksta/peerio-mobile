@@ -6,6 +6,12 @@ import { vars } from '../../styles/styles';
 
 const iconAddChat = require('../../assets/icon-add-chat.png');
 
+const goStyle = {
+    fontSize: 14,
+    fontWeight: vars.font.weight.semiBold,
+    color: vars.bg
+};
+
 const icons = {
     basic(name, color, onPress, style, size) {
         return (
@@ -69,8 +75,8 @@ const icons = {
             <TouchableOpacity
                 pressRetentionOffset={vars.offset}
                 onPress={onPress}>
-                <View style={{ height: size, width: size, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={style}>{text}</Text>
+                <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={[goStyle, style]}>{text}</Text>
                 </View>
             </TouchableOpacity>
         );

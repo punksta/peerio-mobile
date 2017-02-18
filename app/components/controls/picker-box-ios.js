@@ -28,7 +28,7 @@ export default class PickerBoxIos extends Component {
             <View style={shadow}>
                 <View
                     style={background}>
-                    <TouchableOpacity testID="pickerBox" onPress={this.focus} activeOpacity={1}>
+                    <TouchableOpacity testID="pickerBox" onPress={this.focus}>
                         <View
                             pointerEvents="none"
                             style={container}>
