@@ -1,8 +1,8 @@
 import React from 'react';
 import {
-    Text
+    Text, ScrollView
 } from 'react-native';
-import mainState from '../main/main-state';
+import popupState from '../layout/popup-state';
 
 function textControl(t) {
     const text = {
@@ -17,7 +17,7 @@ function textControl(t) {
 
 function popupYes(title, subTitle, text) {
     return new Promise((resolve) => {
-        mainState.showPopup({
+        popupState.showPopup({
             title,
             subTitle: textControl(subTitle),
             contents: textControl(text),
@@ -28,4 +28,16 @@ function popupYes(title, subTitle, text) {
     });
 }
 
-module.exports = { popupYes };
+function popupTOS() {
+    console.log(`popup tos`);
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title: 'Terms of Use',
+            buttons: [{
+                id: 'ok', text: 'OK', action: resolve
+            }]
+        });
+    });
+}
+
+module.exports = { popupYes, popupTOS };

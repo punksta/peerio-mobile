@@ -24,14 +24,8 @@ const mainState = observable({
     currentIndex: 0,
     modalRoute: null,
     modalControl: null,
-    popupControls: [],
     suppressTransition: false,
     _loading: false,
-
-    get activePopup() {
-        const pc = this.popupControls;
-        return pc.length ? pc[pc.length - 1] : null;
-    },
 
     get loading() {
         return this._loading || chatStore.loading; // || fileStore.loading;
@@ -257,14 +251,6 @@ const mainState = observable({
 
     discardModal: action.bound(function() {
         this.modalRoute = null;
-    }),
-
-    showPopup: action.bound(function(popup) {
-        this.popupControls.push(popup);
-    }),
-
-    discardPopup: action.bound(function() {
-        this.popupControls.pop();
     }),
 
     logs: action.bound(function() {

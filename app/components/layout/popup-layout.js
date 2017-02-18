@@ -3,7 +3,7 @@ import {
     View, Text, TouchableOpacity
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import mainState from '../main/main-state';
+import popupState from './popup-state';
 import { vars } from '../../styles/styles';
 
 @observer
@@ -15,7 +15,7 @@ export default class PopupLayout extends Component {
 
     onPress(item) {
         item.action && item.action();
-        mainState.discardPopup();
+        popupState.discardPopup();
     }
 
     button(item) {
@@ -42,7 +42,7 @@ export default class PopupLayout extends Component {
     }
 
     render() {
-        const popup = mainState.activePopup;
+        const popup = popupState.activePopup;
         if (!popup) return null;
 
         const modalStyle = {

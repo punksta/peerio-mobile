@@ -5,13 +5,13 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import TextBox from '../controls/textbox';
-import Link from '../controls/link';
 import Bold from '../controls/bold';
 import LanguagePickerBox from '../controls/language-picker-box';
 import SignupFooter from '../controls/signup-footer';
 import Layout1 from '../layout/layout1';
 import styles from '../../styles/styles';
 import signupState from './signup-state';
+import { popupTOS } from '../shared/popups';
 import { t, T } from '../utils/translator';
 
 @observer
@@ -21,11 +21,21 @@ export default class SignupStep1 extends Component {
         this.url = 'https://www.peerio.com/';
     }
 
+    tosLink(text) {
+        return (
+            <Text
+                onPress={popupTOS}
+                style={{ textDecorationLine: 'underline' }}>
+                {text}
+            </Text>
+        );
+    }
+
     render() {
         const style = styles.wizard;
         const tosParser = {
             emphasis: text => <Bold>{text}</Bold>,
-            tosLink: text => <Link url={this.url}>{text}</Link>
+            tosLink: text => this.tosLink(text)
         };
         const body = (
             <View style={[style.containerFlex, { marginTop: 32 }]}>

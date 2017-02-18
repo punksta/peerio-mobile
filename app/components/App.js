@@ -5,6 +5,7 @@ import { observer } from 'mobx-react/native';
 import Login from './login/login';
 import Signup from './signup/signup';
 import PersistentFooter from './layout/persistent-footer';
+import PopupLayout from './layout/popup-layout';
 // import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
 import ModalContainer from './layout/modal-container';
@@ -182,7 +183,7 @@ export default class App extends Component {
                         renderScene={this.renderScene} />
                     <PersistentFooter />
                 </View>
-                <ModalContainer />
+                <PopupLayout />
                 {state.picker}
             </View>
         );

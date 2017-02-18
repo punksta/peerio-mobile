@@ -30,7 +30,6 @@ const state = observable({
         es: 'Spanish',
         ru: 'Russian'
     },
-    modals: [],
 
     get bottomOffset() {
         const pickerHeight = this.pickerVisible ? this.pickerHeight : 0;
