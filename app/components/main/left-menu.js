@@ -83,7 +83,7 @@ export default class LeftMenu extends Component {
                         {i}
                     </Text>
                 </View>
-                {icons.dark('add-circle-outline', () => { action(); })}
+                {icons.iconAddChat(() => action())}
             </View>
         );
     }

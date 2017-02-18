@@ -1,13 +1,17 @@
 import React from 'react';
-import { TouchableOpacity, View, Text } from 'react-native';
+import { TouchableOpacity, View, Text, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Jumpy from '../shared/jumpy';
 import { vars } from '../../styles/styles';
 
+const iconAddChat = require('../../assets/icon-add-chat.png');
+
 const icons = {
     basic(name, color, onPress, style, size) {
         return (
-            <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity
+                pressRetentionOffset={vars.offset}
+                onPress={onPress}>
                 <View style={{ padding: vars.iconPadding }}>
                     <Icon
                         style={style}
@@ -62,7 +66,9 @@ const icons = {
     text(text, onPress, style) {
         const size = vars.iconPadding * 2 + vars.iconSize;
         return (
-            <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity
+                pressRetentionOffset={vars.offset}
+                onPress={onPress}>
                 <View style={{ height: size, width: size, flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={style}>{text}</Text>
                 </View>
@@ -95,6 +101,20 @@ const icons = {
     jumpy(icon) {
         return (
             <Jumpy>{icon}</Jumpy>
+        );
+    },
+
+    iconAddChat(onPress) {
+        const width = vars.iconSize;
+        const height = width;
+        const padding = vars.iconPadding;
+        return (
+            <TouchableOpacity
+                style={{ padding }}
+                onPress={onPress}
+                pressRetentionOffset={vars.offset}>
+                <Image style={{ width, height }} source={iconAddChat} />
+            </TouchableOpacity>
         );
     }
 };
