@@ -60,6 +60,7 @@ export default class PopupLayout extends Component {
         }];
 
         const container = {
+            flexGrow: popup.fullScreen,
             shadowColor: '#000000',
             shadowOpacity: 0.2,
             shadowRadius: 8,
@@ -77,6 +78,7 @@ export default class PopupLayout extends Component {
         };
 
         const buttonBar = {
+            flex: 0,
             flexDirection: 'row',
             justifyContent: 'flex-end'
         };
@@ -84,7 +86,7 @@ export default class PopupLayout extends Component {
         return (
             <View style={popupNonAnimatedStyle}>
                 <View style={container}>
-                    <View style={{ padding: 20 }}>
+                    <View style={{ padding: 20, flexGrow: 1, flexShrink: 1 }}>
                         <Text style={title}>{popup.title}</Text>
                         {popup.subTitle}
                         {popup.contents}

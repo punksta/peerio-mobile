@@ -28,6 +28,8 @@
 		02321C5B1D7F1BC100282EB1 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */; };
 		02321C5D1D80558E00282EB1 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 02321C5C1D80558E00282EB1 /* main.jsbundle */; };
 		023A731F1DA6D58B00E47992 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FDD4B41DA6457E004E1D5A /* libRNRandomBytes.a */; };
+		0248F0721E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
+		0248F0731E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
 		026B0DA91E0384EF00B24721 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026B0DA61E0384D700B24721 /* libRCTAnimation.a */; };
 		026B0DAA1E0384F300B24721 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026B0DA61E0384D700B24721 /* libRCTAnimation.a */; };
 		029F0E641E55303400C8586F /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 029F0E601E55301200C8586F /* libRNShare.a */; };
@@ -321,6 +323,7 @@
 		02277B141D6AEDC50020B31A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		02321C5C1D80558E00282EB1 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.jsbundle; sourceTree = "<group>"; };
+		0248F0711E5A59BF00C437A9 /* terms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = terms.txt; path = ../app/assets/terms.txt; sourceTree = "<group>"; };
 		026B0DA01E0384D600B24721 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		02BCD7231DFDE9A2000B8FCF /* RNFileOpener.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFileOpener.xcodeproj; path = "../node_modules/react-native-file-opener/ios/RNFileOpener.xcodeproj"; sourceTree = "<group>"; };
 		02BCD72C1DFE1606000B8FCF /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
@@ -693,6 +696,7 @@
 				ED79A42A8D3144739CE4C04B /* Ionicons.ttf */,
 				DE216B2DFB25438F8922A621 /* Octicons.ttf */,
 				1A7F1F7CA2F44844A0FC718E /* Zocial.ttf */,
+				0248F0711E5A59BF00C437A9 /* terms.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1102,6 +1106,7 @@
 			files = (
 				02210A851E0191BA006D7AC0 /* sounds in Resources */,
 				02DB41701DCD1DB000E04176 /* main.jsbundle in Resources */,
+				0248F0731E5A59BF00C437A9 /* terms.txt in Resources */,
 				02DB41711DCD1DB000E04176 /* locales in Resources */,
 				02DB41721DCD1DB000E04176 /* MaterialIcons.ttf in Resources */,
 				02DB41731DCD1DB000E04176 /* Entypo.ttf in Resources */,
@@ -1122,6 +1127,7 @@
 			files = (
 				02210A841E0191BA006D7AC0 /* sounds in Resources */,
 				02321C5D1D80558E00282EB1 /* main.jsbundle in Resources */,
+				0248F0721E5A59BF00C437A9 /* terms.txt in Resources */,
 				02E096B31DAE398B00641B85 /* locales in Resources */,
 				02321C5B1D7F1BC100282EB1 /* MaterialIcons.ttf in Resources */,
 				86F7F88564164E3CA0B1265B /* Entypo.ttf in Resources */,

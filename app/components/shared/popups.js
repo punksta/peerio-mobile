@@ -1,8 +1,9 @@
 import React from 'react';
 import {
-    Text, ScrollView
+    Text, ScrollView, WebView
 } from 'react-native';
 import popupState from '../layout/popup-state';
+import locales from '../../lib/locales';
 
 function textControl(t) {
     const text = {
@@ -28,16 +29,24 @@ function popupYes(title, subTitle, text) {
     });
 }
 
+let tos = '';
+
 function popupTOS() {
     console.log(`popup tos`);
     return new Promise((resolve) => {
         popupState.showPopup({
-            title: 'Terms of Use',
+            fullScreen: 1,
+            contents: <WebView
+            source={{ html: tos }} />,
             buttons: [{
                 id: 'ok', text: 'OK', action: resolve
             }]
         });
     });
 }
+
+locales.loadAssetFile('terms.txt').then(s => {
+    tos = s;
+});
 
 module.exports = { popupYes, popupTOS };

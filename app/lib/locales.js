@@ -31,6 +31,16 @@ module.exports = {
                 console.error(e);
                 return def;
             });
+    },
+
+    loadAssetFile(name) {
+        const path = formatPath(`${name}`);
+        return existsFile(path)
+            .then(exists => (exists ? readFile(path) : ''))
+            .then(s => {
+                console.log(s);
+                return s;
+            });
     }
 };
 
