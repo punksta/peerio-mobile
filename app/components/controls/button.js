@@ -24,7 +24,6 @@ export default class Button extends Component {
         return (
             <TouchableOpacity
                 pressRetentionOffset={offset}
-                hitSlop={offset}
                 onPress={press}
                 testID={this.props.testID}>
                 <View

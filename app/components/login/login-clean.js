@@ -34,20 +34,18 @@ export default class LoginClean extends Component {
         const style = styles.wizard;
         const loginButton = <LoginSignup />;
         const body = (
-            <View>
+            <View
+                style={style.containerFlex}>
                 <Logo />
-                <View
-                    style={style.containerFlexGrow}>
-                    <Text style={{ color: 'rgba(255, 255, 255, 1)', fontSize: 24, marginBottom: 16 }}>{t('login')}</Text>
-                    <View style={{ flexGrow: 1, flexShrink: 2, justifyContent: 'flex-start', maxHeight: 192 }}>
-                        <TextBox lowerCase state={loginState} name="username" hint={t('username')} />
-                        <TextBox state={loginState} name="passphrase" hint={t('passphrase')} secureTextEntry />
-                    </View>
-                    <Center>
-                        {loginButton}
-                    </Center>
-                    <View style={{ flexGrow: 1 }} />
+                <Text style={{ color: 'rgba(255, 255, 255, 1)', fontSize: 24, marginBottom: 16 }}>{t('login')}</Text>
+                <View style={{ flexGrow: 1, flexShrink: 2, justifyContent: 'flex-start', maxHeight: 192 }}>
+                    <TextBox lowerCase state={loginState} name="username" hint={t('username')} />
+                    <TextBox state={loginState} name="passphrase" hint={t('passphrase')} secureTextEntry />
                 </View>
+                <Center>
+                    {loginButton}
+                </Center>
+                <View style={{ flexGrow: 1 }} />
             </View>
         );
         return <Layout1 body={body} footer={null} />;
