@@ -72,7 +72,7 @@
     "react-native-image-picker": "https://github.com/PeerioTechnologies/react-native-image-picker",
     "react-native-menu": "^0.20.2",
     "react-native-picker": "3.0.5",
-    "react-native-push-notification": "https://github.com/PeerioTechnologies/react-native-push-notification",
+    "react-native-push-notification": "https://github.com/zo0r/react-native-push-notification",
     "react-native-randombytes": "^2.1.0",
     "react-native-restart": "0.0.1",
     "react-native-share": "^1.0.19",
