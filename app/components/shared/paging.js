@@ -36,7 +36,7 @@ export default class Paging {
     }
 
     updateFrame() {
-        console.log(`paging.js: ${this.renderCount}`);
+        // console.log(`paging.js: ${this.renderCount}`);
         this._data = this.source.slice(-this.renderCount);
     }
 
@@ -46,6 +46,10 @@ export default class Paging {
 
     get source() {
         return (mainState.currentChat && mainState.currentChat.messages) || [];
+    }
+
+    get loading() {
+        return mainState.loading;
     }
 
     loadNext(count) {

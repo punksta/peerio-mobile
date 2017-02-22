@@ -102,9 +102,13 @@ const mainState = observable({
         this.currentIndex = 0;
         this.currentChat = i;
         chatStore.activate(i.id);
+        this._loading = !i.messagesLoaded;
         when(() => !i.loadingMeta, () => {
-            this.currentChat.loadMessages();
-            this.save();
+            setTimeout(() => {
+                i.loadMessages();
+                this.save();
+                when(() => !i.loadingMessages, (this._loading = false));
+            }, i.messagesLoaded ? 0 : 500);
         });
     }),
 

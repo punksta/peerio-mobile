@@ -36,11 +36,7 @@ module.exports = {
     loadAssetFile(name) {
         const path = formatPath(`${name}`);
         return existsFile(path)
-            .then(exists => (exists ? readFile(path) : ''))
-            .then(s => {
-                console.log(s);
-                return s;
-            });
+            .then(exists => (exists ? readFile(path) : ''));
     }
 };
 

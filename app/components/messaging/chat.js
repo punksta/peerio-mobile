@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
+import ProgressOverlay from '../shared/progress-overlay';
 import Paging from '../shared/paging';
 import ChatItem from './chat-item';
 
@@ -146,6 +147,7 @@ export default class Chat extends Component {
             <View
                 style={{ flexGrow: 1 }}>
                 {this.listView()}
+                <ProgressOverlay enabled={this.paging.loading} />
             </View>
         );
     }
