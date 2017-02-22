@@ -7,6 +7,7 @@ import { observable, reaction } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import Paging from '../shared/paging';
 import ChatItem from './chat-item';
+import FileInlineProgress from '../files/file-inline-progress';
 
 // max new items which are scrolled animated
 const maxScrollableLength = 3;
@@ -142,11 +143,19 @@ export default class Chat extends Component {
 //         );
     }
 
+    uploadQueue() {
+        const q = this.paging.chat ? this.paging.chat.uploadQueue : [];
+        return q.map(f => <FileInlineProgress key={f.fileId} file={f.fileId} />);
+    }
+
     render() {
         return (
             <View
                 style={{ flexGrow: 1 }}>
                 {this.listView()}
+                <View style={{ margin: 12 }}>
+                    {this.uploadQueue()}
+                </View>
                 <ProgressOverlay enabled={this.paging.loading} />
             </View>
         );

@@ -35,12 +35,14 @@ const mainState = observable({
         this._loading = v;
     },
 
+    // extended by specific states (file-state, messaging-state)
     titles: observable.ref({
         recent: () => '',
         files: (s) => (s.currentFile ? s.currentFile.name : 'All files'),
         chat: (s) => (s.currentChat ? s.currentChat.chatName : '')
     }),
 
+    // extended by specific states (file-state, messaging-state)
     fabActions: observable.ref({}),
 
     activateAndTransition: action.bound(function(user) {

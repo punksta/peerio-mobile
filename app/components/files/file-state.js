@@ -1,7 +1,7 @@
 import { Linking, Platform } from 'react-native';
-import { observable, action } from 'mobx';
+import { observable, action, when } from 'mobx';
 import mainState from '../main/main-state';
-import { fileStore, TinyDb } from '../../lib/icebear';
+import { fileStore, TinyDb, socket } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
 import imagePicker from '../helpers/imagepicker';
@@ -94,11 +94,18 @@ const fileState = observable({
         this.resolveFileSelection = null;
         this.resetSelection();
         mainState.discardModal();
-    })
+    }),
+
+    upload(uri, fileName) {
+        return new Promise(resolve => {
+            when(() => socket.authenticated,
+                 () => resolve(fileStore.upload(uri, fileName)));
+        });
+    }
 });
 
 mainState.fabActions.files = () => {
-    imagePicker.test();
+    imagePicker.show([], fileState.upload);
 };
 
 export default fileState;

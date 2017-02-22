@@ -5,6 +5,7 @@ import {
 import InputMain from './input-main';
 import mainState from '../main/main-state';
 import fileState from '../files/file-state';
+import imagePicker from '../helpers/imagepicker';
 
 export default class InputMainContainer extends Component {
     constructor(props) {
@@ -32,15 +33,22 @@ export default class InputMainContainer extends Component {
     }
 
     addFiles() {
-        fileState.selectFiles()
-            .then(files => {
-                if (files.length) {
-                    mainState.addMessage('', files);
-                }
-            })
-            .catch(() => {
-                // this.send('user cancelled file selection');
-            });
+        const buttons = [
+            { name: 'share', title: 'Share from Peerio' }
+        ];
+        imagePicker.show(
+            buttons,
+            (uri, fileName) => mainState.currentChat.uploadAndShare(uri, fileName),
+            () => {
+                fileState.selectFiles()
+                    .then(files => {
+                        if (files.length) {
+                            mainState.addMessage('', files);
+                        }
+                    })
+                    .catch(() => {});
+            }
+        );
     }
 
     render() {

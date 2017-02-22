@@ -7,8 +7,12 @@ export default class Paging {
     lastLength = 0;
     @observable _data = [];
 
+    get chat() {
+        return mainState.currentChat;
+    }
+
     constructor() {
-        reaction(() => mainState.currentChat, chat => {
+        reaction(() => this.chat, chat => {
             console.log(`paging.js: chat changed`);
             if (chat !== this.lastChat) {
                 this.lastChat = [];
