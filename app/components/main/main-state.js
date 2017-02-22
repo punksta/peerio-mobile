@@ -62,6 +62,7 @@ const mainState = observable({
         this.load();
 
         chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, () => {
+            console.log('main-state.js: messages received');
             sounds.received();
         });
 
@@ -107,7 +108,7 @@ const mainState = observable({
             setTimeout(() => {
                 i.loadMessages();
                 this.save();
-                when(() => !i.loadingMessages, (this._loading = false));
+                when(() => !i.loadingMessages, () => (this._loading = false));
             }, i.messagesLoaded ? 0 : 500);
         });
     }),
