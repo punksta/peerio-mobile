@@ -13,12 +13,12 @@ const goStyle = {
 };
 
 const icons = {
-    basic(name, color, onPress, style, size) {
+    basic(name, color, onPress, style, size, noPadding) {
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.offset}
                 onPress={onPress}>
-                <View style={{ padding: vars.iconPadding }}>
+                <View style={{ padding: noPadding ? 0 : vars.iconPadding }}>
                     <Icon
                         style={style}
                         name={name}
@@ -52,6 +52,10 @@ const icons = {
 
     dark(name, onPress, style, size) {
         return icons.basic(name, vars.darkIcon, onPress, style, size);
+    },
+
+    darkNoPadding(name, onPress, style, size) {
+        return icons.basic(name, vars.darkIcon, onPress, style, size, true);
     },
 
     colored(name, onPress, colorFg, backgroundColor) {

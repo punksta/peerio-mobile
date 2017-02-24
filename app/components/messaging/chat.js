@@ -8,6 +8,7 @@ import ProgressOverlay from '../shared/progress-overlay';
 import Paging from '../shared/paging';
 import ChatItem from './chat-item';
 import FileInlineProgress from '../files/file-inline-progress';
+import { fileStore } from '../../lib/icebear';
 
 // max new items which are scrolled animated
 const maxScrollableLength = 3;

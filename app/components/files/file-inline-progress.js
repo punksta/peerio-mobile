@@ -34,11 +34,11 @@ export default class FileInlineProgress extends Component {
                             {file.name} ({file.sizeFormatted})
                         </Text>
                         <View style={{ flex: 0 }}>
-                            {icons.plaindark(exists ? 'open-in-new' : 'file-download')}
+                            {!file.uploading && icons.plaindark(exists ? 'open-in-new' : 'file-download')}
                         </View>
-                        {/* <View style={{ flex: 0 }}>
-                            {icons.plaindark('more-horiz')}
-                        </View> */}
+                        <View style={{ flex: 0 }}>
+                            {file.uploading && icons.darkNoPadding('close', () => fileStore.cancelUpload(file))}
+                        </View>
                     </View>
                     <FileProgress file={file} />
                 </View>
