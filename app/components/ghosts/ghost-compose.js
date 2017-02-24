@@ -105,13 +105,14 @@ export default class ComposeMessage extends Component {
             g.send(this.value)
                 .then(() => {
                     ghostState.view(g);
+                    console.log(`ghost-compose.js: sent ${g.ghostId}`);
                 })
                 .catch(e => {
                     console.error(`ghost-compose.js: sending error`);
                     console.log(e);
                     g.remove();
                 })
-                .finally(() => (this.inProgress = false))
+                .finally(() => (this.inProgress = false));
         }, 100);
     }
 

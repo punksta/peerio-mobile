@@ -1,9 +1,11 @@
 import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
+import moment from 'moment';
 import mainState from '../main/main-state';
-import { fileStore, TinyDb, socket } from '../../lib/icebear';
+import { fileStore, TinyDb, socket, fileHelpers } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
+import { popupInput } from '../shared/popups';
 import imagePicker from '../helpers/imagepicker';
 
 const fileState = observable({
@@ -96,10 +98,27 @@ const fileState = observable({
         mainState.discardModal();
     }),
 
-    upload(uri, fileName) {
+    uploadInline(uri, fileName, fileData) {
+        return fileState.upload(uri, fileName, fileData, true);
+    },
+
+    upload(uri, fileName, fileData, inline) {
+        let fn = fileName;
+        const ext = fileHelpers.getFileExtension(fileName);
+        if (fileData.timestamp) {
+            fn = `${moment(fileData.timestamp).format('llll')}.${ext}`;
+        }
+        const uploader = inline ? mainState.currentChat.uploadAndShare.bind(mainState.currentChat) : fileStore.upload;
         return new Promise(resolve => {
             when(() => socket.authenticated,
-                 () => resolve(fileStore.upload(uri, fileName)));
+                () => resolve(uploader(uri, fn)));
+        }).then(file => {
+            return popupInput('Tap to rename', fileHelpers.getFileNameWithoutExtension(fn))
+                .then(newFileName => {
+                    if (!newFileName) return Promise.resolve();
+                    file.name = `${newFileName}.${ext}`;
+                    return file.saveToServer();
+                });
         });
     }
 });
@@ -107,5 +126,7 @@ const fileState = observable({
 mainState.fabActions.files = () => {
     imagePicker.show([], fileState.upload);
 };
+
+global.fileHelpers = fileHelpers;
 
 export default fileState;

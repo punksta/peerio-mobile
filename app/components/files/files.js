@@ -35,9 +35,6 @@ export default class Files extends Component {
         });
     }
 
-    componentWillMount() {
-    }
-
     componentWillUnmount() {
         this.reaction && this.reaction();
         this.reaction = null;

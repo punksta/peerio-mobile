@@ -1,7 +1,9 @@
 import React from 'react';
 import {
-    Text, ScrollView, WebView
+    Text, WebView
 } from 'react-native';
+import { observable } from 'mobx';
+import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 
@@ -16,6 +18,12 @@ function textControl(t) {
     );
 }
 
+function inputControl(state) {
+    return (
+        <TextInputStateful state={state} />
+    );
+}
+
 function popupYes(title, subTitle, text) {
     return new Promise((resolve) => {
         popupState.showPopup({
@@ -24,6 +32,19 @@ function popupYes(title, subTitle, text) {
             contents: textControl(text),
             buttons: [{
                 id: 'ok', text: 'OK', action: resolve
+            }]
+        });
+    });
+}
+
+function popupInput(title, value) {
+    return new Promise((resolve) => {
+        const o = observable({ value });
+        popupState.showPopup({
+            title,
+            contents: inputControl(o),
+            buttons: [{
+                id: 'ok', text: 'OK', action: () => resolve(o.value)
             }]
         });
     });
@@ -49,4 +70,4 @@ locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
 
-module.exports = { popupYes, popupTOS };
+module.exports = { popupYes, popupInput, popupTOS };
