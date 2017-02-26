@@ -19,12 +19,12 @@ export default class PopupLayout extends Component {
     }
 
     button(item) {
-        const { text, id } = item;
+        const { text, id, secondary } = item;
         const textStyle = {
-            color: vars.bg,
+            color: secondary ? vars.txtDate : vars.bg,
             fontWeight: 'bold'
         };
-        const padding = 16;
+        const padding = 24;
         const touchable = {
             padding
         };
@@ -35,7 +35,7 @@ export default class PopupLayout extends Component {
                 key={id}
                 onPress={() => this.onPress(item)}>
                 <Text style={textStyle}>
-                    {text}
+                    {text.toUpperCase ? text.toUpperCase() : text}
                 </Text>
             </TouchableOpacity>
         );

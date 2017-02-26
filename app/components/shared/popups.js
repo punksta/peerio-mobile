@@ -37,6 +37,18 @@ function popupYes(title, subTitle, text) {
     });
 }
 
+function popupCopyCancel(title, subTitle, text) {
+    return popupState.showPopupPromise(resolve => ({
+        title,
+        subTitle: textControl(subTitle),
+        contents: textControl(text),
+        buttons: [
+            { id: 'cancel', text: 'Cancel', action: () => resolve(false), secondary: true },
+            { id: 'copy', text: 'Copy', action: () => resolve(true) }
+        ]
+    }));
+}
+
 function popupInput(title, value) {
     return new Promise((resolve) => {
         const o = observable({ value });
@@ -70,4 +82,4 @@ locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
 
-module.exports = { popupYes, popupInput, popupTOS };
+module.exports = { popupYes, popupInput, popupTOS, popupCopyCancel };

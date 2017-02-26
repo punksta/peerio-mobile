@@ -1,10 +1,11 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, Clipboard } from 'react-native';
 import { observable, action } from 'mobx';
 import mainState from '../main/main-state';
 import PinModal from '../controls/pin-modal';
 import { User } from '../../lib/icebear';
-import { popupYes } from '../shared/popups';
+import { popupCopyCancel, popupYes } from '../shared/popups';
+import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
 
 
@@ -33,9 +34,15 @@ const settingsState = observable({
                     {passphrase}
                 </Text>
             );
-            popupYes(tx('passphrase'),
-                     'This is your master password. Use it wisely.',
-                     mp);
+            popupCopyCancel(
+                tx('passphrase'),
+                'This is your master password. Use it to login to another device.',
+                mp
+            ).then(r => {
+                if (!r) return;
+                Clipboard.setString(passphrase);
+                snackbarState.pushTemporary('Master Password has been copied to clipboard');
+            });
             mainState.modalControl = null;
         };
         const pinModal = () => (
@@ -59,4 +66,3 @@ mainState.titles.settings = (/* s */) => {
 };
 
 export default settingsState;
-

@@ -12,6 +12,15 @@ const snackbarState = observable({
         this.items.push({ text, callback });
     }),
 
+    pushTemporary: action.bound(function(text) {
+        const item = { text };
+        this.items.push(item);
+        setTimeout(() => {
+            const i = this.items.indexOf(item);
+            if (i !== -1) this.items.splice(i, 1);
+        }, 3000);
+    }),
+
     pop: action.bound(function() {
         if (!this.items.length) return;
         const i = this.items[this.items.length - 1];
