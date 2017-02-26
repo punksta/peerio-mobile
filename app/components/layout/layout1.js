@@ -35,7 +35,7 @@ export default class Layout1 extends Component {
     }
 
     render() {
-        const offset = state.pickerVisible ? state.pickerHeight : state.keyboardHeight;
+        // const offset = state.pickerVisible ? state.pickerHeight : state.keyboardHeight;
         const paddingTop = vars.layoutPaddingTop;
 
         const boxStyle = {
@@ -44,6 +44,7 @@ export default class Layout1 extends Component {
             justifyContent: 'space-between',
             borderColor: 'yellow',
             borderWidth: 0,
+            height: this.scrollViewHeight,
             paddingTop // ,
             // paddingBottom: this.props.noKeyboard ? 0 : offset
         };
@@ -56,7 +57,6 @@ export default class Layout1 extends Component {
 
         const contentContainerStyle = this.props.noFitHeight ? {} : {
             flex: 1,
-            height: this.scrollViewHeight,
             borderColor: 'red',
             borderWidth: 0
         };
@@ -79,7 +79,9 @@ export default class Layout1 extends Component {
                     {this.props.body}
                     {this.props.footer}
                 </ScrollView>
-                <SnackBarConnection />
+                <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                    <SnackBarConnection />
+                </View>
             </View>
         );
     }

@@ -33,7 +33,9 @@ export default class Layout2 extends Component {
             }}>
                 {this.props.body}
                 {this.props.footer}
-                <SnackBarConnection />
+                <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                    <SnackBarConnection />
+                </View>
             </View>
         );
     }
