@@ -22,7 +22,7 @@ export default class AvatarCircle extends Component {
             height,
             borderRadius: width / 2,
             backgroundColor: '#CFCFCF',
-            margin: 4,
+            margin: 4 * ratio,
             marginTop: 10
         };
         if (this.props.loading) {
