@@ -9,7 +9,8 @@ export default class Center extends Component {
         let style = {
             flexGrow: 1,
             flexDirection: 'row',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            alignItems: 'center'
         };
         if (this.props.style) {
             style = styles.inherit(style, this.props.style);

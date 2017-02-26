@@ -185,7 +185,7 @@ export default class TextBox extends Component {
             bottom: 0,
             backgroundColor: 'transparent'
         };
-        const icAlert = !this.valid ? {
+        const icAlert = this.validationMessage ? {
             borderBottomColor: vars.txtAlert,
             borderBottomWidth: 2
         } : null;
