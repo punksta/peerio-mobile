@@ -103,10 +103,10 @@ const fileState = observable({
     },
 
     upload(uri, fileName, fileData, inline) {
-        let fn = fileName;
-        const ext = fileHelpers.getFileExtension(fileName);
-        if (fileData.timestamp) {
-            fn = `${moment(fileData.timestamp).format('llll')}.${ext}`;
+        let fn = fileHelpers.getFileName(fileName || uri);
+        const ext = fileHelpers.getFileExtension(fn);
+        if (!fileName) {
+            fn = `${moment(Date.now()).format('llll')}.${ext}`;
         }
         const uploader = inline ? mainState.currentChat.uploadAndShare.bind(mainState.currentChat) :
             fileStore.upload.bind(fileStore);
