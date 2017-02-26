@@ -58,6 +58,7 @@ export default class SignupStep1 extends Component {
                         <TextBox
                             returnKeyType="next"
                             state={signupState}
+                            autoShrinkTextLimit={14}
                             name="firstName"
                             hint={t('firstName')} />
                     </View>
@@ -66,6 +67,7 @@ export default class SignupStep1 extends Component {
                             returnKeyType="go"
                             onSubmit={() => signupState.next()}
                             state={signupState}
+                            autoShrinkTextLimit={14}
                             name="lastName"
                             hint={t('lastName')} />
                     </View>

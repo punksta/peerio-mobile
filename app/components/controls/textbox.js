@@ -189,6 +189,11 @@ export default class TextBox extends Component {
             borderBottomColor: vars.txtAlert,
             borderBottomWidth: 2
         } : null;
+        let fontSize = 14;
+        const astl = this.props.autoShrinkTextLimit;
+        if (astl && this.value && this.value.length && astl < this.value.length) {
+            fontSize = Math.floor(fontSize * astl / this.value.length);
+        }
         return (
             <View
                 style={[style.shadow, { borderColor: 'green', borderWidth: 0 }]}>
@@ -207,7 +212,7 @@ export default class TextBox extends Component {
                         <TextInput
                             keyboardType={this.props.keyboardType}
                             testID={this.props.name}
-                            style={[style.textbox,
+                            style={[style.textbox, { fontSize },
                             { height: vars.inputPaddedHeight, top: 0 }]}
                             underlineColorAndroid={'transparent'}
                             returnKeyType={returnKeyType}
@@ -253,5 +258,6 @@ TextBox.propTypes = {
     secureTextEntry: React.PropTypes.bool,
     lowerCase: React.PropTypes.bool,
     autoCapitalize: React.PropTypes.oneOf(['none', 'sentences', 'words', 'characters']),
-    autoCorrect: React.PropTypes.bool
+    autoCorrect: React.PropTypes.bool,
+    autoShrinkTextLimit: React.PropTypes.number
 };
