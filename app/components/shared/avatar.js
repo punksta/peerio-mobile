@@ -57,19 +57,19 @@ const nameMessageContainerStyle = {
 };
 
 const nameTextStyle = {
-    color: 'rgba(0, 0, 0, .54)',
+    color: vars.txtMedium,
     fontWeight: vars.font.weight.bold,
     fontSize: 14
 };
 
 const dateTextStyle = {
-    color: 'rgba(0, 0, 0, .38)',
+    color: vars.txtDate,
     marginLeft: 8
 };
 
 const lastMessageTextStyle = {
     fontWeight: vars.font.weight.regular,
-    color: 'rgba(0, 0, 0, .54)',
+    color: vars.txtMedium,
     fontSize: 14,
     lineHeight: 22
 };

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View, RefreshControl
+    ScrollView, View, RefreshControl, Text
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
@@ -8,7 +8,8 @@ import ProgressOverlay from '../shared/progress-overlay';
 import Paging from '../shared/paging';
 import ChatItem from './chat-item';
 import FileInlineProgress from '../files/file-inline-progress';
-import { fileStore } from '../../lib/icebear';
+import AvatarCircle from '../shared/avatar-circle';
+import { vars } from '../../styles/styles';
 
 // max new items which are scrolled animated
 const maxScrollableLength = 3;
@@ -128,6 +129,7 @@ export default class Chat extends Component {
                 onContentSizeChange={this.scroll}
                 enableEmptySections
                 ref={sv => (this.scrollView = sv)}>
+                {!this.paging.loading && !this.paging.hasMore && this.zeroStateItem()}
                 {this.data.map(this.item)}
             </ScrollView>
         );
@@ -147,6 +149,28 @@ export default class Chat extends Component {
     uploadQueue() {
         const q = this.paging.chat ? this.paging.chat.uploadQueue : [];
         return q.map(f => <FileInlineProgress key={f.fileId} file={f.fileId} />);
+    }
+
+    zeroStateItem() {
+        const zsContainer = {
+            borderBottomWidth: 1,
+            borderBottomColor: '#CFCFCF'
+        };
+        const chat = this.paging.chat;
+        const avatars = chat.participants.map(contact => (
+            <AvatarCircle contact={contact} medium />
+        ));
+        return (
+            <View style={zsContainer}>
+                <View>{avatars}</View>
+                <Text style={{ textAlign: 'center', margin: 12, color: vars.txtMedium }}>
+                    {'This is the beginning of your chat history with '}
+                    <Text style={{ fontWeight: 'bold' }}>
+                        {chat.participantUsernames}
+                    </Text>
+                </Text>
+            </View>
+        );
     }
 
     render() {
