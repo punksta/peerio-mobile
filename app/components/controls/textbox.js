@@ -80,15 +80,6 @@ export default class TextBox extends Component {
         state.focusedTextBox = null;
     }
 
-    componentWillReceiveProps(/* nextProps */) {
-        if (!this.props.state) {
-            // Object.assign(this.props, nextProps);
-            this.forceUpdate();
-            // this.value = nextProps.value;
-            // this.validationMessage = nextProps.validationMessage;
-        }
-    }
-
     _callState(name, value) {
         const s = this.props.state;
         const n = `${this.props.name}${name}`;
@@ -142,15 +133,19 @@ export default class TextBox extends Component {
         focuser && focuser();
     }
 
+    validationControl() {
+        return !this.valid && (
+            <Text
+                style={{
+                    color: vars.highlight,
+                    fontSize: 12,
+                    backgroundColor: 'transparent'
+                }}>{t(this.validationMessage)}</Text>
+        );
+    }
+
     render() {
         const returnKeyType = this.props.returnKeyType || 'default';
-        // if (this.props.onSubmit) {
-        //     returnKeyType = 'done';
-        // }
-        // if (this.nextField) {
-        //     console.log(`textbox.js: render: ${this.nextField}`);
-        //     returnKeyType = 'next';
-        // }
         const style = this.focused ? styles.input.active : styles.input.normal;
         const hint = this.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
@@ -160,27 +155,6 @@ export default class TextBox extends Component {
                     this.showSecret ? 'visibility-off' : 'visibility',
                     this.toggleSecret, style.icon)}
             </View>);
-        const validationControl = !this.valid ? (
-            <View
-                pointerEvents="none"
-                style={{ position: 'absolute', top: 0, right: 4 }}>
-                <Text
-                    style={{
-                        color: vars.txtAlert,
-                        fontSize: 12,
-                        backgroundColor: 'transparent'
-                    }}>{t(this.validationMessage)}</Text>
-            </View>
-        ) : null;
-        const infoControl = this.props.info ? (
-            <Text style={{
-                backgroundColor: 'transparent',
-                color: vars.midlight,
-                position: 'absolute',
-                fontSize: 10,
-                marginTop: 2
-            }}>Optional</Text>
-        ) : null;
         const hintStyle = [styles.input.hint.text, {
             borderWidth: 0,
             width: 200,
@@ -203,6 +177,18 @@ export default class TextBox extends Component {
             bottom: 0,
             position: 'absolute'
         }];
+        const inputContainer = {
+            position: 'absolute',
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'transparent'
+        };
+        const icAlert = !this.valid ? {
+            borderBottomColor: vars.txtAlert,
+            borderBottomWidth: 2
+        } : null;
         return (
             <View
                 style={[style.shadow, { borderColor: 'green', borderWidth: 0 }]}>
@@ -217,19 +203,12 @@ export default class TextBox extends Component {
                                 backgroundColor: this.focused ? 'transparent' : vars.subtleBg }} />
                     </TouchableOpacity>
                     <View
-                        style={{
-                            position: 'absolute',
-                            left: 0,
-                            top: 0,
-                            right: 0,
-                            bottom: 0,
-                            backgroundColor: 'transparent'
-                        }}>
+                        style={[inputContainer, icAlert]}>
                         <TextInput
                             keyboardType={this.props.keyboardType}
                             testID={this.props.name}
                             style={[style.textbox,
-                            { height: 56, top: 0 }]}
+                            { height: vars.inputPaddedHeight, top: 0 }]}
                             underlineColorAndroid={'transparent'}
                             returnKeyType={returnKeyType}
                             secureTextEntry={this.props.secureTextEntry && !this.showSecret}
@@ -252,9 +231,8 @@ export default class TextBox extends Component {
                             {this.props.hint}
                         </Animated.Text>
                     </View>
-                    {infoControl}
-                    {validationControl}
                 </View>
+                {this.validationControl()}
             </View>
         );
     }

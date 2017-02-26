@@ -83,6 +83,7 @@ const vars = {
         }
     },
     inputHeight: 48,
+    inputPaddedHeight: 56,
     fabSize: 60,
     fabRight: 16,
     fabBottom: 32,
