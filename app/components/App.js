@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, PanResponder, Navigator, AppState } from 'react-native';
 import { reaction, action, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
+import sqlite from 'react-native-sqlcipher-storage';
 import Login from './login/login';
 import Signup from './signup/signup';
 import PersistentFooter from './layout/persistent-footer';
@@ -104,6 +105,9 @@ export default class App extends Component {
             // setTimeout(() => {
             //     state.routes.signupStep2.transition();
             // }, 1000);
+            sqlite.enablePromise(true);
+            sqlite.openDatabase({ name: 'test-db' })
+                .then(() => console.log('app.js: sqlite self-test passed'));
         }
     }
 

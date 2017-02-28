@@ -27,6 +27,10 @@
 		02277B151D6AEDC50020B31A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02277B141D6AEDC50020B31A /* StoreKit.framework */; };
 		02321C5B1D7F1BC100282EB1 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */; };
 		02321C5D1D80558E00282EB1 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 02321C5C1D80558E00282EB1 /* main.jsbundle */; };
+		0235B5D81E65DE4B001D77D1 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5D71E65DE24001D77D1 /* libSQLite.a */; };
+		0235B5D91E65DE51001D77D1 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5D71E65DE24001D77D1 /* libSQLite.a */; };
+		0235B5DB1E65DEAF001D77D1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */; };
+		0235B5DC1E65DED4001D77D1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */; };
 		023A731F1DA6D58B00E47992 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FDD4B41DA6457E004E1D5A /* libRNRandomBytes.a */; };
 		0248F0721E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
 		0248F0731E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
@@ -166,6 +170,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 2DD0EFE61DA8533A00B0C975;
 			remoteInfo = "RCTPushNotification-tvOS";
+		};
+		0235B5D61E65DE24001D77D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 13F5AA2EEB8241769A00F172 /* SQLite.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E23D7B471ACEFE2A00C59171;
+			remoteInfo = SQLite;
 		};
 		026B0D781E037FED00B24721 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -323,6 +334,7 @@
 		02277B141D6AEDC50020B31A /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		02321C5C1D80558E00282EB1 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.jsbundle; sourceTree = "<group>"; };
+		0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		0248F0711E5A59BF00C437A9 /* terms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = terms.txt; path = ../app/assets/terms.txt; sourceTree = "<group>"; };
 		026B0DA01E0384D600B24721 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		02BCD7231DFDE9A2000B8FCF /* RNFileOpener.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFileOpener.xcodeproj; path = "../node_modules/react-native-file-opener/ios/RNFileOpener.xcodeproj"; sourceTree = "<group>"; };
@@ -341,6 +353,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = peeriomobile/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = peeriomobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = peeriomobile/main.m; sourceTree = "<group>"; };
+		13F5AA2EEB8241769A00F172 /* SQLite.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SQLite.xcodeproj; path = "../node_modules/react-native-sqlcipher-storage/src/ios/SQLite.xcodeproj"; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		1A7F1F7CA2F44844A0FC718E /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		21D883CDAA7C4E718E6EE873 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
@@ -386,6 +399,8 @@
 				0222C3951E0C98B90084C586 /* libRCTPushNotification.a in Frameworks */,
 				02BB9BCC1E416954004AF2AC /* libRNTouchIDValue.a in Frameworks */,
 				029F0E651E55303F00C8586F /* libRNShare.a in Frameworks */,
+				0235B5D91E65DE51001D77D1 /* libSQLite.a in Frameworks */,
+				0235B5DC1E65DED4001D77D1 /* libsqlite3.0.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +408,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0235B5DB1E65DEAF001D77D1 /* libsqlite3.0.tbd in Frameworks */,
 				02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -417,6 +433,7 @@
 				0222C3941E0C98B40084C586 /* libRCTPushNotification.a in Frameworks */,
 				02CC88781E1E8988002BB078 /* libRNTouchIDValue.a in Frameworks */,
 				029F0E641E55303400C8586F /* libRNShare.a in Frameworks */,
+				0235B5D81E65DE4B001D77D1 /* libSQLite.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -506,6 +523,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		0235B5B41E65DE24001D77D1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0235B5D71E65DE24001D77D1 /* libSQLite.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		026B0DA11E0384D600B24721 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -534,6 +559,7 @@
 		02BCD72B1DFE1606000B8FCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */,
 				02BCD72C1DFE1606000B8FCF /* QuickLook.framework */,
 			);
 			name = Frameworks;
@@ -646,6 +672,7 @@
 				85F72AE1AB9C4B249FDE6333 /* RNFS.xcodeproj */,
 				88D6237453EF462AAED942D1 /* RNImagePicker.xcodeproj */,
 				26029CF21DF64479AF373AC9 /* RNShare.xcodeproj */,
+				13F5AA2EEB8241769A00F172 /* SQLite.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -870,6 +897,10 @@
 					ProductGroup = 02D763E11D9918E800E7E57C /* Products */;
 					ProjectRef = 53F9542E76844F59917732EA /* RNVectorIcons.xcodeproj */;
 				},
+				{
+					ProductGroup = 0235B5B41E65DE24001D77D1 /* Products */;
+					ProjectRef = 13F5AA2EEB8241769A00F172 /* SQLite.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -955,6 +986,13 @@
 			fileType = archive.ar;
 			path = "libRCTPushNotification-tvOS.a";
 			remoteRef = 0222C3811E0C989D0084C586 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0235B5D71E65DE24001D77D1 /* libSQLite.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSQLite.a;
+			remoteRef = 0235B5D61E65DE24001D77D1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		026B0D791E037FED00B24721 /* libRCTImage-tvOS.a */ = {
@@ -1223,6 +1261,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-sqlcipher-storage/src/**",
 				);
 				INFOPLIST_FILE = "peeriomobile/Info-Expandoo.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1237,6 +1276,7 @@
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1278,6 +1318,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-sqlcipher-storage/src/**",
 				);
 				INFOPLIST_FILE = "peeriomobile/Info-Expandoo.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1292,6 +1333,7 @@
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
@@ -1333,6 +1375,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-sqlcipher-storage/src/**",
 				);
 				INFOPLIST_FILE = peeriomobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1387,6 +1430,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-sqlcipher-storage/src/**",
 				);
 				INFOPLIST_FILE = peeriomobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1468,6 +1512,7 @@
 					"$(SRCROOT)/../node_modules/react-native-auto-expanding-textinput/ios/AutoExpandingTextInput",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-sqlcipher-storage/src/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1523,6 +1568,7 @@
 					"$(SRCROOT)/../node_modules/react-native-auto-expanding-textinput/ios/AutoExpandingTextInput",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
+					"$(SRCROOT)/../node_modules/react-native-sqlcipher-storage/src/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
