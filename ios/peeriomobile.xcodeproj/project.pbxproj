@@ -1312,8 +1312,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
 				CURRENT_PROJECT_VERSION = 273;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
@@ -1355,8 +1355,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
-				PROVISIONING_PROFILE = "11459fc3-9831-41c0-bf37-53ee452af20c";
-				PROVISIONING_PROFILE_SPECIFIER = com.peerio.dev;
+				PROVISIONING_PROFILE = "1f70bad6-eabe-4771-adb8-bb46b73b0b2e";
+				PROVISIONING_PROFILE_SPECIFIER = "com.peerio-new";
 				SYMROOT = build/Build/Products;
 			};
 			name = Debug;
