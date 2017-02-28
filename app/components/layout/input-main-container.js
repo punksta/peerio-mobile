@@ -38,7 +38,7 @@ export default class InputMainContainer extends Component {
         ];
         imagePicker.show(
             buttons,
-            (uri, fileName) => mainState.currentChat.uploadAndShare(uri, fileName),
+            (uri, fileName) => mainState.currentChat.uploadAndShareFile(uri, fileName),
             () => {
                 fileState.selectFiles()
                     .then(files => {
