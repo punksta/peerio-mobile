@@ -108,8 +108,9 @@ const fileState = observable({
         if (!fileName) {
             fn = `${moment(Date.now()).format('llll')}.${ext}`;
         }
-        const uploader = inline ? mainState.currentChat.uploadAndShare.bind(mainState.currentChat) :
-            fileStore.upload.bind(fileStore);
+        const chat = mainState.currentChat;
+        const uploader = inline ? () => chat.uploadAndShare(uri, fileName) :
+            () => fileStore.upload(uri, fileName);
         return new Promise(resolve => {
             when(() => socket.authenticated,
                 () => resolve(uploader(uri, fn)));
