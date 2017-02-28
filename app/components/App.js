@@ -22,7 +22,6 @@ export default class App extends Component {
         super(props);
         state.load();
         this.renderScene = this.renderScene.bind(this);
-
         this.routes = [
             this.route('loginClean', Login.Clean, true),
             this.route('loginSaved', Login.Saved),

@@ -11,9 +11,7 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import mainState from '../main/main-state';
 
-@observer
 export default class Logs extends Component {
-
     render() {
         const items = console.stack.map((i, k) => (
             <TouchableOpacity key={k}>

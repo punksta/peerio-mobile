@@ -9,6 +9,7 @@ import { observer } from 'mobx-react/native';
 import moment from 'moment';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import fileState from './file-state';
 
 const width = Dimensions.get('window').width;
 const height = 64;
@@ -68,7 +69,8 @@ export default class FileInnerItem extends Component {
 
     render() {
         const file = this.props.file;
-        const iconRight = icons.dark('keyboard-arrow-right');
+        const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
+            icons.dark('keyboard-arrow-right');
         const nameStyle = {
             color: vars.txtDark,
             fontSize: 14,
@@ -88,13 +90,6 @@ export default class FileInnerItem extends Component {
         }
         icon = icons.dark(icon);
         const loadingStyle = null;
-        // if (file.downloading || file.uploading) {
-        //     loadingStyle = {
-        //         borderWidth: 2,
-        //         borderRadius: 32,
-        //         borderColor: 'green'
-        //     };
-        // }
         const marginLeft = this.props.checkbox === 'always' ? 0 : -checkBoxWidth;
         const arrow = this.props.hideArrow ? null : (
             <View style={{ flex: 0 }}>
@@ -103,10 +98,10 @@ export default class FileInnerItem extends Component {
         );
         return (
             <View style={{ backgroundColor: 'white' }}>
-                <TouchableOpacity onPress={() => this.onPress()}>
+                <TouchableOpacity onPress={() => !file.uploading && this.onPress()}>
                     <View style={[fileInfoContainerStyle, { opacity, marginLeft }]}>
                         {this.checkbox()}
-                        <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]} pointerEvents="none">
+                        <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]}>
                             <View style={[loadingStyle, { flex: 0 }]}>
                                 {icon}
                             </View>

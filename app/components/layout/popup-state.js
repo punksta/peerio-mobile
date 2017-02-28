@@ -12,6 +12,10 @@ const popupState = observable({
         this.popupControls.push(popup);
     }),
 
+    showPopupPromise: action.bound(function(caller) {
+        return new Promise((resolve, reject) => this.showPopup(caller(resolve, reject)));
+    }),
+
     discardPopup: action.bound(function() {
         this.popupControls.pop();
     })

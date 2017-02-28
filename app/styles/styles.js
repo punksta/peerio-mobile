@@ -37,6 +37,8 @@ const vars = {
     txtLight: '#bfdfef',
     txtAlert: '#ff0000aa',
     txtDark: 'rgba(0, 0, 0, .87)',
+    txtMedium: 'rgba(0, 0, 0, .54)',
+    txtDate: 'rgba(0, 0, 0, .38)',
     inputBg: '#fff',
     pickerBg: 'rgba(255, 255, 255, .12)',
     pickerText: '#fff',
@@ -83,6 +85,7 @@ const vars = {
         }
     },
     inputHeight: 48,
+    inputPaddedHeight: 56,
     fabSize: 60,
     fabRight: 16,
     fabBottom: 32,

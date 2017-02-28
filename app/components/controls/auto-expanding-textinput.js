@@ -70,5 +70,6 @@ export default class AutoExpandingTextInput extends Component {
 }
 
 AutoExpandingTextInput.propTypes = {
-    style: React.PropTypes.any
+    style: React.PropTypes.any,
+    value: React.PropTypes.any
 };

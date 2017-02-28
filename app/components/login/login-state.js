@@ -5,8 +5,10 @@ import mainState from '../main/main-state';
 import { User, validation, fileStore, socket } from '../../lib/icebear';
 import touchId from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
+import { tx } from '../utils/translator';
 
-const { isValidLoginUsername } = validation.validators;
+const { validators, addValidation } = validation;
+const { isValidLoginUsername } = validators;
 
 const loginState = observable({
     username: '',
@@ -14,6 +16,7 @@ const loginState = observable({
     firstName: 'Peerio',
     lastName: 'Test',
     passphrase: '',
+    passphraseValidationMessage: null,
     language: 'English',
     changeUser: false,
     savedUserInfo: false,
@@ -59,19 +62,20 @@ const loginState = observable({
                 if (valid) {
                     return user.login();
                 }
-                this.error = 'badUsername';
+                // this.error = 'badUsername';
                 return Promise.reject(new Error('Bad username'));
             })
             .then(() => console.log('login-state.js: logged in'))
             .then(() => mainState.activateAndTransition(user))
             .catch(e => {
                 console.error(e);
-                if (!this.error) this.error = 'loginFailed';
+                // if (!this.error) this.error = 'loginFailed';
+                this.passphraseValidationMessage = tx('incorrectPasswordOrPINTitle');
                 return Promise.reject(new Error(this.error));
             })
             .finally(() => {
                 this.isInProgress = false;
-                setTimeout(() => (this.error = null), 1000);
+                // setTimeout(() => (this.error = null), 1000);
             });
     }),
 
@@ -126,16 +130,9 @@ const loginState = observable({
         return false;
     }),
 
-    save: action.bound(async function() {
-        // const { username, firstName, lastName } = this;
-        // TinyDb.openUserDb(username);
-        // await TinyDb.user.set('userData', {
-        //     username,
-        //     firstName,
-        //     lastName
-        // });
-        // await TinyDb.user.set('registration', {});
-    }),
+    save() {
+        return null;
+    },
 
     triggerTouchId: action.bound(async function() {
         await touchId.load();
@@ -148,7 +145,7 @@ const loginState = observable({
     })
 });
 
-// loginState.mount();
+addValidation(loginState, 'username', validators.usernameLogin, 0);
 
 export default loginState;
 
