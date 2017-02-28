@@ -37,7 +37,7 @@ export default class FileInlineProgress extends Component {
                             {!file.uploading && icons.plaindark(exists ? 'open-in-new' : 'file-download')}
                         </View>
                         <View style={{ flex: 0 }}>
-                            {file.uploading && icons.darkNoPadding('close', () => fileStore.cancelUpload(file))}
+                            {file.uploading && icons.darkNoPadding('close', () => fileState.cancelUpload(file))}
                         </View>
                     </View>
                     <FileProgress file={file} />

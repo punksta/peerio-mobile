@@ -121,6 +121,10 @@ const fileState = observable({
                     return file.saveToServer();
                 });
         });
+    },
+
+    cancelUpload(file) {
+        fileStore.cancelUpload(file);
     }
 });
 
