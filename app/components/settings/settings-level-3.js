@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View
+    View, Text
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
@@ -21,13 +21,7 @@ export default class SettingsLevel2 extends Component {
     render() {
         return (
             <View style={bgStyle}>
-                <SettingsItem
-                    title={t('twoFactorAuth')}
-                    onPress={() => settingsState.transition('twoFactorAuth')} />
-                <SettingsItem
-                    title={t('passphrase')}
-                    icon="visibility"
-                    onPress={() => settingsState.showPassphrase()} />
+                <Text>Two factor auth</Text>
             </View>
         );
     }

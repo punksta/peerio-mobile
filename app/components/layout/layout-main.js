@@ -26,6 +26,7 @@ import SnackBar from '../snackbars/snackbar';
 import Fab from '../shared/fab';
 import SettingsLevel1 from '../settings/settings-level-1';
 import SettingsLevel2 from '../settings/settings-level-2';
+import SettingsLevel3 from '../settings/settings-level-3';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import Ghosts from '../ghosts/ghosts';
 import GhostsLevel1 from '../ghosts/ghosts-level-1';
@@ -38,7 +39,7 @@ const routes = {
     files: [<Files />, <FileView />],
     ghosts: [<Ghosts />, <GhostsLevel1 />],
     chat: [<Chat />],
-    settings: [<SettingsLevel1 />, <SettingsLevel2 />],
+    settings: [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />],
     logs: [<Logs />]
 };
 

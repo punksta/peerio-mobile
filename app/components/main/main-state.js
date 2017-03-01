@@ -171,10 +171,10 @@ const mainState = observable({
     }),
 
     back: action.bound(function() {
-        this.currentIndex = 0;
+        this.currentIndex--;
         this.currentFile = null;
         // this.currentChat = null;
-        this.isBackVisible = false;
+        this.isBackVisible = this.currentIndex > 0;
     }),
 
     load: action.bound(async function() {
