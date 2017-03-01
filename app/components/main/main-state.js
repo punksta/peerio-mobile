@@ -231,8 +231,9 @@ const mainState = observable({
 
     addMessage: action.bound(function(msg, files) {
         sounds.sending();
-        this.currentChat && this.currentChat
-            .sendMessage(msg, files).then(sounds.sent).catch(sounds.destroy);
+        this.currentChat && (
+            files ? this.currentChat.shareFiles(files) : this.currentChat.sendMessage(msg)
+        ).then(sounds.sent).catch(sounds.destroy);
     }),
 
     addAck: action.bound(function() {
