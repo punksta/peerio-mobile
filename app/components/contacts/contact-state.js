@@ -66,16 +66,14 @@ const contactState = observable({
         this.recipientsMap.clear();
     }),
 
-    send: action.bound(function(text, recipient, files) {
+    send: action.bound(function(text, recipient) {
         mainState.suppressTransition = true;
         when(() => !mainState.suppressTransition, () => this.clear());
         const chat = chatStore.startChat(recipient ? [recipient] : this.recipients);
         mainState.chat(chat);
         this.exit();
         when(() => chat.id, () => {
-            //todo: Samvel, i'm not sure while files are even passed here if you check for text existense
-            // but i left it safe (behaving the same way) just in case
-            text && (files ? chat.shareFiles(files) : chat.sendMessage(text));
+            chat.sendMessage(text);
         });
     }),
 
