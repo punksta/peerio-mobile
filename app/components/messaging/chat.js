@@ -158,7 +158,7 @@ export default class Chat extends Component {
         };
         const chat = this.paging.chat;
         const avatars = chat.participants.map(contact => (
-            <AvatarCircle contact={contact} medium />
+            <AvatarCircle contact={contact} key={contact.username} medium />
         ));
         return (
             <View style={zsContainer}>
