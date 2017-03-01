@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import popupState from './popup-state';
+import ButtonText from '../controls/button-text';
 import { vars } from '../../styles/styles';
 
 @observer
@@ -20,24 +21,12 @@ export default class PopupLayout extends Component {
 
     button(item) {
         const { text, id, secondary } = item;
-        const textStyle = {
-            color: secondary ? vars.txtDate : vars.bg,
-            fontWeight: 'bold'
-        };
-        const padding = 24;
-        const touchable = {
-            padding
-        };
         return (
-            <TouchableOpacity
-                pressRetentionOffset={vars.retentionOffset}
-                style={touchable}
+            <ButtonText
+                onPress={() => this.onPress(item)}
+                secondary={secondary}
                 key={id}
-                onPress={() => this.onPress(item)}>
-                <Text style={textStyle}>
-                    {text.toUpperCase ? text.toUpperCase() : text}
-                </Text>
-            </TouchableOpacity>
+                text={text} />
         );
     }
 
