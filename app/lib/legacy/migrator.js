@@ -16,8 +16,7 @@ function encodeUTF8(arr) {
     let i, s = [];
     for (i = 0; i < arr.length; i++) s.push(String.fromCharCode(arr[i]));
     return decodeURIComponent(escape(s.join('')));
-};
-
+}
 
 const keySize = 32;
 const scryptResourceCost = 14;
