@@ -4,6 +4,8 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.BV.LinearGradient.LinearGradientPackage;
 import cl.json.RNSharePackage;
 import com.facebook.stetho.Stetho;
 import com.zmxv.RNSound.RNSoundPackage;
@@ -39,6 +41,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNDeviceInfo(),
+            new LinearGradientPackage(),
             new RNSharePackage(),
             new RNSoundPackage(),
             new ReactNativePushNotificationPackage(),

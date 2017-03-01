@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { View, PanResponder, Navigator, AppState } from 'react-native';
 import { reaction, action, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
-import sqlite from 'react-native-sqlcipher-storage';
 import Login from './login/login';
 import Signup from './signup/signup';
 import PersistentFooter from './layout/persistent-footer';
@@ -13,6 +12,7 @@ import state from './layout/state';
 import styles, { vars } from './../styles/styles';
 // import icebear from '../lib/icebear';
 import push from '../lib/push';
+import migrator from '../lib/legacy/migrator';
 import '../lib/sounds';
 import './utils/bridge';
 import './touchid/touchid-bridge';
@@ -105,9 +105,7 @@ export default class App extends Component {
             // setTimeout(() => {
             //     state.routes.signupStep2.transition();
             // }, 1000);
-            sqlite.enablePromise(true);
-            sqlite.openDatabase({ name: 'test-db' })
-                .then(() => console.log('app.js: sqlite self-test passed'));
+            migrator.run();
         }
     }
 
