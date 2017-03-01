@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View, RefreshControl, Text
+    ScrollView, View, RefreshControl, Text, TouchableOpacity
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
@@ -9,6 +9,7 @@ import Paging from '../shared/paging';
 import ChatItem from './chat-item';
 import FileInlineProgress from '../files/file-inline-progress';
 import AvatarCircle from '../shared/avatar-circle';
+import mainState from '../main/main-state';
 import { vars } from '../../styles/styles';
 
 // max new items which are scrolled animated
@@ -158,11 +159,16 @@ export default class Chat extends Component {
         };
         const chat = this.paging.chat;
         const avatars = chat.participants.map(contact => (
-            <AvatarCircle contact={contact} key={contact.username} medium />
+            <TouchableOpacity
+                onPress={() => mainState.contactView(contact)} key={contact.username}>
+                <AvatarCircle
+                    contact={contact}
+                    medium />
+            </TouchableOpacity>
         ));
         return (
             <View style={zsContainer}>
-                <View>{avatars}</View>
+                <View style={{ flexDirection: 'row' }}>{avatars}</View>
                 <Text style={{ textAlign: 'center', margin: 12, color: vars.txtMedium }}>
                     {'This is the beginning of your chat history with '}
                     <Text style={{ fontWeight: 'bold' }}>
