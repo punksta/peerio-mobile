@@ -12,6 +12,7 @@ import state from './layout/state';
 import styles, { vars } from './../styles/styles';
 // import icebear from '../lib/icebear';
 import push from '../lib/push';
+import migrator from '../lib/legacy/migrator';
 import '../lib/sounds';
 import './utils/bridge';
 import './touchid/touchid-bridge';
@@ -104,6 +105,7 @@ export default class App extends Component {
             // setTimeout(() => {
             //     state.routes.signupStep2.transition();
             // }, 1000);
+            migrator.run();
         }
     }
 
