@@ -147,18 +147,19 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-device-info')
-    compile project(':react-native-linear-gradient')
-    compile project(':react-native-share')
-    compile project(':react-native-sound')
-    compile project(':react-native-push-notification')
-    compile project(':react-native-file-opener')
-    compile project(':peerio-react-native-fetch-blob')
-    compile project(':react-native-restart')
-    compile project(':react-native-image-picker')
     compile project(':react-native-vector-icons')
+    compile project(':react-native-sound')
+    compile project(':react-native-share')
+    compile project(':react-native-restart')
     compile project(':react-native-randombytes')
+    compile project(':react-native-push-notification')
+    compile project(':react-native-picker')
+    compile project(':react-native-image-picker')
     compile project(':react-native-fs')
+    compile project(':react-native-file-opener')
+    compile project(':react-native-device-info')
+    compile project(':peerio-react-native-fetch-blob')
+    compile project(':react-native-sqlcipher-storage')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules

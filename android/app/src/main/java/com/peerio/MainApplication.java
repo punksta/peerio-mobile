@@ -4,20 +4,20 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
-import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.BV.LinearGradient.LinearGradientPackage;
-import cl.json.RNSharePackage;
-import com.facebook.stetho.Stetho;
-import com.zmxv.RNSound.RNSoundPackage;
-import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import com.fileopener.FileOpenerPackage;
-import com.RNFetchBlob.RNFetchBlobPackage;
-import com.avishayil.rnrestart.ReactNativeRestartPackage;
-import com.imagepicker.ImagePickerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.zmxv.RNSound.RNSoundPackage;
+import cl.json.RNSharePackage;
+import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
+import com.beefe.picker.PickerViewPackage;
+import com.imagepicker.ImagePickerPackage;
 import com.rnfs.RNFSPackage;
-import com.facebook.react.ReactInstanceManager;
+import com.fileopener.FileOpenerPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
+import com.RNFetchBlob.RNFetchBlobPackage;
+import org.pgsqlite.SQLitePluginPackage;
+import com.facebook.stetho.Stetho;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -33,7 +33,7 @@ public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
     @Override
-    protected boolean getUseDeveloperSupport() {
+    public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
     }
 
@@ -41,18 +41,19 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNDeviceInfo(),
-            new LinearGradientPackage(),
-            new RNSharePackage(),
-            new RNSoundPackage(),
-            new ReactNativePushNotificationPackage(),
-            new FileOpenerPackage(),
-            new RNFetchBlobPackage(),
-            new ReactNativeRestartPackage(),
-            new ImagePickerPackage(),
-            new VectorIconsPackage(),
-            new RandomBytesPackage(),
-            new RNFSPackage()
+          new VectorIconsPackage(),
+          new RNSoundPackage(),
+          new ReactNativeRestartPackage(),
+          new RandomBytesPackage(),
+          new ReactNativePushNotificationPackage(),
+          new PickerViewPackage(),
+          new ImagePickerPackage(),
+          new FileOpenerPackage(),
+          new RNDeviceInfo(),
+          new RNFetchBlobPackage(),
+          new RNSharePackage(),
+          new SQLitePluginPackage(),
+          new RNFSPackage()
       );
     }
   };

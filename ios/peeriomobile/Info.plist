@@ -57,6 +57,8 @@
       <string>Ionicons.ttf</string>
       <string>Octicons.ttf</string>
       <string>Zocial.ttf</string>
+      <string>MaterialCommunityIcons.ttf</string>
+      <string>SimpleLineIcons.ttf</string>
     </array>
     <key>UIBackgroundModes</key>
     <array>
