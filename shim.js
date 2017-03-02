@@ -23,8 +23,9 @@ if (!Uint8Array.prototype.join) {
 }
 
 // global.location = global.location || { port: 80 }
-var isDev = typeof __DEV__ === 'boolean' && __DEV__
-process.env['NODE_ENV'] = isDev ? 'development' : 'production'
+var isDev = typeof __DEV__ === 'boolean' && __DEV__;
+const env = process.env;
+env.NODE_ENV = isDev ? 'development' : 'production';
 if (typeof localStorage !== 'undefined') {
   localStorage.debug = isDev ? '*' : ''
 }

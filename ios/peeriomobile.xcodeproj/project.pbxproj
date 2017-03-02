@@ -1474,7 +1474,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SYMROOT = build/Build/Products;
 			};
 			name = Debug;
 		};
@@ -1537,7 +1536,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.expandoo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYMROOT = build/Build/Products;
 			};
 			name = Release;
 		};
@@ -1597,7 +1595,6 @@
 				PRODUCT_NAME = peeriomobile;
 				PROVISIONING_PROFILE = "1f70bad6-eabe-4771-adb8-bb46b73b0b2e";
 				PROVISIONING_PROFILE_SPECIFIER = "com.peerio-new";
-				SYMROOT = build/Build/Products;
 			};
 			name = Debug;
 		};
@@ -1656,7 +1653,6 @@
 				PRODUCT_NAME = peeriomobile;
 				PROVISIONING_PROFILE = "1f70bad6-eabe-4771-adb8-bb46b73b0b2e";
 				PROVISIONING_PROFILE_SPECIFIER = "com.peerio-new";
-				SYMROOT = build/Build/Products;
 			};
 			name = Release;
 		};
