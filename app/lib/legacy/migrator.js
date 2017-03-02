@@ -49,12 +49,13 @@ class Migrator {
     };
 
     run = () => {
-        tinydb.openSystem('_peerio_system')
+        return tinydb.openSystem('_peerio_system')
             .then(() => this.checkSystem())
             .then(() => tinydb.getSavedLogin())
             .then(data => {
                 console.log('tinydb.js: last login data');
                 console.log(data);
+                this.username = data.username;
                 return data.username;
             })
             .then(username => {
@@ -75,12 +76,24 @@ class Migrator {
                                 return this.secretBoxDecrypt(ciphertext, nonce, pinKey)
                                     .then(keys => {
                                         console.log(`migrator.js: keys decrypted`);
+                                        this.keys = keys;
                                         console.log(JSON.stringify(keys));
+                                        return keys;
                                     });
                             });
                     });
             });
-    }
+    };
+
+    decryptPassphrase = (pin) => {
+        const { ciphertext, nonce, username } = this;
+        return this.getKeyFromPIN(pin, username)
+            .then(pinKey => this.secretBoxDecrypt(ciphertext, nonce, pinKey))
+            .then(keys => {
+                console.log(`migrator.js: keys decrypted`);
+                console.log(JSON.stringify(keys));
+            });
+    };
 
     checkSystem = () => tinydb.checkSystemDB()
         .then(r => {

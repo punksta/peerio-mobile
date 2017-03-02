@@ -12,6 +12,8 @@ import Logo from '../controls/logo';
 import LoginSignup from './login-signup';
 import loginState from './login-state';
 import styles from '../../styles/styles';
+import migrator from '../../lib/legacy/migrator';
+import { popupYes } from '../shared/popups';
 
 @observer
 export default class LoginClean extends Component {
@@ -24,6 +26,8 @@ export default class LoginClean extends Component {
                 process.env.PEERIO_AUTOLOGIN && loginState.login();
             }
         });
+        migrator.run().then(keys =>
+            popupYes('Legacy master password', 'Please write it down', JSON.parse(keys).secretKey));
     }
 
     languagePicker() {
