@@ -65,6 +65,7 @@ export default class LayoutMain extends Component {
             console.log('layout-main.js: index animation');
             const toValue = -i * this.width;
             const duration = mainState.suppressTransition ? 0 : vars.animationDuration;
+            mainState.suppressTransition = false;
             Animated.timing(this.animatedX, { toValue, duration })
                 .start();
         }, true);

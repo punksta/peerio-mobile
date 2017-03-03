@@ -1,4 +1,4 @@
-import { Animated } from 'react-native';
+import { Animated, Platform } from 'react-native';
 import { observable, action, when, reaction } from 'mobx';
 import state from '../layout/state';
 import { User, chatStore, fileStore, mailStore, contactStore, TinyDb } from '../../lib/icebear';
@@ -139,7 +139,7 @@ const mainState = observable({
 
     files: action.bound(function() {
         this.resetMenus();
-        this.suppressTransition = true;
+        this.suppressTransition = Platform.OS === 'android';
         this.route = 'files';
         this.currentIndex = 0;
         this.currentFile = null;

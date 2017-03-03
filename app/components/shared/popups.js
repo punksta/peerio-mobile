@@ -13,7 +13,7 @@ function textControl(t) {
         marginVertical: 12
     };
 
-    return (
+    return t && (
         <Text style={text}>{t}</Text>
     );
 }
@@ -33,6 +33,20 @@ function popupYes(title, subTitle, text) {
             buttons: [{
                 id: 'ok', text: 'OK', action: resolve
             }]
+        });
+    });
+}
+
+function popupYesCancel(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title,
+            subTitle: textControl(subTitle),
+            contents: textControl(text),
+            buttons: [
+                { id: 'cancel', text: 'Cancel', action: () => resolve(false), secondary: true },
+                { id: 'yes', text: 'Yes', action: () => resolve(true) }
+            ]
         });
     });
 }
@@ -97,4 +111,4 @@ locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
 
-module.exports = { popupYes, popupInput, popupTOS, popupCopyCancel, popupInputCancel };
+module.exports = { popupYes, popupYesCancel, popupInput, popupTOS, popupCopyCancel, popupInputCancel };

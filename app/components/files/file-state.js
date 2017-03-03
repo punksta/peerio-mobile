@@ -5,7 +5,7 @@ import mainState from '../main/main-state';
 import { fileStore, TinyDb, socket, fileHelpers } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
-import { popupInput } from '../shared/popups';
+import { popupInput, popupYesCancel } from '../shared/popups';
 import imagePicker from '../helpers/imagepicker';
 
 const fileState = observable({
@@ -125,7 +125,7 @@ const fileState = observable({
     },
 
     cancelUpload(file) {
-        fileStore.cancelUpload(file);
+        return popupYesCancel('Cancel file upload?').then(r => r && fileStore.cancelUpload(file));
     }
 });
 
