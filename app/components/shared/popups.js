@@ -44,7 +44,7 @@ function popupYesCancel(title, subTitle, text) {
             subTitle: textControl(subTitle),
             contents: textControl(text),
             buttons: [
-                { id: 'cancel', text: 'Cancel', action: () => resolve(false), secondary: true },
+                { id: 'no', text: 'No', action: () => resolve(false), secondary: true },
                 { id: 'yes', text: 'Yes', action: () => resolve(true) }
             ]
         });

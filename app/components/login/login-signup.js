@@ -33,6 +33,7 @@ export default class LoginSignup extends Component {
             marginTop: 6,
             paddingLeft: 8,
             paddingRight: 8,
+            opacity: loginState.isInProgress ? 0 : 1,
             justifyContent: 'center'
         };
         const textStyle = {
