@@ -21,30 +21,32 @@ export default class ContactView extends Component {
 
     render() {
         const contact = this.props.contact || mainState.currentContact;
-        const { username, firstName, lastName, fingerprint, tofuError } = contact;
+        const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted } = contact;
         const tofuErrorControl = tofuError && (
-            <View style={{ backgroundColor: '#D0021B', flexGrow: 1, padding: 10, marginVertical: 24 }}>
+            <View style={{ backgroundColor: '#D0021B', flexGrow: 1, padding: 10 }}>
                 <Text style={{ color: vars.white }}>
                     This contact{'\''}s public key has changed, which means it may be compromised.
                 </Text>
             </View>
         );
-        let i = 0;
-        const fingerprintFormatted = fingerprint.replace(/-/g, () => (i++ === 2 ? '\n' : ' '));
         const body = (
-            <View style={{ padding: 8 }}>
-                <View style={flexRow}>
-                    <AvatarCircle contact={contact} large />
+            <View>
+                <View style={[flexRow, { backgroundColor: contact.color }]}>
+                    <Text style={{ color: vars.white, fontWeight: 'bold', fontSize: 60, marginHorizontal: 24, marginVertical: 16 }}>
+                        {contact.letter}
+                    </Text>
                     <View>
-                        <Text style={{ fontWeight: 'bold', color: vars.txtDark, fontSize: 16, marginVertical: 10 }}>{firstName} {lastName}</Text>
-                        <Text style={{ color: vars.txtMedium }}>@{username}</Text>
+                        <Text style={{ fontWeight: 'bold', color: vars.white, fontSize: 16, marginVertical: 4 }}>{firstName} {lastName}</Text>
+                        <Text style={{ color: vars.white }}>@{username}</Text>
                     </View>
                 </View>
-                {tofuErrorControl}
-                <Text style={{ color: vars.txtDate, marginVertical: 10 }}>Fingerprint:</Text>
-                <Text style={{ color: vars.txtMedium }} numberOfLines={2}>
-                    {fingerprintFormatted}
-                </Text>
+                <View style={{ margin: 24 }}>
+                    {tofuErrorControl}
+                    <Text style={{ color: vars.txtDate, marginVertical: 10 }}>Fingerprint:</Text>
+                    <Text style={{ color: vars.txtMedium, fontFamily: 'Verdana', fontSize: 16 }} numberOfLines={2}>
+                        {fingerprintSkylarFormatted}
+                    </Text>
+                </View>
             </View>
         );
         return <LayoutModalExit body={body} title={username} />;

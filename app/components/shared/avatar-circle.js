@@ -28,8 +28,7 @@ export default class AvatarCircle extends Component {
         if (this.props.loading) {
             return <ActivityIndicator style={{ height, margin: 4 }} />;
         }
-        const { username, firstName, color, tofuError } = this.props.contact;
-        const letter = (firstName || username || ' ')[0].toUpperCase();
+        const { color, tofuError, letter } = this.props.contact;
         const coloredAvatarStyle = [avatarStyle, {
             overflow: 'hidden',
             justifyContent: 'center',
