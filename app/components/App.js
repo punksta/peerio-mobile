@@ -6,6 +6,7 @@ import Login from './login/login';
 import Signup from './signup/signup';
 import PersistentFooter from './layout/persistent-footer';
 import PopupLayout from './layout/popup-layout';
+import BgPattern from './controls/bg-pattern';
 // import DebugPanel from './layout/debugPanel';
 import LayoutMain from './layout/layout-main';
 import state from './layout/state';
@@ -151,6 +152,7 @@ export default class App extends Component {
                 removeClippedSubviews
                 key={route.key}
                 style={[styles.navigator.card, hidden]}>
+                <BgPattern />
                 {inner}
             </View>
         );
@@ -175,7 +177,6 @@ export default class App extends Component {
                     style={{ flex: 1, borderWidth: 0, borderColor: 'red' }}>
                     <Navigator
                         testID="navigator"
-                        style={{ backgroundColor: vars.bg }}
                         ref={nav => (this.nav = nav)}
                         initialRoute={this.routes[0]}
                         configureScene={(route, routeStack) => this.configureScene(route, routeStack)}
