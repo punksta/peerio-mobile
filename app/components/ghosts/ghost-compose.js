@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TextInput
+    View, Text, TextInput, TouchableOpacity
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
@@ -25,14 +25,17 @@ const filler = {
 const textboxInput = {
     flex: 1,
     flexGrow: 1,
+    flexShrink: 1,
     fontSize: 16,
-    color: vars.txtDark
+    color: vars.txtDark,
+    marginLeft: 8
 };
 
 const textArea = {
     fontSize: 14,
     marginHorizontal: 10,
-    color: vars.txtDark
+    color: vars.txtDark,
+    height: vars.inputHeight
 };
 
 const shadow = {
@@ -43,6 +46,11 @@ const shadow = {
         height: 1,
         width: 1
     }
+};
+
+const recipient = {
+    flex: 0,
+    height: vars.inputHeight
 };
 
 const value = `
@@ -81,16 +89,19 @@ newline into the field.
 
 @observer
 export default class ComposeMessage extends Component {
+    @observable recipients = __DEV__ ?
+        ['seav@gmail.com', 'testvsov@bl.com', 'romeiro@romeiro.com'] : [];
+    @observable typingRecipient = __DEV__ ? 'seavan@gmail.com' : '';
+
     get ghost() {
         return mailStore.selectedGhost;
     }
 
     get isValid() {
-        return !!((this.files.length || this.value.length) && this.recipient.length);
+        return !!((this.files.length || this.value.length) && this.recipients.length);
     }
 
     @observable value = __DEV__ ? value : '';
-    @observable recipient = __DEV__ ? 'seavan@gmail.com' : '';
     @observable files = [];
     @observable subject = __DEV__ ? 'test subject' : '';
     @observable inProgress = false;
@@ -98,7 +109,7 @@ export default class ComposeMessage extends Component {
     send() {
         const g = mailStore.createGhost();
         g.attachFiles(this.files);
-        g.recipients.push(this.recipient);
+        g.recipients = this.recipients.slice();
         g.subject = this.subject;
         this.inProgress = true;
         setTimeout(() => {
@@ -145,20 +156,86 @@ export default class ComposeMessage extends Component {
         );
     }
 
+    recipient(r) {
+        const bubble = {
+            backgroundColor: vars.bg,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 8,
+            margin: 4,
+            paddingHorizontal: 8,
+            flexGrow: 1,
+            flexShrink: 1,
+            flexDirection: 'row'
+        };
+        const text = {
+            color: vars.white
+        };
+        return (
+            <TouchableOpacity onPress={() => this.removeRecipient(r)} key={r}>
+                <View style={recipient}>
+                    <View style={bubble}>
+                        <Text
+                            ellipsizeMode="tail"
+                            style={text}>{r}</Text>
+                        {icons.plainWhite('close')}
+                    </View>
+                </View>
+            </TouchableOpacity>
+        );
+    }
+
+    recipientsBox() {
+        return this.recipients.map(r => this.recipient(r));
+    }
+
+    pushRecipient(r) {
+        const i = this.recipients.indexOf(r);
+        (i === -1) && this.recipients.push(r);
+    }
+
+    removeRecipient(r) {
+        const i = this.recipients.indexOf(r);
+        (i !== -1) && this.recipients.splice(i, 1);
+    }
+
     to() {
+        const changeText = (text) => {
+            const items = text.split(/[ ,]/).map(s => s.trim()).filter(s => !!s);
+            if (items.length > 1) {
+                this.pushRecipient(items[0]);
+                this.typingRecipient = items[1];
+                return;
+            }
+            this.typingRecipient = text;
+        };
+
+        const pushRemaining = () => {
+            const r = this.typingRecipient.trim();
+            !!r && this.pushRecipient(r);
+            this.typingRecipient = '';
+        };
+
         return this.lineBlock(
             <View style={row}>
                 {this.text('To:')}
-                <TextInput
-                    keyboardType="email-address"
-                    underlineColorAndroid={'transparent'}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    autoComplete={false}
-                    value={this.recipient}
-                    onChangeText={text => (this.recipient = text)}
-                    style={textboxInput} />
-                {icons.dark('keyboard-arrow-down')}
+                <View style={{ flexGrow: 1 }}>
+                    <View style={[row, { flexGrow: 1, flexShrink: 1, borderWidth: 1, borderColor: 'transparent', flexWrap: 'wrap' }]}>
+                        {this.recipientsBox()}
+                        <View style={[recipient, { flexGrow: 1 }]}>
+                            <TextInput
+                                keyboardType="email-address"
+                                underlineColorAndroid={'transparent'}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                autoComplete={false}
+                                value={this.typingRecipient}
+                                onBlur={() => pushRemaining()}
+                                onChangeText={text => changeText(text)}
+                                style={textboxInput} />
+                        </View>
+                    </View>
+                </View>
             </View>
         );
     }
@@ -227,4 +304,3 @@ export default class ComposeMessage extends Component {
         );
     }
 }
-

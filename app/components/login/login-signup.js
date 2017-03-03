@@ -76,7 +76,6 @@ export default class LoginSignup extends Component {
         };
         const activityOverlay = {
             position: 'absolute',
-            backgroundColor: vars.bg,
             left: 0,
             right: 0,
             top: 0,
