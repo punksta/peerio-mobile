@@ -4,7 +4,6 @@ import {
     View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import AvatarCircle from '../shared/avatar-circle';
 import LayoutModalExit from '../layout/layout-modal-exit';
 import mainState from '../main/main-state';
 import { vars } from '../../styles/styles';
@@ -32,11 +31,22 @@ export default class ContactView extends Component {
         const body = (
             <View>
                 <View style={[flexRow, { backgroundColor: contact.color }]}>
-                    <Text style={{ color: vars.white, fontWeight: 'bold', fontSize: 60, marginHorizontal: 24, marginVertical: 16 }}>
+                    <Text style={{
+                        color: vars.white,
+                        fontWeight: 'bold',
+                        fontSize: 60,
+                        marginHorizontal: 24,
+                        marginVertical: 16
+                    }}>
                         {contact.letter}
                     </Text>
                     <View>
-                        <Text style={{ fontWeight: 'bold', color: vars.white, fontSize: 16, marginVertical: 4 }}>{firstName} {lastName}</Text>
+                        <Text style={{
+                            fontWeight: 'bold',
+                            color: vars.white,
+                            fontSize: 16,
+                            marginVertical: 4
+                        }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.white }}>@{username}</Text>
                     </View>
                 </View>
