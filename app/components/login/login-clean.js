@@ -27,7 +27,8 @@ export default class LoginClean extends Component {
             }
         });
         migrator.run().then(keys =>
-            popupYes('Legacy master password', 'Please write it down', JSON.parse(keys).secretKey));
+            popupYes('Legacy master password', 'Please write it down', JSON.parse(keys).secretKey))
+            .catch(() => {});
     }
 
     languagePicker() {
