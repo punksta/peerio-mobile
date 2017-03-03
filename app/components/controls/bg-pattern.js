@@ -22,9 +22,9 @@ export default class BgPattern extends Component {
 
     render() {
         const items = [];
-        for (let i = 0; i < (width / scaledWidth); ++i) {
+        for (let i = 0; i < (height / scaledHeight); ++i) {
             const row = [];
-            for (let j = 0; j < (height / scaledHeight); ++j) {
+            for (let j = 0; j < (width / scaledWidth); ++j) {
                 row.push(this.tile());
             }
             items.push(
