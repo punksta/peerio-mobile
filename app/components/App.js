@@ -24,7 +24,7 @@ export default class App extends Component {
         state.load();
         this.renderScene = this.renderScene.bind(this);
         this.routes = [
-            this.route('loginClean', Login.Clean, true),
+            this.route('loginStart', Login.Wizard, true),
             this.route('loginSaved', Login.Saved),
             this.route('signupStep1', Signup.Step1),
             this.route('signupStep2', Signup.Pin),
@@ -78,10 +78,10 @@ export default class App extends Component {
         };
 
         const log = console.log;
-        console.log = function() {
-            log.apply(console, arguments);
-            Array.from(arguments).forEach(console.stackPush);
-        };
+        // console.log = function() {
+        //     log.apply(console, arguments);
+        //     Array.from(arguments).forEach(console.stackPush);
+        // };
 
         // const error = console.error;
         // console.error = function() {
@@ -159,9 +159,9 @@ export default class App extends Component {
     }
 
     configureScene(route /* , routeStack */) {
-        if (route.index < 2 || route.index > 3) {
+        /* if (route.index < 2 || route.index > 3) {
             return Navigator.SceneConfigs.FadeAndroid;
-        }
+        } */
         return Navigator.SceneConfigs.PushFromRight;
     }
 

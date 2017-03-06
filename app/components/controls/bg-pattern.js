@@ -14,9 +14,9 @@ const scaledHeight = origHeight * ratio / origRatio;
 const { width, height } = Dimensions.get('window');
 
 export default class BgPattern extends Component {
-    tile() {
+    tile(j) {
         return (
-            <Image testID="bg" style={{ height: scaledHeight, width: scaledWidth }} source={bg} />
+            <Image key={j} testID="bg" style={{ height: scaledHeight, width: scaledWidth }} source={bg} />
         );
     }
 
@@ -25,10 +25,10 @@ export default class BgPattern extends Component {
         for (let i = 0; i < (height / scaledHeight); ++i) {
             const row = [];
             for (let j = 0; j < (width / scaledWidth); ++j) {
-                row.push(this.tile());
+                row.push(this.tile(j));
             }
             items.push(
-                <View style={{ flexDirection: 'row' }}>
+                <View key={`${i}`} style={{ flexDirection: 'row' }}>
                     {row}
                 </View>
             );

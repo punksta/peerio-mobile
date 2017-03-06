@@ -41,7 +41,7 @@ const signupState = observable({
     },
 
     exit() {
-        state.route = 'loginClean';
+        state.route = 'loginStart';
     },
 
     reset: action.bound(function() {
