@@ -180,6 +180,7 @@ export default class LayoutMain extends Component {
                 <TouchableWithoutFeedback
                     onPress={menuState ? () => mainState.resetMenus() : null}>
                     <Animated.View
+                        pointerEvents={menuState ? 'box-only' : 'auto'}
                         style={outerStyle}>
                         <Animated.View style={{ flex: 1, transform: transformMenu }}>
                             <HeaderMain title={title} />
