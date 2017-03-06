@@ -32,7 +32,7 @@ if (typeof localStorage !== 'undefined') {
 
 const rnWebSocket = global.WebSocket;
 global.WebSocket = function(url) {
-  const r = new rnWebSocket(url);
+  const r = new rnWebSocket(url, null, null, { pinSSLCert: 'maincert.com' });
   r.binaryType = 'blob';
   return r;
 };
