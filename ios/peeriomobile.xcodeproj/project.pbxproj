@@ -36,10 +36,13 @@
 		023A731F1DA6D58B00E47992 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FDD4B41DA6457E004E1D5A /* libRNRandomBytes.a */; };
 		0248F0721E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
 		0248F0731E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
+		025A63E41E6D9F0500C53B41 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4FC9400FF0F74C249A550AC2 /* MaterialCommunityIcons.ttf */; };
+		025A63E51E6D9F0500C53B41 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 372E848CA7B444A09B937444 /* SimpleLineIcons.ttf */; };
 		026B0DA91E0384EF00B24721 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026B0DA61E0384D700B24721 /* libRCTAnimation.a */; };
 		026B0DAA1E0384F300B24721 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026B0DA61E0384D700B24721 /* libRCTAnimation.a */; };
 		029F0E641E55303400C8586F /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 029F0E601E55301200C8586F /* libRNShare.a */; };
 		029F0E651E55303F00C8586F /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 029F0E601E55301200C8586F /* libRNShare.a */; };
+		02A076271E6D8876008974C5 /* maincert.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = 02A075FF1E6D880E008974C5 /* maincert.com.cer */; };
 		02BB9BCC1E416954004AF2AC /* libRNTouchIDValue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CC88771E1E87D7002BB078 /* libRNTouchIDValue.a */; };
 		02BCD7291DFDE9AF000B8FCF /* libRNFileOpener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD7281DFDE9A2000B8FCF /* libRNFileOpener.a */; };
 		02BCD72A1DFDE9B3000B8FCF /* libRNFileOpener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD7281DFDE9A2000B8FCF /* libRNFileOpener.a */; };
@@ -405,6 +408,7 @@
 		0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		0248F0711E5A59BF00C437A9 /* terms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = terms.txt; path = ../app/assets/terms.txt; sourceTree = "<group>"; };
 		026B0DA01E0384D600B24721 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		02A075FF1E6D880E008974C5 /* maincert.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = maincert.com.cer; path = ../app/assets/maincert.com.cer; sourceTree = "<group>"; };
 		02BCD7231DFDE9A2000B8FCF /* RNFileOpener.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFileOpener.xcodeproj; path = "../node_modules/react-native-file-opener/ios/RNFileOpener.xcodeproj"; sourceTree = "<group>"; };
 		02BCD72C1DFE1606000B8FCF /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		02CC88721E1E87D7002BB078 /* RNTouchIDValue.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNTouchIDValue.xcodeproj; path = "../node_modules/react-native-touch-id-value/RNTouchIDValue.xcodeproj"; sourceTree = "<group>"; };
@@ -812,6 +816,7 @@
 		EE3B3AB15A814B41A0267C44 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				02A075FF1E6D880E008974C5 /* maincert.com.cer */,
 				02210A831E0191BA006D7AC0 /* sounds */,
 				02E096DB1DAE50E100641B85 /* dict */,
 				02E096B21DAE398B00641B85 /* locales */,
@@ -1323,6 +1328,8 @@
 				02DB41791DCD1DB000E04176 /* Images.xcassets in Resources */,
 				02DB417A1DCD1DB000E04176 /* Octicons.ttf in Resources */,
 				02DB417B1DCD1DB000E04176 /* Zocial.ttf in Resources */,
+				025A63E41E6D9F0500C53B41 /* MaterialCommunityIcons.ttf in Resources */,
+				025A63E51E6D9F0500C53B41 /* SimpleLineIcons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1336,6 +1343,7 @@
 				02E096B31DAE398B00641B85 /* locales in Resources */,
 				02321C5B1D7F1BC100282EB1 /* MaterialIcons.ttf in Resources */,
 				86F7F88564164E3CA0B1265B /* Entypo.ttf in Resources */,
+				02A076271E6D8876008974C5 /* maincert.com.cer in Resources */,
 				CF69BA63107E428598B08410 /* EvilIcons.ttf in Resources */,
 				51CAD96E068B4E2EAA239290 /* FontAwesome.ttf in Resources */,
 				B73DC4B1F0BD4E63BE1B4BD5 /* Foundation.ttf in Resources */,
