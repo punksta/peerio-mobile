@@ -73,7 +73,7 @@ export default class Layout1 extends Component {
                     ref={svRef}
                     style={[scrollViewStyle]}
                     contentContainerStyle={[contentContainerStyle]}
-                    keyboardShouldPersistTaps
+                    keyboardShouldPersistTaps="handled"
                     onScroll={this.onScroll}
                     onLayout={this.layout}>
                     {this.props.body}

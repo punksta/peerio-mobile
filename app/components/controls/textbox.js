@@ -69,7 +69,7 @@ export default class TextBox extends Component {
         }, true);
         const s = this.props.state;
         if (s) {
-            // add focus callback so that we can be focused on "Next" action
+            // add focus callback so that we can be focused on Next action
             const focus = s.focus || {};
             focus[this.props.name] = () => this.focus();
             s.focus = focus;
@@ -88,7 +88,7 @@ export default class TextBox extends Component {
 
     blur() {
         console.log('textbox.js: blur');
-        this._callState('OnBlur');
+        this._callState(`OnBlur`);
         state.focusedTextBox = null;
         requestAnimationFrame(() => {
             this.focused = false;
@@ -102,7 +102,7 @@ export default class TextBox extends Component {
         } else {
             this.props.value = tx;
         }
-        this._callState('OnChange', tx);
+        this._callState(`OnChange`, tx);
         this.props.onChangeText && this.props.onChangeText(this.props.name, tx);
     }
 

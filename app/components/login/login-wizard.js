@@ -3,7 +3,7 @@ import {
     View, Text
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { tu } from '../utils/translator';
+import { tu, tx } from '../utils/translator';
 import loginState from './login-state';
 import styles, { vars } from '../../styles/styles';
 import migrator from '../../lib/legacy/migrator';
@@ -51,7 +51,8 @@ export default class LoginWizard extends LoginWizardBase {
             }
         });
         // migrator.run().then(keys =>
-        //     popupYes('Legacy master password', 'Please write it down', JSON.parse(keys).secretKey))
+        //     popupYes(tx('popup_legacyMasterPassword'),
+        // tx('popup_legacyWriteDown'), JSON.parse(keys).secretKey))
         //     .catch(() => {});
     }
 }

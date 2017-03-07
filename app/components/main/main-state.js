@@ -38,7 +38,7 @@ const mainState = observable({
     // extended by specific states (file-state, messaging-state)
     titles: observable.ref({
         recent: () => '',
-        files: (s) => (s.currentFile ? s.currentFile.name : 'All files'),
+        files: (s) => (s.currentFile ? s.currentFile.name : tx('files_allFiles')),
         chat: (s) => (s.currentChat ? s.currentChat.chatName : '')
     }),
 
@@ -291,11 +291,11 @@ reaction(() => mainState.route === 'files', files => {
 });
 
 // mainState.showPopup({
-//     title: 'Master Password',
+//     title: tx('passphrase'),
 //     text: 'blue zeppelin runs aboard all',
 //     buttons: [
-//         { id: 'skip', text: 'Skip' },
-//         { id: 'use', text: 'Use QR' }
+//         { id: 'skip', text: tx('button_skip') },
+//         { id: 'use', text: tx('button_useQR') }
 //     ]
 // });
 

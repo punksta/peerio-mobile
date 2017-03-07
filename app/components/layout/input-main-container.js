@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     View
 } from 'react-native';
+import { tx } from '../utils/translator';
 import InputMain from './input-main';
 import mainState from '../main/main-state';
 import fileState from '../files/file-state';
@@ -34,7 +35,7 @@ export default class InputMainContainer extends Component {
 
     addFiles() {
         const buttons = [
-            { name: 'share', title: 'Share from Peerio' }
+            { name: 'share', title: tx('share_fromPeerio') }
         ];
         imagePicker.show(
             buttons,

@@ -6,6 +6,7 @@ import {
     Animated
 } from 'react-native';
 import { observer } from 'mobx-react/native';
+import { t } from '../utils/translator';
 import fileState from '../files/file-state';
 import contactState from '../contacts/contact-state';
 import icons from '../helpers/icons';
@@ -56,16 +57,16 @@ export default class FileActions extends Component {
         const enabled = file && file.readyForDownload || fileState.showSelection;
 
         const leftAction = file && !file.isPartialDownload && file.cached ?
-            this.action('Open', 'open-in-new', () => file.launchViewer(), enabled) :
-            this.action('Download', 'file-download', () => fileState.download(), enabled);
+            this.action(t('button_open'), 'open-in-new', () => file.launchViewer(), enabled) :
+            this.action(t('download'), 'file-download', () => fileState.download(), enabled);
 
 
         return (
             <Animated.View style={[bottomRowStyle, animation]}>
                 {leftAction}
-                {this.action('Share', 'reply', () => contactState.shareFile(), enabled)}
-                {this.action('Delete', 'delete', () => fileState.delete(), enabled)}
-                {/* {this.action('More', 'more-horiz')} */}
+                {this.action(t('button_share'), 'reply', () => contactState.shareFile(), enabled)}
+                {this.action(t('button_delete'), 'delete', () => fileState.delete(), enabled)}
+                {/* {this.action(t('button_more'), 'more-horiz')} */}
             </Animated.View>
         );
     }

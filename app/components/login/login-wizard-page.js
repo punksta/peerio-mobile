@@ -9,9 +9,6 @@ import Logo from '../controls/logo';
 import Button from '../controls/button';
 import styles, { vars } from '../../styles/styles';
 
-const { width, height } = Dimensions.get('window');
-const logoHeight = height * 0.33;
-
 @observer
 export default class LoginWizardPage extends Component {
     button(text, onPress) {

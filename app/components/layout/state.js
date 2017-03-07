@@ -25,10 +25,10 @@ const state = observable({
     languageSelected: 'en',
     appState: 'active',
     languages: {
-        en: 'English',
-        fr: 'French',
-        es: 'Spanish',
-        ru: 'Russian'
+        en: `English`,
+        fr: `French`,
+        es: `Spanish`,
+        ru: `Russian`
     },
 
     get bottomOffset() {

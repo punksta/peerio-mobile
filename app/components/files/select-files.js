@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
-import { t } from 'peerio-translator';
+import { t, tx } from '../utils/translator';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import FileInnerItem from './file-inner-item';
@@ -43,7 +43,7 @@ export default class SelectFiles extends Component {
                     onChangeText={text => this.onChangeFindFileText(text)}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    placeholder="Find a file"
+                    placeholder={tx('files_findAFile')}
                     ref={ti => (this.textInput = ti)} style={style} />
             </View>
         );

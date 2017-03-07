@@ -8,7 +8,7 @@ import SettingsItem from './settings-item';
 import ButtonText from '../controls/button-text';
 import settingsState from './settings-state';
 import snackbarState from '../snackbars/snackbar-state';
-import { t } from '../utils/translator';
+import { tx } from '../utils/translator';
 
 const paddingVertical = vars.listViewPaddingVertical;
 const paddingHorizontal = vars.listViewPaddingHorizontal;
@@ -33,7 +33,7 @@ const whiteStyle = {
 
 @observer
 export default class SettingsLevel2 extends Component {
-    key2fa = 'FY5DGKRMJHXCLJDJJAOISDUUSIA';
+    key2fa = `FY5DGKRMJHXCLJDJJAOISDUUSIA`;
 
     copyKey() {
         Clipboard.setString(this.key2fa);
@@ -45,15 +45,12 @@ export default class SettingsLevel2 extends Component {
             <View style={bgStyle}>
                 <View>
                     <Text style={{ color: vars.txtDark }}>
-                        Two factor authentication provide an additional
-                    layer of security to your Peerio account.
-                    To set up 2FA enter the secret key into your
-                    authenticator app.
-                   </Text>
+                        {tx('2fa_info')}
+                    </Text>
                 </View>
                 <View style={{ marginVertical }}>
                     <Text style={labelStyle}>
-                        Secret key
+                        {tx('2fa_secretKey')}
                     </Text>
                     <View style={whiteStyle}>
                         <Text style={{ fontWeight: 'bold' }}>
@@ -63,19 +60,18 @@ export default class SettingsLevel2 extends Component {
                             flexDirection: 'row',
                             justifyContent: 'flex-end'
                         }}>
-                            <ButtonText text="Copy key" onPress={() => this.copyKey()} />
+                            <ButtonText text={tx('button_copyKey')} onPress={() => this.copyKey()} />
                         </View>
                     </View>
                 </View>
                 <View>
                     <Text>
-                        Enter the code provided by
-                        your authenticator app.
+                        {tx('2fa_enter')}
                     </Text>
                 </View>
                 <View style={{ marginVertical }}>
                     <Text style={labelStyle}>
-                        Authenticator app code
+                        {tx('2fa_authenticatorCode')}
                     </Text>
                     <View style={{
                         flexDirection: 'row',
@@ -90,7 +86,7 @@ export default class SettingsLevel2 extends Component {
                             height: vars.inputHeight,
                             flexGrow: 1
                         }} value="123456" />
-                        <ButtonText text="Confirm" />
+                        <ButtonText text={tx('button_confirm')} />
                     </View>
                 </View>
             </View>

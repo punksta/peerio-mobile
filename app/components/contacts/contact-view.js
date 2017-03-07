@@ -53,7 +53,7 @@ export default class ContactView extends Component {
                 <View style={{ margin: 24 }}>
                     {tofuErrorControl}
                     <Text style={{ color: vars.txtDate, marginVertical: 10 }}>Fingerprint:</Text>
-                    <Text style={{ color: vars.txtMedium, fontFamily: 'Verdana', fontSize: 16 }} numberOfLines={2}>
+                    <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: 16 }} numberOfLines={2}>
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>

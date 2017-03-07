@@ -12,7 +12,7 @@ export default {
             }
         };
         ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
+            console.log('imagepicker.js: response = ', response);
             if (response.didCancel) {
                 console.log('imagepicker.js: user cancelled image picker');
             } else if (response.error) {

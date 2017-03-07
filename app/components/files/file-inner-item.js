@@ -108,7 +108,7 @@ export default class FileInnerItem extends Component {
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: 16 }}>
                                 <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                 <Text style={infoStyle}>
-                                    {moment(file.uploadedAt).format('MMM Do YYYY, hh:mm a')}
+                                    {moment(file.uploadedAt).format(`MMM Do YYYY, hh:mm a`)}
                                 </Text>
                             </View>
                             {arrow}

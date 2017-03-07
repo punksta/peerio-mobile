@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
+import { tx } from '../utils/translator';
 import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -96,7 +97,7 @@ export default class InputMain extends Component {
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
                         value={this.value}
-                        placeholder="Enter text here"
+                        placeholder={tx('chat_inputPlaceholder')}
                         enablesReturnKeyAutomatically
                         returnKeyType="default"
                         minHeight={56}

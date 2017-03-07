@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { LayoutAnimation, Picker, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import _ from 'lodash';
+import { t } from '../utils/translator';
 import state from '../layout/state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
@@ -87,7 +88,7 @@ export default class PickerPopup extends Component {
                         {up}
                         {down}
                     </View>
-                    {icons.text('OK', () => this.close())}
+                    {icons.text(t('ok'), () => this.close())}
                 </View>
                 <Picker
                     style={pickerStyle}

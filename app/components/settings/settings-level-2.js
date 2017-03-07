@@ -7,7 +7,7 @@ import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
 import settingsState from './settings-state';
 import { popupInputCancel } from '../shared/popups';
-import { t } from '../utils/translator';
+import { t, tx } from '../utils/translator';
 
 const bgStyle = {
     flexGrow: 1,
@@ -20,7 +20,7 @@ const bgStyle = {
 @observer
 export default class SettingsLevel2 extends Component {
     twoFactorTest() {
-        popupInputCancel('Enter 2FA code:');
+        popupInputCancel(`${tx('popup_enter2FA')}:`);
     }
 
     render() {

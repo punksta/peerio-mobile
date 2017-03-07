@@ -20,7 +20,7 @@ export default class DevNav extends Component {
     }
 
     componentDidMount() {
-        console.log('Mounting dev nav');
+        console.log(`dev-nav.js: mounting dev nav`);
         // this.navigate();
     }
 

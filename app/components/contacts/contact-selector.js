@@ -5,7 +5,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
 import { when } from 'mobx';
-import { t } from 'peerio-translator';
+import { t, tx } from 'peerio-translator';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import Avatar from '../shared/avatar';
@@ -112,7 +112,7 @@ export default class ContactSelector extends Component {
                     onChangeText={text => this.onChangeFindUserText(text)}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    placeholder="Find someone by username"
+                    placeholder={tx('contacts_findSomeone')}
                     ref={ti => (this.textInput = ti)} style={style} />
             </View>
         );

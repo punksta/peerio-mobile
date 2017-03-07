@@ -39,12 +39,12 @@ const settingsState = observable({
             );
             popupCopyCancel(
                 tx('passphrase'),
-                'This is your master password. Use it to login to another device.',
+                tx('popup_masterPasswordText'),
                 mp
             ).then(r => {
                 if (!r) return;
                 Clipboard.setString(passphrase);
-                snackbarState.pushTemporary('Master Password has been copied to clipboard');
+                snackbarState.pushTemporary(tx('popup_masterPasswordCopied'));
             });
             mainState.modalControl = null;
         };

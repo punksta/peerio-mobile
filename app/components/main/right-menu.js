@@ -12,7 +12,7 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
-import { t } from '../utils/translator';
+import { t, tx } from '../utils/translator';
 import { fileStore } from '../../lib/icebear';
 
 const itemStyle = {
@@ -124,7 +124,7 @@ export default class RightMenu extends Component {
                 action: () => null
                 }, */
             {
-                name: t('Logs'),
+                name: tx('logs'),
                 icon: 'help',
                 action: () => mainState.logs()
             }

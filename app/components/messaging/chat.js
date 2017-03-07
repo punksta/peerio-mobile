@@ -11,6 +11,7 @@ import FileInlineProgress from '../files/file-inline-progress';
 import AvatarCircle from '../shared/avatar-circle';
 import mainState from '../main/main-state';
 import { vars } from '../../styles/styles';
+import { tx } from '../utils/translator';
 
 // max new items which are scrolled animated
 const maxScrollableLength = 3;
@@ -170,7 +171,8 @@ export default class Chat extends Component {
             <View style={zsContainer}>
                 <View style={{ flexDirection: 'row' }}>{avatars}</View>
                 <Text style={{ textAlign: 'center', margin: 12, color: vars.txtMedium }}>
-                    {'This is the beginning of your chat history with '}
+                    {tx('chat_beginning')}
+                    <Text>{' '}</Text>
                     <Text style={{ fontWeight: 'bold' }}>
                         {chat.participantUsernames}
                     </Text>

@@ -154,7 +154,7 @@ export default class Avatar extends Component {
         const message = this.props.message || '';
         const icon = this.props.icon ? icons.dark(this.props.icon) : null;
         const date = this.props.date ?
-            <Text style={dateTextStyle}>{moment(this.props.date).format('MMM D, LT')}</Text> : null;
+            <Text style={dateTextStyle}>{moment(this.props.date).format(`MMM D, LT`)}</Text> : null;
         const checkbox = this.props.checkbox ? this.checkbox() : null;
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
         const files = this.props.files ?

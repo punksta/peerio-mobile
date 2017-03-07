@@ -66,7 +66,7 @@ export default class GhostItem extends Component {
                 <View style={block}>
                     <View style={row}>
                         <Text style={normalText}>{g.subject}</Text>
-                        <Text style={lightText}>{moment(g.timestamp).format('L')}</Text>
+                        <Text style={lightText}>{moment(g.timestamp).format(`L`)}</Text>
                     </View>
                     <Text style={lightText}>{g.recipients.join(', ')}</Text>
                     <View style={rowFill}>

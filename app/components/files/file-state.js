@@ -39,7 +39,8 @@ const fileState = observable({
             default: text = 'androidEncryptionStatusOff';
         }
         return text ? TinyDb.system.getValue('fileEncryptionStatusShown')
-            .then(shown => (shown ? Promise.reject(new Error('Already shown')) : Promise.resolve()))
+            .then(shown => (shown ?
+                Promise.reject(new Error('file-state.js: already shown')) : Promise.resolve()))
             .then(() => rnAlertYesNo(null, tx(text)))
             .then(() => Linking.openURL('https://support.google.com/nexus/answer/2844831?hl=en'))
             .catch(e => console.log(e))
@@ -49,7 +50,8 @@ const fileState = observable({
     remindAboutExternal() {
         return Platform.OS === 'android' ?
             TinyDb.system.getValue('saved_toExternalShown')
-                .then(shown => (shown ? Promise.reject(new Error('Already shown')) : Promise.resolve()))
+                .then(shown => (shown ?
+                    Promise.reject(new Error('file-state.js: already shown')) : Promise.resolve()))
                 .then(() => rnAlertYesNo(null, tx('saved_toExternal')))
                 .then(() => {
                     TinyDb.system.setValue('saved_toExternalShown', true);
@@ -115,7 +117,7 @@ const fileState = observable({
             when(() => socket.authenticated,
                 () => resolve(uploader(uri, fn)));
         }).then(file => {
-            return popupInput('Tap to rename', fileHelpers.getFileNameWithoutExtension(fn))
+            return popupInput(tx('popup_tapToRename'), fileHelpers.getFileNameWithoutExtension(fn))
                 .then(newFileName => {
                     if (!newFileName) return Promise.resolve();
                     file.name = `${newFileName}.${ext}`;
@@ -125,7 +127,7 @@ const fileState = observable({
     },
 
     cancelUpload(file) {
-        return popupYesCancel('Cancel file upload?').then(r => r && fileStore.cancelUpload(file));
+        return popupYesCancel(tx('popup_cancelFileUpload')).then(r => r && fileStore.cancelUpload(file));
     }
 });
 

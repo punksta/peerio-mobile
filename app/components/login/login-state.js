@@ -13,11 +13,10 @@ const { isValidLoginUsername } = validators;
 const loginState = observable({
     username: '',
     usernameValid: null,
-    firstName: 'Peerio',
-    lastName: 'Test',
+    firstName: '',
+    lastName: '',
     passphrase: '',
     passphraseValidationMessage: null,
-    language: 'English',
     changeUser: false,
     savedUserInfo: false,
     isInProgress: false,
@@ -63,7 +62,7 @@ const loginState = observable({
                     return user.login();
                 }
                 // this.error = 'badUsername';
-                return Promise.reject(new Error('Bad username'));
+                return Promise.reject(new Error('login-state.js: bad username'));
             })
             .then(() => console.log('login-state.js: logged in'))
             .then(() => mainState.activateAndTransition(user))
@@ -86,7 +85,7 @@ const loginState = observable({
         this.isInProgress = true;
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
-        });
+        }).catch(e => console.log(e));
     }),
 
     loginCached: action.bound(function(data) {
@@ -100,7 +99,10 @@ const loginState = observable({
 
     async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
-        return (inProgress ? rnAlertYesNo('Are you sure?', 'File tasks are not completed') : Promise.resolve(true))
+        return (inProgress ? rnAlertYesNo(
+            tx('popup_areYouSure'),
+            tx('popup_fileTasksNotCompleted')) : Promise.resolve(true)
+        )
             .then(() => User.removeLastAuthenticated())
             .then(() => RNRestart.Restart())
             .catch(() => null);

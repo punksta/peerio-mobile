@@ -8,6 +8,7 @@ import {
 import Share from 'react-native-share';
 import moment from 'moment';
 import { observer } from 'mobx-react/native';
+import { tx } from '../utils/translator';
 // import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import { mailStore } from '../../lib/icebear';
@@ -64,9 +65,9 @@ export default class Ghost extends Component {
 
     share() {
         Share.open({
-            title: 'Peerio Mail',
+            title: tx('share_peerioMailTitle'),
             message: this.ghost.passphrase,
-            subject: 'Share Peerio Mail'
+            subject: tx('share_peerioMailSubject')
         })
         .catch(() => {
             console.log(`ghost-view.js: share cancelled by user`);
@@ -93,7 +94,7 @@ export default class Ghost extends Component {
                     <View style={row}>
                         <Text style={normalText}>Me</Text>
                         <Text style={lightText}>
-                            {moment(g.timestamp).format('LLL')}
+                            {moment(g.timestamp).format(`LLL`)}
                         </Text>
                     </View>
                     <View style={{ marginVertical }}>

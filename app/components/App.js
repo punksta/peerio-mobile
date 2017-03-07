@@ -65,11 +65,11 @@ export default class App extends Component {
         }
 
         global.ErrorUtils && global.ErrorUtils.setGlobalHandler((...args) => {
-            console.error('App.js: unhandled error');
+            console.error(`App.js: unhandled error`);
             console.error(args);
         });
 
-        console.stack = observable([]);
+        console.stack = [];
         console.stackPush = (i) => {
             const MAX = 1000;
             const index = console.stack.length;
@@ -78,16 +78,16 @@ export default class App extends Component {
         };
 
         const log = console.log;
-        // console.log = function() {
-        //     log.apply(console, arguments);
-        //     Array.from(arguments).forEach(console.stackPush);
-        // };
+        console.log = function() {
+            log.apply(console, arguments);
+            Array.from(arguments).forEach(console.stackPush);
+        };
 
-        // const error = console.error;
-        // console.error = function() {
-        //     error.apply(console, arguments);
-        //     Array.from(arguments).forEach(console.stackPush);
-        // };
+        const error = console.error;
+        console.error = function() {
+            error.apply(console, arguments);
+            Array.from(arguments).forEach(console.stackPush);
+        };
 
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);

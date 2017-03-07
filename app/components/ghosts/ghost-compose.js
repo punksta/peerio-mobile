@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
+import { tx } from '../utils/translator';
 import GhostSendButton from './ghost-send-button';
 import icons from '../helpers/icons';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -138,10 +139,10 @@ export default class ComposeMessage extends Component {
             });
     }
 
-    text(t) {
+    textWithColon(text) {
         return (
             <Text style={{ color: vars.subtleText, padding: 8 }}>
-                {t}
+                {text}:
             </Text>
         );
     }
@@ -218,7 +219,7 @@ export default class ComposeMessage extends Component {
 
         return this.lineBlock(
             <View style={row}>
-                {this.text('To:')}
+                {this.textWithColon(tx('to'))}
                 <View style={{ flexGrow: 1 }}>
                     <View style={[row, { flexGrow: 1, flexShrink: 1, borderWidth: 1, borderColor: 'transparent', flexWrap: 'wrap' }]}>
                         {this.recipientsBox()}
@@ -243,7 +244,7 @@ export default class ComposeMessage extends Component {
     subjectBlock() {
         return this.lineBlock(
             <View style={row}>
-                {this.text('Subject:')}
+                {this.textWithColon(tx('subject'))}
                 <TextInput
                     underlineColorAndroid={'transparent'}
                     autoCapitalize="none"
