@@ -26,6 +26,7 @@ export default class LoginWizardBase extends Component {
     @observable currentIndex = 0;
     @observable animatedIndex = 0;
     @observable pages = [];
+    direction = 1;
 
     constructor(props) {
         super(props);
@@ -37,14 +38,16 @@ export default class LoginWizardBase extends Component {
             setTimeout(() => {
                 this.currentIndex = i;
             }, 100);
+            this.direction = (i >= this.currentIndex) ? 1 : -1;
             LayoutAnimation.easeInEaseOut();
         });
     }
 
     animatedContainer(key, item, index) {
         const currentView = index === this.currentIndex;
-        const shiftNew = index > this.animatedIndex ? width : 0;
-        const shift = index < this.index ? -width : shiftNew;
+        const normalizedWidth = this.direction * width;
+        const shiftNew = index !== this.animatedIndex ? normalizedWidth : 0;
+        const shift = index !== this.index ? -normalizedWidth : shiftNew;
         const animation = { left: shift };
         const container = { flexGrow: 1 };
         return item && currentView && (
