@@ -5,7 +5,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
 import { when } from 'mobx';
-import { t, tx } from 'peerio-translator';
+import { t, tx } from '../utils/translator';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import Avatar from '../shared/avatar';
