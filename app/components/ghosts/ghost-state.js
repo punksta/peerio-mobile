@@ -1,7 +1,8 @@
 import { observable } from 'mobx';
 import mainState from '../main/main-state';
 import { tx } from '../utils/translator';
-import { mailStore } from '../../lib/icebear';
+import { mailStore, User } from '../../lib/icebear';
+import { popupUpgrade } from '../shared/popups';
 
 const ghostState = observable({
     isComposing: false,
@@ -13,6 +14,10 @@ const ghostState = observable({
     },
 
     compose() {
+        if (!User.current.canSendGhost()) {
+            popupUpgrade(tx('ghosts_sendingError'), null, tx('ghosts_quotaExceeded'));
+            return;
+        }
         ghostState.isComposing = true;
         mainState.currentIndex = 1;
         mainState.isBackVisible = true;

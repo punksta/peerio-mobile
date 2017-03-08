@@ -2,7 +2,7 @@ import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
 import moment from 'moment';
 import mainState from '../main/main-state';
-import { fileStore, TinyDb, socket, fileHelpers, errors } from '../../lib/icebear';
+import { fileStore, TinyDb, socket, fileHelpers, errors, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { popupInput, popupYesCancel, popupUpgrade } from '../shared/popups';
@@ -105,17 +105,17 @@ const fileState = observable({
     },
 
     upload(uri, fileName, fileData, inline) {
+        const upgrade = () =>
+            popupUpgrade(tx('files_uploadError'), null, tx('files_quotaExceeded'));
+        if (!User.current.canUploadFileSize(fileData.fileSize)) return upgrade();
         let fn = fileHelpers.getFileName(fileName || uri);
         const ext = fileHelpers.getFileExtension(fn);
         if (!fileName) {
             fn = `${moment(Date.now()).format('llll')}.${ext}`;
         }
         const chat = mainState.currentChat;
-        const errorHandler = e => {
-            if (e.code === errors.ServerError.codes.quotaExceeded) {
-                popupUpgrade(tx('files_uploadError'), null, tx('files_quotaExceeded'));
-            }
-        };
+        const errorHandler = e =>
+            (e.code === errors.ServerError.codes.quotaExceeded) && upgrade();
         const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName, errorHandler) :
             () => fileStore.upload(uri, fileName, errorHandler);
         return new Promise(resolve => {

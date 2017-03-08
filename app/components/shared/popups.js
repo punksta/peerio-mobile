@@ -117,4 +117,12 @@ locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
 
-module.exports = { popupYes, popupYesCancel, popupInput, popupTOS, popupCopyCancel, popupInputCancel };
+module.exports = {
+    popupYes,
+    popupYesCancel,
+    popupInput,
+    popupTOS,
+    popupCopyCancel,
+    popupInputCancel,
+    popupUpgrade
+};
