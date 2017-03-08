@@ -60,14 +60,16 @@ export default class Ghosts extends Component {
 
     listView() {
         return (
-            <ScrollView
-                initialListSize={1}
-                dataSource={this.dataSource}
-                renderRow={this.item}
-                enableEmptySections
-                ref={sv => (this.scrollView = sv)}>
-                {this.data.map(i => this.item(i))}
-            </ScrollView>
+            <MenuContext>
+                <ScrollView
+                    initialListSize={1}
+                    dataSource={this.dataSource}
+                    renderRow={this.item}
+                    enableEmptySections
+                    ref={sv => (this.scrollView = sv)}>
+                    {this.data.map(i => this.item(i))}
+                </ScrollView>
+            </MenuContext>
         );
     }
 
@@ -78,9 +80,7 @@ export default class Ghosts extends Component {
         return (
             <View
                 style={{ flex: 1, flexGrow: 1 }}>
-                <MenuContext>
-                    {body}
-                </MenuContext>
+                {body}
                 <ProgressOverlay enabled={mailStore.loading} />
             </View>
         );

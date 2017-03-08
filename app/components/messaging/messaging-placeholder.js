@@ -103,9 +103,7 @@ export default class MessagingPlaceholder extends Component {
         };
         return (
             <View style={s}>
-                <MainStateLoading>
-                    {this.messaging()}
-                </MainStateLoading>
+                {this.messaging()}
             </View>
         );
     }

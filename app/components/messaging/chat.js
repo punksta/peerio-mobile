@@ -6,6 +6,7 @@ import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import Paging from '../shared/paging';
+import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import ChatItem from './chat-item';
 import FileInlineProgress from '../files/file-inline-progress';
 import AvatarCircle from '../shared/avatar-circle';
@@ -185,7 +186,7 @@ export default class Chat extends Component {
         return (
             <View
                 style={{ flexGrow: 1 }}>
-                {this.listView()}
+                {this.data.length ? this.listView() : <MessagingPlaceholder />}
                 <View style={{ margin: 12 }}>
                     {this.uploadQueue()}
                 </View>
