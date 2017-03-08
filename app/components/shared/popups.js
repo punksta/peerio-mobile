@@ -38,6 +38,11 @@ function popupYes(title, subTitle, text) {
     });
 }
 
+function popupUpgrade(title, subTitle, text) {
+    // TODO: add upgrade button
+    return popupYes(title, subTitle, text);
+}
+
 function popupYesCancel(title, subTitle, text) {
     return new Promise((resolve) => {
         popupState.showPopup({

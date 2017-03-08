@@ -4,12 +4,13 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
+import { popupUpgrade } from '../shared/popups';
 import { tx } from '../utils/translator';
 import GhostSendButton from './ghost-send-button';
 import icons from '../helpers/icons';
 import ProgressOverlay from '../shared/progress-overlay';
 import ghostState from './ghost-state';
-import { mailStore } from '../../lib/icebear';
+import { mailStore, errors } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import { vars } from '../../styles/styles';
 
@@ -119,10 +120,18 @@ export default class ComposeMessage extends Component {
                     ghostState.view(g);
                     console.log(`ghost-compose.js: sent ${g.ghostId}`);
                 })
+                .then(() => {
+                    throw new errors.ServerError(413, 'nope');
+                })
                 .catch(e => {
                     console.error(`ghost-compose.js: sending error`);
                     console.log(e);
                     g.remove();
+                    let msg = e.message;
+                    if (e.code === errors.ServerError.codes.quotaExceeded) {
+                        msg = tx('ghosts_quotaExceeded');
+                    }
+                    popupUpgrade(tx('ghosts_sendingError'), null, msg);
                 })
                 .finally(() => (this.inProgress = false));
         }, 100);
@@ -217,11 +226,19 @@ export default class ComposeMessage extends Component {
             this.typingRecipient = '';
         };
 
+        const container = {
+            flexGrow: 1,
+            flexShrink: 1,
+            borderWidth: 1,
+            borderColor: 'transparent',
+            flexWrap: 'wrap'
+        };
+
         return this.lineBlock(
             <View style={row}>
                 {this.textWithColon(tx('to'))}
                 <View style={{ flexGrow: 1 }}>
-                    <View style={[row, { flexGrow: 1, flexShrink: 1, borderWidth: 1, borderColor: 'transparent', flexWrap: 'wrap' }]}>
+                    <View style={[row, container]}>
                         {this.recipientsBox()}
                         <View style={[recipient, { flexGrow: 1 }]}>
                             <TextInput

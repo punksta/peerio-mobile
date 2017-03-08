@@ -2,10 +2,10 @@ import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
 import moment from 'moment';
 import mainState from '../main/main-state';
-import { fileStore, TinyDb, socket, fileHelpers } from '../../lib/icebear';
+import { fileStore, TinyDb, socket, fileHelpers, errors } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
-import { popupInput, popupYesCancel } from '../shared/popups';
+import { popupInput, popupYesCancel, popupUpgrade } from '../shared/popups';
 import imagePicker from '../helpers/imagepicker';
 
 const fileState = observable({
@@ -111,8 +111,13 @@ const fileState = observable({
             fn = `${moment(Date.now()).format('llll')}.${ext}`;
         }
         const chat = mainState.currentChat;
-        const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName) :
-            () => fileStore.upload(uri, fileName);
+        const errorHandler = e => {
+            if (e.code === errors.ServerError.codes.quotaExceeded) {
+                popupUpgrade(tx('files_uploadError'), null, tx('files_quotaExceeded'));
+            }
+        };
+        const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName, errorHandler) :
+            () => fileStore.upload(uri, fileName, errorHandler);
         return new Promise(resolve => {
             when(() => socket.authenticated,
                 () => resolve(uploader(uri, fn)));
