@@ -53,8 +53,7 @@ const mainState = observable({
                 title="Create device PIN"
                 onSuccess={pin => User.current.setPasscode(pin)} />
         );
-        mainState.modalControl = pinModal;
-
+        if (__DEV__) mainState.modalControl = pinModal;
         state.routes.main.transition();
         User.current = user;
         this.saveUser();
