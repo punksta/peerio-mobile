@@ -36,7 +36,9 @@ export default class Circles extends Component {
     }
 
     normal(i) {
-        return (
+        return this.props.empty ? (
+            <View key={i} style={style.normal} />
+        ) : (
             <View key={i} style={[style.active, dash]}>
                 <Text style={dashText}>-</Text>
             </View>
@@ -65,5 +67,6 @@ export default class Circles extends Component {
 Circles.propTypes = {
     count: React.PropTypes.number.isRequired,
     current: React.PropTypes.number.isRequired,
-    fill: React.PropTypes.bool
+    fill: React.PropTypes.bool,
+    empty: React.PropTypes.bool
 };

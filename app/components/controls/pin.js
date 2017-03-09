@@ -43,6 +43,7 @@ export default class Pin extends Component {
     check() {
         if (this.pin === this.enteredPin) {
             this.message = t('wait');
+            this.isSpinner = true;
             this.props.onConfirm && this.props.onConfirm(this.enteredPin);
         } else {
             this.shake();
@@ -60,7 +61,6 @@ export default class Pin extends Component {
     error(msg) {
         this.isConfirm = false;
         this.message = msg || this.props.messageWrong || t('passphrase_wrongpin');
-        this.subTitle = t('passcode_inputPlaceholder');
     }
 
     initial() {
@@ -88,13 +88,13 @@ export default class Pin extends Component {
             borderWidth: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            width: 64,
-            height: 64
+            width: this.circleW,
+            height: this.circleW
         });
         const circleHl = styles.circle.create(r, {
             backgroundColor: vars.midlight,
-            width: 64,
-            height: 64
+            width: this.circleW,
+            height: this.circleW
         });
         return (
             <View style={circleHl} key={key}>
@@ -119,7 +119,7 @@ export default class Pin extends Component {
                 this.props.onEnter(pin)
                     .then(r => {
                         console.log(`returned ${r}`);
-                        this.props.onSuccess && this.props.onSuccess(r);
+                        return this.props.onSuccess && this.props.onSuccess(r);
                     })
                     .catch(e => {
                         console.log(`pin.js: error ${e}`);
@@ -153,7 +153,7 @@ export default class Pin extends Component {
 
     layout(e) {
         const w = e.nativeEvent.layout.width;
-        this.circleW = w / 3.6;
+        this.circleW = w / 3.9;
     }
 
     row(index, items) {
@@ -185,11 +185,11 @@ export default class Pin extends Component {
         const bs = this.pin.length ? p(null, 'backspace', () => this.backspace()) : p();
         const inProgress = this.loading;
         const body = (
-            <View style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0 }}>
+            <View style={{ flexGrow: 1, borderColor: 'green', borderWidth: 0, justifyContent: 'space-between' }}>
                 <Text style={style.message.subTitle}>
                     {this.subTitle}
                 </Text>
-                <Animatable.View ref={v => { this.shaker = v; }}>
+                <Animatable.View ref={v => { this.shaker = v; }} style={{ flex: 0, borderColor: 'blue', borderWidth: 0 }}>
                     <Center style={style.message.container}>
                         <Text style={style.message.text}>
                             {this.message}
@@ -200,12 +200,14 @@ export default class Pin extends Component {
                             <View style={{ flex: 1, alignSelf: 'center' }}>
                                 <ActivityIndicator style={{ marginTop: -6 }} color={vars.highlight} />
                             </View> :
-                            <Circles count={this.maxPinLength} current={this.pin.length} fill /> }
+                            <Circles count={this.maxPinLength} current={this.pin.length} fill empty={this.isConfirm} /> }
                     </View>
                 </Animatable.View>
                 <View style={{ flexGrow: 1,
-                    maxHeight: 352,
                     opacity: inProgress ? 0.5 : 1,
+                    borderWidth: 0,
+                    borderColor: 'yellow',
+                    marginTop: 24,
                     marginLeft: 16,
                     marginRight: 16 }}>
                     {this.row(0, [p(1), p(2, `ABC`), p(3, `DEF`)])}
@@ -217,7 +219,8 @@ export default class Pin extends Component {
         );
         return (
             <View style={{
-                flex: 1
+                flex: 1,
+                flexGrow: 1
             }} onLayout={this.layout}>
                 {this.circleW ? body : null}
             </View>

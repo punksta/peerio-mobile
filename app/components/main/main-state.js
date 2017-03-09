@@ -1,3 +1,4 @@
+import React from 'react';
 import { Animated, Platform } from 'react-native';
 import { observable, action, when, reaction } from 'mobx';
 import state from '../layout/state';
@@ -6,6 +7,7 @@ import sounds from '../../lib/sounds';
 import { enablePushNotifications } from '../../lib/push';
 import touchid from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
+import PinModalCreate from '../controls/pin-modal-create';
 import { tx } from '../utils/translator';
 
 const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
@@ -46,6 +48,13 @@ const mainState = observable({
     fabActions: observable.ref({}),
 
     activateAndTransition: action.bound(function(user) {
+        const pinModal = () => (
+            <PinModalCreate
+                title="Create device PIN"
+                onSuccess={pin => User.current.setPasscode(pin)} />
+        );
+        mainState.modalControl = pinModal;
+
         state.routes.main.transition();
         User.current = user;
         this.saveUser();

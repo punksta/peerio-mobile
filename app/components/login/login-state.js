@@ -1,84 +1,70 @@
 import { when, observable, action } from 'mobx';
 import RNRestart from 'react-native-restart';
-import state from '../layout/state';
 import mainState from '../main/main-state';
 import { User, validation, fileStore, socket } from '../../lib/icebear';
 import touchId from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { tx } from '../utils/translator';
+import RoutedState from '../shared/routed-state';
 
 const { validators, addValidation } = validation;
 const { isValidLoginUsername } = validators;
 
-const loginState = observable({
-    username: '',
-    usernameValid: null,
-    firstName: '',
-    lastName: '',
-    passphrase: '',
-    passphraseValidationMessage: null,
-    changeUser: false,
-    savedUserInfo: false,
-    isInProgress: false,
-    pin: false,
-    error: null,
+class LoginState extends RoutedState {
+    @observable username = '';
+    @observable usernameValid = null;
+    @observable firstName = '';
+    @observable lastName = '';
+    @observable passphrase = '';
+    @observable passphraseValidationMessage = null;
+    @observable changeUser = false;
+    @observable savedUserInfo = false;
+    @observable isInProgress = false;
 
-    get isActive() {
-        return state.route.startsWith('login');
-    },
-
-    get isConnected() {
-        return socket.connected;
-    },
-
-    clean: action.bound(function() {
+    @action clean() {
         console.log('transitioning to clean');
         this.username = '';
         this.usernameValid = null;
         this.passphrase = '';
         this.savedUserInfo = false;
         this.isInProgress = false;
-        this.pin = false;
-        state.routes.loginClean.transition();
-    }),
+        this.routes.loginStart.transition();
+    }
 
-    changeUserAction: action.bound(async function() {
+    @action async changeUserAction() {
         await User.removeLastAuthenticated();
         this.username = null;
         this.usernameValid = null;
         this.passphrase = '';
-    }),
+    }
 
-    saved: action.bound(function() {
+    @action saved() {
         this.savedUserInfo = true;
-        state.routes.loginSaved.transition();
-    }),
+        this.routes.loginSaved.transition();
+    }
 
-    _login: action.bound(function(user) {
+    @action _login(user) {
         console.log(`login-state.js: logging in ${user.username}`);
         return isValidLoginUsername(user.username)
             .then(valid => {
                 if (valid) {
                     return user.login();
                 }
-                // this.error = 'badUsername';
                 return Promise.reject(new Error('login-state.js: bad username'));
             })
             .then(() => console.log('login-state.js: logged in'))
             .then(() => mainState.activateAndTransition(user))
             .catch(e => {
                 console.error(e);
-                // if (!this.error) this.error = 'loginFailed';
                 this.passphraseValidationMessage = tx('incorrectPasswordOrPINTitle');
                 return Promise.reject(new Error(this.error));
             })
             .finally(() => {
                 this.isInProgress = false;
-                // setTimeout(() => (this.error = null), 1000);
             });
-    }),
+    }
 
-    login: action.bound(function(pin) {
+    @action login(pin) {
         const user = new User();
         user.username = this.username;
         user.passphrase = pin || this.passphrase || 'such a secret passphrase';
@@ -86,16 +72,16 @@ const loginState = observable({
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
         }).catch(e => console.log(e));
-    }),
+    }
 
-    loginCached: action.bound(function(data) {
+    @action loginCached(data) {
         const user = new User();
         user.deserializeAuthData(data);
         this.isInProgress = true;
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
         });
-    }),
+    }
 
     async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
@@ -106,9 +92,9 @@ const loginState = observable({
             .then(() => User.removeLastAuthenticated())
             .then(() => RNRestart.Restart())
             .catch(() => null);
-    },
+    }
 
-    load: action.bound(async function() {
+    async load() {
         console.log(`login-state.js: loading`);
         const userData = await User.getLastAuthenticated();
         if (userData) {
@@ -130,13 +116,9 @@ const loginState = observable({
                 });
         }
         return false;
-    }),
+    }
 
-    save() {
-        return null;
-    },
-
-    triggerTouchId: action.bound(async function() {
+    @action async triggerTouchId() {
         await touchId.load();
         touchId.available && touchId.get(`user::${this.username}`)
             .then(data => {
@@ -144,12 +126,11 @@ const loginState = observable({
                     this.loginCached(JSON.parse(data));
                 }
             });
-    })
-});
+    }
+}
+
+const loginState = new LoginState();
 
 addValidation(loginState, 'username', validators.usernameLogin, 0);
 
 export default loginState;
-
-this.Peerio = this.Peerio || {};
-this.Peerio.loginState = loginState;
