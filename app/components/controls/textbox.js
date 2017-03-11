@@ -9,7 +9,7 @@ import {
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
-import state from '../layout/state';
+import uiState from '../layout/ui-state';
 import styles, { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 
@@ -77,7 +77,7 @@ export default class TextBox extends Component {
     }
 
     componentWillUnmount() {
-        state.focusedTextBox = null;
+        uiState.focusedTextBox = null;
     }
 
     _callState(name, value) {
@@ -89,7 +89,7 @@ export default class TextBox extends Component {
     blur() {
         console.log('textbox.js: blur');
         this._callState(`OnBlur`);
-        state.focusedTextBox = null;
+        uiState.focusedTextBox = null;
         requestAnimationFrame(() => {
             this.focused = false;
         });
@@ -107,7 +107,7 @@ export default class TextBox extends Component {
     }
 
     focus() {
-        state.focusedTextBox = this.textinput;
+        uiState.focusedTextBox = this.textinput;
         this.textinput.focus();
         requestAnimationFrame(() => {
             this.focused = true;

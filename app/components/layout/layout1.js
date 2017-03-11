@@ -5,7 +5,7 @@ import {
 import { observer } from 'mobx-react/native';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import { vars } from '../../styles/styles';
-import state from './state';
+import uiState from './ui-state';
 
 @observer
 export default class Layout1 extends Component {
@@ -18,7 +18,7 @@ export default class Layout1 extends Component {
     componentWillMount() {
         this.panResponder = PanResponder.create({
             onStartShouldSetPanResponder: (/* evt, gestureState */) => {
-                !this.props.noAutoHide && state.hideAll();
+                !this.props.noAutoHide && uiState.hideAll();
                 return false;
             }
         });
@@ -35,7 +35,6 @@ export default class Layout1 extends Component {
     }
 
     render() {
-        // const offset = state.pickerVisible ? state.pickerHeight : state.keyboardHeight;
         const paddingTop = vars.layoutPaddingTop;
 
         const boxStyle = {
@@ -45,8 +44,7 @@ export default class Layout1 extends Component {
             borderColor: 'yellow',
             borderWidth: 0,
             height: this.scrollViewHeight,
-            paddingTop // ,
-            // paddingBottom: this.props.noKeyboard ? 0 : offset
+            paddingTop
         };
 
         const scrollViewStyle = {

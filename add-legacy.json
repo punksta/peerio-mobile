@@ -1,0 +1,9 @@
+{
+    "username": "t123123123",
+    "firstName": "First",
+    "lastName": "Last",
+    "publicKeyString": "nananana",
+    "messageNotifications": true,
+    "contactNotifications": true,
+    "contactRequestNotifications": true
+}

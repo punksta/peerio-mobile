@@ -5,7 +5,7 @@ import { User, validation, fileStore, socket } from '../../lib/icebear';
 import touchId from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { tx } from '../utils/translator';
-import RoutedState from '../shared/routed-state';
+import RoutedState from '../routes/routed-state';
 
 const { validators, addValidation } = validation;
 const { isValidLoginUsername } = validators;
@@ -20,6 +20,7 @@ class LoginState extends RoutedState {
     @observable changeUser = false;
     @observable savedUserInfo = false;
     @observable isInProgress = false;
+    _prefix = 'login';
 
     @action clean() {
         console.log('transitioning to clean');

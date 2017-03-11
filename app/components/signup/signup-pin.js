@@ -4,7 +4,6 @@ import {
     View
 } from 'react-native';
 import { t } from '../utils/translator';
-import SignupFooter from '../controls/signup-footer';
 import Pin from '../controls/pin';
 // import Button from '../controls/button';
 import Layout2 from '../layout/layout2';
@@ -21,8 +20,8 @@ export default class SignupPin extends Component {
 
     render() {
         const style = styles.wizard;
-        const body = (
-            <View style={[style.containerFlex, { marginTop: 32 }]}>
+        return (
+            <View style={{ flexGrow: 1, marginTop: 32 }}>
                 <Text style={style.text.title}>{t('signupStep2')}</Text>
                 <Pin
                     preventSimplePin
@@ -30,10 +29,6 @@ export default class SignupPin extends Component {
                     ref={pin => (this.pin = pin)}
                     onConfirm={pin => this.usePin(pin)} />
             </View>
-        );
-
-        return (
-            <Layout2 body={body} footer={<SignupFooter />} />
         );
     }
 }

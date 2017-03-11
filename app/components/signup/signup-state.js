@@ -1,82 +1,81 @@
-import { observable, action, reaction } from 'mobx';
-import state from '../layout/state';
+import { observable, action, reaction, when } from 'mobx';
+import routerApp from '../routes/router-app';
 import mainState from '../main/main-state';
+import uiState from '../layout/ui-state';
+import RoutedState from '../routes/routed-state';
 import { User, PhraseDictionaryCollection, validation, socket } from '../../lib/icebear';
 
 const { validators, addValidation } = validation;
 
-const signupState = observable({
-    username: '',
-    email: '',
-    firstName: '',
-    lastName: '',
-    pin: '',
-    pinSaved: false,
-    current: 0,
-    count: 0,
-    inProgress: false,
-
-    get isActive() {
-        return state.route.startsWith('signup');
-    },
+class SignupState extends RoutedState {
+    @observable username = '';
+    @observable email = '';
+    @observable firstName = '';
+    @observable lastName = '';
+    @observable pin = '';
+    @observable pinSaved = false;
+    @observable current = 0;
+    @observable count = 0;
+    @observable inProgress = false;
+    _prefix = 'signup';
 
     get nextAvailable() {
-        switch (signupState.current) {
+        switch (this.current) {
             case 0: return this.isValid() && socket.connected;
             case 1: return this.pinSaved && socket.connected;
             default: return false;
         }
-    },
+    }
 
     get isLast() {
         return this.current === this.count - 1;
-    },
+    }
 
     get isFirst() {
         return this.current === 0;
-    },
+    }
 
     transition() {
-        state.route = 'signupStep1';
-    },
+        routerApp.routes.signupStep1.transition();
+    }
 
     exit() {
-        state.route = 'loginStart';
-    },
+        routerApp.routes.loginStart.transition();
+    }
 
-    reset: action.bound(function() {
+    @action reset() {
         this.current = 0;
-    }),
+    }
 
     generatePassphrase() {
         const dict = PhraseDictionaryCollection.current;
         return dict.getPassphrase(5);
-    },
+    }
 
-    next: action.bound(function() {
+    @action next() {
         if (!this.nextAvailable) return;
         if (this.current < this.count - 1) {
-            signupState.current++;
+            this.current++;
         } else {
             this.finish();
         }
-    }),
+    }
 
-    prev: action.bound(function() {
+    @action prev() {
         if (this.current > 0) {
             this.current--;
         } else {
             this.exit();
         }
-    }),
+    }
 
-    finish: action.bound(async function() {
+    @action async finish() {
         this.inProgress = true;
         this.passphrase = await this.generatePassphrase();
         console.log(this.passphrase);
         const user = new User();
         const { username, email, firstName, lastName, pin, passphrase } = this;
-        const localeCode = state.locale;
+        const localeCode = uiState.locale;
 
         user.username = username;
         user.email = email;
@@ -92,8 +91,10 @@ const signupState = observable({
                 this.reset();
             })
             .finally(() => (this.inProgress = false));
-    })
-});
+    }
+}
+
+const signupState = new SignupState();
 
 addValidation(signupState, 'username', validators.username, 0);
 addValidation(signupState, 'email', validators.email, 1);
@@ -107,20 +108,20 @@ const signupWizardRoutes = [
 
 signupState.count = signupWizardRoutes.length;
 
-// state.persistentFooter.signup = (i) => (signupState.isActive ? <SignupCircles key={i} /> : null);
-
-
 if (__DEV__) {
-    // const s = signupState;
-    // s.username = `anritest1`;
-    // s.email = `seavan+${new Date().getTime()}@gmail.com`;
-    // s.firstName = 's';
-    // s.lastName = 's';
+    when(() => signupState.isConnected, () => {
+        const s = signupState;
+        const rnd = new Date().getTime();
+        s.username = `t${rnd}`;
+        s.email = `seavan+${rnd}@gmail.com`;
+        s.firstName = 'First';
+        s.lastName = 'Last';
+    });
 }
 
 reaction(() => [signupState.current, signupState.isActive], () => {
     if (signupState.isActive) {
-        state.route = signupWizardRoutes[signupState.current];
+        uiState.route = signupWizardRoutes[signupState.current];
     }
 });
 

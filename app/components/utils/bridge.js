@@ -5,13 +5,13 @@ import 'moment/locale/fr';
 import 'moment/locale/es';
 import 'moment/locale/de';
 import { TinyDb } from '../../lib/icebear';
-import state from '../layout/state';
+import uiState from '../layout/ui-state';
 import loginState from '../login/login-state';
 import signupState from '../signup/signup-state';
 
 this.Peerio = global.Peerio = global.Peerio || {};
 this.Peerio.store = TinyDb;
-this.Peerio.state = state;
+this.Peerio.uiState = uiState;
 this.Peerio.loginState = loginState;
 this.Peerio.signupState = signupState;
 this.Peerio.t = t;

@@ -1,21 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
-    View, Text
+    View, Dimensions
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { tu, tx } from '../utils/translator';
+import Wizard from '../wizard/wizard';
 import loginState from './login-state';
 import styles, { vars } from '../../styles/styles';
+import Logo from '../controls/logo';
+import Layout1 from '../layout/layout1';
 import migrator from '../../lib/legacy/migrator';
 import { popupYes } from '../shared/popups';
 import Button from '../controls/button';
 import LoginStart from './login-start';
-import LoginWizardBase from './login-wizard-base';
 import LoginClean from './login-clean';
 import LoginPassword from './login-password';
 
+const { height } = Dimensions.get('window');
+const logoHeight = height * 0.33;
+
 @observer
-export default class LoginWizard extends LoginWizardBase {
+export default class LoginWizard extends Wizard {
     constructor(props) {
         super(props);
         this.pages = ['loginStart', 'loginClean', 'loginPassword'];
@@ -41,6 +46,7 @@ export default class LoginWizard extends LoginWizardBase {
             </View>
         );
     }
+
     componentDidMount() {
         const load = __DEV__ && process.env.PEERIO_SKIPLOGINLOAD ? Promise.resolve(true) : loginState.load();
         load.then(() => {
@@ -54,5 +60,20 @@ export default class LoginWizard extends LoginWizardBase {
         //     popupYes(tx('popup_legacyMasterPassword'),
         // tx('popup_legacyWriteDown'), JSON.parse(keys).secretKey))
         //     .catch(() => {});
+    }
+
+    render() {
+        const style = styles.wizard;
+        const body = (
+            <View
+                style={[style.containerFlex, { height }]}>
+                <View style={{ height: logoHeight, justifyContent: 'center' }}>
+                    <Logo />
+                </View>
+                {this.wizard()}
+                {this.footerContainer()}
+            </View>
+        );
+        return <Layout1 body={body} footer={null} />;
     }
 }

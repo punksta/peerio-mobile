@@ -1,7 +1,7 @@
 import React from 'react';
 import { Animated, Platform } from 'react-native';
 import { observable, action, when, reaction } from 'mobx';
-import state from '../layout/state';
+import uiState from '../layout/ui-state';
 import { User, chatStore, fileStore, mailStore, contactStore, TinyDb } from '../../lib/icebear';
 import sounds from '../../lib/sounds';
 import { enablePushNotifications } from '../../lib/push';
@@ -9,6 +9,7 @@ import touchid from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 import PinModalCreate from '../controls/pin-modal-create';
 import { tx } from '../utils/translator';
+import routerApp from '../routes/router-app';
 
 const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
 
@@ -54,7 +55,7 @@ const mainState = observable({
                 onSuccess={pin => User.current.setPasscode(pin)} />
         );
         if (__DEV__) mainState.modalControl = pinModal;
-        state.routes.main.transition();
+        routerApp.routes.main.transition();
         User.current = user;
         this.saveUser();
         // store.openUserDb(user.username);
@@ -68,7 +69,7 @@ const mainState = observable({
     }),
 
     initial: action.bound(function() {
-        state.hideKeyboard();
+        uiState.hideKeyboard();
         this.messages();
         this.load();
 
@@ -251,13 +252,13 @@ const mainState = observable({
     }),
 
     toggleLeftMenu: action.bound(function() {
-        state.hideKeyboard();
+        uiState.hideKeyboard();
         this.isLeftMenuVisible = !this.isLeftMenuVisible;
         this.isRightMenuVisible = false;
     }),
 
     toggleRightMenu: action.bound(function() {
-        state.hideKeyboard();
+        uiState.hideKeyboard();
         this.isRightMenuVisible = !this.isRightMenuVisible;
         this.isLeftMenuVisible = false;
     }),
@@ -291,7 +292,7 @@ mainState.animatedLeftMenu = new Animated.Value(0);
 mainState.animatedLeftMenuWidth = new Animated.Value(0);
 
 reaction(() => mainState.isLeftMenuVisible, () => {
-    if (mainState.isLeftMenuVisible) state.hideKeyboard();
+    if (mainState.isLeftMenuVisible) uiState.hideKeyboard();
 });
 
 reaction(() => mainState.route === 'files', files => {

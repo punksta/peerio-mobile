@@ -95,7 +95,7 @@ export default class Chat extends Component {
 
         this.scrollTimeout = setTimeout(() => {
             if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
-                let y = this.contentHeight - this.scrollViewHeight; // + state.keyboardHeight;
+                let y = this.contentHeight - this.scrollViewHeight;
                 if (y < 0) {
                     console.log('chat.js: less content than fit');
                     this.paging.hasMore && this.paging.loadNext();

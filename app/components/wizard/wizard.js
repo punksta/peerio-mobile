@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
 import {
-    View, Text, LayoutAnimation, Dimensions
+    View, LayoutAnimation, Dimensions
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
-import { tu } from '../utils/translator';
-import Layout1 from '../layout/layout1';
-import Logo from '../controls/logo';
-import Button from '../controls/button';
-import styles, { vars } from '../../styles/styles';
 
-const { width, height } = Dimensions.get('window');
-const logoHeight = height * 0.33;
+const { width } = Dimensions.get('window');
 
 @observer
-export default class LoginWizardBase extends Component {
+export default class Wizard extends Component {
     /**
      * Animation sequence (start with index 0)
      * 1. new index becomes 1 (this.index === 1)
@@ -43,7 +37,7 @@ export default class LoginWizardBase extends Component {
         });
     }
 
-    animatedContainer(key, item, index) {
+    _animatedContainer(key, item, index) {
         const currentView = index === this.currentIndex;
         const normalizedWidth = this.direction * width;
         const shiftNew = index !== this.animatedIndex ? normalizedWidth : 0;
@@ -57,6 +51,10 @@ export default class LoginWizardBase extends Component {
         );
     }
 
+    wizard() {
+        return this.pages.map((k, i) => this._animatedContainer(k, this[k](), i));
+    }
+
     footerContainer() {
         const footerBody = this.footer();
         return footerBody && (
@@ -64,24 +62,5 @@ export default class LoginWizardBase extends Component {
                 {footerBody}
             </View>
         );
-    }
-
-    footer() {
-        return null;
-    }
-
-    render() {
-        const style = styles.wizard;
-        const body = (
-            <View
-                style={[style.containerFlex, { height }]}>
-                <View style={{ height: logoHeight, justifyContent: 'center' }}>
-                    <Logo />
-                </View>
-                {this.pages.map((k, i) => this.animatedContainer(k, this[k](), i))}
-                {this.footerContainer()}
-            </View>
-        );
-        return <Layout1 body={body} footer={null} />;
     }
 }

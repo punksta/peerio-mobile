@@ -26,7 +26,7 @@ export default class LoginWizardPage extends Component {
             fontWeight: 'bold'
         };
         return (
-            <View style={buttonContainer}>
+            <View style={buttonContainer} key={text}>
                 {this._button(text, onPress, button, buttonText)}
             </View>
         );

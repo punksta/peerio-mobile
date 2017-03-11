@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { t, has } from 'peerio-translator';
 import { reaction } from 'mobx';
-import state from '../layout/state';
+import uiState from '../layout/ui-state';
 
 class T extends Component {
     componentDidMount() {
-        this.localeUpdateReaction = reaction(() => state.locale, () => {
+        this.localeUpdateReaction = reaction(() => uiState.locale, () => {
             // console.log('update reaction');
             this.forceUpdate();
         });

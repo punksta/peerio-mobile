@@ -7,8 +7,6 @@ import { observer } from 'mobx-react/native';
 import TextBox from '../controls/textbox';
 import Bold from '../controls/bold';
 import LanguagePickerBox from '../controls/language-picker-box';
-import SignupFooter from '../controls/signup-footer';
-import Layout1 from '../layout/layout1';
 import styles from '../../styles/styles';
 import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
@@ -37,8 +35,8 @@ export default class SignupStep1 extends Component {
             emphasis: text => <Bold>{text}</Bold>,
             tosLink: text => this.tosLink(text)
         };
-        const body = (
-            <View style={[style.containerFlex, { marginTop: 32 }]}>
+        return (
+            <View style={[{ marginTop: 32 }]}>
                 <Text style={style.text.title}>{t('signupStep1')}</Text>
                 <Text style={style.text.subTitle}>{t('profile')}</Text>
                 <TextBox
@@ -77,14 +75,7 @@ export default class SignupStep1 extends Component {
                     <T k="signup_TOSRequestText">{tosParser}</T>
                 </Text>
                 <View style={{ flexGrow: 1 }} />
-                <View style={{ marginHorizontal: -40 }}>
-                    <SignupFooter />
-                </View>
             </View>
-        );
-
-        return (
-            <Layout1 body={body} />
         );
     }
 }

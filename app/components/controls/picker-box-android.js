@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Picker } from 'react-native';
 import { observer } from 'mobx-react/native';
 import _ from 'lodash';
-import state from '../layout/state';
+import uiState from '../layout/ui-state';
 import { vars } from '../../styles/styles';
 
 @observer
@@ -13,7 +13,7 @@ export default class PickerBoxAndroid extends Component {
     }
 
     onValueChange(lang) {
-        state[this.props.name] = lang;
+        uiState[this.props.name] = lang;
     }
 
     layout(e) {

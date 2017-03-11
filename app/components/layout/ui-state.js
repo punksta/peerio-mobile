@@ -7,60 +7,59 @@ import translator from 'peerio-translator';
 import locales from '../../lib/locales';
 import { TinyDb, PhraseDictionaryCollection } from '../../lib/icebear';
 
-const state = observable({
-    isFirstLogin: false,
-    route: '',
-    prevRoute: '',
-    routes: {},
-    routesList: [],
-    persistentFooter: [],
-    pages: [],
-    focusedTextBox: null,
-    picker: null,
-    pickerVisible: false,
-    keyboardVisible: false,
-    keyboardHeight: 0,
-    locale: null,
-    pickerHeight: 200,
-    languageSelected: 'en',
-    appState: 'active',
-    languages: {
+class UIState {
+    @observable isFirstLogin = false;
+    @observable route = '';
+    @observable prevRoute = '';
+    @observable routes = {};
+    @observable routesList = [];
+    @observable pages = [];
+    @observable focusedTextBox = null;
+    @observable picker = null;
+    @observable pickerVisible = false;
+    @observable keyboardVisible = false;
+    @observable keyboardHeight = 0;
+    @observable locale = null;
+    @observable pickerHeight = 200;
+    @observable languageSelected = 'en';
+    @observable appState = 'active';
+    @observable languages = {
         en: `English`,
         fr: `French`,
         es: `Spanish`,
         ru: `Russian`
-    },
+    };
 
     get bottomOffset() {
         const pickerHeight = this.pickerVisible ? this.pickerHeight : 0;
         return this.keyboardHeight || pickerHeight;
-    },
+    }
 
-    focusTextBox: action.bound(function(textbox) {
+    @action focusTextBox(textbox) {
         this.focusedTextBox = textbox;
-    }),
+    }
 
-    showPicker: action.bound(function(picker) {
+    @action showPicker(picker) {
         this.hideKeyboard();
         this.picker = picker;
         setTimeout(() => { this.pickerVisible = true; }, 0);
-    }),
+    }
 
-    hidePicker: action.bound(function() {
+    @action hidePicker() {
         this.hideKeyboard();
-    }),
+    }
 
-    hideKeyboard: action.bound(function() {
+    @action hideKeyboard() {
         dismissKeyboard();
         setTimeout(() => { this.pickerVisible = false; }, 0);
-    }),
+    }
 
-    hideAll: action.bound(function() {
+    @action hideAll() {
         this.hideKeyboard();
         this.hidePicker();
-    }),
+    }
 
-    setLocale: action.bound(function(lc) {
+    @action setLocale(lc) {
         return locales.loadLocaleFile(lc)
             .then(locale => {
                 console.log(`state.js: ${lc}`);
@@ -73,56 +72,57 @@ const state = observable({
             })
             .then(() => locales.loadDictFile(lc))
             .then(dictString => {
-                PhraseDictionaryCollection.addDictionary(state.locale, dictString);
-                PhraseDictionaryCollection.selectDictionary(state.locale);
+                PhraseDictionaryCollection.addDictionary(this.locale, dictString);
+                PhraseDictionaryCollection.selectDictionary(this.locale);
             });
-    }),
+    }
 
-    load: action.bound(function() {
+    @action load() {
         return TinyDb.system.getValue('state')
             .then(s => this.setLocale(s && s.locale || 'en'));
-    }),
+    }
 
-    save: action.bound(function() {
+    @action save() {
         const locale = this.locale || 'en';
         return TinyDb.system.setValue('state', { locale });
-    })
-});
+    }
+}
 
-reaction(() => state.languageSelected, ls => state.setLocale(ls));
+const uiState = new UIState();
 
-reaction(() => state.route, () => {
-    const r = state.routes[state.route];
+reaction(() => uiState.languageSelected, ls => uiState.setLocale(ls));
+
+reaction(() => uiState.route, () => {
+    const r = uiState.routes[uiState.route];
     const pages = [];
-    if (r && r.states) {
-        _.forOwn(r.states, (val, key) => {
+    if (r && r.uiStates) {
+        _.forOwn(r.uiStates, (val, key) => {
             pages.push(key);
         });
     }
-    state.pages = pages;
+    uiState.pages = pages;
 });
 
-reaction(() => state.focusedTextBox, () => {
-    if (state.focusedTextBox) {
-        state.pickerVisible = false;
+reaction(() => uiState.focusedTextBox, () => {
+    if (uiState.focusedTextBox) {
+        uiState.pickerVisible = false;
     }
 });
 
 Keyboard.addListener('keyboardWillShow', (e) => {
-    state.keyboardHeight = e.endCoordinates.height;
+    uiState.keyboardHeight = e.endCoordinates.height;
 });
 
 Keyboard.addListener('keyboardDidShow', (e) => {
-    state.keyboardHeight = e.endCoordinates.height;
+    uiState.keyboardHeight = e.endCoordinates.height;
 });
 
 Keyboard.addListener('keyboardWillHide', () => {
-    state.keyboardHeight = 0;
+    uiState.keyboardHeight = 0;
 });
 
 Keyboard.addListener('keyboardDidHide', () => {
-    state.keyboardHeight = 0;
+    uiState.keyboardHeight = 0;
 });
 
-
-export default state;
+export default uiState;

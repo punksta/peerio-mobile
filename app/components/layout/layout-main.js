@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { reaction, observable } from 'mobx';
-import state from './state';
+import uiState from './ui-state';
 import InputMainContainer from './input-main-container';
 import mainState from '../main/main-state';
 import Bottom from '../controls/bottom';
@@ -94,7 +94,7 @@ export default class LayoutMain extends Component {
                 mainState.blackStatusBar = false;
             }
         }, true);
-        reaction(() => state.appState, () => this.forceUpdate());
+        reaction(() => uiState.appState, () => this.forceUpdate());
     }
 
     componentWillUnmount() {
@@ -144,8 +144,8 @@ export default class LayoutMain extends Component {
             backgroundColor: '#fff',
             flex: 1,
             flexDirection: 'column',
-            justifyContent: 'space-between',
-            paddingBottom: global.platform === 'android' ? 0 : state.keyboardHeight
+            justifyContent: 'space-between'
+            // paddingBottom: global.platform === 'android' ? 0 : state.keyboardHeight
         };
         const transformModal = [{ translateY: this.modalAnimated || 0 }];
 

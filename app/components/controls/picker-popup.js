@@ -3,7 +3,7 @@ import { LayoutAnimation, Picker, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import _ from 'lodash';
 import { t } from '../utils/translator';
-import state from '../layout/state';
+import uiState from '../layout/ui-state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 
@@ -31,7 +31,7 @@ export default class PickerPopup extends Component {
     }
 
     close() {
-        state.pickerVisible = false;
+        uiState.pickerVisible = false;
     }
 
     next(shift) {
@@ -62,7 +62,7 @@ export default class PickerPopup extends Component {
             bottom: 0,
             left: 0,
             right: 0,
-            height: state.pickerVisible ? state.pickerHeight : 0
+            height: uiState.pickerVisible ? uiState.pickerHeight : 0
         };
 
         const pickerStyle = {
