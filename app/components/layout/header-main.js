@@ -4,37 +4,16 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
-import mainState from '../main/main-state';
+import routerMain from '../routes/router-main';
 import styles, { vars } from '../../styles/styles';
 import MessageIcon from './message-icon';
 import BackIcon from './back-icon';
 
 @observer
 export default class HeaderMain extends Component {
-    constructor(props) {
-        super(props);
-        this.leftMenu = this.leftMenu.bind(this);
-        this.rightMenu = this.rightMenu.bind(this);
-    }
-
-    leftMenu() {
-        mainState.toggleLeftMenu();
-    }
-
-    rightMenu() {
-        mainState.toggleRightMenu();
-    }
-
-    search() {
-    }
-
-    back() {
-        mainState.back();
-    }
-
     render() {
-        let leftIcon = mainState.isLeftHamburgerVisible ? <MessageIcon /> : null;
-        if (mainState.isBackVisible) {
+        let leftIcon = routerMain.isLeftHamburgerVisible ? <MessageIcon /> : null;
+        if (routerMain.isBackVisible) {
             leftIcon = <BackIcon />;
         }
         const textStyle = {
@@ -43,7 +22,7 @@ export default class HeaderMain extends Component {
             flex: 1,
             fontSize: 16,
             alignItems: 'center',
-            marginLeft: mainState.isLeftHamburgerVisible ? 0 : vars.iconSize
+            marginLeft: routerMain.isLeftHamburgerVisible ? 0 : vars.iconSize
         };
         const containerStyle = {
             flex: 0,
@@ -66,7 +45,7 @@ export default class HeaderMain extends Component {
                         numberOfLines={1}
                         style={textStyle}>{this.props.title}</Text>
                     <View style={{ backgroundColor: 'transparent' }}>
-                        {icons.white('more-vert', this.rightMenu)}
+                        {icons.white('more-vert', () => routerMain.toggleRightMenu())}
                     </View>
                 </View>
             </View>

@@ -3,7 +3,7 @@ import {
     View, Dimensions, Text, TouchableOpacity, ScrollView
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import mainState from '../main/main-state';
+import routerMain from '../routes/router-main';
 import contactState from '../contacts/contact-state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
@@ -63,7 +63,7 @@ const headerContainer = {
 export default class LeftMenu extends Component {
 
     hideAnimated() {
-        mainState.isLeftMenuVisible = false;
+        routerMain.isLeftMenuVisible = false;
     }
 
     channel(i) {
@@ -89,7 +89,7 @@ export default class LeftMenu extends Component {
     }
 
     item(i, key) {
-        const action = () => mainState.chat(i);
+        const action = () => routerMain.chat(i);
         const id = i.id || key;
         const text = i.chatName;
         const online = true;
@@ -135,7 +135,7 @@ export default class LeftMenu extends Component {
 
         return (
             <Swiper
-                state={mainState}
+                state={routerMain}
                 width="animatedLeftMenuWidth"
                 animated="animatedLeftMenu"
                 visible="isLeftMenuVisible"
@@ -157,6 +157,3 @@ export default class LeftMenu extends Component {
         );
     }
 }
-
-LeftMenu.propTypes = {
-};

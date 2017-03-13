@@ -2,33 +2,47 @@ import React from 'react';
 import { Text, Clipboard } from 'react-native';
 import { observable, action, reaction } from 'mobx';
 import mainState from '../main/main-state';
+import routerMain from '../routes/router-main';
 import PinModal from '../controls/pin-modal';
 import { User } from '../../lib/icebear';
 import { popupCopyCancel, popupYes } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
 
+class SettingsState {
+    @observable subroute = null;
+    @observable stack = [];
 
-const settingsState = observable({
-    subroute: null,
-    stack: [],
+    constructor() {
+        reaction(() => mainState.currentIndex, (i) => {
+            if (mainState.route === 'settings') {
+                while (i < this.stack.length) {
+                    this.stack.pop();
+                }
+                this.subroute = i ? this.stack[i - 1] : null;
+            }
+        });
+    }
 
-    transition: action.bound(function(subroute) {
+    get title() {
+        const sr = this.subroute;
+        return sr ? tx(sr) : tx('settings');
+    }
+
+    @action transition(subroute) {
         console.log(`settings-state.js: transition ${subroute}`);
-        mainState.route = 'settings';
-        mainState.isRightMenuVisible = false;
-        mainState.isLeftHamburgerVisible = false;
+        routerMain.route = 'settings';
+        routerMain.isRightMenuVisible = false;
+        routerMain.isLeftHamburgerVisible = false;
         if (subroute) {
             this.subroute = subroute;
-            mainState.isBackVisible = true;
             this.stack.push(subroute);
-            mainState.currentIndex = this.stack.length;
+            routerMain.currentIndex = this.stack.length;
         } else {
-            mainState.isBackVisible = false;
-            mainState.currentIndex = 0;
+            routerMain.currentIndex = 0;
             this.stack.clear();
         }
-    }),
+    }
 
     showPassphrase() {
         const success = passphrase => {
@@ -61,20 +75,6 @@ const settingsState = observable({
             mainState.modalControl = pinModal;
         });
     }
-});
+}
 
-mainState.titles.settings = (/* s */) => {
-    const sr = settingsState.subroute;
-    return sr ? tx(sr) : tx('settings');
-};
-
-reaction(() => mainState.currentIndex, (i) => {
-    if (mainState.route === 'settings') {
-        while (i < settingsState.stack.length) {
-            settingsState.stack.pop();
-        }
-        settingsState.subroute = i ? settingsState.stack[i - 1] : null;
-    }
-});
-
-export default settingsState;
+export default new SettingsState();

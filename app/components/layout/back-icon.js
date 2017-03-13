@@ -4,14 +4,13 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
-import mainState from '../main/main-state';
-import { helpers } from '../../styles/styles';
+import routerMain from '../routes/router-main';
 
 @observer
 export default class BackIcon extends Component {
     render() {
         return (
-            <TouchableOpacity onPress={() => mainState.back()}>
+            <TouchableOpacity onPress={() => routerMain.back()}>
                 <View style={{
                     alignItems: 'center',
                     backgroundColor: 'transparent',

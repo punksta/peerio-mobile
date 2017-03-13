@@ -228,16 +228,15 @@ export default class Pin extends Component {
     }
 }
 
-
 Pin.propTypes = {
     onConfirm: React.PropTypes.func,
     onEnter: React.PropTypes.func,
     onSuccess: React.PropTypes.func,
     checkPin: React.PropTypes.func,
-    messageEnter: React.PropTypes.string,
-    messageWrong: React.PropTypes.string,
-    messageConfirm: React.PropTypes.string,
-    messageInitial: React.PropTypes.string,
+    messageEnter: React.PropTypes.any,
+    messageWrong: React.PropTypes.any,
+    messageConfirm: React.PropTypes.any,
+    messageInitial: React.PropTypes.any,
     preventSimplePin: React.PropTypes.bool,
     inProgress: React.PropTypes.bool
 };

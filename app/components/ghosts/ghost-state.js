@@ -1,41 +1,38 @@
 import { observable } from 'mobx';
-import mainState from '../main/main-state';
+import routerMain from '../routes/router-main';
 import { tx } from '../utils/translator';
 import { mailStore, User } from '../../lib/icebear';
 import { popupUpgrade } from '../shared/popups';
 
-const ghostState = observable({
-    isComposing: false,
-
-    transition() {
-        mainState.resetMenus();
-        mainState.route = 'ghosts';
-        mainState.currentIndex = 0;
-    },
+class GhostState {
+    @observable isComposing = false;
 
     compose() {
         if (!User.current.canSendGhost()) {
             popupUpgrade(tx('ghosts_sendingError'), null, tx('ghosts_quotaExceeded'));
             return;
         }
-        ghostState.isComposing = true;
-        mainState.currentIndex = 1;
-        mainState.isBackVisible = true;
-    },
+        this.isComposing = true;
+        routerMain.ghosts({});
+    }
 
     view(ghost) {
-        ghostState.isComposing = false;
-        mainState.route = 'ghosts';
-        mainState.currentIndex = 1;
-        mainState.isBackVisible = true;
+        this.isComposing = false;
+        routerMain.ghosts(ghost);
         mailStore.selectedId = ghost.ghostId;
     }
-});
 
-mainState.titles.ghosts = (/* s */) => {
-    return tx('ghosts');
-};
+    onTransition(active, ghost) {
+        mailStore.selectedId = active && ghost ? ghost.ghostId : null;
+    }
 
-mainState.fabActions.ghosts = () => ghostState.compose();
+    get title() {
+        return tx('ghosts');
+    }
 
-export default ghostState;
+    fabAction() {
+        this.compose();
+    }
+}
+
+export default new GhostState();

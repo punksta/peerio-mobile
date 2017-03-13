@@ -22,7 +22,7 @@ class SignupState extends RoutedState {
     get nextAvailable() {
         switch (this.current) {
             case 0: return this.isValid() && socket.connected;
-            case 1: return this.pinSaved && socket.connected;
+            case 1: return this.pinSaved && socket.connected || __DEV__;
             default: return false;
         }
     }
@@ -76,7 +76,7 @@ class SignupState extends RoutedState {
         const user = new User();
         const { username, email, firstName, lastName, pin, passphrase } = this;
         const localeCode = uiState.locale;
-
+        console.log(`signup-state.js: ${username}`);
         user.username = username;
         user.email = email;
         user.passphrase = __DEV__ ? 'icebear' : passphrase;

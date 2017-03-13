@@ -3,6 +3,7 @@ import {
     View, Dimensions
 } from 'react-native';
 import { observer } from 'mobx-react/native';
+import { when } from 'mobx';
 import { tu, tx } from '../utils/translator';
 import Wizard from '../wizard/wizard';
 import loginState from './login-state';
@@ -51,9 +52,11 @@ export default class LoginWizard extends Wizard {
         const load = __DEV__ && process.env.PEERIO_SKIPLOGINLOAD ? Promise.resolve(true) : loginState.load();
         load.then(() => {
             if (__DEV__) {
-                loginState.username = process.env.PEERIO_USERNAME || loginState.username;
-                loginState.passphrase = process.env.PEERIO_PASSPHRASE || loginState.passphrase;
-                process.env.PEERIO_AUTOLOGIN && loginState.login();
+                when(() => loginState.isConnected, () => {
+                    loginState.username = process.env.PEERIO_USERNAME;
+                    loginState.passphrase = process.env.PEERIO_PASSPHRASE;
+                    process.env.PEERIO_AUTOLOGIN && loginState.login();
+                });
             }
         });
         // migrator.run().then(keys =>

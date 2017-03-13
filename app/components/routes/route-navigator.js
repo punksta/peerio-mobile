@@ -45,7 +45,7 @@ export default class RouteNavigator extends Component {
         );
     }
 
-    configureScene(route /* , routeStack */) {
+    configureScene(/* route, routeStack */) {
         return Navigator.SceneConfigs.PushFromRight;
     }
 

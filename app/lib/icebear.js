@@ -24,6 +24,9 @@ config.FileStream.getCacheList()
         console.log(r);
     });
 
+config.appVersion = '3.0.4';
+config.platform = 'ios';
+
 socket.start();
 
 global.icebear = icebear;

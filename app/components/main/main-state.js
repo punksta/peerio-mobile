@@ -13,48 +13,36 @@ import routerApp from '../routes/router-app';
 
 const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
 
-const mainState = observable({
-    isLeftHamburgerVisible: true,
-    isBackVisible: false,
-    isLeftMenuVisible: false,
-    isRightMenuVisible: false,
-    isInputVisible: false,
-    blackStatusBar: false,
-    route: null,
-    currentChat: null,
-    currentFile: null,
-    currentContact: null,
-    currentIndex: 0,
-    modalRoute: null,
-    modalControl: null,
-    suppressTransition: false,
-    _loading: false,
+class MainState {
+    @observable modalRoute = null;
+    @observable modalControl = null;
+    @observable _loading = false;
 
     get loading() {
         return this._loading || chatStore.loading; // || fileStore.loading;
-    },
+    }
 
     set loading(v) {
         this._loading = v;
-    },
+    }
 
     // extended by specific states (file-state, messaging-state)
-    titles: observable.ref({
+    titles = observable.ref({
         recent: () => '',
         files: (s) => (s.currentFile ? s.currentFile.name : tx('files_allFiles')),
         chat: (s) => (s.currentChat ? s.currentChat.chatName : '')
-    }),
+    });
 
     // extended by specific states (file-state, messaging-state)
-    fabActions: observable.ref({}),
+    fabActions = observable.ref({});
 
-    activateAndTransition: action.bound(function(user) {
+    @action activateAndTransition(user) {
         const pinModal = () => (
             <PinModalCreate
                 title="Create device PIN"
                 onSuccess={pin => User.current.setPasscode(pin)} />
         );
-        if (__DEV__) mainState.modalControl = pinModal;
+        // if (__DEV__) mainState.modalControl = pinModal;
         routerApp.routes.main.transition();
         User.current = user;
         this.saveUser();
@@ -66,9 +54,9 @@ const mainState = observable({
             contactStore.loadLegacyContacts();
             when(() => !fileStore.loading, () => mailStore.loadAllGhosts());
         });
-    }),
+    }
 
-    initial: action.bound(function() {
+    @action initial() {
         uiState.hideKeyboard();
         this.messages();
         this.load();
@@ -92,11 +80,8 @@ const mainState = observable({
 
             if (__DEV__) {
                 if (process.env.PEERIO_DEFAULT_ROUTE) {
-                    mainState.route = process.env.PEERIO_DEFAULT_ROUTE;
+                    this.route = process.env.PEERIO_DEFAULT_ROUTE;
                 }
-                // this.showModal('shareFileTo');
-                // this.showModal('selectFiles');
-                // this.files();
             }
 
             // enablePushNotifications();
@@ -106,9 +91,9 @@ const mainState = observable({
             });
         });
         //
-    }),
+    }
 
-    chat: action.bound(function(i) {
+    @action chat(i) {
         this.resetMenus();
         this.isInputVisible = true;
         this.route = 'chat';
@@ -123,70 +108,40 @@ const mainState = observable({
                 when(() => !i.loadingMessages, () => (this._loading = false));
             }, i.messagesLoaded ? 0 : 500);
         });
-    }),
-
-    messages: action(function() {
-        this.resetMenus();
-        this.route = this.currentChat ? 'chat' : 'recent';
-        this.currentIndex = 0;
-        this.isBackVisible = false;
-    }),
-
-    get unreadMessages() {
-        let r = 0;
-        chatStore.chats.forEach(c => (r += c.unreadCount));
-        return r;
-    },
-
-    resetMenus: action.bound(function() {
-        this.isInputVisible = false;
-        this.isLeftMenuVisible = false;
-        this.isRightMenuVisible = false;
-        this.isLeftHamburgerVisible = true;
-        this.modalRoute = null;
-    }),
-
-    files: action.bound(function() {
-        this.resetMenus();
-        this.suppressTransition = Platform.OS === 'android';
-        this.route = 'files';
-        this.currentIndex = 0;
-        this.currentFile = null;
-        this.isBackVisible = false;
-    }),
+    }
 
     get fileCount() {
         return fileStore.files.length;
-    },
+    }
 
-    file: action.bound(function(i) {
+    @action file(i) {
         this.route = 'files';
         this.currentFile = i;
         this.currentIndex = 1;
         this.isBackVisible = true;
-    }),
+    }
 
-    downloadFile: action.bound(function(i) {
+    @action downloadFile(i) {
         const file = i || this.currentFile;
         if (!file) return;
         if (file.downloading || file.uploading) return;
         file.download().catch(e => console.error(e));
-    }),
+    }
 
-    deleteFile: action.bound(function(i) {
+    @action deleteFile(i) {
         const f = i || this.currentFile;
         this.back();
         fileStore.remove(f);
-    }),
+    }
 
-    back: action.bound(function() {
+    @action back() {
         this.currentIndex--;
         this.currentFile = null;
         // this.currentChat = null;
         this.isBackVisible = this.currentIndex > 0;
-    }),
+    }
 
-    load: action.bound(async function() {
+    @action async load() {
         console.log('main-state.js: loading');
         this.loading = true;
         const s = await TinyDb.user.getValue('main-state');
@@ -195,9 +150,9 @@ const mainState = observable({
         }
         this.loading = false;
         console.log('main-state.js: loaded');
-    }),
+    }
 
-    saveUser: action.bound(async function() {
+    @action async saveUser() {
         const user = User.current;
         await TinyDb.system.setValue('lastUsername', user.username);
         const skipTouchID = `${user.username}::skipTouchID`;
@@ -220,84 +175,53 @@ const mainState = observable({
                 }
                 console.log('main-state.js: touch id available and value is set');
             });
-    }),
+    }
 
-    save: action.bound(async function() {
+    @action async save() {
         await TinyDb.user.setValue('main-state', { currentChat: this.currentChat.id });
-    }),
+    }
 
     get title() {
         const t = this.titles[this.route];
         // console.log(`main-state.js: ${this.titles}, ${this.route}, ${t}`);
         // console.log(this.titles);
         return t && t(this);
-    },
+    }
 
     get canSend() {
         return this.currentChat && this.currentChat.id &&
                       !this.currentChat.loadingMessages;
-    },
+    }
 
-    addMessage: action.bound(function(msg, files) {
+    @action addMessage(msg, files) {
         sounds.sending();
         this.currentChat && (
             files ? this.currentChat.shareFiles(files) : this.currentChat.sendMessage(msg)
         ).then(sounds.sent).catch(sounds.destroy);
-    }),
+    }
 
-    addAck: action.bound(function() {
+    @action addAck() {
         sounds.ack();
         this.currentChat && this.currentChat
             .sendAck().then(sounds.sent).catch(sounds.destroy);
-    }),
+    }
 
-    toggleLeftMenu: action.bound(function() {
-        uiState.hideKeyboard();
-        this.isLeftMenuVisible = !this.isLeftMenuVisible;
-        this.isRightMenuVisible = false;
-    }),
-
-    toggleRightMenu: action.bound(function() {
-        uiState.hideKeyboard();
-        this.isRightMenuVisible = !this.isRightMenuVisible;
-        this.isLeftMenuVisible = false;
-    }),
-
-    showModal: action.bound(function(route) {
+    @action showModal(route) {
         this.modalRoute = route;
-    }),
+    }
 
-    discardModal: action.bound(function() {
+    @action discardModal() {
         this.modalRoute = null;
-    }),
+    }
 
-    logs: action.bound(function() {
-        this.resetMenus();
-        this.route = 'logs';
-    }),
-
-    contactView: action.bound(function(contact) {
+    @action contactView(contact) {
         this.resetMenus();
         this.currentContact = contact;
         this.showModal('contactView');
-    }),
+    }
+}
 
-    fabAction: action.bound(function() {
-        const fa = this.fabActions[this.route];
-        fa && fa();
-    })
-});
-
-mainState.animatedLeftMenu = new Animated.Value(0);
-mainState.animatedLeftMenuWidth = new Animated.Value(0);
-
-reaction(() => mainState.isLeftMenuVisible, () => {
-    if (mainState.isLeftMenuVisible) uiState.hideKeyboard();
-});
-
-reaction(() => mainState.route === 'files', files => {
-    fileStore.active = files;
-});
+const mainState = new MainState();
 
 // mainState.showPopup({
 //     title: tx('passphrase'),

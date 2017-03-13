@@ -1,6 +1,5 @@
 import { Keyboard } from 'react-native';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
-import _ from 'lodash';
 import moment from 'moment';
 import { observable, action, reaction } from 'mobx';
 import translator from 'peerio-translator';
@@ -62,7 +61,7 @@ class UIState {
     @action setLocale(lc) {
         return locales.loadLocaleFile(lc)
             .then(locale => {
-                console.log(`state.js: ${lc}`);
+                console.log(`ui-state.js: ${lc}`);
                 console.log(lc);
                 translator.setLocale(lc, locale);
                 this.locale = lc;
@@ -91,17 +90,6 @@ class UIState {
 const uiState = new UIState();
 
 reaction(() => uiState.languageSelected, ls => uiState.setLocale(ls));
-
-reaction(() => uiState.route, () => {
-    const r = uiState.routes[uiState.route];
-    const pages = [];
-    if (r && r.uiStates) {
-        _.forOwn(r.uiStates, (val, key) => {
-            pages.push(key);
-        });
-    }
-    uiState.pages = pages;
-});
 
 reaction(() => uiState.focusedTextBox, () => {
     if (uiState.focusedTextBox) {

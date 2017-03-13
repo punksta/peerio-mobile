@@ -5,19 +5,21 @@ export default class Router {
     routes = {};
     routesList = [];
 
+    get current() {
+        return this.routes[this.route] || null;
+    }
+
     get first() {
         return this.routes[this.routesList[0]];
     }
 
-    add(key, component, replace, type) {
+    add(key, component, replace) {
         this.routesList.push(key);
         this.routes[key] = {
             index: this.routesList.length - 1,
             replace,
             key,
-            type,
             component,
-            states: component.states,
             transition: action(() => {
                 setTimeout(() => {
                     this.route = key;

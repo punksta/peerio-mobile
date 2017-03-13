@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
-import mainState from '../main/main-state';
+import routerMain from '../routes/router-main';
 
 const fabSize = vars.fabSize;
 
@@ -36,11 +36,6 @@ const shadowStyle = {
 };
 
 export default class Fab extends Component {
-    fabAction() {
-        mainState.fabAction();
-        return false;
-    }
-
     render() {
         const s = [fabStyle, helpers.circle(fabSize), shadowStyle];
         return (
@@ -49,7 +44,7 @@ export default class Fab extends Component {
                 <TouchableOpacity
                     style={s}
                     pressRetentionOffset={vars.offset}
-                    onPress={() => this.fabAction()}>
+                    onPress={() => routerMain.fabAction()}>
                     {icons.plainWhite('add')}
                 </TouchableOpacity>
             </View>

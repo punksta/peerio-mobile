@@ -11,44 +11,16 @@ import { observer } from 'mobx-react/native';
 import { reaction, observable } from 'mobx';
 import uiState from './ui-state';
 import InputMainContainer from './input-main-container';
-import mainState from '../main/main-state';
 import Bottom from '../controls/bottom';
 import LeftMenu from '../main/left-menu';
 import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
-import Chat from '../messaging/chat';
-import Files from '../files/files';
-import FileView from '../files/file-view';
-import ComposeMessage from '../messaging/compose-message';
-import SelectFiles from '../files/select-files';
-import FileShare from '../files/file-share';
 import SnackBar from '../snackbars/snackbar';
+
 import Fab from '../shared/fab';
-import SettingsLevel1 from '../settings/settings-level-1';
-import SettingsLevel2 from '../settings/settings-level-2';
-import SettingsLevel3 from '../settings/settings-level-3';
-import MessagingPlaceholder from '../messaging/messaging-placeholder';
-import Ghosts from '../ghosts/ghosts';
-import GhostsLevel1 from '../ghosts/ghosts-level-1';
-import ContactView from '../contacts/contact-view';
-import Logs from '../logs/logs';
 import styles, { vars } from '../../styles/styles';
-
-const routes = {
-    recent: [<MessagingPlaceholder />],
-    files: [<Files />, <FileView />],
-    ghosts: [<Ghosts />, <GhostsLevel1 />],
-    chat: [<Chat />],
-    settings: [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />],
-    logs: [<Logs />]
-};
-
-const modalRoutes = {
-    compose: <ComposeMessage />,
-    shareFileTo: <FileShare />,
-    selectFiles: <SelectFiles />,
-    contactView: <ContactView />
-};
+import routerMain from '../routes/router-main';
+import routerModal from '../routes/router-modal';
 
 @observer
 export default class LayoutMain extends Component {
@@ -61,45 +33,36 @@ export default class LayoutMain extends Component {
         this.animatedX = new Animated.Value(0);
         this.leftMenuAnimated = new Animated.Value(0);
         this.modalAnimated = new Animated.Value(this.height);
-        this.indexAnimation = reaction(() => mainState.currentIndex, i => {
+        this.indexAnimation = reaction(() => routerMain.currentIndex, i => {
             console.log('layout-main.js: index animation');
             const toValue = -i * this.width;
-            const duration = mainState.suppressTransition ? 0 : vars.animationDuration;
-            mainState.suppressTransition = false;
+            const duration = routerMain.suppressTransition ? 0 : vars.animationDuration;
+            routerMain.suppressTransition = false;
             Animated.timing(this.animatedX, { toValue, duration })
                 .start();
         }, true);
-        this.leftMenuAnimation = reaction(() => mainState.isLeftMenuVisible, v => {
+        this.leftMenuAnimation = reaction(() => routerMain.isLeftMenuVisible, v => {
             const toValue = v ? this.width * vars.menuWidthRatio : 0;
             Animated.timing(this.leftMenuAnimated, { toValue, duration: vars.animationDuration })
                 .start();
         }, true);
     }
 
-    componentWillMount() {
-        mainState.initial();
-    }
-
     componentDidMount() {
-        reaction(() => mainState.modalRoute, route => {
+        reaction(() => routerModal.route, route => {
             if (route) {
                 this.modalRoute = route;
                 Animated.timing(
                     this.modalAnimated, { toValue: 0, duration: 300 }
-                ).start(() => (mainState.blackStatusBar = true));
+                ).start(() => (routerMain.blackStatusBar = true));
             } else {
                 Animated.timing(
                     this.modalAnimated, { toValue: this.height, duration: 300 }
                 ).start(() => (this.modalRoute = route));
-                mainState.blackStatusBar = false;
+                routerMain.blackStatusBar = false;
             }
         }, true);
         reaction(() => uiState.appState, () => this.forceUpdate());
-    }
-
-    componentWillUnmount() {
-        this.indexAnimation();
-        console.log('layout-main.js: unmounted');
     }
 
     page(control, key) {
@@ -122,30 +85,18 @@ export default class LayoutMain extends Component {
         return controls.map((item, index) => this.page(item, index));
     }
 
-    modal() {
-        return modalRoutes[this.modalRoute] || null;
-    }
-
-    body() {
-        const r = mainState.route;
-        if (routes[r]) {
-            return routes[r];
-        }
-        return [];
-    }
-
     render() {
         const transform = [{ translateX: this.animatedX }];
         const transformMenu = [
-            { translateX: mainState.animatedLeftMenu },
-            { translateX: mainState.animatedLeftMenuWidth }
+            { translateX: routerMain.animatedLeftMenu },
+            { translateX: routerMain.animatedLeftMenuWidth }
         ];
         const outerStyle = {
             backgroundColor: '#fff',
             flex: 1,
             flexDirection: 'column',
-            justifyContent: 'space-between'
-            // paddingBottom: global.platform === 'android' ? 0 : state.keyboardHeight
+            justifyContent: 'space-between',
+            paddingBottom: global.platform === 'android' ? 0 : uiState.keyboardHeight
         };
         const transformModal = [{ translateY: this.modalAnimated || 0 }];
 
@@ -158,32 +109,30 @@ export default class LayoutMain extends Component {
         };
 
         const modalAnimatedStyle = [modalStyle, { transform: transformModal }];
-        const modalControl = mainState.modalControl && mainState.modalControl();
+        const modalControl = routerModal.modalControl;
         const modalNonAnimatedStyle = [modalStyle, {
             transform: [{ translateY: modalControl ? 0 : this.height }]
         }];
 
-        const title = mainState.title;
-        const menuState = mainState.isLeftMenuVisible || mainState.isRightMenuVisible;
-        const pages = this.body();
-        const currentPage = pages[mainState.currentIndex] || {};
-        const currentComponent = currentPage.type && currentPage.type.prototype || {};
+        const menuState = routerMain.isLeftMenuVisible || routerMain.isRightMenuVisible;
+        const pages = routerMain.pages;
+        const currentComponent = routerMain.currentComponent;
+        const modal = routerModal.modal;
         const snackBar = !menuState &&
-            !mainState.modalRoute && !currentComponent.suppressMainSnackBar && <SnackBar />;
+            !modal && !currentComponent.suppressMainSnackBar && <SnackBar />;
 
         const width = this.width * pages.length;
-
         return (
             <View
                 testID="mainLayout"
                 style={[styles.container.root]}>
                 <TouchableWithoutFeedback
-                    onPress={menuState ? () => mainState.resetMenus() : null}>
+                    onPress={menuState ? () => routerMain.resetMenus() : null}>
                     <Animated.View
                         pointerEvents={menuState ? 'box-only' : 'auto'}
                         style={outerStyle}>
                         <Animated.View style={{ flex: 1, transform: transformMenu }}>
-                            <HeaderMain title={title} />
+                            <HeaderMain title={routerMain.title} />
                             <Animated.View style={{ flex: 1, transform, width }}>
                                 <View style={{ flex: 1, width }}>
                                     {this.pages(pages)}
@@ -193,28 +142,21 @@ export default class LayoutMain extends Component {
                                 {currentComponent.isFabVisible && <Fab />}
                                 {snackBar}
                             </Bottom>
-                            { currentComponent.showInput && <InputMainContainer /> }
+                            {currentComponent.showInput && <InputMainContainer />}
                         </Animated.View>
                     </Animated.View>
                 </TouchableWithoutFeedback>
                 <LeftMenu />
                 <RightMenu />
                 <Animated.View style={modalAnimatedStyle}>
-                    {this.modal()}
+                    {modal}
                 </Animated.View>
                 <View style={modalNonAnimatedStyle}>
                     {modalControl}
                 </View>
-                <StatusBar barStyle={mainState.blackStatusBar ? 'default' : 'light-content'}
-                           hidden={Platform.OS !== 'android' && menuState && !mainState.modalRoute}
-                           // TODO: set show hide animation to 'fade' and 'slide'
-                />
+                <StatusBar barStyle={routerMain.blackStatusBar ? 'default' : 'light-content'}
+                           hidden={Platform.OS !== 'android' && menuState && !modal} />
             </View>
         );
     }
 }
-
-LayoutMain.propTypes = {
-    body: React.PropTypes.any,
-    footer: React.PropTypes.any
-};

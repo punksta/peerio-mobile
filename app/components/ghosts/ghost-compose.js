@@ -115,18 +115,14 @@ export default class ComposeMessage extends Component {
         g.subject = this.subject;
         this.inProgress = true;
         setTimeout(() => {
-            g.send(this.value)
+            mailStore.send(g, this.value)
                 .then(() => {
                     ghostState.view(g);
                     console.log(`ghost-compose.js: sent ${g.ghostId}`);
                 })
-                .then(() => {
-                    throw new errors.ServerError(413, 'nope');
-                })
                 .catch(e => {
                     console.error(`ghost-compose.js: sending error`);
                     console.log(e);
-                    g.remove();
                     let msg = e.message;
                     if (e.code === errors.ServerError.codes.quotaExceeded) {
                         msg = tx('ghosts_quotaExceeded');

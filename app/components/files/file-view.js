@@ -7,9 +7,9 @@ import moment from 'moment';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
-import mainState from '../main/main-state';
 import FileProgress from './file-progress';
 import FileActions from './file-actions';
+import fileState from './file-state';
 
 const firstRowStyle = {
     flex: 0,
@@ -38,13 +38,11 @@ const hintStyle = {
 export default class FileView extends Component {
 
     render() {
-        const file = mainState.currentFile || {};
+        const file = fileState.currentFile || {};
         let icon = 'image';
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
         icon = icons.plaindark(icon, vars.iconFileViewSize);
-        // icon = file.downloading || file.uploading ?
-            // icons.jumpy(icon) : icon;
         return (
             <View
                 style={{
@@ -76,26 +74,10 @@ export default class FileView extends Component {
                                     <Text>{moment(file.uploadedAt).format(`MMM DD, YYYY`)}</Text>
                                 </View>
                             </View>
-                            {/*
-                            <View style={secondRowStyle}>
-                                <View style={{ flexGrow: 1 }}>
-                                    <Text style={hintStyle}>Progress</Text>
-                                    <Text>{file.progress}</Text>
-                                </View>
-                                <View style={{ flexGrow: 1 }}>
-                                    <Text style={hintStyle}>Progress buffer</Text>
-                                    <Text>{file.progressBuffer}</Text>
-                                </View>
-                            </View>*/}
-                            {/*
-                            <View style={secondRowStyle}>
-                                <Text>downloaded: {file.downloaded ? 'yes' : 'no'}</Text>
-                                <Text>cache exists: {file.cacheExists ? 'yes' : 'no'}</Text>
-                            </View>*/}
                         </View>
                     </View>
                     <View style={secondRowStyle}>
-                        <FileProgress file={mainState.currentFile} />
+                        <FileProgress file={file} />
                     </View>
                 </View>
                 <FileActions file={file} />
