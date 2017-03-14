@@ -38,38 +38,6 @@ class MainState {
         // });
     }
 
-    @action initial() {
-        console.log('main-state.js: loading');
-        uiState.hideKeyboard();
-        this.load();
-
-        when(() => !this.loading, () => {
-            let c = this.saved && chatStore.chatMap[this.saved.currentChat];
-            if (!c && chatStore.chats.length) {
-                c = chatStore.chats[chatStore.chats.length - 1];
-            }
-
-            if (c) {
-                this.chat(c);
-            }
-
-            this.messages();
-
-            if (__DEV__) {
-                if (process.env.PEERIO_DEFAULT_ROUTE) {
-                    this.route = process.env.PEERIO_DEFAULT_ROUTE;
-                }
-            }
-
-            // enablePushNotifications();
-            // make sure we loaded everything before requesting push permission
-            when(() => !c || (!c.loadingMeta && !c.loadingMessages), () => {
-                (EN === 'peeriomobile') && enablePushNotifications();
-            });
-        });
-        //
-    }
-
     @action async load() {
         console.log('main-state.js: loading');
         this.loading = true;
@@ -104,13 +72,6 @@ class MainState {
                 }
                 console.log('main-state.js: touch id available and value is set');
             });
-    }
-
-
-    @action contactView(contact) {
-        this.resetMenus();
-        this.currentContact = contact;
-        this.showModal('contactView');
     }
 }
 

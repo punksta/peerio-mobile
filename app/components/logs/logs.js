@@ -5,11 +5,6 @@ import {
     TouchableOpacity,
     ScrollView
 } from 'react-native';
-import moment from 'moment';
-import { observer } from 'mobx-react/native';
-import icons from '../helpers/icons';
-import { vars } from '../../styles/styles';
-import mainState from '../main/main-state';
 
 export default class Logs extends Component {
     render() {

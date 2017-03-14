@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {
-    View, ActivityIndicator, Text, Dimensions, Image
+    View, Text, Dimensions, Image
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import mainState from '../main/main-state';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
 const arrowDownZeroState = require('../../assets/arrow-down-zero-state.png');
@@ -80,11 +79,9 @@ export default class FilesPlaceholder extends Component {
             flex: 1,
             justifyContent: 'space-between'
         };
-        const ind = mainState.loading ?
-            <ActivityIndicator style={{ paddingTop: 10 }} /> : this.messaging();
         return (
             <View style={s}>
-                {ind}
+                {this.messaging()}
             </View>
         );
     }

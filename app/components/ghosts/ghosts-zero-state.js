@@ -3,7 +3,6 @@ import {
     View, ActivityIndicator, Text, Dimensions, Image
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import mainState from '../main/main-state';
 
 const ghostZeroState = require('../../assets/ghost-zero-state.png');
 const arrowDownZeroState = require('../../assets/arrow-down-zero-state.png');
@@ -83,11 +82,9 @@ export default class GhostsZeroState extends Component {
             flex: 1,
             justifyContent: 'space-between'
         };
-        const ind = mainState.loading ?
-            <ActivityIndicator style={{ paddingTop: 10 }} /> : this.messaging();
         return (
             <View style={s}>
-                {ind}
+                {this.messaging()}
             </View>
         );
     }

@@ -61,12 +61,17 @@ export default class GhostItem extends Component {
 
     render() {
         const g = this.props.ghost;
+        const text = g.expired ? (
+            <Text style={[lightText, { color: vars.txtAlert }]}>{'EXPIRED'}</Text>
+        ) : (
+            <Text style={lightText}>{moment(g.timestamp).format(`L`)}</Text>
+        );
         return (
             <TouchableOpacity onPress={() => this.press()}>
                 <View style={block}>
                     <View style={row}>
                         <Text style={normalText}>{g.subject}</Text>
-                        <Text style={lightText}>{moment(g.timestamp).format(`L`)}</Text>
+                        {text}
                     </View>
                     <Text style={lightText}>{g.recipients.join(', ')}</Text>
                     <View style={rowFill}>

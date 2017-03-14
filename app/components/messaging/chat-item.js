@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
 import Avatar from '../shared/avatar';
-import mainState from '../main/main-state';
+import contactState from '../contacts/contact-state';
 
 @observer
 export default class ChatItem extends Component {
@@ -12,7 +12,7 @@ export default class ChatItem extends Component {
         const msg = i.text || '';
         const timestamp = i.timestamp;
         const text = msg.replace(/\n[ ]+/g, '\n');
-        const onPress = () => mainState.contactView(i.sender);
+        const onPress = () => contactState.contactView(i.sender);
         const error = !!msg.signatureError;
         return (
             <Avatar

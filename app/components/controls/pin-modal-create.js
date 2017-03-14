@@ -2,13 +2,11 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Pin from './pin';
-import Center from '../controls/center';
-import Big from '../controls/big';
 import Button from './button';
 import styles, { vars } from '../../styles/styles';
 import { t, tu } from '../utils/translator';
 import { User } from '../../lib/icebear';
-import mainState from '../main/main-state';
+import routerModal from '../routes/router-modal';
 import BgPattern from '../controls/bg-pattern';
 
 @observer
@@ -20,7 +18,7 @@ export default class PinModalCreate extends Component {
     }
 
     hide() {
-        mainState.modalControl = null;
+        routerModal.modalControl = null;
     }
 
     render() {

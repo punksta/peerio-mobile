@@ -1,7 +1,9 @@
 import { observable, action, when } from 'mobx';
 import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
-import { chatStore, contactStore } from '../../lib/icebear';
+import { contactStore } from '../../lib/icebear';
+import fileState from '../files/file-state';
+import chatState from '../messaging/chat-state';
 
 class ContactState {
     composeMessage() {
@@ -17,11 +19,19 @@ class ContactState {
         this.clear();
     }
 
+    @observable currentContact = null;
     @observable findUserText = '';
     @observable loading = false;
     @observable found = [];
     @observable recipients = [];
     @observable recipientsMap = observable.shallowMap();
+
+
+    @action contactView(contact) {
+        routerMain.resetMenus();
+        this.currentContact = contact;
+        routerModal.contactView();
+    }
 
     findByUsername(username) {
         return this.recipients.filter(i => i.username === username);
@@ -70,7 +80,7 @@ class ContactState {
     @action send(text, recipient) {
         routerMain.suppressTransition = true;
         when(() => !routerMain.suppressTransition, () => this.clear());
-        const chat = chatStore.startChat(recipient ? [recipient] : this.recipients);
+        const chat = chatState.store.startChat(recipient ? [recipient] : this.recipients);
         routerMain.chats(chat);
         when(() => !chat.loadingMeta, () => {
             this.exit();
@@ -83,11 +93,12 @@ class ContactState {
     }
 
     @action share() {
-        // if (!mainState.currentFile) return;
-        // const chat = chatStore.startChat(this.recipients);
-        // mainState.chat(chat);
-        // when(() => !chat.loadingMeta, () => chat.shareFiles([mainState.currentFile]));
-        // this.exit();
+        if (!fileState.currentFile) return;
+        const file = fileState.currentFile;
+        const chat = chatState.store.startChat(this.recipients);
+        routerMain.chats(chat);
+        when(() => !chat.loadingMeta, () => chat.shareFiles([file]));
+        this.exit();
     }
 }
 

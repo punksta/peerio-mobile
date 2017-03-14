@@ -7,7 +7,7 @@ import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
-import mainState from '../main/main-state';
+import routerModal from '../routes/router-modal';
 
 @observer
 export default class LayoutModalExit extends Component {
@@ -30,7 +30,7 @@ export default class LayoutModalExit extends Component {
         };
         return (
             <View style={container}>
-                {icons.dark('close', () => mainState.discardModal())}
+                {icons.dark('close', () => routerModal.discard())}
                 <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
                 {icons.placeholder()}
             </View>

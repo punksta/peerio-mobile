@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import LayoutModalExit from '../layout/layout-modal-exit';
-import mainState from '../main/main-state';
+import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 
 const flexRow = {
@@ -19,7 +19,7 @@ const flexRow = {
 export default class ContactView extends Component {
 
     render() {
-        const contact = this.props.contact || mainState.currentContact;
+        const contact = this.props.contact || contactState.currentContact;
         const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted } = contact;
         const tofuErrorControl = tofuError && (
             <View style={{ backgroundColor: '#D0021B', flexGrow: 1, padding: 10 }}>

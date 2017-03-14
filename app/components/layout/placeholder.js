@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
-import {
-    View, ActivityIndicator
-} from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SnackBar from '../snackbars/snackbar';
-import mainState from '../main/main-state';
 
 @observer
 export default class Placeholder extends Component {
@@ -13,9 +10,8 @@ export default class Placeholder extends Component {
             flex: 1,
             justifyContent: 'space-between'
         };
-        const ind = mainState.loading ?
-            <ActivityIndicator style={{ paddingTop: 10 }} /> : <View />;
-        const sb = mainState.loading ? null : <SnackBar />;
+        const ind = <View />;
+        const sb = <SnackBar />;
         return (
             <View style={s}>
                 {ind}

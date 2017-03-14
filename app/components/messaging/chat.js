@@ -47,11 +47,12 @@ export default class Chat extends Component {
     }
 
     componentWillMount() {
-        reaction(() => this.chat ? this.chat.limboMessages.length : 0, l => {
+        reaction(() => (this.chat ? this.chat.limboMessages.length : 0), l => {
             this.disableNextScroll = l < this.lastLength;
             this.animateNextScroll = l > this.lastLength;
             this.lastLength = l;
         });
+        this.animateNextScroll = false;
     }
 
     item(message, i) {

@@ -12,7 +12,7 @@ import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileActions from './file-actions';
 import fileState from './file-state';
-import mainState from '../main/main-state';
+import routerMain from '../routes/router-main';
 
 @observer
 export default class Files extends Component {
@@ -47,8 +47,8 @@ export default class Files extends Component {
         });
 
         this.reaction = reaction(() => [
-            mainState.route === 'files',
-            mainState.currentIndex === 0,
+            routerMain.route === 'files',
+            routerMain.currentIndex === 0,
             this.data,
             this.data.length
         ], () => {

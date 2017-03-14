@@ -1,6 +1,6 @@
 import React from 'react';
 import { Animated } from 'react-native';
-import { observable, reaction, action } from 'mobx';
+import { observable, reaction, action, when } from 'mobx';
 import Router from './router';
 import uiState from '../layout/ui-state';
 import SettingsLevel1 from '../settings/settings-level-1';
@@ -15,6 +15,10 @@ import Logs from '../logs/logs';
 import fileState from '../files/file-state';
 import ghostState from '../ghosts/ghost-state';
 import chatState from '../messaging/chat-state';
+import settingsState from '../settings/settings-state';
+import { enablePushNotifications } from '../../lib/push';
+
+const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
 
 class RouterMain extends Router {
     // current route object
@@ -26,25 +30,31 @@ class RouterMain extends Router {
     @observable isInputVisible = false;
     @observable blackStatusBar = false;
     @observable currentIndex = 0;
-    @observable modalRoute = null;
-    @observable modalControl = null;
     @observable suppressTransition = false;
     animatedLeftMenu = new Animated.Value(0);
     animatedLeftMenuWidth = new Animated.Value(0);
 
     constructor() {
         super();
-        this.add('files', [<Files />, <FileView />], fileState);
-        this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
-        this.add('chats', [<Chat />], chatState);
-        this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />]);
-        this.add('logs', [<Logs />]);
-
         reaction(() => this.isLeftMenuVisible || this.isRightMenuVisible, visible => {
             visible && uiState.hideKeyboard();
         });
         reaction(() => this.currentIndex, i => (this.isBackVisible = i > 0));
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
+    }
+
+    initial() {
+        this.add('files', [<Files />, <FileView />], fileState);
+        this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
+        this.add('chats', [<Chat />], chatState);
+        this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
+        this.add('logs', [<Logs />], { title: 'Logs' });
+
+        this.ghosts();
+        chatState.store.loadAllChats();
+        when(() => !ghostState.store.loading && chatState.store.loaded, () => {
+            (EN === 'peeriomobile') && enablePushNotifications();
+        });
     }
 
     add(key, components, routeState) {
@@ -64,6 +74,10 @@ class RouterMain extends Router {
         };
     }
 
+    get title() {
+        return this.current && this.current.routeState ? this.current.routeState.title : null;
+    }
+
     get pages() {
         return this.current ? this.current.components : [];
     }
@@ -78,6 +92,7 @@ class RouterMain extends Router {
     }
 
     @action fabAction() {
+        console.log(`router-main.js: fab action`);
         this.current && this.current.routeState && this.current.routeState.fabAction();
     }
 

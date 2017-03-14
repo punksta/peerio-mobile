@@ -33,20 +33,6 @@ export default class Ghosts extends Component {
         return mailStore.ghosts;
     }
 
-    componentWillMount() {
-        // this.reaction = reaction(() => [
-        //     mainState.route === 'ghosts',
-        //     mainState.currentIndex === 0,
-        //     this.data,
-        //     this.data.length
-        // ], () => {
-        //     console.log(`ghosts.js: force update`);
-        //     this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
-        //     this.forceUpdate();
-        //     setTimeout(() => this.forceUpdate(), 1000);
-        // }, true);
-    }
-
     componentWillUnmount() {
         this.reaction && this.reaction();
         this.reaction = null;

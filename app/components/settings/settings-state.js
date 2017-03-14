@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, Clipboard } from 'react-native';
 import { observable, action, reaction } from 'mobx';
-import mainState from '../main/main-state';
 import routerMain from '../routes/router-main';
+import routerModal from '../routes/router-modal';
 import PinModal from '../controls/pin-modal';
 import { User } from '../../lib/icebear';
 import { popupCopyCancel, popupYes } from '../shared/popups';
@@ -13,20 +13,21 @@ class SettingsState {
     @observable subroute = null;
     @observable stack = [];
 
-    constructor() {
-        reaction(() => mainState.currentIndex, (i) => {
-            if (mainState.route === 'settings') {
+    get title() {
+        const sr = this.subroute;
+        return sr ? tx(sr) : tx('settings');
+    }
+
+    onTransition(active) {
+        if (this.reaction) return;
+        this.reaction = reaction(() => routerMain.currentIndex, (i) => {
+            if (routerMain.route === 'settings') {
                 while (i < this.stack.length) {
                     this.stack.pop();
                 }
                 this.subroute = i ? this.stack[i - 1] : null;
             }
         });
-    }
-
-    get title() {
-        const sr = this.subroute;
-        return sr ? tx(sr) : tx('settings');
     }
 
     @action transition(subroute) {
@@ -60,19 +61,19 @@ class SettingsState {
                 Clipboard.setString(passphrase);
                 snackbarState.pushTemporary(tx('popup_masterPasswordCopied'));
             });
-            mainState.modalControl = null;
+            routerModal.modalControl = null;
         };
-        const pinModal = () => (
+        const pinModal = (
             <PinModal
                 onSuccess={success}
-                onCancel={() => (mainState.modalControl = null)} />
+                onCancel={() => (routerModal.modalControl = null)} />
         );
         User.current.hasPasscode().then(r => {
             if (!r) {
                 popupYes(tx('passphrase'), tx('passcode_notSet'));
                 return;
             }
-            mainState.modalControl = pinModal;
+            routerModal.modalControl = pinModal;
         });
     }
 }

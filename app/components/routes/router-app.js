@@ -13,7 +13,7 @@ class RouterApp extends Router {
         this.add('signupStep1', SignupWizard);
         this.add('main', LayoutMain);
 
-        when(() => this.route === 'main', () => routerMain.chats());
+        when(() => this.route === 'main', () => routerMain.initial());
     }
 }
 

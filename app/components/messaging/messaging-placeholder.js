@@ -3,8 +3,6 @@ import {
     View, Text, Dimensions, Image
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import MainStateLoading from '../main/main-state-loading';
-import mainState from '../main/main-state';
 
 const chatZeroState = require('../../assets/chat-zero-state.png');
 const arrowUpZeroState = require('../../assets/arrow-up-zero-state.png');
@@ -15,10 +13,6 @@ export default class MessagingPlaceholder extends Component {
         super(props);
         this.width = Dimensions.get('window').width;
         this.height = Dimensions.get('window').height;
-    }
-
-    get suppressMainSnackBar() {
-        return mainState.loading;
     }
 
     messaging() {

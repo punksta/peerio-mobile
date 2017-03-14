@@ -1,7 +1,9 @@
 import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
 import moment from 'moment';
-import mainState from '../main/main-state';
+import chatState from '../messaging/chat-state';
+import routerMain from '../routes/router-main';
+import routerModal from '../routes/router-modal';
 import { fileStore, TinyDb, socket, fileHelpers, errors, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
@@ -10,6 +12,7 @@ import imagePicker from '../helpers/imagepicker';
 
 class FileState {
     @observable currentFile = null;
+    store = fileStore;
 
     get showSelection() {
         return fileStore.hasSelectedFiles;
@@ -20,7 +23,7 @@ class FileState {
     }
 
     @action delete() {
-        const f = mainState.currentFile ? [mainState.currentFile] : this.selected;
+        const f = this.currentFile ? [this.currentFile] : this.selected;
         const count = f.length;
         const t = tx((count > 1) ? 'confirm_deleteFiles' : 'confirm_deleteFile', { count });
         rnAlertYesNo(t)
@@ -28,7 +31,7 @@ class FileState {
                 f.forEach(item => {
                     fileStore.remove(item);
                 });
-                mainState.files();
+                routerMain.files();
             })
             .catch(() => null);
     }
@@ -65,7 +68,7 @@ class FileState {
     @action download(fp) {
         this.remindAboutEncryption().then(() => this.remindAboutExternal()).then(r => {
             if (!r) return;
-            const singleFile = fp || mainState.currentFile;
+            const singleFile = fp || this.currentFile;
             const f = singleFile ? [singleFile] : this.selected;
             f.forEach(file => {
                 file.selected = false;
@@ -84,13 +87,13 @@ class FileState {
         return new Promise((resolve, reject) => {
             this.resolveFileSelection = resolve;
             this.rejectFileSelection = reject;
-            mainState.showModal('selectFiles');
+            routerModal.selectFiles();
         });
     }
 
     @action exitSelectFiles() {
         this.resetSelection();
-        mainState.discardModal();
+        routerModal.discard();
         this.rejectFileSelection && this.rejectFileSelection(new Error(`file-state.js: user cancel`));
         this.rejectFileSelection = null;
     }
@@ -99,7 +102,7 @@ class FileState {
         this.resolveFileSelection(this.selected.slice());
         this.resolveFileSelection = null;
         this.resetSelection();
-        mainState.discardModal();
+        routerModal.discard();
     }
 
     uploadInline(uri, fileName, fileData) {
@@ -115,7 +118,7 @@ class FileState {
         if (!fileName) {
             fn = `${moment(Date.now()).format('llll')}.${ext}`;
         }
-        const chat = mainState.currentChat;
+        const chat = chatState.currentChat;
         const errorHandler = e =>
             (e.code === errors.ServerError.codes.quotaExceeded) && upgrade();
         const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName, errorHandler) :
@@ -138,6 +141,7 @@ class FileState {
     }
 
     onTransition(active, file) {
+        console.log('files on transition');
         active && fileStore.loadAllFiles();
         fileStore.active = active;
         this.currentFile = active ? file : null;
@@ -148,6 +152,7 @@ class FileState {
     }
 
     fabAction() {
+        console.log(`file-state.js: fab action`);
         imagePicker.show([], this.upload);
     }
 }

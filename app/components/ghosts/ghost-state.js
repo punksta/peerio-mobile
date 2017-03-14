@@ -6,6 +6,7 @@ import { popupUpgrade } from '../shared/popups';
 
 class GhostState {
     @observable isComposing = false;
+    store = mailStore;
 
     compose() {
         if (!User.current.canSendGhost()) {
