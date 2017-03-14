@@ -24,7 +24,7 @@ import routerModal from '../routes/router-modal';
 
 @observer
 export default class LayoutMain extends Component {
-    @observable modalRoute = null;
+    @observable modal = null;
 
     constructor(props) {
         super(props);
@@ -49,16 +49,15 @@ export default class LayoutMain extends Component {
     }
 
     componentDidMount() {
-        reaction(() => routerModal.route, route => {
-            if (route) {
-                this.modalRoute = route;
-                Animated.timing(
-                    this.modalAnimated, { toValue: 0, duration: 300 }
-                ).start(() => (routerMain.blackStatusBar = true));
+        reaction(() => routerModal.modal, modal => {
+            const duration = vars.animationDuration;
+            if (modal) {
+                this.modal = modal;
+                Animated.timing(this.modalAnimated, { toValue: 0, duration })
+                    .start(() => (routerMain.blackStatusBar = true));
             } else {
-                Animated.timing(
-                    this.modalAnimated, { toValue: this.height, duration: 300 }
-                ).start(() => (this.modalRoute = route));
+                Animated.timing(this.modalAnimated, { toValue: this.height, duration })
+                    .start(() => (this.modal = null));
                 routerMain.blackStatusBar = false;
             }
         }, true);
@@ -117,9 +116,8 @@ export default class LayoutMain extends Component {
         const menuState = routerMain.isLeftMenuVisible || routerMain.isRightMenuVisible;
         const pages = routerMain.pages;
         const currentComponent = routerMain.currentComponent;
-        const modal = routerModal.modal;
         const snackBar = !menuState &&
-            !modal && !currentComponent.suppressMainSnackBar && <SnackBar />;
+            !this.modal && !currentComponent.suppressMainSnackBar && <SnackBar />;
 
         const width = this.width * pages.length;
         return (
@@ -149,13 +147,13 @@ export default class LayoutMain extends Component {
                 <LeftMenu />
                 <RightMenu />
                 <Animated.View style={modalAnimatedStyle}>
-                    {modal}
+                    {this.modal}
                 </Animated.View>
                 <View style={modalNonAnimatedStyle}>
                     {modalControl}
                 </View>
                 <StatusBar barStyle={routerMain.blackStatusBar ? 'default' : 'light-content'}
-                           hidden={Platform.OS !== 'android' && menuState && !modal} />
+                           hidden={Platform.OS !== 'android' && menuState && !this.modal} />
             </View>
         );
     }

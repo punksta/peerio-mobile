@@ -34,7 +34,8 @@ export default class MessagingPlaceholder extends Component {
         };
         const outerContainerStyle = {
             flex: 1,
-            alignItems: 'center'
+            flexGrow: 1,
+            alignItems: 'stretch'
         };
         const imageStyle = {
             flex: 1,
@@ -56,40 +57,38 @@ export default class MessagingPlaceholder extends Component {
         };
         return (
             <View style={outerContainerStyle}>
-                <View style={{ flex: 1,
-                    width: this.width }}>
-                    <View style={[titleBlockStyle, { marginTop: 16 }]}>
-                        <View style={{ flex: 1, marginLeft: 32 }}>
-                            <Image source={arrowUpZeroState}
-                                   resizeMode="contain"
-                                   style={imageStyle} />
-                        </View>
-                        <View style={{ flexGrow: 1, flexShrink: 0, alignItems: 'center', alignSelf: 'center', marginTop: 52, marginLeft: -32 }}>
-                            <Text style={headerStyle}>Have a{'\n'}conversation</Text>
-                        </View>
-                        <View style={{ flex: 1 }} />
+                <View style={[titleBlockStyle, { marginTop: 16 }]}>
+                    <View style={{ flex: 1, marginLeft: 32 }}>
+                        <Image source={arrowUpZeroState}
+                            resizeMode="contain"
+                            style={imageStyle} />
                     </View>
-                    <View style={{
-                        borderColor: 'red',
-                        borderWidth: 0,
-                        flexGrow: 0,
-                        alignSelf: 'center',
-                        justifyContent: 'center',
-                        paddingLeft: 20,
-                        paddingRight: 20,
-                        width: 245,
-                        height: 232,
-                        marginTop: 32 }}>
-                        <Image source={chatZeroState}
-                               resizeMode="contain"
-                               style={{ flexGrow: 1, width: null, height: null }} />
+                    <View style={{ flexGrow: 1, flexShrink: 0, alignItems: 'center', alignSelf: 'center', marginTop: 52, marginLeft: -32 }}>
+                        <Text style={headerStyle}>Have a{'\n'}conversation</Text>
                     </View>
-                    <View style={textHintContainer}>
-                        <View style={{ flex: 1 }}>
-                            <Text style={infoStyle}>Direct messages</Text>
-                            <Text style={infoStyle}>Multiparty chat</Text>
-                            <Text style={infoStyle}>Share files in chat</Text>
-                        </View>
+                    <View style={{ flex: 1 }} />
+                </View>
+                <View style={{
+                    borderColor: 'red',
+                    borderWidth: 0,
+                    flexGrow: 0,
+                    alignSelf: 'center',
+                    justifyContent: 'center',
+                    paddingLeft: 20,
+                    paddingRight: 20,
+                    width: 245,
+                    height: 232,
+                    marginTop: 32
+                }}>
+                    <Image source={chatZeroState}
+                        resizeMode="contain"
+                        style={{ flexGrow: 1, width: null, height: null }} />
+                </View>
+                <View style={textHintContainer}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={infoStyle}>Direct messages</Text>
+                        <Text style={infoStyle}>Multiparty chat</Text>
+                        <Text style={infoStyle}>Share files in chat</Text>
                     </View>
                 </View>
             </View>
@@ -99,6 +98,7 @@ export default class MessagingPlaceholder extends Component {
     render() {
         const s = {
             flex: 1,
+            flexGrow: 1,
             justifyContent: 'space-between'
         };
         return (

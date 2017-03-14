@@ -1,14 +1,44 @@
-import { observable, action, when } from 'mobx';
-import { chatStore } from '../../lib/icebear';
+import { observable, action, when, reaction } from 'mobx';
+import { chatStore, TinyDb } from '../../lib/icebear';
 import sounds from '../../lib/sounds';
 
-const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
-
 class ChatState {
-    @observable _loading = false;
+    store = chatStore;
+    _loading = true;
+
+    constructor() {
+        chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, () => {
+            console.log('chat-state.js: messages received');
+            sounds.received();
+        });
+
+        reaction(() => chatStore.activeChat, chat => {
+            if (chat && !chat.loadingMeta) {
+                console.log(`chat-store switched to ${chat.id}`);
+                chat.loadMessages();
+                this.save();
+                this.loading = false;
+            }
+        });
+        // when(() => chatStore.loaded, () => {
+        //     let c = this.saved && chatStore.chatMap[this.saved.currentChat];
+        //     if (!c && chatStore.chats.length) {
+        //         c = chatStore.chats[chatStore.chats.length - 1];
+        //     }
+        //     c && this.activate(c);
+        // });
+    }
+
+    get currentChat() {
+        return chatStore.activeChat;
+    }
+
+    @observable _loading = true;
 
     get loading() {
-        return this._loading || chatStore.loading; // || fileStore.loading;
+        const c = this.currentChat;
+        return this._loading ||
+            chatStore.loading || c && (c.loadingMeta || !c.initialPageLoaded);
     }
 
     set loading(v) {
@@ -16,31 +46,30 @@ class ChatState {
     }
 
     get title() {
-
+        return this.currentChat ? this.currentChat.chatName : '';
     }
 
-    @action chat(i) {
-        this.resetMenus();
-        this.isInputVisible = true;
-        this.route = 'chat';
-        this.currentIndex = 0;
-        this.currentChat = i;
-        chatStore.activate(i.id);
-        this._loading = !i.messagesLoaded;
-        when(() => !i.loadingMeta, () => {
-            setTimeout(() => {
-                i.loadMessages();
-                this.save();
-                when(() => !i.loadingMessages, () => (this._loading = false));
-            }, i.messagesLoaded ? 0 : 500);
-        });
+    activate(chat) {
+        if (chat.id) {
+            console.log(`chat-state.js: activating chat ${chat.id}`);
+            chatStore.activate(chat.id);
+        }
     }
 
-    @action messages() {
-        this.resetMenus();
-        this.route = this.currentChat ? 'chat' : 'recent';
-        this.currentIndex = 0;
-        this.isBackVisible = false;
+    onTransition(active, c) {
+        console.log(`chat-state.js: loading all chats`);
+        active && chatStore.loadAllChats();
+        if (active) {
+            when(() => !chatStore.loading, () => {
+                if (!chatStore.chats.length) this.loading = false;
+                const chat = c || (chatStore.chats.length && chatStore.chats[chatStore.chats.length - 1]);
+                chat && this.activate(chat);
+            });
+        }
+    }
+
+    @action async save() {
+        await TinyDb.user.setValue('main-state', { currentChat: this.currentChat.id });
     }
 
     get unreadMessages() {

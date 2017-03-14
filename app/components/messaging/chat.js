@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View, RefreshControl, Text, TouchableOpacity
+    ScrollView, View, RefreshControl, Text, TouchableOpacity, ActivityIndicator
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, when } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
-import Paging from '../shared/paging';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import ChatItem from './chat-item';
 import FileInlineProgress from '../files/file-inline-progress';
 import AvatarCircle from '../shared/avatar-circle';
-import mainState from '../main/main-state';
+import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
-
+import chatState from '../messaging/chat-state';
 // max new items which are scrolled animated
 const maxScrollableLength = 3;
 
@@ -24,133 +23,164 @@ export default class Chat extends Component {
     @observable refreshing = false;
     enableNextScroll = false;
     lastLength = 0;
-
-    paging = new Paging();
+    topComponentRef = null;
+    indicatorHeight = 40;
 
     constructor(props) {
         super(props);
         this.layoutScrollView = this.layoutScrollView.bind(this);
-        this.scroll = this.scroll.bind(this);
-        // this.dataSource = new ListView.DataSource({
-        //     rowHasChanged: (r1, r2) => r1 !== r2
-        // });
+        this.contentSizeChanged = this.contentSizeChanged.bind(this);
+        this.onScroll = this.onScroll.bind(this);
+        this.item = this.item.bind(this);
     }
 
     get data() {
-        return this.paging.data;
+        return this.chat ? this.chat.messages : null;
+    }
+
+    get chat() {
+        return chatState.currentChat;
     }
 
     get showInput() {
-        return true;
+        return !!chatState.currentChat;
     }
 
     componentWillMount() {
-        reaction(() => this.data.length, (l) => {
-            this.enableNextScroll = (l - this.lastLength) < maxScrollableLength;
+        reaction(() => this.chat ? this.chat.limboMessages.length : 0, l => {
+            this.disableNextScroll = l < this.lastLength;
+            this.animateNextScroll = l > this.lastLength;
             this.lastLength = l;
         });
-
-        // this.reaction = reaction(() => (mainState.route === 'chat') && this.data && this.data.length, () => {
-        //     console.log(`chat.js update reaction ${this.data.length}`);
-        //     this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
-        //     this.forceUpdate();
-        // }, true);
     }
 
-    // componentWillUnmount() {
-    //     this.reaction && this.reaction();
-    //     this.reaction = null;
-    // }
-
-    item(chat, i) {
-        return <ChatItem key={chat.id || i} chat={chat} />;
+    item(message, i) {
+        const layout = e => {
+            let { y, height } = e.nativeEvent.layout;
+            if (message.id === this.topChatID) {
+                console.log(`chat.js: scroll top ${y}, ${this.indicatorHeight}`);
+                y -= this.indicatorHeight;
+                if (y < 0) y = 0;
+                this.topChatID = null;
+                // y = Math.min(y, this.scrollViewHeight) / 2;
+                this.scrollView.scrollTo({ y, animated: false });
+                console.log(`chat.js: scroll top`);
+            }
+            if (message.id === this.bottomChatID) {
+                console.log(`chat.js: scroll bottom`);
+                this.bottomChatID = null;
+                y = y + height - this.scrollViewHeight + this.indicatorHeight;
+                setTimeout(() => this.scrollView.scrollTo({ y, animated: false }), 0);
+            }
+        };
+        return <ChatItem key={message.id || i} chat={message} onLayout={layout} />;
     }
 
     layoutScrollView(event) {
         console.log('chat.js: layout scroll view');
         this.scrollViewHeight = event.nativeEvent.layout.height;
-        // console.log(this.scrollViewHeight);
-        this.paging.hasMore && this.paging.updateFrame();
-        // console.log(`layout sv: ${this.scrollViewHeight}`);
-        this.scroll();
+        this.contentSizeChanged();
     }
 
-    scroll(contentWidth, contentHeight) {
-        if (!this.scrollView) return;
-
-        if (this.refreshing) {
-            let y = (contentHeight - this.contentHeight) / 2;
-            if (y < 0) y = 0;
-            this.scrollView.scrollTo({ y, animated: false });
-            this.refreshing = false;
-            this.contentHeight = contentHeight;
-            return;
-        }
+    contentSizeChanged(contentWidth, contentHeight) {
+        if (!this.scrollView || !this.chat) return;
 
         if (contentHeight) {
             this.contentHeight = contentHeight;
         }
 
+        if (this.refreshing) {
+            return;
+        }
+
+        //     let y = (contentHeight - this.contentHeight) / 2;
+        //     if (y < 0) y = 0;
+        //     // this.scrollView.scrollTo({ y, animated: true });
+        //     this.refreshing = false;
+        //     return;
+        // }
+
         if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
 
         this.scrollTimeout = setTimeout(() => {
             if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
+                let indicatorSpacing = 0;
+                if (this.chat.canGoUp) indicatorSpacing += this.indicatorHeight;
+                if (this.chat.canGoDown) indicatorSpacing += this.indicatorHeight;
                 let y = this.contentHeight - this.scrollViewHeight;
-                if (y < 0) {
+                if (y - indicatorSpacing < 0) {
                     console.log('chat.js: less content than fit');
-                    this.paging.hasMore && this.paging.loadNext();
+                    this.chat.loadPreviousPage();
                     y = 0;
                 }
-                const animated = this.enableNextScroll;
-                this.scrollView.scrollTo({ y, animated });
-                this.enableNextScroll = false;
+                const animated = this.animateNextScroll;
+                console.log('chat.js: auto scroll');
+                !this.disableNextScroll && this.scrollView.scrollTo({ y, animated });
+                this.animateNextScroll = false;
+                this.disableNextScroll = false;
             } else {
-                setTimeout(() => this.scroll(), 1000);
+                setTimeout(() => this.contentSizeChanged(), 1000);
             }
-        }, 100);
+        }, 0);
     }
 
-    _onRefresh() {
+    _onGoUp() {
+        if (this.refreshing || this.chat.loadingTopPage || !this.chat.canGoUp) return;
         this.refreshing = true;
-        this.paging.hasMore && setTimeout(() => this.paging.loadNext(), 500);
-        setTimeout(() => (this.refreshing = false), 1000);
+        this.topChatID = this.data[0].id;
+        this.chat.loadPreviousPage();
+        when(() => !this.chat.loadingTopPage, () => setTimeout(() => (this.refreshing = false), 1000));
+    }
+
+    _onGoDown() {
+        if (this.refreshing || this.chat.loadingBottomPage || !this.chat.canGoDown) return;
+        this.refreshing = true;
+        this.bottomChatID = this.data[this.data.length - 1].id;
+        this.chat.loadNextPage();
+        when(() => !this.chat.loadingBottomPage, () => setTimeout(() => (this.refreshing = false), 1000));
+    }
+
+    onScroll(event) {
+        if (!this.contentHeight || !this.scrollViewHeight || !this.chat) return;
+        const y = event.nativeEvent.contentOffset.y;
+        const h = this.contentHeight - this.scrollViewHeight;
+        // console.log(`chat.js: ${y}, ${h}`);
+        if (y < this.indicatorHeight / 2) {
+            this._onGoUp();
+        }
+        if (y >= h - this.indicatorHeight / 2) {
+            this._onGoDown();
+        }
     }
 
     listView() {
-        const refreshControl = this.paging.hasMore ? (
-            <RefreshControl
-                refreshing={this.refreshing}
-                onRefresh={() => this._onRefresh()}
-            />
+        const refreshControlTop = this.chat.canGoUp ? (
+            <ActivityIndicator size="large" style={{ padding: 10 }} onLayout={e => (this.indicatorHeight = e.nativeEvent.layout.height)} />
+        ) : null;
+        const refreshControlBottom = this.chat.canGoDown ? (
+            <ActivityIndicator size="large" style={{ padding: 10 }} />
         ) : null;
         return (
             <ScrollView
                 onLayout={this.layoutScrollView}
-                refreshControl={refreshControl}
                 style={{ flexGrow: 1 }}
                 initialListSize={1}
-                onContentSizeChange={this.scroll}
+                onContentSizeChange={this.contentSizeChanged}
+                scrollEventThrottle={0}
+                onScroll={this.onScroll}
+                keyboardShouldPersistTaps="never"
                 enableEmptySections
                 ref={sv => (this.scrollView = sv)}>
-                {!this.paging.loading && !this.paging.hasMore && this.zeroStateItem()}
+                {this.chat.canGoUp ? refreshControlTop : this.zeroStateItem()}
                 {this.data.map(this.item)}
+                {this.chat.limboMessages && this.chat.limboMessages.map(this.item)}
+                {refreshControlBottom}
             </ScrollView>
         );
-
-//         return (
-//             <ListView
-//                 initialListSize={1}
-//                 dataSource={this.dataSource}
-//                 renderRow={this.item}
-//                 onContentSizeChange={this.scroll}
-//                 enableEmptySections
-//                 ref={sv => (this.scrollView = sv)}
-//             />
-//         );
     }
 
     uploadQueue() {
-        const q = this.paging.chat ? this.paging.chat.uploadQueue : [];
+        const q = this.chat ? this.chat.uploadQueue : [];
         return q.map(f => <FileInlineProgress key={f.fileId} file={f.fileId} />);
     }
 
@@ -159,10 +189,10 @@ export default class Chat extends Component {
             borderBottomWidth: 1,
             borderBottomColor: '#CFCFCF'
         };
-        const chat = this.paging.chat;
+        const chat = this.chat;
         const avatars = chat.participants.map(contact => (
             <TouchableOpacity
-                onPress={() => mainState.contactView(contact)} key={contact.username}>
+                onPress={() => contactState.contactView(contact)} key={contact.username}>
                 <AvatarCircle
                     contact={contact}
                     medium />
@@ -186,11 +216,11 @@ export default class Chat extends Component {
         return (
             <View
                 style={{ flexGrow: 1 }}>
-                {this.data.length ? this.listView() : <MessagingPlaceholder />}
+                {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
                 <View style={{ margin: 12 }}>
                     {this.uploadQueue()}
                 </View>
-                <ProgressOverlay enabled={this.paging.loading} />
+                <ProgressOverlay enabled={chatState.loading} />
             </View>
         );
     }

@@ -36,7 +36,7 @@ export default class RouteNavigator extends Component {
         return (
             <View
                 testID={`route${route.key}Scene`}
-                removeClippedSubviews
+                removeClippedSubviews={false}
                 key={route.key}
                 style={[styles.navigator.card, hidden]}>
                 <BgPattern />
@@ -53,8 +53,7 @@ export default class RouteNavigator extends Component {
         return (
             <View
                 testID="navigatorContainer"
-                pointerEvents="auto"
-                style={{ flex: 1, borderWidth: 0, borderColor: 'red' }}>
+                style={{ flex: 1 }}>
                 <Navigator
                     testID="navigator"
                     ref={nav => (this.nav = nav)}

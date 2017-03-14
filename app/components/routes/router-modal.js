@@ -22,6 +22,10 @@ class RouterModal extends Router {
         this[route] = super.add(route, component).transition;
     }
 
+    discard() {
+        this.route = null;
+    }
+
     get modal() {
         return this.current ? React.createElement(this.current.component) : null;
     }

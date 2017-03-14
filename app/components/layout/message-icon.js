@@ -5,7 +5,7 @@ import {
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
-import mainState from '../main/main-state';
+import chatState from '../messaging/chat-state';
 import routerMain from '../routes/router-main';
 import { helpers } from '../../styles/styles';
 
@@ -14,7 +14,7 @@ export default class MessageIcon extends Component {
     @observable unread = false;
     lastCount = 0;
     componentDidMount() {
-        reaction(() => mainState.unreadMessages, count => {
+        reaction(() => chatState.unreadMessages, count => {
             // console.log(`message-icon.js: unread count ${count}`);
             this.unread = count >= this.lastCount;
             this.lastCount = count;

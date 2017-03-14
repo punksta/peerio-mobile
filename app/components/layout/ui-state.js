@@ -103,6 +103,7 @@ Keyboard.addListener('keyboardWillShow', (e) => {
 
 Keyboard.addListener('keyboardDidShow', (e) => {
     uiState.keyboardHeight = e.endCoordinates.height;
+    console.log(`ui-state.js: keyboard height ${uiState.keyboardHeight}`);
 });
 
 Keyboard.addListener('keyboardWillHide', () => {

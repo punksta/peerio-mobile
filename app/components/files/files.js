@@ -7,9 +7,8 @@ import {
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { fileStore } from '../../lib/icebear';
-// import { vars } from '../../styles/styles';
 import FilesPlaceholder from './files-placeholder';
-// import styles, { vars } from '../../styles/styles';
+import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileActions from './file-actions';
 import fileState from './file-state';
@@ -80,7 +79,7 @@ export default class Files extends Component {
 
     render() {
         const body = this.data.length ?
-            this.listView() : <FilesPlaceholder />;
+            this.listView() : !fileStore.loading && <FilesPlaceholder />;
 
         return (
             <View
@@ -89,6 +88,7 @@ export default class Files extends Component {
                     {body}
                 </View>
                 <FileActions height={this.actionsHeight} />
+                <ProgressOverlay enabled={fileStore.loading} />
             </View>
         );
     }

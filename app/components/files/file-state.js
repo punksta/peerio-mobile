@@ -138,8 +138,13 @@ class FileState {
     }
 
     onTransition(active, file) {
+        active && fileStore.loadAllFiles();
         fileStore.active = active;
         this.currentFile = active ? file : null;
+    }
+
+    get title() {
+        return this.currentFile ? this.currentFile.name : tx('files_allFiles');
     }
 
     fabAction() {

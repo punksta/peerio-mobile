@@ -41,7 +41,7 @@ export default class App extends Component {
             const MAX = 1000;
             const index = console.stack.length;
             const delta = index - MAX;
-            console.stack.splice(index, delta > 0 ? delta : 0, i);
+            // console.stack.splice(index, delta > 0 ? delta : 0, i);
         };
 
         const log = console.log;

@@ -25,6 +25,7 @@ export default class ChatItem extends Component {
                 key={key}
                 error={error}
                 onPress={onPress}
+                onLayout={this.props.onLayout}
                 noTap
                 noBorderBottom
             />
@@ -33,6 +34,7 @@ export default class ChatItem extends Component {
 }
 
 ChatItem.propTypes = {
+    onLayout: React.PropTypes.func,
     onPress: React.PropTypes.func,
     chat: React.PropTypes.any.isRequired
 };

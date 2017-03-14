@@ -89,7 +89,7 @@ export default class LeftMenu extends Component {
     }
 
     item(i, key) {
-        const action = () => routerMain.chat(i);
+        const action = () => routerMain.chats(i);
         const id = i.id || key;
         const text = i.chatName;
         const online = true;

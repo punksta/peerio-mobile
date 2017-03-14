@@ -6,7 +6,6 @@ import uiState from '../layout/ui-state';
 import SettingsLevel1 from '../settings/settings-level-1';
 import SettingsLevel2 from '../settings/settings-level-2';
 import SettingsLevel3 from '../settings/settings-level-3';
-import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import Ghosts from '../ghosts/ghosts';
 import GhostsLevel1 from '../ghosts/ghosts-level-1';
 import Chat from '../messaging/chat';
@@ -15,6 +14,7 @@ import FileView from '../files/file-view';
 import Logs from '../logs/logs';
 import fileState from '../files/file-state';
 import ghostState from '../ghosts/ghost-state';
+import chatState from '../messaging/chat-state';
 
 class RouterMain extends Router {
     // current route object
@@ -36,7 +36,7 @@ class RouterMain extends Router {
         super();
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
-        this.add('chats', [<MessagingPlaceholder />, <Chat />]);
+        this.add('chats', [<Chat />], chatState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />]);
         this.add('logs', [<Logs />]);
 
@@ -44,7 +44,7 @@ class RouterMain extends Router {
             visible && uiState.hideKeyboard();
         });
         reaction(() => this.currentIndex, i => (this.isBackVisible = i > 0));
-        reaction(() => [this.route, this.currentIndex], i => uiState.hideAll());
+        reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
     }
 
     add(key, components, routeState) {
@@ -58,8 +58,9 @@ class RouterMain extends Router {
             this.resetMenus();
             this.current = route;
             this.route = key;
-            this.currentIndex = item ? 1 : 0;
+            this.currentIndex = (components.length > 1 && item) ? 1 : 0;
             this.onTransition(route, true, item);
+            console.log(`router-main: transition to ${this.route}:${this.currentIndex}`);
         };
     }
 
@@ -82,7 +83,7 @@ class RouterMain extends Router {
 
     @action back() {
         if (this.currentIndex > 0) this.currentIndex--;
-        this.onDeactivate(this.current);
+        this.onTransition(this.current, false);
     }
 
     @action resetMenus() {
@@ -104,7 +105,7 @@ class RouterMain extends Router {
         this.isLeftMenuVisible = false;
     }
 }
+
 const routerMain = new RouterMain();
-routerMain.ghosts();
 
 export default routerMain;

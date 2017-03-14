@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { tx } from '../utils/translator';
 import InputMain from './input-main';
-import mainState from '../main/main-state';
+import chatState from '../messaging/chat-state';
 import fileState from '../files/file-state';
 import imagePicker from '../helpers/imagepicker';
 
@@ -26,11 +26,11 @@ export default class InputMainContainer extends Component {
             this.sendAck();
             return;
         }
-        mainState.addMessage(message);
+        chatState.addMessage(message);
     }
 
     sendAck() {
-        mainState.addAck();
+        chatState.addAck();
     }
 
     addFiles() {
@@ -44,7 +44,7 @@ export default class InputMainContainer extends Component {
                 fileState.selectFiles()
                     .then(files => {
                         if (files.length) {
-                            mainState.addMessage('', files);
+                            chatState.addMessage('', files);
                         }
                     })
                     .catch(() => {});

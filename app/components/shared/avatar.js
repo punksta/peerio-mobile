@@ -160,7 +160,7 @@ export default class Avatar extends Component {
         const files = this.props.files ?
             this.props.files.map(file => <FileInlineProgress key={file.id} file={file} />) : null;
         return (
-            <View style={{ backgroundColor: vars.bg }}>
+            <View style={{ backgroundColor: vars.bg }} onLayout={this.props.onLayout}>
                 <TouchableOpacity onPress={this.props.onPress} activeOpacity={this.props.noTap ? 1 : 0.2}>
                     <View style={itemStyle}>
                         {checkbox}
@@ -213,6 +213,7 @@ Avatar.propTypes = {
     checkedState: React.PropTypes.any,
     hideOnline: React.PropTypes.bool,
     noBorderBottom: React.PropTypes.bool,
-    noTap: React.PropTypes.bool
+    noTap: React.PropTypes.bool,
+    onLayout: React.PropTypes.func
 };
 

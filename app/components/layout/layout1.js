@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import {
-    View, ScrollView, PanResponder
-} from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import { vars } from '../../styles/styles';
-import uiState from './ui-state';
 
 @observer
 export default class Layout1 extends Component {
@@ -13,15 +10,6 @@ export default class Layout1 extends Component {
         super(props);
         this.layout = this.layout.bind(this);
         this.scroll = this.scroll.bind(this);
-    }
-
-    componentWillMount() {
-        this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: (/* evt, gestureState */) => {
-                !this.props.noAutoHide && uiState.hideAll();
-                return false;
-            }
-        });
     }
 
     layout(e) {
@@ -64,7 +52,6 @@ export default class Layout1 extends Component {
         return (
             <View
                 testID="layout1"
-                {...this.panResponder.panHandlers}
                 style={[boxStyle, this.props.style]}>
                 {this.props.header}
                 <ScrollView

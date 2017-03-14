@@ -23,7 +23,8 @@ class GhostState {
     }
 
     onTransition(active, ghost) {
-        mailStore.selectedId = active && ghost ? ghost.ghostId : null;
+        active && mailStore.loadAllGhosts();
+        // mailStore.selectedId = active && ghost ? ghost.ghostId : null;
     }
 
     get title() {
