@@ -52,7 +52,7 @@ class RouterMain extends Router {
 
         this.ghosts();
         chatState.store.loadAllChats();
-        when(() => !ghostState.store.loading && chatState.store.loaded, () => {
+        when(() => !ghostState.store.loading && !chatState.store.loading, () => {
             (EN === 'peeriomobile') && enablePushNotifications();
         });
     }
