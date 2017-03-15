@@ -46,13 +46,13 @@ export default class App extends Component {
 
         const log = console.log;
         console.log = function() {
-            log.apply(console, arguments);
+            __DEV__ && log.apply(console, arguments);
             Array.from(arguments).forEach(console.stackPush);
         };
 
         const error = console.error;
         console.error = function() {
-            error.apply(console, arguments);
+            __DEV__ && error.apply(console, arguments);
             Array.from(arguments).forEach(console.stackPush);
         };
 
