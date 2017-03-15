@@ -120,15 +120,6 @@ export default class ComposeMessage extends Component {
                     ghostState.view(g);
                     console.log(`ghost-compose.js: sent ${g.ghostId}`);
                 })
-                .catch(e => {
-                    console.error(`ghost-compose.js: sending error`);
-                    console.log(e);
-                    let msg = e.message;
-                    if (e.code === errors.ServerError.codes.quotaExceeded) {
-                        msg = tx('ghosts_quotaExceeded');
-                    }
-                    popupUpgrade(tx('ghosts_sendingError'), null, msg);
-                })
                 .finally(() => (this.inProgress = false));
         }, 100);
     }
