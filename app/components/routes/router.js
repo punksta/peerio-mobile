@@ -1,4 +1,4 @@
-import { reaction, action, observable } from 'mobx';
+import { action, observable } from 'mobx';
 
 export default class Router {
     @observable route = '';
@@ -26,6 +26,7 @@ export default class Router {
                 }, 0);
             })
         };
+        this[key] = this.routes[key].transition;
         return this.routes[key];
     }
 }

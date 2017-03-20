@@ -1,17 +1,14 @@
 import React from 'react';
 import { observable, action, when } from 'mobx';
-import uiState from '../layout/ui-state';
 import { User, chatStore, contactStore, TinyDb } from '../../lib/icebear';
 import { enablePushNotifications } from '../../lib/push';
 import touchid from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 import PinModalCreate from '../controls/pin-modal-create';
 import { tx } from '../utils/translator';
-import routerApp from '../routes/router-app';
+import RoutedState from '../routes/routed-state';
 
-const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
-
-class MainState {
+class MainState extends RoutedState {
     @observable _loading = false;
 
     get loading() {
@@ -29,7 +26,7 @@ class MainState {
                 onSuccess={pin => User.current.setPasscode(pin)} />
         );
         // if (__DEV__) mainState.modalControl = pinModal;
-        routerApp.routes.main.transition();
+        this.routes.app.main();
         User.current = user;
         this.saveUser();
         // chatStore.loadAllChats();

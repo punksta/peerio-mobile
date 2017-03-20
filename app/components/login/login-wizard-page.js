@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import {
-    View, Text, LayoutAnimation, Dimensions
-} from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { tu } from '../utils/translator';
-import Layout1 from '../layout/layout1';
-import Logo from '../controls/logo';
 import Button from '../controls/button';
 import styles, { vars } from '../../styles/styles';
 
@@ -32,13 +28,19 @@ export default class LoginWizardPage extends Component {
         );
     }
 
-    _button(text, onPress, style, textStyle) {
-        return <Button style={style} testID={text} textStyle={textStyle} text={tu(text)} onPress={onPress} />;
+    _button(text, onPress, style, textStyle, disabled) {
+        return (
+            <Button style={[style, disabled && { opacity: 0.5 }]}
+            testID={text}
+            textStyle={textStyle}
+            text={tu(text)}
+            onPress={disabled ? null : onPress} />
+        );
     }
 
-    _footerButton(text, onPress, style) {
+    _footerButton(text, onPress, style, disabled) {
         const s = styles.wizard.footer.button.base;
-        return this._button(text, onPress, [s, style], { fontWeight: 'bold' });
+        return this._button(text, onPress, [s, style], { fontWeight: 'bold' }, disabled);
     }
 
     buttons() {

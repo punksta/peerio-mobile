@@ -1,17 +1,23 @@
 import { socket } from '../../lib/icebear';
-import uiState from '../layout/ui-state';
+import routes from './routes';
 
 export default class RoutedState {
+    _prefix = null;
+    _routerMain = null;
+    static _routerApp = null;
+
+    get routes() { return routes; }
+
     get isConnected() {
         return socket.connected;
     }
 
     get isActive() {
         if (!this._prefix) throw new Error('routed-state.js: no prefix');
-        return uiState.route.startsWith(this._prefix);
+        return this.routerMain.route.startsWith(this._prefix);
     }
 
-    get routes() {
-        return uiState.routes;
-    }
+    get routerMain() { return this.routes.main; }
+
+    get routerModal() { return this.routes.modal; }
 }

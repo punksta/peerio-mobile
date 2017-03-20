@@ -8,7 +8,6 @@ import Swiper from '../controls/swiper';
 import FileProgress from './file-progress';
 import FileInnerItem from './file-inner-item';
 import fileState from './file-state';
-import routerMain from '../routes/router-main';
 
 const height = 64;
 const checkBoxWidth = height;
@@ -38,7 +37,7 @@ export default class FileItem extends Component {
         if (fileState.showSelection) {
             file.selected = !file.selected;
         } else {
-            routerMain.files(file);
+            fileState.routerMain.files(file);
         }
     }
 

@@ -1,5 +1,4 @@
-import { observable, action, reaction, when } from 'mobx';
-import routerApp from '../routes/router-app';
+import { observable, action, when } from 'mobx';
 import mainState from '../main/main-state';
 import uiState from '../layout/ui-state';
 import RoutedState from '../routes/routed-state';
@@ -13,61 +12,41 @@ class SignupState extends RoutedState {
     @observable firstName = '';
     @observable lastName = '';
     @observable pin = '';
-    @observable pinSaved = false;
     @observable current = 0;
     @observable count = 0;
     @observable inProgress = false;
+    // two pages of signup wizard
+    @observable count = 2;
     _prefix = 'signup';
 
     get nextAvailable() {
         switch (this.current) {
+            // enter profile info
             case 0: return this.isValid() && socket.connected;
-            case 1: return this.pinSaved && socket.connected || __DEV__;
+            // save pin and register
+            case 1: return socket.connected;
             default: return false;
         }
     }
 
-    get isLast() {
-        return this.current === this.count - 1;
-    }
+    get isLast() { return this.current === this.count - 1; }
 
-    get isFirst() {
-        return this.current === 0;
-    }
+    get isFirst() { return this.current === 0; }
 
-    transition() {
-        routerApp.routes.signupStep1.transition();
-    }
+    transition = () => this.routes.app.signupStep1();
 
-    exit() {
-        routerApp.routes.loginStart.transition();
-    }
+    exit = () => this.routes.app.loginStart();
 
-    @action reset() {
-        this.current = 0;
-    }
+    @action reset() { this.current = 0; }
 
     generatePassphrase() {
         const dict = PhraseDictionaryCollection.current;
         return dict.getPassphrase(5);
     }
 
-    @action next() {
-        if (!this.nextAvailable) return;
-        if (this.current < this.count - 1) {
-            this.current++;
-        } else {
-            this.finish();
-        }
-    }
+    @action next() { (this.current < this.count - 1) ? this.current++ : this.finish(); }
 
-    @action prev() {
-        if (this.current > 0) {
-            this.current--;
-        } else {
-            this.exit();
-        }
-    }
+    @action prev() { (this.current > 0) ? this.current-- : this.exit(); }
 
     @action async finish() {
         this.inProgress = true;
@@ -101,13 +80,6 @@ addValidation(signupState, 'email', validators.email, 1);
 addValidation(signupState, 'firstName', validators.firstName, 2);
 addValidation(signupState, 'lastName', validators.lastName, 3);
 
-const signupWizardRoutes = [
-    'signupStep1',
-    'signupStep2'
-];
-
-signupState.count = signupWizardRoutes.length;
-
 if (__DEV__) {
     when(() => signupState.isConnected, () => {
         const s = signupState;
@@ -119,11 +91,4 @@ if (__DEV__) {
     });
 }
 
-reaction(() => [signupState.current, signupState.isActive], () => {
-    if (signupState.isActive) {
-        uiState.route = signupWizardRoutes[signupState.current];
-    }
-});
-
 export default signupState;
-

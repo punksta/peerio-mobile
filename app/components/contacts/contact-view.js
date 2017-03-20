@@ -59,7 +59,7 @@ export default class ContactView extends Component {
                 </View>
             </View>
         );
-        return <LayoutModalExit body={body} title={username} />;
+        return <LayoutModalExit body={body} title={username} onClose={() => this.routerModal.discard()} />;
     }
 }
 

@@ -59,10 +59,13 @@ export default class LoginWizard extends Wizard {
                 });
             }
         });
-        // migrator.run().then(keys =>
-        //     popupYes(tx('popup_legacyMasterPassword'),
-        // tx('popup_legacyWriteDown'), JSON.parse(keys).secretKey))
-        //     .catch(() => {});
+        /* migrator.run().then(keys => {
+            popupYes(tx('popup_legacyMasterPassword'), tx('popup_legacyWriteDown'), keys.secretKey);
+            return keys;
+        })
+        .then(migrator.authenticate)
+        .then(() => popupYes('Migration', 'Successfully authenticated'))
+        .catch(e => console.log(e)); */
     }
 
     render() {

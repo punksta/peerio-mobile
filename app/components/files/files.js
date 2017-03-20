@@ -6,13 +6,11 @@ import {
 } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { fileStore } from '../../lib/icebear';
 import FilesPlaceholder from './files-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileActions from './file-actions';
 import fileState from './file-state';
-import routerMain from '../routes/router-main';
 
 @observer
 export default class Files extends Component {
@@ -29,7 +27,7 @@ export default class Files extends Component {
     actionsHeight = new Animated.Value(0)
 
     get data() {
-        return fileStore.files.sort((f1, f2) => {
+        return fileState.store.files.sort((f1, f2) => {
             return f2.uploadedAt - f1.uploadedAt;
         });
     }
@@ -47,8 +45,8 @@ export default class Files extends Component {
         });
 
         this.reaction = reaction(() => [
-            routerMain.route === 'files',
-            routerMain.currentIndex === 0,
+            fileState.routerMain.route === 'files',
+            fileState.routerMain.currentIndex === 0,
             this.data,
             this.data.length
         ], () => {
@@ -79,7 +77,7 @@ export default class Files extends Component {
 
     render() {
         const body = this.data.length ?
-            this.listView() : !fileStore.loading && <FilesPlaceholder />;
+            this.listView() : !fileState.store.loading && <FilesPlaceholder />;
 
         return (
             <View
@@ -88,7 +86,7 @@ export default class Files extends Component {
                     {body}
                 </View>
                 <FileActions height={this.actionsHeight} />
-                <ProgressOverlay enabled={fileStore.loading} />
+                <ProgressOverlay enabled={fileState.store.loading} />
             </View>
         );
     }

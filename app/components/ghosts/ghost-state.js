@@ -1,10 +1,10 @@
 import { observable } from 'mobx';
-import routerMain from '../routes/router-main';
+import RoutedState from '../routes/routed-state';
 import { tx } from '../utils/translator';
 import { mailStore, User } from '../../lib/icebear';
 import { popupUpgrade } from '../shared/popups';
 
-class GhostState {
+class GhostState extends RoutedState {
     @observable isComposing = false;
     store = mailStore;
 
@@ -14,16 +14,16 @@ class GhostState {
             return;
         }
         this.isComposing = true;
-        routerMain.ghosts({});
+        this.routerMain.ghosts({});
     }
 
     view(ghost) {
         this.isComposing = false;
-        routerMain.ghosts(ghost);
+        this.routerMain.ghosts(ghost);
         mailStore.selectedId = ghost.ghostId;
     }
 
-    onTransition(active, ghost) {
+    onTransition(active /* , ghost */) {
         active && mailStore.loadAllGhosts();
         // mailStore.selectedId = active && ghost ? ghost.ghostId : null;
     }

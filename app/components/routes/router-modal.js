@@ -5,6 +5,7 @@ import ComposeMessage from '../messaging/compose-message';
 import SelectFiles from '../files/select-files';
 import FileShare from '../files/file-share';
 import ContactView from '../contacts/contact-view';
+import routes from './routes';
 
 class RouterModal extends Router {
     // TODO: get rid of it
@@ -12,6 +13,7 @@ class RouterModal extends Router {
 
     constructor() {
         super();
+        routes.modal = this;
         this.add('compose', ComposeMessage);
         this.add('shareFileTo', FileShare);
         this.add('selectFiles', SelectFiles);

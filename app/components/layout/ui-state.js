@@ -10,8 +10,6 @@ class UIState {
     @observable isFirstLogin = false;
     @observable route = '';
     @observable prevRoute = '';
-    @observable routes = {};
-    @observable routesList = [];
     @observable pages = [];
     @observable focusedTextBox = null;
     @observable picker = null;

@@ -16,11 +16,14 @@ export default class Wizard extends Component {
      * 3. view 1 appears (this.currentIndex === 1) to the left (because this.animatedIndex === 0)
      * 4. view 1 slides in (this.animatedIndex === 1)
      */
-    @observable index = 0;
+    @observable _index = 0;
     @observable currentIndex = 0;
     @observable animatedIndex = 0;
     @observable pages = [];
     direction = 1;
+
+    get index() { return this._index; }
+    set index(i) { this._index = i; }
 
     constructor(props) {
         super(props);

@@ -2,17 +2,17 @@ import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
 import moment from 'moment';
 import chatState from '../messaging/chat-state';
-import routerMain from '../routes/router-main';
-import routerModal from '../routes/router-modal';
+import RoutedState from '../routes/routed-state';
 import { fileStore, TinyDb, socket, fileHelpers, errors, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { popupInput, popupYesCancel, popupUpgrade } from '../shared/popups';
 import imagePicker from '../helpers/imagepicker';
 
-class FileState {
+class FileState extends RoutedState {
     @observable currentFile = null;
     store = fileStore;
+    _prefix = 'files';
 
     get showSelection() {
         return fileStore.hasSelectedFiles;
@@ -31,7 +31,7 @@ class FileState {
                 f.forEach(item => {
                     fileStore.remove(item);
                 });
-                routerMain.files();
+                this.routerMain.files();
             })
             .catch(() => null);
     }
@@ -87,13 +87,13 @@ class FileState {
         return new Promise((resolve, reject) => {
             this.resolveFileSelection = resolve;
             this.rejectFileSelection = reject;
-            routerModal.selectFiles();
+            this.routerModal.selectFiles();
         });
     }
 
     @action exitSelectFiles() {
         this.resetSelection();
-        routerModal.discard();
+        this.routerModal.discard();
         this.rejectFileSelection && this.rejectFileSelection(new Error(`file-state.js: user cancel`));
         this.rejectFileSelection = null;
     }
@@ -102,7 +102,7 @@ class FileState {
         this.resolveFileSelection(this.selected.slice());
         this.resolveFileSelection = null;
         this.resetSelection();
-        routerModal.discard();
+        this.routerModal.discard();
     }
 
     uploadInline(uri, fileName, fileData) {

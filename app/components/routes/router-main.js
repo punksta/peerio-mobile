@@ -17,6 +17,7 @@ import ghostState from '../ghosts/ghost-state';
 import chatState from '../messaging/chat-state';
 import settingsState from '../settings/settings-state';
 import { enablePushNotifications } from '../../lib/push';
+import routes from './routes';
 
 const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
 
@@ -36,6 +37,7 @@ class RouterMain extends Router {
 
     constructor() {
         super();
+        routes.main = this;
         reaction(() => this.isLeftMenuVisible || this.isRightMenuVisible, visible => {
             visible && uiState.hideKeyboard();
         });

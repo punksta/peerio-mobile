@@ -7,7 +7,6 @@ import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
-import routerModal from '../routes/router-modal';
 
 @observer
 export default class LayoutModalExit extends Component {
@@ -30,7 +29,7 @@ export default class LayoutModalExit extends Component {
         };
         return (
             <View style={container}>
-                {icons.dark('close', () => routerModal.discard())}
+                {icons.dark('close', () => this.props.onClose())}
                 <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
                 {icons.placeholder()}
             </View>
@@ -73,5 +72,6 @@ export default class LayoutModalExit extends Component {
 
 LayoutModalExit.propTypes = {
     title: React.PropTypes.string,
-    body: React.PropTypes.any
+    body: React.PropTypes.any,
+    onClose: React.PropTypes.any
 };

@@ -1,17 +1,17 @@
 import React from 'react';
 import { Text, Clipboard } from 'react-native';
 import { observable, action, reaction } from 'mobx';
-import routerMain from '../routes/router-main';
-import routerModal from '../routes/router-modal';
+import RoutedState from '../routes/routed-state';
 import PinModal from '../controls/pin-modal';
 import { User } from '../../lib/icebear';
 import { popupCopyCancel, popupYes } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
 
-class SettingsState {
+class SettingsState extends RoutedState {
     @observable subroute = null;
     @observable stack = [];
+    _prefix = 'settings';
 
     get title() {
         const sr = this.subroute;
@@ -20,8 +20,8 @@ class SettingsState {
 
     onTransition(active) {
         if (this.reaction) return;
-        this.reaction = reaction(() => routerMain.currentIndex, (i) => {
-            if (routerMain.route === 'settings') {
+        this.reaction = reaction(() => this.routerMain.currentIndex, (i) => {
+            if (this.routerMain.route === 'settings') {
                 while (i < this.stack.length) {
                     this.stack.pop();
                 }
@@ -32,15 +32,15 @@ class SettingsState {
 
     @action transition(subroute) {
         console.log(`settings-state.js: transition ${subroute}`);
-        routerMain.route = 'settings';
-        routerMain.isRightMenuVisible = false;
-        routerMain.isLeftHamburgerVisible = false;
+        this.routerMain.route = 'settings';
+        this.routerMain.isRightMenuVisible = false;
+        this.routerMain.isLeftHamburgerVisible = false;
         if (subroute) {
             this.subroute = subroute;
             this.stack.push(subroute);
-            routerMain.currentIndex = this.stack.length;
+            this.routerMain.currentIndex = this.stack.length;
         } else {
-            routerMain.currentIndex = 0;
+            this.routerMain.currentIndex = 0;
             this.stack.clear();
         }
     }
@@ -61,19 +61,19 @@ class SettingsState {
                 Clipboard.setString(passphrase);
                 snackbarState.pushTemporary(tx('popup_masterPasswordCopied'));
             });
-            routerModal.modalControl = null;
+            this.routerModal.modalControl = null;
         };
         const pinModal = (
             <PinModal
                 onSuccess={success}
-                onCancel={() => (routerModal.modalControl = null)} />
+                onCancel={() => (this.routerModal.modalControl = null)} />
         );
         User.current.hasPasscode().then(r => {
             if (!r) {
                 popupYes(tx('passphrase'), tx('passcode_notSet'));
                 return;
             }
-            routerModal.modalControl = pinModal;
+            this.routerModal.modalControl = pinModal;
         });
     }
 }

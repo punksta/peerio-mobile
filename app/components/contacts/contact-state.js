@@ -1,21 +1,23 @@
 import { observable, action, when } from 'mobx';
-import routerMain from '../routes/router-main';
-import routerModal from '../routes/router-modal';
+import RoutedState from '../routes/routed-state';
 import { contactStore } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 
-class ContactState {
+class ContactState extends RoutedState {
+    _prefix = 'contacts';
+    store = contactStore;
+
     composeMessage() {
-        routerModal.compose();
+        this.routerModal.compose();
     }
 
     shareFile() {
-        routerModal.shareFileTo();
+        this.routerModal.shareFileTo();
     }
 
     @action exit() {
-        routerModal.discard();
+        this.routerModal.discard();
         this.clear();
     }
 
@@ -28,9 +30,9 @@ class ContactState {
 
 
     @action contactView(contact) {
-        routerMain.resetMenus();
+        this.routerMain.resetMenus();
         this.currentContact = contact;
-        routerModal.contactView();
+        this.routerModal.contactView();
     }
 
     findByUsername(username) {
@@ -78,10 +80,10 @@ class ContactState {
     }
 
     @action send(text, recipient) {
-        routerMain.suppressTransition = true;
-        when(() => !routerMain.suppressTransition, () => this.clear());
+        this.routerMain.suppressTransition = true;
+        when(() => !this.routerMain.suppressTransition, () => this.clear());
         const chat = chatState.store.startChat(recipient ? [recipient] : this.recipients);
-        routerMain.chats(chat);
+        this.routerMain.chats(chat);
         when(() => !chat.loadingMeta, () => {
             this.exit();
             text && chat.sendMessage(text);
@@ -96,7 +98,7 @@ class ContactState {
         if (!fileState.currentFile) return;
         const file = fileState.currentFile;
         const chat = chatState.store.startChat(this.recipients);
-        routerMain.chats(chat);
+        this.routerMain.chats(chat);
         when(() => !chat.loadingMeta, () => chat.shareFiles([file]));
         this.exit();
     }
