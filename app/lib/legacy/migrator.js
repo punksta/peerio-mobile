@@ -1,8 +1,9 @@
+import { when } from 'mobx';
 import BLAKE2s from 'blake2s-js';
 import scrypt from 'scrypt-async';
 import nacl from 'tweetnacl';
 import tinydb from './tinydb';
-import { crypto } from '../icebear';
+import { crypto, legacyMigrator, socket } from '../icebear';
 
 const { cryptoUtil } = crypto;
 
@@ -75,15 +76,24 @@ class Migrator {
                                 console.log(nonce);
                                 return this.secretBoxDecrypt(ciphertext, nonce, pinKey)
                                     .then(keys => {
+                                        const data = JSON.parse(keys);
                                         console.log(`migrator.js: keys decrypted`);
-                                        this.keys = keys;
-                                        console.log(JSON.stringify(keys));
-                                        return keys;
+                                        data.username = username;
+                                        console.log(JSON.stringify(data));
+                                        return data;
                                     });
                             });
                     });
             });
     };
+
+    authenticate(data) {
+        const { username, secretKey } = data;
+        console.log(`migrator.js: authenticating legacy user ${username}:${secretKey}`);
+        return new Promise(resolve => {
+            when(() => socket.connected, () => resolve(legacyMigrator.authenticate(username, secretKey)));
+        });
+    }
 
     decryptPassphrase = (pin) => {
         const { ciphertext, nonce, username } = this;

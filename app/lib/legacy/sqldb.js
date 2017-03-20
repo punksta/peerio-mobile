@@ -6,6 +6,7 @@ class SqlDb {
 
     openSystem = (name) => {
         const key = deviceInfo.getUniqueID() || 'f0905d253a79';
+        console.log(`sqldb.js: key ${key}`);
         return sqlite.openDatabase({ name, location: 2 /* 'nosync' */, key })
             .then(result => {
                 console.log('sqldb.js - success');
