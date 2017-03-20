@@ -1,5 +1,5 @@
-import { observable, action, reaction } from 'mobx';
-import { systemWarnings } from '../../lib/icebear';
+import { observable, action, reaction, when } from 'mobx';
+import { systemWarnings, socket } from '../../lib/icebear';
 import { popupYes } from '../shared/popups';
 import { t } from '../utils/translator';
 
@@ -61,5 +61,9 @@ reaction(() => systemWarnings.collection.length, (l) => {
 });
 
 // systemWarnings.addLocalWarningSevere('ghosts_quotaExceeded', 'ghosts_sendingError');
+when(() => socket.throttled, () => {
+    popupYes('Authentication error', '425 Throttled', 'Your account has been throttled due to unusual activity')
+        .then(() => (socket.throttled = false));
+});
 
 export default snackbarState;
