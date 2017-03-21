@@ -10,14 +10,13 @@ import cl.json.RNSharePackage;
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
-import com.beefe.picker.PickerViewPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.rnfs.RNFSPackage;
 import com.fileopener.FileOpenerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import org.pgsqlite.SQLitePluginPackage;
-import com.facebook.stetho.Stetho;
+// import com.facebook.stetho.Stetho;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -28,7 +27,7 @@ import java.util.List;
 public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
-    Stetho.initializeWithDefaults(this);
+    // Stetho.initializeWithDefaults(this);
   }
 
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -46,7 +45,6 @@ public class MainApplication extends Application implements ReactApplication {
           new ReactNativeRestartPackage(),
           new RandomBytesPackage(),
           new ReactNativePushNotificationPackage(),
-          new PickerViewPackage(),
           new ImagePickerPackage(),
           new FileOpenerPackage(),
           new RNDeviceInfo(),

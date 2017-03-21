@@ -147,13 +147,13 @@ android {
 }
 
 dependencies {
+    compile project(':ReactAndroid')
     compile project(':react-native-vector-icons')
     compile project(':react-native-sound')
     compile project(':react-native-share')
     compile project(':react-native-restart')
     compile project(':react-native-randombytes')
     compile project(':react-native-push-notification')
-    compile project(':react-native-picker')
     compile project(':react-native-image-picker')
     compile project(':react-native-fs')
     compile project(':react-native-file-opener')
@@ -162,10 +162,7 @@ dependencies {
     compile project(':react-native-sqlcipher-storage')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
-    compile "com.facebook.stetho:stetho:1.4.2"
-    compile 'com.facebook.stetho:stetho-js-rhino:1.4.2'
-    compile "com.facebook.stetho:stetho-okhttp3:1.4.2"
+    // compile "com.facebook.react:react-native:+"  // From node_modules
     compile ('com.google.android.gms:play-services-gcm:8.1.0') {
         force = true;
     }
