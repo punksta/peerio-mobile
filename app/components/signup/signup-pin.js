@@ -5,8 +5,6 @@ import {
 } from 'react-native';
 import { t } from '../utils/translator';
 import Pin from '../controls/pin';
-// import Button from '../controls/button';
-import Layout2 from '../layout/layout2';
 import styles from '../../styles/styles';
 import signupState from './signup-state';
 

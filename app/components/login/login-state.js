@@ -22,6 +22,12 @@ class LoginState extends RoutedState {
     @observable isInProgress = false;
     _prefix = 'login';
 
+    @action changeUserAction() {
+        if (this.isInProgress) return;
+        this.changeUser = true;
+        this.clean();
+    }
+
     @action clean() {
         console.log('transitioning to clean');
         this.username = '';
@@ -29,19 +35,12 @@ class LoginState extends RoutedState {
         this.passphrase = '';
         this.savedUserInfo = false;
         this.isInProgress = false;
-        this.routes.loginStart.transition();
-    }
-
-    @action async changeUserAction() {
-        await User.removeLastAuthenticated();
-        this.username = null;
-        this.usernameValid = null;
-        this.passphrase = '';
+        this.routes.loginStart();
     }
 
     @action saved() {
         this.savedUserInfo = true;
-        this.routes.loginSaved.transition();
+        this.routes.loginSaved();
     }
 
     @action _login(user) {

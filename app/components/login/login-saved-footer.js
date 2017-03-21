@@ -10,19 +10,8 @@ import styles from '../../styles/styles';
 
 export default class LoginSavedFooter extends Component {
 
-    constructor(props) {
-        super(props);
-        this.touchID = this.touchID.bind(this);
-        this.changeUser = this.changeUser.bind(this);
-    }
+    useMP() {
 
-    touchID() {
-    }
-
-    changeUser() {
-        if (loginState.isInProgress) return;
-        loginState.changeUser = true;
-        loginState.clean();
     }
 
     render() {
@@ -30,11 +19,10 @@ export default class LoginSavedFooter extends Component {
         return (
             <View style={styles.container.footer}>
                 <View style={style.row}>
-                    {/*
-                    <TouchableOpacity style={style.button.left} onPress={this.touchID}>
-                        <Text style={style.button.text}>{t('touchId')}</Text>
-                    </TouchableOpacity> */}
-                    <TouchableOpacity style={style.button.base} onPress={this.changeUser}>
+                    <TouchableOpacity style={style.button.left} onPress={() => this.useMP()}>
+                        <Text style={style.button.text}>{t('login_useMP')}</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={style.button.base} onPress={() => loginState.changeUserAction()}>
                         <Text style={style.button.text}>{t('login_changeUserButton')}</Text>
                     </TouchableOpacity>
                 </View>
