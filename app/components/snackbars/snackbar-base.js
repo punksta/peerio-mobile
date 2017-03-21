@@ -21,6 +21,9 @@ export default class SnackbarBase extends Component {
     }
 
     // to override
+    get autoDismiss() { return false; }
+
+    // to override
     getText() {
         return null;
     }
@@ -42,6 +45,7 @@ export default class SnackbarBase extends Component {
             return;
         }
         this._timer = setTimeout(() => this.show(), this.getShowDelay());
+        if (this.autoDismiss) setTimeout(() => this.tap(), 5000);
     }
 
     hide(cb) {

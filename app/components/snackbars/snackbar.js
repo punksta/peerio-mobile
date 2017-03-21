@@ -5,6 +5,9 @@ import snackbarState from './snackbar-state';
 @observer
 export default class Snackbar extends SnackbarBase {
     // to override
+    get autoDismiss() { return true; }
+
+    // to override
     getText() {
         return snackbarState.text;
     }
