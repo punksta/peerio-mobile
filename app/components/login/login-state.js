@@ -35,12 +35,12 @@ class LoginState extends RoutedState {
         this.passphrase = '';
         this.savedUserInfo = false;
         this.isInProgress = false;
-        this.routes.loginStart();
+        this.routes.app.loginStart();
     }
 
     @action saved() {
         this.savedUserInfo = true;
-        this.routes.loginSaved();
+        this.routes.app.loginSaved();
     }
 
     @action _login(user) {

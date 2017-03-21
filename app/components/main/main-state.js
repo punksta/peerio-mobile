@@ -1,7 +1,6 @@
 import React from 'react';
 import { observable, action, when } from 'mobx';
 import { User, chatStore, contactStore, TinyDb } from '../../lib/icebear';
-import { enablePushNotifications } from '../../lib/push';
 import touchid from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 import PinModalCreate from '../controls/pin-modal-create';
