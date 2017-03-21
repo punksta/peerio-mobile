@@ -32,9 +32,17 @@ if (typeof localStorage !== 'undefined') {
 
 const rnWebSocket = global.WebSocket;
 global.WebSocket = function(url) {
-  const r = new rnWebSocket(url, null, null, { pinSSLCert: 'maincert.com' });
-  r.binaryType = 'blob';
-  return r;
+    // enforce TLS pinning for our main server
+    const options = url.startsWith('wss://') ? {
+        // for ios, name of asset containing verified cert
+        pinSSLCert: 'maincert.com',
+        // for Android, sha256 hash of verified cert
+        pinSSLHost: url.match(/\/\/(.*?)\//)[1],
+        pinSSLCertHash: 'sha256/hOTzKrLdAWvqPQuVV2lYC61JxrXUYyTudUmMhppBkVk='
+    } : null;
+    const r = new rnWebSocket(url, null, null, options);
+    r.binaryType = 'blob';
+    return r;
 };
 
 const cryptoShim = require('react-native-crypto');
