@@ -81,7 +81,7 @@ addValidation(signupState, 'firstName', validators.firstName, 2);
 addValidation(signupState, 'lastName', validators.lastName, 3);
 
 if (__DEV__) {
-    when(() => signupState.isConnected, () => {
+    when(() => signupState.isConnected && signupState.isActive, () => {
         const s = signupState;
         const rnd = new Date().getTime();
         s.username = `t${rnd}`;

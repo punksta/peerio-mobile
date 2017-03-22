@@ -48,14 +48,12 @@ reaction(() => systemWarnings.collection.length, (l) => {
     console.log('snackbar-state.js: server warning update');
     if (l) {
         const sw = systemWarnings.collection[l - 1];
+        const swAction = () => sw && sw.action && sw.action();
         if (sw.level === 'severe') {
             // TODO: add custom button support
-            popupYes(t(sw.title), t(sw.content));
+            popupYes(t(sw.title), t(sw.content)).then(swAction);
         } else {
-            snackbarState.push(t(sw.content), () => {
-                console.log('snackbar-state.js: server warning cleared');
-                sw && sw.action && sw.action();
-            });
+            snackbarState.push(t(sw.content), swAction);
         }
     }
 });

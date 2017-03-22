@@ -14,7 +14,7 @@ export default class RoutedState {
 
     get isActive() {
         if (!this._prefix) throw new Error('routed-state.js: no prefix');
-        return this.routerMain.route.startsWith(this._prefix);
+        return !![routes.main, routes.app].filter(a => a.route.startsWith(this._prefix)).length;
     }
 
     get routerMain() { return this.routes.main; }
