@@ -147,6 +147,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-billing')
     compile project(':ReactAndroid')
     compile project(':react-native-vector-icons')
     compile project(':react-native-sound')
