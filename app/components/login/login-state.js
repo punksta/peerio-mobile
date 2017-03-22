@@ -53,13 +53,7 @@ class LoginState extends RoutedState {
 
     @action _login(user) {
         console.log(`login-state.js: logging in ${user.username}`);
-        return isValidLoginUsername(user.username)
-            .then(valid => {
-                if (valid) {
-                    return user.login();
-                }
-                return Promise.reject(new Error('login-state.js: bad username'));
-            })
+        return user.login()
             .then(() => console.log('login-state.js: logged in'))
             .then(() => mainState.activateAndTransition(user))
             .catch(e => {

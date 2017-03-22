@@ -8,6 +8,7 @@ import SettingsItem from './settings-item';
 import settingsState from './settings-state';
 import { popupInputCancel } from '../shared/popups';
 import { t, tx } from '../utils/translator';
+import payments from '../payments/payments';
 
 const bgStyle = {
     flexGrow: 1,
@@ -23,7 +24,7 @@ export default class SettingsLevel2 extends Component {
         popupInputCancel(`${tx('popup_enter2FA')}:`);
     }
 
-    render() {
+    security() {
         return (
             <View style={bgStyle}>
                 <SettingsItem
@@ -38,5 +39,20 @@ export default class SettingsLevel2 extends Component {
                     onPress={() => settingsState.showPassphrase()} />
             </View>
         );
+    }
+
+    payments() {
+        return (
+            <View style={bgStyle}>
+                <SettingsItem
+                    title={t('Test Payment')}
+                    onPress={() => payments.test()} />
+            </View>
+        );
+    }
+
+    render() {
+        const view = this[settingsState.subroute];
+        return view ? view() : null;
     }
 }
