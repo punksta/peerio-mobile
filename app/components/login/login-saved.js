@@ -43,9 +43,14 @@ export default class LoginSaved extends Component {
                 <Center style={{
                     flexGrow: 0,
                     marginTop: 6,
-                    marginBottom: 18
+                    marginBottom: 18,
+                    height: 30 // limit height
                 }}>
-                    <Big style={styles.text.inverse}>{t('login_welcomeBack')} <Bold>{loginState.firstName}</Bold></Big>
+                    <Big style={styles.text.inverse}>
+                        {t('login_welcomeBack')}
+                        {' '}
+                        <Bold>{loginState.firstName || loginState.username}</Bold>
+                    </Big>
                 </Center>
                 <Pin
                     inProgress={loginState.isInProgress}

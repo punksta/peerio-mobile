@@ -18,8 +18,8 @@ class LoginState extends RoutedState {
     @observable passphrase = '';
     @observable passphraseValidationMessage = null;
     @observable changeUser = false;
-    @observable savedUserInfo = false;
     @observable isInProgress = false;
+    @observable current = 0;
     _prefix = 'login';
 
     @action changeUserAction() {
@@ -28,24 +28,32 @@ class LoginState extends RoutedState {
         this.clean();
     }
 
+    @action checkSavedUserPin() {
+        const user = new User();
+        user.username = this.username;
+        return user.hasPasscode().then(has => has && this.saved());
+    }
+
+    @action useMasterPassword() {
+        this.current = 2;
+        this.routes.app.loginStart();
+    }
+
     @action clean() {
         console.log('transitioning to clean');
+        this.current = 0;
         this.username = '';
         this.usernameValid = null;
         this.passphrase = '';
-        this.savedUserInfo = false;
         this.isInProgress = false;
         this.routes.app.loginStart();
     }
 
-    @action saved() {
-        this.savedUserInfo = true;
-        this.routes.app.loginSaved();
-    }
+    @action saved = () => this.routes.app.loginSaved();
 
     @action _login(user) {
         console.log(`login-state.js: logging in ${user.username}`);
-        return Promise.resolve(true) // isValidLoginUsername(user.username)
+        return isValidLoginUsername(user.username)
             .then(valid => {
                 if (valid) {
                     return user.login();

@@ -22,17 +22,17 @@ const logoHeight = height * 0.33;
 
 @observer
 export default class LoginWizard extends Wizard {
-    constructor(props) {
-        super(props);
-        this.pages = ['loginStart', 'loginClean', 'loginPassword'];
-    }
+    pages = ['loginStart', 'loginClean', 'loginPassword'];
+
+    get index() { return loginState.current; }
+    set index(i) { loginState.current = i; }
 
     loginStart() {
         return <LoginStart login={() => this.index++} />;
     }
 
     loginClean() {
-        return <LoginClean submit={() => this.index++} />;
+        return <LoginClean submit={() => { this.index++; loginState.checkSavedUserPin(); }} />;
     }
 
     loginPassword() {
