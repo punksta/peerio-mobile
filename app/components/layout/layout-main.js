@@ -16,7 +16,7 @@ import LeftMenu from '../main/left-menu';
 import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
 import SnackBar from '../snackbars/snackbar';
-
+import SnackBarConnection from '../snackbars/snackbar-connection';
 import Fab from '../shared/fab';
 import styles, { vars } from '../../styles/styles';
 import routerMain from '../routes/router-main';
@@ -139,6 +139,7 @@ export default class LayoutMain extends Component {
                             <Bottom>
                                 {currentComponent.isFabVisible && <Fab />}
                                 {snackBar}
+                                <SnackBarConnection />
                             </Bottom>
                             {currentComponent.showInput && <InputMainContainer />}
                         </Animated.View>
