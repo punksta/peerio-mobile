@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -13,6 +14,8 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		0210710E1E03967000687D5E /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0210710D1E03965C00687D5E /* libRNFetchBlob.a */; };
 		0210710F1E03967600687D5E /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0210710D1E03965C00687D5E /* libRNFetchBlob.a */; };
+		02202B821E840B07006CDA9B /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02202B791E840AF7006CDA9B /* libRNMail.a */; };
+		02202B831E840B0D006CDA9B /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02202B791E840AF7006CDA9B /* libRNMail.a */; };
 		02210A811E019037006D7AC0 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02210A7F1E01902A006D7AC0 /* libRNSound.a */; };
 		02210A821E01903D006D7AC0 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02210A7F1E01902A006D7AC0 /* libRNSound.a */; };
 		02210A841E0191BA006D7AC0 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 02210A831E0191BA006D7AC0 /* sounds */; };
@@ -143,6 +146,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = A15C300E1CD25C330074CB35;
 			remoteInfo = RNFetchBlob;
+		};
+		02202B781E840AF7006CDA9B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 450DEE9B4CC440CA96F796BA /* RNMail.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 46FEDE7F1AFF192F00D3261C;
+			remoteInfo = RNMail;
+		};
+		02202B7A1E840AF7006CDA9B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 450DEE9B4CC440CA96F796BA /* RNMail.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 46FEDE8A1AFF192F00D3261C;
+			remoteInfo = RNMailTests;
 		};
 		02210A7E1E01902A006D7AC0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -440,6 +457,7 @@
 		21D883CDAA7C4E718E6EE873 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		26029CF21DF64479AF373AC9 /* RNShare.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNShare.xcodeproj; path = "../node_modules/react-native-share/ios/RNShare.xcodeproj"; sourceTree = "<group>"; };
 		372E848CA7B444A09B937444 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
+		450DEE9B4CC440CA96F796BA /* RNMail.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNMail.xcodeproj; path = "../node_modules/react-native-mail/RNMail.xcodeproj"; sourceTree = "<group>"; };
 		4FC9400FF0F74C249A550AC2 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		53F9542E76844F59917732EA /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -486,6 +504,7 @@
 				0235B5DC1E65DED4001D77D1 /* libsqlite3.0.tbd in Frameworks */,
 				025935611E809AB500FAEE7E /* libInAppUtils.a in Frameworks */,
 				0235B6621E664F0A001D77D1 /* libRNDeviceInfo.a in Frameworks */,
+				02202B831E840B0D006CDA9B /* libRNMail.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +540,7 @@
 				0235B5D81E65DE4B001D77D1 /* libSQLite.a in Frameworks */,
 				0235B6611E664F02001D77D1 /* libRNDeviceInfo.a in Frameworks */,
 				025935601E809AAF00FAEE7E /* libInAppUtils.a in Frameworks */,
+				02202B821E840B07006CDA9B /* libRNMail.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,6 +593,15 @@
 			isa = PBXGroup;
 			children = (
 				0210710D1E03965C00687D5E /* libRNFetchBlob.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		02202B521E840AF6006CDA9B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02202B791E840AF7006CDA9B /* libRNMail.a */,
+				02202B7B1E840AF7006CDA9B /* RNMailTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -785,6 +814,7 @@
 				26029CF21DF64479AF373AC9 /* RNShare.xcodeproj */,
 				13F5AA2EEB8241769A00F172 /* SQLite.xcodeproj */,
 				0E103048E40D48F8B3368298 /* RNDeviceInfo.xcodeproj */,
+				450DEE9B4CC440CA96F796BA /* RNMail.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1002,6 +1032,10 @@
 					ProjectRef = 88D6237453EF462AAED942D1 /* RNImagePicker.xcodeproj */;
 				},
 				{
+					ProductGroup = 02202B521E840AF6006CDA9B /* Products */;
+					ProjectRef = 450DEE9B4CC440CA96F796BA /* RNMail.xcodeproj */;
+				},
+				{
 					ProductGroup = 02FDD4A51DA6457E004E1D5A /* Products */;
 					ProjectRef = 081BA9E7BB014EC9A1CF87BA /* RNRandomBytes.xcodeproj */;
 				},
@@ -1075,6 +1109,20 @@
 			fileType = archive.ar;
 			path = libRNFetchBlob.a;
 			remoteRef = 0210710C1E03965C00687D5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02202B791E840AF7006CDA9B /* libRNMail.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNMail.a;
+			remoteRef = 02202B781E840AF7006CDA9B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02202B7B1E840AF7006CDA9B /* RNMailTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RNMailTests.xctest;
+			remoteRef = 02202B7A1E840AF7006CDA9B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		02210A7F1E01902A006D7AC0 /* libRNSound.a */ = {
@@ -1466,6 +1514,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
+					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 				);
 				INFOPLIST_FILE = "peeriomobile/Info-Expandoo.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1480,6 +1529,7 @@
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1530,6 +1580,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
+					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 				);
 				INFOPLIST_FILE = "peeriomobile/Info-Expandoo.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1544,6 +1595,7 @@
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1568,8 +1620,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Samvel Avanesov (7TA58ZPZB5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Samvel Avanesov (7TA58ZPZB5)";
 				CURRENT_PROJECT_VERSION = 291;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
@@ -1594,6 +1646,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
+					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 				);
 				INFOPLIST_FILE = peeriomobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1616,8 +1669,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
-				PROVISIONING_PROFILE = "1f70bad6-eabe-4771-adb8-bb46b73b0b2e";
-				PROVISIONING_PROFILE_SPECIFIER = "com.peerio-new";
+				PROVISIONING_PROFILE = "8af779d7-8d20-405a-b046-26c189b7ce9e";
+				PROVISIONING_PROFILE_SPECIFIER = "com.peerio.dev-seavan";
 			};
 			name = Debug;
 		};
@@ -1652,6 +1705,7 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
+					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 				);
 				INFOPLIST_FILE = peeriomobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
