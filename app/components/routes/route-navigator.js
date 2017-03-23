@@ -9,7 +9,7 @@ export default class RouteNavigator extends Component {
     componentDidMount() {
         const routes = this.props.routes;
         this.bindRouteroutes = reaction(() => routes.route, route => {
-            console.log('reaction: %s => %s', routes.prevRoute, route);
+            console.log(`route-navigator: ${routes.prevRoute}, ${route}`);
             const newIndex = routes.routesList.indexOf(route);
             const oldIndex = routes.routesList.indexOf(routes.prevRoute);
             routes.prevRoute = route;

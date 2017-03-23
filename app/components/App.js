@@ -37,11 +37,12 @@ export default class App extends Component {
         });
 
         console.stack = [];
-        console.stackPush = (i) => {
+        console.stackPush = (msg) => {
             const MAX = 1000;
             const index = console.stack.length;
             const delta = index - MAX;
-            // console.stack.splice(index, delta > 0 ? delta : 0, i);
+            const time = new Date();
+            console.stack.splice(index, delta > 0 ? delta : 0, { msg, time });
         };
 
         const log = console.log;

@@ -120,31 +120,38 @@ export default class LayoutMain extends Component {
             !this.modal && !currentComponent.suppressMainSnackBar && <SnackBar />;
 
         const width = this.width * pages.length;
+        const animatedBlock = (
+            <Animated.View
+                pointerEvents={menuState ? 'box-only' : 'auto'}
+                style={outerStyle}>
+                <Animated.View style={{ flex: 1, transform: transformMenu }}>
+                    <HeaderMain title={routerMain.title} />
+                    <Animated.View style={{ flex: 1, transform, width }}>
+                        <View style={{ flex: 1, width }}>
+                            {this.pages(pages)}
+                        </View>
+                    </Animated.View>
+                    <Bottom>
+                        {currentComponent.isFabVisible && <Fab />}
+                        {snackBar}
+                        <SnackBarConnection />
+                    </Bottom>
+                    {currentComponent.showInput && <InputMainContainer />}
+                </Animated.View>
+            </Animated.View>
+        );
+        const tapHider = menuState && (
+            <TouchableWithoutFeedback
+                onPress={() => routerMain.resetMenus()}>
+                <View style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }} />
+            </TouchableWithoutFeedback>
+         );
         return (
             <View
                 testID="mainLayout"
                 style={[styles.container.root]}>
-                <TouchableWithoutFeedback
-                    onPress={menuState ? () => routerMain.resetMenus() : null}>
-                    <Animated.View
-                        pointerEvents={menuState ? 'box-only' : 'auto'}
-                        style={outerStyle}>
-                        <Animated.View style={{ flex: 1, transform: transformMenu }}>
-                            <HeaderMain title={routerMain.title} />
-                            <Animated.View style={{ flex: 1, transform, width }}>
-                                <View style={{ flex: 1, width }}>
-                                    {this.pages(pages)}
-                                </View>
-                            </Animated.View>
-                            <Bottom>
-                                {currentComponent.isFabVisible && <Fab />}
-                                {snackBar}
-                                <SnackBarConnection />
-                            </Bottom>
-                            {currentComponent.showInput && <InputMainContainer />}
-                        </Animated.View>
-                    </Animated.View>
-                </TouchableWithoutFeedback>
+                {animatedBlock}
+                {tapHider}
                 <LeftMenu />
                 <RightMenu />
                 <Animated.View style={modalAnimatedStyle}>
