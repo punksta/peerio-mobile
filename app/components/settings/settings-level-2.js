@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View
+    View, Text
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
@@ -9,6 +9,7 @@ import settingsState from './settings-state';
 import { popupInputCancel } from '../shared/popups';
 import { t, tx } from '../utils/translator';
 import payments from '../payments/payments';
+import PaymentsQuotas from '../payments/payments-quotas';
 
 const bgStyle = {
     flexGrow: 1,
@@ -49,6 +50,10 @@ export default class SettingsLevel2 extends Component {
                     onPress={() => payments.test()} />
             </View>
         );
+    }
+
+    quotas() {
+        return <PaymentsQuotas />;
     }
 
     render() {
