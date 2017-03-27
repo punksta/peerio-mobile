@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text
+    ScrollView, View, Text
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
@@ -24,10 +24,10 @@ export default class PaymentsQuotas extends Component {
     render() {
         const q = User.current.quota;
         return (
-            <View style={bgStyle}>
+            <ScrollView style={bgStyle}>
                 <Text style={header}>Current quota</Text>
-                <Text>{JSON.stringify(q)}</Text>
-            </View>
+                <Text>{JSON.stringify(q, null, ' ')}</Text>
+            </ScrollView>
         );
     }
 }
