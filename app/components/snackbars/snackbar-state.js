@@ -1,7 +1,8 @@
 import { observable, action, reaction, when } from 'mobx';
 import { systemWarnings, socket } from '../../lib/icebear';
 import { popupYes } from '../shared/popups';
-import { t } from '../utils/translator';
+import { t, tx } from '../utils/translator';
+import tagify from '../shared/tagify';
 
 class SnackBarState {
     @observable items = [];
@@ -51,7 +52,7 @@ reaction(() => systemWarnings.collection.length, (l) => {
         const swAction = () => sw && sw.action && sw.action();
         if (sw.level === 'severe') {
             // TODO: add custom button support
-            popupYes(t(sw.title), t(sw.content)).then(swAction);
+            popupYes(tx(sw.title), tagify(tx(sw.content))).then(swAction);
         } else {
             snackbarState.push(t(sw.content), swAction);
         }
