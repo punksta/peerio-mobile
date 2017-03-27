@@ -49,6 +49,7 @@ class SignupState extends RoutedState {
     @action prev() { (this.current > 0) ? this.current-- : this.exit(); }
 
     @action async finish() {
+        if (!this.isValid()) return;
         this.inProgress = true;
         this.passphrase = await this.generatePassphrase();
         console.log(this.passphrase);
