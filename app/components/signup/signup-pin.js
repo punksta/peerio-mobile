@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-    Text,
-    View
-} from 'react-native';
+import { Text, View } from 'react-native';
 import { t } from '../utils/translator';
 import Pin from '../controls/pin';
 import styles from '../../styles/styles';

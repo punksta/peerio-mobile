@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Text, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Pin from './pin';
 import Button from './button';
@@ -8,26 +8,27 @@ import { t, tu } from '../utils/translator';
 import { User } from '../../lib/icebear';
 import routerModal from '../routes/router-modal';
 import BgPattern from '../controls/bg-pattern';
+import Center from '../controls/center';
+import Big from '../controls/big';
+import Bold from '../controls/bold';
 
 @observer
 export default class PinModalCreate extends Component {
     success(pin) {
         console.log('pin-modal-create.js: success');
-        const handler = this.props.onSuccess || Promise.resolve();
-        return handler(pin).catch(() => {}).finally(() => this.hide());
+        return User.current.setPasscode(pin).catch(() => {}).finally(() => this.hide());
     }
 
     hide() {
-        routerModal.modalControl = null;
+        routerModal.discard();
     }
 
     render() {
         const container = {
             flexGrow: 1,
             flex: 1,
-            backgroundColor: vars.bg,
-            paddingVertical: vars.modalPaddingVertical,
-            paddingHorizontal: vars.modalPaddingHorizontal
+            padding: 50,
+            backgroundColor: vars.bg
         };
         return (
             <View style={container}>
@@ -40,11 +41,8 @@ export default class PinModalCreate extends Component {
                 <View style={{ flexGrow: 0, flex: 0, flexDirection: 'row', justifyContent: 'flex-start' }}>
                     <Button text={tu('cancel')} onPress={() => this.hide()} />
                 </View>
+                <StatusBar barStyle="light-content" />
             </View>
         );
     }
 }
-
-PinModalCreate.propTypes = {
-    onSuccess: React.PropTypes.func.isRequired
-};

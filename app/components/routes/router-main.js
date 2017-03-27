@@ -16,6 +16,7 @@ import fileState from '../files/file-state';
 import ghostState from '../ghosts/ghost-state';
 import chatState from '../messaging/chat-state';
 import settingsState from '../settings/settings-state';
+import contactState from '../contacts/contact-state';
 import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
 
@@ -57,6 +58,7 @@ class RouterMain extends Router {
         when(() => !ghostState.store.loading && !chatState.store.loading, () => {
             (EN === 'peeriomobile') && enablePushNotifications();
         });
+        when(() => !chatState.store.loading, () => contactState.store.loadLegacyContacts());
     }
 
     add(key, components, routeState) {

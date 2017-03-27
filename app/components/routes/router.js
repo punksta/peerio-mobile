@@ -21,9 +21,8 @@ export default class Router {
             key,
             component,
             transition: action(() => {
-                setTimeout(() => {
-                    this.route = key;
-                }, 0);
+                console.log(`router.js: ${this.route} => ${key}`);
+                this.route = key;
             })
         };
         this[key] = this.routes[key].transition;

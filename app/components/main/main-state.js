@@ -3,7 +3,6 @@ import { observable, action, when } from 'mobx';
 import { User, chatStore, contactStore, TinyDb } from '../../lib/icebear';
 import touchid from '../touchid/touchid-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
-import PinModalCreate from '../controls/pin-modal-create';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
@@ -18,20 +17,19 @@ class MainState extends RoutedState {
         this._loading = v;
     }
 
-    @action activateAndTransition(user) {
-        const pinModal = () => (
-            <PinModalCreate
-                title="Create device PIN"
-                onSuccess={pin => User.current.setPasscode(pin)} />
-        );
-        // if (__DEV__) mainState.modalControl = pinModal;
+    @action async activateAndTransition(user) {
         this.routes.app.main();
         User.current = user;
-        this.saveUser();
-        // chatStore.loadAllChats();
-        // when(() => !chatStore.loading, () => {
-        //    contactStore.loadLegacyContacts();
-        // });
+        const hasPin = await user.hasPasscode();
+        if (!hasPin) {
+            const skipPIN = `${user.username}::skipPIN`;
+            const skipPINValue = await TinyDb.system.getValue(skipPIN);
+            if (!skipPINValue) {
+                setTimeout(() => this.routes.modal.createPin(), 500);
+            }
+            await TinyDb.system.setValue(skipPIN, true);
+        }
+        await this.saveUser();
     }
 
     @action async load() {

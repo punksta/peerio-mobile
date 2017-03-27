@@ -73,7 +73,7 @@ class LoginState extends RoutedState {
         this.isInProgress = true;
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
-        }).catch(e => console.log(e));
+        });
     }
 
     @action loginCached(data) {

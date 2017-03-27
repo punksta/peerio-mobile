@@ -36,7 +36,7 @@ export default class LoginWizard extends Wizard {
     }
 
     loginPassword() {
-        return <LoginPassword submit={() => loginState.login()} />;
+        return <LoginPassword submit={() => loginState.login().catch(e => console.log(e))} />;
     }
 
     footer() {
@@ -59,6 +59,7 @@ export default class LoginWizard extends Wizard {
                 });
             }
         });
+        migrator.generatePublicKeyString('t15162', 'icebear');
         /* migrator.run().then(keys => {
             popupYes(tx('popup_legacyMasterPassword'), tx('popup_legacyWriteDown'), keys.secretKey);
             return keys;

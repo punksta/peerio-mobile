@@ -5,6 +5,7 @@ import ComposeMessage from '../messaging/compose-message';
 import SelectFiles from '../files/select-files';
 import FileShare from '../files/file-share';
 import ContactView from '../contacts/contact-view';
+import PinModalCreate from '../controls/pin-modal-create';
 import routes from './routes';
 
 class RouterModal extends Router {
@@ -18,6 +19,7 @@ class RouterModal extends Router {
         this.add('shareFileTo', FileShare);
         this.add('selectFiles', SelectFiles);
         this.add('contactView', ContactView);
+        this.add('createPin', PinModalCreate);
     }
 
     add(route, component) {

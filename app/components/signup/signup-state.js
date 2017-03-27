@@ -49,7 +49,7 @@ class SignupState extends RoutedState {
     @action prev() { (this.current > 0) ? this.current-- : this.exit(); }
 
     @action async finish() {
-        if (!this.isValid()) return;
+        if (!this.isValid()) return Promise.resolve();
         this.inProgress = true;
         this.passphrase = await this.generatePassphrase();
         console.log(this.passphrase);
@@ -64,8 +64,8 @@ class SignupState extends RoutedState {
         user.lastName = lastName;
         user.localeCode = localeCode;
         return user.createAccountAndLogin()
-            .then(() => mainState.activateAndTransition(user))
             .then(() => User.current.setPasscode(pin))
+            .then(() => mainState.activateAndTransition(user))
             .catch((e) => {
                 console.log(e);
                 this.reset();

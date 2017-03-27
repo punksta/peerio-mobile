@@ -160,8 +160,9 @@ export default class LayoutMain extends Component {
                 <View style={modalNonAnimatedStyle}>
                     {modalControl}
                 </View>
-                <StatusBar barStyle={routerMain.blackStatusBar ? 'default' : 'light-content'}
-                           hidden={Platform.OS !== 'android' && menuState && !this.modal} />
+                <StatusBar
+                    barStyle="light-content"
+                    hidden={Platform.OS !== 'android' && menuState && !this.modal} />
             </View>
         );
     }

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-    View
-} from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
 import Layout2 from '../layout/layout2';
@@ -29,6 +27,7 @@ export default class LoginSaved extends Component {
         loginState.login(pin)
             .then(() => (this.count = 0))
             .catch(() => {
+                console.error('login-saved.js: login error');
                 setTimeout(() => {
                     pinControl.spinner(false);
                     pinControl.shake();
@@ -39,11 +38,9 @@ export default class LoginSaved extends Component {
     render() {
         const style = styles.wizard;
         const body = (
-            <View style={[style.containerFlexGrow, { marginTop: 44 }]}>
+            <View style={[style.containerFlexGrow, { marginTop: 20 }]}>
                 <Center style={{
                     flexGrow: 0,
-                    marginTop: 6,
-                    marginBottom: 18,
                     height: 30 // limit height
                 }}>
                     <Big style={styles.text.inverse}>
@@ -56,6 +53,7 @@ export default class LoginSaved extends Component {
                     inProgress={loginState.isInProgress}
                     messageEnter={' '}
                     checkPin={this.checkPin} />
+                <StatusBar barStyle="light-content" />
             </View>
         );
         return <Layout2 body={body} footer={<LoginSavedFooter />} />;

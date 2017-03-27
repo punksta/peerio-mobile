@@ -109,6 +109,11 @@ class Migrator {
         .then(r => {
             console.log(`migrator.js: check run successfully: ${r}`);
         });
+
+    generatePublicKeyString(username, password) {
+        legacyMigrator.derivePublicKeyString(username, password)
+            .then(pk => console.log(`migrator.js: ${username}:${pk}`));
+    }
 }
 
 const migrator = new Migrator();
