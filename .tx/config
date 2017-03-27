@@ -1,7 +1,7 @@
 [main]
 host = https://www.transifex.com
 
-[peerio.client]
+[peerio.icebear]
 file_filter = locales/<lang>.json
 source_file = locales/en.json
 source_lang = en
