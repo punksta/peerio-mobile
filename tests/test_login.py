@@ -8,7 +8,7 @@ class Login(common.testcase.TestCase):
         d.reset()
         d.tap('login')
         sleep(1)
-        d.send_keys('username', 't1490045584336')
+        d.send_keys('username', 't1490700725079')
         d.tap('logo')
         sleep(1)
         d.tap('continue')
