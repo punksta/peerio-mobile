@@ -43,7 +43,10 @@ class SignupState extends RoutedState {
         return dict.getPassphrase(5);
     }
 
-    @action next() { (this.current < this.count - 1) ? this.current++ : this.finish(); }
+    @action next() {
+        if (!this.isValid()) return;
+        (this.current < this.count - 1) ? this.current++ : this.finish();
+    }
 
     @action prev() { (this.current > 0) ? this.current-- : this.exit(); }
 
