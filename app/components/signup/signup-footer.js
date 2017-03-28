@@ -26,13 +26,13 @@ export default class SignupFooter extends Component {
     render() {
         const next = this.button(
             signupState.isLast ? tu('') : tu('next'),
-            signupState.nextAvailable,
+            !signupState.isInProgress && signupState.nextAvailable,
             () => signupState.next()
         );
 
         const prev = this.button(
             signupState.isFirst ? tu('cancel') : tu('back'),
-            !signupState.inProgress,
+            !signupState.isInProgress,
             () => signupState.prev());
 
         return (

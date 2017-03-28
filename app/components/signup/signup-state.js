@@ -14,7 +14,6 @@ class SignupState extends RoutedState {
     @observable pin = '';
     @observable current = 0;
     @observable count = 0;
-    @observable inProgress = false;
     // two pages of signup wizard
     @observable count = 2;
     _prefix = 'signup';
@@ -50,7 +49,7 @@ class SignupState extends RoutedState {
 
     @action async finish() {
         if (!this.isValid()) return Promise.resolve();
-        this.inProgress = true;
+        this.isInProgress = true;
         this.passphrase = await this.generatePassphrase();
         console.log(this.passphrase);
         const user = new User();
@@ -63,14 +62,16 @@ class SignupState extends RoutedState {
         user.firstName = firstName;
         user.lastName = lastName;
         user.localeCode = localeCode;
-        return user.createAccountAndLogin()
-            .then(() => User.current.setPasscode(pin))
+        return requestAnimationFrame(
+            () => user.createAccountAndLogin()
+            .then(() => user.setPasscode(pin))
             .then(() => mainState.activateAndTransition(user))
             .catch((e) => {
                 console.log(e);
                 this.reset();
             })
-            .finally(() => (this.inProgress = false));
+            .finally(() => (this.isInProgress = false))
+        );
     }
 }
 

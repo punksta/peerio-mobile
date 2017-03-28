@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import {
-    Text, ActivityIndicator, View
-} from 'react-native';
+import { Text } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { t, T } from '../utils/translator';
 import TextBox from '../controls/textbox';
 import Bold from '../controls/bold';
 import Center from '../controls/center';
+import ActivityOverlay from '../controls/activity-overlay';
 import loginState from './login-state';
 import LoginWizardPage from './login-wizard-page';
 import { vars } from '../../styles/styles';
@@ -31,27 +30,11 @@ export default class LoginPassword extends LoginWizardPage {
 
 
     buttons() {
-        const center = {
-            justifyContent: 'center',
-            alignItems: 'center'
-        };
-        const activityOverlay = {
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0
-        };
-        const activityIndicator = (
-            <View style={[activityOverlay, center]}>
-                <ActivityIndicator color={vars.highlight} />
-            </View>
-        );
         const opacity = loginState.isInProgress ? 0 : 1;
         return (
             <Center>
                 {this._footerButton('login', () => this.props.submit(), { opacity })}
-                {loginState.isInProgress && activityIndicator}
+                <ActivityOverlay visible={loginState.isInProgress} />
             </Center>
         );
     }

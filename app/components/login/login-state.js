@@ -8,7 +8,6 @@ import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
 const { validators, addValidation } = validation;
-const { isValidLoginUsername } = validators;
 
 class LoginState extends RoutedState {
     @observable username = '';
@@ -18,7 +17,6 @@ class LoginState extends RoutedState {
     @observable passphrase = '';
     @observable passphraseValidationMessage = null;
     @observable changeUser = false;
-    @observable isInProgress = false;
     @observable current = 0;
     _prefix = 'login';
 
@@ -66,11 +64,12 @@ class LoginState extends RoutedState {
             });
     }
 
-    @action login(pin) {
+    @action login = (pin) => {
         const user = new User();
         user.username = this.username;
         user.passphrase = pin || this.passphrase || 'such a secret passphrase';
         this.isInProgress = true;
+        console.log(this.username);
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
         });
@@ -104,8 +103,7 @@ class LoginState extends RoutedState {
             if (this.username && this.username !== username) return false;
             this.username = username;
             this.username && this.triggerTouchId();
-            console.log(`login-state.js: loaded ${userData}`);
-            // we logged in with someone else
+            console.log(`login-state.js: loaded`);
             this.username = username;
             this.firstName = firstName;
             this.lastName = lastName;

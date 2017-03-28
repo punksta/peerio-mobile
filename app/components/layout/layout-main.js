@@ -126,6 +126,7 @@ export default class LayoutMain extends Component {
                 style={outerStyle}>
                 <Animated.View style={{ flex: 1, transform: transformMenu }}>
                     <HeaderMain title={routerMain.title} />
+                    <SnackBarConnection />
                     <Animated.View style={{ flex: 1, transform, width }}>
                         <View style={{ flex: 1, width }}>
                             {this.pages(pages)}
@@ -134,10 +135,7 @@ export default class LayoutMain extends Component {
                     <Bottom>
                         {currentComponent.isFabVisible && <Fab />}
                         {snackBar}
-                    </Bottom>
-                    {currentComponent.showInput && <InputMainContainer />}
-                    <Bottom>
-                        <SnackBarConnection />
+                        {currentComponent.showInput && <InputMainContainer />}
                     </Bottom>
                 </Animated.View>
             </Animated.View>

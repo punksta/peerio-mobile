@@ -53,8 +53,8 @@ export default class LoginWizard extends Wizard {
         load.then(() => {
             if (__DEV__) {
                 when(() => loginState.isConnected, () => {
-                    loginState.username = process.env.PEERIO_USERNAME;
-                    loginState.passphrase = process.env.PEERIO_PASSPHRASE;
+                    loginState.username = process.env.PEERIO_USERNAME || loginState.username;
+                    loginState.passphrase = process.env.PEERIO_PASSPHRASE || loginState.passphrase;
                     process.env.PEERIO_AUTOLOGIN && loginState.login();
                 });
             }

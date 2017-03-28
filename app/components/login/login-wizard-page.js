@@ -7,11 +7,12 @@ import styles, { vars } from '../../styles/styles';
 
 @observer
 export default class LoginWizardPage extends Component {
-    button(text, onPress) {
+    button(text, onPress, hidden) {
         const buttonContainer = {
             marginVertical: 20,
             alignItems: 'stretch',
-            backgroundColor: vars.bg
+            backgroundColor: vars.bg,
+            opacity: hidden ? 0 : 1
         };
         const button = {
             padding: 12,

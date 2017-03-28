@@ -10,7 +10,7 @@ export default class SignupPin extends Component {
     usePin(pin) {
         signupState.pin = pin;
         this.pin.spinner(true);
-        setTimeout(() => signupState.finish(), 200);
+        signupState.finish();
     }
 
     render() {

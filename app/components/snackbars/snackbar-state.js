@@ -1,11 +1,29 @@
-import { observable, action, reaction, when } from 'mobx';
+import { observable, action, observe, when } from 'mobx';
 import { systemWarnings, socket } from '../../lib/icebear';
 import { popupYes } from '../shared/popups';
 import { t, tx } from '../utils/translator';
+import RoutedState from '../routes/routed-state';
 import tagify from '../shared/tagify';
 
-class SnackBarState {
+class SnackBarState extends RoutedState {
     @observable items = [];
+
+    constructor(props) {
+        super(props);
+        observe(systemWarnings.collection, change => {
+            console.log('snackbar-state.js: server warning update');
+            const add = sw => when(() => !this.isInProgress, () => {
+                const swAction = () => sw && sw.action && sw.action();
+                if (sw.level === 'severe') {
+                    // TODO: add custom button support
+                    popupYes(tx(sw.title), tagify(tx(sw.content))).then(swAction);
+                } else {
+                    this.push(t(sw.content), swAction);
+                }
+            });
+            change.added && change.added.length && change.added.forEach(add);
+        });
+    }
 
     get text() {
         return this.items.length ?
@@ -44,21 +62,6 @@ class SnackBarState {
 }
 
 const snackbarState = new SnackBarState();
-
-reaction(() => systemWarnings.collection.length, (l) => {
-    console.log('snackbar-state.js: server warning update');
-    if (l) {
-        const sw = systemWarnings.collection[l - 1];
-        const swAction = () => sw && sw.action && sw.action();
-        if (sw.level === 'severe') {
-            // TODO: add custom button support
-            popupYes(tx(sw.title), tagify(tx(sw.content))).then(swAction);
-        } else {
-            snackbarState.push(t(sw.content), swAction);
-        }
-    }
-});
-
 // systemWarnings.addLocalWarningSevere('ghosts_quotaExceeded', 'ghosts_sendingError');
 when(() => socket.throttled, () => {
     popupYes('Authentication error', '425 Throttled', 'Your account has been throttled due to unusual activity')

@@ -1,10 +1,17 @@
+import { observable } from 'mobx';
 import { socket } from '../../lib/icebear';
 import routes from './routes';
+
+const globalRoutedState = observable({
+    isInProgress: false
+});
 
 export default class RoutedState {
     _prefix = null;
     _routerMain = null;
     static _routerApp = null;
+    get isInProgress() { return globalRoutedState.isInProgress; }
+    set isInProgress(v) { globalRoutedState.isInProgress = v; }
 
     get routes() { return routes; }
 
