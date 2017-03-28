@@ -17,6 +17,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+ 
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
@@ -26,6 +27,20 @@
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
+  NSArray *allPngImageNames = [[NSBundle mainBundle] pathsForResourcesOfType:@"png"
+                                    inDirectory:nil];
+  for (NSString *imgName in allPngImageNames){
+    // Find launch images
+    if ([imgName containsString:@"LaunchImage"]){
+      UIImage *img = [UIImage imageNamed:imgName]; //-- this is a launch image
+      // Has image same scale and dimensions as our current device's screen?
+      if (img.scale == [UIScreen mainScreen].scale && CGSizeEqualToSize(img.size, [UIScreen mainScreen].bounds.size)) {
+        NSLog(@"Found launch image for current device %@", img.description);
+        UIImageView *launchView = [[UIImageView alloc] initWithImage: img];
+        rootView.loadingView = launchView;
+      }
+    }
+  }
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];

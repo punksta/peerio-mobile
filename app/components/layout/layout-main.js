@@ -134,9 +134,11 @@ export default class LayoutMain extends Component {
                     <Bottom>
                         {currentComponent.isFabVisible && <Fab />}
                         {snackBar}
-                        <SnackBarConnection />
                     </Bottom>
                     {currentComponent.showInput && <InputMainContainer />}
+                    <Bottom>
+                        <SnackBarConnection />
+                    </Bottom>
                 </Animated.View>
             </Animated.View>
         );
