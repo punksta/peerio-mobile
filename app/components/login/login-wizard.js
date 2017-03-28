@@ -59,7 +59,7 @@ export default class LoginWizard extends Wizard {
                 });
             }
         });
-        migrator.generatePublicKeyString('t15162', 'icebear');
+        // migrator.generatePublicKeyString('t15162', 'icebear');
         /* migrator.run().then(keys => {
             popupYes(tx('popup_legacyMasterPassword'), tx('popup_legacyWriteDown'), keys.secretKey);
             return keys;

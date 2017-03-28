@@ -21,4 +21,6 @@ class Login(common.testcase.TestCase):
         d.wait_for_find('Allow')
         d.tap('Allow')
         d.wait_for_not_find('Allow')
+        d.wait_for_find('pin-cancel')
+        d.tap('pin-cancel')
         d.wait_for_find('mainLayout')

@@ -1,16 +1,24 @@
 from interactive import d
+from time import sleep
 
 print "login"
 
 d.reset()
-d.send_keys('username', 'anritest8')
+d.tap('login')
+sleep(1)
+d.send_keys('username', 't1490700725079')
 d.tap('logo')
+sleep(1)
+d.tap('continue')
+sleep(1)
 d.send_keys('passphrase', 'icebear')
 d.tap('logo')
-d.tap('loginButton')
-# waiting for push notification popup
-# may have locale issues
+sleep(1)
+d.tap('login')
+sleep(1)
 d.wait_for_find('Allow')
 d.tap('Allow')
 d.wait_for_not_find('Allow')
+sleep(3)
+d.tap('pin-cancel')
 d.wait_for_find('mainLayout')

@@ -38,7 +38,7 @@ export default class PinModal extends Component {
                     onEnter={this.checkPin}
                     messageEnter={' '} />
                 <View style={{ flexGrow: 0, flex: 0, flexDirection: 'row', justifyContent: 'flex-start' }}>
-                    <Button text={tu('cancel')} onPress={this.props.onCancel} />
+                    <Button testID="pin-cancel" text={tu('cancel')} onPress={this.props.onCancel} />
                 </View>
             </View>
         );

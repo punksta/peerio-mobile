@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, PanResponder, AppState } from 'react-native';
+import { View, PanResponder, AppState, ActivityIndicator } from 'react-native';
 import { observer } from 'mobx-react/native';
 import PopupLayout from './layout/popup-layout';
 import RouteNavigator from './routes/route-navigator';
@@ -82,11 +82,14 @@ export default class App extends Component {
     }
 
     render() {
-        if (!uiState.locale) return null;
-        return (
+        return !uiState.locale ? (
+            <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <ActivityIndicator size="large" />
+            </View>
+        ) : (
             <View
                 testID="appOuterViewBackground"
-                style={{ flex: 1, backgroundColor: vars.bg }}>
+                style={{ flexGrow: 1, backgroundColor: vars.bg }}>
                 <RouteNavigator routes={routerApp} />
                 <PopupLayout />
                 {uiState.picker}
