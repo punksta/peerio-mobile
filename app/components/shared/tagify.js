@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, Linking } from 'react-native';
-import * as linkify from 'linkifyjs-peerio';
+import * as linkify from 'linkifyjs';
 import { vars } from '../../styles/styles';
 
 export default (m) => {
