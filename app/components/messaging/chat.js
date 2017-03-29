@@ -47,12 +47,12 @@ export default class Chat extends Component {
     }
 
     componentWillMount() {
-        reaction(() => (this.chat ? this.chat.limboMessages.length : 0), l => {
+        /* reaction(() => (this.chat ? this.chat.limboMessages.length : 0), l => {
             this.disableNextScroll = l < this.lastLength;
             this.animateNextScroll = l > this.lastLength;
             this.lastLength = l;
         });
-        this.animateNextScroll = false;
+        this.animateNextScroll = false; */
     }
 
     item(message, i) {
@@ -216,7 +216,7 @@ export default class Chat extends Component {
     render() {
         return (
             <View
-                style={{ flexGrow: 1 }}>
+                style={{ flexGrow: 1, marginBottom: 4 }}>
                 {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
                 <View style={{ margin: 12 }}>
                     {this.uploadQueue()}

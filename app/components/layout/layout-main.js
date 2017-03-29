@@ -25,6 +25,7 @@ import routerModal from '../routes/router-modal';
 @observer
 export default class LayoutMain extends Component {
     @observable modal = null;
+    @observable modalVisible = false;
 
     constructor(props) {
         super(props);
@@ -54,11 +55,11 @@ export default class LayoutMain extends Component {
             if (modal) {
                 this.modal = modal;
                 Animated.timing(this.modalAnimated, { toValue: 0, duration })
-                    .start(() => (routerMain.blackStatusBar = true));
+                    .start(() => (this.modalVisible = true));
             } else {
+                this.modalVisible = null;
                 Animated.timing(this.modalAnimated, { toValue: this.height, duration })
                     .start(() => (this.modal = null));
-                routerMain.blackStatusBar = false;
             }
         }, true);
         reaction(() => uiState.appState, () => this.forceUpdate());
@@ -130,13 +131,13 @@ export default class LayoutMain extends Component {
                     <Animated.View style={{ flex: 1, transform, width }}>
                         <View style={{ flex: 1, width }}>
                             {this.pages(pages)}
+                            <Bottom>
+                                {currentComponent.isFabVisible && <Fab />}
+                                {snackBar}
+                            </Bottom>
                         </View>
-                    </Animated.View>
-                    <Bottom>
-                        {currentComponent.isFabVisible && <Fab />}
-                        {snackBar}
                         {currentComponent.showInput && <InputMainContainer />}
-                    </Bottom>
+                    </Animated.View>
                 </Animated.View>
             </Animated.View>
         );
@@ -161,7 +162,7 @@ export default class LayoutMain extends Component {
                     {modalControl}
                 </View>
                 <StatusBar
-                    barStyle="light-content"
+                    barStyle={this.modalVisible ? 'default' : 'light-content'}
                     hidden={Platform.OS !== 'android' && menuState && !this.modal} />
             </View>
         );

@@ -48,10 +48,10 @@ const nameMessageContainerStyle = {
     borderWidth: 0,
     borderColor: 'red',
     flexDirection: 'column',
-    padding: 8,
     paddingLeft: 16,
     marginLeft: 6,
-    marginRight: 6
+    marginRight: 6,
+    paddingTop: 8
 };
 
 const nameTextStyle = {
@@ -137,7 +137,19 @@ export default class Avatar extends Component {
         const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
         const files = this.props.files ?
             this.props.files.map(file => <FileInlineProgress key={file.id} file={file} />) : null;
-        return (
+        return this.props.collapsed ? (
+            <View style={{ backgroundColor: vars.bg }} onLayout={this.props.onLayout}>
+                <View style={itemStyle}>
+                    <TouchableOpacity onPress={this.props.onPress}>
+                        <View style={[ics, { marginLeft: 66 }]}>
+                            {this.message(message)}
+                            {files}
+                            <ErrorCircle invert visible={!!error} />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        ) : (
             <View style={{ backgroundColor: vars.bg }} onLayout={this.props.onLayout}>
                 <TouchableOpacity onPress={this.props.onPress} activeOpacity={this.props.noTap ? 1 : 0.2}>
                     <View style={itemStyle}>
@@ -192,6 +204,7 @@ Avatar.propTypes = {
     hideOnline: React.PropTypes.bool,
     noBorderBottom: React.PropTypes.bool,
     noTap: React.PropTypes.bool,
+    collapsed: React.PropTypes.bool,
     onLayout: React.PropTypes.func
 };
 

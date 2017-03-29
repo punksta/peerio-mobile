@@ -28,6 +28,7 @@ export default class ChatItem extends Component {
                 onLayout={this.props.onLayout}
                 noTap
                 noBorderBottom
+                collapsed={!!i.groupWithPrevious}
             />
         );
     }

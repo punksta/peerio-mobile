@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-    Text,
-    View
-} from 'react-native';
+import { Text, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import LayoutModalExit from '../layout/layout-modal-exit';
 import contactState from '../contacts/contact-state';
@@ -59,7 +56,7 @@ export default class ContactView extends Component {
                 </View>
             </View>
         );
-        return <LayoutModalExit body={body} title={username} onClose={() => this.routerModal.discard()} />;
+        return <LayoutModalExit body={body} title={username} onClose={() => contactState.routerModal.discard()} />;
     }
 }
 
