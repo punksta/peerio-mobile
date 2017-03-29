@@ -131,13 +131,13 @@ export default class LayoutMain extends Component {
                     <Animated.View style={{ flex: 1, transform, width }}>
                         <View style={{ flex: 1, width }}>
                             {this.pages(pages)}
-                            <Bottom>
-                                {currentComponent.isFabVisible && <Fab />}
-                                {snackBar}
-                            </Bottom>
                         </View>
                         {currentComponent.showInput && <InputMainContainer />}
                     </Animated.View>
+                    <Bottom>
+                        {currentComponent.isFabVisible && <Fab />}
+                        {snackBar}
+                    </Bottom>
                 </Animated.View>
             </Animated.View>
         );
