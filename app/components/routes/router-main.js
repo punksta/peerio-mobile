@@ -46,14 +46,14 @@ class RouterMain extends Router {
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
     }
 
-    initial() {
+    @action initial() {
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
         this.add('chats', [<Chat />], chatState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
 
-        this.ghosts();
+        this.chats();
         chatState.store.loadAllChats();
         when(() => !ghostState.store.loading && !chatState.store.loading, () => {
             (EN === 'peeriomobile') && enablePushNotifications();

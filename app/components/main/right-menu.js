@@ -82,7 +82,7 @@ export default class RightMenu extends Component {
         const i = (name, route, icon, bubble) => ({ name, route, icon, bubble });
 
         const items = [
-            i(t('ghosts'), 'ghosts', 'mail'),
+            // i(t('ghosts'), 'ghosts', 'mail'),
             i(t('messages'), 'chats', 'chat-bubble', chatStore.unreadMessages),
             i(t('files'), 'files', 'folder', fileStore.unreadFiles),
             i(t('settings'), 'settings', 'settings'),
