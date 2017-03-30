@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
 import Layout2 from '../layout/layout2';
@@ -53,7 +53,6 @@ export default class LoginSaved extends Component {
                     inProgress={loginState.isInProgress}
                     messageEnter={' '}
                     checkPin={this.checkPin} />
-                <StatusBar barStyle="light-content" />
             </View>
         );
         return <Layout2 body={body} footer={<LoginSavedFooter />} />;

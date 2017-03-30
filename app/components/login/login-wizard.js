@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-    View, Dimensions
-} from 'react-native';
+import { View, Dimensions, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { when } from 'mobx';
 import { tu, tx } from '../utils/translator';
@@ -79,6 +77,7 @@ export default class LoginWizard extends Wizard {
                 </View>
                 {this.wizard()}
                 {this.footerContainer()}
+                <StatusBar barStyle="light-content" />
             </View>
         );
         return <Layout1 body={body} footer={null} />;

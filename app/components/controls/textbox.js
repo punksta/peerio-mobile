@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    Animated
-} from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, TouchableHighlight, Animated } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
@@ -194,19 +188,20 @@ export default class TextBox extends Component {
         if (astl && this.value && this.value.length && astl < this.value.length) {
             fontSize = Math.floor(fontSize * astl / this.value.length);
         }
+
+        const focuser = (
+            <TouchableHighlight onPress={() => { this.focus(); }}>
+                <View style={[inputContainer, {
+                    height: vars.inputHeight
+                }]} />
+            </TouchableHighlight>
+        );
+
         return (
             <View
                 style={[style.shadow, { borderColor: 'green', borderWidth: 0 }]}>
                 <View
-                    style={{ backgroundColor: vars.inputBg, overflow: 'hidden', borderRadius: 2 }}>
-                    <TouchableOpacity
-                        onPress={() => { this.focus(); }}>
-                        <View
-                            pointerEvents="none"
-                            style={{
-                                height: vars.inputHeight,
-                                backgroundColor: this.focused ? 'transparent' : vars.subtleBg }} />
-                    </TouchableOpacity>
+                    style={{ backgroundColor: vars.inputBg, height: vars.inputHeight, overflow: 'hidden', borderRadius: 2 }}>
                     <View
                         style={[inputContainer, icAlert]}>
                         <TextInput
@@ -219,6 +214,7 @@ export default class TextBox extends Component {
                             secureTextEntry={this.props.secureTextEntry && !this.showSecret}
                             ref={ti => { this.textinput = ti; }}
                             value={this.value}
+                            maxLength={this.props.maxLength}
                             onFocus={this.focus}
                             onBlur={this.blur}
                             onChangeText={this.changeText}
@@ -228,6 +224,7 @@ export default class TextBox extends Component {
                             autoComplete={false}
                         />
                     </View>
+                    {!this.focused && focuser}
                     {showSecretIcon}
                     <View
                         pointerEvents="none"
@@ -259,5 +256,6 @@ TextBox.propTypes = {
     lowerCase: React.PropTypes.bool,
     autoCapitalize: React.PropTypes.oneOf(['none', 'sentences', 'words', 'characters']),
     autoCorrect: React.PropTypes.bool,
-    autoShrinkTextLimit: React.PropTypes.number
+    autoShrinkTextLimit: React.PropTypes.number,
+    maxLength: React.PropTypes.number
 };
