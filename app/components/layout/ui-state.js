@@ -4,7 +4,7 @@ import moment from 'moment';
 import { observable, action, reaction } from 'mobx';
 import translator from 'peerio-translator';
 import locales from '../../lib/locales';
-import { TinyDb, PhraseDictionaryCollection } from '../../lib/icebear';
+import { TinyDb, PhraseDictionary } from '../../lib/icebear';
 
 class UIState {
     @observable isFirstLogin = false;
@@ -69,8 +69,7 @@ class UIState {
             })
             .then(() => locales.loadDictFile(lc))
             .then(dictString => {
-                PhraseDictionaryCollection.addDictionary(this.locale, dictString);
-                PhraseDictionaryCollection.selectDictionary(this.locale);
+                PhraseDictionary.setDictionary(this.locale, dictString);
             });
     }
 

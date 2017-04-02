@@ -2,7 +2,7 @@ import { observable, action, when } from 'mobx';
 import mainState from '../main/main-state';
 import uiState from '../layout/ui-state';
 import RoutedState from '../routes/routed-state';
-import { User, PhraseDictionaryCollection, validation, socket } from '../../lib/icebear';
+import { User, PhraseDictionary, validation, socket } from '../../lib/icebear';
 
 const { validators, addValidation } = validation;
 
@@ -39,8 +39,7 @@ class SignupState extends RoutedState {
     @action reset() { this.current = 0; }
 
     generatePassphrase() {
-        const dict = PhraseDictionaryCollection.current;
-        return dict.getPassphrase(5);
+        return PhraseDictionary.current.getPassphrase(5);
     }
 
     @action next() {
@@ -67,13 +66,13 @@ class SignupState extends RoutedState {
         user.localeCode = localeCode;
         return requestAnimationFrame(
             () => user.createAccountAndLogin()
-            .then(() => user.setPasscode(pin))
-            .then(() => mainState.activateAndTransition(user))
-            .catch((e) => {
-                console.log(e);
-                this.reset();
-            })
-            .finally(() => (this.isInProgress = false))
+                .then(() => user.setPasscode(pin))
+                .then(() => mainState.activateAndTransition(user))
+                .catch((e) => {
+                    console.log(e);
+                    this.reset();
+                })
+                .finally(() => (this.isInProgress = false))
         );
     }
 }
