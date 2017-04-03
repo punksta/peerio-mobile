@@ -29,7 +29,7 @@ class FileState extends RoutedState {
         rnAlertYesNo(t)
             .then(() => {
                 f.forEach(item => {
-                    fileStore.remove(item);
+                    item.remove();
                 });
                 this.routerMain.files();
             })
@@ -137,7 +137,7 @@ class FileState extends RoutedState {
     }
 
     cancelUpload(file) {
-        return popupYesCancel(tx('popup_cancelFileUpload')).then(r => r && fileStore.cancelUpload(file));
+        return popupYesCancel(tx('popup_cancelFileUpload')).then(r => r && file.cancelUpload());
     }
 
     onTransition(active, file) {
