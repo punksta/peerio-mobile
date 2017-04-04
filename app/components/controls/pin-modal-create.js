@@ -39,7 +39,7 @@ export default class PinModalCreate extends Component {
                     messageInitial={'Create a device PIN'}
                     messageEnter={' '} />
                 <View style={{ flexGrow: 0, flex: 0, flexDirection: 'row', justifyContent: 'flex-start' }}>
-                    <Button testID="pin-cancel" text={tu('button_skip')} onPress={() => this.hide()} />
+                    <Button testID="pin-skip" text={tu('button_skip')} onPress={() => this.hide()} />
                 </View>
                 <StatusBar barStyle="light-content" />
             </View>
