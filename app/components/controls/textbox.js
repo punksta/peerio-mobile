@@ -224,7 +224,6 @@ export default class TextBox extends Component {
                             autoComplete={false}
                         />
                     </View>
-                    {!this.focused && focuser}
                     {showSecretIcon}
                     <View
                         pointerEvents="none"
