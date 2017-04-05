@@ -22,7 +22,7 @@ const { bg } = branding[EN];
 const statusBarHeight = Platform.OS === 'android' ? 0 : 10;
 const layoutPaddingTop = statusBarHeight * 2;
 
-const r = 30;
+const r = 40;
 const retentionOffset = { top: r, left: r, bottom: r, right: r };
 
 const vars = {

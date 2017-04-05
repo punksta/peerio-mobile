@@ -33,21 +33,27 @@ export default class Logs extends Component {
     }
 
     sendButton() {
-        const s = {
+        const outer = {
             position: 'absolute',
             right: 40,
-            bottom: 40,
-            padding: 20,
+            bottom: 40
+        };
+        const s = {
+            padding: 30,
             opacity: 0.9,
             backgroundColor: vars.fabEnabled,
             borderRadius: 14
         };
         return (
-            <TouchableOpacity onPress={() => this.sendLogs()}>
-                <View style={s}>
-                    <Text style={{ color: 'white' }}>Send Logs</Text>
-                </View>
-            </TouchableOpacity>
+            <View style={outer}>
+                <TouchableOpacity
+                    pressRetentionOffset={vars.retentionOffset}
+                    onPress={() => this.sendLogs()}>
+                    <View style={s}>
+                        <Text style={{ color: 'white' }}>Send Logs</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
         );
     }
 

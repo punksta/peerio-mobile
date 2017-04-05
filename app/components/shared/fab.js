@@ -43,7 +43,7 @@ export default class Fab extends Component {
                 style={fabContainer}>
                 <TouchableOpacity
                     style={s}
-                    pressRetentionOffset={vars.offset}
+                    pressRetentionOffset={vars.retentionOffset}
                     onPress={() => routerMain.fabAction()}>
                     {icons.plainWhite('add')}
                 </TouchableOpacity>
