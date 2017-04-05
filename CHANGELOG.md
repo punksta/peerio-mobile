@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.1.2"></a>
+## [3.1.2](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.1.1...v3.1.2) (2017-04-05)
+
+
+### Bug Fixes
+
+* **tests:** update test to math new ID ([ac8e9a0](https://github.com/PeerioTechnologies/peerio-mobile/commit/ac8e9a0))
+* **tests:** update testid to match button label ([4cf8b2a](https://github.com/PeerioTechnologies/peerio-mobile/commit/4cf8b2a))
+
+
+
 <a name="3.1.1"></a>
 ## [3.1.1](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.1.0...v3.1.1) (2017-04-04)
 
