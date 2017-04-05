@@ -13,76 +13,29 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		0210710E1E03967000687D5E /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0210710D1E03965C00687D5E /* libRNFetchBlob.a */; };
-		0210710F1E03967600687D5E /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0210710D1E03965C00687D5E /* libRNFetchBlob.a */; };
 		02202B821E840B07006CDA9B /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02202B791E840AF7006CDA9B /* libRNMail.a */; };
-		02202B831E840B0D006CDA9B /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02202B791E840AF7006CDA9B /* libRNMail.a */; };
 		02210A811E019037006D7AC0 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02210A7F1E01902A006D7AC0 /* libRNSound.a */; };
-		02210A821E01903D006D7AC0 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02210A7F1E01902A006D7AC0 /* libRNSound.a */; };
 		02210A841E0191BA006D7AC0 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 02210A831E0191BA006D7AC0 /* sounds */; };
-		02210A851E0191BA006D7AC0 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 02210A831E0191BA006D7AC0 /* sounds */; };
 		0221BCD21DDC710400706A4F /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221BCD11DDC6D3C00706A4F /* libRCTRestart.a */; };
-		0221BCD31DDC710E00706A4F /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221BCD11DDC6D3C00706A4F /* libRCTRestart.a */; };
 		0221BD371DDDC24200706A4F /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221BD341DDDC22700706A4F /* libRNImagePicker.a */; };
-		0221BD381DDDC24900706A4F /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221BD341DDDC22700706A4F /* libRNImagePicker.a */; };
 		0222C3941E0C98B40084C586 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0222C3801E0C989D0084C586 /* libRCTPushNotification.a */; };
-		0222C3951E0C98B90084C586 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0222C3801E0C989D0084C586 /* libRCTPushNotification.a */; };
 		02277B151D6AEDC50020B31A /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02277B141D6AEDC50020B31A /* StoreKit.framework */; };
 		02321C5B1D7F1BC100282EB1 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */; };
 		02321C5D1D80558E00282EB1 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 02321C5C1D80558E00282EB1 /* main.jsbundle */; };
 		0235B5D81E65DE4B001D77D1 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5D71E65DE24001D77D1 /* libSQLite.a */; };
-		0235B5D91E65DE51001D77D1 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5D71E65DE24001D77D1 /* libSQLite.a */; };
 		0235B5DB1E65DEAF001D77D1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */; };
-		0235B5DC1E65DED4001D77D1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */; };
 		0235B6611E664F02001D77D1 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B6561E664ECB001D77D1 /* libRNDeviceInfo.a */; };
-		0235B6621E664F0A001D77D1 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B6561E664ECB001D77D1 /* libRNDeviceInfo.a */; };
 		023A731F1DA6D58B00E47992 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FDD4B41DA6457E004E1D5A /* libRNRandomBytes.a */; };
 		0248F0721E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
-		0248F0731E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
 		025935601E809AAF00FAEE7E /* libInAppUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0259355D1E809AA400FAEE7E /* libInAppUtils.a */; };
-		025935611E809AB500FAEE7E /* libInAppUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0259355D1E809AA400FAEE7E /* libInAppUtils.a */; };
-		025A63E41E6D9F0500C53B41 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4FC9400FF0F74C249A550AC2 /* MaterialCommunityIcons.ttf */; };
-		025A63E51E6D9F0500C53B41 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 372E848CA7B444A09B937444 /* SimpleLineIcons.ttf */; };
 		026B0DA91E0384EF00B24721 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026B0DA61E0384D700B24721 /* libRCTAnimation.a */; };
-		026B0DAA1E0384F300B24721 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026B0DA61E0384D700B24721 /* libRCTAnimation.a */; };
 		029F0E641E55303400C8586F /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 029F0E601E55301200C8586F /* libRNShare.a */; };
-		029F0E651E55303F00C8586F /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 029F0E601E55301200C8586F /* libRNShare.a */; };
 		02A076271E6D8876008974C5 /* maincert.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = 02A075FF1E6D880E008974C5 /* maincert.com.cer */; };
-		02BB9BCC1E416954004AF2AC /* libRNTouchIDValue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CC88771E1E87D7002BB078 /* libRNTouchIDValue.a */; };
 		02BCD7291DFDE9AF000B8FCF /* libRNFileOpener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD7281DFDE9A2000B8FCF /* libRNFileOpener.a */; };
-		02BCD72A1DFDE9B3000B8FCF /* libRNFileOpener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD7281DFDE9A2000B8FCF /* libRNFileOpener.a */; };
 		02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD72C1DFE1606000B8FCF /* QuickLook.framework */; };
-		02BCD72E1DFE1610000B8FCF /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD72C1DFE1606000B8FCF /* QuickLook.framework */; };
 		02CC88781E1E8988002BB078 /* libRNTouchIDValue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CC88771E1E87D7002BB078 /* libRNTouchIDValue.a */; };
 		02D764D31D9B13B300E7E57C /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D763F21D9918E800E7E57C /* libRNVectorIcons.a */; };
 		02DB41591DCD1B1C00E04176 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		02DB415E1DCD1DB000E04176 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		02DB415F1DCD1DB000E04176 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		02DB41611DCD1DB000E04176 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		02DB41621DCD1DB000E04176 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
-		02DB41631DCD1DB000E04176 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
-		02DB41641DCD1DB000E04176 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
-		02DB41651DCD1DB000E04176 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
-		02DB41661DCD1DB000E04176 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
-		02DB41671DCD1DB000E04176 /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
-		02DB41681DCD1DB000E04176 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		02DB41691DCD1DB000E04176 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
-		02DB416A1DCD1DB000E04176 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
-		02DB416B1DCD1DB000E04176 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02277B141D6AEDC50020B31A /* StoreKit.framework */; };
-		02DB416C1DCD1DB000E04176 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D763F21D9918E800E7E57C /* libRNVectorIcons.a */; };
-		02DB416D1DCD1DB000E04176 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FDD4B41DA6457E004E1D5A /* libRNRandomBytes.a */; };
-		02DB416E1DCD1DB000E04176 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E096D11DAE3B3B00641B85 /* libRNFS.a */; };
-		02DB41701DCD1DB000E04176 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 02321C5C1D80558E00282EB1 /* main.jsbundle */; };
-		02DB41711DCD1DB000E04176 /* locales in Resources */ = {isa = PBXBuildFile; fileRef = 02E096B21DAE398B00641B85 /* locales */; };
-		02DB41721DCD1DB000E04176 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */; };
-		02DB41731DCD1DB000E04176 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0F64612EAF249BC98CB3DE2 /* Entypo.ttf */; };
-		02DB41741DCD1DB000E04176 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21D883CDAA7C4E718E6EE873 /* EvilIcons.ttf */; };
-		02DB41751DCD1DB000E04176 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A7DDFAC6A6F74107A3D45471 /* FontAwesome.ttf */; };
-		02DB41761DCD1DB000E04176 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B836295CD1B344EBB035E1B6 /* Foundation.ttf */; };
-		02DB41771DCD1DB000E04176 /* dict in Resources */ = {isa = PBXBuildFile; fileRef = 02E096DB1DAE50E100641B85 /* dict */; };
-		02DB41781DCD1DB000E04176 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED79A42A8D3144739CE4C04B /* Ionicons.ttf */; };
-		02DB41791DCD1DB000E04176 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		02DB417A1DCD1DB000E04176 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DE216B2DFB25438F8922A621 /* Octicons.ttf */; };
-		02DB417B1DCD1DB000E04176 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A7F1F7CA2F44844A0FC718E /* Zocial.ttf */; };
 		02E096B31DAE398B00641B85 /* locales in Resources */ = {isa = PBXBuildFile; fileRef = 02E096B21DAE398B00641B85 /* locales */; };
 		02E096DA1DAE3B7600641B85 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E096D11DAE3B3B00641B85 /* libRNFS.a */; };
 		02E096DC1DAE50E100641B85 /* dict in Resources */ = {isa = PBXBuildFile; fileRef = 02E096DB1DAE50E100641B85 /* dict */; };
@@ -438,7 +391,6 @@
 		02BCD72C1DFE1606000B8FCF /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		02CC88721E1E87D7002BB078 /* RNTouchIDValue.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNTouchIDValue.xcodeproj; path = "../node_modules/react-native-touch-id-value/RNTouchIDValue.xcodeproj"; sourceTree = "<group>"; };
 		02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = peeriomobile.entitlements; path = peeriomobile/peeriomobile.entitlements; sourceTree = "<group>"; };
-		02DB417F1DCD1DB000E04176 /* expandoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = expandoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02E096B21DAE398B00641B85 /* locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = locales; path = ../locales; sourceTree = "<group>"; };
 		02E096DB1DAE50E100641B85 /* dict */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dict; path = "../node_modules/peerio-copy/phrase/dict"; sourceTree = "<group>"; };
 		081BA9E7BB014EC9A1CF87BA /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
@@ -472,42 +424,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		02DB41601DCD1DB000E04176 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				02BCD72E1DFE1610000B8FCF /* QuickLook.framework in Frameworks */,
-				02DB41611DCD1DB000E04176 /* libReact.a in Frameworks */,
-				02DB41621DCD1DB000E04176 /* libRCTActionSheet.a in Frameworks */,
-				02DB41631DCD1DB000E04176 /* libRCTGeolocation.a in Frameworks */,
-				02DB41641DCD1DB000E04176 /* libRCTImage.a in Frameworks */,
-				02DB41651DCD1DB000E04176 /* libRCTLinking.a in Frameworks */,
-				02DB41661DCD1DB000E04176 /* libRCTNetwork.a in Frameworks */,
-				02DB41671DCD1DB000E04176 /* libRCTSettings.a in Frameworks */,
-				02DB41681DCD1DB000E04176 /* libRCTText.a in Frameworks */,
-				02DB41691DCD1DB000E04176 /* libRCTVibration.a in Frameworks */,
-				02DB416A1DCD1DB000E04176 /* libRCTWebSocket.a in Frameworks */,
-				02DB416B1DCD1DB000E04176 /* StoreKit.framework in Frameworks */,
-				02DB416C1DCD1DB000E04176 /* libRNVectorIcons.a in Frameworks */,
-				02DB416D1DCD1DB000E04176 /* libRNRandomBytes.a in Frameworks */,
-				02DB416E1DCD1DB000E04176 /* libRNFS.a in Frameworks */,
-				0221BCD31DDC710E00706A4F /* libRCTRestart.a in Frameworks */,
-				0221BD381DDDC24900706A4F /* libRNImagePicker.a in Frameworks */,
-				02BCD72A1DFDE9B3000B8FCF /* libRNFileOpener.a in Frameworks */,
-				02210A821E01903D006D7AC0 /* libRNSound.a in Frameworks */,
-				026B0DAA1E0384F300B24721 /* libRCTAnimation.a in Frameworks */,
-				0210710F1E03967600687D5E /* libRNFetchBlob.a in Frameworks */,
-				0222C3951E0C98B90084C586 /* libRCTPushNotification.a in Frameworks */,
-				02BB9BCC1E416954004AF2AC /* libRNTouchIDValue.a in Frameworks */,
-				029F0E651E55303F00C8586F /* libRNShare.a in Frameworks */,
-				0235B5D91E65DE51001D77D1 /* libSQLite.a in Frameworks */,
-				0235B5DC1E65DED4001D77D1 /* libsqlite3.0.tbd in Frameworks */,
-				025935611E809AB500FAEE7E /* libInAppUtils.a in Frameworks */,
-				0235B6621E664F0A001D77D1 /* libRNDeviceInfo.a in Frameworks */,
-				02202B831E840B0D006CDA9B /* libRNMail.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8C1A680F5B00A75B9A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -846,7 +762,6 @@
 			isa = PBXGroup;
 			children = (
 				13B07F961A680F5B00A75B9A /* peeriomobile.app */,
-				02DB417F1DCD1DB000E04176 /* expandoo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -876,24 +791,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		02DB415A1DCD1DB000E04176 /* expandoo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 02DB417C1DCD1DB000E04176 /* Build configuration list for PBXNativeTarget "expandoo" */;
-			buildPhases = (
-				02DB415B1DCD1DB000E04176 /* Bundle React Native code and images */,
-				02DB415C1DCD1DB000E04176 /* Sources */,
-				02DB41601DCD1DB000E04176 /* Frameworks */,
-				02DB416F1DCD1DB000E04176 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = expandoo;
-			productName = "Hello World";
-			productReference = 02DB417F1DCD1DB000E04176 /* expandoo.app */;
-			productType = "com.apple.product-type.application";
-		};
 		13B07F861A680F5B00A75B9A /* peeriomobile */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "peeriomobile" */;
@@ -922,10 +819,6 @@
 				LastUpgradeCheck = 800;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
-					02DB415A1DCD1DB000E04176 = {
-						DevelopmentTeam = 492SG86Y5S;
-						ProvisioningStyle = Automatic;
-					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 7L45B96YPK;
 						ProvisioningStyle = Manual;
@@ -1063,7 +956,6 @@
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* peeriomobile */,
-				02DB415A1DCD1DB000E04176 /* expandoo */,
 			);
 		};
 /* End PBXProject section */
@@ -1373,29 +1265,6 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
-		02DB416F1DCD1DB000E04176 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				02210A851E0191BA006D7AC0 /* sounds in Resources */,
-				02DB41701DCD1DB000E04176 /* main.jsbundle in Resources */,
-				0248F0731E5A59BF00C437A9 /* terms.txt in Resources */,
-				02DB41711DCD1DB000E04176 /* locales in Resources */,
-				02DB41721DCD1DB000E04176 /* MaterialIcons.ttf in Resources */,
-				02DB41731DCD1DB000E04176 /* Entypo.ttf in Resources */,
-				02DB41741DCD1DB000E04176 /* EvilIcons.ttf in Resources */,
-				02DB41751DCD1DB000E04176 /* FontAwesome.ttf in Resources */,
-				02DB41761DCD1DB000E04176 /* Foundation.ttf in Resources */,
-				02DB41771DCD1DB000E04176 /* dict in Resources */,
-				02DB41781DCD1DB000E04176 /* Ionicons.ttf in Resources */,
-				02DB41791DCD1DB000E04176 /* Images.xcassets in Resources */,
-				02DB417A1DCD1DB000E04176 /* Octicons.ttf in Resources */,
-				02DB417B1DCD1DB000E04176 /* Zocial.ttf in Resources */,
-				025A63E41E6D9F0500C53B41 /* MaterialCommunityIcons.ttf in Resources */,
-				025A63E51E6D9F0500C53B41 /* SimpleLineIcons.ttf in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F8E1A680F5B00A75B9A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1437,32 +1306,9 @@
 			shellPath = /bin/bash;
 			shellScript = "cd $SRCROOT/..\nsource env.sh\n\nif [ \"$CONFIGURATION\" == \"Debug\" ] && [ -f \"ios/main.jsbundle\" ]; then\n    if lsof -Pi :8081 -sTCP:LISTEN -t >/dev/null ; then\n        echo \"Bundle RN: running sim and packager. skipping bundler.\"\n        exit 0\n    fi\nfi\n\nexport NODE_BINARY=node\n\n# clean up\nrm -f ios/main.jsbundle\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n   ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n# check that command was successful\n\nif [ ! -f ios/main.jsbundle ]; then\n    echo \"JS compilation failed. Please check the sources\"\n    exit 1\nfi\n";
 		};
-		02DB415B1DCD1DB000E04176 /* Bundle React Native code and images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native code and images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n# ../node_modules/react-native/packager/react-native-xcode.sh\ncd $SRCROOT/..\nsource env-expandoo.sh\n# clean up\nrm -f ios/main.jsbundle\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n     ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n# check that command was successful\n\nif [ ! -f ios/main.jsbundle ]; then\n    echo \"JS compilation failed. Please check the sources\"\n    exit 1\nfi";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		02DB415C1DCD1DB000E04176 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				02DB415E1DCD1DB000E04176 /* AppDelegate.m in Sources */,
-				02DB415F1DCD1DB000E04176 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		13B07F871A680F5B00A75B9A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1483,137 +1329,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		02DB417D1DCD1DB000E04176 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
-				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 492SG86Y5S;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-autogrow-textinput/ios",
-					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-					"$(SRCROOT)/../node_modules/react-native-autogrow-textinput/ios",
-					"$(SRCROOT)/../node_modules/react-native-randombytes",
-					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-fs/**",
-					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-auto-expanding-textinput/ios/AutoExpandingTextInput",
-					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
-					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS",
-					"$(SRCROOT)/../node_modules/react-native-share/ios",
-					"$(SRCROOT)/../node_modules/react-native-sqlcipher-storage/src/**",
-					"$(SRCROOT)/../node_modules/react-native-device-uuid",
-					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
-					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
-					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
-					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
-				);
-				INFOPLIST_FILE = "peeriomobile/Info-Expandoo.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.expandoo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-			};
-			name = Debug;
-		};
-		02DB417E1DCD1DB000E04176 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-1";
-				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = 492SG86Y5S;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-autogrow-textinput/ios",
-					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-					"$(SRCROOT)/../node_modules/react-native-autogrow-textinput/ios",
-					"$(SRCROOT)/../node_modules/react-native-randombytes",
-					"$(SRCROOT)/../node_modules/react-native-tcp/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-fs/**",
-					"$(SRCROOT)/../node_modules/react-native-udp/ios/**",
-					"$(SRCROOT)/../node_modules/react-native-auto-expanding-textinput/ios/AutoExpandingTextInput",
-					"$(SRCROOT)/../node_modules/react-native-image-picker/ios",
-					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS",
-					"$(SRCROOT)/../node_modules/react-native-share/ios",
-					"$(SRCROOT)/../node_modules/react-native-sqlcipher-storage/src/**",
-					"$(SRCROOT)/../node_modules/react-native-device-uuid",
-					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
-					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
-					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
-					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
-				);
-				INFOPLIST_FILE = "peeriomobile/Info-Expandoo.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/peeriomobile\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-lc++",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.expandoo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1862,15 +1577,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		02DB417C1DCD1DB000E04176 /* Build configuration list for PBXNativeTarget "expandoo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				02DB417D1DCD1DB000E04176 /* Debug */,
-				02DB417E1DCD1DB000E04176 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "peeriomobile" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
