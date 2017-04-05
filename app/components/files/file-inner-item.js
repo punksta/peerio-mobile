@@ -69,8 +69,9 @@ export default class FileInnerItem extends Component {
 
     render() {
         const file = this.props.file;
+        const action = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
-            icons.dark('keyboard-arrow-right');
+            icons.dark('keyboard-arrow-right', action);
         const nameStyle = {
             color: vars.txtDark,
             fontSize: 14,
@@ -98,7 +99,7 @@ export default class FileInnerItem extends Component {
         );
         return (
             <View style={{ backgroundColor: 'white' }}>
-                <TouchableOpacity onPress={() => !file.uploading && this.onPress()}>
+                <TouchableOpacity onPress={action}>
                     <View style={[fileInfoContainerStyle, { opacity, marginLeft }]}>
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]}>

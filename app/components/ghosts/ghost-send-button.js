@@ -45,7 +45,7 @@ export default class GhostSendButton extends Component {
                 <TouchableOpacity
                     style={s}
                     activeOpacity={this.props.enabled ? 0.2 : 1}
-                    pressRetentionOffset={vars.offset}
+                    pressRetentionOffset={vars.retentionOffset}
                     onPress={() => this.props.enabled && this.props.send()}>
                     {icons.plainWhite('send')}
                 </TouchableOpacity>

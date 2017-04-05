@@ -16,7 +16,7 @@ const icons = {
     basic(name, color, onPress, style, size, noPadding) {
         return (
             <TouchableOpacity
-                pressRetentionOffset={vars.offset}
+                pressRetentionOffset={vars.retentionOffset}
                 onPress={onPress}>
                 <View style={{ padding: noPadding ? 0 : vars.iconPadding }}>
                     <Icon
@@ -77,7 +77,7 @@ const icons = {
         const size = vars.iconPadding * 2 + vars.iconSize;
         return (
             <TouchableOpacity
-                pressRetentionOffset={vars.offset}
+                pressRetentionOffset={vars.retentionOffset}
                 onPress={onPress}>
                 <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={[goStyle, style]}>{text}</Text>
@@ -122,7 +122,7 @@ const icons = {
             <TouchableOpacity
                 style={{ padding }}
                 onPress={onPress}
-                pressRetentionOffset={vars.offset}>
+                pressRetentionOffset={vars.retentionOffset}>
                 <Image style={{ width, height }} source={iconAddChat} />
             </TouchableOpacity>
         );
