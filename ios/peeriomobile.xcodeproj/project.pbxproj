@@ -1336,7 +1336,6 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Samvel Avanesov (7TA58ZPZB5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Samvel Avanesov (7TA58ZPZB5)";
 				CURRENT_PROJECT_VERSION = 306;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
@@ -1396,7 +1395,6 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
 				CURRENT_PROJECT_VERSION = 306;
 				DEVELOPMENT_TEAM = 7L45B96YPK;
 				HEADER_SEARCH_PATHS = (
@@ -1467,7 +1465,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_ACTIVITY_MODE = disabled;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1533,8 +1530,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_ACTIVITY_MODE = "";
 				ENABLE_NS_ASSERTIONS = NO;
