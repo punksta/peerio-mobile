@@ -806,7 +806,7 @@
 				0253B8111E6868F200554265 /* PBXTargetDependency */,
 			);
 			name = peeriomobile;
-			productName = "Hello World";
+			productName = peeriomobile;
 			productReference = 13B07F961A680F5B00A75B9A /* peeriomobile.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -1385,7 +1385,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
 				PROVISIONING_PROFILE = "8af779d7-8d20-405a-b046-26c189b7ce9e";
-				PROVISIONING_PROFILE_SPECIFIER = "com.peerio.dev-seavan";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1444,7 +1444,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
 				PROVISIONING_PROFILE = "1f70bad6-eabe-4771-adb8-bb46b73b0b2e";
-				PROVISIONING_PROFILE_SPECIFIER = "com.peerio-new";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
