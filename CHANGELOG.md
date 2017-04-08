@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.2.2"></a>
+## [3.2.2](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.2.1...v3.2.2) (2017-04-08)
+
+
+### Bug Fixes
+
+* **routing:** bug in routing after touchid ([5747d38](https://github.com/PeerioTechnologies/peerio-mobile/commit/5747d38))
+
+
+
 <a name="3.2.1"></a>
 ## [3.2.1](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.2.0...v3.2.1) (2017-04-08)
 
