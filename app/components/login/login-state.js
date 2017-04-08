@@ -104,7 +104,7 @@ class LoginState extends RoutedState {
         this.username = username;
         if (username) {
             this.isInProgress = true;
-            await this.triggerTouchId();
+            if (await this.triggerTouchId()) return;
             this.isInProgress = false;
         }
         console.log(`login-state.js: loaded`);
@@ -121,7 +121,8 @@ class LoginState extends RoutedState {
         if (!touchId.available) return false;
         const data = await touchId.get(`user::${this.username}`);
         if (!data) return false;
-        return this.loginCached(JSON.parse(data));
+        this.loginCached(JSON.parse(data));
+        return true;
     }
 }
 

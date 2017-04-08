@@ -10,7 +10,7 @@ class RouterApp extends Router {
     constructor() {
         super();
         routes.app = this;
-        this.add('loginStart', Login.Wizard, true);
+        this.add('loginStart', Login.Wizard);
         this.add('loginSaved', Login.Saved);
         this.add('signupStep1', SignupWizard);
         this.add('main', LayoutMain, true);
