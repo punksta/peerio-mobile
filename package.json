@@ -58,7 +58,7 @@
     "nacl-stream": "0.3.3",
     "npm-run-all": "^4.0.1",
     "peerio-copy": "https://github.com/PeerioTechnologies/peerio-copy.git#icebear",
-    "peerio-icebear": "git@github.com:PeerioTechnologies/peerio-icebear.git",
+    "peerio-icebear": "git@github.com:PeerioTechnologies/peerio-icebear.git#mobile",
     "peerio-react-native-fetch-blob": "0.10.3",
     "peerio-translator": "https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
     "process": "^0.11.9",
