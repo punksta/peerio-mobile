@@ -85,19 +85,6 @@ export default class LayoutMain extends Component {
             paddingBottom: global.platform === 'android' ? 0 : uiState.keyboardHeight
         };
 
-        const modalStyle = {
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            right: 0
-        };
-
-        const modalControl = routerModal.modalControl;
-        const modalNonAnimatedStyle = [modalStyle, {
-            transform: [{ translateY: modalControl ? 0 : this.height }]
-        }];
-
         const menuState = routerMain.isLeftMenuVisible || routerMain.isRightMenuVisible;
         const pages = routerMain.pages;
         const currentComponent = routerMain.currentComponent;
@@ -139,9 +126,6 @@ export default class LayoutMain extends Component {
                 {tapHider}
                 <LeftMenu />
                 <RightMenu />
-                <View style={modalNonAnimatedStyle}>
-                    {modalControl}
-                </View>
                 <StatusBar
                     barStyle={routerModal.isBlackStatusBar ? 'default' : 'light-content'}
                     hidden={Platform.OS !== 'android' && menuState && !routerModal.modal} />

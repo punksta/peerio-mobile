@@ -96,8 +96,8 @@ export default class App extends Component {
                 testID="appOuterViewBackground"
                 style={{ flexGrow: 1, backgroundColor: vars.bg }}>
                 <RouteNavigator routes={routerApp} />
-                <PopupLayout />
                 <ModalLayout />
+                <PopupLayout />
                 {uiState.picker}
             </View>
         );

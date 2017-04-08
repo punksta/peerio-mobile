@@ -2,50 +2,46 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Pin from './pin';
-import Center from '../controls/center';
-import Big from '../controls/big';
 import Button from './button';
 import styles, { vars } from '../../styles/styles';
-import { t, tu } from '../utils/translator';
-import { User } from '../../lib/icebear';
+import uiState from '../layout/ui-state';
+import BgPattern from '../controls/bg-pattern';
 
 @observer
 export default class PinModal extends Component {
-    constructor(props) {
-        super(props);
-        this.checkPin = this.checkPin.bind(this);
+    skipText = `SKIP`;
+    initialText = `INITIAL`;
+
+    onSuccess(result) {
+        uiState.routerModal.discard(result);
     }
 
-    checkPin(pin) {
-        return User.current.validatePasscode(pin);
+    hide() {
+        uiState.routerModal.discard();
     }
 
     render() {
         const container = {
             flexGrow: 1,
             flex: 1,
-            backgroundColor: vars.bg,
-            paddingVertical: vars.modalPaddingVertical,
-            paddingHorizontal: vars.modalPaddingHorizontal
+            padding: 50,
+            backgroundColor: vars.bg
         };
         return (
             <View style={container}>
-                <Center style={{ flexGrow: 0, flex: 0 }}>
-                    <Big style={styles.text.inverse}>{t('passphrase_enterpin')}</Big>
-                </Center>
+                <BgPattern />
                 <Pin
-                    onSuccess={this.props.onSuccess}
-                    onEnter={this.checkPin}
+                    preventSimplePin={this.preventSimplePin}
+                    ref={pin => (this.pin = pin)}
+                    onConfirm={this.onConfirm}
+                    onSuccess={r => this.onSuccess(r)}
+                    onEnter={this.onEnter}
+                    messageInitial={this.initialText}
                     messageEnter={' '} />
                 <View style={{ flexGrow: 0, flex: 0, flexDirection: 'row', justifyContent: 'flex-start' }}>
-                    <Button testID="pin-cancel" text={tu('cancel')} onPress={this.props.onCancel} />
+                    <Button testID="pin-skip" text={this.skipText} onPress={() => this.hide()} />
                 </View>
             </View>
         );
     }
 }
-
-PinModal.propTypes = {
-    onCancel: React.PropTypes.func.isRequired,
-    onSuccess: React.PropTypes.func.isRequired
-};

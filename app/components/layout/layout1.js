@@ -57,6 +57,7 @@ export default class Layout1 extends Component {
                 <ScrollView
                     ref={svRef}
                     style={[scrollViewStyle]}
+                    scrollEnabled={!this.props.noScroll}
                     contentContainerStyle={[contentContainerStyle]}
                     keyboardShouldPersistTaps="handled"
                     onScroll={this.onScroll}
@@ -78,6 +79,7 @@ Layout1.propTypes = {
     footer: React.PropTypes.any,
     header: React.PropTypes.any,
     padding: React.PropTypes.any,
+    noScroll: React.PropTypes.bool,
     noFitHeight: React.PropTypes.bool,
     noAutoHide: React.PropTypes.bool,
     noKeyboard: React.PropTypes.bool,

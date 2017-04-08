@@ -5,12 +5,10 @@ import { observable, action, reaction } from 'mobx';
 import translator from 'peerio-translator';
 import locales from '../../lib/locales';
 import { TinyDb, PhraseDictionary } from '../../lib/icebear';
+import RoutedState from '../routes/routed-state';
 
-class UIState {
+class UIState extends RoutedState {
     @observable isFirstLogin = false;
-    @observable route = '';
-    @observable prevRoute = '';
-    @observable pages = [];
     @observable focusedTextBox = null;
     @observable picker = null;
     @observable pickerVisible = false;

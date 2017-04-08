@@ -6,12 +6,12 @@ import SelectFiles from '../files/select-files';
 import FileShare from '../files/file-share';
 import ContactView from '../contacts/contact-view';
 import PinModalCreate from '../controls/pin-modal-create';
+import PinModalAsk from '../controls/pin-modal-ask';
 import routes from './routes';
 
 class RouterModal extends Router {
-    // TODO: get rid of it
-    @observable modalControl = null;
     @observable animating = false;
+    resolver = null;
 
     constructor() {
         super();
@@ -21,19 +21,31 @@ class RouterModal extends Router {
         this.add('selectFiles', SelectFiles);
         this.add('contactView', ContactView);
         this.add('createPin', PinModalCreate, true);
+        this.add('askPin', PinModalAsk, true);
     }
 
     add(route, component, isWhite) {
-        const r = super.add(route, component).transition;
+        const r = super.add(route, component);
         r.isWhite = isWhite;
-        this[route] = r;
+        this[route] = () => {
+            this.flushResolver();
+            r.transition();
+            return new Promise(resolve => {
+                this.resolver = resolve;
+            });
+        };
     }
 
-    waitFor() {
-        return new Promise(resolve => when(() => !this.route && !this.modalControl, resolve));
+    flushResolver(value) {
+        if (this.resolver) {
+            console.log('router-modal.js: auto-resolving unclosed resolver');
+            this.resolver(value);
+            this.resolver = null;
+        }
     }
 
-    discard() {
+    discard(value) {
+        this.flushResolver(value);
         this.route = null;
     }
 

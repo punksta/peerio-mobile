@@ -7,6 +7,7 @@ import { User } from '../../lib/icebear';
 import { popupCopyCancel, popupYes } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
+import touchId from '../touchid/touchid-bridge';
 
 class SettingsState extends RoutedState {
     @observable subroute = null;
@@ -45,8 +46,22 @@ class SettingsState extends RoutedState {
         }
     }
 
-    showPassphrase() {
-        const success = passphrase => {
+    async showPassphrase() {
+        const user = User.current;
+        let passphrase = null;
+        if (touchId.available) {
+            const data = await touchId.get(`user::${user.username}`);
+            if (data) passphrase = JSON.parse(data).passphrase;
+        }
+        if (!passphrase) {
+            const hasPasscode = await user.hasPasscode();
+            if (!hasPasscode) {
+                popupYes(tx('passphrase'), tx('passcode_notSet'));
+                return;
+            }
+            passphrase = await this.routerModal.askPin();
+        }
+        if (passphrase) {
             const mp = (
                 <Text style={{ fontWeight: 'bold', fontSize: 14 }}>
                     {passphrase}
@@ -61,20 +76,7 @@ class SettingsState extends RoutedState {
                 Clipboard.setString(passphrase);
                 snackbarState.pushTemporary(tx('popup_masterPasswordCopied'));
             });
-            this.routerModal.modalControl = null;
-        };
-        const pinModal = (
-            <PinModal
-                onSuccess={success}
-                onCancel={() => (this.routerModal.modalControl = null)} />
-        );
-        User.current.hasPasscode().then(r => {
-            if (!r) {
-                popupYes(tx('passphrase'), tx('passcode_notSet'));
-                return;
-            }
-            this.routerModal.modalControl = pinModal;
-        });
+        }
     }
 }
 

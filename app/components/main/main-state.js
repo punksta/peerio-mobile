@@ -44,8 +44,7 @@ class MainState extends RoutedState {
         if (!hasPin) {
             const skipPIN = `${user.username}::skipPIN`;
             if (!await TinyDb.system.getValue(skipPIN)) {
-                this.routes.modal.createPin();
-                await this.routes.modal.waitFor();
+                await this.routes.modal.createPin();
             }
             await TinyDb.system.setValue(skipPIN, true);
         }

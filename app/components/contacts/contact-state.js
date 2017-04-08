@@ -9,7 +9,6 @@ class ContactState extends RoutedState {
     store = contactStore;
 
     @action async init() {
-        this.store.loadLegacyContacts();
         return new Promise(resolve => when(() => !this.store.loading, resolve));
     }
 
