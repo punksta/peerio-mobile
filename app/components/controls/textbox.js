@@ -143,8 +143,12 @@ export default class TextBox extends Component {
         const style = this.focused ? styles.input.active : styles.input.normal;
         const hint = this.focused || this.props.value && this.props.value.length ?
             styles.input.hint.scaled : styles.input.hint.full;
+        const iconContainer = {
+            flexGrow: 0,
+            flexShrink: 1
+        };
         const showSecretIcon = !this.props.secureTextEntry || this.showSecret ? null :
-            (<View style={style.iconContainer}>
+            (<View style={iconContainer}>
                 {icons.dark(
                     this.showSecret ? 'visibility-off' : 'visibility',
                     this.toggleSecret, style.icon)}
@@ -177,7 +181,8 @@ export default class TextBox extends Component {
             top: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            flexDirection: 'row'
         };
         const icAlert = this.validationMessage ? {
             borderBottomColor: vars.txtAlert,
@@ -188,15 +193,6 @@ export default class TextBox extends Component {
         if (astl && this.value && this.value.length && astl < this.value.length) {
             fontSize = Math.floor(fontSize * astl / this.value.length);
         }
-
-        const focuser = (
-            <TouchableHighlight onPress={() => { this.focus(); }}>
-                <View style={[inputContainer, {
-                    height: vars.inputHeight
-                }]} />
-            </TouchableHighlight>
-        );
-
         return (
             <View
                 style={[style.shadow, { borderColor: 'green', borderWidth: 0 }]}>
@@ -223,8 +219,8 @@ export default class TextBox extends Component {
                             autoCorrect={false}
                             autoComplete={false}
                         />
+                        {showSecretIcon}
                     </View>
-                    {showSecretIcon}
                     <View
                         pointerEvents="none"
                         style={hintContainer}>

@@ -170,11 +170,8 @@ const styles = {
     input: {
         base: {
             normal: baseclass('input-base', {
-                position: 'absolute',
-                left: 10,
-                right: 0,
-                bottom: 0,
-                top: 20,
+                flexGrow: 1,
+                marginLeft: 10,
                 height: 28,
                 backgroundColor: 'transparent',
                 borderColor: 'yellow',
@@ -201,11 +198,6 @@ const styles = {
                 backgroundColor: vars.subtleBg
             }),
             hint: inherit('hint'),
-            iconContainer: {
-                position: 'absolute',
-                right: 2,
-                top: 2
-            },
             icon: {
                 backgroundColor: 'transparent'
             }
@@ -225,11 +217,6 @@ const styles = {
             container: inherit('input-container', {
                 backgroundColor: 'transparent'
             }),
-            iconContainer: {
-                position: 'absolute',
-                right: 2,
-                top: 2
-            },
             icon: {
                 backgroundColor: 'transparent'
             }
