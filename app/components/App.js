@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, PanResponder, AppState, ActivityIndicator } from 'react-native';
 import { observer } from 'mobx-react/native';
 import PopupLayout from './layout/popup-layout';
+import ModalLayout from './layout/modal-layout';
 import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
@@ -92,6 +93,7 @@ export default class App extends Component {
                 style={{ flexGrow: 1, backgroundColor: vars.bg }}>
                 <RouteNavigator routes={routerApp} />
                 <PopupLayout />
+                <ModalLayout />
                 {uiState.picker}
             </View>
         );

@@ -11,6 +11,7 @@ import routes from './routes';
 class RouterModal extends Router {
     // TODO: get rid of it
     @observable modalControl = null;
+    @observable animating = false;
 
     constructor() {
         super();
@@ -19,11 +20,13 @@ class RouterModal extends Router {
         this.add('shareFileTo', FileShare);
         this.add('selectFiles', SelectFiles);
         this.add('contactView', ContactView);
-        this.add('createPin', PinModalCreate);
+        this.add('createPin', PinModalCreate, true);
     }
 
-    add(route, component) {
-        this[route] = super.add(route, component).transition;
+    add(route, component, isWhite) {
+        const r = super.add(route, component).transition;
+        r.isWhite = isWhite;
+        this[route] = r;
     }
 
     waitFor() {
@@ -32,6 +35,10 @@ class RouterModal extends Router {
 
     discard() {
         this.route = null;
+    }
+
+    get isBlackStatusBar() {
+        return !this.animating && this.current && !this.current.isWhite;
     }
 
     get modal() {

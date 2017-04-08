@@ -10,13 +10,16 @@ export default class RouteNavigator extends Component {
         const routes = this.props.routes;
         this.bindRouteroutes = reaction(() => routes.route, route => {
             console.log(`route-navigator: ${routes.prevRoute}, ${route}`);
+
             const newIndex = routes.routesList.indexOf(route);
             const oldIndex = routes.routesList.indexOf(routes.prevRoute);
             routes.prevRoute = route;
             const rInfo = routes.routes[route];
+            console.log(rInfo);
             requestAnimationFrame(uiState.hideKeyboard);
             if (rInfo.replace) {
-                this.nav.resetTo(rInfo);
+                console.log('reset route stack');
+                this.nav.immediatelyResetRouteStack([rInfo]);
                 return;
             }
             if (newIndex === oldIndex - 1) {

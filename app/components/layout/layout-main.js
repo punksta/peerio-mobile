@@ -24,7 +24,6 @@ import routerModal from '../routes/router-modal';
 
 @observer
 export default class LayoutMain extends Component {
-    @observable modal = null;
     @observable modalVisible = false;
 
     constructor(props) {
@@ -33,7 +32,6 @@ export default class LayoutMain extends Component {
         this.height = Dimensions.get('window').height;
         this.animatedX = new Animated.Value(0);
         this.leftMenuAnimated = new Animated.Value(0);
-        this.modalAnimated = new Animated.Value(this.height);
         this.indexAnimation = reaction(() => routerMain.currentIndex, i => {
             console.log('layout-main.js: index animation');
             const toValue = -i * this.width;
@@ -50,18 +48,6 @@ export default class LayoutMain extends Component {
     }
 
     componentDidMount() {
-        reaction(() => routerModal.modal, modal => {
-            const duration = vars.animationDuration;
-            if (modal) {
-                this.modal = modal;
-                Animated.timing(this.modalAnimated, { toValue: 0, duration })
-                    .start(() => (this.modalVisible = true));
-            } else {
-                this.modalVisible = null;
-                Animated.timing(this.modalAnimated, { toValue: this.height, duration })
-                    .start(() => (this.modal = null));
-            }
-        }, true);
         reaction(() => uiState.appState, () => this.forceUpdate());
     }
 
@@ -98,7 +84,6 @@ export default class LayoutMain extends Component {
             justifyContent: 'space-between',
             paddingBottom: global.platform === 'android' ? 0 : uiState.keyboardHeight
         };
-        const transformModal = [{ translateY: this.modalAnimated || 0 }];
 
         const modalStyle = {
             position: 'absolute',
@@ -108,7 +93,6 @@ export default class LayoutMain extends Component {
             right: 0
         };
 
-        const modalAnimatedStyle = [modalStyle, { transform: transformModal }];
         const modalControl = routerModal.modalControl;
         const modalNonAnimatedStyle = [modalStyle, {
             transform: [{ translateY: modalControl ? 0 : this.height }]
@@ -155,15 +139,12 @@ export default class LayoutMain extends Component {
                 {tapHider}
                 <LeftMenu />
                 <RightMenu />
-                <Animated.View style={modalAnimatedStyle}>
-                    {this.modal}
-                </Animated.View>
                 <View style={modalNonAnimatedStyle}>
                     {modalControl}
                 </View>
                 <StatusBar
-                    barStyle={this.modalVisible ? 'default' : 'light-content'}
-                    hidden={Platform.OS !== 'android' && menuState && !this.modal} />
+                    barStyle={routerModal.isBlackStatusBar ? 'default' : 'light-content'}
+                    hidden={Platform.OS !== 'android' && menuState && !routerModal.modal} />
             </View>
         );
     }

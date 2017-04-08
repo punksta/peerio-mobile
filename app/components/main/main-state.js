@@ -34,8 +34,8 @@ class MainState extends RoutedState {
     }
 
     @action async init() {
-        await this.saveUser();
         await this.checkPin();
+        await this.saveUser();
     }
 
     @action async checkPin() {
