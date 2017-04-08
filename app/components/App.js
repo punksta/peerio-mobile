@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, PanResponder, AppState, ActivityIndicator } from 'react-native';
 import { observer } from 'mobx-react/native';
+import { Worker } from 'rn-workers';
 import PopupLayout from './layout/popup-layout';
 import ModalLayout from './layout/modal-layout';
 import RouteNavigator from './routes/route-navigator';
@@ -65,6 +66,9 @@ export default class App extends Component {
     componentDidMount() {
         AppState.addEventListener('change', this._handleAppStateChange);
         AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
+        this.worker = new Worker();
+        this.worker.onmessage = message => console.log(message);
+        this.worker.postMessage("Hey Worker!")
     }
 
     _handleAppStateChange(appState) {
