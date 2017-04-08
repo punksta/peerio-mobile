@@ -28,12 +28,12 @@ export default class SettingsLevel2 extends Component {
     security() {
         return (
             <View style={bgStyle}>
-                <SettingsItem
+                {/* <SettingsItem
                     title={t('twoFactorAuth')}
                     onPress={() => settingsState.transition('twoFactorAuth')} />
                 <SettingsItem
                     title="2FA prompt"
-                    onPress={() => this.twoFactorTest()} />
+                    onPress={() => this.twoFactorTest()} /> */}
                 <SettingsItem
                     title={t('passphrase')}
                     icon="visibility"

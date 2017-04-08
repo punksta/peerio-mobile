@@ -15,7 +15,6 @@ export default class RouteNavigator extends Component {
             const oldIndex = routes.routesList.indexOf(routes.prevRoute);
             routes.prevRoute = route;
             const rInfo = routes.routes[route];
-            console.log(rInfo);
             requestAnimationFrame(uiState.hideKeyboard);
             if (rInfo.replace) {
                 console.log('reset route stack');
