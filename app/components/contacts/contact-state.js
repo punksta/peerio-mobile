@@ -8,6 +8,11 @@ class ContactState extends RoutedState {
     _prefix = 'contacts';
     store = contactStore;
 
+    @action async init() {
+        this.store.loadLegacyContacts();
+        return new Promise(resolve => when(() => !this.store.loading, resolve));
+    }
+
     composeMessage() {
         this.routerModal.compose();
     }

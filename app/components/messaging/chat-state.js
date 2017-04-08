@@ -29,6 +29,11 @@ class ChatState {
         // });
     }
 
+    @action async init() {
+        this.store.loadAllChats();
+        return new Promise(resolve => when(() => !this.store.loading, resolve));
+    }
+
     get currentChat() {
         return chatStore.activeChat;
     }

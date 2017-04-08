@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable } from 'mobx';
+import { observable, when } from 'mobx';
 import Router from './router';
 import ComposeMessage from '../messaging/compose-message';
 import SelectFiles from '../files/select-files';
@@ -24,6 +24,10 @@ class RouterModal extends Router {
 
     add(route, component) {
         this[route] = super.add(route, component).transition;
+    }
+
+    waitFor() {
+        return new Promise(resolve => when(() => !this.route && !this.modalControl, resolve));
     }
 
     discard() {

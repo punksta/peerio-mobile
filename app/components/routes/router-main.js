@@ -12,6 +12,7 @@ import Chat from '../messaging/chat';
 import Files from '../files/files';
 import FileView from '../files/file-view';
 import Logs from '../logs/logs';
+import mainState from '../main/main-state';
 import fileState from '../files/file-state';
 import ghostState from '../ghosts/ghost-state';
 import chatState from '../messaging/chat-state';
@@ -46,19 +47,18 @@ class RouterMain extends Router {
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
     }
 
-    @action initial() {
+    @action async initial() {
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
         this.add('chats', [<Chat />], chatState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
 
+        await mainState.init();
+        await chatState.init();
+        await contactState.init();
+        if (EN === 'peeriomobile') await enablePushNotifications();
         this.chats();
-        chatState.store.loadAllChats();
-        when(() => !ghostState.store.loading && !chatState.store.loading, () => {
-            (EN === 'peeriomobile') && enablePushNotifications();
-        });
-        when(() => !chatState.store.loading, () => contactState.store.loadLegacyContacts());
     }
 
     add(key, components, routeState) {

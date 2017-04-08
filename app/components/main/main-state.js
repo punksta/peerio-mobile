@@ -2,7 +2,7 @@ import React from 'react';
 import { observable, action, when } from 'mobx';
 import { User, chatStore, contactStore, TinyDb } from '../../lib/icebear';
 import touchid from '../touchid/touchid-bridge';
-import { rnAlertYesNo } from '../../lib/alerts';
+import { popupYesCancel } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
@@ -18,18 +18,8 @@ class MainState extends RoutedState {
     }
 
     @action async activateAndTransition(user) {
-        this.routes.app.main();
         User.current = user;
-        const hasPin = await user.hasPasscode();
-        if (!hasPin) {
-            const skipPIN = `${user.username}::skipPIN`;
-            const skipPINValue = await TinyDb.system.getValue(skipPIN);
-            if (!skipPINValue) {
-                setTimeout(() => this.routes.modal.createPin(), 500);
-            }
-            await TinyDb.system.setValue(skipPIN, true);
-        }
-        await this.saveUser();
+        this.routes.app.main();
     }
 
     @action async load() {
@@ -43,29 +33,53 @@ class MainState extends RoutedState {
         console.log('main-state.js: loaded');
     }
 
+    @action async init() {
+        await this.saveUser();
+        await this.checkPin();
+    }
+
+    @action async checkPin() {
+        const user = User.current;
+        const hasPin = await user.hasPasscode();
+        if (!hasPin) {
+            const skipPIN = `${user.username}::skipPIN`;
+            if (!await TinyDb.system.getValue(skipPIN)) {
+                this.routes.modal.createPin();
+                await this.routes.modal.waitFor();
+            }
+            await TinyDb.system.setValue(skipPIN, true);
+        }
+    }
+
     @action async saveUser() {
         const user = User.current;
         await TinyDb.system.setValue('lastUsername', user.username);
         const skipTouchID = `${user.username}::skipTouchID`;
         const skipTouchIDValue = await TinyDb.system.getValue(skipTouchID);
+        if (skipTouchIDValue) {
+            console.log('main-state.js: skip touch id');
+            return;
+        }
         await touchid.load();
-        !skipTouchIDValue && touchid.available && TinyDb.system.getValue(`user::${user.username}::touchid`)
-            .then(result => {
-                if (!result) {
-                    console.log('main-state.js: touch id available but value not set');
-                    console.log('main-state.js: saving');
-                    rnAlertYesNo(tx('touchId'), tx('setup_touchTitle'))
-                        .then(() => {
-                            TinyDb.system.setValue(`user::${user.username}::touchid`, true);
-                            return touchid.save(`user::${user.username}`, user.serializeAuthData());
-                        })
-                        .catch(() => {
-                            console.log('main-state.js: user cancel touch id');
-                            return TinyDb.system.setValue(skipTouchID, true);
-                        });
-                }
-                console.log('main-state.js: touch id available and value is set');
-            });
+        if (!touchid.available) {
+            console.log('main-state.js: touch id is not available');
+            return;
+        }
+        const touchIdKey = `user::${user.username}::touchid`;
+        if (await TinyDb.system.getValue(touchIdKey)) {
+            console.log('main-state.js: touch id available and value is set');
+            return;
+        }
+        console.log('main-state.js: touch id available but value is not set');
+        console.log('main-state.js: offering to save');
+        if (await popupYesCancel(tx('touchId'), tx('setup_touchTitle'))) {
+            TinyDb.system.setValue(touchIdKey, true);
+            await touchid.save(`user::${user.username}`, user.serializeAuthData());
+            console.log('main-state.js: touch id saved');
+            return;
+        }
+        console.log('main-state.js: user cancel touch id');
+        await TinyDb.system.setValue(skipTouchID, true);
     }
 }
 
