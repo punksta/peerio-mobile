@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.3.0"></a>
+# [3.3.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.2.2...v3.3.0) (2017-04-08)
+
+
+### Bug Fixes
+
+* **ui:** show secret icon overlaps textbox ([cb63c16](https://github.com/PeerioTechnologies/peerio-mobile/commit/cb63c16))
+
+
+### Features
+
+* **ui:** refactor modals. enable touchid for viewing MP ([fa6f635](https://github.com/PeerioTechnologies/peerio-mobile/commit/fa6f635))
+
+
+
 <a name="3.2.2"></a>
 ## [3.2.2](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.2.1...v3.2.2) (2017-04-08)
 
