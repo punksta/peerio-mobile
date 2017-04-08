@@ -53,11 +53,10 @@ class RouterMain extends Router {
         this.add('chats', [<Chat />], chatState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
-
+        if (EN === 'peeriomobile') await enablePushNotifications();
         await mainState.init();
         await chatState.init();
         await contactState.init();
-        if (EN === 'peeriomobile') await enablePushNotifications();
         this.chats();
     }
 

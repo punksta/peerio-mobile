@@ -98,34 +98,30 @@ class LoginState extends RoutedState {
     async load() {
         console.log(`login-state.js: loading`);
         const userData = await User.getLastAuthenticated();
-        if (userData) {
-            const { username, firstName, lastName } = userData;
-            if (this.username && this.username !== username) return false;
-            this.username = username;
-            this.username && this.triggerTouchId();
-            console.log(`login-state.js: loaded`);
-            this.username = username;
-            this.firstName = firstName;
-            this.lastName = lastName;
-            const user = new User();
-            user.username = username;
-            return user.hasPasscode()
-                .then(result => {
-                    console.log(`login-state.js: ${result}`);
-                    result && this.saved();
-                });
+        if (!userData) return;
+        const { username, firstName, lastName } = userData;
+        if (this.username && this.username !== username) return;
+        this.username = username;
+        if (username) {
+            this.isInProgress = true;
+            await this.triggerTouchId();
+            this.isInProgress = false;
         }
-        return false;
+        console.log(`login-state.js: loaded`);
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        const user = new User();
+        user.username = username;
+        if (await user.hasPasscode()) this.saved();
     }
 
     @action async triggerTouchId() {
         await touchId.load();
-        touchId.available && touchId.get(`user::${this.username}`)
-            .then(data => {
-                if (data) {
-                    this.loginCached(JSON.parse(data));
-                }
-            });
+        if (!touchId.available) return false;
+        const data = await touchId.get(`user::${this.username}`);
+        if (!data) return false;
+        return this.loginCached(JSON.parse(data));
     }
 }
 

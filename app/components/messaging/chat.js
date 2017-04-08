@@ -111,7 +111,7 @@ export default class Chat extends Component {
                 let y = this.contentHeight - this.scrollViewHeight;
                 if (y - indicatorSpacing < 0) {
                     console.log('chat.js: less content than fit');
-                    this.chat.loadPreviousPage();
+                    this.chat.messages.length && this.chat.loadPreviousPage();
                     y = 0;
                 }
                 const animated = this.animateNextScroll;
