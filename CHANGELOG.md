@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.1.10"></a>
+## [3.1.10](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.1.9...v3.1.10) (2017-04-08)
+
+
+### Bug Fixes
+
+* **ui:** making initialization more sequential, to wait for loading each step ([58466af](https://github.com/PeerioTechnologies/peerio-mobile/commit/58466af))
+
+
+
 <a name="3.1.9"></a>
 ## [3.1.9](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.1.8...v3.1.9) (2017-04-07)
 
