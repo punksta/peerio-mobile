@@ -11,6 +11,7 @@ import Swiper from '../controls/swiper';
 import Hider from '../controls/hider';
 import { fileStore, chatStore } from '../../lib/icebear';
 import { t } from '../utils/translator';
+import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-storage-usage';
 
 const itemStyle = {
     flexGrow: 1,
@@ -44,11 +45,20 @@ export default class RightMenu extends Component {
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={textStyle}>{i.name}</Text>
                             {bubble}
+                            {i.customRight}
                         </View>
                     </View>
                 </TouchableOpacity>
             </View>
         );
+    }
+
+    divider(i, k) {
+        const s = {
+            borderBottomWidth: 1,
+            borderBottomColor: '#CFCFCF'
+        };
+        return <View key={k} style={s} />;
     }
 
     render() {
@@ -79,15 +89,20 @@ export default class RightMenu extends Component {
             }
         };
 
-        const i = (name, route, icon, bubble) => ({ name, route, icon, bubble });
+        const i = (name, route, icon, bubble) => ({ name, route, icon, bubble, map: this.item });
+        const i2 = (name, action, icon, customRight) => ({ name, action, icon, customRight, map: this.item });
+        const divider = () => ({ map: this.divider });
 
         const items = [
             // i(t('ghosts'), 'ghosts', 'mail'),
             i(t('messages'), 'chats', 'chat-bubble', chatStore.unreadMessages),
             i(t('files'), 'files', 'folder', fileStore.unreadFiles),
+            divider(),
             i(t('settings'), 'settings', 'settings'),
             // i(t('help', 'help', 'help')),
-            i(t('logs'), 'logs', 'help')
+            i(t('logs'), 'logs', 'help'),
+            divider(),
+            i2(t('Storage usage'), paymentCheckout, 'list', <PaymentStorageUsage />)
         ];
 
         const signOut = {
@@ -105,7 +120,7 @@ export default class RightMenu extends Component {
                 <Hider onHide={this.hideAnimated}>
                     <View style={[menuContainerStyle, shadowStyle]}>
                         <View>
-                            { items.map(this.item) }
+                            { items.map((el, k) => el.map(el, k)) }
                         </View>
                         <View>
                             { this.item(signOut, 0) }
