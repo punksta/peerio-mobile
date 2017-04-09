@@ -110,29 +110,28 @@ class FileState extends RoutedState {
     }
 
     upload(uri, fileName, fileData, inline) {
-        const upgrade = () =>
-            popupUpgrade(tx('files_uploadError'), null, tx('files_quotaExceeded'));
-        if (!User.current.canUploadFileSize(fileData.fileSize)) return upgrade();
         let fn = fileHelpers.getFileName(fileName || uri);
         const ext = fileHelpers.getFileExtension(fn);
         if (!fileName) {
             fn = `${moment(Date.now()).format('llll')}.${ext}`;
         }
         const chat = chatState.currentChat;
-        const errorHandler = e =>
-            (e.code === errors.ServerError.codes.quotaExceeded) && upgrade();
-        const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName, errorHandler) :
-            () => fileStore.upload(uri, fileName, errorHandler);
+        const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName) :
+            () => fileStore.upload(uri, fileName);
         return new Promise(resolve => {
             when(() => socket.authenticated,
                 () => resolve(uploader(uri, fn)));
         }).then(file => {
-            return popupInput(tx('popup_tapToRename'), fileHelpers.getFileNameWithoutExtension(fn))
-                .then(newFileName => {
-                    if (!newFileName) return Promise.resolve();
-                    file.name = `${newFileName}.${ext}`;
-                    return file.saveToServer();
-                });
+            // TODO: better way to check that file passed stat check
+            setTimeout(() => {
+                if (file.deleted) return;
+                popupInput(tx('popup_tapToRename'), fileHelpers.getFileNameWithoutExtension(fn))
+                    .then(newFileName => {
+                        if (!newFileName) return Promise.resolve();
+                        file.name = `${newFileName}.${ext}`;
+                        return file.saveToServer();
+                    });
+            }, 500);
         });
     }
 

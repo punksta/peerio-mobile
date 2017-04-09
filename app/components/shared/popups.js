@@ -7,6 +7,7 @@ import { t } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
+import { paymentCheckout } from '../payments/payments-storage-usage';
 
 function textControl(str) {
     const text = {
@@ -23,6 +24,24 @@ function inputControl(state) {
     return (
         <TextInputStateful state={state} />
     );
+}
+
+const swActions = {
+    UPGRADE: paymentCheckout
+};
+
+function popupSystemWarning(title, contents, buttons) {
+    const button = (text, action) => ({ id: text, text: t(text), action });
+    const swButton = i => ({ id: i.action, text: t(i.label), action: swActions[i.action] });
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title,
+            contents: textControl(contents),
+            buttons: buttons ?
+                buttons.map(i => (i.action ? swButton(i) : button(i, resolve)))
+                    : [button('ok', resolve)]
+        });
+    });
 }
 
 function popupYes(title, subTitle, text) {
@@ -124,5 +143,6 @@ module.exports = {
     popupTOS,
     popupCopyCancel,
     popupInputCancel,
-    popupUpgrade
+    popupUpgrade,
+    popupSystemWarning
 };

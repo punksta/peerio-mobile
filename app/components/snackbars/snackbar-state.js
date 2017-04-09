@@ -1,6 +1,6 @@
 import { observable, action, observe, when } from 'mobx';
 import { systemWarnings, socket } from '../../lib/icebear';
-import { popupYes } from '../shared/popups';
+import { popupYes, popupSystemWarning } from '../shared/popups';
 import { t, tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 import tagify from '../shared/tagify';
@@ -15,8 +15,7 @@ class SnackBarState extends RoutedState {
             const add = sw => when(() => !this.isInProgress, () => {
                 const swAction = () => sw && sw.action && sw.action();
                 if (sw.level === 'severe') {
-                    // TODO: add custom button support
-                    popupYes(tx(sw.title), tagify(tx(sw.content))).then(swAction);
+                    popupSystemWarning(tx(sw.title), tagify(tx(sw.content)), sw.buttons).then(swAction);
                 } else {
                     this.push(t(sw.content), swAction);
                 }
