@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.4.0"></a>
+# [3.4.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.3.2...v3.4.0) (2017-04-09)
+
+
+### Features
+
+* **ui:** hide payment and quotas. add quotas menu item ([7449c85](https://github.com/PeerioTechnologies/peerio-mobile/commit/7449c85))
+
+
+
 <a name="3.3.2"></a>
 ## [3.3.2](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.3.1...v3.3.2) (2017-04-08)
 
