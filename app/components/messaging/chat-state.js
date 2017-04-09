@@ -13,8 +13,9 @@ class ChatState {
         });
 
         reaction(() => chatStore.activeChat, chat => {
-            if (chat && !chat.loadingMeta) {
+            if (chat) {
                 console.log(`chat-store switched to ${chat.id}`);
+                console.log(`chat-store: loading ${chat.id}`);
                 chat.loadMessages();
                 this.save();
                 this.loading = false;

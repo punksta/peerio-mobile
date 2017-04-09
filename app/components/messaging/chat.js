@@ -191,7 +191,7 @@ export default class Chat extends Component {
             borderBottomColor: '#CFCFCF'
         };
         const chat = this.chat;
-        const avatars = chat.participants.map(contact => (
+        const avatars = (chat.participants || []).map(contact => (
             <TouchableOpacity
                 onPress={() => contactState.contactView(contact)} key={contact.username}>
                 <AvatarCircle
