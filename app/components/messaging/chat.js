@@ -206,7 +206,7 @@ export default class Chat extends Component {
                     {tx('chat_beginning')}
                     <Text>{' '}</Text>
                     <Text style={{ fontWeight: 'bold' }}>
-                        {chat.participantUsernames}
+                        {chat.chatName}
                     </Text>
                 </Text>
             </View>
