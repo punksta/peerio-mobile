@@ -105,7 +105,7 @@ class FileState extends RoutedState {
         this.routerModal.discard();
     }
 
-    uploadInline(uri, fileName, fileData) {
+    uploadInline = (uri, fileName, fileData) => {
         return this.upload(uri, fileName, fileData, true);
     }
 
