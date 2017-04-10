@@ -12,6 +12,7 @@ import Hider from '../controls/hider';
 import { fileStore, chatStore } from '../../lib/icebear';
 import { t } from '../utils/translator';
 import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-storage-usage';
+import { toggleConnection } from './dev-menu-items';
 
 const itemStyle = {
     flexGrow: 1,
@@ -93,7 +94,7 @@ export default class RightMenu extends Component {
         const i2 = (name, action, icon, customRight) => ({ name, action, icon, customRight, map: this.item });
         const divider = () => ({ map: this.divider });
 
-        const items = [
+        let items = [
             // i(t('ghosts'), 'ghosts', 'mail'),
             i(t('messages'), 'chats', 'chat-bubble', chatStore.unreadMessages),
             i(t('files'), 'files', 'folder', fileStore.unreadFiles),
@@ -104,6 +105,13 @@ export default class RightMenu extends Component {
             divider(),
             i2(t('Storage usage'), paymentCheckout, 'list', <PaymentStorageUsage />)
         ];
+
+        if (__DEV__) {
+            items = items.concat([
+                divider(),
+                i2('Toggle connection', toggleConnection, 'cast-connected')
+            ]);
+        }
 
         const signOut = {
             name: t('signOut'),
