@@ -13,9 +13,11 @@ export default class ChatItem extends Component {
         const timestamp = i.timestamp;
         const text = msg.replace(/\n[ ]+/g, '\n');
         const onPress = () => contactState.contactView(i.sender);
-        const error = !!msg.signatureError;
+        const error = !!i.signatureError;
         return (
             <Avatar
+                sendError={i.sendError}
+                sending={i.sending}
                 contact={i.sender}
                 files={i.files}
                 receipts={i.receipts}

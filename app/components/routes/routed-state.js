@@ -15,9 +15,9 @@ export default class RoutedState {
 
     get routes() { return routes; }
 
-    get isConnected() {
-        return socket.connected;
-    }
+    get isConnected() { return socket.connected; }
+
+    get isAuthenticated() { return socket.authenticated; }
 
     get isActive() {
         if (!this._prefix) throw new Error('routed-state.js: no prefix');

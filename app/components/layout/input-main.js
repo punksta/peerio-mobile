@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import {
-    View,
-    TextInput,
-    PanResponder,
-    TouchableOpacity
-} from 'react-native';
+import { View, PanResponder, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import { tx } from '../utils/translator';
 import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import uiState from './ui-state';
 
 @observer
 export default class InputMain extends Component {
@@ -23,7 +19,6 @@ export default class InputMain extends Component {
         this.value = this.props.value;
         this.plus = this.plus.bind(this);
         this.send = this.send.bind(this);
-        this.sendAck = this.sendAck.bind(this);
         this.onChangeText = this.onChangeText.bind(this);
     }
 
@@ -53,12 +48,9 @@ export default class InputMain extends Component {
     }
 
     send() {
-        this.props.send(this.value);
+        if (!uiState.isAuthenticated) return;
+        this.hasText ? this.props.send(this.value) : this.props.sendAck();
         this.value = '';
-    }
-
-    sendAck() {
-        this.props.sendAck();
     }
 
     setFocus() {
@@ -77,23 +69,34 @@ export default class InputMain extends Component {
         };
 
         const iconStyle = { width: 24, height: 24, margin: -12 };
-        const icon = this.hasText ?
-            icons.white('send', this.send, iconStyle) :
-            icons.white('thumb-up', this.sendAck, iconStyle);
-
+        const icon = icons.white(this.hasText ? 'send' : 'thumb-up', this.send, iconStyle);
+        const outerStyle = {
+            flex: 1,
+            flexGrow: 1,
+            flexDirection: 'row',
+            alignItems: 'center'
+        };
+        const autoExpandingInputContainerStyle = {
+            flex: 1,
+            flexGrow: 1,
+            alignItems: 'stretch'
+        };
+        const sendIconStyle = {
+            alignItems: 'center',
+            backgroundColor: uiState.isAuthenticated ? vars.checkboxActive : vars.checkboxIconInactive,
+            borderRadius: 20,
+            justifyContent: 'center',
+            height: 40,
+            marginRight: 8,
+            width: 40
+        };
         return (
-            <View
-                style={{
-                    flex: 1,
-                    flexGrow: 1,
-                    flexDirection: 'row',
-                    alignItems: 'center'
-                }}>
+            <View style={outerStyle}>
                 {icons.dark('add-circle-outline', this.plus, {
                     paddingLeft: 4,
                     paddingRight: 24
                 })}
-                <View style={{ flex: 1, flexGrow: 1, borderWidth: 0, borderColor: 'yellow', alignItems: 'stretch' }}>
+                <View style={autoExpandingInputContainerStyle}>
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
                         value={this.value}
@@ -108,14 +111,7 @@ export default class InputMain extends Component {
                     />
                 </View>
                 <TouchableOpacity onPress={this.send}>
-                    <View style={{
-                        alignItems: 'center',
-                        backgroundColor: vars.checkboxActive,
-                        borderRadius: 20,
-                        justifyContent: 'center',
-                        height: 40,
-                        marginRight: 8,
-                        width: 40 }}>
+                    <View style={sendIconStyle}>
                         {icon}
                     </View>
                 </TouchableOpacity>

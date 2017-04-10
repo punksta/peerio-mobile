@@ -83,6 +83,7 @@ export default class Avatar extends Component {
     }
 
     checkbox() {
+        if (!this.props.checkbox) return null;
         const v = vars;
         const color = this.checked ? v.checkboxActive : v.checkboxInactive;
         const iconColor = this.checked ? 'white' : v.checkboxIconInactive;
@@ -113,75 +114,107 @@ export default class Avatar extends Component {
         return null;
     }
 
-    message(m) {
+    get message() {
         return (
             <Text style={lastMessageTextStyle}>
-                {tagify(m)}
+                {tagify(this.props.message || '')}
             </Text>
         );
     }
 
-    render() {
-        const error = this.props.error;
-        const errorStyle = error ? {
+    get files() {
+        return this.props.files ?
+            this.props.files.map(file => <FileInlineProgress key={file.id} file={file} />) : null;
+    }
+
+    get signatureError() {
+        return <ErrorCircle invert visible={!!this.props.error} />;
+    }
+
+    get corruptedMessage() {
+        return <CorruptedMessage visible={this.props.error && this.showError} />;
+    }
+
+    get icon() {
+        return this.props.icon ? icons.dark(this.props.icon) : null;
+    }
+
+    get date() {
+        return !!this.props.date &&
+            <Text style={dateTextStyle}>{moment(this.props.date).format(`MMM D, LT`)}</Text>;
+    }
+
+    get errorStyle() {
+        return this.props.error || this.props.sendError ? {
             backgroundColor: '#ff000020',
             borderRadius: 14,
             marginVertical: 2,
             marginHorizontal: 4
         } : null;
-        const message = this.props.message || '';
-        const icon = this.props.icon ? icons.dark(this.props.icon) : null;
-        const date = this.props.date ?
-            <Text style={dateTextStyle}>{moment(this.props.date).format(`MMM D, LT`)}</Text> : null;
-        const checkbox = this.props.checkbox ? this.checkbox() : null;
-        const ics = this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
-        const files = this.props.files ?
-            this.props.files.map(file => <FileInlineProgress key={file.id} file={file} />) : null;
-        return this.props.collapsed ? (
-            <View style={{ backgroundColor: vars.bg }} onLayout={this.props.onLayout}>
-                <View style={itemStyle}>
-                    <TouchableOpacity onPress={this.props.onPress}>
-                        <View style={[ics, { marginLeft: 66 }]}>
-                            {this.message(message)}
-                            {files}
-                            <ErrorCircle invert visible={!!error} />
-                        </View>
-                    </TouchableOpacity>
+    }
+
+    get itemContainerStyle() {
+        return this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
+    }
+
+    renderCollapsed() {
+        return (
+            <View style={itemStyle}>
+                <View style={[this.itemContainerStyle, { marginLeft: 66 }, this.errorStyle]}>
+                    {this.message}
+                    {this.files}
+                    {this.signatureError}
                 </View>
             </View>
-        ) : (
-            <View style={{ backgroundColor: vars.bg }} onLayout={this.props.onLayout}>
-                <TouchableOpacity onPress={this.props.onPress} activeOpacity={this.props.noTap ? 1 : 0.2}>
-                    <View style={itemStyle}>
-                        {checkbox}
-                        <View style={[{ flexGrow: 1 }, errorStyle]}>
-                            <View style={ics}>
-                                <TouchableOpacity onPress={this.props.onPress}>
-                                    <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={() => this.onPressText()}
-                                    style={nameMessageContainerStyle}>
-                                    <View style={nameContainerStyle}>
-                                        <Text ellipsizeMode="tail" style={nameTextStyle}>
-                                            {this.props.contact.username}
-                                        </Text>
-                                        {date}
-                                    </View>
-                                    {this.message(message)}
-                                    {files}
-                                    <ErrorCircle invert visible={!!error} />
-                                </TouchableOpacity>
-                                {icon}
-                                <OnlineCircle visible={!this.props.hideOnline} online={this.props.online} />
+        );
+    }
+
+    renderFull() {
+        return (
+            <View style={itemStyle}>
+                {this.checkbox}
+                <View style={[{ flexGrow: 1 }, this.errorStyle]}>
+                    <View style={this.itemContainerStyle}>
+                        <TouchableOpacity onPress={this.props.onPress}>
+                            <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => this.onPressText()}
+                            style={nameMessageContainerStyle}>
+                            <View style={nameContainerStyle}>
+                                <Text ellipsizeMode="tail" style={nameTextStyle}>
+                                    {this.props.contact.username}
+                                </Text>
+                                {this.date}
                             </View>
-                            <CorruptedMessage visible={error && this.showError} />
-                            <ReadReceiptList receipts={this.props.receipts} />
-                        </View>
+                            {this.message}
+                            {this.files}
+                            {this.signatureError}
+                        </TouchableOpacity>
+                        {this.icon}
+                        <OnlineCircle visible={!this.props.hideOnline} online={this.props.online} />
                     </View>
-                </TouchableOpacity>
+                    {this.corruptedMessage}
+                    <ReadReceiptList receipts={this.props.receipts} />
+                </View>
             </View>
         );
+    }
+
+    renderOuter(inner) {
+        const opacity = this.props.sending ? 0.5 : 1;
+        return (
+            <View style={{ backgroundColor: 'vars.bg', opacity }} onLayout={this.props.onLayout}>
+                <TouchableOpacity onPress={this.props.onPress} activeOpacity={this.props.noTap ? 1 : 0.2}>
+                    {inner}
+                </TouchableOpacity>
+            </View >
+        );
+    }
+
+    render() {
+        const inner = this.props.collapsed ? this.renderCollapsed() : this.renderFull();
+        return this.renderOuter(inner);
     }
 }
 
@@ -205,6 +238,8 @@ Avatar.propTypes = {
     noBorderBottom: React.PropTypes.bool,
     noTap: React.PropTypes.bool,
     collapsed: React.PropTypes.bool,
+    sending: React.PropTypes.bool,
+    sendError: React.PropTypes.bool,
     onLayout: React.PropTypes.func
 };
 
