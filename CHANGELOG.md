@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.5.0"></a>
+# [3.5.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.4.0...v3.5.0) (2017-04-10)
+
+
+### Bug Fixes
+
+* **ui:** no comma/space between usernames in chat beginning ([024fc7c](https://github.com/PeerioTechnologies/peerio-mobile/commit/024fc7c))
+* **ui:** not being able to upload files inline ([8a6b05b](https://github.com/PeerioTechnologies/peerio-mobile/commit/8a6b05b))
+
+
+### Features
+
+* **ui:** custom buttons and actions for system warnings ([a78f69b](https://github.com/PeerioTechnologies/peerio-mobile/commit/a78f69b))
+* **ui:** handle connectivity issues ([815215e](https://github.com/PeerioTechnologies/peerio-mobile/commit/815215e))
+
+
+
 <a name="3.4.0"></a>
 # [3.4.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.3.2...v3.4.0) (2017-04-09)
 
