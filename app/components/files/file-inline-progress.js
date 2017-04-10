@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import {
-    View,
-    Text,
-    TouchableOpacity
-} from 'react-native';
+import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { fileStore } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import icons from '../helpers/icons';
 import FileProgress from './file-progress';
 
 @observer
 export default class FileInlineProgress extends Component {
+    get downloadButton() {
+
+    }
+
     render() {
         const rowStyle = {
             flexGrow: 1,
@@ -20,7 +19,7 @@ export default class FileInlineProgress extends Component {
             borderWidth: 0,
             marginBottom: 8
         };
-        const file = fileStore.getById(this.props.file);
+        const file = fileState.store.getById(this.props.file);
         if (file === null) return null;
         const exists = file && !file.isPartialDownload && file.cached;
         return (
@@ -34,9 +33,8 @@ export default class FileInlineProgress extends Component {
                             {file.name} ({file.sizeFormatted})
                         </Text>
                         <View style={{ flex: 0 }}>
-                            {!file.uploading && icons.plaindark(exists ? 'open-in-new' : 'file-download')}
-                        </View>
-                        <View style={{ flex: 0 }}>
+                            {!file.uploading && this.props.transparentOnFinishUpload && <ActivityIndicator />}
+                            {!file.uploading && !this.props.transparentOnFinishUpload && icons.plaindark(exists ? 'open-in-new' : 'file-download')}
                             {file.uploading && icons.darkNoPadding('close', () => fileState.cancelUpload(file))}
                         </View>
                     </View>
@@ -48,6 +46,7 @@ export default class FileInlineProgress extends Component {
 }
 
 FileInlineProgress.propTypes = {
-    file: React.PropTypes.string
+    file: React.PropTypes.string,
+    transparentOnFinishUpload: React.PropTypes.bool
 };
 

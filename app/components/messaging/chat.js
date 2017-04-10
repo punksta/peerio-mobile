@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View, RefreshControl, Text, TouchableOpacity, ActivityIndicator
+    ScrollView, View, Text, TouchableOpacity, ActivityIndicator
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, reaction, when } from 'mobx';
+import { observable, when } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import ChatItem from './chat-item';
-import FileInlineProgress from '../files/file-inline-progress';
 import AvatarCircle from '../shared/avatar-circle';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
@@ -180,11 +179,6 @@ export default class Chat extends Component {
         );
     }
 
-    uploadQueue() {
-        const q = this.chat ? this.chat.uploadQueue : [];
-        return q.map(f => <FileInlineProgress key={f.fileId} file={f.fileId} />);
-    }
-
     zeroStateItem() {
         const zsContainer = {
             borderBottomWidth: 1,
@@ -216,11 +210,8 @@ export default class Chat extends Component {
     render() {
         return (
             <View
-                style={{ flexGrow: 1, marginBottom: 4 }}>
+                style={{ flexGrow: 1, paddingBottom: 4 }}>
                 {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
-                <View style={{ margin: 12 }}>
-                    {this.uploadQueue()}
-                </View>
                 <ProgressOverlay enabled={chatState.loading} />
             </View>
         );

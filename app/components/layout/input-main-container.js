@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import {
-    View
-} from 'react-native';
+import { View, Text } from 'react-native';
 import { tx } from '../utils/translator';
 import InputMain from './input-main';
+import { observer } from 'mobx-react/native';
 import chatState from '../messaging/chat-state';
 import fileState from '../files/file-state';
 import imagePicker from '../helpers/imagepicker';
+import FileInlineProgress from '../files/file-inline-progress';
 
+@observer
 export default class InputMainContainer extends Component {
     constructor(props) {
         super(props);
@@ -52,19 +53,36 @@ export default class InputMainContainer extends Component {
         );
     }
 
+    uploadQueue() {
+        const chat = chatState.currentChat;
+        const q = chat ? chat.uploadQueue : [];
+        return q.map(f => (
+            <View style={{ margin: 12 }}>
+                <FileInlineProgress key={f.fileId} file={f.fileId} transparentOnFinishUpload />
+            </View>
+        ));
+    }
+
     render() {
+        const outer = {
+            backgroundColor: '#fff'
+        };
         const s = {
             minHeight: 80,
             borderTopColor: 'rgba(0, 0, 0, .12)',
-            borderTopWidth: 1,
-            backgroundColor: '#fff'
+            borderTopWidth: 1
         };
         return (
-            <View style={s}>
-                <InputMain
-                    plus={this.addFiles}
-                    sendAck={this.sendAck}
-                    send={this.send} />
+            <View style={outer}>
+                <View>
+                    {this.uploadQueue()}
+                </View>
+                <View style={s}>
+                    <InputMain
+                        plus={this.addFiles}
+                        sendAck={this.sendAck}
+                        send={this.send} />
+                </View>
             </View>
         );
     }

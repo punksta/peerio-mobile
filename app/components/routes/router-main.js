@@ -57,6 +57,7 @@ class RouterMain extends Router {
         await mainState.init();
         await chatState.init();
         await contactState.init();
+        await fileState.init();
         this.chats();
     }
 

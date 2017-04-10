@@ -25,11 +25,13 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'flex-start',
     paddingLeft: 8,
+    paddingRight: 4,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, .12)'
 };
 
 const itemContainerStyleNoBorder = {
+    paddingRight: 4,
     flexGrow: 1,
     paddingLeft: 8,
     flexDirection: 'row',
@@ -124,7 +126,7 @@ export default class Avatar extends Component {
 
     get files() {
         return this.props.files ?
-            this.props.files.map(file => <FileInlineProgress key={file.id} file={file} />) : null;
+            this.props.files.map(file => <FileInlineProgress key={file} file={file} />) : null;
     }
 
     get signatureError() {
@@ -162,8 +164,10 @@ export default class Avatar extends Component {
             <View style={itemStyle}>
                 <View style={[this.itemContainerStyle, { marginLeft: 66 }, this.errorStyle]}>
                     {this.message}
-                    {this.files}
-                    {this.signatureError}
+                    <View style={{ flexGrow: 1 }}>
+                        {this.files}
+                        {this.signatureError}
+                    </View>
                 </View>
             </View>
         );
@@ -204,7 +208,7 @@ export default class Avatar extends Component {
     renderOuter(inner) {
         const opacity = this.props.sending ? 0.5 : 1;
         return (
-            <View style={{ backgroundColor: 'vars.bg', opacity }} onLayout={this.props.onLayout}>
+            <View style={{ backgroundColor: vars.bg, opacity }} onLayout={this.props.onLayout}>
                 <TouchableOpacity onPress={this.props.onPress} activeOpacity={this.props.noTap ? 1 : 0.2}>
                     {inner}
                 </TouchableOpacity>

@@ -14,6 +14,11 @@ class FileState extends RoutedState {
     store = fileStore;
     _prefix = 'files';
 
+    @action async init() {
+        this.store.loadAllFiles();
+        return new Promise(resolve => when(() => !this.store.loading, resolve));
+    }
+
     get showSelection() {
         return fileStore.hasSelectedFiles;
     }
