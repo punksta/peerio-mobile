@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.5.1"></a>
+## [3.5.1](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.5.0...v3.5.1) (2017-04-11)
+
+
+### Bug Fixes
+
+* **pushes:** contract update ([07993cd](https://github.com/PeerioTechnologies/peerio-mobile/commit/07993cd))
+* **ui:** inline file upload ([190b164](https://github.com/PeerioTechnologies/peerio-mobile/commit/190b164))
+
+
+
 <a name="3.5.0"></a>
 # [3.5.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.4.0...v3.5.0) (2017-04-10)
 
