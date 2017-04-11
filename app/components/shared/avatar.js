@@ -27,6 +27,7 @@ const itemContainerStyle = {
     paddingLeft: 8,
     paddingRight: 4,
     borderBottomWidth: 1,
+    paddingBottom: 8,
     borderBottomColor: 'rgba(0, 0, 0, .12)'
 };
 

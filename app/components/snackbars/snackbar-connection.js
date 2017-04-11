@@ -13,7 +13,7 @@ export default class SnackbarConnection extends SnackbarBase {
 
     // to override
     getShowDelay() {
-        return 500;
+        return 2000;
     }
 
     tap() {
