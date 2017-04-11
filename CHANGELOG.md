@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.6.0"></a>
+# [3.6.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.5.1...v3.6.0) (2017-04-11)
+
+
+### Bug Fixes
+
+* **ui:** loading view for iPhone 5 and iPhone SE ([d02d51d](https://github.com/PeerioTechnologies/peerio-mobile/commit/d02d51d))
+* **ui:** misc fixes ([f16e07b](https://github.com/PeerioTechnologies/peerio-mobile/commit/f16e07b))
+
+
+### Features
+
+* **ui:** privacy screen for ios ([ea9782f](https://github.com/PeerioTechnologies/peerio-mobile/commit/ea9782f))
+* **ui:** sharing files does not start a chat now ([ba4c2f6](https://github.com/PeerioTechnologies/peerio-mobile/commit/ba4c2f6))
+
+
+
 <a name="3.5.1"></a>
 ## [3.5.1](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.5.0...v3.5.1) (2017-04-11)
 
