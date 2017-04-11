@@ -37,7 +37,8 @@
       if (img.scale == [UIScreen mainScreen].scale && CGSizeEqualToSize(img.size, [UIScreen mainScreen].bounds.size)) {
         NSLog(@"Found launch image for current device %@", img.description);
         UIImageView *launchView = [[UIImageView alloc] initWithImage: img];
-        rootView.loadingView = launchView;
+        [rootView setLoadingView:launchView];
+        break;
       }
     }
   }
