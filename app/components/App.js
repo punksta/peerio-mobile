@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, PanResponder, AppState, ActivityIndicator } from 'react-native';
+import { View, PanResponder, AppState, ActivityIndicator, NativeModules } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { Worker } from 'rn-workers';
 import PopupLayout from './layout/popup-layout';
@@ -66,9 +66,10 @@ export default class App extends Component {
     componentDidMount() {
         AppState.addEventListener('change', this._handleAppStateChange);
         AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
-        this.worker = new Worker();
+        NativeModules.PrivacySnapshot && NativeModules.PrivacySnapshot.enabled(true);
+        /* this.worker = new Worker();
         this.worker.onmessage = message => console.log(message);
-        this.worker.postMessage("Hey Worker!")
+        this.worker.postMessage("Hey Worker!") */
     }
 
     _handleAppStateChange(appState) {

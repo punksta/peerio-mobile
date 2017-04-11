@@ -40,6 +40,7 @@
 		02E096B31DAE398B00641B85 /* locales in Resources */ = {isa = PBXBuildFile; fileRef = 02E096B21DAE398B00641B85 /* locales */; };
 		02E096DA1DAE3B7600641B85 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E096D11DAE3B3B00641B85 /* libRNFS.a */; };
 		02E096DC1DAE50E100641B85 /* dict in Resources */ = {isa = PBXBuildFile; fileRef = 02E096DB1DAE50E100641B85 /* dict */; };
+		02F966301E9D493900FBECFF /* libRCTPrivacySnapshot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F966101E9D490700FBECFF /* libRCTPrivacySnapshot.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -332,6 +333,13 @@
 			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
 			remoteInfo = RNFS;
 		};
+		02F9660F1E9D490700FBECFF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E324EB0D0FAE4F96A2D57F34 /* RCTPrivacySnapshot.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DB1744351BC4C14D00D02B05;
+			remoteInfo = RCTPrivacySnapshot;
+		};
 		02FDD4B31DA6457E004E1D5A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 081BA9E7BB014EC9A1CF87BA /* RNRandomBytes.xcodeproj */;
@@ -429,6 +437,7 @@
 		A7DDFAC6A6F74107A3D45471 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		B836295CD1B344EBB035E1B6 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		DE216B2DFB25438F8922A621 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		E324EB0D0FAE4F96A2D57F34 /* RCTPrivacySnapshot.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTPrivacySnapshot.xcodeproj; path = "../node_modules/react-native-privacy-snapshot/RCTPrivacySnapshot.xcodeproj"; sourceTree = "<group>"; };
 		ED79A42A8D3144739CE4C04B /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -467,6 +476,7 @@
 				025935601E809AAF00FAEE7E /* libInAppUtils.a in Frameworks */,
 				02202B821E840B07006CDA9B /* libRNMail.a in Frameworks */,
 				02D7F9251E993C00002F7EF6 /* libRNWorkers.a in Frameworks */,
+				02F966301E9D493900FBECFF /* libRCTPrivacySnapshot.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -656,6 +666,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		02F966001E9D490700FBECFF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				02F966101E9D490700FBECFF /* libRCTPrivacySnapshot.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		02FDD4A51DA6457E004E1D5A /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -750,6 +768,7 @@
 				0E103048E40D48F8B3368298 /* RNDeviceInfo.xcodeproj */,
 				450DEE9B4CC440CA96F796BA /* RNMail.xcodeproj */,
 				96E6790100DC4DB980CD4990 /* RNWorkers.xcodeproj */,
+				E324EB0D0FAE4F96A2D57F34 /* RCTPrivacySnapshot.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -894,6 +913,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = 02F966001E9D490700FBECFF /* Products */;
+					ProjectRef = E324EB0D0FAE4F96A2D57F34 /* RCTPrivacySnapshot.xcodeproj */;
 				},
 				{
 					ProductGroup = 0222C3711E0C989D0084C586 /* Products */;
@@ -1250,6 +1273,13 @@
 			remoteRef = 02E096D01DAE3B3B00641B85 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		02F966101E9D490700FBECFF /* libRCTPrivacySnapshot.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPrivacySnapshot.a;
+			remoteRef = 02F9660F1E9D490700FBECFF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		02FDD4B41DA6457E004E1D5A /* libRNRandomBytes.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1392,12 +1422,14 @@
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 					"$(SRCROOT)/../node_modules/rn-workers/ios/RNWorkers",
+					"$(SRCROOT)/../node_modules/react-native-privacy-snapshot/RCTPrivacySnapshot",
 				);
 				INFOPLIST_FILE = peeriomobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
@@ -1452,12 +1484,14 @@
 					"$(SRCROOT)/../node_modules/react-native-picker/ios/RCTBEEPickerManager",
 					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 					"$(SRCROOT)/../node_modules/rn-workers/ios/RNWorkers",
+					"$(SRCROOT)/../node_modules/react-native-privacy-snapshot/RCTPrivacySnapshot",
 				);
 				INFOPLIST_FILE = peeriomobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",

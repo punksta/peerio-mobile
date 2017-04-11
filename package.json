@@ -77,6 +77,7 @@
     "react-native-in-app-utils": "git+https://github.com/chirag04/react-native-in-app-utils.git",
     "react-native-mail": "^3.0.1",
     "react-native-menu": "^0.20.2",
+    "react-native-privacy-snapshot": "git+https://github.com/PeerioTechnologies/react-native-privacy-snapshot.git",
     "react-native-push-notification": "https://github.com/zo0r/react-native-push-notification",
     "react-native-randombytes": "^2.1.0",
     "react-native-restart": "0.0.2",
