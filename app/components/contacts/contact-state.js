@@ -101,9 +101,7 @@ class ContactState extends RoutedState {
     @action share() {
         if (!fileState.currentFile) return;
         const file = fileState.currentFile;
-        const chat = chatState.store.startChat(this.recipients);
-        this.routerMain.chats(chat);
-        when(() => !chat.loadingMeta, () => chat.shareFiles([file]));
+        this.recipients.forEach(username => file.share(username));
         this.exit();
     }
 }
