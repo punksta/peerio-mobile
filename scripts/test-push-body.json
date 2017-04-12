@@ -1,5 +1,5 @@
 {
-  "username": "test10",
+  "username": "zarag0ztestuser2",
   "payload": {
     "APNS": "{ \"aps\": { \"alert\": \" has a new Peerio message\", \"sound\": \"sounds/push.caf\" } }"
   }
