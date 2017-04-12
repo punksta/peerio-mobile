@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.facebook.react.ReactApplication;
 import com.fabricio.vergal.RNWorkers.RNWorkersPackage;
-import co.apptailor.Worker.BaseReactPackage;
 import com.chirag.RNMail.RNMail;
 import com.idehub.Billing.InAppBillingBridgePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -44,10 +43,9 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNWorkersPackage(),
-            new BaseReactPackage(),
-            new RNMail(),
-              new InAppBillingBridgePackage(),
+          new RNWorkersPackage(),
+          new RNMail(),
+          new InAppBillingBridgePackage(),
           new VectorIconsPackage(),
           new RNSoundPackage(),
           new ReactNativeRestartPackage(),
