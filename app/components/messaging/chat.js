@@ -73,7 +73,7 @@ export default class Chat extends Component {
                 setTimeout(() => this.scrollView.scrollTo({ y, animated: false }), 0);
             }
         };
-        return <ChatItem key={message.id || i} chat={message} onLayout={layout} />;
+        return <ChatItem key={message.id || i} chat={this.chat} message={message} onLayout={layout} />;
     }
 
     layoutScrollView(event) {

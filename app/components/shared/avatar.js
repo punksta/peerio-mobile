@@ -138,6 +138,14 @@ export default class Avatar extends Component {
         return <CorruptedMessage visible={this.props.error && this.showError} />;
     }
 
+    get retryCancel() {
+        return this.props.sendError ?
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                {icons.dark('replay', this.props.onRetry)}
+                {icons.dark('cancel', this.props.onCancel)}
+            </View> : null;
+    }
+
     get icon() {
         return this.props.icon ? icons.dark(this.props.icon) : null;
     }
@@ -169,6 +177,7 @@ export default class Avatar extends Component {
                         {this.files}
                         {this.signatureError}
                     </View>
+                    {this.retryCancel}
                 </View>
             </View>
         );
@@ -199,6 +208,7 @@ export default class Avatar extends Component {
                         {this.icon}
                         <OnlineCircle visible={!this.props.hideOnline} online={this.props.online} />
                     </View>
+                    {this.retryCancel}
                     {this.corruptedMessage}
                     <ReadReceiptList receipts={this.props.receipts} />
                 </View>
@@ -225,6 +235,8 @@ export default class Avatar extends Component {
 
 Avatar.propTypes = {
     onPress: React.PropTypes.func,
+    onRetry: React.PropTypes.func,
+    onCancel: React.PropTypes.func,
     onPressText: React.PropTypes.func,
     contact: React.PropTypes.any.isRequired,
     date: React.PropTypes.any,

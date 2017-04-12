@@ -6,7 +6,7 @@ import contactState from '../contacts/contact-state';
 @observer
 export default class ChatItem extends Component {
     render() {
-        const i = this.props.chat;
+        const i = this.props.message;
         if (!i.sender) return null;
         const key = i.id;
         const msg = i.text || '';
@@ -28,6 +28,8 @@ export default class ChatItem extends Component {
                 error={error}
                 onPress={onPress}
                 onLayout={this.props.onLayout}
+                onRetry={() => i.resend()}
+                onCancel={() => this.props.chat.removeMessage(i)}
                 noTap
                 noBorderBottom
                 collapsed={!!i.groupWithPrevious}
@@ -39,5 +41,6 @@ export default class ChatItem extends Component {
 ChatItem.propTypes = {
     onLayout: React.PropTypes.func,
     onPress: React.PropTypes.func,
-    chat: React.PropTypes.any.isRequired
+    chat: React.PropTypes.any.isRequired,
+    message: React.PropTypes.any.isRequired
 };
