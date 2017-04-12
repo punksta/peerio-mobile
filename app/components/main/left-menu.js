@@ -145,7 +145,7 @@ export default class LeftMenu extends Component {
                 rightToLeft>
                 <View style={innerContainerStyle}>
                     <View>
-                        { this.header(t('directMessages'), () => contactState.composeMessage()) }
+                        { this.header(t('title_chats'), () => contactState.composeMessage()) }
                     </View>
                     <ScrollView
                         removeClippedSubviews={false}

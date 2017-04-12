@@ -42,7 +42,7 @@ export default class Pin extends Component {
 
     check() {
         if (this.pin === this.enteredPin) {
-            this.message = t('wait');
+            this.message = t('title_wait');
             this.isSpinner = true;
             this.props.onConfirm && this.props.onConfirm(this.enteredPin);
         } else {

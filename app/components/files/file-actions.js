@@ -58,7 +58,7 @@ export default class FileActions extends Component {
 
         const leftAction = file && !file.isPartialDownload && file.cached ?
             this.action(t('button_open'), 'open-in-new', () => file.launchViewer(), enabled) :
-            this.action(t('download'), 'file-download', () => fileState.download(), enabled);
+            this.action(t('title_download'), 'file-download', () => fileState.download(), enabled);
 
 
         return (

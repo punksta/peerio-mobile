@@ -5,7 +5,7 @@ import { t } from '../utils/translator';
 export default class ComposeMessage extends Component {
     render() {
         return (
-            <ContactSelector action="send" title={t('chatWith')} />
+            <ContactSelector action="send" title={t('title_chatWith')} />
         );
     }
 }

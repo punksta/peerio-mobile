@@ -29,7 +29,7 @@ class GhostState extends RoutedState {
     }
 
     get title() {
-        return tx('ghosts');
+        return tx('title_mail');
     }
 
     fabAction() {
