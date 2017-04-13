@@ -64,7 +64,7 @@ export default class FileActions extends Component {
         return (
             <Animated.View style={[bottomRowStyle, animation]}>
                 {leftAction}
-                {this.action(t('button_share'), 'reply', () => contactState.shareFile(), enabled)}
+                {this.action(t('button_share'), 'reply', () => contactState.shareFile(), file && file.canShare && enabled)}
                 {this.action(t('button_delete'), 'delete', () => fileState.delete(), enabled)}
                 {/* {this.action(t('button_more'), 'more-horiz')} */}
             </Animated.View>
