@@ -11,14 +11,15 @@ class PaymentStorageUsage extends Component {
         if (!u) return null;
         return (
             <View style={{ marginHorizontal: 10 }}>
-                <Bold>{u.fileQuotaUsedPercent} of {u.fileQuotaTotalFmt}</Bold>
+                <Bold>{u.fileQuotaUsedPercent}% of {u.fileQuotaTotalFmt}</Bold>
             </View>
         );
     }
 }
 
 const paymentCheckout = () => {
-    Linking.openURL('https://www.peerio.com/checkout.html');
+    console.log('todo: payment action');
+    // Linking.openURL('https://www.peerio.com/checkout.html');
 };
 
 module.exports = { PaymentStorageUsage, paymentCheckout };
