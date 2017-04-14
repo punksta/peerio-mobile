@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.7.0"></a>
+# [3.7.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.6.0...v3.7.0) (2017-04-13)
+
+
+### Bug Fixes
+
+* **android:** fix android build process ([33237e0](https://github.com/PeerioTechnologies/peerio-mobile/commit/33237e0))
+* **ui:** ui ([78f4178](https://github.com/PeerioTechnologies/peerio-mobile/commit/78f4178))
+
+
+### Features
+
+* **ui:** retry and cancel for failed messages ([1cd3f4e](https://github.com/PeerioTechnologies/peerio-mobile/commit/1cd3f4e))
+
+
+
 <a name="3.6.0"></a>
 # [3.6.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.5.1...v3.6.0) (2017-04-11)
 
