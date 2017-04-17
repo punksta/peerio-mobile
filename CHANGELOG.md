@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.8.0"></a>
+# [3.8.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.7.0...v3.8.0) (2017-04-17)
+
+
+### Bug Fixes
+
+* **ui:** hamburger in settings state ([0a49ff6](https://github.com/PeerioTechnologies/peerio-mobile/commit/0a49ff6))
+
+
+### Features
+
+* **locales:** moving to translated library ([b311415](https://github.com/PeerioTechnologies/peerio-mobile/commit/b311415))
+
+
+
 <a name="3.7.0"></a>
 # [3.7.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.6.0...v3.7.0) (2017-04-13)
 
