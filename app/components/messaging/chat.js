@@ -197,7 +197,7 @@ export default class Chat extends Component {
             <View style={zsContainer}>
                 <View style={{ flexDirection: 'row' }}>{avatars}</View>
                 <Text style={{ textAlign: 'center', margin: 12, color: vars.txtMedium }}>
-                    {tx('title_chatBeginning')}
+                    {tx('chat_beginning')}
                     <Text>{' '}</Text>
                     <Text style={{ fontWeight: 'bold' }}>
                         {chat.chatName}

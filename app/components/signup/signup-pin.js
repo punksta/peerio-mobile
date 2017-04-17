@@ -17,7 +17,7 @@ export default class SignupPin extends Component {
         const style = styles.wizard;
         return (
             <View style={{ flexGrow: 1, marginTop: 32 }}>
-                <Text style={style.text.title}>{t('title_signupStep2')}</Text>
+                <Text style={style.text.title}>{t('signupStep2')}</Text>
                 <Pin
                     preventSimplePin
                     messageInitial={t('passcode_inputPlaceholder')}

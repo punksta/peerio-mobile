@@ -95,12 +95,12 @@ export default class RightMenu extends Component {
         const divider = () => ({ map: this.divider });
 
         let items = [
-            // i(t('title_mail'), 'ghosts', 'mail'),
+            // i(t('ghosts'), 'ghosts', 'mail'),
             i(t('messages'), 'chats', 'chat-bubble', chatStore.unreadMessages),
-            i(t('title_files'), 'files', 'folder', fileStore.unreadFiles),
+            i(t('files'), 'files', 'folder', fileStore.unreadFiles),
             divider(),
-            i(t('title_settings'), 'settings', 'settings'),
-            // i(t('title_help', 'help', 'help')),
+            i(t('settings'), 'settings', 'settings'),
+            // i(t('help', 'help', 'help')),
             i(t('logs'), 'logs', 'help'),
             divider(),
             i2(t('Storage usage'), paymentCheckout, 'list', <PaymentStorageUsage />)
@@ -114,7 +114,7 @@ export default class RightMenu extends Component {
         }
 
         const signOut = {
-            name: t('button_logout'),
+            name: t('signOut'),
             icon: 'power-settings-new',
             action: () => loginState.signOut()
         };

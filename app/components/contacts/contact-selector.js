@@ -140,7 +140,7 @@ export default class ContactSelector extends Component {
                 {icons.dark('close', this.exit)}
                 <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
                 {contactState.recipients.length ?
-                    icons.text(t('button_go'), () => this.action()) : icons.placeholder()}
+                    icons.text(t('go'), () => this.action()) : icons.placeholder()}
             </View>
         );
     }

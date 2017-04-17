@@ -37,20 +37,20 @@ export default class SignupStep1 extends Component {
         };
         return (
             <View style={[{ marginTop: 32 }]}>
-                <Text style={style.text.title}>{t('title_signupStep1')}</Text>
-                <Text style={style.text.subTitle}>{t('title_settingsProfile')}</Text>
+                <Text style={style.text.title}>{t('signupStep1')}</Text>
+                <Text style={style.text.subTitle}>{t('profile')}</Text>
                 <TextBox
                     returnKeyType="next"
                     lowerCase
                     state={signupState}
                     name="username"
-                    hint={t('title_username')} />
+                    hint={t('username')} />
                 <TextBox
                     returnKeyType="next"
                     keyboardType="email-address"
                     state={signupState}
                     name="email"
-                    hint={t('title_email')} />
+                    hint={t('email')} />
                 <View style={{ flexDirection: 'row' }}>
                     <View style={{ flex: 1 }}>
                         <TextBox
@@ -59,7 +59,7 @@ export default class SignupStep1 extends Component {
                             maxLength={24}
                             autoShrinkTextLimit={14}
                             name="firstName"
-                            hint={t('title_firstName')} />
+                            hint={t('firstName')} />
                     </View>
                     <View style={{ flex: 1 }}>
                         <TextBox
@@ -69,7 +69,7 @@ export default class SignupStep1 extends Component {
                             maxLength={24}
                             autoShrinkTextLimit={14}
                             name="lastName"
-                            hint={t('title_lastName')} />
+                            hint={t('lastName')} />
                     </View>
                 </View>
                 <LanguagePickerBox />

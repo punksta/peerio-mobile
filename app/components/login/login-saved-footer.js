@@ -16,10 +16,10 @@ export default class LoginSavedFooter extends Component {
             <View style={[styles.container.footer, { opacity: enabled ? 1 : 0.5 }]}>
                 <View style={style.row}>
                     <TouchableOpacity style={style.button.base} onPress={() => enabled && loginState.useMasterPassword()}>
-                        <Text style={style.button.text}>{t('button_useMasterPassword')}</Text>
+                        <Text style={style.button.text}>{t('login_useMP')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.button.base} onPress={() => enabled && loginState.changeUserAction()}>
-                        <Text style={style.button.text}>{t('button_changeUserMobile')}</Text>
+                        <Text style={style.button.text}>{t('login_changeUserButton')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

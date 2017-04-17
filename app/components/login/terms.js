@@ -21,7 +21,7 @@ export default class Terms extends Component {
     render() {
         return (
             <Center>
-                <Button text={t('link_HHterms')} onPress={this.terms} />
+                <Button text={t('terms')} onPress={this.terms} />
             </Center>
         );
     }

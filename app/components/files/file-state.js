@@ -152,7 +152,7 @@ class FileState extends RoutedState {
     }
 
     get title() {
-        return this.currentFile ? this.currentFile.name : tx('title_fileFilterAll');
+        return this.currentFile ? this.currentFile.name : tx('files_allFiles');
     }
 
     fabAction() {

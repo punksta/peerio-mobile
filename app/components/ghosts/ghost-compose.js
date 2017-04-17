@@ -223,7 +223,7 @@ export default class ComposeMessage extends Component {
 
         return this.lineBlock(
             <View style={row}>
-                {this.textWithColon(tx('title_to'))}
+                {this.textWithColon(tx('to'))}
                 <View style={{ flexGrow: 1 }}>
                     <View style={[row, container]}>
                         {this.recipientsBox()}
@@ -248,7 +248,7 @@ export default class ComposeMessage extends Component {
     subjectBlock() {
         return this.lineBlock(
             <View style={row}>
-                {this.textWithColon(tx('title_subject'))}
+                {this.textWithColon(tx('subject'))}
                 <TextInput
                     underlineColorAndroid={'transparent'}
                     autoCapitalize="none"

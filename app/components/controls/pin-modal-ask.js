@@ -8,7 +8,7 @@ import PinModal from './pin-modal';
 @observer
 export default class PinModalAsk extends PinModal {
     skipText = tu('button_cancel');
-    initialText = t('title_enterPIN');
+    initialText = t('passphrase_enterpin');
     onEnter = pin => User.current.validatePasscode(pin);
     onSuccess = passphrase => uiState.routerModal.discard(passphrase);
 }

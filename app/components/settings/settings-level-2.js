@@ -35,7 +35,7 @@ export default class SettingsLevel2 extends Component {
                     title="2FA prompt"
                     onPress={() => this.twoFactorTest()} /> */}
                 <SettingsItem
-                    title={t('title_MP')}
+                    title={t('passphrase')}
                     icon="visibility"
                     onPress={() => settingsState.showPassphrase()} />
             </View>

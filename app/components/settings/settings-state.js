@@ -16,7 +16,7 @@ class SettingsState extends RoutedState {
 
     get title() {
         const sr = this.subroute;
-        return sr ? tx(sr) : tx('title_settings');
+        return sr ? tx(sr) : tx('settings');
     }
 
     onTransition(active) {
@@ -56,7 +56,7 @@ class SettingsState extends RoutedState {
         if (!passphrase) {
             const hasPasscode = await user.hasPasscode();
             if (!hasPasscode) {
-                popupYes(tx('title_MP'), tx('passcode_notSet'));
+                popupYes(tx('passphrase'), tx('passcode_notSet'));
                 return;
             }
             passphrase = await this.routerModal.askPin();
@@ -68,7 +68,7 @@ class SettingsState extends RoutedState {
                 </Text>
             );
             popupCopyCancel(
-                tx('title_MP'),
+                tx('passphrase'),
                 tx('popup_masterPasswordText'),
                 mp
             ).then(r => {
