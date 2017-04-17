@@ -20,6 +20,8 @@ class SettingsState extends RoutedState {
     }
 
     onTransition(active) {
+        this.routerMain.isRightMenuVisible = false;
+        this.routerMain.isLeftHamburgerVisible = false;
         if (this.reaction) return;
         this.reaction = reaction(() => this.routerMain.currentIndex, (i) => {
             if (this.routerMain.route === 'settings') {
@@ -34,8 +36,6 @@ class SettingsState extends RoutedState {
     @action transition(subroute) {
         console.log(`settings-state.js: transition ${subroute}`);
         this.routerMain.route = 'settings';
-        this.routerMain.isRightMenuVisible = false;
-        this.routerMain.isLeftHamburgerVisible = false;
         if (subroute) {
             this.subroute = subroute;
             this.stack.push(subroute);
