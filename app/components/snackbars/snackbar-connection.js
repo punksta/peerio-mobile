@@ -6,6 +6,8 @@ import { t } from '../utils/translator';
 
 @observer
 export default class SnackbarConnection extends SnackbarBase {
+    get isVisible() { return !socket.connected; }
+
     // to override
     getText() {
         return socket.connected ? null : t('snackbar_connection');

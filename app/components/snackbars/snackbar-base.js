@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
+import { warnings, warningStates } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
 
 @observer
@@ -11,7 +12,7 @@ export default class SnackbarBase extends Component {
     constructor(props) {
         super(props);
         this.animatedHeight = new Animated.Value(0);
-        reaction(() => this.getText(), text => {
+        reaction(() => this.isVisible, text => {
             text ? this.show() : this.hide();
         });
     }
@@ -21,11 +22,11 @@ export default class SnackbarBase extends Component {
     }
 
     // to override
-    get autoDismiss() { return false; }
+    getText() { return null; }
 
-    // to override
-    getText() {
-        return null;
+    get isVisible() {
+        const w = warnings.current;
+        return !!(w && w.level === this.level && w.state === warningStates.SHOWING);
     }
 
     // to override
@@ -34,22 +35,19 @@ export default class SnackbarBase extends Component {
     }
 
     show() {
-        if (!this.getText()) {
+        if (!this.isVisible) {
             this._timer = null;
             return;
         }
         if (this._timer) {
             this._timer = null;
             this.animate(vars.snackbarHeight);
-            this.visible = true;
             return;
         }
         this._timer = setTimeout(() => this.show(), this.getShowDelay());
-        if (this.autoDismiss) setTimeout(() => this.tap(), 5000);
     }
 
     hide(cb) {
-        this.visible = false;
         this.animate(0, () => {
             cb && cb();
             this.show();
@@ -58,6 +56,7 @@ export default class SnackbarBase extends Component {
 
     tap() {
         console.log('snackbar-base.js: tap');
+        warnings.current.dismiss();
     }
 
     animate(toValue, cb) {

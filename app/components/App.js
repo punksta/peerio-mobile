@@ -8,7 +8,7 @@ import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
 import styles, { vars } from './../styles/styles';
-// import icebear from '../lib/icebear';
+import { clientApp } from '../lib/icebear';
 import push from '../lib/push';
 import '../lib/sounds';
 import './utils/bridge';
@@ -77,9 +77,11 @@ export default class App extends Component {
         uiState.appState = appState;
         if (appState === 'active') {
             push.disableServerSide();
+            clientApp.isFocused = true;
         }
         if (appState === 'background') {
             push.enableServerSide();
+            clientApp.isFocused = false;
         }
     }
 

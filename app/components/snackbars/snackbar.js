@@ -4,13 +4,10 @@ import snackbarState from './snackbar-state';
 
 @observer
 export default class Snackbar extends SnackbarBase {
-    // to override
-    get autoDismiss() { return true; }
+    level = 'medium';
 
     // to override
-    getText() {
-        return snackbarState.text;
-    }
+    getText() { return snackbarState.text; }
 
     tap() {
         this.hide(() => snackbarState.pop());
