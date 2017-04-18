@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.8.2",
+  "version": "3.9.0",
   "private": true,
   "scripts": {
     "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && rn-nodeify --install 'crypto, stream, process, events, vm' --hack && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
@@ -19,7 +19,7 @@
     "android-reinstall-gm": "adb shell pm uninstall -k com.peerio && adb install android/app/build/outputs/apk/app-x86-release-signed.apk",
     "lint": "eslint --fix --ext .js,.jsx .",
     "localize": "tx pull -af",
-    "release": "standard-version && git push --follow-tags origin master",
+    "release": "standard-version -r minor && git push --follow-tags origin master",
     "link": "react-native link",
     "build-ios-sim-debug": "cd ios && xcodebuild -project peeriomobile.xcodeproj -configuration Debug -scheme peeriomobile -destination platform='iOS Simulator,name=iPhone 6,OS=10.2' -derivedDataPath build",
     "build-ios-expandoo": "cd ios && xcodebuild -scheme expandoo -configuration Debug build",
