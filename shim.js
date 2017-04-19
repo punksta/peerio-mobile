@@ -48,6 +48,16 @@ global.WebSocket = function(url) {
 const cryptoShim = require('react-native-crypto');
 global.cryptoShim = cryptoShim;
 
+const randomBytes = cryptoShim.randomBytes;
+console.log(`shim.js: checking randomBytes`);
+console.log(randomBytes(8));
+
+const nacl = require('tweetnacl');
+nacl.setPRNG((x, n) => {
+	const a = randomBytes(n);
+	a.copy(x);
+});
+
 // global.WebSocket = global.originalWebSocket;
 // console.log('shim.js binaryType: ', ws.binaryType);
 // console.log('shim.js: ', global.originalWebSocket);
