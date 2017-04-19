@@ -31,7 +31,7 @@ export default class SignupFooter extends Component {
         );
 
         const prev = this.button(
-            signupState.isFirst ? tu('cancel') : tu('back'),
+            signupState.isFirst ? tu('button_cancel') : tu('back'),
             !signupState.isInProgress,
             () => signupState.prev());
 

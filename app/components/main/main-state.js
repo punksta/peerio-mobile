@@ -85,7 +85,7 @@ class MainState extends RoutedState {
 const mainState = new MainState();
 
 // mainState.showPopup({
-//     title: tx('passphrase'),
+//     title: tx('title_MP'),
 //     text: 'blue zeppelin runs aboard all',
 //     buttons: [
 //         { id: 'skip', text: tx('button_skip') },

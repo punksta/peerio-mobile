@@ -77,7 +77,7 @@ export default class SelectFiles extends Component {
                 {icons.dark('close', () => fileState.exitSelectFiles())}
                 <Center style={style}><Text style={textStyle}>Share to chat</Text></Center>
                 { selected ?
-                    icons.text(t('go'), () => fileState.submitSelectFiles(), goStyle) : icons.placeholder()}
+                    icons.text(t('button_go'), () => fileState.submitSelectFiles(), goStyle) : icons.placeholder()}
             </View>
         );
     }

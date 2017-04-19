@@ -44,7 +44,7 @@ export default class LoginSaved extends Component {
                     height: 30 // limit height
                 }}>
                     <Big style={styles.text.inverse}>
-                        {t('login_welcomeBack')}
+                        {t('title_welcomeBack')}
                         {' '}
                         <Bold>{loginState.firstName || loginState.username}</Bold>
                     </Big>
