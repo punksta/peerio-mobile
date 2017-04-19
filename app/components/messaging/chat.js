@@ -56,7 +56,8 @@ export default class Chat extends Component {
 
     item(message, i) {
         const layout = e => {
-            let { y, height } = e.nativeEvent.layout;
+            let { y } = e.nativeEvent.layout;
+            const { height } = e.nativeEvent.layout;
             if (message.id === this.topChatID) {
                 console.log(`chat.js: scroll top ${y}, ${this.indicatorHeight}`);
                 y -= this.indicatorHeight;

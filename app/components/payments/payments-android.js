@@ -9,7 +9,7 @@ class PaymentsAndroid extends PaymentsBase {
             .then(() => Alert.alert('Purchase Successful', id))
             .catch(e => {
                 console.error(e);
-                Alert.alert('Purchase Unsuccessful', id)
+                Alert.alert('Purchase Unsuccessful', id);
             });
     }
 

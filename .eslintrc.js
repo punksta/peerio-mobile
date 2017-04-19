@@ -15,7 +15,10 @@ module.exports = {
         'no-mixed-operators': 0,
         'new-cap': 0,
         'prefer-rest-params': 0,
-        'no-multi-assign': 0
+        'no-multi-assign': 0,
+        'no-unused-vars': 0,
+        'react/no-array-index-key': 0,
+        'max-len': 0
     },
     globals: {
         'requestAnimationFrame': false,

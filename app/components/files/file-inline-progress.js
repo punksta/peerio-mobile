@@ -7,10 +7,6 @@ import FileProgress from './file-progress';
 
 @observer
 export default class FileInlineProgress extends Component {
-    get downloadButton() {
-
-    }
-
     render() {
         const rowStyle = {
             flexGrow: 1,
