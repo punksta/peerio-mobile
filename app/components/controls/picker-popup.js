@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { LayoutAnimation, Picker, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import _ from 'lodash';
-import { t } from '../utils/translator';
+import { t, tu } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';

@@ -3,7 +3,7 @@ import {
     Text, WebView
 } from 'react-native';
 import { observable } from 'mobx';
-import { t } from '../utils/translator';
+import { t, tu } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';

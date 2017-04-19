@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import { observer } from 'mobx-react/native';
 import { tx } from '../utils/translator';
 import InputMain from './input-main';
-import { observer } from 'mobx-react/native';
 import chatState from '../messaging/chat-state';
 import fileState from '../files/file-state';
 import imagePicker from '../helpers/imagepicker';

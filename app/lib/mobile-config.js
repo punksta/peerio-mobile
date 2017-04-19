@@ -14,11 +14,11 @@ export default (c, icebear) => {
         mpDetail: 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
         tfaDetail: 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-',
         msgSignature: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
-        upgrade: 'https://www.peerio.com/pricing.html'
-	    proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
-	    proAccount: 'https://account.peerio.com',
-	    helpCenter: 'https://peerio.zendesk.com/',
-	    contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new'
+        upgrade: 'https://www.peerio.com/pricing.html',
+        proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
+        proAccount: 'https://account.peerio.com',
+        helpCenter: 'https://peerio.zendesk.com/',
+        contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new'
     };
 
     setUrlMap(cfg.translator.urlMap);
