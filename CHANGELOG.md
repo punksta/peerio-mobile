@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.11.0"></a>
+# [3.11.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.10.0...v3.11.0) (2017-04-19)
+
+
+### Features
+
+* **tests:** reworking tests for signup ([7bd10ca](https://github.com/PeerioTechnologies/peerio-mobile/commit/7bd10ca))
+
+
+
 <a name="3.10.0"></a>
 # [3.10.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.9.0...v3.10.0) (2017-04-19)
 
