@@ -88,7 +88,7 @@ export default class PickerPopup extends Component {
                         {up}
                         {down}
                     </View>
-                    {icons.text(t('button_ok'), () => this.close())}
+                    {icons.text(tu('button_ok'), () => this.close())}
                 </View>
                 <Picker
                     style={pickerStyle}

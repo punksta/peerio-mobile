@@ -51,7 +51,7 @@ function popupYes(title, subTitle, text) {
             subTitle: textControl(subTitle),
             contents: textControl(text),
             buttons: [{
-                id: 'ok', text: t('button_ok'), action: resolve
+                id: 'ok', text: tu('button_ok'), action: resolve
             }]
         });
     });
@@ -82,7 +82,7 @@ function popupCopyCancel(title, subTitle, text) {
         subTitle: textControl(subTitle),
         contents: textControl(text),
         buttons: [
-            { id: 'cancel', text: t('button_ok'), action: () => resolve(false), secondary: true },
+            { id: 'cancel', text: tu('button_ok'), action: () => resolve(false), secondary: true },
             { id: 'copy', text: t('title_copy'), action: () => resolve(true) }
         ]
     }));
@@ -95,7 +95,7 @@ function popupInput(title, value) {
             title,
             contents: inputControl(o),
             buttons: [{
-                id: 'ok', text: t('button_ok'), action: () => resolve(o.value)
+                id: 'ok', text: tu('button_ok'), action: () => resolve(o.value)
             }]
         });
     });
@@ -110,7 +110,7 @@ function popupInputCancel(title, value) {
             buttons: [{
                 id: 'cancel', text: t('button_cancel'), secondary: true
             }, {
-                id: 'ok', text: t('button_ok'), action: () => resolve(o.value)
+                id: 'ok', text: tu('button_ok'), action: () => resolve(o.value)
             }]
         });
     });
@@ -126,7 +126,7 @@ function popupTOS() {
             contents: <WebView
             source={{ html: tos }} />,
             buttons: [{
-                id: 'ok', text: t('button_ok'), action: resolve
+                id: 'ok', text: tu('button_ok'), action: resolve
             }]
         });
     });
