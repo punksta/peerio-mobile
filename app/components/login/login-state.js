@@ -56,7 +56,7 @@ class LoginState extends RoutedState {
             .then(() => mainState.activateAndTransition(user))
             .catch(e => {
                 console.error(e);
-                this.passphraseValidationMessage = tx('incorrectPasswordOrPINTitle');
+                this.passphraseValidationMessage = tx('error_wrongPassword');
                 return Promise.reject(new Error(this.error));
             })
             .finally(() => {
@@ -87,8 +87,7 @@ class LoginState extends RoutedState {
     async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         return (inProgress ? rnAlertYesNo(
-            tx('popup_areYouSure'),
-            tx('popup_fileTasksNotCompleted')) : Promise.resolve(true)
+            tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true)
         )
             .then(() => User.removeLastAuthenticated())
             .then(() => RNRestart.Restart())

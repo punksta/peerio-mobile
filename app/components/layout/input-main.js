@@ -100,7 +100,7 @@ export default class InputMain extends Component {
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
                         value={this.value}
-                        placeholder={tx('chat_inputPlaceholder')}
+                        placeholder={tx('title_chatPlaceholder')}
                         enablesReturnKeyAutomatically
                         returnKeyType="default"
                         minHeight={56}

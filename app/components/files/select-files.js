@@ -43,7 +43,7 @@ export default class SelectFiles extends Component {
                     onChangeText={text => this.onChangeFindFileText(text)}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    placeholder={tx('files_findAFile')}
+                    placeholder={tx('title_search')}
                     ref={ti => (this.textInput = ti)} style={style} />
             </View>
         );

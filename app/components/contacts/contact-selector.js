@@ -112,7 +112,7 @@ export default class ContactSelector extends Component {
                     onChangeText={text => this.onChangeFindUserText(text)}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    placeholder={tx('contacts_findSomeone')}
+                    placeholder={tx('title_userSearch')}
                     ref={ti => (this.textInput = ti)} style={style} />
             </View>
         );

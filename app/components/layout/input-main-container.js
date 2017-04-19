@@ -36,7 +36,7 @@ export default class InputMainContainer extends Component {
 
     addFiles() {
         const buttons = [
-            { name: 'share', title: tx('share_fromPeerio') }
+            { name: 'share', title: tx('title_shareFromFiles') }
         ];
         imagePicker.show(
             buttons,

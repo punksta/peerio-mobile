@@ -10,7 +10,7 @@ export default class SnackbarConnection extends SnackbarBase {
 
     // to override
     getText() {
-        return socket.connected ? null : t('snackbar_connection');
+        return socket.connected ? null : t('error_connecting');
     }
 
     // to override

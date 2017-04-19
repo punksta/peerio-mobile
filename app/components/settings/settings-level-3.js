@@ -45,12 +45,12 @@ export default class SettingsLevel2 extends Component {
             <View style={bgStyle}>
                 <View>
                     <Text style={{ color: vars.txtDark }}>
-                        {tx('2fa_info')}
+                        {tx('title_2FADetail')}
                     </Text>
                 </View>
                 <View style={{ marginVertical }}>
                     <Text style={labelStyle}>
-                        {tx('2fa_secretKey')}
+                        {tx('title_2FAsecretKey')}
                     </Text>
                     <View style={whiteStyle}>
                         <Text style={{ fontWeight: 'bold' }}>
@@ -60,18 +60,18 @@ export default class SettingsLevel2 extends Component {
                             flexDirection: 'row',
                             justifyContent: 'flex-end'
                         }}>
-                            <ButtonText text={tx('button_copyKey')} onPress={() => this.copyKey()} />
+                            <ButtonText text={tx('title_copy')} onPress={() => this.copyKey()} />
                         </View>
                     </View>
                 </View>
                 <View>
                     <Text>
-                        {tx('2fa_enter')}
+                        {tx('dialog_enter2FA')}
                     </Text>
                 </View>
                 <View style={{ marginVertical }}>
                     <Text style={labelStyle}>
-                        {tx('2fa_authenticatorCode')}
+                        {tx('title_2FACode')}
                     </Text>
                     <View style={{
                         flexDirection: 'row',
@@ -86,7 +86,7 @@ export default class SettingsLevel2 extends Component {
                             height: vars.inputHeight,
                             flexGrow: 1
                         }} value="123456" />
-                        <ButtonText text={tx('button_confirm')} />
+                        <ButtonText text={tx('button_continue')} />
                     </View>
                 </View>
             </View>

@@ -71,7 +71,7 @@ class MainState extends RoutedState {
         }
         console.log('main-state.js: touch id available but value is not set');
         console.log('main-state.js: offering to save');
-        if (await popupYesCancel(tx('touchId'), tx('setup_touchTitle'))) {
+        if (await popupYesCancel(tx('title_touchID'), tx('dialog_enableTouchID'))) {
             TinyDb.system.setValue(touchIdKey, true);
             await touchid.save(`user::${user.username}`, user.serializeAuthData());
             console.log('main-state.js: touch id saved');

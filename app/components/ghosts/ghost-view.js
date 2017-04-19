@@ -65,9 +65,9 @@ export default class Ghost extends Component {
 
     share() {
         Share.open({
-            title: tx('share_peerioMailTitle'),
+            title: tx('title_mail'),
             message: this.ghost.passphrase,
-            subject: tx('share_peerioMailSubject')
+            subject: tx('button_share')
         })
         .catch(() => {
             console.log(`ghost-view.js: share cancelled by user`);

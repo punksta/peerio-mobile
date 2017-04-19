@@ -10,7 +10,7 @@ class GhostState extends RoutedState {
 
     compose() {
         if (!User.current.canSendGhost()) {
-            popupUpgrade(tx('ghosts_sendingError'), null, tx('ghosts_quotaExceeded'));
+            popupUpgrade(tx('error_sendingMail'), null, tx('error_mailQuotaExceeded'));
             return;
         }
         this.isComposing = true;

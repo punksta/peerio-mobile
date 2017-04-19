@@ -96,12 +96,12 @@ export default class RightMenu extends Component {
 
         let items = [
             // i(t('title_mail'), 'ghosts', 'mail'),
-            i(t('messages'), 'chats', 'chat-bubble', chatStore.unreadMessages),
+            i(t('title_chats'), 'chats', 'chat-bubble', chatStore.unreadMessages),
             i(t('title_files'), 'files', 'folder', fileStore.unreadFiles),
             divider(),
             i(t('title_settings'), 'settings', 'settings'),
             // i(t('title_help', 'help', 'help')),
-            i(t('logs'), 'logs', 'help'),
+            i(t('title_help'), 'logs', 'help'),
             divider(),
             i2(t('Storage usage'), paymentCheckout, 'list', <PaymentStorageUsage />)
         ];

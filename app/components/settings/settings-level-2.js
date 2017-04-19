@@ -22,14 +22,14 @@ const bgStyle = {
 @observer
 export default class SettingsLevel2 extends Component {
     twoFactorTest() {
-        popupInputCancel(`${tx('popup_enter2FA')}:`);
+        popupInputCancel(`${tx('dialog_enter2FA')}:`);
     }
 
     security() {
         return (
             <View style={bgStyle}>
                 {/* <SettingsItem
-                    title={t('twoFactorAuth')}
+                    title={t('title_2FA')}
                     onPress={() => settingsState.transition('twoFactorAuth')} />
                 <SettingsItem
                     title="2FA prompt"

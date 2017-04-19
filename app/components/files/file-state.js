@@ -30,7 +30,7 @@ class FileState extends RoutedState {
     @action delete() {
         const f = this.currentFile ? [this.currentFile] : this.selected;
         const count = f.length;
-        const t = tx((count > 1) ? 'confirm_deleteFiles' : 'confirm_deleteFile', { count });
+        const t = tx((count > 1) ? 'dialog_confirmDeleteFiles' : 'dialog_confirmDeleteFile', { count });
         rnAlertYesNo(t)
             .then(() => {
                 f.forEach(item => {
@@ -62,7 +62,7 @@ class FileState extends RoutedState {
             TinyDb.system.getValue('saved_toExternalShown')
                 .then(shown => (shown ?
                     Promise.reject(new Error('file-state.js: already shown')) : Promise.resolve()))
-                .then(() => rnAlertYesNo(null, tx('saved_toExternal')))
+                .then(() => rnAlertYesNo(null, tx('dialog_toExternal')))
                 .then(() => {
                     TinyDb.system.setValue('saved_toExternalShown', true);
                     return Promise.resolve(true);
@@ -130,7 +130,7 @@ class FileState extends RoutedState {
             // TODO: better way to check that file passed stat check
             setTimeout(() => {
                 if (file.deleted) return;
-                popupInput(tx('popup_tapToRename'), fileHelpers.getFileNameWithoutExtension(fn))
+                popupInput(tx('title_fileName'), fileHelpers.getFileNameWithoutExtension(fn))
                     .then(newFileName => {
                         if (!newFileName) return Promise.resolve();
                         file.name = `${newFileName}.${ext}`;
@@ -141,7 +141,7 @@ class FileState extends RoutedState {
     }
 
     cancelUpload(file) {
-        return popupYesCancel(tx('popup_cancelFileUpload')).then(r => r && file.cancelUpload());
+        return popupYesCancel(tx('title_confirmCancelUpload')).then(r => r && file.cancelUpload());
     }
 
     onTransition(active, file) {

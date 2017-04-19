@@ -82,8 +82,8 @@ function popupCopyCancel(title, subTitle, text) {
         subTitle: textControl(subTitle),
         contents: textControl(text),
         buttons: [
-            { id: 'cancel', text: t('button_cancel'), action: () => resolve(false), secondary: true },
-            { id: 'copy', text: t('button_copy'), action: () => resolve(true) }
+            { id: 'cancel', text: t('button_ok'), action: () => resolve(false), secondary: true },
+            { id: 'copy', text: t('title_copy'), action: () => resolve(true) }
         ]
     }));
 }

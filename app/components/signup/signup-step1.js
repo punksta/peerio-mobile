@@ -74,7 +74,7 @@ export default class SignupStep1 extends Component {
                 </View>
                 <LanguagePickerBox />
                 <Text style={[style.text.info, { fontSize: 14 }]}>
-                    <T k="signup_TOSRequestText">{tosParser}</T>
+                    <T k="title_TOSRequestText">{tosParser}</T>
                 </Text>
                 <View style={{ flexGrow: 1 }} />
             </View>

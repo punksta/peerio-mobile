@@ -69,12 +69,12 @@ class SettingsState extends RoutedState {
             );
             popupCopyCancel(
                 tx('title_MP'),
-                tx('popup_masterPasswordText'),
+                tx('title_MPDetail'),
                 mp
             ).then(r => {
                 if (!r) return;
                 Clipboard.setString(passphrase);
-                snackbarState.pushTemporary(tx('popup_masterPasswordCopied'));
+                snackbarState.pushTemporary(tx('title_copied'));
             });
         }
     }

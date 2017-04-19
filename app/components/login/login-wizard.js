@@ -41,7 +41,7 @@ export default class LoginWizard extends Wizard {
         const s = styles.wizard.footer.button.base;
         return (this.index > 0) && (
             <View>
-                <Button style={s} onPress={() => (this.index--)} text={tu('back')} />
+                <Button style={s} onPress={() => (this.index--)} text={tu('button_back')} />
             </View>
         );
     }

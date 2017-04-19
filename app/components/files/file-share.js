@@ -5,7 +5,7 @@ import { t } from '../utils/translator';
 export default class FileShare extends Component {
     render() {
         return (
-            <ContactSelector action="share" title={t('contacts_shareWith')} />
+            <ContactSelector action="share" title={t('title_shareWith')} />
         );
     }
 }

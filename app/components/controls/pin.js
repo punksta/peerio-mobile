@@ -55,12 +55,12 @@ export default class Pin extends Component {
         this.pin = '';
         this.isConfirm = true;
         this.message = '';
-        this.subTitle = t('passcode_confirm');
+        this.subTitle = t('title_PINConfirm');
     }
 
     error(msg) {
         this.isConfirm = false;
-        this.message = msg || this.props.messageWrong || t('passphrase_wrongpin');
+        this.message = msg || this.props.messageWrong || t('error_wrongPIN');
     }
 
     initial() {
@@ -135,7 +135,7 @@ export default class Pin extends Component {
             } else {
                 if (this.props.preventSimplePin) {
                     if (!Util.pinEntropyCheck(this.pin)) {
-                        this.shake(t('signup_pinIsNotStrongEnough'));
+                        this.shake(t('error_PINWeak'));
                         return;
                     }
                 }
