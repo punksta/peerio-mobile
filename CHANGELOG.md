@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.10.0"></a>
+# [3.10.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.9.0...v3.10.0) (2017-04-19)
+
+
+### Features
+
+* **crypto:** upgrade to tweetnacl 1.0.0 ([0c10c86](https://github.com/PeerioTechnologies/peerio-mobile/commit/0c10c86))
+* **ui:** tag handlers for peerio-copy ([3c98563](https://github.com/PeerioTechnologies/peerio-mobile/commit/3c98563))
+
+
+
 <a name="3.9.0"></a>
 # [3.9.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.8.2...v3.9.0) (2017-04-18)
 
