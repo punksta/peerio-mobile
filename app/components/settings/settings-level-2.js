@@ -35,7 +35,7 @@ export default class SettingsLevel2 extends Component {
                     title="2FA prompt"
                     onPress={() => this.twoFactorTest()} /> */}
                 <SettingsItem
-                    title={t('passphrase')}
+                    title="passphrase"
                     icon="visibility"
                     onPress={() => settingsState.showPassphrase()} />
             </View>
@@ -46,7 +46,7 @@ export default class SettingsLevel2 extends Component {
         return (
             <View style={bgStyle}>
                 <SettingsItem
-                    title={t('Test Payment')}
+                    title="test_payment"
                     onPress={() => payments.test()} />
             </View>
         );

@@ -21,9 +21,9 @@ export default class SettingsLevel1 extends Component {
     render() {
         return (
             <View style={bgStyle}>
-                <SettingsItem title={t('profile')} disabled />
-                <SettingsItem title={t('security')} onPress={() => settingsState.transition('security')} />
-                <SettingsItem title={t('preferences')} disabled />
+                <SettingsItem title="profile" disabled />
+                <SettingsItem title="security" onPress={() => settingsState.transition('security')} />
+                <SettingsItem title="preferences" disabled />
 {/*                <SettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
 {/*                <SettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
             </View>

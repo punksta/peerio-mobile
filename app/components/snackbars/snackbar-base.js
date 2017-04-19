@@ -12,8 +12,8 @@ export default class SnackbarBase extends Component {
     constructor(props) {
         super(props);
         this.animatedHeight = new Animated.Value(0);
-        reaction(() => this.isVisible, text => {
-            text ? this.show() : this.hide();
+        reaction(() => this.isVisible && this.text, vis => {
+            vis ? this.show() : this.hide();
         });
     }
 

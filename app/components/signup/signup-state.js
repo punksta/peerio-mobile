@@ -84,7 +84,7 @@ addValidation(signupState, 'email', validators.email, 1);
 addValidation(signupState, 'firstName', validators.firstName, 2);
 addValidation(signupState, 'lastName', validators.lastName, 3);
 
-if (__DEV__) {
+if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
     when(() => !process.env.PEERIO_AUTOLOGIN && signupState.isConnected && signupState.isActive, () => {
         const s = signupState;
         const rnd = new Date().getTime();

@@ -18,6 +18,7 @@ class UIState extends RoutedState {
     @observable pickerHeight = 200;
     @observable languageSelected = 'en';
     @observable appState = 'active';
+    @observable debugText = 'test';
     @observable languages = {
         en: `English`,
         fr: `French`,
