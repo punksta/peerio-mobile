@@ -26,6 +26,7 @@
 		0235B5DB1E65DEAF001D77D1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */; };
 		0235B6611E664F02001D77D1 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B6561E664ECB001D77D1 /* libRNDeviceInfo.a */; };
 		023A731F1DA6D58B00E47992 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FDD4B41DA6457E004E1D5A /* libRNRandomBytes.a */; };
+		02420A521EA79E0D005FFB89 /* worker.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 02420A511EA79E0D005FFB89 /* worker.jsbundle */; };
 		0248F0721E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
 		025935601E809AAF00FAEE7E /* libInAppUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0259355D1E809AA400FAEE7E /* libInAppUtils.a */; };
 		026B0DA91E0384EF00B24721 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026B0DA61E0384D700B24721 /* libRCTAnimation.a */; };
@@ -399,6 +400,7 @@
 		02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		02321C5C1D80558E00282EB1 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.jsbundle; sourceTree = "<group>"; };
 		0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		02420A511EA79E0D005FFB89 /* worker.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = worker.jsbundle; sourceTree = "<group>"; };
 		0248F0711E5A59BF00C437A9 /* terms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = terms.txt; path = ../app/assets/terms.txt; sourceTree = "<group>"; };
 		025935571E809AA300FAEE7E /* InAppUtils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = InAppUtils.xcodeproj; path = "../node_modules/react-native-in-app-utils/InAppUtils.xcodeproj"; sourceTree = "<group>"; };
 		026B0DA01E0384D600B24721 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
@@ -703,6 +705,7 @@
 		13B07FAE1A68108700A75B9A /* peeriomobile */ = {
 			isa = PBXGroup;
 			children = (
+				02420A511EA79E0D005FFB89 /* worker.jsbundle */,
 				02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */,
 				02321C5C1D80558E00282EB1 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -1341,6 +1344,7 @@
 				B73DC4B1F0BD4E63BE1B4BD5 /* Foundation.ttf in Resources */,
 				02E096DC1DAE50E100641B85 /* dict in Resources */,
 				8390076B9DE5486982F0EBE9 /* Ionicons.ttf in Resources */,
+				02420A521EA79E0D005FFB89 /* worker.jsbundle in Resources */,
 				02DB41591DCD1B1C00E04176 /* Images.xcassets in Resources */,
 				1467A9A8E0304BE0953E715B /* Octicons.ttf in Resources */,
 				17093292DCFB4EFBB929257F /* Zocial.ttf in Resources */,
@@ -1364,7 +1368,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "cd $SRCROOT/..\nsource env.sh\n\nif [ \"$CONFIGURATION\" == \"Debug\" ] && [ -f \"ios/main.jsbundle\" ]; then\n    if lsof -Pi :8081 -sTCP:LISTEN -t >/dev/null ; then\n        echo \"Bundle RN: running sim and packager. skipping bundler.\"\n        exit 0\n    fi\nfi\n\nexport NODE_BINARY=node\n\n# clean up\nrm -f ios/main.jsbundle\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n   ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n# check that command was successful\n\nif [ ! -f ios/main.jsbundle ]; then\n    echo \"JS compilation failed. Please check the sources\"\n    exit 1\nfi\n";
+			shellScript = "cd $SRCROOT/..\nsource env.sh\n\nif [ \"$CONFIGURATION\" == \"Debug\" ] && [ -f \"ios/main.jsbundle\" ]; then\n    if lsof -Pi :8081 -sTCP:LISTEN -t >/dev/null ; then\n        echo \"Bundle RN: running sim and packager. skipping bundler.\"\n        exit 0\n    fi\nfi\n\nexport NODE_BINARY=node\n\n# clean up\nrm -f ios/main.jsbundle\nrm -f ios/worker.jsbundle\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n   ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\n    ./node_modules/.bin/react-native bundle --entry-file index.worker.js --bundle-output ios/worker.jsbundle --assets-dest --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.worker.js --bundle-output ios/worker.jsbundle --assets-dest --platform ios --reset-cache\nfi\n# check that command was successful\n\nif [ ! -f ios/main.jsbundle ]; then\n    echo \"JS compilation failed. Please check the sources\"\n    exit 1\nfi\n\nif [ ! -f ios/worker.jsbundle ]; then\n    echo \"JS worker compilation failed. Please check the sources\"\n    exit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

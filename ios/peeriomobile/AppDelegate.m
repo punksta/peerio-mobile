@@ -9,15 +9,17 @@
 
 #import "AppDelegate.h"
 
-#import "RCTBundleURLProvider.h"
-#import "RCTRootView.h"
-#import "RCTPushNotificationManager.h"
+#import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
+#import <React/RCTPushNotificationManager.h>
+#import "RNWorkersManager.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
- 
+  [RNWorkersManager sharedInstance].preferResourceEnabled = [NSNumber numberWithBool: YES];
+  [[RNWorkersManager sharedInstance] initWorker];
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
@@ -26,6 +28,7 @@
                                                       moduleName:@"peeriomobile"
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
+  [[RNWorkersManager sharedInstance] startWorkersWithRootView:rootView];                                                   
   rootView.backgroundColor = [[UIColor alloc] initWithRed:0.19f green:0.58f blue:0.81f alpha:1];
   NSArray *allPngImageNames = [[NSBundle mainBundle] pathsForResourcesOfType:@"png"
                                     inDirectory:nil];
@@ -46,6 +49,14 @@
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
+  
+  
+  
+//  dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 0.5);
+//  dispatch_after(delay, dispatch_get_main_queue(), ^(void){
+      // do work in the UI thread here
+//  });
+  
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   return YES;

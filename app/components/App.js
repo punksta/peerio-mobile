@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { View, PanResponder, AppState, ActivityIndicator, NativeModules } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { Worker } from 'rn-workers';
 import PopupLayout from './layout/popup-layout';
 import ModalLayout from './layout/modal-layout';
 import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
 import styles, { vars } from './../styles/styles';
-import { clientApp } from '../lib/icebear';
+import { clientApp, crypto } from '../lib/icebear';
+import worker from '../lib/worker';
+import { scryptToWorker } from '../lib/scrypt-worker';
 import push from '../lib/push';
 import '../lib/sounds';
 import './utils/bridge';
@@ -67,9 +68,11 @@ export default class App extends Component {
         AppState.addEventListener('change', this._handleAppStateChange);
         AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
         NativeModules.PrivacySnapshot && NativeModules.PrivacySnapshot.enabled(true);
-        /* this.worker = new Worker();
-        this.worker.onmessage = message => console.log(message);
-        this.worker.postMessage("Hey Worker!") */
+        worker.init()
+        .then(() => {
+            console.log('App.js: settings worker scrypt');
+            crypto.setScrypt(scryptToWorker);
+        });
     }
 
     _handleAppStateChange(appState) {
