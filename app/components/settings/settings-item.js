@@ -5,7 +5,7 @@ import {
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
-
+import { t } from '../utils/translator';
 
 const itemContainerStyle = {
     flexGrow: 1,
@@ -30,11 +30,12 @@ export default class SettingsItem extends Component {
         return (
             <TouchableOpacity
                 pressRetentionOffset={offset}
+                testID={this.props.title}
                 onPress={() => !this.props.disabled && this.press()}>
                 <View style={[itemContainerStyle]} pointerEvents="none">
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text style={{ color: this.props.disabled ? vars.txtLight : vars.txtDark }}>
-                            {this.props.title}
+                            {t(this.props.title)}
                         </Text>
                     </View>
                     <View style={{ flex: 0 }}>

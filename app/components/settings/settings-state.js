@@ -6,6 +6,7 @@ import PinModal from '../controls/pin-modal';
 import { User } from '../../lib/icebear';
 import { popupCopyCancel, popupYes } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
+import uiState from '../layout/ui-state';
 import { tx } from '../utils/translator';
 import touchId from '../touchid/touchid-bridge';
 
@@ -75,6 +76,7 @@ class SettingsState extends RoutedState {
                 if (!r) return;
                 Clipboard.setString(passphrase);
                 snackbarState.pushTemporary(tx('title_copied'));
+                uiState.debugText = passphrase;
             });
         }
     }

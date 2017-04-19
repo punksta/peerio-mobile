@@ -44,7 +44,7 @@ export default class HeaderMain extends Component {
                         ellipsizeMode="tail"
                         numberOfLines={1}
                         style={textStyle}>{this.props.title}</Text>
-                    <View style={{ backgroundColor: 'transparent' }}>
+                    <View style={{ backgroundColor: 'transparent' }} testID="rightMenuButton">
                         {icons.white('more-vert', () => routerMain.toggleRightMenu())}
                     </View>
                 </View>

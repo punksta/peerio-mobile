@@ -39,7 +39,7 @@ export default class RightMenu extends Component {
         };
         const action = () => (i.action ? i.action() : routerMain[i.route]());
         return (
-            <View style={{ backgroundColor: vars.bg }} key={key}>
+            <View style={{ backgroundColor: vars.bg }} testID={i.route} key={key}>
                 <TouchableOpacity onPress={action}>
                     <View style={itemStyle} pointerEvents="box-only">
                         { selected ? icons.colored(i.icon, null, vars.bg) : icons.dark(i.icon) }

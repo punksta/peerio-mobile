@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, PanResponder, AppState, ActivityIndicator, NativeModules } from 'react-native';
+import { View, Text, PanResponder, AppState, ActivityIndicator, NativeModules } from 'react-native';
 import { observer } from 'mobx-react/native';
 import PopupLayout from './layout/popup-layout';
 import ModalLayout from './layout/modal-layout';
@@ -105,6 +105,7 @@ export default class App extends Component {
                 <ModalLayout />
                 <PopupLayout />
                 {uiState.picker}
+                <Text style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
             </View>
         );
     }

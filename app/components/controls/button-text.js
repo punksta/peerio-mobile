@@ -20,6 +20,7 @@ export default class ButtonText extends Component {
 
         return (
             <TouchableOpacity
+                testID={this.props.testID}
                 pressRetentionOffset={vars.retentionOffset}
                 style={touchable}
                 onPress={onPress}>
@@ -33,6 +34,7 @@ export default class ButtonText extends Component {
 
 ButtonText.propTypes = {
     text: React.PropTypes.any,
+    testID: React.PropTypes.any,
     onPress: React.PropTypes.any,
     secondary: React.PropTypes.bool
 };

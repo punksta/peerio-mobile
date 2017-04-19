@@ -23,6 +23,7 @@ export default class PopupLayout extends Component {
         const { text, id, secondary } = item;
         return (
             <ButtonText
+                testID={`popupButton_${id}`}
                 onPress={() => this.onPress(item)}
                 secondary={secondary}
                 key={id}
