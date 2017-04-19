@@ -5,6 +5,7 @@ import ComposeMessage from '../messaging/compose-message';
 import SelectFiles from '../files/select-files';
 import FileShare from '../files/file-share';
 import ContactView from '../contacts/contact-view';
+import ChatInfo from '../messaging/chat-info';
 import PinModalCreate from '../controls/pin-modal-create';
 import PinModalAsk from '../controls/pin-modal-ask';
 import routes from './routes';
@@ -22,6 +23,7 @@ class RouterModal extends Router {
         this.add('contactView', ContactView);
         this.add('createPin', PinModalCreate, true);
         this.add('askPin', PinModalAsk, true);
+        this.add('chatInfo', ChatInfo);
     }
 
     add(route, component, isWhite) {
