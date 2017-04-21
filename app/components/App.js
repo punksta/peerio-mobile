@@ -69,12 +69,12 @@ export default class App extends Component {
         AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
         NativeModules.PrivacySnapshot && NativeModules.PrivacySnapshot.enabled(true);
         worker.init()
-        .then(() => {
-            console.log('App.js: settings worker scrypt');
-            crypto.setScrypt(scryptToWorker);
-            console.log('App.js: settings worker sign/verify');
-            crypto.sign.setDetachedVerify(signDetachedToWorker, verifyDetachedToWorker);
-        });
+            .then(() => {
+                console.log('App.js: settings worker scrypt');
+                crypto.setScrypt(scryptToWorker);
+                console.log('App.js: settings worker sign/verify');
+                crypto.sign.setImplementation(signDetachedToWorker, verifyDetachedToWorker);
+            });
     }
 
     _handleAppStateChange(appState) {
@@ -101,14 +101,14 @@ export default class App extends Component {
             </View>
         ) : (
             <View
-                testID="appOuterViewBackground"
-                style={{ flexGrow: 1, backgroundColor: vars.bg }}>
-                <RouteNavigator routes={routerApp} />
-                <ModalLayout />
-                <PopupLayout />
-                {uiState.picker}
-                <Text style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
-            </View>
-        );
+                    testID="appOuterViewBackground"
+                    style={{ flexGrow: 1, backgroundColor: vars.bg }}>
+                    <RouteNavigator routes={routerApp} />
+                    <ModalLayout />
+                    <PopupLayout />
+                    {uiState.picker}
+                    <Text style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
+                </View>
+            );
     }
 }
