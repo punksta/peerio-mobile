@@ -20,10 +20,10 @@ class UIState extends RoutedState {
     @observable appState = 'active';
     @observable debugText = 'test';
     @observable languages = {
-        en: `English`,
-        fr: `French`,
-        es: `Spanish`,
-        ru: `Russian`
+        en: `English`
+        // fr: `French`,
+        // es: `Spanish`,
+        // ru: `Russian`
     };
 
     get bottomOffset() {
