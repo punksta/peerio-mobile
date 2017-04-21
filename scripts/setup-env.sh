@@ -6,9 +6,4 @@ if [ ! -f env.sh ]; then
   echo "Creating env.sh"
   echo "export PEERIO_SOCKET_SERVER=$PEERIO_SOCKET_SERVER" > env.sh
 fi
-if [ ! -f env-expandoo.sh ]; then
-  echo "Creating env-expandoo.sh"
-  echo "export PEERIO_SOCKET_SERVER=$PEERIO_SOCKET_SERVER" > env-expandoo.sh
-  echo "export EXECUTABLE_NAME=expandoo" > env-expandoo.sh
-fi
 mkdir -p app/lib/peerio-icebear
