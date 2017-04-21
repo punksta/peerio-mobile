@@ -9,7 +9,7 @@ import uiState from './layout/ui-state';
 import styles, { vars } from './../styles/styles';
 import { clientApp, crypto } from '../lib/icebear';
 import worker from '../lib/worker';
-import { scryptToWorker } from '../lib/scrypt-worker';
+import { scryptToWorker, signDetachedToWorker, verifyDetachedToWorker } from '../lib/scrypt-worker';
 import push from '../lib/push';
 import '../lib/sounds';
 import './utils/bridge';
@@ -72,6 +72,8 @@ export default class App extends Component {
         .then(() => {
             console.log('App.js: settings worker scrypt');
             crypto.setScrypt(scryptToWorker);
+            console.log('App.js: settings worker sign/verify');
+            crypto.sign.setDetachedVerify(signDetachedToWorker, verifyDetachedToWorker);
         });
     }
 

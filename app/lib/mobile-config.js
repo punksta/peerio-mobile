@@ -5,6 +5,7 @@ import KeyValueStorage from '../store/key-value-storage';
 
 export default (c, icebear) => {
     const cfg = c;
+    cfg.chatDecryptQueueDelay = 10;
     cfg.ghostFrontendUrl = 'https://mail.peerio.com';
     // --- TRANSLATOR
     cfg.translator = {};

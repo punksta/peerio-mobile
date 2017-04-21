@@ -1,5 +1,7 @@
+/* eslint-disable */
+import './shim.js';
 import { WorkerService } from 'rn-workers';
-import { scryptForWorker } from './app/lib/scrypt-worker';
+import { scryptForWorker, verifyDetachedForWorker, signDetachedForWorker } from './app/lib/scrypt-worker';
 
 const worker = new WorkerService();
 
@@ -10,12 +12,13 @@ function healthCheck(params) {
 
 const fns = {
     healthCheck,
-    scryptForWorker
+    scryptForWorker,
+    verifyDetachedForWorker,
+    signDetachedForWorker
 };
 
 function receive(message) {
-    console.log(`index.worker.js: receiving message`);
-    console.log(message);
+    console.log(`index.worker.js: receiving message from ${data.fn}`);
     const data = JSON.parse(message);
     if (!fns[data.fn]) throw new Error(`index.worker.js: no such function ${data.fn}`);
     try {
