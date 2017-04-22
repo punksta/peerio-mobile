@@ -94,21 +94,26 @@ export default class App extends Component {
         console.log(`App.js: AppState memory warning`);
     }
 
-    render() {
-        return !uiState.locale ? (
+    _placeHolder() {
+        return (
             <View style={{ flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <ActivityIndicator size="large" />
             </View>
-        ) : (
+        );
+    }
+
+    render() {
+        if (!uiState.locale) return this._placeHolder();
+        return (
             <View
-                    testID="appOuterViewBackground"
-                    style={{ flexGrow: 1, backgroundColor: vars.bg }}>
-                    <RouteNavigator routes={routerApp} />
-                    <ModalLayout />
-                    <PopupLayout />
-                    {uiState.picker}
-                    <Text style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
-                </View>
-            );
+                testID="appOuterViewBackground"
+                style={{ flexGrow: 1, backgroundColor: vars.bg }}>
+                <RouteNavigator routes={routerApp} />
+                <ModalLayout />
+                <PopupLayout />
+                {uiState.picker}
+                <Text style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
+            </View>
+        );
     }
 }
