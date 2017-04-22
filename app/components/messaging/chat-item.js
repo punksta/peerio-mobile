@@ -28,7 +28,7 @@ export default class ChatItem extends Component {
                 error={error}
                 onPress={onPress}
                 onLayout={this.props.onLayout}
-                onRetry={() => i.resend()}
+                onRetry={() => i.send()}
                 onCancel={() => this.props.chat.removeMessage(i)}
                 noTap
                 noBorderBottom
