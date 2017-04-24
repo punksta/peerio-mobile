@@ -18,8 +18,15 @@ const fns = {
 };
 
 function receive(message) {
-    console.log(`index.worker.js: receiving message from ${data.fn}`);
-    const data = JSON.parse(message);
+    let data = {};
+    try {
+        data = JSON.parse(message);
+        console.log(`index.worker.js: receiving message from ${data.fn}`);
+    } catch (e) {
+        send(data, null, `index.worker.js: error decoding message`);
+        return;
+    }
+
     if (!fns[data.fn]) throw new Error(`index.worker.js: no such function ${data.fn}`);
     try {
         fns[data.fn](data.params)
