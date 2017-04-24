@@ -4,6 +4,7 @@ from websocket import create_connection
 from common.abstractdriver import AbstractDriver
 import selenium
 import appium
+import os
 from selenium.common.exceptions import NoSuchElementException
 
 import common.processes
@@ -73,6 +74,13 @@ class IosDriver(AbstractDriver):
     def restart(self):
         self.appium.close_app()
         self.appium.launch_app()
+
+    def screen(self, name):
+        key = 'CIRCLE_ARTIFACTS'
+        path = '.'
+        if key in os.environ:
+            path = os.environ[key]
+        self.appium.save_screenshot(path + '/' + name)
 
 
 
