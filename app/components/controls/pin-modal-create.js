@@ -12,6 +12,9 @@ export default class PinModalCreate extends PinModal {
     onConfirm = (pin) => {
         console.log('pin-modal-create.js: success');
         this.pin.spinner(true);
-        setTimeout(() => User.current.setPasscode(pin).catch(() => {}).finally(() => this.hide()), 200);
+        const user = User.current;
+        setTimeout(() => user.setPasscode(pin)
+            .then(() => (user.hasPasscodeCached = true))
+            .catch(() => {}).finally(() => this.hide()), 200);
     }
 }

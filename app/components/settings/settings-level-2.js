@@ -5,6 +5,7 @@ import {
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
+import { User } from '../../lib/icebear';
 import settingsState from './settings-state';
 import { popupInputCancel } from '../shared/popups';
 import { t, tx } from '../utils/translator';
@@ -26,6 +27,7 @@ export default class SettingsLevel2 extends Component {
     }
 
     security() {
+        const user = User.current;
         return (
             <View style={bgStyle}>
                 {/* <SettingsItem
@@ -37,6 +39,7 @@ export default class SettingsLevel2 extends Component {
                 <SettingsItem
                     title="title_MP"
                     icon="visibility"
+                    disabled={!(user.hasPasscodeCached || user.hasTouchIdCached)}
                     onPress={() => settingsState.showPassphrase()} />
             </View>
         );

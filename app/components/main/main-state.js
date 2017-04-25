@@ -52,6 +52,7 @@ class MainState extends RoutedState {
 
     @action async saveUser() {
         const user = User.current;
+        user.hasPasscodeCached = await user.hasPasscode();
         await TinyDb.system.setValue('lastUsername', user.username);
         const skipTouchID = `${user.username}::skipTouchID`;
         const skipTouchIDValue = await TinyDb.system.getValue(skipTouchID);
@@ -67,6 +68,7 @@ class MainState extends RoutedState {
         const touchIdKey = `user::${user.username}::touchid`;
         if (await TinyDb.system.getValue(touchIdKey)) {
             console.log('main-state.js: touch id available and value is set');
+            user.hasTouchIdCached = true;
             return;
         }
         console.log('main-state.js: touch id available but value is not set');
@@ -75,6 +77,7 @@ class MainState extends RoutedState {
             TinyDb.system.setValue(touchIdKey, true);
             await touchid.save(`user::${user.username}`, user.serializeAuthData());
             console.log('main-state.js: touch id saved');
+            user.hasTouchIdCached = true;
             return;
         }
         console.log('main-state.js: user cancel touch id');
