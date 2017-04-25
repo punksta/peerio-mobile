@@ -9,6 +9,7 @@ const icebear = require('./peerio-icebear');
 const { socket, config, FileStreamAbstract } = icebear;
 mobileConfig(config, { FileStreamAbstract });
 
+console.log(`icebear.js: Starting connection to ${config.socketServerUrl}`);
 socket.start();
 
 global.icebear = icebear;
