@@ -6,7 +6,7 @@ import { scryptForWorker, verifyDetachedForWorker, signDetachedForWorker } from 
 const worker = new WorkerService();
 
 function healthCheck(params) {
-    console.log(`index.worker.js: health check ${params}`);
+    console.log(`index.worker.js: health check`);
     return Promise.resolve(true);
 }
 
@@ -21,7 +21,7 @@ function receive(message) {
     let data = {};
     try {
         data = JSON.parse(message);
-        console.log(`index.worker.js: receiving message from ${data.fn}`);
+        console.log(`index.worker.js[${data.messageIndex}]: receiving message from ${data.fn}`);
     } catch (e) {
         send(data, null, `index.worker.js: error decoding message`);
         return;

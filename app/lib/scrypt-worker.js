@@ -50,11 +50,16 @@ function verifyDetachedToWorker(message, signature, publicKey) {
     const messageB64 = bytesToB64(message);
     const signatureB64 = bytesToB64(signature);
     const publicKeyB64 = bytesToB64(publicKey);
+    console.log(new Error().stack);
     return call('verifyDetachedForWorker', { messageB64, signatureB64, publicKeyB64 });
 }
 
-function verifyDetachedForWorker(message, signature, publicKey) {
+function verifyDetachedForWorker(params) {
     let result = false;
+    const { messageB64, signatureB64, publicKeyB64 } = params;
+    const message = b64ToBytes(messageB64);
+    const signature = b64ToBytes(signatureB64);
+    const publicKey = b64ToBytes(publicKeyB64);
     try {
         result = nacl.sign.detached.verify(message, signature, publicKey);
     } catch (err) {
