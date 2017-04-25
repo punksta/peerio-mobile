@@ -26,7 +26,7 @@ class ContactState extends RoutedState {
     }
 
     @observable currentContact = null;
-    @observable findUserText = '';
+    @observable findUserText = process.env.PEERIO_SEARCH_USERNAME || '';
     @observable loading = false;
     @observable found = [];
     @observable recipients = [];

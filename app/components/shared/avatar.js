@@ -20,15 +20,19 @@ const itemStyle = {
     backgroundColor: 'white'
 };
 
+const bottomBorderStyle = {
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, .12)'
+};
+
 const itemContainerStyle = {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'flex-start',
     paddingLeft: 8,
     paddingRight: 4,
-    borderBottomWidth: 1,
     paddingBottom: 8,
-    borderBottomColor: 'rgba(0, 0, 0, .12)'
+
 };
 
 const itemContainerStyleNoBorder = {
@@ -85,7 +89,7 @@ export default class Avatar extends Component {
         return cs && ck && !!cs.has(ck);
     }
 
-    checkbox() {
+    get checkbox() {
         if (!this.props.checkbox) return null;
         const v = vars;
         const color = this.checked ? v.checkboxActive : v.checkboxInactive;
@@ -164,8 +168,13 @@ export default class Avatar extends Component {
         } : null;
     }
 
-    get itemContainerStyle() {
-        return this.props.noBorderBottom ? itemContainerStyleNoBorder : itemContainerStyle;
+    get borderStyle() {
+        return this.props.noBorderBottom ? null : bottomBorderStyle;
+    }
+
+    get checkedStyle() {
+        if (this.props.checkbox) return null;
+        return { backgroundColor: vars.bg };
     }
 
     renderCollapsed() {
@@ -185,10 +194,10 @@ export default class Avatar extends Component {
 
     renderFull() {
         return (
-            <View style={itemStyle}>
+            <View style={[itemStyle, bottomBorderStyle]}>
                 {this.checkbox}
                 <View style={[{ flexGrow: 1 }, this.errorStyle]}>
-                    <View style={this.itemContainerStyle}>
+                    <View style={itemContainerStyle}>
                         <TouchableOpacity onPress={this.props.onPress}>
                             <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
                         </TouchableOpacity>
