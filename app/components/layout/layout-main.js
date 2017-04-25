@@ -31,18 +31,12 @@ export default class LayoutMain extends Component {
         this.width = Dimensions.get('window').width;
         this.height = Dimensions.get('window').height;
         this.animatedX = new Animated.Value(0);
-        this.leftMenuAnimated = new Animated.Value(0);
         this.indexAnimation = reaction(() => routerMain.currentIndex, i => {
             console.log('layout-main.js: index animation');
             const toValue = -i * this.width;
             const duration = routerMain.suppressTransition ? 0 : vars.animationDuration;
             routerMain.suppressTransition = false;
             Animated.timing(this.animatedX, { toValue, duration })
-                .start();
-        }, true);
-        this.leftMenuAnimation = reaction(() => routerMain.isLeftMenuVisible, v => {
-            const toValue = v ? this.width * vars.menuWidthRatio : 0;
-            Animated.timing(this.leftMenuAnimated, { toValue, duration: vars.animationDuration })
                 .start();
         }, true);
     }
