@@ -78,3 +78,5 @@ cscope.*
 *.keystore*
 gp-service.json
 add-legacy.json
+
+temp
