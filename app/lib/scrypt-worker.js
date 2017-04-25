@@ -50,7 +50,6 @@ function verifyDetachedToWorker(message, signature, publicKey) {
     const messageB64 = bytesToB64(message);
     const signatureB64 = bytesToB64(signature);
     const publicKeyB64 = bytesToB64(publicKey);
-    console.log(new Error().stack);
     return call('verifyDetachedForWorker', { messageB64, signatureB64, publicKeyB64 });
 }
 
