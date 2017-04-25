@@ -3,6 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import { vars } from '../../styles/styles';
+import uiState from '../layout/ui-state';
 
 @observer
 export default class Layout1 extends Component {
@@ -24,6 +25,7 @@ export default class Layout1 extends Component {
 
     render() {
         const paddingTop = vars.layoutPaddingTop;
+        const paddingBottom = global.platform === 'android' ? 0 : uiState.keyboardHeight;
 
         const boxStyle = {
             flex: 1,
@@ -32,7 +34,8 @@ export default class Layout1 extends Component {
             borderColor: 'yellow',
             borderWidth: 0,
             height: this.scrollViewHeight,
-            paddingTop
+            paddingTop,
+            paddingBottom
         };
 
         const scrollViewStyle = {
