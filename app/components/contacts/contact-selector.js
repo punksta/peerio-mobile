@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TextInput, ActivityIndicator, TouchableOpacity
+    View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
@@ -8,11 +8,13 @@ import { when } from 'mobx';
 import { t, tx } from '../utils/translator';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
+import Bottom from '../controls/bottom';
+import SnackBar from '../snackbars/snackbar';
 import Avatar from '../shared/avatar';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import contactState from './contact-state';
-import { contactStore } from '../../lib/icebear';
+import snackbarState from '../snackbars/snackbar-state';
 
 const actions = {
     send: () => contactState.send(),
@@ -21,18 +23,6 @@ const actions = {
 
 @observer
 export default class ContactSelector extends Component {
-    constructor(props) {
-        super(props);
-        this.exit = this.exit.bind(this);
-    }
-
-    exit() {
-        contactState.exit();
-    }
-
-    removeRecipient(c) {
-        contactState.remove(c);
-    }
 
     userbox(contact, i) {
         const style = {
@@ -51,7 +41,7 @@ export default class ContactSelector extends Component {
         };
 
         return (
-            <TouchableOpacity key={i} onPress={() => this.removeRecipient(contact)} >
+            <TouchableOpacity key={i} onPress={() => contactState.remove(contact)} >
                 <View style={style}>
                     <Text style={textStyle}>{contact.username}</Text>
                     <Icon
@@ -84,10 +74,25 @@ export default class ContactSelector extends Component {
     }
 
     onChangeFindUserText(text) {
+        const items = text.split(/[ ,;]/);
+        if (items.length > 1) {
+            contactState.findUserText = items[0];
+            this.onSubmit();
+            return;
+        }
         contactState.findUserText = text;
         if (text && text.length > 0) {
             this.searchUser(text);
         }
+    }
+
+    onSubmit() {
+        if (!contactState.findUserText && contactState.recipients.length) {
+            this.action();
+            return;
+        }
+        this.searchUser(contactState.findUserText, true);
+        contactState.findUserText = '';
     }
 
     textbox() {
@@ -109,6 +114,9 @@ export default class ContactSelector extends Component {
                 {icons.dark('search')}
                 <TextInput
                     value={contactState.findUserText}
+                    returnKeyType="go"
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => this.onSubmit()}
                     onChangeText={text => this.onChangeFindUserText(text)}
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -137,7 +145,7 @@ export default class ContactSelector extends Component {
         };
         return (
             <View style={container}>
-                {icons.dark('close', this.exit)}
+                {icons.dark('close', () => contactState.exit())}
                 <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
                 {contactState.recipients.length ?
                     icons.text(t('button_go'), () => this.action()) : icons.placeholder()}
@@ -164,9 +172,20 @@ export default class ContactSelector extends Component {
         );
     }
 
-    searchUser(username) {
+    searchUser(username, addImmediately) {
         console.log(`compose-message.js: searching for ${username}`);
-        const c = contactStore.getContact(username);
+        const c = contactState.store.getContact(username);
+        if (addImmediately) {
+            contactState.add(c);
+            when(() => !c.loading, () => {
+                if (c.notFound) {
+                    LayoutAnimation.easeInEaseOut();
+                    contactState.remove(c);
+                    snackbarState.pushTemporary(`User ${username} is not found`);
+                }
+            });
+            return;
+        }
         contactState.loading = true;
         when(() => !c.loading, () => {
             console.log(`compose-message.js: search done for ${username}, not found: ${c.notFound}`);
@@ -226,12 +245,17 @@ export default class ContactSelector extends Component {
         const layoutStyle = {
             backgroundColor: 'white'
         };
+        const snackbar = (
+            <Bottom>
+                <SnackBar />
+            </Bottom>
+        );
         return (
             <Layout1
                 defaultBar
-                noFitHeight
                 body={body}
                 header={header}
+                footer={snackbar}
                 style={layoutStyle} />
         );
     }
