@@ -26,6 +26,8 @@ class Signup(common.testcase.TestCase):
         d.send_keys('email', username + '@email.com')
         d.send_keys('firstName', 'First')
         d.send_keys('lastName', 'Last')
+        d.tap('signupStep1Title')
+        sleep(1)
         d.tap('signupNext')
         d.screen('signup-step-2.png')
         sleep(2)

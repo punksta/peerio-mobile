@@ -38,7 +38,7 @@ export default class SignupStep1 extends Component {
         return (
             <View style={[{ marginTop: 32 }]}>
                 <Text style={style.text.title}>{t('title_signupStep1')}</Text>
-                <Text style={style.text.subTitle}>{t('title_settingsProfile')}</Text>
+                <Text testID="signupStep1Title" style={style.text.subTitle}>{t('title_settingsProfile')}</Text>
                 <TextBox
                     returnKeyType="next"
                     lowerCase
