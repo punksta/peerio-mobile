@@ -44,6 +44,11 @@ class SignupState extends RoutedState {
 
     @action next() {
         if (!this.isValid()) return;
+        if (process.env.PEERIO_QUICK_SIGNUP) {
+            this.pin = '125125';
+            this.finish();
+            return;
+        }
         (this.current < this.count - 1) ? this.current++ : this.finish();
     }
 
@@ -60,7 +65,7 @@ class SignupState extends RoutedState {
         console.log(`signup-state.js: ${username}`);
         user.username = username;
         user.email = email;
-        user.passphrase = __DEV__ ? 'icebear' : passphrase;
+        user.passphrase = __DEV__ && process.env.PEERIO_QUICK_SIGNUP ? 'icebear' : passphrase;
         user.firstName = firstName;
         user.lastName = lastName;
         user.localeCode = localeCode;
