@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     Text, Animated, TouchableWithoutFeedback
 } from 'react-native';
-import { reaction } from 'mobx';
+import { reaction, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { warnings, warningStates } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
@@ -12,13 +12,13 @@ export default class SnackbarBase extends Component {
     constructor(props) {
         super(props);
         this.animatedHeight = new Animated.Value(0);
-        reaction(() => this.isVisible && this.text, vis => {
-            vis ? this.show() : this.hide();
-        });
     }
 
     componentDidMount() {
         this.show();
+        reaction(() => this.isVisible, vis => {
+            vis ? this.show() : this.hide();
+        });
     }
 
     // to override
@@ -26,7 +26,7 @@ export default class SnackbarBase extends Component {
 
     get isVisible() {
         const w = warnings.current;
-        return !!(w && w.level === this.level && w.state === warningStates.SHOWING);
+        return !!(w && w.level === this.level && w.state === warningStates.SHOWING) && this.getText();
     }
 
     // to override

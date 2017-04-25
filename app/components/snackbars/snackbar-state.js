@@ -1,4 +1,4 @@
-import { observable, action, reaction, when } from 'mobx';
+import { observable, computed, action, reaction, when } from 'mobx';
 import { warnings, socket } from '../../lib/icebear';
 import { popupYes, popupSystemWarning } from '../shared/popups';
 import { t, tx } from '../utils/translator';
