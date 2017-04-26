@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.16.0"></a>
+# [3.16.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.15.0...v3.16.0) (2017-04-26)
+
+
+### Bug Fixes
+
+* **ui:** arrow hide ([4be3b6c](https://github.com/PeerioTechnologies/peerio-mobile/commit/4be3b6c))
+
+
+
 <a name="3.15.0"></a>
 # [3.15.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.14.0...v3.15.0) (2017-04-26)
 
