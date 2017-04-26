@@ -16,7 +16,6 @@ class ChatState {
             if (chat) {
                 console.log(`chat-store switched to ${chat.id}`);
                 console.log(`chat-store: loading ${chat.id}`);
-                this.save();
                 this.loading = false;
             }
         });
@@ -63,18 +62,13 @@ class ChatState {
 
     onTransition(active, c) {
         console.log(`chat-state.js: loading all chats`);
-        active && chatStore.loadAllChats();
+        active && chatStore.loadAllChats(10);
         if (active) {
             when(() => !chatStore.loading, () => {
                 if (!chatStore.chats.length) this.loading = false;
-                const chat = c || (chatStore.chats.length && chatStore.chats[chatStore.chats.length - 1]);
-                chat && this.activate(chat);
+                c && this.activate(chat);
             });
         }
-    }
-
-    @action async save() {
-        await TinyDb.user.setValue('main-state', { currentChat: this.currentChat.id });
     }
 
     get unreadMessages() {

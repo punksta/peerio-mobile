@@ -3,11 +3,11 @@ import {
     View, TouchableOpacity
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import routerMain from '../routes/router-main';
+import routerModal from '../routes/router-modal';
 import HeaderIconBase from './header-icon-base';
 
 @observer
-export default class BackIcon extends HeaderIconBase {
-    icon = 'arrow-back';
-    action = () => routerMain.back();
+export default class DownIcon extends HeaderIconBase {
+    icon = 'arrow-drop-down';
+    action = () => routerModal.chatInfo();
 }

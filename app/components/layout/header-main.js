@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import {
-    View, Text
+    View, Text, TouchableOpacity
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
 import routerMain from '../routes/router-main';
+import routerModal from '../routes/router-modal';
 import styles, { vars } from '../../styles/styles';
 import MessageIcon from './message-icon';
 import BackIcon from './back-icon';
+import DownIcon from './down-icon';
 
 @observer
 export default class HeaderMain extends Component {
@@ -19,7 +21,6 @@ export default class HeaderMain extends Component {
         const textStyle = {
             color: vars.white,
             fontWeight: vars.font.weight.regular,
-            flex: 1,
             fontSize: 16,
             alignItems: 'center',
             marginLeft: routerMain.isLeftHamburgerVisible ? 0 : vars.iconSize
@@ -40,10 +41,19 @@ export default class HeaderMain extends Component {
             }}>
                 <View style={containerStyle}>
                     {leftIcon}
-                    <Text
-                        ellipsizeMode="tail"
-                        numberOfLines={1}
-                        style={textStyle}>{this.props.title}</Text>
+                    <View style={{ flexGrow: 1, justifyContent: 'center' }}>
+                        <TouchableOpacity
+                            onPress={() => routerModal.chatInfo()}
+                            pressRetentionOffset={vars.retentionOffset}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text
+                                    ellipsizeMode="tail"
+                                    numberOfLines={1}
+                                    style={textStyle}>{this.props.title}</Text>
+                                <DownIcon />
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                     <View style={{ backgroundColor: 'transparent' }} testID="rightMenuButton">
                         {icons.white('more-vert', () => routerMain.toggleRightMenu())}
                     </View>

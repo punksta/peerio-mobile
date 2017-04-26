@@ -29,7 +29,7 @@ export default class LayoutModalExit extends Component {
             <View style={container}>
                 {icons.dark('close', () => this.props.onClose())}
                 <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
-                {icons.placeholder()}
+                {this.props.rightIcon || icons.placeholder()}
             </View>
         );
     }
@@ -71,5 +71,6 @@ export default class LayoutModalExit extends Component {
 LayoutModalExit.propTypes = {
     title: React.PropTypes.string,
     body: React.PropTypes.any,
-    onClose: React.PropTypes.any
+    onClose: React.PropTypes.any,
+    rightIcon: React.PropTypes.any
 };
