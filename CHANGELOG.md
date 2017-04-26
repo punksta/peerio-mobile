@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.15.0"></a>
+# [3.15.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.14.0...v3.15.0) (2017-04-26)
+
+
+### Bug Fixes
+
+* **worker:** increase timeout for worker operations ([58e625c](https://github.com/PeerioTechnologies/peerio-mobile/commit/58e625c))
+
+
+
 <a name="3.14.0"></a>
 # [3.14.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.13.0...v3.14.0) (2017-04-26)
 
