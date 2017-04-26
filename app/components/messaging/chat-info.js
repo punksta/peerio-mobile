@@ -80,7 +80,7 @@ export default class ChatInfo extends Component {
         const body = (
             <View>
                 {this.lineBlock(this.renameTextBox())}
-                {this.lineBlock(chat.participants.map(this.participant))}
+                {chat.participants && this.lineBlock(chat.participants.map(this.participant))}
                 {this.lineBlock(this.action('Hide chat', 'archive', this.hideChat))}
             </View>
         );

@@ -97,8 +97,8 @@ class ChatState extends RoutedState {
             .sendAck().then(sounds.sent).catch(sounds.destroy);
     }
 
-    titleAction = () => {
-        this.routerModal.chatInfo();
+    get titleAction() {
+        return this.currentChat ? (() => this.routerModal.chatInfo()) : null;
     }
 }
 
