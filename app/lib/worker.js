@@ -5,7 +5,7 @@ let worker = null;
 let messageIndex = 0;
 const handlers = {};
 const maxMessageIndex = Number.MAX_SAFE_INTEGER / 2;
-const callTimeout = 5000;
+const callTimeout = 50000;
 
 function call(fn, params) {
     if (worker === null) throw new Error('worker.js: worker is not initialized');
