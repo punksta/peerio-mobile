@@ -15,6 +15,7 @@ function scryptForWorker(params) {
     const salt = b64ToBytes(saltB64);
     const options = params.options || {};
     options.encoding = 'base64';
+    options.interruptStep = 0;
 
     return new Promise((resolve) =>
         scrypt(password, salt, options, result => {
