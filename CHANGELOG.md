@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.14.0"></a>
+# [3.14.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.13.0...v3.14.0) (2017-04-26)
+
+
+### Bug Fixes
+
+* **eslint:** indentation ([315de45](https://github.com/PeerioTechnologies/peerio-mobile/commit/315de45))
+* **tests:** add tapping on title to hide keyboard ([9d21f05](https://github.com/PeerioTechnologies/peerio-mobile/commit/9d21f05))
+* **tests:** increase timeout ([58f8520](https://github.com/PeerioTechnologies/peerio-mobile/commit/58f8520))
+* **ui:** padding for layout1 when keyboard is visible ([5f38165](https://github.com/PeerioTechnologies/peerio-mobile/commit/5f38165))
+* **ui:** show checkbox when selecting contacts ([bfdd28b](https://github.com/PeerioTechnologies/peerio-mobile/commit/bfdd28b))
+* **ui:** snackbar hiding ([a3c9381](https://github.com/PeerioTechnologies/peerio-mobile/commit/a3c9381))
+* **ui:** uppercase OK ([e2049b3](https://github.com/PeerioTechnologies/peerio-mobile/commit/e2049b3))
+* **worker:** fix nullref ([54cc685](https://github.com/PeerioTechnologies/peerio-mobile/commit/54cc685))
+* **worker:** remove extra logs ([6c1f8a2](https://github.com/PeerioTechnologies/peerio-mobile/commit/6c1f8a2))
+
+
+### Features
+
+* **logs:** log server name when starting ([ba34233](https://github.com/PeerioTechnologies/peerio-mobile/commit/ba34233))
+* **tests:** faster quick signup ([1697f07](https://github.com/PeerioTechnologies/peerio-mobile/commit/1697f07))
+* **tests:** make screenshots ([6e5ac13](https://github.com/PeerioTechnologies/peerio-mobile/commit/6e5ac13))
+* **ui:** chat rename ([06350ba](https://github.com/PeerioTechnologies/peerio-mobile/commit/06350ba))
+* **ui:** disable all languages save for English ([22f6972](https://github.com/PeerioTechnologies/peerio-mobile/commit/22f6972))
+* **ui:** disable show master password if no pin and touchid is set ([12098b7](https://github.com/PeerioTechnologies/peerio-mobile/commit/12098b7))
+* **ui:** hide chat ([3e1b9dd](https://github.com/PeerioTechnologies/peerio-mobile/commit/3e1b9dd))
+* **ui:** space and enter and submit now add contact ([e5e5583](https://github.com/PeerioTechnologies/peerio-mobile/commit/e5e5583))
+* **workers:** hide some logs ([75fd236](https://github.com/PeerioTechnologies/peerio-mobile/commit/75fd236))
+* **workers:** sign and verify in workers ([862936c](https://github.com/PeerioTechnologies/peerio-mobile/commit/862936c))
+
+
+
 <a name="3.13.0"></a>
 # [3.13.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.12.0...v3.13.0) (2017-04-20)
 
