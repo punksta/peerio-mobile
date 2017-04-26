@@ -34,9 +34,14 @@ export default class ChatInfo extends Component {
         );
     }
 
+    hideChat = () => {
+        chatState.currentChat.hide();
+        chatState.routerModal.discard();
+    }
+
     action(title, icon, action) {
         return (
-            <TouchableOpacity pressRetentionOffset={vars.retentionOffset}>
+            <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={action}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     {icons.dark(icon, action)}
                     <Text>{title}</Text>
@@ -76,7 +81,7 @@ export default class ChatInfo extends Component {
             <View>
                 {this.lineBlock(this.renameTextBox())}
                 {this.lineBlock(chat.participants.map(this.participant))}
-                {this.lineBlock(this.action('Hide chat', 'archive'))}
+                {this.lineBlock(this.action('Hide chat', 'archive', this.hideChat))}
             </View>
         );
         const rightIcon = icons.dark(chat.isFavorite ? 'star' : 'star-border',
