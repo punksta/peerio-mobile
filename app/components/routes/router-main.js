@@ -82,6 +82,10 @@ class RouterMain extends Router {
         return this.current && this.current.routeState ? this.current.routeState.title : null;
     }
 
+    get titleAction() {
+        return this.current && this.current.routeState ? this.current.routeState.titleAction : null;
+    }
+
     get pages() {
         return this.current ? this.current.components : [];
     }

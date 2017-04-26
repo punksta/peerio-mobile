@@ -91,7 +91,7 @@ export default class LayoutMain extends Component {
                 pointerEvents={menuState ? 'box-only' : 'auto'}
                 style={outerStyle}>
                 <Animated.View style={{ flex: 1, transform: transformMenu }}>
-                    <HeaderMain title={routerMain.title} />
+                    <HeaderMain />
                     <SnackBarConnection />
                     <Animated.View style={{ flex: 1, transform, width }}>
                         <View style={{ flex: 1, width }}>

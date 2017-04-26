@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { observer } from 'mobx-react/native';
+import { observable } from 'mobx';
 import LayoutModalExit from '../layout/layout-modal-exit';
+import Avatar from '../shared/avatar';
 import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -15,12 +17,66 @@ const flexRow = {
 
 @observer
 export default class ChatInfo extends Component {
+    @observable chatName = '';
+
+    componentDidMount() {
+        const chat = chatState.currentChat;
+        this.chatName = chat.chatName;
+    }
+
+    lineBlock(content) {
+        const s = {
+            borderBottomWidth: 1,
+            borderBottomColor: 'rgba(0, 0, 0, .12)'
+        };
+        return (
+            <View style={s}>{content}</View>
+        );
+    }
+
+    action(title, icon, action) {
+        return (
+            <TouchableOpacity pressRetentionOffset={vars.retentionOffset}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    {icons.dark(icon, action)}
+                    <Text>{title}</Text>
+                </View>
+            </TouchableOpacity>
+        );
+    }
+
+    participant = (contact, i) => {
+        const { username } = contact;
+        return (
+            <Avatar
+                noBorderBottom
+                contact={contact}
+                key={username || i}
+                message={username}
+                hideOnline />
+        );
+    }
+
+    renameTextBox() {
+        const chat = chatState.currentChat;
+        const update = () => chat.rename(this.chatName);
+        return (
+            <TextInput
+                onChangeText={text => (this.chatName = text)}
+                onBlur={update}
+                onEndEditing={update}
+                value={this.chatName}
+                style={{ paddingLeft: 18, height: vars.inputHeight }} />
+        );
+    }
 
     render() {
         const chat = chatState.currentChat;
         const body = (
             <View>
-                <Text>Chat Info</Text>
+                {this.lineBlock(this.renameTextBox())}
+                {this.lineBlock(chat.participants.map(this.participant))}
+                {this.lineBlock(this.action('Hide chat', 'archive'))}
             </View>
         );
         const rightIcon = icons.dark(chat.isFavorite ? 'star' : 'star-border',
@@ -29,7 +85,7 @@ export default class ChatInfo extends Component {
             body={body}
             title={chatState.title}
             rightIcon={rightIcon}
-            onClose={() => contactState.routerModal.discard()} />;
+            onClose={() => chatState.routerModal.discard()} />;
     }
 }
 

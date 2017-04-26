@@ -32,6 +32,7 @@ export default class HeaderMain extends Component {
             // paddingTop: vars.statusBarHeight,
             height: vars.headerHeight
         };
+        const titleAction = routerMain.titleAction;
         return (
             <View style={{
                 height: vars.headerSpacing,
@@ -43,14 +44,14 @@ export default class HeaderMain extends Component {
                     {leftIcon}
                     <View style={{ flexGrow: 1, justifyContent: 'center' }}>
                         <TouchableOpacity
-                            onPress={() => routerModal.chatInfo()}
+                            onPress={titleAction}
                             pressRetentionOffset={vars.retentionOffset}>
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <Text
                                     ellipsizeMode="tail"
                                     numberOfLines={1}
-                                    style={textStyle}>{this.props.title}</Text>
-                                <DownIcon />
+                                    style={textStyle}>{routerMain.title}</Text>
+                                {titleAction && <DownIcon action={titleAction} />}
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -63,6 +64,3 @@ export default class HeaderMain extends Component {
     }
 }
 
-HeaderMain.propTypes = {
-    title: React.PropTypes.string
-};

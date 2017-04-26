@@ -1,12 +1,14 @@
 import { observable, action, when, reaction } from 'mobx';
 import { chatStore, TinyDb } from '../../lib/icebear';
+import RoutedState from '../routes/routed-state';
 import sounds from '../../lib/sounds';
 
-class ChatState {
+class ChatState extends RoutedState {
     store = chatStore;
     _loading = true;
 
     constructor() {
+        super();
         chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, () => {
             console.log('chat-state.js: messages received');
             sounds.received();
@@ -93,6 +95,10 @@ class ChatState {
         sounds.ack();
         this.currentChat && this.currentChat
             .sendAck().then(sounds.sent).catch(sounds.destroy);
+    }
+
+    titleAction = () => {
+        this.routerModal.chatInfo();
     }
 }
 

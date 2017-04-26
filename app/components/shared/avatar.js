@@ -35,14 +35,6 @@ const itemContainerStyle = {
 
 };
 
-const itemContainerStyleNoBorder = {
-    paddingRight: 4,
-    flexGrow: 1,
-    paddingLeft: 8,
-    flexDirection: 'row',
-    alignItems: 'flex-start'
-};
-
 const nameContainerStyle = {
     flexGrow: 1,
     flexDirection: 'row',
@@ -194,7 +186,7 @@ export default class Avatar extends Component {
 
     renderFull() {
         return (
-            <View style={[itemStyle, bottomBorderStyle]}>
+            <View style={[itemStyle, this.borderStyle]}>
                 {this.checkbox}
                 <View style={[{ flexGrow: 1 }, this.errorStyle]}>
                     <View style={itemContainerStyle}>
