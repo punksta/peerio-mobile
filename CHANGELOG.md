@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.17.0"></a>
+# [3.17.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.16.0...v3.17.0) (2017-04-27)
+
+
+### Bug Fixes
+
+* **scrypt:** always reset interruptStep to 0 ([4384f63](https://github.com/PeerioTechnologies/peerio-mobile/commit/4384f63))
+* chat selection ([bc769a2](https://github.com/PeerioTechnologies/peerio-mobile/commit/bc769a2))
+* temporary extensive logging ([eb767c1](https://github.com/PeerioTechnologies/peerio-mobile/commit/eb767c1))
+
+
+
 <a name="3.16.0"></a>
 # [3.16.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.15.0...v3.16.0) (2017-04-26)
 
