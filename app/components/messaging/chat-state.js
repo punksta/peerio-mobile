@@ -68,7 +68,7 @@ class ChatState extends RoutedState {
         if (active) {
             when(() => !chatStore.loading, () => {
                 if (!chatStore.chats.length) this.loading = false;
-                c && this.activate(chat);
+                c && this.activate(c);
             });
         }
     }
