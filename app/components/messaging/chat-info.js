@@ -86,11 +86,11 @@ export default class ChatInfo extends Component {
         );
         const rightIcon = icons.dark(chat.isFavorite ? 'star' : 'star-border',
             () => chat.toggleFavoriteState());
-        return <LayoutModalExit
+        return (<LayoutModalExit
             body={body}
             title={chatState.title}
             rightIcon={rightIcon}
-            onClose={() => chatState.routerModal.discard()} />;
+            onClose={() => chatState.routerModal.discard()} />);
     }
 }
 

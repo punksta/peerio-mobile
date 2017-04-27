@@ -31,7 +31,7 @@ const itemContainerStyle = {
     alignItems: 'flex-start',
     paddingLeft: 8,
     paddingRight: 4,
-    paddingBottom: 8,
+    paddingBottom: 8
 
 };
 
