@@ -119,6 +119,8 @@ class LoginState extends RoutedState {
         await touchId.load();
         if (!touchId.available) return false;
         const data = await touchId.get(`user::${this.username}`);
+        console.log('touchid data');
+        console.log(data);
         if (!data) return false;
         this.loginCached(JSON.parse(data)).catch(e => console.log(e));
         return true;
