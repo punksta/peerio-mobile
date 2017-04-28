@@ -24,7 +24,11 @@ export default class RouteNavigator extends Component {
             if (newIndex === oldIndex - 1) {
                 this.nav.pop();
             } else if (newIndex < oldIndex) {
-                this.nav.jumpTo(rInfo);
+                try {
+                    this.nav.jumpTo(rInfo);
+                } catch (e) {
+                    console.error(e);
+                }
             } else {
                 this.nav.push(rInfo);
             }

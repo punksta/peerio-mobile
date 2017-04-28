@@ -19,6 +19,7 @@ class LoginState extends RoutedState {
     @observable changeUser = false;
     @observable current = 0;
     _prefix = 'login';
+    _resetTouchId = null;
 
     @action changeUserAction() {
         if (this.isInProgress) return;
@@ -54,6 +55,14 @@ class LoginState extends RoutedState {
         return user.login()
             .then(() => console.log('login-state.js: logged in'))
             .then(() => mainState.activateAndTransition(user))
+            .then(async () => {
+                if (this._resetTouchId) {
+                    console.log('login-state.js: fixing touch id');
+                    await touchId.delete(`user::${this.username}`);
+                    await mainState.saveUserTouchId();
+                    this._resetTouchId = false;
+                }
+            })
             .catch(e => {
                 console.error(e);
                 this.passphraseValidationMessage = tx('error_wrongPassword');
@@ -75,7 +84,7 @@ class LoginState extends RoutedState {
         });
     }
 
-    @action loginCached(data) {
+    @action loginCached = (data) => {
         const user = new User();
         user.deserializeAuthData(data);
         this.isInProgress = true;
@@ -119,11 +128,17 @@ class LoginState extends RoutedState {
         await touchId.load();
         if (!touchId.available) return false;
         const data = await touchId.get(`user::${this.username}`);
-        console.log('touchid data');
-        console.log(data);
+        // console.log('touchid data');
+        // console.log(data);
         if (!data) return false;
-        this.loginCached(JSON.parse(data)).catch(e => console.log(e));
-        return true;
+        return Promise.resolve(data)
+            .then(JSON.parse)
+            .then(this.loginCached)
+            .then(() => true)
+            .catch(e => {
+                console.log('login-state.js: logging in with touch id failed');
+                this._resetTouchId = true;
+            });
     }
 }
 

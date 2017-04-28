@@ -1,30 +1,42 @@
+import { NativeModules } from 'react-native';
 import { observable, action } from 'mobx';
 import TouchID from 'react-native-touch-id-value';
 
-const touchid = observable({
-    available: null,
+const { RNTouchIDValue } = NativeModules;
 
-    load: action.bound(async function() {
-        this.available = await TouchID.isFeatureAvailable();
-        console.log(`touchid-bridge.js: ${touchid.available}`);
-    }),
+class TouchIdBridge {
+    @observable available = false;
+
+    load = async () => {
+        if (!RNTouchIDValue) return;
+        this.available = await RNTouchIDValue.isFeatureAvailable();
+        console.log(`touchid-bridge.js: ${this.available}`);
+    }
 
     save(key, value) {
         console.log(`touchid-bridge.js: saving ${key}:${value.length}`);
-        return TouchID.save(key, value).catch(e => {
+        return RNTouchIDValue.saveValue(value, key).catch(e => {
             console.log(`touchid-bridge.js: error saving ${key}`);
-            console.error(e);
+            console.log(e);
         });
-    },
+    }
 
     get(key) {
         console.log(`touchid-bridge.js: requesting ${key}`);
-        return TouchID.get(key).catch(e => {
+        return RNTouchIDValue.getValue(key).catch(e => {
             console.log(`touchdid-bridge.js: returned error from ${key}`);
             console.log(e);
             return Promise.resolve(null);
         });
     }
-});
 
-export default touchid;
+    delete(key) {
+        console.log(`touchid-bridge.js: deleting ${key}`);
+        return RNTouchIDValue.deleteValue(key).catch(e => {
+            console.log(`touchdid-bridge.js: error deleting ${key}`);
+            return Promise.resolve(null);
+        });
+    }
+}
+
+export default new TouchIdBridge();

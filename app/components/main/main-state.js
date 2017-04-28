@@ -50,6 +50,21 @@ class MainState extends RoutedState {
         }
     }
 
+    @action async saveUserTouchId() {
+        const user = User.current;
+        await touchid.save(`user::${user.username}`, user.serializeAuthData());
+        console.log('main-state.js: touch id saved');
+        user.hasTouchIdCached = true;
+    }
+
+    @action async damageUserTouchId() {
+        const user = User.current;
+        await touchid.delete(`user::${user.username}`);
+        await touchid.save(`user::${user.username}`, 'blah');
+        console.log('main-state.js: touch id damaged');
+        user.hasTouchIdCached = true;
+    }
+
     @action async saveUser() {
         const user = User.current;
         user.hasPasscodeCached = await user.hasPasscode();
@@ -75,9 +90,7 @@ class MainState extends RoutedState {
         console.log('main-state.js: offering to save');
         if (await popupYesCancel(tx('title_touchID'), tx('dialog_enableTouchID'))) {
             TinyDb.system.setValue(touchIdKey, true);
-            await touchid.save(`user::${user.username}`, user.serializeAuthData());
-            console.log('main-state.js: touch id saved');
-            user.hasTouchIdCached = true;
+            await this.saveUserTouchId();
             return;
         }
         console.log('main-state.js: user cancel touch id');

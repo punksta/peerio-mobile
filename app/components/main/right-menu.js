@@ -5,6 +5,7 @@ import {
 import { observer } from 'mobx-react/native';
 import routerMain from '../routes/router-main';
 import loginState from '../login/login-state';
+import mainState from '../main/main-state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import Swiper from '../controls/swiper';
@@ -109,7 +110,8 @@ export default class RightMenu extends Component {
         if (__DEV__) {
             items = items.concat([
                 divider(),
-                i2('Toggle connection', toggleConnection, 'cast-connected')
+                i2('Toggle connection', toggleConnection, 'cast-connected'),
+                i2('Damage TouchID', () => mainState.damageUserTouchId(), 'cast-connected')
             ]);
         }
 

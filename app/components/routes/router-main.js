@@ -96,7 +96,11 @@ class RouterMain extends Router {
     }
 
     onTransition(route, active, param) {
-        route && route.routeState && route.routeState.onTransition && route.routeState.onTransition(active, param);
+        try {
+            route && route.routeState && route.routeState.onTransition && route.routeState.onTransition(active, param);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     @action fabAction() {
