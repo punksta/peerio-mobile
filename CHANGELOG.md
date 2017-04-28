@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.20.0"></a>
+# [3.20.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.19.0...v3.20.0) (2017-04-28)
+
+
+### Bug Fixes
+
+* **build:** fix libsodium.a location ([7f693e2](https://github.com/PeerioTechnologies/peerio-mobile/commit/7f693e2))
+* **touchid:** recover damaged touchid ([aa9d00e](https://github.com/PeerioTechnologies/peerio-mobile/commit/aa9d00e))
+
+
+
 <a name="3.19.0"></a>
 # [3.19.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.18.0...v3.19.0) (2017-04-28)
 
