@@ -10,6 +10,7 @@ import styles, { vars } from './../styles/styles';
 import { clientApp, crypto } from '../lib/icebear';
 import worker from '../lib/worker';
 import { scryptToWorker, signDetachedToWorker, verifyDetachedToWorker } from '../lib/scrypt-worker';
+import { scryptNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import '../lib/sounds';
 import './utils/bridge';
@@ -72,6 +73,10 @@ export default class App extends Component {
             .then(() => {
                 console.log('App.js: settings worker scrypt');
                 crypto.setScrypt(scryptToWorker);
+                if (NativeModules.RNSodium && NativeModules.RNSodium.scrypt) {
+                    console.log('App.js: using native scrypt');
+                    crypto.setScrypt(scryptNative);
+                }
                 console.log('App.js: settings worker sign/verify');
                 crypto.sign.setImplementation(signDetachedToWorker, verifyDetachedToWorker);
             });
