@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.19.0"></a>
+# [3.19.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.18.0...v3.19.0) (2017-04-28)
+
+
+### Features
+
+* **crypto:** plug-in native crypto if available ([a4ccfe5](https://github.com/PeerioTechnologies/peerio-mobile/commit/a4ccfe5))
+* **crypto:** scrypt-native js ([49ec8de](https://github.com/PeerioTechnologies/peerio-mobile/commit/49ec8de))
+* **crypto:** sodium - react-native bridge ([3b22ae0](https://github.com/PeerioTechnologies/peerio-mobile/commit/3b22ae0))
+* **crypto:** temporary adding sodium lib to ios project ([252b4cc](https://github.com/PeerioTechnologies/peerio-mobile/commit/252b4cc))
+* **worker:** trace function time ([b14dcfc](https://github.com/PeerioTechnologies/peerio-mobile/commit/b14dcfc))
+
+
+
 <a name="3.18.0"></a>
 # [3.18.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.17.0...v3.18.0) (2017-04-27)
 
