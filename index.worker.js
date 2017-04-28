@@ -28,10 +28,15 @@ function receive(message) {
     }
 
     if (!fns[data.fn]) throw new Error(`index.worker.js: no such function ${data.fn}`);
+    const start = (new Date()).getTime();
     try {
         fns[data.fn](data.params)
             .then(r => send(data, r))
-            .catch(() => send(data, null, `index.worker.js: error in promise ${data.fn}`));
+            .catch(() => send(data, null, `index.worker.js: error in promise ${data.fn}`))
+            .then(() => {
+                const duration = (new Date()).getTime() - start;
+                console.log(`index.worker.js: ${data.fn} executed for ${duration}`);
+            })
     } catch (e) {
         send(data, null, `index.worker.js: error invoking function ${data.fn}`);
     }
