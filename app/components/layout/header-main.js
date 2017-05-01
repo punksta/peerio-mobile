@@ -19,6 +19,7 @@ export default class HeaderMain extends Component {
             leftIcon = <BackIcon />;
         }
         const textStyle = {
+            flexShrink: 1,
             color: vars.white,
             fontWeight: vars.font.weight.regular,
             fontSize: 16,
@@ -42,16 +43,18 @@ export default class HeaderMain extends Component {
             }}>
                 <View style={containerStyle}>
                     {leftIcon}
-                    <View style={{ flexGrow: 1, justifyContent: 'center' }}>
+                    <View style={{ flexGrow: 1, flexShrink: 1, justifyContent: 'center' }}>
                         <TouchableOpacity
                             onPress={titleAction}
                             pressRetentionOffset={vars.retentionOffset}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={{ flexDirection: 'row', flexGrow: 1, alignItems: 'center' }}>
                                 <Text
                                     ellipsizeMode="tail"
-                                    numberOfLines={1}
+                                    numberOfLines={2}
                                     style={textStyle}>{routerMain.title}</Text>
-                                {titleAction && <DownIcon action={titleAction} />}
+                                <View style={{ flex: 0, flexGrow: 0, flexShrink: 1 }}>
+                                    {titleAction && <DownIcon action={titleAction} />}
+                                </View>
                             </View>
                         </TouchableOpacity>
                     </View>
