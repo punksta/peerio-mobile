@@ -12,6 +12,9 @@ import FileItem from './file-item';
 import FileActions from './file-actions';
 import fileState from './file-state';
 
+const INITIAL_LIST_SIZE = 10;
+const PAGE_SIZE = 2;
+
 @observer
 export default class Files extends Component {
     constructor(props) {
@@ -24,6 +27,7 @@ export default class Files extends Component {
 
     @observable dataSource = null;
     @observable refreshing = false
+    @observable maxLoadedIndex = INITIAL_LIST_SIZE;
     actionsHeight = new Animated.Value(0)
 
     get data() {
@@ -48,10 +52,11 @@ export default class Files extends Component {
             fileState.routerMain.route === 'files',
             fileState.routerMain.currentIndex === 0,
             this.data,
-            this.data.length
+            this.data.length,
+            this.maxLoadedIndex
         ], () => {
-            console.log(`files.js: force update`);
-            this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
+            console.log(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
+            this.dataSource = this.dataSource.cloneWithRows(this.data.slice(0, this.maxLoadedIndex));
             this.forceUpdate();
         }, true);
     }
@@ -62,12 +67,20 @@ export default class Files extends Component {
         );
     }
 
+    onEndReached = () => {
+        console.log('files.js: on end reached');
+        this.maxLoadedIndex += PAGE_SIZE;
+    }
+
     listView() {
         return (
             <ListView
-                initialListSize={1}
+                initialListSize={INITIAL_LIST_SIZE}
+                pageSize={PAGE_SIZE}
                 dataSource={this.dataSource}
                 renderRow={this.item}
+                onEndReached={this.onEndReached}
+                onEndReachedThreshold={20}
                 onContentSizeChange={this.scroll}
                 enableEmptySections
                 ref={sv => (this.scrollView = sv)}
