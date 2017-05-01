@@ -8,6 +8,7 @@ import ProgressOverlay from '../shared/progress-overlay';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
+import ChatActionSheet from './chat-action-sheet';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
@@ -74,7 +75,13 @@ export default class Chat extends Component {
                 setTimeout(() => this.scrollView.scrollTo({ y, animated: false }), 0);
             }
         };
-        return <ChatItem key={message.id || i} chat={this.chat} message={message} onLayout={layout} />;
+        return (
+            <ChatItem
+                key={message.id || i}
+                message={message}
+                onRetryCancel={() => this._actionSheet.show(message, this.chat)}
+                onLayout={layout} />
+        );
     }
 
     layoutScrollView(event) {
@@ -214,6 +221,7 @@ export default class Chat extends Component {
                 style={{ flexGrow: 1, paddingBottom: 4 }}>
                 {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
                 <ProgressOverlay enabled={chatState.loading} />
+                <ChatActionSheet ref={sheet => (this._actionSheet = sheet)} />
             </View>
         );
     }

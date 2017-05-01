@@ -12,7 +12,8 @@ export default class ChatItem extends Component {
         const msg = i.text || '';
         const timestamp = i.timestamp;
         const text = msg.replace(/\n[ ]+/g, '\n');
-        const onPress = () => contactState.contactView(i.sender);
+        const onPressAvatar = () => contactState.contactView(i.sender);
+        const onPress = i.sendError ? this.props.onRetryCancel : null;
         const error = !!i.signatureError;
         return (
             <Avatar
@@ -27,10 +28,9 @@ export default class ChatItem extends Component {
                 key={key}
                 error={error}
                 onPress={onPress}
+                onPressAvatar={onPressAvatar}
                 onLayout={this.props.onLayout}
-                onRetry={() => i.send()}
-                onCancel={() => this.props.chat.removeMessage(i)}
-                noTap
+                onRetryCancel={this.props.onRetryCancel}
                 noBorderBottom
                 collapsed={!!i.groupWithPrevious}
             />
@@ -41,6 +41,6 @@ export default class ChatItem extends Component {
 ChatItem.propTypes = {
     onLayout: React.PropTypes.func,
     onPress: React.PropTypes.func,
-    chat: React.PropTypes.any.isRequired,
+    onRetryCancel: React.PropTypes.func,
     message: React.PropTypes.any.isRequired
 };
