@@ -60,6 +60,7 @@
     "react-addons-pure-render-mixin": "15.4.2",
     "react-dom": "15.4.2",
     "react-native": "https://github.com/PeerioTechnologies/react-native.git",
+    "react-native-actionsheet": "^2.1.0",
     "react-native-animatable": "^1.1.0",
     "react-native-billing": "^2.3.0",
     "react-native-cli": "*",

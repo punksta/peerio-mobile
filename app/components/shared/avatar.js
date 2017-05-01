@@ -99,23 +99,21 @@ export default class Avatar extends Component {
         );
     }
 
-    onPressText() {
+    onPressAll = () => {
         console.log(`avatar.js: onPressText`);
-        if (this.props.onPressText) {
-            return this.props.onPressText();
-        }
         if (this.props.error) {
             this.showError = !this.showError;
+            return null;
         }
-        if (this.props.onPress) {
-            return this.props.onPress();
+        if (this.props.sendError && this.props.onRetryCancel) {
+            return this.props.onRetryCancel();
         }
-        return null;
+        return this.props.onPress && this.props.onPress();
     }
 
     get message() {
         return (
-            <Text style={lastMessageTextStyle}>
+            <Text selectable style={lastMessageTextStyle}>
                 {tagify(this.props.message || '')}
             </Text>
         );
@@ -126,8 +124,8 @@ export default class Avatar extends Component {
             this.props.files.map(file => <FileInlineProgress key={file} file={file} />) : null;
     }
 
-    get signatureError() {
-        return <ErrorCircle invert visible={!!this.props.error} />;
+    get errorCircle() {
+        return <ErrorCircle onPress={this.onPressAll} invert={!this.props.sendError} visible={this.props.error || this.props.sendError} />;
     }
 
     get corruptedMessage() {
@@ -135,10 +133,14 @@ export default class Avatar extends Component {
     }
 
     get retryCancel() {
+        const notSentMessageStyle = {
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            marginBottom: 8
+        };
         return this.props.sendError ?
-            <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                {icons.dark('replay', this.props.onRetry)}
-                {icons.dark('cancel', this.props.onCancel)}
+            <View style={notSentMessageStyle}>
+                <Text style={{ color: vars.txtAlert }}>Message not sent</Text>
             </View> : null;
     }
 
@@ -152,7 +154,7 @@ export default class Avatar extends Component {
     }
 
     get errorStyle() {
-        return this.props.error || this.props.sendError ? {
+        return this.props.error ? {
             backgroundColor: '#ff000020',
             borderRadius: 14,
             marginVertical: 2,
@@ -169,47 +171,60 @@ export default class Avatar extends Component {
         return { backgroundColor: vars.bg };
     }
 
+    get avatar() {
+        return (
+            <TouchableOpacity
+                pressRetentionOffset={vars.retentionOffset}
+                onPress={this.props.onPressAvatar || this.onPressAll}>
+                <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
+            </TouchableOpacity>
+        );
+    }
+
+    get username() {
+        return (
+            <View style={nameContainerStyle}>
+                <Text ellipsizeMode="tail" style={nameTextStyle}>
+                    {this.props.contact.username}
+                </Text>
+                {this.date}
+            </View>
+        );
+    }
+
     renderCollapsed() {
         return (
-            <View style={itemStyle}>
-                <View style={[this.itemContainerStyle, { marginLeft: 66 }, this.errorStyle]}>
+            <View style={[itemStyle, this.errorStyle]}>
+                <View style={[this.itemContainerStyle, { marginLeft: 74 }]}>
                     {this.message}
                     <View style={{ flexGrow: 1 }}>
+                        {this.corruptedMessage}
                         {this.files}
-                        {this.signatureError}
+                        {this.retryCancel}
                     </View>
-                    {this.retryCancel}
                 </View>
+                {this.errorCircle}
             </View>
         );
     }
 
     renderFull() {
         return (
-            <View style={[itemStyle, this.borderStyle]}>
+            <View style={[itemStyle, this.borderStyle, this.errorStyle]}>
                 {this.checkbox}
-                <View style={[{ flexGrow: 1 }, this.errorStyle]}>
+                <View style={[{ flexGrow: 1 }]}>
                     <View style={itemContainerStyle}>
-                        <TouchableOpacity onPress={this.props.onPress}>
-                            <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => this.onPressText()}
-                            style={nameMessageContainerStyle}>
-                            <View style={nameContainerStyle}>
-                                <Text ellipsizeMode="tail" style={nameTextStyle}>
-                                    {this.props.contact.username}
-                                </Text>
-                                {this.date}
-                            </View>
+                        {this.avatar}
+                        <View style={nameMessageContainerStyle}>
+                            {this.username}
                             {this.message}
                             {this.files}
-                            {this.signatureError}
-                        </TouchableOpacity>
+                            {this.retryCancel}
+                        </View>
                         {this.icon}
                         <OnlineCircle visible={!this.props.hideOnline} online={this.props.online} />
                     </View>
-                    {this.retryCancel}
+                    {this.errorCircle}
                     {this.corruptedMessage}
                     <ReadReceiptList receipts={this.props.receipts} />
                 </View>
@@ -219,9 +234,16 @@ export default class Avatar extends Component {
 
     renderOuter(inner) {
         const opacity = this.props.sending ? 0.5 : 1;
+        const activeOpacity = this.props.noTap && !this.props.error && !this.props.sendError ?
+            1 : 0.2;
         return (
-            <View style={{ backgroundColor: vars.bg, opacity }} onLayout={this.props.onLayout}>
-                <TouchableOpacity onPress={this.props.onPress} activeOpacity={this.props.noTap ? 1 : 0.2}>
+            <View
+                style={{ backgroundColor: vars.white, opacity }}
+                onLayout={this.props.onLayout}>
+                <TouchableOpacity
+                    pressRetentionOffset={vars.retentionOffset}
+                    onPress={this.onPressAll}
+                    activeOpacity={activeOpacity}>
                     {inner}
                 </TouchableOpacity>
             </View >
@@ -236,9 +258,8 @@ export default class Avatar extends Component {
 
 Avatar.propTypes = {
     onPress: React.PropTypes.func,
-    onRetry: React.PropTypes.func,
-    onCancel: React.PropTypes.func,
-    onPressText: React.PropTypes.func,
+    onPressAvatar: React.PropTypes.func,
+    onRetryCancel: React.PropTypes.func,
     contact: React.PropTypes.any.isRequired,
     date: React.PropTypes.any,
     files: React.PropTypes.any,

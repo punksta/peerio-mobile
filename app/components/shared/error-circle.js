@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-    Text,
-    View
-} from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
 
 const diameter = 18;
@@ -19,8 +16,6 @@ export default class ErrorCircle extends Component {
         const borderColor = this.props.invert ? color1 : color2;
         const backgroundColor = this.props.invert ? color2 : color1;
         const tofuStyle = {
-            position: 'absolute',
-            right: 0,
             width,
             height,
             borderRadius: width / 2,
@@ -29,20 +24,26 @@ export default class ErrorCircle extends Component {
             backgroundColor,
             overflow: 'hidden',
             justifyContent: 'center',
-            alignItems: 'center',
-            margin: 4,
-            marginTop: 10
+            alignItems: 'center'
         };
-
+        const containerStyle = {
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            padding: 8
+        };
         return (
-            <View style={tofuStyle}>
-                <Text style={{ color: borderColor, fontSize: 12 * ratio, fontWeight: 'bold' }}>!</Text>
-            </View>
+            <TouchableOpacity onPress={this.props.onPress} style={containerStyle}>
+                <View style={tofuStyle}>
+                    <Text style={{ color: borderColor, fontSize: 12 * ratio, fontWeight: 'bold' }}>!</Text>
+                </View>
+            </TouchableOpacity>
         );
     }
 }
 
 ErrorCircle.propTypes = {
+    onPress: React.PropTypes.func,
     visible: React.PropTypes.bool,
     large: React.PropTypes.bool,
     invert: React.PropTypes.bool
