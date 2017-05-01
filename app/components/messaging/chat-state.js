@@ -87,13 +87,12 @@ class ChatState extends RoutedState {
     @action addMessage(msg, files) {
         this.currentChat && (
             files ? this.currentChat.shareFiles(files) : this.currentChat.sendMessage(msg)
-        ).then(sounds.sent).catch(sounds.destroy);
+        ).catch(sounds.destroy);
     }
 
     @action addAck() {
-        sounds.ack();
         this.currentChat && this.currentChat
-            .sendAck().then(sounds.sent).catch(sounds.destroy);
+            .sendAck().catch(sounds.destroy);
     }
 
     get titleAction() {
