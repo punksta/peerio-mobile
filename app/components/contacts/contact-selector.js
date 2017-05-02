@@ -181,7 +181,7 @@ export default class ContactSelector extends Component {
                 if (c.notFound) {
                     LayoutAnimation.easeInEaseOut();
                     contactState.remove(c);
-                    snackbarState.pushTemporary(`User ${username} is not found`);
+                    snackbarState.pushTemporary(t('error_usernameNotFound'));
                 }
             });
             return;
