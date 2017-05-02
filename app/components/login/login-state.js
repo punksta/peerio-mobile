@@ -1,4 +1,4 @@
-import { when, observable, action } from 'mobx';
+import { when, observable, action, reaction } from 'mobx';
 import RNRestart from 'react-native-restart';
 import mainState from '../main/main-state';
 import { User, validation, fileStore, socket } from '../../lib/icebear';
@@ -21,15 +21,23 @@ class LoginState extends RoutedState {
     _prefix = 'login';
     _resetTouchId = null;
 
+    constructor() {
+        super();
+        reaction(() => this.passphrase, () => (this.passphraseValidationMessage = null));
+    }
+
     @action changeUserAction() {
         if (this.isInProgress) return;
         this.changeUser = true;
         this.clean();
+        this.routes.app.loginStart();
     }
 
     @action checkSavedUserPin() {
         const user = new User();
         user.username = this.username;
+        this.firstName = '';
+        this.lastName = '';
         return user.hasPasscode().then(has => has && this.saved());
     }
 
@@ -39,13 +47,11 @@ class LoginState extends RoutedState {
     }
 
     @action clean() {
-        console.log('transitioning to clean');
         this.current = 0;
         this.username = '';
-        this.usernameValid = null;
         this.passphrase = '';
         this.isInProgress = false;
-        this.routes.app.loginStart();
+        this.resetValidationState();
     }
 
     @action saved = () => this.routes.app.loginSaved();
@@ -55,6 +61,7 @@ class LoginState extends RoutedState {
         return user.login()
             .then(() => console.log('login-state.js: logged in'))
             .then(() => mainState.activateAndTransition(user))
+            .then(() => this.clean())
             .then(async () => {
                 if (this._resetTouchId) {
                     console.log('login-state.js: fixing touch id');

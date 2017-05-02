@@ -30,7 +30,12 @@ export default class LoginWizard extends Wizard {
     }
 
     loginClean() {
-        return <LoginClean submit={() => { this.index++; loginState.checkSavedUserPin(); }} />;
+        const loginEnteredAction = () => {
+            this.index++;
+            loginState.passphrase = '';
+            loginState.checkSavedUserPin();
+        };
+        return <LoginClean submit={loginEnteredAction} />;
     }
 
     loginPassword() {

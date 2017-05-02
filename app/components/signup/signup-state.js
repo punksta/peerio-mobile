@@ -13,7 +13,6 @@ class SignupState extends RoutedState {
     @observable lastName = '';
     @observable pin = '';
     @observable current = 0;
-    @observable count = 0;
     // two pages of signup wizard
     @observable count = 2;
     _prefix = 'signup';
@@ -34,13 +33,20 @@ class SignupState extends RoutedState {
 
     transition = () => this.routes.app.signupStep1();
 
-    exit = () => this.routes.app.loginStart();
+    exit = () => {
+        this.username = '';
+        this.email = '';
+        this.firstName = '';
+        this.lastName = '';
+        this.pin = '';
+        this.current = 0;
+        this.resetValidationState();
+        this.routes.app.loginStart();
+    }
 
     @action reset() { this.current = 0; }
 
-    generatePassphrase() {
-        return PhraseDictionary.current.getPassphrase(5);
-    }
+    generatePassphrase = () => PhraseDictionary.current.getPassphrase(5);
 
     @action next() {
         if (!this.isValid()) return;
