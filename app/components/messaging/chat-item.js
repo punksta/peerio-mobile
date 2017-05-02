@@ -2,9 +2,24 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
 import Avatar from '../shared/avatar';
 import contactState from '../contacts/contact-state';
+import { t } from '../utils/translator';
 
 @observer
 export default class ChatItem extends Component {
+    getSystemMessageText(systemData) {
+        if (!systemData) return null;
+        switch (systemData.action) {
+            case 'rename':
+                return systemData.newName
+                    ? t('title_chatRenamed', { name: systemData.newName })
+                    : t('title_chatNameRemoved');
+            case 'create':
+                return t('title_chatCreated');
+            default:
+                return '';
+        }
+    }
+
     render() {
         const i = this.props.message;
         if (!i.sender) return null;
@@ -25,6 +40,7 @@ export default class ChatItem extends Component {
                 hideOnline
                 date={timestamp}
                 message={text}
+                systemMessage={this.getSystemMessageText(i.systemData)}
                 key={key}
                 error={error}
                 onPress={onPress}

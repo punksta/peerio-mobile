@@ -22,8 +22,7 @@ export default class AvatarCircle extends Component {
             height,
             borderRadius: width / 2,
             backgroundColor: '#CFCFCF',
-            margin: 4 * ratio,
-            marginTop: 10
+            margin: 4 * ratio
         };
         if (this.props.loading) {
             return <ActivityIndicator style={{ height, margin: 4 }} />;
@@ -36,7 +35,7 @@ export default class AvatarCircle extends Component {
             backgroundColor: color || '#fff'
         }];
         return (
-            <View>
+            <View style={{ borderWidth: 0, borderColor: 'green' }}>
                 <View style={coloredAvatarStyle}>
                     <Text style={{ color: 'white', fontSize: 12 * ratio }}>{letter}</Text>
                 </View>

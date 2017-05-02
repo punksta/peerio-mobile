@@ -17,7 +17,9 @@ const itemStyle = {
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    borderWidth: 0,
+    borderColor: 'red'
 };
 
 const bottomBorderStyle = {
@@ -28,14 +30,16 @@ const bottomBorderStyle = {
 const itemContainerStyle = {
     flexGrow: 1,
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     paddingLeft: 8,
     paddingRight: 4,
-    paddingBottom: 8
+    paddingBottom: 0
 
 };
 
 const nameContainerStyle = {
+    borderWidth: 0,
+    borderColor: 'red',
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center'
@@ -47,10 +51,11 @@ const nameMessageContainerStyle = {
     borderWidth: 0,
     borderColor: 'red',
     flexDirection: 'column',
+    justifyContent: 'center',
     paddingLeft: 16,
     marginLeft: 6,
     marginRight: 6,
-    paddingTop: 8
+    paddingTop: 0
 };
 
 const nameTextStyle = {
@@ -69,6 +74,10 @@ const lastMessageTextStyle = {
     color: vars.txtMedium,
     fontSize: 14,
     lineHeight: 22
+};
+
+const systemMessageStyle = {
+    fontStyle: 'italic'
 };
 
 @observer
@@ -112,9 +121,18 @@ export default class Avatar extends Component {
     }
 
     get message() {
-        return (
+        return this.props.message ? (
             <Text selectable style={lastMessageTextStyle}>
                 {tagify(this.props.message || '')}
+            </Text>
+        ) : null;
+    }
+
+    get systemMessage() {
+        const { systemMessage } = this.props;
+        return systemMessage && (
+            <Text style={[lastMessageTextStyle, systemMessageStyle]}>
+                {systemMessage}
             </Text>
         );
     }
@@ -200,6 +218,7 @@ export default class Avatar extends Component {
                     <View style={{ flexGrow: 1 }}>
                         {this.corruptedMessage}
                         {this.files}
+                        {this.systemMessage}
                         {this.retryCancel}
                     </View>
                 </View>
@@ -219,6 +238,7 @@ export default class Avatar extends Component {
                             {this.username}
                             {this.message}
                             {this.files}
+                            {this.systemMessage}
                             {this.retryCancel}
                         </View>
                         {this.icon}
@@ -266,6 +286,7 @@ Avatar.propTypes = {
     receipts: React.PropTypes.any,
     icon: React.PropTypes.string,
     message: React.PropTypes.string,
+    systemMessage: React.PropTypes.string,
     online: React.PropTypes.bool,
     error: React.PropTypes.bool,
     loading: React.PropTypes.bool,

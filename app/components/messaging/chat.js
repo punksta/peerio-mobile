@@ -190,7 +190,8 @@ export default class Chat extends Component {
     zeroStateItem() {
         const zsContainer = {
             borderBottomWidth: 1,
-            borderBottomColor: '#CFCFCF'
+            borderBottomColor: '#CFCFCF',
+            marginBottom: 12
         };
         const chat = this.chat;
         const avatars = (chat.participants || []).map(contact => (
