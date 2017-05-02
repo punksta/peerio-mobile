@@ -42,6 +42,7 @@ class Signup(common.testcase.TestCase):
         d.tap('popupButton_ok')
         d.wait_for_not_find('popupButton_ok')
 
-        # sleep(3)
+        sleep(3)
+        d.screen('signup-step-3.png')
         # d.tap('pin-cancel')
         # d.wait_for_find('mainLayout')
