@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.21.0"></a>
+# [3.21.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.20.0...v3.21.0) (2017-05-03)
+
+
+### Bug Fixes
+
+* **l18n:** use existing key instead of hardcoded english ([08164c3](https://github.com/PeerioTechnologies/peerio-mobile/commit/08164c3))
+* **ui:** ellipsis for long chat names ([7c419f9](https://github.com/PeerioTechnologies/peerio-mobile/commit/7c419f9))
+* **ui:** reset states between transitions in login/signup ([cc50519](https://github.com/PeerioTechnologies/peerio-mobile/commit/cc50519))
+
+
+### Features
+
+* **ui:** action sheet for chat retry/cancel ([dce4647](https://github.com/PeerioTechnologies/peerio-mobile/commit/dce4647))
+* **ui:** action sheet for retry/delete message send on failure ([01f4796](https://github.com/PeerioTechnologies/peerio-mobile/commit/01f4796))
+* **ui:** chat system messages and overall UI fix ([9737499](https://github.com/PeerioTechnologies/peerio-mobile/commit/9737499))
+* **ui:** icon for app review ([7e6bc87](https://github.com/PeerioTechnologies/peerio-mobile/commit/7e6bc87))
+* **ui:** remove sending sounds ([d989930](https://github.com/PeerioTechnologies/peerio-mobile/commit/d989930))
+* **ui:** removing sent and ack sending and sent sounds as well ([76f1ffc](https://github.com/PeerioTechnologies/peerio-mobile/commit/76f1ffc))
+* **ui:** virtual paging for files ([ce92bb9](https://github.com/PeerioTechnologies/peerio-mobile/commit/ce92bb9))
+
+
+
 <a name="3.20.0"></a>
 # [3.20.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.19.0...v3.20.0) (2017-04-28)
 
