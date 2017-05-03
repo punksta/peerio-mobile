@@ -3,7 +3,6 @@ import {
     View,
     StatusBar,
     Animated,
-    TouchableWithoutFeedback,
     Platform,
     Dimensions
 } from 'react-native';
@@ -12,9 +11,8 @@ import { reaction, observable } from 'mobx';
 import uiState from './ui-state';
 import InputMainContainer from './input-main-container';
 import Bottom from '../controls/bottom';
-import LeftMenu from '../main/left-menu';
-import RightMenu from '../main/right-menu';
 import HeaderMain from './header-main';
+import Tabs from './tabs';
 import SnackBar from '../snackbars/snackbar';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import Fab from '../shared/fab';
@@ -67,10 +65,6 @@ export default class LayoutMain extends Component {
 
     render() {
         const transform = [{ translateX: this.animatedX }];
-        const transformMenu = [
-            { translateX: routerMain.animatedLeftMenu },
-            { translateX: routerMain.animatedLeftMenuWidth }
-        ];
         const outerStyle = {
             backgroundColor: '#fff',
             flex: 1,
@@ -79,50 +73,39 @@ export default class LayoutMain extends Component {
             paddingBottom: global.platform === 'android' ? 0 : uiState.keyboardHeight
         };
 
-        const menuState = routerMain.isLeftMenuVisible || routerMain.isRightMenuVisible;
         const pages = routerMain.pages;
+        const currentPage = pages[routerMain.currentIndex];
         const currentComponent = routerMain.currentComponent;
-        const snackBar = !menuState &&
+        const snackBar =
             !this.modal && !currentComponent.suppressMainSnackBar && <SnackBar />;
 
         const width = this.width * pages.length;
         const animatedBlock = (
             <Animated.View
-                pointerEvents={menuState ? 'box-only' : 'auto'}
                 style={outerStyle}>
-                <Animated.View style={{ flex: 1, transform: transformMenu }}>
+                <View style={{ flex: 1 }}>
                     <HeaderMain />
                     <SnackBarConnection />
-                    <Animated.View style={{ flex: 1, transform, width }}>
-                        <View style={{ flex: 1, width }}>
-                            {this.pages(pages)}
-                        </View>
-                        {currentComponent.showInput && <InputMainContainer />}
-                    </Animated.View>
+                    <View style={{ flex: 1 }}>
+                        {currentPage}
+                    </View>
+                    {currentComponent.showInput && <InputMainContainer />}
                     <Bottom>
                         {currentComponent.isFabVisible && <Fab />}
                         {snackBar}
                     </Bottom>
-                </Animated.View>
+                    <Tabs />
+                </View>
             </Animated.View>
         );
-        const tapHider = menuState && (
-            <TouchableWithoutFeedback
-                onPress={() => routerMain.resetMenus()}>
-                <View style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0 }} />
-            </TouchableWithoutFeedback>
-         );
         return (
             <View
                 testID="mainLayout"
                 style={[styles.container.root]}>
                 {animatedBlock}
-                {tapHider}
-                <LeftMenu />
-                <RightMenu />
                 <StatusBar
                     barStyle={routerModal.isBlackStatusBar ? 'default' : 'light-content'}
-                    hidden={Platform.OS !== 'android' && menuState && !routerModal.modal} />
+                    hidden={false} />
             </View>
         );
     }

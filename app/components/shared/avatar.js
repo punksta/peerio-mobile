@@ -29,6 +29,7 @@ const bottomBorderStyle = {
 
 const itemContainerStyle = {
     flexGrow: 1,
+    flexShrink: 1,
     flexDirection: 'row',
     alignItems: 'center',
     paddingLeft: 8,
@@ -70,6 +71,8 @@ const dateTextStyle = {
 };
 
 const lastMessageTextStyle = {
+    flexGrow: 1,
+    flexShrink: 1,
     fontWeight: vars.font.weight.regular,
     color: vars.txtMedium,
     fontSize: 14,
@@ -121,8 +124,16 @@ export default class Avatar extends Component {
     }
 
     get message() {
+        const { ellipsize, bold } = this.props;
+        const ellipsizeMode = ellipsize ? 'tail' : undefined;
+        const numberOfLines = ellipsize ? 1 : undefined;
+        const boldStyle = bold ? { fontWeight: 'bold' } : null;
         return this.props.message ? (
-            <Text selectable style={lastMessageTextStyle}>
+            <Text
+                ellipsizeMode={ellipsizeMode}
+                numberOfLines={numberOfLines}
+                selectable
+                style={[lastMessageTextStyle, bold]}>
                 {tagify(this.props.message || '')}
             </Text>
         ) : null;
@@ -199,11 +210,11 @@ export default class Avatar extends Component {
         );
     }
 
-    get username() {
+    get title() {
         return (
             <View style={nameContainerStyle}>
                 <Text ellipsizeMode="tail" style={nameTextStyle}>
-                    {this.props.contact.username}
+                    {this.props.title || this.props.contact.username}
                 </Text>
                 {this.date}
             </View>
@@ -234,8 +245,8 @@ export default class Avatar extends Component {
                 <View style={[{ flexGrow: 1 }]}>
                     <View style={itemContainerStyle}>
                         {this.avatar}
-                        <View style={nameMessageContainerStyle}>
-                            {this.username}
+                        <View style={[nameMessageContainerStyle, { width: this.props.ellipsize ? 100 : undefined }]}>
+                            {this.title}
                             {this.message}
                             {this.files}
                             {this.systemMessage}
@@ -286,7 +297,8 @@ Avatar.propTypes = {
     receipts: React.PropTypes.any,
     icon: React.PropTypes.string,
     message: React.PropTypes.string,
-    systemMessage: React.PropTypes.string,
+    title: React.PropTypes.string,
+    systemMessage: React.PropTypes.any,
     online: React.PropTypes.bool,
     error: React.PropTypes.bool,
     loading: React.PropTypes.bool,
@@ -300,6 +312,8 @@ Avatar.propTypes = {
     collapsed: React.PropTypes.bool,
     sending: React.PropTypes.bool,
     sendError: React.PropTypes.bool,
+    ellipsize: React.PropTypes.bool,
+    bold: React.PropTypes.bool,
     onLayout: React.PropTypes.func
 };
 

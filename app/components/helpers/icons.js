@@ -88,20 +88,20 @@ const icons = {
 
     bubble(text) {
         const notificationStyle = {
-            backgroundColor: vars.bg,
+            backgroundColor: vars.notificationIcon,
             borderRadius: 14,
             overflow: 'hidden',
-            width: 32,
-            height: 24,
+            width: 14,
+            height: 14,
             marginRight: 8
         };
         return (
             <View style={notificationStyle}>
                 <Text style={{
                     color: 'white',
-                    fontSize: 14,
+                    fontSize: 8,
                     fontWeight: vars.font.weight.semiBold,
-                    lineHeight: 24,
+                    lineHeight: 14,
                     textAlign: 'center'
                 }}>{`${text}`} </Text>
             </View>

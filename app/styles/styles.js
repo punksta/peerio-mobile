@@ -33,6 +33,7 @@ const vars = {
     midlight: '#FFFFFF55',
     white: '#fff',
     whiteIcon: '#fff',
+    notificationIcon: '#f00',
     darkIcon: '#00000070',
     txtLight: '#bfdfef',
     txtAlert: '#ff0000aa',

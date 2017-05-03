@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, Clipboard } from 'react-native';
+import { Text, Clipboard, LayoutAnimation } from 'react-native';
 import { observable, action, reaction } from 'mobx';
 import RoutedState from '../routes/routed-state';
 import PinModal from '../controls/pin-modal';
@@ -36,6 +36,7 @@ class SettingsState extends RoutedState {
 
     @action transition(subroute) {
         console.log(`settings-state.js: transition ${subroute}`);
+        LayoutAnimation.easeInEaseOut();
         this.routerMain.route = 'settings';
         if (subroute) {
             this.subroute = subroute;

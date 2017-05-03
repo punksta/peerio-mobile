@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated } from 'react-native';
+import { Animated, LayoutAnimation } from 'react-native';
 import { observable, reaction, action, when } from 'mobx';
 import Router from './router';
 import uiState from '../layout/ui-state';
@@ -9,6 +9,7 @@ import SettingsLevel3 from '../settings/settings-level-3';
 import Ghosts from '../ghosts/ghosts';
 import GhostsLevel1 from '../ghosts/ghosts-level-1';
 import Chat from '../messaging/chat';
+import ChatList from '../messaging/chat-list';
 import Files from '../files/files';
 import FileView from '../files/file-view';
 import Logs from '../logs/logs';
@@ -26,10 +27,7 @@ const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
 class RouterMain extends Router {
     // current route object
     @observable current = null;
-    @observable isLeftHamburgerVisible = true;
     @observable isBackVisible = false;
-    @observable isLeftMenuVisible = false;
-    @observable isRightMenuVisible = false;
     @observable isInputVisible = false;
     @observable blackStatusBar = false;
     @observable currentIndex = 0;
@@ -40,9 +38,6 @@ class RouterMain extends Router {
     constructor() {
         super();
         routes.main = this;
-        reaction(() => this.isLeftMenuVisible || this.isRightMenuVisible, visible => {
-            visible && uiState.hideKeyboard();
-        });
         reaction(() => this.currentIndex, i => (this.isBackVisible = i > 0));
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
     }
@@ -50,7 +45,7 @@ class RouterMain extends Router {
     @action async initial() {
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
-        this.add('chats', [<Chat />], chatState);
+        this.add('chats', [<ChatList />, <Chat />], chatState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
         if (EN === 'peeriomobile') await enablePushNotifications();
@@ -67,12 +62,18 @@ class RouterMain extends Router {
         route.routeState = routeState;
         this[key] = route.transition = (item) => {
             if (this.route !== key) {
+                LayoutAnimation.easeInEaseOut();
                 this.onTransition(this.current, false, item);
             }
             this.resetMenus();
             this.current = route;
             this.route = key;
-            this.currentIndex = (components.length > 1 && item) ? 1 : 0;
+
+            const newIndex = (components.length > 1 && item) ? 1 : 0;
+            if (newIndex !== this.currentIndex) {
+                LayoutAnimation.easeInEaseOut();
+            }
+            this.currentIndex = newIndex;
             this.onTransition(route, true, item);
             console.log(`router-main: transition to ${this.route}:${this.currentIndex}`);
         };
@@ -110,26 +111,15 @@ class RouterMain extends Router {
 
     @action back() {
         if (this.currentIndex > 0) this.currentIndex--;
-        this.onTransition(this.current, false);
+        this.onTransition(this.current, true);
+        LayoutAnimation.easeInEaseOut();
+        console.log(`router-main: transition to ${this.route}:${this.currentIndex}`);
     }
 
     @action resetMenus() {
         this.isInputVisible = false;
-        this.isLeftMenuVisible = false;
-        this.isRightMenuVisible = false;
         this.isLeftHamburgerVisible = true;
         this.modalRoute = null;
-    }
-
-    @action toggleLeftMenu() {
-        console.log('toggle left menu');
-        this.isLeftMenuVisible = !this.isLeftMenuVisible;
-        this.isRightMenuVisible = false;
-    }
-
-    @action toggleRightMenu() {
-        this.isRightMenuVisible = !this.isRightMenuVisible;
-        this.isLeftMenuVisible = false;
     }
 }
 

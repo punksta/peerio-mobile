@@ -9,5 +9,5 @@ import HeaderIconBase from './header-icon-base';
 @observer
 export default class DownIcon extends HeaderIconBase {
     icon = 'arrow-drop-down';
-    action = () => this.props.action();
+    action = () => this.props.action && this.props.action();
 }

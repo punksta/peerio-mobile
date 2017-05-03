@@ -1,6 +1,7 @@
 import { observable, action, when, reaction } from 'mobx';
 import { chatStore, TinyDb } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
+import contactState from '../contacts/contact-state';
 import sounds from '../../lib/sounds';
 
 class ChatState extends RoutedState {
@@ -20,14 +21,7 @@ class ChatState extends RoutedState {
                 console.log(`chat-store: loading ${chat.id}`);
                 this.loading = false;
             }
-        });
-        // when(() => chatStore.loaded, () => {
-        //     let c = this.saved && chatStore.chatMap[this.saved.currentChat];
-        //     if (!c && chatStore.chats.length) {
-        //         c = chatStore.chats[chatStore.chats.length - 1];
-        //     }
-        //     c && this.activate(c);
-        // });
+        }, true);
     }
 
     @action async init() {
@@ -52,6 +46,7 @@ class ChatState extends RoutedState {
     }
 
     get title() {
+        if (this.routerMain.currentIndex === 0) return 'Chats';
         return this.currentChat ? this.currentChat.chatName : '';
     }
 
@@ -96,7 +91,13 @@ class ChatState extends RoutedState {
     }
 
     get titleAction() {
+        if (this.routerMain.currentIndex === 0) return null;
         return this.currentChat ? (() => this.routerModal.chatInfo()) : null;
+    }
+
+    fabAction() {
+        console.log(`chat-state.js: fab action`);
+        contactState.composeMessage();
     }
 }
 

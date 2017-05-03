@@ -19,7 +19,7 @@ const fabStyle = {
     width: fabSize,
     height: fabSize,
     marginRight: fabSize / 2,
-    marginBottom: fabSize,
+    marginBottom: fabSize * 1.5,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#FF7D00'
