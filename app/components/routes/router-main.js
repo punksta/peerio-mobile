@@ -32,8 +32,6 @@ class RouterMain extends Router {
     @observable blackStatusBar = false;
     @observable currentIndex = 0;
     @observable suppressTransition = false;
-    animatedLeftMenu = new Animated.Value(0);
-    animatedLeftMenuWidth = new Animated.Value(0);
 
     constructor() {
         super();
@@ -118,7 +116,6 @@ class RouterMain extends Router {
 
     @action resetMenus() {
         this.isInputVisible = false;
-        this.isLeftHamburgerVisible = true;
         this.modalRoute = null;
     }
 }

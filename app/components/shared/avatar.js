@@ -195,6 +195,11 @@ export default class Avatar extends Component {
         return this.props.noBorderBottom ? null : bottomBorderStyle;
     }
 
+    get paddingStyle() {
+        const paddingVertical = this.props.extraPaddingVertical;
+        return paddingVertical ? { paddingVertical } : null;
+    }
+
     get checkedStyle() {
         if (this.props.checkbox) return null;
         return { backgroundColor: vars.bg };
@@ -240,7 +245,7 @@ export default class Avatar extends Component {
 
     renderFull() {
         return (
-            <View style={[itemStyle, this.borderStyle, this.errorStyle]}>
+            <View style={[itemStyle, this.borderStyle, this.errorStyle, this.paddingStyle]}>
                 {this.checkbox}
                 <View style={[{ flexGrow: 1 }]}>
                     <View style={itemContainerStyle}>
@@ -314,6 +319,7 @@ Avatar.propTypes = {
     sendError: React.PropTypes.bool,
     ellipsize: React.PropTypes.bool,
     bold: React.PropTypes.bool,
+    extraPaddingVertical: React.PropTypes.number,
     onLayout: React.PropTypes.func
 };
 

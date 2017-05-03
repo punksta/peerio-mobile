@@ -23,6 +23,7 @@ export default class ChatListItem extends Component {
         return (
             <Avatar
                 icon="keyboard-arrow-right"
+                extraPaddingVertical={8}
                 bold
                 ellipsize
                 date={timestamp}
