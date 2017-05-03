@@ -43,7 +43,7 @@ export default class Chat extends Component {
     }
 
     get showInput() {
-        return !!chatState.currentChat;
+        return !!chatState.currentChat && !chatState.loading;
     }
 
     componentWillMount() {
@@ -162,6 +162,7 @@ export default class Chat extends Component {
     }
 
     listView() {
+        if (chatState.loading) return null;
         const refreshControlTop = this.chat.canGoUp ? (
             <ActivityIndicator size="large" style={{ padding: 10 }} onLayout={e => (this.indicatorHeight = e.nativeEvent.layout.height)} />
         ) : null;

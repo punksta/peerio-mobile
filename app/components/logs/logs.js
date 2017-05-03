@@ -5,7 +5,8 @@ import {
     TouchableOpacity,
     ScrollView,
     NativeModules,
-    Alert
+    Alert,
+    ListView
 } from 'react-native';
 import stringify from 'json-stringify-safe';
 import moment from 'moment';
@@ -22,6 +23,17 @@ const mapFormat = ({ time, msg }) => ({
 const mapGlue = ({ msg, time }) => `${time}: ${msg}`;
 
 export default class Logs extends Component {
+    constructor(props) {
+        super(props);
+        this.dataSource = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2
+        });
+    }
+
+    get data() {
+        return console.stack.map(mapFormat).map(({ time, msg }, k) => ({ time, msg, k }));
+    }
+
     sendLogs() {
         const subject = `Peerio Support // logs from ${User.current.username}`;
         const recipients = ['support@peerio.com'];
@@ -57,19 +69,39 @@ export default class Logs extends Component {
         );
     }
 
-    render() {
-        const items = console.stack.map(mapFormat).map(({ time, msg }, k) => (
+    componentDidMount() {
+        this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
+        this.forceUpdate();
+    }
+
+    listView() {
+        return (
+            <ListView
+                initialListSize={2}
+                pageSize={2}
+                dataSource={this.dataSource}
+                renderRow={this.item}
+                enableEmptySections
+                ref={sv => (this.scrollView = sv)}
+            />
+        );
+    }
+
+    item(item) {
+        const { time, msg, k } = item;
+        return (
             <Text key={`${time}${k}`}>
                 <Text style={{ color: '#666666' }}>{time}</Text>
                 {': '}
                 {msg}
             </Text>
-        ));
+        );
+    }
+
+    render() {
         return (
             <View style={{ flexGrow: 1 }}>
-                <ScrollView>
-                    {items}
-                </ScrollView>
+                {this.listView()}
                 {this.sendButton()}
             </View>
         );

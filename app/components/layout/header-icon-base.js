@@ -9,23 +9,23 @@ import routerMain from '../routes/router-main';
 @observer
 export default class HeaderIconBase extends Component {
     icon = '';
-    action = () => {};
+    action = () => { };
 
     render() {
         return (
-            <TouchableOpacity onPress={this.action}>
-                <View style={{
-                    alignItems: 'center',
-                    backgroundColor: 'transparent',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    marginRight: 16,
-                    width: 56,
-                    height: 56
-                }}>
-                    {icons.plainWhite(this.icon)}
-                </View>
-            </TouchableOpacity>
+            <View style={{ flex: 0, borderWidth: 0, borderColor: 'red' }}>
+                <TouchableOpacity onPress={this.action}>
+                    <View style={{
+                        alignItems: 'center',
+                        backgroundColor: 'transparent',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        margin: 16
+                    }}>
+                        {icons.plainWhite(this.icon)}
+                    </View>
+                </TouchableOpacity>
+            </View>
         );
     }
 }

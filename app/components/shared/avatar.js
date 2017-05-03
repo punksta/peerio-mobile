@@ -42,6 +42,7 @@ const nameContainerStyle = {
     borderWidth: 0,
     borderColor: 'red',
     flexGrow: 1,
+    flexShrink: 1,
     flexDirection: 'row',
     alignItems: 'center'
 };
@@ -218,10 +219,14 @@ export default class Avatar extends Component {
     get title() {
         return (
             <View style={nameContainerStyle}>
-                <Text ellipsizeMode="tail" style={nameTextStyle}>
-                    {this.props.title || this.props.contact.username}
-                </Text>
-                {this.date}
+                <View style={{ flexShrink: 1 }}>
+                    <Text ellipsizeMode="tail" style={nameTextStyle}>
+                        {this.props.title || this.props.contact.username}
+                    </Text>
+                </View>
+                <View style={{ flex: 0 }}>
+                    {this.date}
+                </View>
             </View>
         );
     }

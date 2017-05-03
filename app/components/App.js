@@ -42,7 +42,7 @@ export default class App extends Component {
 
         console.stack = [];
         console.stackPush = (msg) => {
-            const MAX = 1000;
+            const MAX = 100;
             const index = console.stack.length;
             const delta = index - MAX;
             const time = new Date();

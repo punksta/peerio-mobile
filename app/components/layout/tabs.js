@@ -36,6 +36,7 @@ const bottomRowStyle = {
 export default class Tabs extends Component {
 
     action(text, route, icon, bubble) {
+        const color = routerMain.route === route ? vars.txtLight : vars.white;
         const indicator = bubble ? (
             <View style={{ position: 'absolute', right: -10, top: 0 }}>
                 {icons.bubble(bubble)}
@@ -47,8 +48,8 @@ export default class Tabs extends Component {
                 pressRetentionOffset={vars.retentionOffset}
                 style={actionCellStyle}>
                 <View pointerEvents="none" style={{ alignItems: 'center' }}>
-                    {icons.plainWhite(icon)}
-                    <Text style={actionTextStyle}>{text}</Text>
+                    {icons.plain(icon, undefined, color)}
+                    <Text style={[actionTextStyle, { color }]}>{text}</Text>
                     {indicator}
                 </View>
             </TouchableOpacity>

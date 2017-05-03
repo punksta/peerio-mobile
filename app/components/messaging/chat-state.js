@@ -60,6 +60,7 @@ class ChatState extends RoutedState {
     onTransition(active, c) {
         console.log(`chat-state.js: loading all chats`);
         active && chatStore.loadAllChats(10);
+        this.loading = c && c.loadingMeta;
         if (active) {
             when(() => !chatStore.loading, () => {
                 if (!chatStore.chats.length) this.loading = false;

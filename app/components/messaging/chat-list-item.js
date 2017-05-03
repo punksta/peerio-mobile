@@ -17,7 +17,7 @@ export default class ChatListItem extends Component {
         const key = chat.id;
         const msg = mostRecentMessage ? mostRecentMessage.text : '';
         const timestamp = mostRecentMessage ? mostRecentMessage.timestamp : null;
-        const text = msg.replace(/\n[ ]+/g, '\n');
+        const text = msg ? msg.replace(/\n[ ]+/g, '\n') : '';
         const onPress = () => chatState.routerMain.chats(chat);
         const bold = chat.unreadCount > 0;
         return (

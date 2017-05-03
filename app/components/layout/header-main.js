@@ -19,10 +19,11 @@ export default class HeaderMain extends Component {
             flexGrow: 1,
             flexShrink: 1,
             color: vars.white,
-            fontSize: 20,
+            fontSize: 18,
             fontWeight: 'bold',
             alignItems: 'center',
-            marginLeft: routerMain.currentIndex === 0 ? vars.iconSize * 3 : -vars.iconSize
+            maxWidth: 300
+            // marginLeft: routerMain.currentIndex === 0 ? vars.iconSize * 3 : -vars.iconSize
         };
         const containerStyle = {
             flex: 0,
@@ -39,20 +40,18 @@ export default class HeaderMain extends Component {
                 justifyContent: 'flex-end',
                 backgroundColor: styles.branding.peeriomobile.bg
             }}>
-                <View style={containerStyle}>
+                <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
                     {leftIcon}
-                    <View style={{ flexGrow: 1, flexShrink: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <View style={{ flex: 1, borderWidth: 0, borderColor: 'yellow', flexGrow: 1, flexShrink: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <TouchableOpacity
                             onPress={titleAction}
                             pressRetentionOffset={vars.retentionOffset}>
-                            <View style={{ flexDirection: 'row', flexGrow: 1, alignItems: 'center' }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <Text
                                     ellipsizeMode="tail"
                                     numberOfLines={2}
                                     style={textStyle}>{routerMain.title}</Text>
-                                <View style={{ flex: 0, flexGrow: 0, flexShrink: 1, opacity: titleAction ? 1 : 0 }}>
-                                    <DownIcon action={titleAction} />
-                                </View>
+                                { titleAction && <DownIcon action={titleAction} /> }
                             </View>
                         </TouchableOpacity>
                     </View>
