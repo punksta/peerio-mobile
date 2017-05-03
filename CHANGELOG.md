@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.22.0"></a>
+# [3.22.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.21.0...v3.22.0) (2017-05-03)
+
+
+### Features
+
+* **ui:** navigation colors ([f2d8b6d](https://github.com/PeerioTechnologies/peerio-mobile/commit/f2d8b6d))
+* **ui:** new navigation ([59d688a](https://github.com/PeerioTechnologies/peerio-mobile/commit/59d688a))
+
+
+
 <a name="3.21.0"></a>
 # [3.21.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.20.0...v3.21.0) (2017-05-03)
 
