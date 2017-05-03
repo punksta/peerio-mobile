@@ -133,7 +133,7 @@ export default class Avatar extends Component {
                 ellipsizeMode={ellipsizeMode}
                 numberOfLines={numberOfLines}
                 selectable
-                style={[lastMessageTextStyle, bold]}>
+                style={[lastMessageTextStyle, boldStyle]}>
                 {tagify(this.props.message || '')}
             </Text>
         ) : null;

@@ -19,8 +19,8 @@ export default class HeaderMain extends Component {
             flexGrow: 1,
             flexShrink: 1,
             color: vars.white,
-            fontWeight: vars.font.weight.regular,
-            fontSize: 16,
+            fontSize: 20,
+            fontWeight: 'bold',
             alignItems: 'center',
             marginLeft: routerMain.currentIndex === 0 ? vars.iconSize * 3 : -vars.iconSize
         };

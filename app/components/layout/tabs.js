@@ -26,7 +26,7 @@ const actionTextStyle = {
 const bottomRowStyle = {
     flex: 0,
     flexDirection: 'row',
-    backgroundColor: vars.bg,
+    backgroundColor: vars.tabsBg,
     height: 56,
     padding: 0
 };

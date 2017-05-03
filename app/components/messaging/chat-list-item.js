@@ -16,7 +16,7 @@ export default class ChatListItem extends Component {
         if (!contact) return empty;
         const key = chat.id;
         const msg = mostRecentMessage ? mostRecentMessage.text : '';
-        const timestamp = mostRecentMessage ? mostRecentMessage.timestamp : 'nope';
+        const timestamp = mostRecentMessage ? mostRecentMessage.timestamp : null;
         const text = msg.replace(/\n[ ]+/g, '\n');
         const onPress = () => chatState.routerMain.chats(chat);
         const bold = chat.unreadCount > 0;
@@ -24,7 +24,7 @@ export default class ChatListItem extends Component {
             <Avatar
                 icon="keyboard-arrow-right"
                 extraPaddingVertical={8}
-                bold
+                bold={bold}
                 ellipsize
                 date={timestamp}
                 contact={contact}

@@ -10,14 +10,16 @@ console.log(`Branding ${EN}`);
 const branding = {
     name: EN,
     peeriomobile: {
-        bg: '#2C95CF'
+        bg: '#2C95CF',
+        tabsBg: '#757575'
     },
     expandoo: {
-        bg: '#009dfd'
+        bg: '#009dfd',
+        tabsBg: '#757575'
     }
 };
 
-const { bg } = branding[EN];
+const { bg, tabsBg } = branding[EN];
 
 const statusBarHeight = Platform.OS === 'android' ? 0 : 10;
 const layoutPaddingTop = statusBarHeight * 2;
@@ -28,6 +30,7 @@ const retentionOffset = { top: r, left: r, bottom: r, right: r };
 const vars = {
     circle: 10,
     bg,
+    tabsBg,
     disabled: '#00000020',
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',
