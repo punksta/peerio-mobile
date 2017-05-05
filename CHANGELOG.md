@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.24.0"></a>
+# [3.24.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.23.0...v3.24.0) (2017-05-05)
+
+
+### Bug Fixes
+
+* **build:** turning off in-app payments and disabled settings items ([ab20f83](https://github.com/PeerioTechnologies/peerio-mobile/commit/ab20f83))
+
+
+
 <a name="3.23.0"></a>
 # [3.23.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.22.0...v3.23.0) (2017-05-03)
 
