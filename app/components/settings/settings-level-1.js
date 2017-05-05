@@ -23,9 +23,9 @@ export default class SettingsLevel1 extends Component {
     render() {
         return (
             <View style={bgStyle}>
-                <SettingsItem title="title_settingsProfile" disabled />
+                {/* <SettingsItem title="title_settingsProfile" disabled /> */}
                 <SettingsItem title="title_settingsSecurity" onPress={() => settingsState.transition('security')} />
-                <SettingsItem title="title_settingsPreferences" disabled />
+                {/* <SettingsItem title="title_settingsPreferences" disabled /> */}
                 <SettingsItem title="title_help" onPress={() => settingsState.routerMain.logs()} />
                 {__DEV__ && <SettingsItem title="Toggle connection" onPress={toggleConnection} />}
                 {__DEV__ && <SettingsItem title="Damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
