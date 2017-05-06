@@ -3,6 +3,7 @@ package com.peerio;
 import android.app.Application;
 import android.util.Log;
 
+import com.fabricio.vergal.RNWorkers.RNWorkersManager;
 import com.facebook.react.ReactApplication;
 import com.fabricio.vergal.RNWorkers.RNWorkersPackage;
 import com.chirag.RNMail.RNMail;
@@ -20,6 +21,7 @@ import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import org.pgsqlite.SQLitePluginPackage;
 // import com.facebook.stetho.Stetho;
+import com.facebook.soloader.SoLoader;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -30,6 +32,9 @@ import java.util.List;
 public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
+    SoLoader.init(this, false);
+    RNWorkersManager.getInstance().init(this, BuildConfig.DEBUG);
+    RNWorkersManager.getInstance().startWorkers();
     // Stetho.initializeWithDefaults(this);
   }
 
