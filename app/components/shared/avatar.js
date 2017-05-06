@@ -44,7 +44,8 @@ const nameContainerStyle = {
     flexGrow: 1,
     flexShrink: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'space-between'
 };
 
 const nameMessageContainerStyle = {
@@ -125,16 +126,15 @@ export default class Avatar extends Component {
     }
 
     get message() {
-        const { ellipsize, bold } = this.props;
+        const { ellipsize } = this.props;
         const ellipsizeMode = ellipsize ? 'tail' : undefined;
         const numberOfLines = ellipsize ? 1 : undefined;
-        const boldStyle = bold ? { fontWeight: 'bold' } : null;
         return this.props.message ? (
             <Text
                 ellipsizeMode={ellipsizeMode}
                 numberOfLines={numberOfLines}
                 selectable
-                style={[lastMessageTextStyle, boldStyle]}>
+                style={lastMessageTextStyle}>
                 {tagify(this.props.message || '')}
             </Text>
         ) : null;
@@ -174,13 +174,10 @@ export default class Avatar extends Component {
             </View> : null;
     }
 
-    get icon() {
-        return this.props.icon ? icons.dark(this.props.icon) : null;
-    }
-
     get date() {
+        const unreadStyle = this.props.unread ? { color: vars.bg } : null;
         return !!this.props.date &&
-            <Text style={dateTextStyle}>{moment(this.props.date).format(`MMM D, LT`)}</Text>;
+            <Text style={[dateTextStyle, unreadStyle]}>{moment(this.props.date).format(`MMM D, LT`)}</Text>;
     }
 
     get errorStyle() {
@@ -262,7 +259,7 @@ export default class Avatar extends Component {
                             {this.systemMessage}
                             {this.retryCancel}
                         </View>
-                        {this.icon}
+                        {this.props.rightIcon}
                         <OnlineCircle visible={!this.props.hideOnline} online={this.props.online} />
                     </View>
                     {this.errorCircle}
@@ -305,7 +302,7 @@ Avatar.propTypes = {
     date: React.PropTypes.any,
     files: React.PropTypes.any,
     receipts: React.PropTypes.any,
-    icon: React.PropTypes.string,
+    rightIcon: React.PropTypes.any,
     message: React.PropTypes.string,
     title: React.PropTypes.string,
     systemMessage: React.PropTypes.any,
@@ -323,8 +320,7 @@ Avatar.propTypes = {
     sending: React.PropTypes.bool,
     sendError: React.PropTypes.bool,
     ellipsize: React.PropTypes.bool,
-    bold: React.PropTypes.bool,
+    unread: React.PropTypes.bool,
     extraPaddingVertical: React.PropTypes.number,
     onLayout: React.PropTypes.func
 };
-

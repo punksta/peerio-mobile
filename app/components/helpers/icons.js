@@ -86,22 +86,25 @@ const icons = {
         );
     },
 
-    bubble(text) {
+    bubble: (text) => icons.circle(text, 14, 8, vars.notificationIcon, vars.white),
+    unreadBubble: (text) => icons.circle(text, 24, 12, vars.bg, vars.white),
+
+    circle(text, radius, margin, bgColor, fgColor) {
         const notificationStyle = {
-            backgroundColor: vars.notificationIcon,
-            borderRadius: 14,
+            backgroundColor: bgColor,
+            borderRadius: radius,
             overflow: 'hidden',
-            width: 14,
-            height: 14,
-            marginRight: 8
+            width: radius,
+            height: radius,
+            marginHorizontal: margin
         };
         return (
             <View style={notificationStyle}>
                 <Text style={{
-                    color: 'white',
+                    color: fgColor,
                     fontSize: 8,
                     fontWeight: vars.font.weight.semiBold,
-                    lineHeight: 14,
+                    lineHeight: radius,
                     textAlign: 'center'
                 }}>{`${text}`} </Text>
             </View>

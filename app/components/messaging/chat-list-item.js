@@ -7,6 +7,12 @@ import icons from '../helpers/icons';
 
 @observer
 export default class ChatListItem extends Component {
+    get rightIcon() {
+        const { chat } = this.props;
+        return chat.unreadCount > 0 ?
+            icons.unreadBubble(chat.unreadCount) : icons.dark('keyboard-arrow-right');
+    }
+
     render() {
         const empty = null;
         const { chat } = this.props;
@@ -19,12 +25,12 @@ export default class ChatListItem extends Component {
         const timestamp = mostRecentMessage ? mostRecentMessage.timestamp : null;
         const text = msg ? msg.replace(/\n[ ]+/g, '\n') : '';
         const onPress = () => chatState.routerMain.chats(chat);
-        const bold = chat.unreadCount > 0;
+        const unread = chat.unreadCount > 0;
         return (
             <Avatar
-                icon="keyboard-arrow-right"
+                rightIcon={this.rightIcon}
                 extraPaddingVertical={8}
-                bold={bold}
+                unread={unread}
                 ellipsize
                 date={timestamp}
                 contact={contact}

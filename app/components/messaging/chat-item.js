@@ -6,15 +6,15 @@ import { t } from '../utils/translator';
 
 @observer
 export default class ChatItem extends Component {
-    getSystemMessageText(systemData) {
-        if (!systemData) return null;
-        switch (systemData.action) {
+    getSystemMessageText(msg) {
+        if (!msg.systemData) return null;
+        switch (msg.systemData.action) {
             case 'rename':
-                return systemData.newName
-                    ? t('title_chatRenamed', { name: systemData.newName })
+                return msg.systemData.newName
+                    ? t('title_chatRenamed', { name: msg.systemData.newName })
                     : t('title_chatNameRemoved');
             case 'create':
-                return t('title_chatCreated');
+                return t('title_chatCreated', { fullName: msg.sender.fullName });
             default:
                 return '';
         }
@@ -40,7 +40,7 @@ export default class ChatItem extends Component {
                 hideOnline
                 date={timestamp}
                 message={text}
-                systemMessage={this.getSystemMessageText(i.systemData)}
+                systemMessage={this.getSystemMessageText(i)}
                 key={key}
                 error={error}
                 onPress={onPress}
