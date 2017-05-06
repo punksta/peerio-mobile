@@ -31,7 +31,7 @@ const swActions = {
 };
 
 function popupSystemWarning(title, contents, buttons) {
-    const button = (text, action) => ({ id: text, text, action });
+    const button = (text, action) => ({ id: 'ok', text, action });
     const swButton = i => ({ id: i.action, text: t(i.label), action: swActions[i.action] });
     return new Promise((resolve) => {
         popupState.showPopup({
