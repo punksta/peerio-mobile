@@ -21,6 +21,9 @@ export default class LayoutModalExit extends Component {
             flexGrow: 1
         };
         const textStyle = {
+            flexGrow: 1,
+            flexShrink: 1,
+            flex: 1,
             fontSize: 14,
             fontWeight: vars.font.weight.semiBold,
             color: 'rgba(0, 0, 0, .54)'
@@ -28,9 +31,7 @@ export default class LayoutModalExit extends Component {
         return (
             <View style={container}>
                 {icons.dark('close', () => this.props.onClose())}
-                <Center style={style}>
-                    <Text style={textStyle} ellipsizeMode="tail" numberOfLines={1}>{this.props.title}</Text>
-                </Center>
+                <Text style={textStyle} ellipsizeMode="tail" numberOfLines={1}>{this.props.title}</Text>
                 {this.props.rightIcon || icons.placeholder()}
             </View>
         );
