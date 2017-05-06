@@ -36,7 +36,7 @@ const bottomRowStyle = {
 export default class Tabs extends Component {
 
     action(text, route, icon, bubble) {
-        const color = routerMain.route === route ? vars.txtLight : vars.white;
+        const color = routerMain.route === route ? vars.bg : vars.tabsFg;
         const indicator = bubble ? (
             <View style={{ position: 'absolute', right: -10, top: 0 }}>
                 {icons.bubble(bubble)}
@@ -63,7 +63,7 @@ export default class Tabs extends Component {
         };
         return (
             <Animated.View style={[bottomRowStyle, animation]}>
-                {this.action(t('title_chats'), 'chats', 'chat', chatStore.unreadMessages)}
+                {this.action(t('title_chats'), 'chats', 'forum', chatStore.unreadMessages)}
                 {this.action(t('title_files'), 'files', 'folder', fileStore.unreadFiles)}
                 {/* this.action(t('title_mail'), 'ghosts', 'mail') */}
                 {this.action(t('title_settings'), 'settings', 'settings')}

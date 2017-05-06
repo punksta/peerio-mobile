@@ -11,15 +11,17 @@ const branding = {
     name: EN,
     peeriomobile: {
         bg: '#2C95CF',
-        tabsBg: '#757575'
+        tabsBg: '#f7f7f7',
+        tabsFg: '#757575'
     },
     expandoo: {
         bg: '#009dfd',
-        tabsBg: '#757575'
+        tabsBg: '#f7f7f7',
+        tabsFg: '#757575'
     }
 };
 
-const { bg, tabsBg } = branding[EN];
+const { bg, tabsBg, tabsFg } = branding[EN];
 
 const statusBarHeight = Platform.OS === 'android' ? 0 : 10;
 const layoutPaddingTop = statusBarHeight * 2;
@@ -31,6 +33,7 @@ const vars = {
     circle: 10,
     bg,
     tabsBg,
+    tabsFg,
     disabled: '#00000020',
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',
