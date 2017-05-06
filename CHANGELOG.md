@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.25.0"></a>
+# [3.25.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.24.0...v3.25.0) (2017-05-06)
+
+
+### Bug Fixes
+
+* **ui:** layout fixes for Air 10.2/10.3 low-res mode ([89e9416](https://github.com/PeerioTechnologies/peerio-mobile/commit/89e9416))
+
+
+
 <a name="3.24.0"></a>
 # [3.24.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.23.0...v3.24.0) (2017-05-05)
 
