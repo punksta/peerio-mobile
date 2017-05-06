@@ -113,6 +113,7 @@ export default class ContactSelector extends Component {
             <View style={container}>
                 {icons.dark('search')}
                 <TextInput
+                    underlineColorAndroid={'transparent'}
                     value={contactState.findUserText}
                     returnKeyType="go"
                     blurOnSubmit={false}
