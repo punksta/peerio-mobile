@@ -58,9 +58,9 @@ class RouterMain extends Router {
         const route = super.add(key, null);
         route.components = observable.ref(components);
         route.routeState = routeState;
-        this[key] = route.transition = (item) => {
+        this[key] = route.transition = (item, suppressTransition) => {
             if (this.route !== key) {
-                LayoutAnimation.easeInEaseOut();
+                !suppressTransition && LayoutAnimation.easeInEaseOut();
                 this.onTransition(this.current, false, item);
             }
             this.resetMenus();
@@ -69,7 +69,7 @@ class RouterMain extends Router {
 
             const newIndex = (components.length > 1 && item) ? 1 : 0;
             if (newIndex !== this.currentIndex) {
-                LayoutAnimation.easeInEaseOut();
+                !suppressTransition && LayoutAnimation.easeInEaseOut();
             }
             this.currentIndex = newIndex;
             this.onTransition(route, true, item);

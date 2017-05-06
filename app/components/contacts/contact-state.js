@@ -86,8 +86,10 @@ class ContactState extends RoutedState {
     @action send(text, recipient) {
         const chat = chatState.store.startChat(recipient ? [recipient] : this.recipients);
         this.exit();
-        this.routerMain.chats(chat);
+        chatState.loading = true;
         when(() => !chat.loadingMeta, () => {
+            chatState.loading = false;
+            this.routerMain.chats(chat, true);
             text && chat.sendMessage(text);
         });
     }
