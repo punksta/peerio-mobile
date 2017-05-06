@@ -197,6 +197,7 @@ export default class Chat extends Component {
         const chat = this.chat;
         const avatars = (chat.participants || []).map(contact => (
             <TouchableOpacity
+                style={{ flex: 1 }}
                 onPress={() => contactState.contactView(contact)} key={contact.username}>
                 <AvatarCircle
                     contact={contact}
@@ -205,7 +206,7 @@ export default class Chat extends Component {
         ));
         return (
             <View style={zsContainer}>
-                <View style={{ flexDirection: 'row' }}>{avatars}</View>
+                <View style={{ flexDirection: 'row', marginRight: 48 }}>{avatars}</View>
                 <Text style={{ textAlign: 'center', margin: 12, color: vars.txtMedium }}>
                     {tx('title_chatBeginning')}
                     <Text>{' '}</Text>
