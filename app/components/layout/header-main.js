@@ -16,49 +16,55 @@ export default class HeaderMain extends Component {
             leftIcon = <BackIcon />;
         }
         const textStyle = {
+            flex: 1,
             flexGrow: 1,
             flexShrink: 1,
             color: vars.white,
             fontSize: 18,
             fontWeight: 'bold',
+            textAlign: 'center',
             alignItems: 'center',
-            maxWidth: 300
+            justifyContent: 'center',
+            borderColor: 'blue',
+            borderWidth: 0
             // marginLeft: routerMain.currentIndex === 0 ? vars.iconSize * 3 : -vars.iconSize
         };
         const containerStyle = {
-            flex: 0,
+            flex: -1,
             flexDirection: 'row',
             alignItems: 'center',
-            // paddingTop: vars.statusBarHeight,
-            height: vars.headerHeight
+            paddingTop: vars.statusBarHeight,
+            minHeight: vars.headerHeight
         };
         const titleAction = routerMain.titleAction;
         return (
             <View style={{
-                height: vars.headerSpacing,
-                flex: 0,
+                paddingTop: vars.statusBarHeight,
+                // height: vars.headerSpacing,
+                flex: -1,
                 justifyContent: 'flex-end',
                 backgroundColor: styles.branding.peeriomobile.bg
             }}>
-                <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
-                    {leftIcon}
-                    <View style={{ flex: 1, borderWidth: 0, borderColor: 'yellow', flexGrow: 1, flexShrink: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <TouchableOpacity
-                            onPress={titleAction}
-                            pressRetentionOffset={vars.retentionOffset}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <Text
-                                    ellipsizeMode="tail"
-                                    numberOfLines={2}
-                                    style={textStyle}>{routerMain.title}</Text>
-                                { titleAction && <DownIcon action={titleAction} /> }
-                            </View>
-                        </TouchableOpacity>
+                <TouchableOpacity onPress={titleAction}
+                    pressRetentionOffset={vars.retentionOffset}>
+                    <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
+                        <View style={{ flex: 0 }}>
+                            {leftIcon}
+                        </View>
+                        <Text
+                            ellipsizeMode="middle"
+                            numberOfLines={2}
+                            style={textStyle}>
+                            {routerMain.title}
+                            {titleAction && <Text style={{ fontSize: 14 }}>
+                                {'  ▼  '}
+                            </Text>}
+                        </Text>
                     </View>
-                    {/* <View style={{ backgroundColor: 'transparent' }} testID="rightMenuButton">
+                </TouchableOpacity>
+                {/* <View style={{ backgroundColor: 'transparent' }} testID="rightMenuButton">
                         {icons.white('more-vert', () => routerMain.toggleRightMenu())}
                     </View> */}
-                </View>
             </View>
         );
     }
