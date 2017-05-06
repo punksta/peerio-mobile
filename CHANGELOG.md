@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.26.0"></a>
+# [3.26.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.25.0...v3.26.0) (2017-05-06)
+
+
+### Bug Fixes
+
+* **android:** remove border bottom from default inputs ([3e4cd6d](https://github.com/PeerioTechnologies/peerio-mobile/commit/3e4cd6d))
+* **tests:** correct testid for popup ok buttons ([cb10812](https://github.com/PeerioTechnologies/peerio-mobile/commit/cb10812))
+* **tests:** removing pyparsing from requirements ([2fec110](https://github.com/PeerioTechnologies/peerio-mobile/commit/2fec110))
+* **tests:** update to appium 1.6.4 to support latest carthage ([15928e3](https://github.com/PeerioTechnologies/peerio-mobile/commit/15928e3))
+* **ui:** ellipsize modal popup ([d1f772a](https://github.com/PeerioTechnologies/peerio-mobile/commit/d1f772a))
+* **ui:** multiline breaking layout fixes ([87f776f](https://github.com/PeerioTechnologies/peerio-mobile/commit/87f776f))
+* **ui:** overflowing avatar circles are overlapped on each other now ([4018157](https://github.com/PeerioTechnologies/peerio-mobile/commit/4018157))
+* **ui:** overlapping text ([4c84dbb](https://github.com/PeerioTechnologies/peerio-mobile/commit/4c84dbb))
+* **ui:** text layout in long messages ([e0c8ece](https://github.com/PeerioTechnologies/peerio-mobile/commit/e0c8ece))
+* **ui:** uppercase ok for systemWarning ([02191c5](https://github.com/PeerioTechnologies/peerio-mobile/commit/02191c5))
+* **ui, android:** avoid animation crash on creating chat ([3ae55d5](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ae55d5))
+
+
+### Features
+
+* **android:** add workers support and upgrade to RN0.44 ([005fe31](https://github.com/PeerioTechnologies/peerio-mobile/commit/005fe31))
+* **deps:** upgrade to RN0.44 ([7a83d06](https://github.com/PeerioTechnologies/peerio-mobile/commit/7a83d06))
+* **ui:** group icon for chats ([2e5d729](https://github.com/PeerioTechnologies/peerio-mobile/commit/2e5d729))
+* **ui:** show star next to favorite chats in list ([4c091ab](https://github.com/PeerioTechnologies/peerio-mobile/commit/4c091ab))
+* **ui:** unread counters for individual chats ([ebe5a7a](https://github.com/PeerioTechnologies/peerio-mobile/commit/ebe5a7a))
+* **ui:** update tabs bg and fg color ([be4709e](https://github.com/PeerioTechnologies/peerio-mobile/commit/be4709e))
+
+
+
 <a name="3.25.0"></a>
 # [3.25.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.24.0...v3.25.0) (2017-05-06)
 
