@@ -48,6 +48,7 @@ export default class ChatItem extends Component {
                 onRetryCancel={this.props.onRetryCancel}
                 noBorderBottom
                 collapsed={!!i.groupWithPrevious}
+                extraPaddingTop={8}
             />
         );
     }

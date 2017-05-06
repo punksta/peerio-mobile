@@ -30,6 +30,7 @@ export default class ChatListItem extends Component {
             <Avatar
                 starred={chat.isFavorite}
                 rightIcon={this.rightIcon}
+                extraPaddingTop={8}
                 extraPaddingVertical={8}
                 unread={unread}
                 ellipsize

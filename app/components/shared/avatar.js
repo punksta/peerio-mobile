@@ -48,6 +48,7 @@ const nameContainerStyle = {
 };
 
 const nameMessageContainerStyle = {
+    flex: 1,
     flexGrow: 1,
     flexShrink: 1,
     borderWidth: 0,
@@ -72,12 +73,15 @@ const dateTextStyle = {
 };
 
 const lastMessageTextStyle = {
+    flex: 1,
     flexGrow: 1,
     flexShrink: 1,
     fontWeight: vars.font.weight.regular,
     color: vars.txtMedium,
     fontSize: 14,
-    lineHeight: 22
+    lineHeight: 22,
+    borderWidth: 0,
+    borderColor: 'green'
 };
 
 const systemMessageStyle = {
@@ -197,7 +201,8 @@ export default class Avatar extends Component {
 
     get paddingStyle() {
         const paddingVertical = this.props.extraPaddingVertical;
-        return paddingVertical ? { paddingVertical } : null;
+        const paddingTop = this.props.extraPaddingTop;
+        return (paddingVertical || paddingTop) ? { paddingVertical, paddingTop } : null;
     }
 
     get checkedStyle() {
@@ -208,6 +213,7 @@ export default class Avatar extends Component {
     get avatar() {
         return (
             <TouchableOpacity
+                style={{ alignSelf: 'flex-start' }}
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={this.props.onPressAvatar || this.onPressAll}>
                 <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
@@ -260,7 +266,7 @@ export default class Avatar extends Component {
                 <View style={[{ flexGrow: 1 }]}>
                     <View style={itemContainerStyle}>
                         {this.avatar}
-                        <View style={[nameMessageContainerStyle, { width: this.props.ellipsize ? 100 : undefined }]}>
+                        <View style={[nameMessageContainerStyle]}>
                             {this.title}
                             {this.message}
                             {this.files}
@@ -331,5 +337,6 @@ Avatar.propTypes = {
     unread: React.PropTypes.bool,
     starred: React.PropTypes.bool,
     extraPaddingVertical: React.PropTypes.number,
+    extraPaddingTop: React.PropTypes.number,
     onLayout: React.PropTypes.func
 };

@@ -192,7 +192,7 @@ export default class Chat extends Component {
         const zsContainer = {
             borderBottomWidth: 1,
             borderBottomColor: '#CFCFCF',
-            marginBottom: 12
+            marginBottom: 8
         };
         const chat = this.chat;
         const avatars = (chat.participants || []).map(contact => (
