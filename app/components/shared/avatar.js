@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import moment from 'moment';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
@@ -176,8 +175,11 @@ export default class Avatar extends Component {
 
     get date() {
         const unreadStyle = this.props.unread ? { color: vars.bg } : null;
-        return !!this.props.date &&
-            <Text style={[dateTextStyle, unreadStyle]}>{moment(this.props.date).format(`MMM D, LT`)}</Text>;
+        const { timestampText } = this.props;
+        return timestampText ?
+            <Text style={[dateTextStyle, unreadStyle]}>
+                {timestampText}
+            </Text> : null;
     }
 
     get errorStyle() {
@@ -217,7 +219,7 @@ export default class Avatar extends Component {
         return (
             <View style={nameContainerStyle}>
                 <View style={{ flexShrink: 1 }}>
-                    <Text ellipsizeMode="tail" style={nameTextStyle}>
+                    <Text ellipsizeMode="tail" numberOfLines={1} style={nameTextStyle}>
                         {this.props.title || this.props.contact.username}
                     </Text>
                 </View>
@@ -299,7 +301,7 @@ Avatar.propTypes = {
     onPressAvatar: React.PropTypes.func,
     onRetryCancel: React.PropTypes.func,
     contact: React.PropTypes.any.isRequired,
-    date: React.PropTypes.any,
+    timestampText: React.PropTypes.any,
     files: React.PropTypes.any,
     receipts: React.PropTypes.any,
     rightIcon: React.PropTypes.any,

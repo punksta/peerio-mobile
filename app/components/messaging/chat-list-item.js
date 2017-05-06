@@ -22,7 +22,7 @@ export default class ChatListItem extends Component {
         if (!contact) return empty;
         const key = chat.id;
         const msg = mostRecentMessage ? mostRecentMessage.text : '';
-        const timestamp = mostRecentMessage ? mostRecentMessage.timestamp : null;
+        const timestamp = mostRecentMessage ? mostRecentMessage.messageTimestampText : null;
         const text = msg ? msg.replace(/\n[ ]+/g, '\n') : '';
         const onPress = () => chatState.routerMain.chats(chat);
         const unread = chat.unreadCount > 0;
@@ -32,7 +32,7 @@ export default class ChatListItem extends Component {
                 extraPaddingVertical={8}
                 unread={unread}
                 ellipsize
-                date={timestamp}
+                timestampText={timestamp}
                 contact={contact}
                 title={chat.chatName}
                 hideOnline

@@ -25,7 +25,6 @@ export default class ChatItem extends Component {
         if (!i.sender) return null;
         const key = i.id;
         const msg = i.text || '';
-        const timestamp = i.timestamp;
         const text = msg.replace(/\n[ ]+/g, '\n');
         const onPressAvatar = () => contactState.contactView(i.sender);
         const onPress = i.sendError ? this.props.onRetryCancel : null;
@@ -38,7 +37,7 @@ export default class ChatItem extends Component {
                 files={i.files}
                 receipts={i.receipts}
                 hideOnline
-                date={timestamp}
+                timestampText={i.messageTimestampText}
                 message={text}
                 systemMessage={this.getSystemMessageText(i)}
                 key={key}

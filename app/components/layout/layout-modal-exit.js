@@ -14,7 +14,7 @@ export default class LayoutModalExit extends Component {
             flexDirection: 'row',
             alignItems: 'center',
             padding: 4,
-            paddingTop: 0,
+            paddingTop: vars.statusBarHeight,
             paddingBottom: 0
         };
         const style = {
@@ -28,7 +28,9 @@ export default class LayoutModalExit extends Component {
         return (
             <View style={container}>
                 {icons.dark('close', () => this.props.onClose())}
-                <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
+                <Center style={style}>
+                    <Text style={textStyle} ellipsizeMode="tail" numberOfLines={1}>{this.props.title}</Text>
+                </Center>
                 {this.props.rightIcon || icons.placeholder()}
             </View>
         );

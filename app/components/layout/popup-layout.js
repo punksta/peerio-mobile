@@ -77,7 +77,7 @@ export default class PopupLayout extends Component {
             <View style={popupNonAnimatedStyle}>
                 <View style={container}>
                     <View style={{ padding: 20, flexGrow: 1, flexShrink: 1 }}>
-                        <Text style={title}>{popup.title}</Text>
+                        <Text style={title} ellipsizeMode="tail" numberOfLines={1}>{popup.title}</Text>
                         {popup.subTitle}
                         {popup.contents}
                     </View>
