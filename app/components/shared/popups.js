@@ -31,7 +31,7 @@ const swActions = {
 };
 
 function popupSystemWarning(title, contents, buttons) {
-    const button = (text, action) => ({ id: text, text: t(text), action });
+    const button = (text, action) => ({ id: text, text, action });
     const swButton = i => ({ id: i.action, text: t(i.label), action: swActions[i.action] });
     return new Promise((resolve) => {
         popupState.showPopup({
@@ -39,7 +39,7 @@ function popupSystemWarning(title, contents, buttons) {
             contents: textControl(contents),
             buttons: buttons ?
                 buttons.map(i => (i.action ? swButton(i) : button(i, resolve)))
-                    : [button('ok', resolve)]
+                    : [button(tu('button_ok'), resolve)]
         });
     });
 }
