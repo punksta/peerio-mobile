@@ -17,6 +17,7 @@ export default class MessagingPlaceholder extends Component {
 
     messaging() {
         const headerStyle = {
+            flexGrow: 1,
             textAlign: 'center',
             fontSize: 24
         };
@@ -40,7 +41,7 @@ export default class MessagingPlaceholder extends Component {
             flex: 0,
             height: 80,
             flexDirection: 'row',
-            alignItems: 'flex-end'
+            alignItems: 'center'
         };
         const textHintContainer = {
             flex: 0.3,
@@ -52,15 +53,7 @@ export default class MessagingPlaceholder extends Component {
         return (
             <View style={outerContainerStyle}>
                 <View style={[titleBlockStyle, { marginTop: 16 }]}>
-                    <View style={{ flex: 1, marginLeft: 32 }}>
-                        <Image source={arrowUpZeroState}
-                            resizeMode="contain"
-                            style={imageStyle} />
-                    </View>
-                    <View style={{ flexGrow: 1, flexShrink: 0, alignItems: 'center', alignSelf: 'center', marginTop: 52, marginLeft: -32 }}>
-                        <Text style={headerStyle}>Have a{'\n'}conversation</Text>
-                    </View>
-                    <View style={{ flex: 1 }} />
+                    <Text style={headerStyle}>Have a{'\n'}conversation</Text>
                 </View>
                 <View style={{
                     borderColor: 'red',

@@ -100,8 +100,8 @@ export default class Pin extends Component {
             <View style={circleHl} key={key}>
                 <TouchableOpacity testID={`pin${text}`} onPress={() => this.enter(text)}>
                     <View style={circle}>
-                        <Text style={{ color: vars.highlight, fontSize: 24 }}>{text}</Text>
-                        <Text style={{ color: vars.midlight, fontSize: 12 }}>{subText}</Text>
+                        <Text style={{ color: vars.highlight, fontSize: 18 }}>{text}</Text>
+                        <Text style={{ color: vars.midlight, fontSize: 10 }}>{subText}</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -152,8 +152,8 @@ export default class Pin extends Component {
     }
 
     layout(e) {
-        const w = e.nativeEvent.layout.width;
-        this.circleW = w / 3.9;
+        const { width, height } = e.nativeEvent.layout;
+        this.circleW = Math.min(width / 3.9, height / 7.7);
     }
 
     row(index, items) {

@@ -36,11 +36,10 @@ export default class SignupWizard extends Wizard {
         const style = styles.wizard;
         const body = (
             <View
-                style={[style.containerFlex, { height }]}>
+                style={[style.containerFlex]}>
                 {this.wizard()}
-                {this.footerContainer()}
             </View>
         );
-        return <Layout1 body={body} noScroll={signupState.current === 1} footer={null} />;
+        return <Layout1 body={body} noScroll={signupState.current === 1} footer={this.footer()} />;
     }
 }

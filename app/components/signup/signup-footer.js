@@ -38,7 +38,7 @@ export default class SignupFooter extends Component {
             () => signupState.prev(), 'signupPrev');
 
         return (
-            <View>
+            <View style={{ marginTop: 16 }}>
                 <View style={style.row}>
                     {prev}
                     {next}

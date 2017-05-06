@@ -1,56 +1,33 @@
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Dimensions, Text } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import { vars } from '../../styles/styles';
 import uiState from '../layout/ui-state';
 
+const { height } = Dimensions.get('window');
+
 @observer
 export default class Layout1 extends Component {
-    constructor(props) {
-        super(props);
-        this.layout = this.layout.bind(this);
-        this.scroll = this.scroll.bind(this);
-    }
-
-    layout(e) {
-        if (!this.scrollViewHeight) {
-            this.scrollViewHeight = e.nativeEvent.layout.height;
-        }
-    }
-
-    scroll(e) {
-        this.scrollViewTop = e.nativeEvent.contentOffset.y;
-    }
-
     render() {
         const paddingTop = vars.layoutPaddingTop;
         const paddingBottom = global.platform === 'android' ? 0 : uiState.keyboardHeight;
 
         const boxStyle = {
-            flex: 1,
+            flexGrow: 1,
             flexDirection: 'column',
             justifyContent: 'space-between',
             borderColor: 'yellow',
+            borderWidth: 0
+        };
+
+
+        const contentContainerStyle = {
+            flexGrow: 1,
+            justifyContent: 'space-between',
             borderWidth: 0,
-            height: this.scrollViewHeight,
-            paddingTop,
-            paddingBottom
+            borderColor: 'red'
         };
-
-        const scrollViewStyle = {
-            flex: 1,
-            borderColor: 'green',
-            borderWidth: 0
-        };
-
-        const contentContainerStyle = this.props.noFitHeight ? {} : {
-            flex: 1,
-            borderColor: 'red',
-            borderWidth: 0
-        };
-
-        const svRef = (ref) => (this.scrollView = ref);
 
         return (
             <View
@@ -58,15 +35,14 @@ export default class Layout1 extends Component {
                 style={[boxStyle, this.props.style]}>
                 {this.props.header}
                 <ScrollView
-                    ref={svRef}
-                    style={[scrollViewStyle]}
                     scrollEnabled={!this.props.noScroll}
-                    contentContainerStyle={[contentContainerStyle]}
-                    keyboardShouldPersistTaps="handled"
-                    onScroll={this.onScroll}
-                    onLayout={this.layout}>
-                    {this.props.body}
-                    {this.props.footer}
+                    keyboardShouldPersistTaps="handled">
+                    <View style={contentContainerStyle}>
+                        <View style={{ minHeight: height }}>
+                            {this.props.body}
+                            {this.props.footer}
+                        </View>
+                    </View>
                 </ScrollView>
                 <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     <SnackBarConnection />
