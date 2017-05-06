@@ -5,6 +5,7 @@ import {
     View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
+import icons from '../helpers/icons';
 import ErrorCircle from './error-circle';
 
 const avatarDiameter = 36;
@@ -12,9 +13,10 @@ const avatarDiameter = 36;
 @observer
 export default class AvatarCircle extends Component {
     render() {
+        const { large, medium, contact, loading } = this.props;
         let ratio = 1;
-        if (this.props.large) ratio = 3;
-        if (this.props.medium) ratio = 2;
+        if (large) ratio = 3;
+        if (medium) ratio = 2;
         const width = avatarDiameter * ratio;
         const height = width;
         const avatarStyle = {
@@ -24,20 +26,26 @@ export default class AvatarCircle extends Component {
             backgroundColor: '#CFCFCF',
             margin: 4 * ratio
         };
-        if (this.props.loading) {
+        if (loading) {
             return <ActivityIndicator style={{ height, margin: 4 }} />;
         }
-        const { color, tofuError, letter } = this.props.contact;
+
+        const { color, tofuError, letter } = contact || {};
         const coloredAvatarStyle = [avatarStyle, {
             overflow: 'hidden',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: color || '#fff'
+            backgroundColor: color || 'gray'
         }];
+        const inner = contact ? (
+            <Text style={{ color: 'white', fontSize: 12 * ratio }}>
+                {letter}
+            </Text>
+        ) : icons.plainWhite('group');
         return (
             <View style={{ borderWidth: 0, borderColor: 'green' }}>
                 <View style={coloredAvatarStyle}>
-                    <Text style={{ color: 'white', fontSize: 12 * ratio }}>{letter}</Text>
+                    {inner}
                 </View>
                 <ErrorCircle large={this.props.large} visible={tofuError} />
             </View>

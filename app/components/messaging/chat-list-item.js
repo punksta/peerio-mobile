@@ -14,12 +14,11 @@ export default class ChatListItem extends Component {
     }
 
     render() {
-        const empty = null;
         const { chat } = this.props;
-        const { mostRecentMessage } = chat;
-        if (!chat.participants) return empty;
-        const contact = chat.participants[0];
-        if (!contact) return empty;
+        const { mostRecentMessage, participants } = chat;
+        if (!participants || !participants.length) return null;
+        // group chats have null for contact
+        const contact = participants.length > 2 ? null : participants[0];
         const key = chat.id;
         const msg = mostRecentMessage ? mostRecentMessage.text : '';
         const timestamp = mostRecentMessage ? mostRecentMessage.messageTimestampText : null;
