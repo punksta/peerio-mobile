@@ -215,11 +215,17 @@ export default class Avatar extends Component {
         );
     }
 
+    get star() {
+        return this.props.starred ?
+            <Text style={{ color: '#ffd700' }}>{'★'}</Text> : null;
+    }
+
     get title() {
         return (
             <View style={nameContainerStyle}>
                 <View style={{ flexShrink: 1 }}>
                     <Text ellipsizeMode="tail" numberOfLines={1} style={nameTextStyle}>
+                        {this.star}
                         {this.props.title || this.props.contact.username}
                     </Text>
                 </View>
@@ -323,6 +329,7 @@ Avatar.propTypes = {
     sendError: React.PropTypes.bool,
     ellipsize: React.PropTypes.bool,
     unread: React.PropTypes.bool,
+    starred: React.PropTypes.bool,
     extraPaddingVertical: React.PropTypes.number,
     onLayout: React.PropTypes.func
 };
