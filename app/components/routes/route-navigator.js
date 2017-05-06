@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Navigator } from 'react-native';
+import { View } from 'react-native';
+import { Navigator } from 'react-native-deprecated-custom-components';
 import { reaction } from 'mobx';
 import BgPattern from '../controls/bg-pattern';
 import styles from '../../styles/styles';
