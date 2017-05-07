@@ -1,5 +1,7 @@
-import { Platform } from 'react-native';
+import { Platform, DeviceEventEmitter } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+
+let lastCall = null;
 
 export default {
     show(customButtons, imageCallback, customCallback) {
@@ -11,8 +13,9 @@ export default {
                 waitUntilSaved: true
             }
         };
-        ImagePicker.showImagePicker(options, (response) => {
+        lastCall = () => ImagePicker.showImagePicker(options, (response) => {
             console.log('imagepicker.js: response = ', response);
+            lastCall = null;
             if (response.didCancel) {
                 console.log('imagepicker.js: user cancelled image picker');
             } else if (response.error) {
@@ -30,5 +33,12 @@ export default {
                 imageCallback(source.uri, response.fileName, response);
             }
         });
+        lastCall();
     }
 };
+
+// for android granting permissions
+DeviceEventEmitter.addListener('CameraPermissionsGranted', () => {
+    console.log('imagepicker.js: permissions granted');
+    if (lastCall) lastCall();
+});
