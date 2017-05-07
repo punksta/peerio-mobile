@@ -12,7 +12,7 @@ export default class Bottom extends Component {
             right: 0
         };
         return (
-            <View style={style}>
+            <View pointerEvents="box-none" style={style}>
                 {this.props.children}
             </View>
         );

@@ -90,8 +90,10 @@ export default class LayoutMain extends Component {
                         {currentPage}
                     </View>
                     {currentComponent.showInput && <InputMainContainer />}
-                    <Bottom>
+                    <View style={{ position: 'absolute', right: 0, bottom: 0 }}>
                         {currentComponent.isFabVisible && <Fab />}
+                    </View>
+                    <Bottom>
                         {snackBar}
                     </Bottom>
                     <Tabs />
