@@ -9,6 +9,7 @@ import HeaderMain from './header-main';
 import Tabs from './tabs';
 import SnackBar from '../snackbars/snackbar';
 import SnackBarConnection from '../snackbars/snackbar-connection';
+import snackbarState from '../snackbars/snackbar-state';
 import Fab from '../shared/fab';
 import styles, { vars } from '../../styles/styles';
 import routerMain from '../routes/router-main';
@@ -29,11 +30,22 @@ export default class LayoutMain extends Component {
     }
 
     get fab() {
+        const style = {
+            position: 'absolute',
+            right: 0,
+            bottom: this.isFabVisible ? 0 : -height,
+            paddingBottom: this._snackBar ? this._snackBar.animatedHeight : 0
+        };
         return (
-            <View style={{ position: 'absolute', right: 0, bottom: this.isFabVisible ? 0 : -height }}>
+            <Animated.View style={style}>
                 <Fab />
-            </View>
+            </Animated.View>
         );
+    }
+
+    get snackBar() {
+        return !this.modal && !routerMain.currentComponent.suppressMainSnackBar ?
+            <SnackBar ref={sb => (this._snackBar = sb)} /> : null;
     }
 
     page(control, key) {
@@ -67,23 +79,21 @@ export default class LayoutMain extends Component {
         const pages = routerMain.pages;
         const currentPage = pages[routerMain.currentIndex];
         const currentComponent = routerMain.currentComponent;
-        const snackBar =
-            !this.modal && !currentComponent.suppressMainSnackBar && <SnackBar />;
 
         const animatedBlock = (
             <Animated.View
                 style={outerStyle}>
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, flexGrow: 1 }}>
                     <HeaderMain />
                     <SnackBarConnection />
-                    <View style={{ flex: 1 }}>
+                    <View style={{ flex: 1, flexGrow: 1 }}>
                         {currentPage}
+                        <Bottom>
+                            {this.snackBar}
+                        </Bottom>
                     </View>
                     {currentComponent.showInput && <InputMainContainer />}
                     {this.fab}
-                    <Bottom>
-                        {snackBar}
-                    </Bottom>
                     <Tabs />
                 </View>
             </Animated.View>
