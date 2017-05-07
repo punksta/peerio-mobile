@@ -25,6 +25,12 @@ export default class SettingsItem extends Component {
         this.props.onPress && this.props.onPress();
     }
 
+    get rightIcon() {
+        return this.props.icon !== null ?
+            icons.dark(this.props.icon || 'keyboard-arrow-right')
+            : null;
+    }
+
     render() {
         const offset = vars.retentionOffset;
         return (
@@ -39,7 +45,10 @@ export default class SettingsItem extends Component {
                         </Text>
                     </View>
                     <View style={{ flex: 0 }}>
-                        {icons.dark(this.props.icon || 'keyboard-arrow-right')}
+                        {this.props.children}
+                    </View>
+                    <View style={{ flex: 0, minHeight: vars.iconLayoutSize }}>
+                        {this.rightIcon}
                     </View>
                 </View>
             </TouchableOpacity>
@@ -48,6 +57,7 @@ export default class SettingsItem extends Component {
 }
 
 SettingsItem.propTypes = {
+    children: React.PropTypes.any,
     title: React.PropTypes.any,
     disabled: React.PropTypes.bool,
     icon: React.PropTypes.string,

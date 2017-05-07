@@ -6,6 +6,7 @@ import SettingsItem from './settings-item';
 import settingsState from './settings-state';
 import snackbarState from '../snackbars/snackbar-state';
 import mainState from '../main/main-state';
+import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-storage-usage';
 import { toggleConnection } from '../main/dev-menu-items';
 import { t } from '../utils/translator';
 
@@ -30,6 +31,10 @@ export default class SettingsLevel1 extends Component {
                 <SettingsItem title="title_settingsSecurity" onPress={() => settingsState.transition('security')} />
                 {/* <SettingsItem title="title_settingsPreferences" disabled /> */}
                 <SettingsItem title="title_help" onPress={() => settingsState.routerMain.logs()} />
+                {this.spacer}
+                <SettingsItem title="title_storageUsage" icon={null} onPress={paymentCheckout}>
+                    <PaymentStorageUsage />
+                </SettingsItem>
                 {this.spacer}
                 {__DEV__ && <SettingsItem title="Toggle connection" onPress={toggleConnection} />}
                 {__DEV__ && <SettingsItem title="Damage TouchID" onPress={() => mainState.damageUserTouchId()} />}

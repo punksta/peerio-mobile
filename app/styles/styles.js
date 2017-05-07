@@ -99,6 +99,8 @@ const vars = {
     retentionOffset
 };
 
+vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;
+
 const styleCache = {};
 function baseclass(name, style) {
     styleCache[name] = style;

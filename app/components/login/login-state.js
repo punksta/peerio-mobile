@@ -54,7 +54,12 @@ class LoginState extends RoutedState {
         this.resetValidationState();
     }
 
-    @action saved = () => this.routes.app.loginSaved();
+    @action saved = () => {
+        this.routes.app.loginSaved();
+        if (__DEV__ && process.env.PEERIO_QUICK_PIN) {
+            this.login(process.env.PEERIO_QUICK_PIN);
+        }
+    }
 
     @action _login(user) {
         console.log(`login-state.js: logging in ${user.username}`);

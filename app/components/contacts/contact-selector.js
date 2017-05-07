@@ -231,7 +231,7 @@ export default class ContactSelector extends Component {
         const exitRow = this.exitRow();
         const recipients = contactState.recipients;
         return (
-            <View style={{ paddingTop: vars.statusBarHeight }}>
+            <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
                 {this.lineBlock(exitRow)}
                 {/* TODO combine recipients and search */}
                 {recipients.length ? this.lineBlock(userRow) : null}

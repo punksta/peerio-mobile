@@ -60,6 +60,7 @@ export default class HeaderMain extends Component {
                                 {'  ▼  '}
                             </Text>}
                         </Text>
+                        { leftIcon && <View style={{ flex: 0, width: vars.iconLayoutSize }} />}
                     </View>
                 </TouchableOpacity>
                 {/* <View style={{ backgroundColor: 'transparent' }} testID="rightMenuButton">
