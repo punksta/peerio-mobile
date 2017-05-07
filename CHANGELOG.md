@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.27.0"></a>
+# [3.27.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.26.0...v3.27.0) (2017-05-07)
+
+
+### Bug Fixes
+
+* **deps:** exact versioning for react and raect-dom ([af8b734](https://github.com/PeerioTechnologies/peerio-mobile/commit/af8b734))
+* **ui:** android will offer to take photos again after permission request ([01f730f](https://github.com/PeerioTechnologies/peerio-mobile/commit/01f730f))
+* **ui:** bottom margin on signup footer ([8814c17](https://github.com/PeerioTechnologies/peerio-mobile/commit/8814c17))
+* **ui:** invisible wall on fab ([b07b033](https://github.com/PeerioTechnologies/peerio-mobile/commit/b07b033))
+* **ui:** margin top to status bar ([0e2ee0b](https://github.com/PeerioTechnologies/peerio-mobile/commit/0e2ee0b))
+
+
+
 <a name="3.26.0"></a>
 # [3.26.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.25.0...v3.26.0) (2017-05-06)
 
