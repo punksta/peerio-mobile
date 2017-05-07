@@ -8,11 +8,12 @@ import FileInlineProgress from '../files/file-inline-progress';
 import AvatarCircle from './avatar-circle';
 import ErrorCircle from './error-circle';
 import OnlineCircle from './online-circle';
-import ReadReceiptList from './read-receipt-list';
+import ReadReceipt from './read-receipt';
 import CorruptedMessage from './corrupted-message';
 import tagify from './tagify';
 
 const itemStyle = {
+    flex: 1,
     flexGrow: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -27,6 +28,7 @@ const bottomBorderStyle = {
 };
 
 const itemContainerStyle = {
+    flex: 1,
     flexGrow: 1,
     flexShrink: 1,
     flexDirection: 'row',
@@ -242,19 +244,32 @@ export default class Avatar extends Component {
         );
     }
 
+    get receipts() {
+        const { receipts } = this.props;
+        if (!receipts || !receipts.length) return null;
+        return (
+            <View style={{ alignSelf: 'flex-end', marginRight: 4 }}>
+                {receipts.map(u => <ReadReceipt username={u} key={u} />)}
+            </View>
+        );
+    }
+
     renderCollapsed() {
         return (
-            <View style={[itemStyle, this.errorStyle]}>
-                <View style={[this.itemContainerStyle, { marginLeft: 74 }]}>
-                    {this.message}
-                    <View style={{ flexGrow: 1 }}>
-                        {this.corruptedMessage}
-                        {this.files}
-                        {this.systemMessage}
-                        {this.retryCancel}
+            <View>
+                <View style={[itemStyle, this.errorStyle]}>
+                    <View style={[this.itemContainerStyle, { marginLeft: 74 }]}>
+                        {this.message}
+                        <View style={{ flex: 1, flexGrow: 1 }}>
+                            {this.corruptedMessage}
+                            {this.files}
+                            {this.systemMessage}
+                            {this.retryCancel}
+                        </View>
                     </View>
+                    {this.errorCircle}
                 </View>
-                {this.errorCircle}
+                {this.receipts}
             </View>
         );
     }
@@ -278,7 +293,7 @@ export default class Avatar extends Component {
                     </View>
                     {this.errorCircle}
                     {this.corruptedMessage}
-                    <ReadReceiptList receipts={this.props.receipts} />
+                    {this.receipts}
                 </View>
             </View>
         );

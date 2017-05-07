@@ -25,17 +25,13 @@ export default class ReadReceipt extends Component {
     }
 
     render() {
-        const username = this.props.username;
-        const { firstName, color } = this.contact;
-        const letter = (firstName || username || ' ')[0].toUpperCase();
-
+        const { color, letter } = this.contact;
         const circleOnline = {
             backgroundColor: color || '#ccc'
         };
-
         return (
             <View style={[circleStyle, circleOnline]}>
-                <Text style={{ fontSize: 9, color: 'white' }}>{letter}</Text>
+                <Text style={{ fontSize: 9, color: 'white' }}>A</Text>
             </View>
         );
     }
