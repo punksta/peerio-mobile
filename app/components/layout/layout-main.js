@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-    View,
-    StatusBar,
-    Animated,
-    Platform,
-    Dimensions
-} from 'react-native';
+import { View, StatusBar, Animated, LayoutAnimation, Dimensions } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { reaction, observable } from 'mobx';
 import uiState from './ui-state';
@@ -20,35 +14,33 @@ import styles, { vars } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
 
+const { width, height } = Dimensions.get('window');
+
 @observer
 export default class LayoutMain extends Component {
     @observable modalVisible = false;
 
-    constructor(props) {
-        super(props);
-        this.width = Dimensions.get('window').width;
-        this.height = Dimensions.get('window').height;
-        this.animatedX = new Animated.Value(0);
-        this.indexAnimation = reaction(() => routerMain.currentIndex, i => {
-            console.log('layout-main.js: index animation');
-            const toValue = -i * this.width;
-            const duration = routerMain.suppressTransition ? 0 : vars.animationDuration;
-            routerMain.suppressTransition = false;
-            Animated.timing(this.animatedX, { toValue, duration })
-                .start();
-        }, true);
-    }
-
     componentDidMount() {
         reaction(() => uiState.appState, () => this.forceUpdate());
+    }
+
+    get isFabVisible() {
+        return routerMain.currentComponent && routerMain.currentComponent.isFabVisible;
+    }
+
+    get fab() {
+        return (
+            <View style={{ position: 'absolute', right: 0, bottom: this.isFabVisible ? 0 : -height }}>
+                <Fab />
+            </View>
+        );
     }
 
     page(control, key) {
         const s = {
             backgroundColor: '#fff',
             position: 'absolute',
-            left: key * this.width,
-            width: this.width,
+            width,
             bottom: 0,
             top: 0
         };
@@ -64,7 +56,6 @@ export default class LayoutMain extends Component {
     }
 
     render() {
-        const transform = [{ translateX: this.animatedX }];
         const outerStyle = {
             backgroundColor: '#fff',
             flex: 1,
@@ -79,7 +70,6 @@ export default class LayoutMain extends Component {
         const snackBar =
             !this.modal && !currentComponent.suppressMainSnackBar && <SnackBar />;
 
-        const width = this.width * pages.length;
         const animatedBlock = (
             <Animated.View
                 style={outerStyle}>
@@ -90,9 +80,7 @@ export default class LayoutMain extends Component {
                         {currentPage}
                     </View>
                     {currentComponent.showInput && <InputMainContainer />}
-                    <View style={{ position: 'absolute', right: 0, bottom: 0 }}>
-                        {currentComponent.isFabVisible && <Fab />}
-                    </View>
+                    {this.fab}
                     <Bottom>
                         {snackBar}
                     </Bottom>
