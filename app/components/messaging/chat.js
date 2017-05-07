@@ -13,6 +13,7 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
+import ButtonText from '../controls/button-text';
 // max new items which are scrolled animated
 const maxScrollableLength = 3;
 
@@ -188,6 +189,30 @@ export default class Chat extends Component {
         );
     }
 
+    get archiveUpgrade() {
+        const upgradeContainer = {
+            backgroundColor: vars.lightGrayBg,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            paddingLeft: 12
+        };
+        return this.props.archiveUpgrade ? (
+            <View style={upgradeContainer}>
+                <Text style={{ color: vars.txtDark }}>{tx('button_upgradeForArchive')}</Text>
+                <ButtonText text={tx('upgrade')} />
+            </View>
+        ) : null;
+    }
+
+    get archiveNotice() {
+        return this.props.archiveNotice ? (
+            <Text style={{ textAlign: 'left', margin: 12, marginTop: 0, marginBottom: 16, color: vars.txtMedium }}>
+                {tx('title_chatArchive')}
+            </Text>
+        ) : null;
+    }
+
     zeroStateItem() {
         const zsContainer = {
             borderBottomWidth: 1,
@@ -206,14 +231,16 @@ export default class Chat extends Component {
         ));
         return (
             <View style={zsContainer}>
+                {this.archiveUpgrade}
                 <View style={{ flexDirection: 'row', marginRight: 48 }}>{avatars}</View>
-                <Text style={{ textAlign: 'center', margin: 12, color: vars.txtMedium }}>
+                <Text style={{ textAlign: 'left', margin: 12, color: vars.txtDark }}>
                     {tx('title_chatBeginning')}
                     <Text>{' '}</Text>
                     <Text style={{ fontWeight: 'bold' }}>
                         {chat.chatName}
                     </Text>
                 </Text>
+                {this.archiveNotice}
             </View>
         );
     }
@@ -231,6 +258,8 @@ export default class Chat extends Component {
 }
 
 Chat.propTypes = {
-    hideInput: React.PropTypes.bool
+    hideInput: React.PropTypes.bool,
+    archiveUpgrade: React.PropTypes.bool,
+    archiveNotice: React.PropTypes.bool
 };
 
