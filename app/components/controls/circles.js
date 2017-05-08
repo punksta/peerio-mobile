@@ -54,7 +54,7 @@ export default class Circles extends Component {
     render() {
         const items = [];
         for (let i = 0; i < this.props.count; ++i) {
-            circles.push(this.circle(i, this.props.current));
+            items.push(this.circle(i, this.props.current));
         }
         return (
             <View style={s}>

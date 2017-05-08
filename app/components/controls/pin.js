@@ -98,7 +98,10 @@ export default class Pin extends Component {
         });
         return (
             <View style={circleHl} key={key}>
-                <TouchableOpacity testID={`pin${text}`} onPress={() => this.enter(text)}>
+                <TouchableOpacity
+                    pressRetentionOffset={vars.retentionOffset}
+                    delayPressOut={0}
+                    testID={`pin${text}`} onPressOut={() => this.enter(text)}>
                     <View style={circle}>
                         <Text style={{ color: vars.highlight, fontSize: 18 }}>{text}</Text>
                         <Text style={{ color: vars.midlight, fontSize: 10 }}>{subText}</Text>
@@ -113,7 +116,9 @@ export default class Pin extends Component {
         if (this.pin.length >= this.maxPinLength) return;
         const pinValue = this.pin + num;
         this.pin = pinValue;
+        console.log(`pin.js: pin ${this.pin}`);
         if (this.pin.length === this.maxPinLength) {
+            console.log(`pin.js: pin ${this.pin}`);
             if (this.props.onEnter) {
                 this.isSpinner = true;
                 this.props.onEnter(pinValue)

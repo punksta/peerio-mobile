@@ -50,11 +50,11 @@ class SignupState extends RoutedState {
 
     @action next() {
         if (!this.isValid()) return;
-        if (process.env.PEERIO_QUICK_SIGNUP) {
+        /* if (process.env.PEERIO_QUICK_SIGNUP) {
             this.pin = '125125';
             this.finish();
             return;
-        }
+        } */
         (this.current < this.count - 1) ? this.current++ : this.finish();
     }
 
