@@ -5,13 +5,11 @@ import {
 import { observer } from 'mobx-react/native';
 import Layout1 from '../layout/layout1';
 import SignupFooter from './signup-footer';
-import styles from '../../styles/styles';
+import { wizard } from '../../styles/styles';
 import Wizard from '../wizard/wizard';
 import SignupStep1 from './signup-step1';
 import SignupPin from './signup-pin';
 import signupState from './signup-state';
-
-const { height } = Dimensions.get('window');
 
 @observer
 export default class SignupWizard extends Wizard {
@@ -33,7 +31,7 @@ export default class SignupWizard extends Wizard {
     }
 
     render() {
-        const style = styles.wizard;
+        const style = wizard;
         const body = (
             <View
                 style={[style.containerFlex]}>

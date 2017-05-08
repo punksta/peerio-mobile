@@ -2,18 +2,15 @@ import React, { Component } from 'react';
 import {
     Text
 } from 'react-native';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 
 export default class ErrorText extends Component {
     render() {
-        let style = {
-            color: '#FF0000B0'
+        const style = {
+            color: vars.txtAlert
         };
-        if (this.props.style) {
-            style = styles.inherit(style, this.props.style);
-        }
         return (
-            <Text style={style}>
+            <Text style={[style, this.props.style]}>
                 {this.props.children}
             </Text>
         );

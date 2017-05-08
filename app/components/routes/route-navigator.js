@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Navigator } from 'react-native-deprecated-custom-components';
 import { reaction } from 'mobx';
 import BgPattern from '../controls/bg-pattern';
-import styles from '../../styles/styles';
+import { navigator } from '../../styles/styles';
 import uiState from '../layout/ui-state';
 
 export default class RouteNavigator extends Component {
@@ -45,7 +45,7 @@ export default class RouteNavigator extends Component {
                 testID={`route${route.key}Scene`}
                 removeClippedSubviews={false}
                 key={route.key}
-                style={[styles.navigator.card, hidden]}>
+                style={[navigator.card, hidden]}>
                 <BgPattern />
                 {inner}
             </View>

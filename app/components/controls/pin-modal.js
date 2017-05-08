@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Pin from './pin';
 import Button from './button';
-import styles, { vars } from '../../styles/styles';
+import { vars } from '../../styles/styles';
 import uiState from '../layout/ui-state';
 import BgPattern from '../controls/bg-pattern';
 

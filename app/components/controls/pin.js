@@ -12,7 +12,7 @@ import * as Animatable from 'react-native-animatable';
 import Circles from '../controls/circles';
 import Center from '../controls/center';
 import icons from '../helpers/icons';
-import styles, { vars } from '../../styles/styles';
+import { vars, circles, pin } from '../../styles/styles';
 import Util from '../helpers/util';
 
 @observer
@@ -82,7 +82,7 @@ export default class Pin extends Component {
                 </View>
             );
         }
-        const circle = styles.circle.create(r, {
+        const circle = circles.create(r, {
             backgroundColor: vars.bg,
             borderColor: vars.highlight,
             borderWidth: 1,
@@ -91,7 +91,7 @@ export default class Pin extends Component {
             width: this.circleW,
             height: this.circleW
         });
-        const circleHl = styles.circle.create(r, {
+        const circleHl = circles.create(r, {
             backgroundColor: vars.midlight,
             width: this.circleW,
             height: this.circleW
@@ -111,12 +111,12 @@ export default class Pin extends Component {
     enter(num) {
         if (this.loading) return;
         if (this.pin.length >= this.maxPinLength) return;
-        const pin = this.pin + num;
-        this.pin = pin;
+        const pinValue = this.pin + num;
+        this.pin = pinValue;
         if (this.pin.length === this.maxPinLength) {
             if (this.props.onEnter) {
                 this.isSpinner = true;
-                this.props.onEnter(pin)
+                this.props.onEnter(pinValue)
                     .then(r => {
                         console.log(`returned ${r}`);
                         return this.props.onSuccess && this.props.onSuccess(r);
@@ -157,14 +157,14 @@ export default class Pin extends Component {
     }
 
     row(index, items) {
-        const circles = items.map((i, ci) => this.circle(`${index}${ci}`, i.text, i.subText, i.action));
+        const children = items.map((i, ci) => this.circle(`${index}${ci}`, i.text, i.subText, i.action));
         return (
             <View key={index} style={{
                 flex: 1,
                 flexDirection: 'row',
                 justifyContent: items.length === 1 ? 'center' : 'space-between'
             }}>
-                {circles}
+                {children}
             </View>
         );
     }
@@ -180,7 +180,7 @@ export default class Pin extends Component {
     }
 
     render() {
-        const style = styles.pin;
+        const style = pin;
         const p = (text, subText, action) => ({ text, subText, action });
         const bs = this.pin.length ? p(null, 'backspace', () => this.backspace()) : p();
         const inProgress = this.loading;

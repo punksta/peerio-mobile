@@ -3,7 +3,7 @@ import { observer } from 'mobx-react/native';
 import PickerBox from './picker-box';
 import LanguagePicker from './language-picker';
 import uiState from '../layout/ui-state';
-import styles from '../../styles/styles';
+import { pickerBox } from '../../styles/styles';
 
 @observer
 export default class LanguagePickerBox extends Component {
@@ -18,7 +18,7 @@ export default class LanguagePickerBox extends Component {
                 name="languageSelected"
                 picker={this.picker}
                 data={uiState.languages}
-                style={styles.pickerBox}
+                style={pickerBox}
                 value={uiState.languageSelected}
                 hint=""
                 />

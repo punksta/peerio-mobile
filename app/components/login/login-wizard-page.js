@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { tu } from '../utils/translator';
 import Button from '../controls/button';
-import styles, { vars } from '../../styles/styles';
+import { vars, wizard } from '../../styles/styles';
 
 @observer
 export default class LoginWizardPage extends Component {
@@ -40,7 +40,7 @@ export default class LoginWizardPage extends Component {
     }
 
     _footerButton(text, onPress, style, disabled) {
-        const s = styles.wizard.footer.button.base;
+        const s = wizard.footer.button.base;
         return this._button(text, onPress, [s, style], { fontWeight: 'bold' }, disabled);
     }
 

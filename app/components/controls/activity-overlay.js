@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ActivityIndicator } from 'react-native';
-import styles, { vars } from '../../styles/styles';
+import { vars } from '../../styles/styles';
 
 export default class ActivityOverlay extends Component {
     render() {

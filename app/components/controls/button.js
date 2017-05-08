@@ -4,11 +4,11 @@ import {
     Text,
     TouchableOpacity
 } from 'react-native';
-import styles, { vars } from '../../styles/styles';
+import { vars, button } from '../../styles/styles';
 
 export default class Button extends Component {
     render() {
-        const style = styles.button;
+        const style = button;
         let textStyle = this.props.bold ?
             style.text.bold : style.text.normal;
         const opacity = { opacity: this.props.disabled ? 0.5 : 1 };

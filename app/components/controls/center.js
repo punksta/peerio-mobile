@@ -2,21 +2,18 @@ import React, { Component } from 'react';
 import {
     View
 } from 'react-native';
-import styles from '../../styles/styles';
+import { vars } from '../../styles/styles';
 
 export default class Center extends Component {
     render() {
-        let style = {
+        const style = {
             flexGrow: 1,
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center'
         };
-        if (this.props.style) {
-            style = styles.inherit(style, this.props.style);
-        }
         return (
-            <View style={style}>
+            <View style={[style, this.props.style]}>
                 {this.props.children}
             </View>
         );

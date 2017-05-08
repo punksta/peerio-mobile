@@ -11,7 +11,7 @@ import SnackBar from '../snackbars/snackbar';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import snackbarState from '../snackbars/snackbar-state';
 import Fab from '../shared/fab';
-import styles, { vars } from '../../styles/styles';
+import { common } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
 
@@ -101,7 +101,7 @@ export default class LayoutMain extends Component {
         return (
             <View
                 testID="mainLayout"
-                style={[styles.container.root]}>
+                style={[common.container.root]}>
                 {animatedBlock}
                 <StatusBar
                     barStyle={routerModal.isBlackStatusBar ? 'default' : 'light-content'}

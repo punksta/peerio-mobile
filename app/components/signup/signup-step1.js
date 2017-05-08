@@ -7,7 +7,7 @@ import { observer } from 'mobx-react/native';
 import TextBox from '../controls/textbox';
 import Bold from '../controls/bold';
 import LanguagePickerBox from '../controls/language-picker-box';
-import styles from '../../styles/styles';
+import { wizard } from '../../styles/styles';
 import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t, T } from '../utils/translator';
@@ -30,7 +30,7 @@ export default class SignupStep1 extends Component {
     }
 
     render() {
-        const style = styles.wizard;
+        const style = wizard;
         const tosParser = {
             emphasis: text => <Bold>{text}</Bold>,
             tosLink: text => this.tosLink(text)
@@ -61,6 +61,7 @@ export default class SignupStep1 extends Component {
                             name="firstName"
                             hint={t('title_firstName')} />
                     </View>
+                    <View style={{ flex: 0, width: 4 }} />
                     <View style={{ flex: 1 }}>
                         <TextBox
                             returnKeyType="go"

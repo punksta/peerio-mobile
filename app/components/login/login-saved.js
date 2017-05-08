@@ -8,7 +8,7 @@ import Big from '../controls/big';
 import Bold from '../controls/bold';
 import LoginSavedFooter from './login-saved-footer';
 import Pin from '../controls/pin';
-import styles from '../../styles/styles';
+import { common, wizard } from '../../styles/styles';
 import loginState from './login-state';
 import forms from '../helpers/forms';
 
@@ -36,14 +36,14 @@ export default class LoginSaved extends Component {
     }
 
     render() {
-        const style = styles.wizard;
+        const style = wizard;
         const body = (
             <View style={[style.containerFlexGrow, { marginTop: 20 }]}>
                 <Center style={{
                     flexGrow: 0,
                     height: 30 // limit height
                 }}>
-                    <Big style={styles.text.inverse}>
+                    <Big style={common.textInverse}>
                         {t('title_welcomeBack')}
                         {' '}
                         <Bold>{loginState.firstName || loginState.username}</Bold>

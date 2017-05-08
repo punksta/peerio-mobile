@@ -1,4 +1,4 @@
-import { View, Text, PanResponder, AppState, ActivityIndicator, NativeModules } from 'react-native';
+import { NativeModules } from 'react-native';
 import { b64ToBytes, bytesToB64 } from './worker';
 
 function scryptNative(password, salt, options, callback) {

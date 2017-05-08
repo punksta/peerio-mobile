@@ -22,7 +22,7 @@ export default class PickerBoxIos extends Component {
 
     render() {
         const focused = uiState.pickerVisible && uiState.picker === this.picker;
-        const {/* hint,*/ shadow, background, textview, container, iconContainer, icon } =
+        const { shadow, background, textview, container, iconContainer, icon } =
             focused ? this.props.style.active : this.props.style.normal;
         return (
             <View style={shadow}>

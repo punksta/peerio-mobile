@@ -4,9 +4,9 @@ import { observer } from 'mobx-react/native';
 import { tu } from 'peerio-translator';
 
 import signupState from '../signup/signup-state';
-import styles from '../../styles/styles';
+import { wizard } from '../../styles/styles';
 
-const style = styles.wizard.footer;
+const style = wizard.footer;
 
 @observer
 export default class SignupFooter extends Component {

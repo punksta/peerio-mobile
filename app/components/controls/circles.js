@@ -3,7 +3,7 @@ import {
     View, Text
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import styles from '../../styles/styles';
+import { circles } from '../../styles/styles';
 
 const s = {
     flexGrow: 1,
@@ -13,7 +13,7 @@ const s = {
     marginBottom: 32
 };
 
-const style = styles.circle.small;
+const style = circles.small;
 
 const dash = {
     justifyContent: 'center',
@@ -52,13 +52,13 @@ export default class Circles extends Component {
     }
 
     render() {
-        const circles = [];
+        const items = [];
         for (let i = 0; i < this.props.count; ++i) {
             circles.push(this.circle(i, this.props.current));
         }
         return (
             <View style={s}>
-                {circles}
+                {items}
             </View>
         );
     }

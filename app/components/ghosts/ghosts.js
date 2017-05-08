@@ -8,10 +8,8 @@ import {
 import { MenuContext } from 'react-native-menu';
 import { observable /* , reaction */ } from 'mobx';
 import { observer } from 'mobx-react/native';
-// import { vars } from '../../styles/styles';
 import GhostsZeroState from './ghosts-zero-state';
 import ProgressOverlay from '../shared/progress-overlay';
-// import styles, { vars } from '../../styles/styles';
 import GhostItem from './ghost-item';
 import { mailStore } from '../../lib/icebear';
 

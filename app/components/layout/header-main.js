@@ -4,9 +4,8 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import routerMain from '../routes/router-main';
-import styles, { vars } from '../../styles/styles';
+import { vars } from '../../styles/styles';
 import BackIcon from './back-icon';
-import DownIcon from './down-icon';
 
 @observer
 export default class HeaderMain extends Component {
@@ -43,7 +42,7 @@ export default class HeaderMain extends Component {
                 // height: vars.headerSpacing,
                 flex: -1,
                 justifyContent: 'flex-end',
-                backgroundColor: styles.branding.peeriomobile.bg
+                backgroundColor: vars.bg
             }}>
                 <TouchableOpacity onPress={titleAction}
                     pressRetentionOffset={vars.retentionOffset}>

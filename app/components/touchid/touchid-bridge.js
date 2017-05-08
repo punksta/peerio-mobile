@@ -1,6 +1,6 @@
 import { NativeModules } from 'react-native';
-import { observable, action } from 'mobx';
-import TouchID from 'react-native-touch-id-value';
+import { observable } from 'mobx';
+// import TouchID from 'react-native-touch-id-value';
 
 const { RNTouchIDValue } = NativeModules;
 

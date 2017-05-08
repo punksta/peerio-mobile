@@ -5,7 +5,7 @@ import { when } from 'mobx';
 import { tu, tx } from '../utils/translator';
 import Wizard from '../wizard/wizard';
 import loginState from './login-state';
-import styles, { vars } from '../../styles/styles';
+import { wizard } from '../../styles/styles';
 import Logo from '../controls/logo';
 import Layout1 from '../layout/layout1';
 import migrator from '../../lib/legacy/migrator';
@@ -43,7 +43,7 @@ export default class LoginWizard extends Wizard {
     }
 
     footer() {
-        const s = styles.wizard.footer.button.base;
+        const s = wizard.footer.button.base;
         return (this.index > 0) && (
             <View>
                 <Button style={s} onPress={() => (this.index--)} text={tu('button_back')} />
@@ -73,7 +73,7 @@ export default class LoginWizard extends Wizard {
     }
 
     render() {
-        const style = styles.wizard;
+        const style = wizard;
         const body = (
             <View
                 style={[style.containerFlex, { height }]}>

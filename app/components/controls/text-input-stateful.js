@@ -3,7 +3,7 @@ import {
     TextInput, View
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import styles, { vars } from '../../styles/styles';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class TextInputStateful extends Component {

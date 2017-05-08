@@ -6,7 +6,7 @@ import ModalLayout from './layout/modal-layout';
 import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
-import styles, { vars } from './../styles/styles';
+import { vars } from './../styles/styles';
 import { clientApp, crypto } from '../lib/icebear';
 import worker from '../lib/worker';
 import { scryptToWorker, signDetachedToWorker, verifyDetachedToWorker } from '../lib/scrypt-worker';
