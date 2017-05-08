@@ -150,16 +150,21 @@ export default class TextBox extends Component {
         }
         return (
             <View style={[style.outer]}>
-                <TouchableOpacity
-                    onPress={this.focus}
+                <View
                     style={[style.radius]}>
+                    <TouchableOpacity
+                        pressRetentionOffset={vars.retentionOffset}
+                        pointerEvents={!this.focused ? undefined : 'none'}
+                        style={style.touchable}
+                        testID={`${this.props.name}_outer`}
+                        onPress={this.focus} />
                     {this.hint}
                     <View
-                        pointerEvents="none"
+                        pointerEvents={this.focused ? undefined : 'none'}
                         style={[textbox.inputContainer, icAlert]}>
                         <TextInput
                             keyboardType={this.props.keyboardType}
-                            testID={this.props.name}
+                            testID={`${this.props.name}`}
                             style={[style.textbox, { fontSize },
                             { height: vars.inputPaddedHeight, top: 0 }]}
                             ref={ref => (this.textinput = ref)}
@@ -177,7 +182,7 @@ export default class TextBox extends Component {
                         />
                     </View>
                     {this.secretIcon}
-                </TouchableOpacity>
+                </View>
             </View>
         );
     }

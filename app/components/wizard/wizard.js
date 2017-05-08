@@ -55,7 +55,13 @@ export default class Wizard extends Component {
     }
 
     wizard() {
-        return this.pages.map((k, i) => this._animatedContainer(k, this[k](), i));
+        // return this.pages.map((k, i) => this._animatedContainer(k, this[k](), i));
+        const container = { flexGrow: 1 };
+        return (
+            <View style={container}>
+                {this[this.pages[this.index]]()}
+            </View>
+        );
     }
 
     footerContainer() {

@@ -15,15 +15,10 @@ const alertVisible = {
     borderBottomWidth: 2
 };
 
-const radius = {
-    height: vars.inputHeight,
-    overflow: 'hidden',
-    borderRadius: 2
-};
-
 const textbox = {
     flexGrow: 1,
     marginLeft: vars.inputPaddingLeft,
+    padding: 0,
     height: 28,
     color: vars.inputBgInactiveText,
     fontSize: vars.font.size.normal
@@ -31,13 +26,19 @@ const textbox = {
 
 const shadowIOS = {
     shadowColor: '#000000',
-    shadowOpacity: 0.4,
+    shadowOpacity: 0.0,
     shadowRadius: 5,
     shadowOffset: {
         height: 1,
         width: 1
     }
 };
+
+const radius = [{
+    height: vars.inputHeight,
+    overflow: 'hidden',
+    borderRadius: 2
+}, shadowIOS];
 
 const outerContainer = {
     marginBottom: 36,
@@ -51,17 +52,25 @@ export default {
     alertInvisible,
     alertVisible,
     focused: {
-        outer: [outerContainer],
+        outer: [outerContainer, shadowIOS, {
+            // ios shadow
+            shadowOpacity: 0.4,
+            backgroundColor: vars.subtleBg,
+            elevation: 10
+        }],
         radius: [radius, {
             // android shadow
-            backgroundColor: vars.inputBg
             // elevation: 10
+        }],
+        touchable: [inputContainer, shadowIOS, {
+            backgroundColor: vars.inputBg
         }],
         textbox
     },
     blurred: {
-        outer: [outerContainer],
-        radius: [radius, {
+        outer: [outerContainer, shadowIOS],
+        radius,
+        touchable: [inputContainer, {
             backgroundColor: vars.subtleBg
         }],
         textbox
