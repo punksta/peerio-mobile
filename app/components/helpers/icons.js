@@ -96,17 +96,19 @@ const icons = {
             overflow: 'hidden',
             width: radius,
             height: radius,
-            marginHorizontal: margin
+            marginHorizontal: margin,
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+        const textStyle = {
+            color: fgColor,
+            fontSize: 8,
+            fontWeight: vars.font.weight.semiBold,
+            textAlign: 'center'
         };
         return (
             <View style={notificationStyle}>
-                <Text style={{
-                    color: fgColor,
-                    fontSize: 8,
-                    fontWeight: vars.font.weight.semiBold,
-                    lineHeight: radius,
-                    textAlign: 'center'
-                }}>{`${text}`} </Text>
+                <Text style={textStyle}>{`${text}`} </Text>
             </View>
         );
     },
