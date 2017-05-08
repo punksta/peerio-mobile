@@ -153,6 +153,7 @@ export default class TextBox extends Component {
                 <View
                     style={[style.radius]}>
                     <TouchableOpacity
+                        activeOpacity={0.9}
                         pressRetentionOffset={vars.retentionOffset}
                         pointerEvents={!this.focused ? undefined : 'none'}
                         style={style.touchable}

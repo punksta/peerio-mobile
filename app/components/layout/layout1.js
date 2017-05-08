@@ -1,47 +1,45 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Dimensions, Text } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { observer } from 'mobx-react/native';
+import { observable } from 'mobx';
 import SnackBarConnection from '../snackbars/snackbar-connection';
-import { vars } from '../../styles/styles';
-import uiState from '../layout/ui-state';
-
-const { height } = Dimensions.get('window');
 
 @observer
 export default class Layout1 extends Component {
-    render() {
-        const paddingTop = vars.layoutPaddingTop;
-        const paddingBottom = global.platform === 'android' ? 0 : uiState.keyboardHeight;
+    @observable height = 0;
 
+    render() {
         const boxStyle = {
+            flex: 1,
             flexGrow: 1,
             flexDirection: 'column',
-            justifyContent: 'space-between',
-            borderColor: 'yellow',
-            borderWidth: 0
+            justifyContent: 'space-between'
         };
-
 
         const contentContainerStyle = {
             flexGrow: 1,
-            justifyContent: 'space-between',
-            borderWidth: 0,
-            borderColor: 'red'
+            minHeight: this.height
+        };
+
+        const fillerStyle = {
+            flexGrow: 1,
+            justifyContent: 'space-between'
         };
 
         return (
             <View
+                onLayout={event => (this.height = event.nativeEvent.layout.height)}
                 testID="layout1"
                 style={[boxStyle, this.props.style]}>
                 {this.props.header}
                 <ScrollView
+                    contentContainerStyle={contentContainerStyle}
+                    style={{ flex: 1, flexGrow: 1 }}
                     scrollEnabled={!this.props.noScroll}
                     keyboardShouldPersistTaps="handled">
-                    <View style={contentContainerStyle}>
-                        <View style={{ minHeight: height }}>
-                            {this.props.body}
-                            {this.props.footer}
-                        </View>
+                    <View style={fillerStyle}>
+                        {this.props.body}
+                        {this.props.footer}
                     </View>
                 </ScrollView>
                 <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>

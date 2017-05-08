@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import {
-    View, Text, TouchableOpacity
-} from 'react-native';
+import { View, Text, LayoutAnimation } from 'react-native';
+import { reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import popupState from './popup-state';
 import ButtonText from '../controls/button-text';
-import { vars } from '../../styles/styles';
+// import { vars } from '../../styles/styles';
 
 @observer
 export default class PopupLayout extends Component {
-    constructor(props) {
-        super(props);
-        this.button = this.button.bind(this);
+    componentDidMount() {
+        reaction(() => popupState.activePopup, () => LayoutAnimation.easeInEaseOut());
     }
 
     onPress(item) {
@@ -19,7 +17,7 @@ export default class PopupLayout extends Component {
         popupState.discardPopup();
     }
 
-    button(item) {
+    button = (item) => {
         const { text, id, secondary } = item;
         return (
             <ButtonText
@@ -58,6 +56,7 @@ export default class PopupLayout extends Component {
                 height: 1,
                 width: 1
             },
+            elevation: 10,
             margin: 20,
             backgroundColor: 'white'
         };
@@ -69,6 +68,8 @@ export default class PopupLayout extends Component {
 
         const buttonBar = {
             flex: 0,
+            marginHorizontal: 16,
+            marginVertical: 8,
             flexDirection: 'row',
             justifyContent: 'flex-end'
         };

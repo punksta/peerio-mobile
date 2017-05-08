@@ -2,14 +2,13 @@ import React from 'react';
 import { View, Dimensions, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { when } from 'mobx';
-import { tu, tx } from '../utils/translator';
+import { tu } from '../utils/translator';
 import Wizard from '../wizard/wizard';
 import loginState from './login-state';
 import { wizard } from '../../styles/styles';
 import Logo from '../controls/logo';
 import Layout1 from '../layout/layout1';
-import migrator from '../../lib/legacy/migrator';
-import { popupYes } from '../shared/popups';
+// import migrator from '../../lib/legacy/migrator';
 import Button from '../controls/button';
 import LoginStart from './login-start';
 import LoginClean from './login-clean';
@@ -76,15 +75,14 @@ export default class LoginWizard extends Wizard {
         const style = wizard;
         const body = (
             <View
-                style={[style.containerFlex, { height }]}>
+                style={[style.containerFlex]}>
                 <View style={{ height: logoHeight, justifyContent: 'center' }}>
                     <Logo />
                 </View>
                 {this.wizard()}
-                {this.footerContainer()}
                 <StatusBar barStyle="light-content" />
             </View>
         );
-        return <Layout1 body={body} footer={null} />;
+        return <Layout1 body={body} footer={this.footer()} />;
     }
 }

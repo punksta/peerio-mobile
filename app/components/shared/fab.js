@@ -26,6 +26,7 @@ const fabStyle = {
 };
 
 const shadowStyle = {
+    elevation: 10,
     shadowColor: '#000000',
     shadowOpacity: 0.4,
     shadowRadius: 3,
