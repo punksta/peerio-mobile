@@ -21,7 +21,7 @@ function receive(message) {
     let data = {};
     try {
         data = JSON.parse(message);
-        console.log(`index.worker.js[${data.messageIndex}]: receiving message from ${data.fn}`);
+        // console.log(`index.worker.js[${data.messageIndex}]: receiving message from ${data.fn}`);
     } catch (e) {
         send(data, null, `index.worker.js: error decoding message`);
         return;
@@ -35,7 +35,7 @@ function receive(message) {
             .catch(() => send(data, null, `index.worker.js: error in promise ${data.fn}`))
             .then(() => {
                 const duration = (new Date()).getTime() - start;
-                console.log(`index.worker.js: ${data.fn} executed for ${duration}`);
+                // console.log(`index.worker.js: ${data.fn} executed for ${duration}`);
             })
     } catch (e) {
         send(data, null, `index.worker.js: error invoking function ${data.fn}`);

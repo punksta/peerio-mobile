@@ -18,7 +18,7 @@ function call(fn, params) {
         params
     };
     const data = JSON.stringify(message);
-    console.log(`worker.js[${message.messageIndex}]: sending ${fn}`);
+    // console.log(`worker.js[${message.messageIndex}]: sending ${fn}`);
     // console.log(data);
     return new Promise((resolve, reject) => {
         const timeout = setTimeout(() => reject(new Error('Timeout')), callTimeout);
@@ -31,7 +31,7 @@ function receive(data) {
     if (data === undefined) throw new Error('worker.js: undefined received from worker');
     // console.log(data);
     const message = JSON.parse(data);
-    console.log(`worker.js[${message.messageIndex}]: receiving ${message.fn}`);
+    // console.log(`worker.js[${message.messageIndex}]: receiving ${message.fn}`);
     const h = handlers[message.messageIndex];
     if (!h) throw new Error('worker.js: could not find correrspondent handler');
     const { resolve, timeout } = handlers[message.messageIndex];
