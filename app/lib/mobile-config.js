@@ -46,7 +46,7 @@ export default (c, icebear) => {
     cfg.chat = {
         initialPageSize: 20, // amount of messages to load to a newly opened chat
         pageSize: 20, // when next/prev pages is requested, chat will load this amount of messages
-        maxLoadedMessages: 80, // chat will remove excess of messages if paging resulted in larger count
+        maxLoadedMessages: 40, // chat will remove excess of messages if paging resulted in larger count
         decryptQueueThrottle: 10 // ms, delay between proccessing messages in a batch
     };
 };

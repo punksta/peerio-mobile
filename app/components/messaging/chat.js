@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View, Text, TouchableOpacity, ActivityIndicator
+    ScrollView, View, Text, TouchableOpacity, ActivityIndicator, FlatList
 } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, when } from 'mobx';
+import { observable, when, reaction } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import ChatItem from './chat-item';
@@ -25,7 +25,7 @@ export default class Chat extends Component {
     enableNextScroll = false;
     lastLength = 0;
     topComponentRef = null;
-    indicatorHeight = 40;
+    indicatorHeight = 16;
 
     constructor(props) {
         super(props);
@@ -49,18 +49,20 @@ export default class Chat extends Component {
 
     componentWillMount() {
         /* reaction(() => (this.chat ? this.chat.limboMessages.length : 0), l => {
-            this.disableNextScroll = l < this.lastLength;
+            this.disableNextScroll = true;
+            this.forceUpdate();
+            /* this.disableNextScroll = l < this.lastLength;
             this.animateNextScroll = l > this.lastLength;
             this.lastLength = l;
-        });
-        this.animateNextScroll = false; */
+        }); */
+        // this.animateNextScroll = false;
     }
 
-    item(message, i) {
+    item = (item, index) => {
         const layout = e => {
             let { y } = e.nativeEvent.layout;
             const { height } = e.nativeEvent.layout;
-            if (message.id === this.topChatID) {
+            if (item.id === this.topChatID) {
                 console.log(`chat.js: scroll top ${y}, ${this.indicatorHeight}`);
                 y -= this.indicatorHeight;
                 if (y < 0) y = 0;
@@ -69,7 +71,7 @@ export default class Chat extends Component {
                 this.scrollView.scrollTo({ y, animated: false });
                 console.log(`chat.js: scroll top`);
             }
-            if (message.id === this.bottomChatID) {
+            if (item.id === this.bottomChatID) {
                 console.log(`chat.js: scroll bottom`);
                 this.bottomChatID = null;
                 y = y + height - this.scrollViewHeight + this.indicatorHeight;
@@ -78,40 +80,34 @@ export default class Chat extends Component {
         };
         return (
             <ChatItem
-                key={message.id || i}
-                message={message}
-                onRetryCancel={() => this._actionSheet.show(message, this.chat)}
+                key={item.id || index}
+                message={item}
+                onRetryCancel={() => this._actionSheet.show(item, this.chat)}
                 onLayout={layout} />
         );
     }
 
-    layoutScrollView(event) {
+    layoutScrollView = (event) => {
         console.log('chat.js: layout scroll view');
+        // this.scrollView.scrollToEnd();
         this.scrollViewHeight = event.nativeEvent.layout.height;
         this.contentSizeChanged();
     }
 
-    contentSizeChanged(contentWidth, contentHeight) {
+    contentSizeChanged = (contentWidth, contentHeight) => {
+        console.log(`content size changed ${contentWidth}, ${contentHeight}`);
         if (!this.scrollView || !this.chat) return;
 
         if (contentHeight) {
             this.contentHeight = contentHeight;
         }
 
-        if (this.refreshing) {
+        if (this.refreshing || this.disableNextScroll) {
             return;
         }
 
-        //     let y = (contentHeight - this.contentHeight) / 2;
-        //     if (y < 0) y = 0;
-        //     // this.scrollView.scrollTo({ y, animated: true });
-        //     this.refreshing = false;
-        //     return;
-        // }
-
-        if (this.scrollTimeout) clearTimeout(this.scrollTimeout);
-
-        this.scrollTimeout = setTimeout(() => {
+        if (this._contentSizeChanged) clearTimeout(this._contentSizeChanged);
+        this._contentSizeChanged = setTimeout(() => {
             if (this.scrollView && this.contentHeight && this.scrollViewHeight) {
                 let indicatorSpacing = 0;
                 if (this.chat.canGoUp) indicatorSpacing += this.indicatorHeight;
@@ -119,18 +115,18 @@ export default class Chat extends Component {
                 let y = this.contentHeight - this.scrollViewHeight;
                 if (y - indicatorSpacing < 0) {
                     console.log('chat.js: less content than fit');
-                    this.chat.messages.length && this.chat.loadPreviousPage();
+                    // this.chat.messages.length && this.chat.loadPreviousPage();
                     y = 0;
                 }
                 const animated = this.animateNextScroll;
-                console.log('chat.js: auto scroll');
-                !this.disableNextScroll && this.scrollView.scrollTo({ y, animated });
+                // console.log('chat.js: auto scroll');
+                !this.disableNextScroll && this.scrollView.scrollTo({ y, animated: false });
                 this.animateNextScroll = false;
                 this.disableNextScroll = false;
             } else {
                 setTimeout(() => this.contentSizeChanged(), 1000);
             }
-        }, 0);
+        }, 100);
     }
 
     _onGoUp() {
@@ -149,17 +145,36 @@ export default class Chat extends Component {
         when(() => !this.chat.loadingBottomPage, () => setTimeout(() => (this.refreshing = false), 1000));
     }
 
-    onScroll(event) {
-        if (!this.contentHeight || !this.scrollViewHeight || !this.chat) return;
-        const y = event.nativeEvent.contentOffset.y;
-        const h = this.contentHeight - this.scrollViewHeight;
-        // console.log(`chat.js: ${y}, ${h}`);
-        if (y < this.indicatorHeight / 2) {
+    onScroll = (event) => {
+        const { nativeEvent } = event;
+        const updater = () => {
+            console.log('onscroll');
+            const { contentHeight, scrollViewHeight, chat } = this;
+            if (!contentHeight || !scrollViewHeight || !chat) return;
+            const y = nativeEvent.contentOffset.y;
+            const h = this.contentHeight - this.scrollViewHeight;
+            // console.log(`chat.js: ${y}, ${h}`);
+            if (y < this.indicatorHeight / 2) {
+                this._onGoUp();
+            }
+            if (y >= h - this.indicatorHeight / 2) {
+                this._onGoDown();
+            }
+        };
+        if (this._updater) clearTimeout(this._updater);
+        this._updater = setTimeout(updater, 500);
+    }
+
+    onViewableItemsChanged = ({ viewableItems, changed }) => {
+        if (!viewableItems || !viewableItems.length) return;
+        const updater = () => {
             this._onGoUp();
+        };
+        if (this._updater) clearTimeout(this._updater);
+        if (viewableItems[0].index === 0) {
+            this._updater = setTimeout(updater, 1000);
         }
-        if (y >= h - this.indicatorHeight / 2) {
-            this._onGoDown();
-        }
+        // console.log(viewableItems);
     }
 
     listView() {
@@ -170,6 +185,20 @@ export default class Chat extends Component {
         const refreshControlBottom = this.chat.canGoDown ? (
             <ActivityIndicator size="large" style={{ padding: 10 }} />
         ) : null;
+        /* return (
+            <FlatList
+                ListFooterComponent={this.chat.canGoDown ? ActivityIndicator : null}
+                ListHeaderComponent={this.chat.canGoUp ? ActivityIndicator : null}
+                onScroll={this.onScroll}
+                onViewableItemsChanged={this.onViewableItemsChanged}
+                onContentSizeChange={this.contentSizeChanged}
+                onLayout={this.layoutScrollView}
+                ref={sv => (this.scrollView = sv)}
+                initialNumToRender={10}
+                keyExtractor={item => item.id}
+                data={this.data}
+                renderItem={this.item} />
+        ); */
         return (
             <ScrollView
                 onLayout={this.layoutScrollView}

@@ -31,7 +31,7 @@ export default class ReadReceipt extends Component {
         };
         return (
             <View style={[circleStyle, circleOnline]}>
-                <Text style={{ fontSize: 9, color: 'white' }}>A</Text>
+                <Text style={{ fontSize: 9, color: 'white' }}>{letter}</Text>
             </View>
         );
     }

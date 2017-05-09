@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
@@ -89,6 +89,8 @@ const lastMessageTextStyle = {
 const systemMessageStyle = {
     fontStyle: 'italic'
 };
+
+const { width } = Dimensions.get('window');
 
 @observer
 export default class Avatar extends Component {
@@ -247,16 +249,30 @@ export default class Avatar extends Component {
     get receipts() {
         const { receipts } = this.props;
         if (!receipts || !receipts.length) return null;
+        const receiptRow = {
+            alignSelf: 'flex-end',
+            flexDirection: 'row',
+            marginRight: 4,
+            width: width / 1.5
+        };
+        let marginLeft = (width / 1.5 - 26 * receipts.length) / receipts.length;
+        marginLeft = marginLeft < 0 ? marginLeft : 0;
         return (
-            <View style={{ alignSelf: 'flex-end', marginRight: 4 }}>
-                {receipts.map(u => <ReadReceipt username={u} key={u} />)}
+            <View style={receiptRow}>
+                {receipts.map(u => (
+                    <View key={u} style={{
+                        flex: 1, marginLeft, alignItems: 'flex-end'
+                    }}>
+                        <ReadReceipt username={u} />
+                    </View>
+                ))}
             </View>
         );
     }
 
     renderCollapsed() {
         return (
-            <View>
+            <View style={{ flexGrow: 1 }}>
                 <View style={[itemStyle, this.errorStyle]}>
                     <View style={[this.itemContainerStyle, { marginLeft: 74 }]}>
                         {this.message}
@@ -278,7 +294,7 @@ export default class Avatar extends Component {
         return (
             <View style={[itemStyle, this.borderStyle, this.errorStyle, this.paddingStyle]}>
                 {this.checkbox}
-                <View style={[{ flexGrow: 1 }]}>
+                <View style={[{ flexGrow: 1, maxWidth: width }]}>
                     <View style={itemContainerStyle}>
                         {this.avatar}
                         <View style={[nameMessageContainerStyle]}>

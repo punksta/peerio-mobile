@@ -63,6 +63,7 @@ export default class InputMain extends Component {
 
     render() {
         const tiStyle = {
+            color: vars.txtDark,
             borderWidth: 0,
             borderColor: 'red',
             fontSize: 14
@@ -71,8 +72,6 @@ export default class InputMain extends Component {
         const iconStyle = { width: 24, height: 24, margin: -12 };
         const icon = icons.white(this.hasText ? 'send' : 'thumb-up', this.send, iconStyle);
         const outerStyle = {
-            flex: 1,
-            flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center'
         };
@@ -104,7 +103,7 @@ export default class InputMain extends Component {
                         enablesReturnKeyAutomatically
                         returnKeyType="default"
                         minHeight={56}
-                        maxHeight={144}
+                        maxHeight={146}
                         onChangeHeight={this._onChangeHeight}
                         style={tiStyle}
                         ref={ref => { this.input = ref; }}

@@ -38,7 +38,7 @@ class ChatState extends RoutedState {
     get loading() {
         const c = this.currentChat;
         return this._loading ||
-            chatStore.loading || c && (c.loadingMeta || !c.initialPageLoaded);
+            chatStore.loading || c && (c.loadingMeta || c.loadingInitialPage);
     }
 
     set loading(v) {
