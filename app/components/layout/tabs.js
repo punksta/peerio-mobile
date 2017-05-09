@@ -39,7 +39,7 @@ export default class Tabs extends Component {
         const color = routerMain.route === route ? vars.bg : vars.tabsFg;
         const indicator = bubble ? (
             <View style={{ position: 'absolute', right: -5, top: 0 }}>
-                {icons.bubble(bubble)}
+                {icons.bubble('')}
             </View>
          ) : null;
         return (
