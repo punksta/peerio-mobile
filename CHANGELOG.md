@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.28.0"></a>
+# [3.28.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.27.0...v3.28.0) (2017-05-09)
+
+
+### Bug Fixes
+
+* **android:** disable back button ([270d0a6](https://github.com/PeerioTechnologies/peerio-mobile/commit/270d0a6))
+* **tests:** rework layout for tests to work ([3874f59](https://github.com/PeerioTechnologies/peerio-mobile/commit/3874f59))
+* **ui:** android height fixes ([a9b95d9](https://github.com/PeerioTechnologies/peerio-mobile/commit/a9b95d9))
+* **ui:** bubble positions for android ([972c92e](https://github.com/PeerioTechnologies/peerio-mobile/commit/972c92e))
+* **ui:** fix read receipts task #3872 ([439bb71](https://github.com/PeerioTechnologies/peerio-mobile/commit/439bb71)), closes [#3872](https://github.com/PeerioTechnologies/peerio-mobile/issues/3872)
+* **ui:** pin on RN0.44 ([5cbf308](https://github.com/PeerioTechnologies/peerio-mobile/commit/5cbf308))
+* **ui:** snackbar moves fab ([e24a972](https://github.com/PeerioTechnologies/peerio-mobile/commit/e24a972))
+
+
+### Features
+
+* **ui:** archive notice ([0584025](https://github.com/PeerioTechnologies/peerio-mobile/commit/0584025))
+* **ui:** new storage indicator ([6d0bb98](https://github.com/PeerioTechnologies/peerio-mobile/commit/6d0bb98))
+* **ui:** return log out to settings ([c2a56ce](https://github.com/PeerioTechnologies/peerio-mobile/commit/c2a56ce))
+* **ui:** scrolling fixes ([94dc007](https://github.com/PeerioTechnologies/peerio-mobile/commit/94dc007))
+* **ui:** textbox overhaul and styles refactor ([b681ebd](https://github.com/PeerioTechnologies/peerio-mobile/commit/b681ebd))
+
+
+
 <a name="3.27.0"></a>
 # [3.27.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.26.0...v3.27.0) (2017-05-07)
 
