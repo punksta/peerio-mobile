@@ -107,7 +107,7 @@ android {
     versionProps.store(versionPropsFile.newWriter(), null)
     code *= 10
     defaultConfig {
-        applicationId "com.peerio"
+        applicationId "com.peerio.messenger"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode code
