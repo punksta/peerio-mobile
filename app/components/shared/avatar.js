@@ -11,6 +11,7 @@ import OnlineCircle from './online-circle';
 import ReadReceipt from './read-receipt';
 import CorruptedMessage from './corrupted-message';
 import tagify from './tagify';
+import { User } from '../../lib/icebear';
 
 const itemStyle = {
     flex: 1,
@@ -142,7 +143,7 @@ export default class Avatar extends Component {
                 numberOfLines={numberOfLines}
                 selectable
                 style={lastMessageTextStyle}>
-                {tagify(this.props.message || '')}
+                {tagify(this.props.message || '', User.current.username)}
             </Text>
         ) : null;
     }
