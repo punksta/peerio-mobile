@@ -14,7 +14,7 @@ export default class LayoutModalExit extends Component {
             flexDirection: 'row',
             alignItems: 'center',
             padding: 4,
-            paddingTop: vars.statusBarHeight,
+            paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0
         };
         const style = {

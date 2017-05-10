@@ -253,6 +253,8 @@ export default class Avatar extends Component {
         const receiptRow = {
             alignSelf: 'flex-end',
             flexDirection: 'row',
+            justifyContent: 'flex-end',
+            borderWidth: 0,
             marginRight: 4,
             width: width / 1.5
         };
@@ -262,7 +264,7 @@ export default class Avatar extends Component {
             <View style={receiptRow}>
                 {receipts.map(u => (
                     <View key={u} style={{
-                        flex: 1, marginLeft, alignItems: 'flex-end'
+                        flex: 0, marginLeft, alignItems: 'flex-end', borderWidth: 0
                     }}>
                         <ReadReceipt username={u} />
                     </View>
@@ -344,7 +346,7 @@ Avatar.propTypes = {
     onPress: React.PropTypes.func,
     onPressAvatar: React.PropTypes.func,
     onRetryCancel: React.PropTypes.func,
-    contact: React.PropTypes.any.isRequired,
+    contact: React.PropTypes.any,
     timestampText: React.PropTypes.any,
     files: React.PropTypes.any,
     receipts: React.PropTypes.any,

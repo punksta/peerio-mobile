@@ -1,5 +1,5 @@
 import { observable, action, when, reaction } from 'mobx';
-import { chatStore, TinyDb } from '../../lib/icebear';
+import { chatStore, clientApp } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
 import contactState from '../contacts/contact-state';
 import sounds from '../../lib/sounds';
@@ -59,6 +59,7 @@ class ChatState extends RoutedState {
 
     onTransition(active, c) {
         console.log(`chat-state.js: loading all chats`);
+        clientApp.isInChatsView = active;
         active && chatStore.loadAllChats();
         this.loading = c && c.loadingMeta;
         if (active) {

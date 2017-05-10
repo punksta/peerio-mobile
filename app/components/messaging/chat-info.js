@@ -57,7 +57,7 @@ export default class ChatInfo extends Component {
                 noBorderBottom
                 contact={contact}
                 key={username || i}
-                message={username}
+                message={''}
                 hideOnline />
         );
     }
@@ -71,7 +71,7 @@ export default class ChatInfo extends Component {
                 onBlur={update}
                 onEndEditing={update}
                 value={this.chatName}
-                style={{ paddingLeft: 18, height: vars.inputHeight }} />
+                style={{ paddingLeft: 18, height: vars.inputHeight, color: vars.txtDark }} />
         );
     }
 
@@ -80,8 +80,12 @@ export default class ChatInfo extends Component {
         const body = (
             <View>
                 {this.lineBlock(this.renameTextBox())}
-                {chat.participants && this.lineBlock(chat.participants.map(this.participant))}
                 {this.lineBlock(this.action('Hide chat', 'archive', this.hideChat))}
+                {chat.participants && this.lineBlock(
+                    <View style={{ paddingVertical: 8 }}>
+                        {chat.participants.map(this.participant)}
+                    </View>
+                )}
             </View>
         );
         const rightIcon = icons.dark(chat.isFavorite ? 'star' : 'star-border',

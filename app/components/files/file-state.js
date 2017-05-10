@@ -3,10 +3,10 @@ import { observable, action, when } from 'mobx';
 import moment from 'moment';
 import chatState from '../messaging/chat-state';
 import RoutedState from '../routes/routed-state';
-import { fileStore, TinyDb, socket, fileHelpers, errors, User, clientApp } from '../../lib/icebear';
+import { fileStore, TinyDb, socket, fileHelpers, clientApp } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
-import { popupInput, popupYesCancel, popupUpgrade } from '../shared/popups';
+import { popupInput, popupYesCancel } from '../shared/popups';
 import imagePicker from '../helpers/imagepicker';
 
 class FileState extends RoutedState {
