@@ -3,7 +3,7 @@ import { observable, action, when } from 'mobx';
 import moment from 'moment';
 import chatState from '../messaging/chat-state';
 import RoutedState from '../routes/routed-state';
-import { fileStore, TinyDb, socket, fileHelpers, errors, User } from '../../lib/icebear';
+import { fileStore, TinyDb, socket, fileHelpers, errors, User, clientApp } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { popupInput, popupYesCancel, popupUpgrade } from '../shared/popups';
@@ -147,7 +147,7 @@ class FileState extends RoutedState {
     onTransition(active, file) {
         console.log('files on transition');
         active && fileStore.loadAllFiles();
-        fileStore.active = active;
+        clientApp.isInFilesView = active;
         this.currentFile = active ? file : null;
     }
 
