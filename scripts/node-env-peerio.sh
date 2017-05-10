@@ -1,3 +1,13 @@
 #!/bin/bash
+export PEERIO_SOCKET_SERVER=wss://icebear.peerio.com/
 
-source env.sh && node $@
+unset PEERIO_USERNAME
+unset PEERIO_PASSPHRASE
+unset PEERIO_SEARCH_USERNAME
+unset PEERIO_AUTOLOGIN
+unset PEERIO_SKIPLOGINLOAD
+unset PEERIO_DEFAULT_ROUTE
+unset PEERIO_QUICK_SIGNUP
+unset PEERIO_QUICK_PIN
+
+node $@
