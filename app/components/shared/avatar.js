@@ -232,12 +232,13 @@ export default class Avatar extends Component {
     }
 
     get title() {
+        const { contact, title } = this.props;
         return (
             <View style={nameContainerStyle}>
                 <View style={{ flexShrink: 1 }}>
                     <Text ellipsizeMode="tail" numberOfLines={1} style={nameTextStyle}>
                         {this.star}
-                        {this.props.title || this.props.contact.username}
+                        {title || contact.fullName}
                     </Text>
                 </View>
                 <View style={{ flex: 0 }}>

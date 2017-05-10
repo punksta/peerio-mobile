@@ -2,24 +2,11 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
 import Avatar from '../shared/avatar';
 import contactState from '../contacts/contact-state';
+import { systemMessages } from '../../lib/icebear';
 import { t } from '../utils/translator';
 
 @observer
 export default class ChatItem extends Component {
-    getSystemMessageText(msg) {
-        if (!msg.systemData) return null;
-        switch (msg.systemData.action) {
-            case 'rename':
-                return msg.systemData.newName
-                    ? t('title_chatRenamed', { name: msg.systemData.newName })
-                    : t('title_chatNameRemoved');
-            case 'create':
-                return t('title_chatCreated', { fullName: msg.sender.fullName });
-            default:
-                return '';
-        }
-    }
-
     render() {
         const i = this.props.message;
         if (!i.sender) return null;
@@ -29,6 +16,8 @@ export default class ChatItem extends Component {
         const onPressAvatar = () => contactState.contactView(i.sender);
         const onPress = i.sendError ? this.props.onRetryCancel : null;
         const error = !!i.signatureError;
+        const systemMessageText =
+            i.systemData && systemMessages.getSystemMessageText(i) || null;
         return (
             <Avatar
                 sendError={i.sendError}
@@ -39,7 +28,7 @@ export default class ChatItem extends Component {
                 hideOnline
                 timestampText={i.messageTimestampText}
                 message={text}
-                systemMessage={this.getSystemMessageText(i)}
+                systemMessage={systemMessageText}
                 key={key}
                 error={error}
                 onPress={onPress}
