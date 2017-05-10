@@ -266,7 +266,7 @@ export default class Chat extends Component {
                     {tx('title_chatBeginning')}
                     <Text>{' '}</Text>
                     <Text style={{ fontWeight: 'bold' }}>
-                        {chat.chatName}
+                        {chat.name}
                     </Text>
                 </Text>
                 {this.archiveNotice}

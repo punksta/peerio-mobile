@@ -21,7 +21,7 @@ export default class ChatInfo extends Component {
 
     componentDidMount() {
         const chat = chatState.currentChat;
-        this.chatName = chat.chatName;
+        this.chatName = chat.name;
     }
 
     lineBlock(content) {

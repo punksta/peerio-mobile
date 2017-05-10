@@ -35,7 +35,7 @@ export default class ChatListItem extends Component {
                 ellipsize
                 timestampText={timestamp}
                 contact={contact}
-                title={chat.chatName}
+                title={chat.name}
                 hideOnline
                 message={text}
                 key={key}

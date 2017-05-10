@@ -47,7 +47,7 @@ class ChatState extends RoutedState {
 
     get title() {
         if (this.routerMain.currentIndex === 0) return 'Chats';
-        return this.currentChat ? this.currentChat.chatName : '';
+        return this.currentChat ? this.currentChat.name : '';
     }
 
     activate(chat) {
@@ -77,7 +77,7 @@ class ChatState extends RoutedState {
 
     get canSend() {
         return this.currentChat && this.currentChat.id &&
-                      !this.currentChat.loadingMessages;
+            !this.currentChat.loadingMessages;
     }
 
     @action addMessage(msg, files) {
