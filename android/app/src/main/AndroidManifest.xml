@@ -26,6 +26,13 @@
         android:minSdkVersion="19"
         android:targetSdkVersion="23" />
 
+    <compatible-screens>
+        <screen android:screenSize="normal" android:screenDensity="mdpi" />
+        <screen android:screenSize="normal" android:screenDensity="hdpi" />
+        <screen android:screenSize="normal" android:screenDensity="xhdpi" />
+        <screen android:screenSize="large" android:screenDensity="xhdpi" />
+    </compatible-screens>
+
     <application
         android:name=".MainApplication"
         android:allowBackup="false"
