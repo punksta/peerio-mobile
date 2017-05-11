@@ -11,7 +11,6 @@ export default class LoginWizardPage extends Component {
         const buttonContainer = {
             marginVertical: 20,
             alignItems: 'stretch',
-            backgroundColor: vars.bg,
             opacity: hidden ? 0 : 1
         };
         const button = {

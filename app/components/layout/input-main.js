@@ -4,9 +4,9 @@ import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import { tx } from '../utils/translator';
 import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
-import { vars } from '../../styles/styles';
+import { inputMain } from '../../styles/styles';
 import icons from '../helpers/icons';
-import uiState from './ui-state';
+import { uiState, chatState } from '../states';
 
 @observer
 export default class InputMain extends Component {
@@ -57,38 +57,12 @@ export default class InputMain extends Component {
         this.input.ti.focus();
     }
 
-    _onChangeHeight(/* before, after */) {
-        // console.log('before: ' + before + ' after: ' + after);
-    }
-
     render() {
-        const tiStyle = {
-            color: vars.txtDark,
-            borderWidth: 0,
-            borderColor: 'red',
-            fontSize: 14
-        };
-
-        const iconStyle = { width: 24, height: 24, margin: -12 };
+        const { tiStyle, iconStyle, outerStyle, autoExpandingInputContainerStyle,
+            sendIconStyleNormal, sendIconStyleActive } = inputMain;
         const icon = icons.white(this.hasText ? 'send' : 'thumb-up', this.send, iconStyle);
-        const outerStyle = {
-            flexDirection: 'row',
-            alignItems: 'center'
-        };
-        const autoExpandingInputContainerStyle = {
-            flex: 1,
-            flexGrow: 1,
-            alignItems: 'stretch'
-        };
-        const sendIconStyle = {
-            alignItems: 'center',
-            backgroundColor: uiState.isAuthenticated ? vars.checkboxActive : vars.checkboxIconInactive,
-            borderRadius: 20,
-            justifyContent: 'center',
-            height: 40,
-            marginRight: 8,
-            width: 40
-        };
+        const sendIconStyle = uiState.isAuthenticated ? sendIconStyleActive : sendIconStyleNormal;
+        const chatName = chatState.title;
         return (
             <View style={outerStyle}>
                 {icons.dark('add-circle-outline', this.plus, {
@@ -99,7 +73,7 @@ export default class InputMain extends Component {
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
                         value={this.value}
-                        placeholder={tx('title_chatPlaceholder')}
+                        placeholder={tx('title_messageInputPlaceholder', { chatName })}
                         enablesReturnKeyAutomatically
                         returnKeyType="default"
                         minHeight={56}

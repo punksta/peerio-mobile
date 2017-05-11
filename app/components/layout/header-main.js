@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {
     View, Text, TouchableOpacity
 } from 'react-native';
-import { gradient } from '../controls/effects';
 import { observer } from 'mobx-react/native';
+import { gradient } from '../controls/effects';
 import routerMain from '../routes/router-main';
 import { vars } from '../../styles/styles';
 import BackIcon from './back-icon';

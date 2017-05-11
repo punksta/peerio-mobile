@@ -9,6 +9,7 @@ import pickerBox from './picker-box';
 import pin from './pin';
 import wizard from './wizard';
 import navigator from './navigator';
+import inputMain from './input-main';
 import common from './common';
 import debug from './debug';
 
@@ -393,6 +394,7 @@ export {
     common,
     wizard,
     navigator,
+    inputMain,
     debug,
     branding
 };

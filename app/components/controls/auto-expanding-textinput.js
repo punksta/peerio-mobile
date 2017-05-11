@@ -1,16 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
-
+import { TextInput } from 'react-native';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
-
-const styles = StyleSheet.create({
-    default: {
-        textAlign: 'left',
-        padding: 0,
-        paddingBottom: 6,
-        marginTop: 6
-    }
-});
+import { vars } from '../../styles/styles';
 
 export default class AutoExpandingTextInput extends Component {
 
@@ -57,14 +48,23 @@ export default class AutoExpandingTextInput extends Component {
 
     render() {
         const tmpHeight = Math.min(this.state.maxHeight, this.state.height);
+
+        const style = {
+            textAlign: 'left',
+            padding: 0,
+            paddingBottom: 6,
+            marginTop: 6
+        };
+
         return (
             <TextInput
                 {...this.props}
                 ref={ti => (this.ti = ti)}
+                placeholderTextColor={vars.txtMedium}
                 underlineColorAndroid={'transparent'}
                 multiline
                 onChange={this._onChange}
-                style={[styles.default, this.props.style, { height: tmpHeight }]}
+                style={[style, this.props.style, { height: tmpHeight }]}
             />
         );
     }

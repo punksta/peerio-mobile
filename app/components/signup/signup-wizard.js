@@ -1,34 +1,30 @@
 import React from 'react';
-import {
-    View, Dimensions
-} from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Layout1 from '../layout/layout1';
 import SignupFooter from './signup-footer';
 import { wizard } from '../../styles/styles';
 import Wizard from '../wizard/wizard';
 import SignupStep1 from './signup-step1';
-import SignupPin from './signup-pin';
+import SignupAccountKey from './signup-account-key';
 import signupState from './signup-state';
 
 @observer
 export default class SignupWizard extends Wizard {
-    pages = ['signupStep1', 'signupPin'];
+    pages = ['signupStep1', 'signupAccountKey'];
 
     get index() { return signupState.current; }
     set index(i) { signupState.current = i; }
 
-    footer() {
-        return <SignupFooter />;
-    }
+    footer = () => <SignupFooter />;
+    signupStep1 = () => <SignupStep1 />;
+    signupAccountKey = () => <SignupAccountKey />;
 
-    signupStep1() {
-        return <SignupStep1 />;
-    }
-
+    /**
+     * Disabling pin on signup
     signupPin() {
         return <SignupPin />;
-    }
+    } */
 
     render() {
         const style = wizard;

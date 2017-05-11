@@ -7,7 +7,6 @@ import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
 import { gradient } from './controls/effects';
-import { vars } from './../styles/styles';
 import { clientApp, crypto } from '../lib/icebear';
 import worker from '../lib/worker';
 import { scryptToWorker, signDetachedToWorker, verifyDetachedToWorker } from '../lib/scrypt-worker';
