@@ -131,9 +131,11 @@ class LoginState extends RoutedState {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        const user = new User();
-        user.username = username;
-        if (await user.hasPasscode()) this.saved();
+        this.current = 2;
+        // disabling PIN for now
+        // const user = new User();
+        // user.username = username;
+        // if (await user.hasPasscode()) this.saved();
     }
 
     @action async triggerTouchId() {

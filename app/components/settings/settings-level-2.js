@@ -39,7 +39,7 @@ export default class SettingsLevel2 extends Component {
                 <SettingsItem
                     title="title_MP"
                     icon="visibility"
-                    disabled={!(user.hasPasscodeCached || user.hasTouchIdCached)}
+                    disabled={!user.hasTouchIdCached}
                     onPress={() => settingsState.showPassphrase()} />
             </View>
         );

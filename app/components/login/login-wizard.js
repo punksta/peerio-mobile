@@ -32,7 +32,8 @@ export default class LoginWizard extends Wizard {
         const loginEnteredAction = () => {
             this.index++;
             loginState.passphrase = '';
-            loginState.checkSavedUserPin();
+            // DISABLING pin for now
+            // loginState.checkSavedUserPin();
         };
         return <LoginClean submit={loginEnteredAction} />;
     }
