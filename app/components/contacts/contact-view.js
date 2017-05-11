@@ -37,13 +37,16 @@ export default class ContactView extends Component {
                     }}>
                         {contact.letter}
                     </Text>
-                    <View>
-                        <Text style={{
-                            fontWeight: 'bold',
-                            color: vars.white,
-                            fontSize: 16,
-                            marginVertical: 4
-                        }}>{firstName} {lastName}</Text>
+                    <View style={{ flexGrow: 1, flexShrink: 1 }}>
+                        <Text
+                            ellipsizeMode="tail"
+                            numberOfLines={2}
+                            style={{
+                                fontWeight: 'bold',
+                                color: vars.white,
+                                fontSize: 16,
+                                marginVertical: 4
+                            }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.white }}>@{username}</Text>
                     </View>
                 </View>
