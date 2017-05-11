@@ -78,8 +78,8 @@ export default class Files extends Component {
     }
 
     render() {
-        const body = this.data.length ?
-            this.listView() : !chatState.store.loading && <MessagingPlaceholder />;
+        const body = (this.data.length || chatState.store.loaded) ?
+            this.listView() : <MessagingPlaceholder />;
 
         return (
             <View
@@ -87,6 +87,7 @@ export default class Files extends Component {
                 <View style={{ flex: 1 }}>
                     {body}
                 </View>
+                <ProgressOverlay enabled={chatState.store.loading} />
             </View>
         );
     }
