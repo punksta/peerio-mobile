@@ -235,7 +235,7 @@ export default class Chat extends Component {
     }
 
     get archiveNotice() {
-        return this.props.archiveNotice ? (
+        return true || this.props.archiveNotice ? (
             <Text style={{ textAlign: 'left', margin: 12, marginTop: 0, marginBottom: 16, color: vars.txtMedium }}>
                 {tx('title_chatArchive')}
             </Text>
