@@ -278,7 +278,9 @@ export default class Avatar extends Component {
         return (
             <View style={{ flexGrow: 1 }}>
                 <View style={[itemStyle, this.errorStyle]}>
-                    <View style={[this.itemContainerStyle, { marginLeft: 74 }]}>
+                    <View
+                        pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
+                        style={[this.itemContainerStyle, { marginLeft: 74 }]}>
                         {this.message}
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
@@ -299,7 +301,9 @@ export default class Avatar extends Component {
             <View style={[itemStyle, this.borderStyle, this.errorStyle, this.paddingStyle]}>
                 {this.checkbox}
                 <View style={[{ flexGrow: 1, maxWidth: width }]}>
-                    <View style={itemContainerStyle}>
+                    <View
+                        pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
+                        style={itemContainerStyle}>
                         {this.avatar}
                         <View style={[nameMessageContainerStyle]}>
                             {this.title}
@@ -371,6 +375,7 @@ Avatar.propTypes = {
     ellipsize: React.PropTypes.bool,
     unread: React.PropTypes.bool,
     starred: React.PropTypes.bool,
+    disableMessageTapping: React.PropTypes.bool,
     extraPaddingVertical: React.PropTypes.number,
     extraPaddingTop: React.PropTypes.number,
     onLayout: React.PropTypes.func

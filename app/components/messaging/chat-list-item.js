@@ -27,6 +27,7 @@ export default class ChatListItem extends Component {
         const unread = chat.unreadCount > 0;
         return (
             <Avatar
+                disableMessageTapping
                 starred={chat.isFavorite}
                 rightIcon={this.rightIcon}
                 extraPaddingTop={8}
