@@ -11,6 +11,8 @@ import icons from '../helpers/icons';
 export default class TextBox extends Component {
     @observable focused = false;
     @observable showSecret = false;
+    @observable _value = '';
+
     get nextField() {
         const byOrder = this.props.state.byOrder;
         const byName = this.props.state.byName;
@@ -35,6 +37,7 @@ export default class TextBox extends Component {
     }
 
     componentDidMount() {
+        reaction(() => this.value, v => (this._value = v), true);
         reaction(() => [this.focused, this.value], () => {
             LayoutAnimation.easeInEaseOut();
         }, true);
@@ -65,6 +68,7 @@ export default class TextBox extends Component {
     }
 
     changeText = (text) => {
+        this._value = this.props.lowerCase ? text.toLowerCase() : text;
         const tx = this.props.lowerCase ? text.toLowerCase() : text;
         if (this.props.state) {
             this.props.state[this.props.name] = tx;
@@ -172,12 +176,11 @@ export default class TextBox extends Component {
                             underlineColorAndroid={'transparent'}
                             returnKeyType={returnKeyType}
                             secureTextEntry={this.props.secureTextEntry && !this.showSecret}
-                            value={this.value}
+                            value={this._value}
                             maxLength={this.props.maxLength}
                             onBlur={this.blur}
                             onChangeText={this.changeText}
                             onSubmitEditing={this.submit}
-                            autoCapitalize={this.props.autoCapitalize || 'none'}
                             autoCorrect={false}
                             autoComplete={false}
                         />
