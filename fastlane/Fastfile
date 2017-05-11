@@ -71,7 +71,7 @@ platform :android do
     "android/app/build/outputs/apk/app-armeabi-v7a-release-signed.apk",
     "android/app/build/outputs/apk/app-x86-release-signed.apk" ],
     json_key: "gp-service.json",
-    package_name: "com.peerio",
+    package_name: "com.peerio.messenger",
     skip_upload_metadata: true,
     skip_upload_screenshots: true,
     skip_upload_images: true,
