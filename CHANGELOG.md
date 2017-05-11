@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.31.0"></a>
+# [3.31.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.30.0...v3.31.0) (2017-05-11)
+
+
+### Bug Fixes
+
+* **ui:** chat zero message flex avatars ([c561f76](https://github.com/PeerioTechnologies/peerio-mobile/commit/c561f76))
+* **ui:** multiline first-last names in contact view ([05a8ca6](https://github.com/PeerioTechnologies/peerio-mobile/commit/05a8ca6))
+* **ui:** secret icon padding ([d3aeafd](https://github.com/PeerioTechnologies/peerio-mobile/commit/d3aeafd))
+
+
+### Features
+
+* **android:** change package name ([79f14d3](https://github.com/PeerioTechnologies/peerio-mobile/commit/79f14d3))
+* **android:** limit to API > 21 and phones ([410e2b5](https://github.com/PeerioTechnologies/peerio-mobile/commit/410e2b5))
+* **ui:** disable PIN in login process ([d126bba](https://github.com/PeerioTechnologies/peerio-mobile/commit/d126bba))
+* **ui:** disable tapping on preview text hotlinks ([d9e77e5](https://github.com/PeerioTechnologies/peerio-mobile/commit/d9e77e5))
+* **ui:** gradient branded background ([9000d21](https://github.com/PeerioTechnologies/peerio-mobile/commit/9000d21))
+* **ui:** layout loading screen ([7f83ed0](https://github.com/PeerioTechnologies/peerio-mobile/commit/7f83ed0))
+* **ui:** loading indicator for chat list ([b8ca0d1](https://github.com/PeerioTechnologies/peerio-mobile/commit/b8ca0d1))
+* **ui:** new icon ([6befbe3](https://github.com/PeerioTechnologies/peerio-mobile/commit/6befbe3))
+* **ui:** new signup and design ([57bb46f](https://github.com/PeerioTechnologies/peerio-mobile/commit/57bb46f))
+* **ui:** new splash screen ([63fe1f2](https://github.com/PeerioTechnologies/peerio-mobile/commit/63fe1f2))
+
+
+
 <a name="3.30.0"></a>
 # [3.30.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.29.0...v3.30.0) (2017-05-11)
 
