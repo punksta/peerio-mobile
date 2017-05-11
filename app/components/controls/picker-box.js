@@ -8,7 +8,7 @@ import PickerBoxIos from './picker-box-ios';
 export default class PickerBox extends Component {
     render() {
         return global.platform === 'ios' ?
-            <PickerBoxIos {...this.props} /> : <PickerBoxAndroid {...this.props} />;
+            <PickerBoxIos key="picker" {...this.props} /> : <PickerBoxAndroid {...this.props} />;
     }
 }
 

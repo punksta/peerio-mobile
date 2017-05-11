@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text, TouchableOpacity
 } from 'react-native';
+import { gradient } from '../controls/effects';
 import { observer } from 'mobx-react/native';
 import routerMain from '../routes/router-main';
 import { vars } from '../../styles/styles';
@@ -25,7 +26,8 @@ export default class HeaderMain extends Component {
             alignItems: 'center',
             justifyContent: 'center',
             borderColor: 'blue',
-            borderWidth: 0
+            borderWidth: 0,
+            backgroundColor: 'transparent'
             // marginLeft: routerMain.currentIndex === 0 ? vars.iconSize * 3 : -vars.iconSize
         };
         const containerStyle = {
@@ -36,36 +38,31 @@ export default class HeaderMain extends Component {
             minHeight: vars.headerHeight
         };
         const titleAction = routerMain.titleAction;
-        return (
-            <View style={{
-                paddingTop: vars.statusBarHeight,
-                // height: vars.headerSpacing,
-                flex: -1,
-                justifyContent: 'flex-end',
-                backgroundColor: vars.bg
-            }}>
-                <TouchableOpacity onPress={titleAction}
-                    pressRetentionOffset={vars.retentionOffset}>
-                    <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
-                        <View style={{ flex: 0 }}>
-                            {leftIcon}
-                        </View>
-                        <Text
-                            ellipsizeMode="middle"
-                            numberOfLines={2}
-                            style={textStyle}>
-                            {routerMain.title}
-                            {titleAction && <Text style={{ fontSize: 14 }}>
-                                {'  ▼  '}
-                            </Text>}
-                        </Text>
-                        { leftIcon && <View style={{ flex: 0, width: vars.iconLayoutSize }} />}
+        return gradient({
+            paddingTop: vars.statusBarHeight,
+            height: vars.headerHeight,
+            flex: -1,
+            justifyContent: 'flex-end',
+            backgroundColor: vars.bg
+        },
+            <TouchableOpacity onPress={titleAction}
+                pressRetentionOffset={vars.retentionOffset}>
+                <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
+                    <View style={{ flex: 0 }}>
+                        {leftIcon}
                     </View>
-                </TouchableOpacity>
-                {/* <View style={{ backgroundColor: 'transparent' }} testID="rightMenuButton">
-                        {icons.white('more-vert', () => routerMain.toggleRightMenu())}
-                    </View> */}
-            </View>
+                    <Text
+                        ellipsizeMode="middle"
+                        numberOfLines={2}
+                        style={textStyle}>
+                        {routerMain.title}
+                        {titleAction && <Text style={{ fontSize: 14 }}>
+                            {'  ▼  '}
+                        </Text>}
+                    </Text>
+                    {leftIcon && <View style={{ flex: 0, width: vars.iconLayoutSize }} />}
+                </View>
+            </TouchableOpacity>
         );
     }
 }

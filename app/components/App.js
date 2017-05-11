@@ -6,6 +6,7 @@ import ModalLayout from './layout/modal-layout';
 import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
+import { gradient } from './controls/effects';
 import { vars } from './../styles/styles';
 import { clientApp, crypto } from '../lib/icebear';
 import worker from '../lib/worker';
@@ -112,16 +113,15 @@ export default class App extends Component {
 
     render() {
         if (!uiState.locale) return this._placeHolder();
-        return (
-            <View
-                testID="appOuterViewBackground"
-                style={{ flexGrow: 1, backgroundColor: vars.bg }}>
-                <RouteNavigator routes={routerApp} />
-                <ModalLayout />
-                <PopupLayout />
-                {uiState.picker}
-                <Text style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
-            </View>
-        );
+        return gradient({
+            testID: 'appOuterViewBackground',
+            style: { flexGrow: 1 }
+        }, [
+            <RouteNavigator key="navigator" routes={routerApp} />,
+            <ModalLayout key="modals" />,
+            <PopupLayout key="popups" />,
+            uiState.picker,
+            <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
+        ]);
     }
 }

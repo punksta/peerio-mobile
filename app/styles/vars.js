@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import branding from './branding';
 
-const { bg, tabsBg, tabsFg } = branding;
+const { bg, bgGradient, tabsBg, tabsFg } = branding;
 
 const statusBarHeight = Platform.OS === 'android' ? 0 : 10;
 const layoutPaddingTop = statusBarHeight * 2;
@@ -12,6 +12,7 @@ const retentionOffset = { top: r, left: r, bottom: r, right: r };
 const vars = {
     circle: 10,
     bg,
+    bgGradient,
     tabsBg,
     tabsFg,
     disabled: '#00000020',
@@ -46,7 +47,7 @@ const vars = {
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
-    headerHeight: 56,
+    headerHeight: 70,
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconFileViewSize: 72,

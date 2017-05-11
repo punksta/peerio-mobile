@@ -3,7 +3,8 @@ import { View } from 'react-native';
 import { Navigator } from 'react-native-deprecated-custom-components';
 import { reaction } from 'mobx';
 import BgPattern from '../controls/bg-pattern';
-import { navigator } from '../../styles/styles';
+import { navigator, vars } from '../../styles/styles';
+import { gradient } from '../controls/effects';
 import uiState from '../layout/ui-state';
 
 export default class RouteNavigator extends Component {
@@ -37,19 +38,15 @@ export default class RouteNavigator extends Component {
     }
 
     renderScene(route) {
-        const inner = React.createElement(route.component);
+        const inner = React.createElement(route.component, { key: 'scene' });
         this.scene = inner;
         const hidden = { overflow: 'hidden' };
-        return (
-            <View
-                testID={`route${route.key}Scene`}
-                removeClippedSubviews={false}
-                key={route.key}
-                style={[navigator.card, hidden]}>
-                <BgPattern />
-                {inner}
-            </View>
-        );
+        return gradient({
+            testID: `route${route.key}Scene`,
+            removeClippedSubviews: false,
+            key: route.key,
+            style: [navigator.card, hidden]
+        }, [<BgPattern key="bg" />, inner]);
     }
 
     configureScene(/* route, routeStack */) {

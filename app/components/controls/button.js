@@ -27,8 +27,8 @@ export default class Button extends Component {
                 onPress={press}
                 testID={this.props.testID}>
                 <View
-                    style={this.props.style}>
-                    <Text style={[textStyle, opacity]}>
+                    style={[this.props.style]}>
+                    <Text style={[{ backgroundColor: 'transparent' }, textStyle, opacity]}>
                         {text}
                     </Text>
                 </View>
