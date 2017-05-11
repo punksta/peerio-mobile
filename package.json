@@ -88,7 +88,7 @@
     "readable-stream": "1.0.33",
     "rn-workers": "^0.1.6",
     "scrypt-async": "^1.3.1",
-    "socket.io-client": "1.7.3",
+    "socket.io-client": "1.7.4",
     "stream-browserify": "1.0.0",
     "tweetnacl": "^1.0.0-rc.1",
     "vm-browserify": "0.0.4"
