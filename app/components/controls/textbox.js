@@ -152,6 +152,7 @@ export default class TextBox extends Component {
         if (astl && this.value && this.value.length && astl < this.value.length) {
             fontSize = Math.floor(fontSize * astl / this.value.length);
         }
+        const { secretIcon } = this;
         return (
             <View style={[style.outer]}>
                 <View
@@ -171,7 +172,7 @@ export default class TextBox extends Component {
                             keyboardType={this.props.keyboardType}
                             testID={`${this.props.name}`}
                             style={[style.textbox, { fontSize },
-                            { height: vars.inputPaddedHeight, top: 0 }]}
+                            { height: vars.inputPaddedHeight, top: 0, marginRight: this.secretIcon ? 42 : 0 }]}
                             ref={ref => (this.textinput = ref)}
                             underlineColorAndroid={'transparent'}
                             returnKeyType={returnKeyType}
@@ -185,7 +186,7 @@ export default class TextBox extends Component {
                             autoComplete={false}
                         />
                     </View>
-                    {this.secretIcon}
+                    {secretIcon}
                 </View>
             </View>
         );
