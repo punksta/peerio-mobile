@@ -161,7 +161,7 @@ export default class TextBox extends Component {
                         activeOpacity={0.9}
                         pressRetentionOffset={vars.retentionOffset}
                         pointerEvents={!this.focused ? undefined : 'none'}
-                        style={style.touchable}
+                        style={[style.touchable]}
                         testID={`${this.props.name}_outer`}
                         onPress={this.focus} />
                     {this.hint}

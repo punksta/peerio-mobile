@@ -78,7 +78,7 @@ export default class Files extends Component {
     }
 
     render() {
-        const body = (this.data.length || chatState.store.loaded) ?
+        const body = (this.data.length && chatState.store.loaded) ?
             this.listView() : <MessagingPlaceholder />;
 
         return (

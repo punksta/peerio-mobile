@@ -59,6 +59,7 @@ const vars = {
     listViewPaddingHorizontal: 8,
     modalPaddingVertical: 40,
     modalPaddingHorizontal: 40,
+    wizardPadding: 36,
     font: {
         size: {
             normal: 14,

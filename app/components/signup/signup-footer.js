@@ -26,7 +26,7 @@ export default class SignupFooter extends Component {
 
     render() {
         const next = this.button(
-            signupState.isLast ? tu('') : tu('button_next'),
+            tu('button_next'),
             !signupState.isInProgress && signupState.nextAvailable,
             () => signupState.next(),
             'signupNext'

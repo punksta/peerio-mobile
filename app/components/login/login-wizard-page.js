@@ -60,7 +60,7 @@ export default class LoginWizardPage extends Component {
 
     render() {
         return (
-            <View style={{ flexGrow: 1 }}>
+            <View style={{ flexGrow: 1, paddingHorizontal: vars.wizardPadding }}>
                 {this.flexer(this.items())}
                 {this.flexer(this.buttons())}
                 <View style={{ flexGrow: 3 }} />

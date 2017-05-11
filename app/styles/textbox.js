@@ -63,7 +63,7 @@ export default {
             // elevation: 10
         }],
         touchable: [inputContainer, shadowIOS, {
-            backgroundColor: vars.inputBg
+            backgroundColor: vars.white
         }],
         textbox
     },
@@ -71,7 +71,7 @@ export default {
         outer: [outerContainer, shadowIOS],
         radius,
         touchable: [inputContainer, {
-            backgroundColor: vars.subtleBg
+            backgroundColor: '#ffffffA0'
         }],
         textbox
     },

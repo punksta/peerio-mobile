@@ -19,11 +19,6 @@ export default {
     },
     containerFlex: {
         flex: 1,
-        padding: 50,
-        paddingTop: 0,
-        paddingBottom: 0,
-        borderColor: 'violet',
-        borderWidth: 0,
         backgroundColor: 'transparent',
         flexDirection: 'column',
         justifyContent: 'space-between'
@@ -78,7 +73,8 @@ export default {
             left: {},
             right: {},
             text: {
-                color: 'white'
+                color: 'white',
+                backgroundColor: 'transparent'
             }
         }
     }

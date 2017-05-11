@@ -48,8 +48,11 @@ class SignupState extends RoutedState {
 
     generatePassphrase = () => PhraseDictionary.current.getPassphrase(5);
 
-    @action next() {
+    @action async next() {
         if (!this.isValid()) return;
+        if (!this.passphrase) {
+            this.passphrase = await this.generatePassphrase();
+        }
         /* if (process.env.PEERIO_QUICK_SIGNUP) {
             this.pin = '125125';
             this.finish();
@@ -63,8 +66,8 @@ class SignupState extends RoutedState {
     @action async finish() {
         if (!this.isValid()) return Promise.resolve();
         this.isInProgress = true;
-        this.passphrase = await this.generatePassphrase();
-        console.log(this.passphrase);
+        // this.passphrase = await this.generatePassphrase();
+        // console.log(this.passphrase);
         const user = new User();
         const { username, email, firstName, lastName, pin, passphrase } = this;
         const localeCode = uiState.locale;
