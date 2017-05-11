@@ -32,6 +32,7 @@ class RouterMain extends Router {
     @observable blackStatusBar = false;
     @observable currentIndex = 0;
     @observable suppressTransition = false;
+    @observable loading = false;
 
     constructor() {
         super();
@@ -46,11 +47,13 @@ class RouterMain extends Router {
         this.add('chats', [<ChatList />, <Chat />], chatState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
+        this.loading = true;
         if (EN === 'peeriomobile') await enablePushNotifications();
         await mainState.init();
         await chatState.init();
         await contactState.init();
         await fileState.init();
+        this.loading = false;
         this.chats();
     }
 

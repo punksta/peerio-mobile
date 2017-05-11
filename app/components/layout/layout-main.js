@@ -9,7 +9,8 @@ import HeaderMain from './header-main';
 import Tabs from './tabs';
 import SnackBar from '../snackbars/snackbar';
 import SnackBarConnection from '../snackbars/snackbar-connection';
-import snackbarState from '../snackbars/snackbar-state';
+import ProgressOverlay from '../shared/progress-overlay';
+// import snackbarState from '../snackbars/snackbar-state';
 import Fab from '../shared/fab';
 import { common } from '../../styles/styles';
 import routerMain from '../routes/router-main';
@@ -103,6 +104,7 @@ export default class LayoutMain extends Component {
                 testID="mainLayout"
                 style={[common.container.root]}>
                 {animatedBlock}
+                <ProgressOverlay enabled={routerMain.loading} />
                 <StatusBar
                     barStyle={routerModal.isBlackStatusBar ? 'default' : 'light-content'}
                     hidden={false} />
