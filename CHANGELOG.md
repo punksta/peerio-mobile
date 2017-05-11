@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.32.0"></a>
+# [3.32.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.31.0...v3.32.0) (2017-05-11)
+
+
+### Features
+
+* **ui:** enable archive notice ([ab6211f](https://github.com/PeerioTechnologies/peerio-mobile/commit/ab6211f))
+
+
+
 <a name="3.31.0"></a>
 # [3.31.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.30.0...v3.31.0) (2017-05-11)
 
