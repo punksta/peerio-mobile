@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.30.0"></a>
+# [3.30.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.29.0...v3.30.0) (2017-05-11)
+
+
+### Bug Fixes
+
+* **android:** fix textbox behaviour for android 5 ([53a9781](https://github.com/PeerioTechnologies/peerio-mobile/commit/53a9781))
+* **ui:** don't show snackbar right after backgrounding ([94a9f22](https://github.com/PeerioTechnologies/peerio-mobile/commit/94a9f22))
+* **ui:** footer text color ([643aed4](https://github.com/PeerioTechnologies/peerio-mobile/commit/643aed4))
+
+
+### Features
+
+* **build:** rename android app to com.peerio.messenger ([b6e5d3e](https://github.com/PeerioTechnologies/peerio-mobile/commit/b6e5d3e))
+* **ui:** highlight own username ([bda5dc0](https://github.com/PeerioTechnologies/peerio-mobile/commit/bda5dc0))
+* **ui:** message fullName and system messages ([5c2d4ca](https://github.com/PeerioTechnologies/peerio-mobile/commit/5c2d4ca))
+* **ui:** remove indicators from bottom tab bar ([300a51b](https://github.com/PeerioTechnologies/peerio-mobile/commit/300a51b))
+
+
+
 <a name="3.29.0"></a>
 # [3.29.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.28.0...v3.29.0) (2017-05-09)
 
