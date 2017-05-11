@@ -251,7 +251,7 @@ export default class Chat extends Component {
         const chat = this.chat;
         const avatars = (chat.participants || []).map(contact => (
             <TouchableOpacity
-                style={{ flex: 1 }}
+                style={{ flex: 0 }}
                 onPress={() => contactState.contactView(contact)} key={contact.username}>
                 <AvatarCircle
                     contact={contact}
