@@ -22,8 +22,8 @@ export default class LoginPassword extends LoginWizardPage {
             emphasis: text => <Bold>{text}</Bold>
         };
         return [
-            <Text style={textStyle}><T k="title_MPlogin">{textParser}</T></Text>,
-            <TextBox state={loginState} name="passphrase" hint={t('title_MP')} secureTextEntry />
+            <Text style={textStyle}><T k="title_AKlogin">{textParser}</T></Text>,
+            <TextBox state={loginState} name="passphrase" hint={t('title_AccountKey')} secureTextEntry />
         ];
     }
 

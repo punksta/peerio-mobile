@@ -70,8 +70,8 @@ class SettingsState extends RoutedState {
                 </Text>
             );
             popupCopyCancel(
-                tx('title_MP'),
-                tx('title_MPDetail'),
+                tx('title_AK'),
+                tx('title_AKDetail'),
                 mp
             ).then(r => {
                 if (!r) return;

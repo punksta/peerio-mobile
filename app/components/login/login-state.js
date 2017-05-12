@@ -77,7 +77,7 @@ class LoginState extends RoutedState {
             })
             .catch(e => {
                 console.error(e);
-                this.passphraseValidationMessage = tx('error_wrongPassword');
+                this.passphraseValidationMessage = tx('error_wrongAK');
                 return Promise.reject(new Error(this.error));
             })
             .finally(() => {

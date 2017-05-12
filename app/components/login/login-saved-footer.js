@@ -18,7 +18,7 @@ export default class LoginSavedFooter extends Component {
                     <TouchableOpacity
                         style={button.base}
                         onPress={() => enabled && loginState.useMasterPassword()}>
-                        <Text style={button.text.normal}>{t('button_useMasterPassword')}</Text>
+                        <Text style={button.text.normal}>{t('button_useAccountKey')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={button.base}
