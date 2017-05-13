@@ -238,7 +238,13 @@ export default class Avatar extends Component {
                 <View style={{ flexShrink: 1 }}>
                     <Text ellipsizeMode="tail" numberOfLines={1} style={nameTextStyle}>
                         {this.star}
-                        {title || contact.fullName}
+                        {title ||
+                            <Text>
+                                {contact.fullName}
+                                <Text style={{ color: vars.txtMedium, fontWeight: 'normal' }}>
+                                    {' '}{contact.username}
+                                </Text>
+                            </Text>}
                     </Text>
                 </View>
                 <View style={{ flex: 0 }}>

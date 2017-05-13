@@ -41,7 +41,7 @@ const radius = [{
 }, shadowIOS];
 
 const outerContainer = {
-    marginBottom: 36,
+    marginBottom: 24,
     marginTop: 6
 };
 
@@ -49,10 +49,11 @@ const hintContainer = [inputContainer, { paddingLeft: vars.inputPaddingLeft }];
 
 export default {
     inputContainer,
+    outerContainer,
     alertInvisible,
     alertVisible,
     focused: {
-        outer: [outerContainer, shadowIOS, {
+        outer: [shadowIOS, {
             // ios shadow
             shadowOpacity: 0.4,
             backgroundColor: vars.subtleBg,
@@ -68,7 +69,7 @@ export default {
         textbox
     },
     blurred: {
-        outer: [outerContainer, shadowIOS],
+        outer: [shadowIOS],
         radius,
         touchable: [inputContainer, {
             backgroundColor: '#ffffffA0'

@@ -53,7 +53,7 @@ export default class HeaderMain extends Component {
                     </View>
                     <Text
                         ellipsizeMode="middle"
-                        numberOfLines={2}
+                        numberOfLines={1}
                         style={textStyle}>
                         {routerMain.title}
                         {titleAction && <Text style={{ fontSize: 14 }}>

@@ -86,7 +86,7 @@ export default (fileStream) => {
          */
         static launchViewer(path) {
             console.log(`rn-file-stream.js: opening viewer for ${path}`);
-            FileOpener.open(path, 'image/jpeg');
+            return FileOpener.open(path, 'image/jpeg');
         }
 
         static getStat(path) {

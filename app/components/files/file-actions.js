@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
-import fileState from '../files/file-state';
+import { uiState, fileState } from '../states';
 import contactState from '../contacts/contact-state';
 import icons from '../helpers/icons';
 
@@ -48,6 +48,14 @@ export default class FileActions extends Component {
         );
     }
 
+    onViewFile = () => {
+        console.log('onviewfile');
+        // uiState.externalViewer = true;
+        return Promise.resolve()
+            .then(() => this.props.file.launchViewer())
+            .finally(() => (uiState.externalViewer = false));
+    }
+
     render() {
         const animation = {
             overflow: 'hidden',
@@ -57,7 +65,7 @@ export default class FileActions extends Component {
         const enabled = file && file.readyForDownload || fileState.showSelection;
 
         const leftAction = file && !file.isPartialDownload && file.cached ?
-            this.action(t('button_open'), 'open-in-new', () => file.launchViewer(), enabled) :
+            this.action(t('button_open'), 'open-in-new', this.onViewFile, enabled) :
             this.action(t('title_download'), 'file-download', () => fileState.download(), enabled);
 
 
@@ -74,6 +82,5 @@ export default class FileActions extends Component {
 
 FileActions.propTypes = {
     file: React.PropTypes.any,
-    // {Animated.Value} height
     height: React.PropTypes.any
 };

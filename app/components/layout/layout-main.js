@@ -107,7 +107,7 @@ export default class LayoutMain extends Component {
                 {animatedBlock}
                 <ProgressOverlay enabled={routerMain.loading} />
                 <StatusBar
-                    barStyle={routerModal.isBlackStatusBar ? 'default' : 'light-content'}
+                    barStyle={uiState.externalViewer || routerModal.isBlackStatusBar ? 'default' : 'light-content'}
                     hidden={false} />
             </View>
         );

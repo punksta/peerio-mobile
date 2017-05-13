@@ -9,7 +9,7 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileProgress from './file-progress';
 import FileActions from './file-actions';
-import fileState from './file-state';
+import { fileState } from '../states';
 
 const firstRowStyle = {
     flex: 0,

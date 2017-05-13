@@ -19,6 +19,7 @@ class UIState extends RoutedState {
     @observable languageSelected = 'en';
     @observable appState = 'active';
     @observable debugText = 'test';
+    @observable externalViewer = false;
     @observable languages = {
         en: `English`
         // fr: `French`,
