@@ -32,7 +32,7 @@ export default class LoginPassword extends LoginWizardPage {
         const opacity = loginState.isInProgress ? 0 : 1;
         return (
             <Center>
-                {this._footerButton('Sign In', () => this.props.submit(), { opacity })}
+                {this._footerButton('login', () => this.props.submit(), { opacity })}
                 <ActivityOverlay visible={loginState.isInProgress} />
             </Center>
         );
