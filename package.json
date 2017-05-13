@@ -91,7 +91,8 @@
     "socket.io-client": "1.7.4",
     "stream-browserify": "1.0.0",
     "tweetnacl": "^1.0.0-rc.1",
-    "vm-browserify": "0.0.4"
+    "vm-browserify": "0.0.4",
+    "l.js":"git+https://github.com/PeerioTechnologies/l.git#v2"
   },
   "devDependencies": {
     "appium": "1.6.3",
