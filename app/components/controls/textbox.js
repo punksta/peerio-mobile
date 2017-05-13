@@ -37,7 +37,11 @@ export default class TextBox extends Component {
     }
 
     componentDidMount() {
-        reaction(() => this.value, v => (this._value = v), true);
+        reaction(() => this.value, text => {
+            if (this._value === text) return;
+            this.textinput.setNativeProps({ text });
+            this._value = text;
+        }, true);
         reaction(() => [this.focused, this.value], () => {
             LayoutAnimation.easeInEaseOut();
         }, true);
@@ -69,7 +73,9 @@ export default class TextBox extends Component {
 
     changeText = (text) => {
         this._value = this.props.lowerCase ? text.toLowerCase() : text;
-        const tx = this.props.lowerCase ? text.toLowerCase() : text;
+        this.textinput.setNativeProps({ text: this._value });
+        console.log(`textbox.js: ${this._value}`);
+        const tx = this._value;
         if (this.props.state) {
             this.props.state[this.props.name] = tx;
         } else {
@@ -154,40 +160,43 @@ export default class TextBox extends Component {
         }
         const { secretIcon } = this;
         return (
-            <View style={[style.outer]}>
-                <View
-                    style={[style.radius]}>
-                    <TouchableOpacity
-                        activeOpacity={0.9}
-                        pressRetentionOffset={vars.retentionOffset}
-                        pointerEvents={!this.focused ? undefined : 'none'}
-                        style={[style.touchable]}
-                        testID={`${this.props.name}_outer`}
-                        onPress={this.focus} />
-                    {this.hint}
+            <View style={textbox.outerContainer}>
+                <View style={[style.outer]}>
                     <View
-                        pointerEvents={this.focused ? undefined : 'none'}
-                        style={[textbox.inputContainer, icAlert]}>
-                        <TextInput
-                            keyboardType={this.props.keyboardType}
-                            testID={`${this.props.name}`}
-                            style={[style.textbox, { fontSize },
-                            { height: vars.inputPaddedHeight, top: 0, marginRight: this.secretIcon ? 42 : 0 }]}
-                            ref={ref => (this.textinput = ref)}
-                            underlineColorAndroid={'transparent'}
-                            returnKeyType={returnKeyType}
-                            secureTextEntry={this.props.secureTextEntry && !this.showSecret}
-                            value={this._value}
-                            maxLength={this.props.maxLength}
-                            onBlur={this.blur}
-                            onChangeText={this.changeText}
-                            onSubmitEditing={this.submit}
-                            autoCorrect={false}
-                            autoComplete={false}
-                        />
+                        style={[style.radius]}>
+                        <TouchableOpacity
+                            activeOpacity={0.9}
+                            pressRetentionOffset={vars.retentionOffset}
+                            pointerEvents={!this.focused ? undefined : 'none'}
+                            style={[style.touchable]}
+                            testID={`${this.props.name}_outer`}
+                            onPress={this.focus} />
+                        {this.hint}
+                        <View
+                            pointerEvents={this.focused ? undefined : 'none'}
+                            style={[textbox.inputContainer, icAlert]}>
+                            <TextInput
+                                keyboardType={this.props.keyboardType}
+                                testID={`${this.props.name}`}
+                                style={[style.textbox, { fontSize },
+                                { height: vars.inputPaddedHeight, top: 0, marginRight: this.secretIcon ? 42 : 0 }]}
+                                ref={ref => (this.textinput = ref)}
+                                underlineColorAndroid={'transparent'}
+                                returnKeyType={returnKeyType}
+                                secureTextEntry={this.props.secureTextEntry && !this.showSecret}
+                                // value={this._value}
+                                maxLength={this.props.maxLength}
+                                onBlur={this.blur}
+                                onChangeText={this.changeText}
+                                onSubmitEditing={this.submit}
+                                autoCorrect={false}
+                                autoComplete={false}
+                            />
+                        </View>
+                        {secretIcon}
                     </View>
-                    {secretIcon}
                 </View>
+                {this.validationControl}
             </View>
         );
     }
