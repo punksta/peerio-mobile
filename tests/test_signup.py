@@ -1,7 +1,6 @@
 import common.testcase
 import common.helper
 from time import sleep, strftime
-print "signup"
 
 def pinEnter():
     d = common.helper.getDriver()
@@ -19,7 +18,7 @@ class Signup(common.testcase.TestCase):
         d = common.helper.getDriver()
         d.reset()
         d.screen('signup-step-0.png')
-        d.tap('signup')
+        d.tap('button_CreateAccount')
         sleep(2)
         d.screen('signup-step-1.png')
         d.send_keys('username', username)

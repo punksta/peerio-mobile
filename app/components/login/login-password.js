@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { t, T } from '../utils/translator';
@@ -32,7 +32,7 @@ export default class LoginPassword extends LoginWizardPage {
         const opacity = loginState.isInProgress ? 0 : 1;
         return (
             <Center>
-                {this._footerButton('login', () => this.props.submit(), { opacity })}
+                {this._footerButton('button_login', () => this.props.submit(), { opacity })}
                 <ActivityOverlay visible={loginState.isInProgress} />
             </Center>
         );
