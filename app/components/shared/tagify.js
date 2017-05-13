@@ -22,15 +22,15 @@ export default (m, username) => {
     };
 
     const tagifyUsername = (t) => tagifyExact(t, `@${username}`, { backgroundColor: 'yellow' });
-    const tagifyB = (t) => tagify(t, /<\/*b>/, { fontWeight: 'bold' }, tagifyUsername);
-    const tagifyI = (t) => tagify(t, /<\/*i>/, { fontStyle: 'italic' }, tagifyB);
+    // const tagifyB = (t) => tagify(t, /<\/*b>/, { fontWeight: 'bold' }, tagifyUsername);
+    // const tagifyI = (t) => tagify(t, /<\/*i>/, { fontStyle: 'italic' }, tagifyB);
 
     const items = linkify.tokenize(m).map((token, i) => {
         const p = token.isLink ? () => {
             Linking.openURL(token.toHref());
         } : null;
         const str = token.toString();
-        const t = token.isLink ? str : tagifyI(str);
+        const t = token.isLink ? str : tagifyUsername(str);
         const s = token.isLink ? {
             textDecorationLine: 'underline',
             color: vars.bg
