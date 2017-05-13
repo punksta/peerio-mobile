@@ -36,9 +36,16 @@ const hintStyle = {
 
 @observer
 export default class FileView extends Component {
+    get file() {
+        return fileState.currentFile || {};
+    }
+
+    get actionsBar() {
+        return <FileActions file={this.file} />;
+    }
 
     render() {
-        const file = fileState.currentFile || {};
+        const { file } = this;
         let icon = 'image';
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
@@ -80,7 +87,6 @@ export default class FileView extends Component {
                         <FileProgress file={file} />
                     </View>
                 </View>
-                <FileActions file={file} />
             </View>
         );
     }

@@ -80,6 +80,7 @@ export default class LayoutMain extends Component {
         const pages = routerMain.pages;
         const currentPage = pages[routerMain.currentIndex];
         const currentComponent = routerMain.currentComponent;
+        const { actionsBar, showInput } = currentComponent;
 
         const animatedBlock = (
             <Animated.View
@@ -93,9 +94,9 @@ export default class LayoutMain extends Component {
                             {this.snackBar}
                         </Bottom>
                     </View>
-                    {currentComponent.showInput && <InputMainContainer />}
+                    {showInput && <InputMainContainer />}
                     {this.fab}
-                    <Tabs />
+                    { actionsBar || <Tabs />}
                 </View>
             </Animated.View>
         );
