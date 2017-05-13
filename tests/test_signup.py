@@ -31,8 +31,9 @@ class Signup(common.testcase.TestCase):
         d.tap('signupNext')
         d.screen('signup-step-2.png')
         sleep(2)
-        pinEnter()
-        pinEnter()
+        d.tap('signupNext')
+        # pinEnter()
+        # pinEnter()
         # push notification enable alert
         d.wait_for_find('Allow')
         d.tap('Allow')
