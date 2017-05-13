@@ -61,7 +61,7 @@ export default class SignupStep1 extends Component {
             <View style={[{ marginTop: 32 }]}>
                 <View style={padded}>
                     <Text style={style.text.title}>{t('title_signupStep2')}</Text>
-                    <Text testID="signupStep1Title" style={style.text.subTitle}>{t('title_accountKey')}</Text>
+                    <Text testID="signupStep1Title" style={style.text.subTitle}>{t('title_AccountKey')}</Text>
                 </View>
                 <View style={notice}>
                     {signupState.isInProgress ?
