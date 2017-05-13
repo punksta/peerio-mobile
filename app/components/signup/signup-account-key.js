@@ -67,37 +67,21 @@ export default class SignupStep1 extends Component {
                     {signupState.isInProgress ?
                         <ActivityIndicator size="large" color={vars.white} /> :
                         <View>
-                            <Text style={noticeText}>{'Don\'t get'}</Text>
-                            <Text style={noticeText2}>{'locked out!'}</Text>
+                            <Text style={noticeText}>{t('title_AKwarn1')}</Text>
+                            <Text style={noticeText2}>{t('title_AKwarn2')}</Text>
                         </View>}
                 </View>
                 <View style={paddedVertical}>
-                    <Text style={normalText}>
-                        {'Peerio doesn\'t use '}
-                        <Text style={{ fontStyle: 'italic' }}>
-                            {'passwords'}
-                        </Text>
-                        {' like other apps.'}
-                    </Text>
-                    <Text style={normalText}>
-                        {'This key protects all your info, so keep it safe!'}
-                    </Text>
+						<Text style={normalText}>{t('title_AKwarn3')}</Text>
                 </View>
                 <View style={paddedVertical}>
-                    <Text style={normalText}>
-                        {'Your Account Key'}
-                    </Text>
+						<Text style={normalText}>{t('title_yourAccountKey')}</Text>
                     <Text style={passphraseText}>
                         {signupState.passphrase}
                     </Text>
                 </View>
                 <View style={paddedVertical}>
-                    <Text style={normalText}>
-                        <Text style={{ fontWeight: 'bold' }}>
-                            {'Save this now. '}
-                        </Text>
-                        {'You\'re going to need it later'}
-                    </Text>
+                    <Text style={normalText}>{t('title_AKwarn4')}</Text>
                 </View>
                 <View style={[{ flexGrow: 1 }]} />
             </View>
