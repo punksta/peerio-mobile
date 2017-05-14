@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions
+    ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions, LayoutAnimation
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, when, reaction } from 'mobx';
@@ -25,6 +25,7 @@ export default class Chat extends Component {
     @observable contentHeight = 0;
     @observable scrollViewHeight = 0;
     @observable refreshing = false;
+    @observable maxSliceIndex = -1;
     enableNextScroll = false;
     lastLength = 0;
     topComponentRef = null;
@@ -39,7 +40,7 @@ export default class Chat extends Component {
     }
 
     get data() {
-        return this.chat ? this.chat.messages : null;
+        return this.chat ? this.chat.messages.slice(-this.maxSliceIndex) : null;
     }
 
     get chat() {
@@ -48,17 +49,6 @@ export default class Chat extends Component {
 
     get showInput() {
         return !!chatState.currentChat && !chatState.loading;
-    }
-
-    componentWillMount() {
-        /* reaction(() => (this.chat ? this.chat.limboMessages.length : 0), l => {
-            this.disableNextScroll = true;
-            this.forceUpdate();
-            /* this.disableNextScroll = l < this.lastLength;
-            this.animateNextScroll = l > this.lastLength;
-            this.lastLength = l;
-        }); */
-        // this.animateNextScroll = false;
     }
 
     item = (item, index) => {
@@ -72,14 +62,13 @@ export default class Chat extends Component {
                 this.topChatID = null;
                 // y = Math.min(y, this.scrollViewHeight) / 2;
                 this.scrollView.scrollTo({ y, animated: false });
-                console.log(`chat.js: scroll top`);
             }
-            if (item.id === this.bottomChatID) {
+            /* if (item.id === this.bottomChatID) {
                 console.log(`chat.js: scroll bottom`);
                 this.bottomChatID = null;
                 y = y + height - this.scrollViewHeight + this.indicatorHeight;
-                setTimeout(() => this.scrollView.scrollTo({ y, animated: false }), 0);
-            }
+                this.scrollView.scrollTo({ y, animated: false });
+            } */
         };
         return (
             <ChatItem
@@ -118,12 +107,19 @@ export default class Chat extends Component {
                 let y = this.contentHeight - this.scrollViewHeight;
                 if (y - indicatorSpacing < 0) {
                     console.log('chat.js: less content than fit');
+                    if (this.chat && (this.maxSliceIndex < this.chat.messages.length)) {
+                        this.maxSliceIndex += 2;
+                        this.disableAnimateNextScroll = true;
+                    }
                     // this.chat.messages.length && this.chat.loadPreviousPage();
-                    y = 0;
+                    // y = 0;
                 }
-                const animated = this.animateNextScroll;
+                const animated = !this.disableAnimateNextScroll;
                 // console.log('chat.js: auto scroll');
-                !this.disableNextScroll && this.scrollView.scrollTo({ y, animated: false });
+                if (!this.refreshing && !this.disableNextScroll) {
+                    console.log('chat.js: auto scrolling');
+                    this.scrollView.scrollTo({ y, animated });
+                }
                 this.animateNextScroll = false;
                 this.disableNextScroll = false;
             } else {
@@ -162,6 +158,7 @@ export default class Chat extends Component {
             if (y >= h - this.indicatorHeight / 2) {
                 this._onGoDown();
             }
+            this.disableNextScroll = y < h - this.indicatorHeight;
         };
         if (this._updater) clearTimeout(this._updater);
         this._updater = setTimeout(updater, 500);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
-import { observable } from 'mobx';
+import { View, Text, TouchableOpacity, Dimensions, LayoutAnimation } from 'react-native';
+import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
@@ -96,6 +96,15 @@ const { width } = Dimensions.get('window');
 @observer
 export default class Avatar extends Component {
     @observable showError = false;
+
+    componentDidMount() {
+        this._observer = reaction(() => this.props.receipts && this.props.receipts.length,
+            () => LayoutAnimation.easeInEaseOut());
+    }
+
+    componentWillUnmount() {
+        this._observer();
+    }
 
     get checked() {
         const cs = this.props.checkedState;
