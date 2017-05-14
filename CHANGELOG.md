@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.38.0"></a>
+# [3.38.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.36.0...v3.38.0) (2017-05-14)
+
+
+### Bug Fixes
+
+* **l18n:** localise Peerio ID ([20e2e6f](https://github.com/PeerioTechnologies/peerio-mobile/commit/20e2e6f))
+* **ui:** right arrow shouldnt jump when changing to bubble ([e706eee](https://github.com/PeerioTechnologies/peerio-mobile/commit/e706eee))
+* **ui:** show chats with self in the chat list ([5fc44da](https://github.com/PeerioTechnologies/peerio-mobile/commit/5fc44da))
+
+
+### Features
+
+* **push:** re-registering on each reconnect ([21aefd2](https://github.com/PeerioTechnologies/peerio-mobile/commit/21aefd2))
+* **ui:** smooth scrolls on new messages ([e6fe07a](https://github.com/PeerioTechnologies/peerio-mobile/commit/e6fe07a))
+
+
+
 <a name="3.37.0"></a>
 # [3.37.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.36.0...v3.37.0) (2017-05-14)
 
