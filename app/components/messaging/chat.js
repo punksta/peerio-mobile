@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    ScrollView, View, Text, TouchableOpacity, ActivityIndicator, FlatList
+    ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions
 } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, when, reaction } from 'mobx';
@@ -16,6 +16,9 @@ import chatState from '../messaging/chat-state';
 import ButtonText from '../controls/button-text';
 // max new items which are scrolled animated
 const maxScrollableLength = 3;
+
+const { width } = Dimensions.get('window');
+
 
 @observer
 export default class Chat extends Component {
@@ -148,7 +151,6 @@ export default class Chat extends Component {
     onScroll = (event) => {
         const { nativeEvent } = event;
         const updater = () => {
-            console.log('onscroll');
             const { contentHeight, scrollViewHeight, chat } = this;
             if (!contentHeight || !scrollViewHeight || !chat) return;
             const y = nativeEvent.contentOffset.y;
@@ -165,7 +167,7 @@ export default class Chat extends Component {
         this._updater = setTimeout(updater, 500);
     }
 
-    onViewableItemsChanged = ({ viewableItems, changed }) => {
+    /* onViewableItemsChanged = ({ viewableItems, changed }) => {
         if (!viewableItems || !viewableItems.length) return;
         const updater = () => {
             this._onGoUp();
@@ -175,7 +177,7 @@ export default class Chat extends Component {
             this._updater = setTimeout(updater, 1000);
         }
         // console.log(viewableItems);
-    }
+    } */
 
     listView() {
         if (chatState.loading) return null;
@@ -248,20 +250,28 @@ export default class Chat extends Component {
             borderBottomColor: '#CFCFCF',
             marginBottom: 8
         };
-        const chat = this.chat;
-        const avatars = (chat.participants || []).map(contact => (
-            <TouchableOpacity
-                style={{ flex: 0 }}
-                onPress={() => contactState.contactView(contact)} key={contact.username}>
-                <AvatarCircle
-                    contact={contact}
-                    medium />
-            </TouchableOpacity>
+        const { chat } = this;
+        const participants = chat.participants || [];
+        const w = 3 * 36;
+        const shiftX = (width - w - w * participants.length) / participants.length;
+        const shift = shiftX < 0 ? shiftX : 0;
+        const marginLeft = shift < -w ? (-w + 1) : shift;
+        const avatars = (participants || []).map(contact => (
+            <View style={{ marginLeft, width: w }}>
+                <TouchableOpacity
+                    style={{ flex: 0 }}
+                    pressRetentionOffset={vars.pressRetentionOffset}
+                    onPress={() => contactState.contactView(contact)} key={contact.username}>
+                    <AvatarCircle
+                        contact={contact}
+                        medium />
+                </TouchableOpacity>
+            </View>
         ));
         return (
             <View style={zsContainer}>
                 {this.archiveUpgrade}
-                <View style={{ flexDirection: 'row', marginRight: 48 }}>{avatars}</View>
+                <View style={{ flexDirection: 'row', marginRight: 48, paddingLeft: -marginLeft }}>{avatars}</View>
                 <Text style={{ textAlign: 'left', margin: 12, color: vars.txtDark }}>
                     {tx('title_chatBeginning')}
                     <Text>{' '}</Text>
