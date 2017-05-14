@@ -48,7 +48,7 @@ const vars = {
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
-    headerHeight: 56,
+    headerHeight: 80,
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconFileViewSize: 72,
