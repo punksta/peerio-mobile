@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.36.0"></a>
+# [3.36.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.35.0...v3.36.0) (2017-05-14)
+
+
+### Bug Fixes
+
+* **ui:** header height ([fc36776](https://github.com/PeerioTechnologies/peerio-mobile/commit/fc36776))
+
+
+### Features
+
+* **android:** sync versions with ios ([96edbb4](https://github.com/PeerioTechnologies/peerio-mobile/commit/96edbb4))
+* **ui:** new android icon ([dcb9203](https://github.com/PeerioTechnologies/peerio-mobile/commit/dcb9203))
+
+
+
 <a name="3.35.0"></a>
 # [3.35.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.34.0...v3.35.0) (2017-05-14)
 
