@@ -228,7 +228,7 @@ export default class Avatar extends Component {
 
     get star() {
         return this.props.starred ?
-            <Text style={{ color: '#ffd700' }}>{'★'}</Text> : null;
+            <Text style={{ color: '#ffd700' }}>{'★ '}</Text> : null;
     }
 
     get title() {
@@ -236,15 +236,17 @@ export default class Avatar extends Component {
         return (
             <View style={nameContainerStyle}>
                 <View style={{ flexShrink: 1 }}>
-                    <Text ellipsizeMode="tail" numberOfLines={1} style={nameTextStyle}>
+                    <Text ellipsizeMode="tail" numberOfLines={1}>
                         {this.star}
-                        {title ||
-                            <Text>
-                                {contact.fullName}
-                                <Text style={{ color: vars.txtMedium, fontWeight: 'normal' }}>
-                                    {' '}{contact.username}
-                                </Text>
-                            </Text>}
+                        <Text style={nameTextStyle}>
+                            {title ||
+                                <Text>
+                                    {contact.fullName}
+                                    <Text style={{ color: vars.txtMedium, fontWeight: 'normal' }}>
+                                        {' '}{contact.username}
+                                    </Text>
+                                </Text>}
+                        </Text>
                     </Text>
                 </View>
                 <View style={{ flex: 0 }}>
