@@ -26,7 +26,7 @@ export default class ChatListItem extends Component {
         // no participants means chat with yourself
         if (!participants) contact = contactStore.getContact(User.current.username);
         // two participants
-        if (participants.length === 1) contact = participants[0];
+        if (participants && participants.length === 1) contact = participants[0];
         const key = chat.id;
         const msg = mostRecentMessage ? mostRecentMessage.text : '';
         const timestamp = mostRecentMessage ? mostRecentMessage.messageTimestampText : null;
