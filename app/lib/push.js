@@ -17,7 +17,10 @@ function onRegister(token) {
         })
         .catch(e => console.log('push.js: error registering', e));
     };
-    socket.onAuthenticated(registerPush);
+    when(() => socket.authenticated, () => {
+        registerPush();
+        socket.onAuthenticated(registerPush);
+    });
 }
 
 function enablePushNotifications() {
