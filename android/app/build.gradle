@@ -1,6 +1,7 @@
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
+import groovy.json.JsonSlurper
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -106,12 +107,16 @@ android {
     versionProps['VERSION_MINOR']=minor.toString()
     versionProps.store(versionPropsFile.newWriter(), null)
     code *= 10
+    def packageSlurper = new JsonSlurper()
+    def packageJson = packageSlurper.parse file('../../package.json')
+    version = packageJson.version
+
     defaultConfig {
         applicationId "com.peerio.messenger"
-        minSdkVersion 19
-        targetSdkVersion 23
+        minSdkVersion 21
+        targetSdkVersion 24
         versionCode code
-        versionName "3.0." + minor.toString()
+        versionName packageJson.version
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
