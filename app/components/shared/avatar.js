@@ -286,7 +286,7 @@ export default class Avatar extends Component {
                 <View style={[itemStyle, this.errorStyle]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
-                        style={[this.itemContainerStyle, { marginLeft: 74 }]}>
+                        style={[this.itemContainerStyle, { paddingLeft: 74, flexShrink: 1 }]}>
                         {this.message}
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
@@ -306,7 +306,7 @@ export default class Avatar extends Component {
         return (
             <View style={[itemStyle, this.borderStyle, this.errorStyle, this.paddingStyle]}>
                 {this.checkbox}
-                <View style={[{ flexGrow: 1, maxWidth: width }]}>
+                <View style={[{ flexGrow: 1, maxWidth: width, flexShrink: 1 }]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
                         style={itemContainerStyle}>

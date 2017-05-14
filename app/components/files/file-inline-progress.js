@@ -10,6 +10,7 @@ export default class FileInlineProgress extends Component {
     render() {
         const rowStyle = {
             flexGrow: 1,
+            flexShrink: 1,
             flexDirection: 'row',
             borderColor: 'yellow',
             borderWidth: 0,
@@ -20,12 +21,12 @@ export default class FileInlineProgress extends Component {
         const exists = file && !file.isPartialDownload && file.cached;
         return (
             <TouchableOpacity onPress={() => (exists ? file.launchViewer() : fileState.download(file))}>
-                <View style={{ flexDirection: 'column' }}>
+                <View>
                     <View style={rowStyle}>
                         <Text
-                            style={{ flex: 1, opacity: 0.7, fontWeight: 'bold' }}
+                            style={{ flexGrow: 1, flexShrink: 1, opacity: 0.7, fontWeight: 'bold' }}
                             ellipsizeMode="tail"
-                            numberOfLines={3}>
+                            numberOfLines={1}>
                             {file.name} ({file.sizeFormatted})
                         </Text>
                         <View style={{ flex: 0 }}>
