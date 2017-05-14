@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.33.0"></a>
+# [3.33.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.32.0...v3.33.0) (2017-05-14)
+
+
+### Bug Fixes
+
+* **android:** file items disappearing ([99f0b2f](https://github.com/PeerioTechnologies/peerio-mobile/commit/99f0b2f))
+* **android:** fix ui layout when hiding/showing keyboard ([2304c8a](https://github.com/PeerioTechnologies/peerio-mobile/commit/2304c8a))
+* **android:** star color ([bcc3f54](https://github.com/PeerioTechnologies/peerio-mobile/commit/bcc3f54))
+* **android:** take new photo upload stat ([0e0450a](https://github.com/PeerioTechnologies/peerio-mobile/commit/0e0450a))
+* **copy:** sign up and create account buttons ([110e018](https://github.com/PeerioTechnologies/peerio-mobile/commit/110e018))
+* **fix:** typo ([f76fb0a](https://github.com/PeerioTechnologies/peerio-mobile/commit/f76fb0a))
+* **layout:** layout fixes for android ([4bfd2a7](https://github.com/PeerioTechnologies/peerio-mobile/commit/4bfd2a7))
+* **tests:** adapt to new flow ([8bcd939](https://github.com/PeerioTechnologies/peerio-mobile/commit/8bcd939))
+* **ui:** center emoji avatar letters ([907a01f](https://github.com/PeerioTechnologies/peerio-mobile/commit/907a01f))
+* **ui:** file names getting cut off ([4883b79](https://github.com/PeerioTechnologies/peerio-mobile/commit/4883b79))
+* **ui:** make actions bar replace tab bar ([d636104](https://github.com/PeerioTechnologies/peerio-mobile/commit/d636104))
+* **ui:** textbox to normale ([2ca9ebb](https://github.com/PeerioTechnologies/peerio-mobile/commit/2ca9ebb))
+* **ui:** zero state layout circles shift ([e7d41a4](https://github.com/PeerioTechnologies/peerio-mobile/commit/e7d41a4))
+
+
+### Features
+
+* **android:** add gradient support to android ([8069b32](https://github.com/PeerioTechnologies/peerio-mobile/commit/8069b32))
+* **android:** back works in the main layout ([09d9a0d](https://github.com/PeerioTechnologies/peerio-mobile/commit/09d9a0d))
+* **logs:** use l.js ([ed998ad](https://github.com/PeerioTechnologies/peerio-mobile/commit/ed998ad))
+* **ui:** make icon gold ([93f856e](https://github.com/PeerioTechnologies/peerio-mobile/commit/93f856e))
+* **ui:** removing b and i tags ([480f507](https://github.com/PeerioTechnologies/peerio-mobile/commit/480f507))
+
+
+
 <a name="3.32.0"></a>
 # [3.32.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.31.0...v3.32.0) (2017-05-11)
 
