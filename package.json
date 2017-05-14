@@ -47,12 +47,14 @@
     "is-js": "^0.1.1",
     "is_js": "0.9.0",
     "json-stringify-safe": "^5.0.1",
+    "l.js": "git+https://github.com/PeerioTechnologies/l.git#v2",
     "linkifyjs": "https://github.com/PeerioTechnologies/linkifyjs.git",
     "lodash": "4.17.4",
     "mobx": "^3.1.9",
     "mobx-react": "^4.1.0",
     "moment": "^2.18.0",
     "npm-run-all": "^4.0.1",
+    "pbkdf2": "git+https://github.com/PeerioTechnologies/pbkdf2.git",
     "peerio-copy": "https://github.com/PeerioTechnologies/peerio-copy.git#icebear",
     "peerio-icebear": "git@github.com:PeerioTechnologies/peerio-icebear.git#mobile",
     "peerio-react-native-fetch-blob": "0.10.3",
@@ -91,8 +93,7 @@
     "socket.io-client": "1.7.4",
     "stream-browserify": "1.0.0",
     "tweetnacl": "^1.0.0-rc.1",
-    "vm-browserify": "0.0.4",
-    "l.js": "git+https://github.com/PeerioTechnologies/l.git#v2"
+    "vm-browserify": "0.0.4"
   },
   "devDependencies": {
     "appium": "1.6.3",
