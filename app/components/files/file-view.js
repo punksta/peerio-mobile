@@ -26,6 +26,7 @@ const secondRowStyle = {
 
 const firstColumnStyle = {
     flexGrow: 1,
+    flexShrink: 1,
     paddingTop: vars.iconPadding
 };
 

@@ -111,13 +111,13 @@ export default class TextBox extends Component {
         return !this.valid ? (
             <Text
                 style={{
-                    height: 12,
+                    height: 14,
                     color: vars.highlight,
                     fontSize: 12,
                     backgroundColor: 'transparent'
                 }}>{t(this.validationMessage)}</Text>
         ) : (
-            <View style={{ height: 12 }} />
+            <View style={{ height: 14 }} />
         );
     }
 
