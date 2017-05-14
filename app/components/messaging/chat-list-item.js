@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Avatar from '../shared/avatar';
 import chatState from './chat-state';
+import { User, contactStore } from '../../lib/icebear';
 import icons from '../helpers/icons';
 
 @observer
@@ -16,9 +17,12 @@ export default class ChatListItem extends Component {
     render() {
         const { chat } = this.props;
         const { mostRecentMessage, participants } = chat;
-        if (!participants || !participants.length) return null;
         // group chats have null for contact
-        const contact = participants.length > 2 ? null : participants[0];
+        let contact = null;
+        // no participants means chat with yourself
+        if (!participants) contact = contactStore.getContact(User.current.username);
+        // two participants
+        if (participants.length === 1) contact = participants[0];
         const key = chat.id;
         const msg = mostRecentMessage ? mostRecentMessage.text : '';
         const timestamp = mostRecentMessage ? mostRecentMessage.messageTimestampText : null;
