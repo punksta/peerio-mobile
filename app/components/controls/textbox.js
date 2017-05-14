@@ -39,7 +39,6 @@ export default class TextBox extends Component {
     componentDidMount() {
         reaction(() => this.value, text => {
             if (this._value === text) return;
-            this.textinput.setNativeProps({ text });
             this._value = text;
         }, true);
         reaction(() => [this.focused, this.value], () => {
@@ -73,8 +72,6 @@ export default class TextBox extends Component {
 
     changeText = (text) => {
         this._value = this.props.lowerCase ? text.toLowerCase() : text;
-        this.textinput.setNativeProps({ text: this._value });
-        console.log(`textbox.js: ${this._value}`);
         const tx = this._value;
         if (this.props.state) {
             this.props.state[this.props.name] = tx;
@@ -184,7 +181,7 @@ export default class TextBox extends Component {
                                 underlineColorAndroid={'transparent'}
                                 returnKeyType={returnKeyType}
                                 secureTextEntry={this.props.secureTextEntry && !this.showSecret}
-                                // value={this._value}
+                                value={this._value}
                                 maxLength={this.props.maxLength}
                                 onBlur={this.blur}
                                 onChangeText={this.changeText}
