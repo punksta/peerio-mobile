@@ -4,6 +4,7 @@ import { when } from 'mobx';
 import { socket } from '../lib/icebear';
 
 const TEST_TOKEN = 'a41f1b2e8e9279c81dd9c69c56fd060d25c743354a146d4d9dcddcd9bf73b0e6';
+let registered = false;
 
 function onRegister(token) {
     console.log(`push.js: OS: ${Platform.OS}, TOKEN: ${token.token}`);
@@ -13,7 +14,9 @@ function onRegister(token) {
         console.log(`push.js: sending registration OS: ${JSON.stringify(payload)}`);
         return socket.send('/auth/mobile-device/register', payload)
         .then(r => {
+            registered = true;
             console.log(`push.js: register result success ${JSON.stringify(r)}`);
+            when(() => !socket.authenticated, () => (registered = false));
         })
         .catch(e => console.log('push.js: error registering', e));
     };
@@ -46,7 +49,7 @@ function enablePushNotifications() {
 }
 
 function enableServerSide() {
-    when(() => socket.authenticated, () =>
+    when(() => registered && socket.authenticated, () =>
          socket.send('/auth/push/enable')
              .then(r => console.log(`push.js: enabled server ${r}`))
              .catch(e => console.error(e))
@@ -54,7 +57,7 @@ function enableServerSide() {
 }
 
 function disableServerSide() {
-    when(() => socket.authenticated, () =>
+    when(() => registered && socket.authenticated, () =>
          socket.send('/auth/push/disable')
              .then(r => console.log(`push.js: disabled server ${r}`))
              .catch(e => console.error(e))
