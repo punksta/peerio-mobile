@@ -90,7 +90,7 @@ export default (fileStream) => {
         }
 
         static getStat(path) {
-            return RNFetchBlob.fs.stat(path);
+            return RNFS.stat(path);
         }
 
         /**
