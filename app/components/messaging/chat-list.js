@@ -64,6 +64,7 @@ export default class Files extends Component {
         if (chatState.routerMain.currentIndex !== 0) return null;
         return (
             <ListView
+                style={{ flexGrow: 1 }}
                 initialListSize={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
                 dataSource={this.dataSource}
@@ -83,8 +84,8 @@ export default class Files extends Component {
 
         return (
             <View
-                style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}>
+                style={{ flexGrow: 1 }}>
+                <View style={{ flexGrow: 1 }}>
                     {body}
                 </View>
                 <ProgressOverlay enabled={chatState.store.loading} />

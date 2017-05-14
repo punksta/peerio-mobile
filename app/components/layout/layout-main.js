@@ -26,6 +26,11 @@ export default class LayoutMain extends Component {
         reaction(() => uiState.appState, () => this.forceUpdate());
     }
 
+    get updateHack() {
+        return global.platform === 'android' && uiState.keyboardHeight === 0
+            ? 'updateAndroidHack' : '';
+    }
+
     get isFabVisible() {
         return routerMain.currentComponent && routerMain.currentComponent.isFabVisible;
     }
@@ -38,7 +43,9 @@ export default class LayoutMain extends Component {
             paddingBottom: this._snackBar ? this._snackBar.animatedHeight : 0
         };
         return (
-            <Animated.View style={style}>
+            <Animated.View
+                key={`fab${this.updateHack}`}
+                style={style}>
                 <Fab />
             </Animated.View>
         );
@@ -49,29 +56,11 @@ export default class LayoutMain extends Component {
             <SnackBar ref={sb => (this._snackBar = sb)} /> : null;
     }
 
-    page(control, key) {
-        const s = {
-            backgroundColor: '#fff',
-            position: 'absolute',
-            width,
-            bottom: 0,
-            top: 0
-        };
-        return (
-            <View style={s} key={key}>
-                {control}
-            </View>
-        );
-    }
-
-    pages(controls) {
-        return controls.map((item, index) => this.page(item, index));
-    }
-
     render() {
         const outerStyle = {
             backgroundColor: '#fff',
             flex: 1,
+            flexGrow: 1,
             flexDirection: 'column',
             justifyContent: 'space-between',
             paddingBottom: global.platform === 'android' ? 0 : uiState.keyboardHeight
@@ -83,22 +72,22 @@ export default class LayoutMain extends Component {
         const { actionsBar, showInput } = currentComponent;
 
         const animatedBlock = (
-            <Animated.View
+            <View
                 style={outerStyle}>
-                <View style={{ flex: 1, flexGrow: 1 }}>
-                    <HeaderMain />
-                    <SnackBarConnection />
-                    <View style={{ flex: 1, flexGrow: 1 }}>
-                        {currentPage}
-                        <Bottom>
-                            {this.snackBar}
-                        </Bottom>
-                    </View>
-                    {showInput && <InputMainContainer />}
-                    {this.fab}
-                    { actionsBar || <Tabs />}
+                <HeaderMain />
+                <SnackBarConnection />
+                <View
+                    key={`page${this.updateHack}`}
+                    style={{ flex: 1, flexGrow: 1 }}>
+                    {currentPage}
+                    <Bottom>
+                        {this.snackBar}
+                    </Bottom>
                 </View>
-            </Animated.View>
+                {showInput && <InputMainContainer />}
+                {this.fab}
+                {actionsBar || <Tabs />}
+            </View>
         );
         return (
             <View
