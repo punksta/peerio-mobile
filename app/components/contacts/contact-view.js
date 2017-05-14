@@ -4,6 +4,7 @@ import { observer } from 'mobx-react/native';
 import LayoutModalExit from '../layout/layout-modal-exit';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
+import { t } from '../utils/translator';
 
 const flexRow = {
     flexDirection: 'row',
@@ -52,7 +53,7 @@ export default class ContactView extends Component {
                 </View>
                 <View style={{ margin: 24 }}>
                     {tofuErrorControl}
-                    <Text style={{ color: vars.txtDate, marginVertical: 10 }}>Fingerprint:</Text>
+                    <Text style={{ color: vars.txtDate, marginVertical: 10 }}>{t('title_publicKey')}</Text>
                     <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: 16 }} numberOfLines={2}>
                         {fingerprintSkylarFormatted}
                     </Text>
