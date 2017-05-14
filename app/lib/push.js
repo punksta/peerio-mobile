@@ -9,22 +9,15 @@ function onRegister(token) {
     console.log(`push.js: OS: ${Platform.OS}, TOKEN: ${token.token}`);
     const payload = {};
     payload[Platform.OS] = token.token || token;
-    when(() => socket.authenticated, () => {
-        console.log(`push.js: OS: ${JSON.stringify(payload)}`);
-        socket.send('/auth/mobile-device/register', payload)
-            .then(r => {
-                console.log(`push.js: register result success ${JSON.stringify(r)}`);
-                // PushNotification.localNotification({ title: 'test', message: 'testmessage' });
-            })
-            // .then(() => {
-            //     return socket.send('/auth/dev/test-push', {
-            //         icon: 'push',
-            //         text: 'blah'
-            //     });
-            // })
-            // .then(console.log.bind(console))
-            .catch(e => console.log('push.js: error registering', e));
-    });
+    const registerPush = () => {
+        console.log(`push.js: sending registration OS: ${JSON.stringify(payload)}`);
+        return socket.send('/auth/mobile-device/register', payload)
+        .then(r => {
+            console.log(`push.js: register result success ${JSON.stringify(r)}`);
+        })
+        .catch(e => console.log('push.js: error registering', e));
+    };
+    socket.onAuthenticated(registerPush);
 }
 
 function enablePushNotifications() {
