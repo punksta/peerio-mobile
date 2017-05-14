@@ -10,8 +10,12 @@ import icons from '../helpers/icons';
 export default class ChatListItem extends Component {
     get rightIcon() {
         const { chat } = this.props;
-        return chat.unreadCount > 0 ?
-            icons.unreadBubble(chat.unreadCount) : icons.dark('keyboard-arrow-right');
+        return (
+            <View style={{ flex: 0, width: 46, height: 46, justifyContent: 'center' }}>
+                {chat.unreadCount > 0 ?
+                    icons.unreadBubble(chat.unreadCount) : icons.dark('keyboard-arrow-right')}
+            </View>
+        );
     }
 
     render() {
