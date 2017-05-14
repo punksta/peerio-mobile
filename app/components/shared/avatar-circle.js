@@ -38,7 +38,7 @@ export default class AvatarCircle extends Component {
             backgroundColor: color || 'gray'
         }];
         const inner = contact ? (
-            <Text style={{ color: 'white', textAlign: 'center', width: 14, fontSize: 12 * ratio }}>
+            <Text style={{ color: 'white', textAlign: 'center', width: 14 * ratio, fontSize: 12 * ratio }}>
                 {letter}
             </Text>
         ) : icons.plainWhite('group');
