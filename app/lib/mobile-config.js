@@ -41,7 +41,7 @@ export default (c, icebear) => {
             console.log(r);
         });
 
-    cfg.appVersion = '3.0.4';
+    cfg.appVersion = require('../../package.json').version;
     cfg.platform = 'ios';
     cfg.chat = {
         maxInitialChats: 10,
