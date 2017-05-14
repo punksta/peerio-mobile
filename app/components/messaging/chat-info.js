@@ -88,7 +88,7 @@ export default class ChatInfo extends Component {
                 )}
             </View>
         );
-        const rightIcon = icons.dark(chat.isFavorite ? 'star' : 'star-border',
+        const rightIcon = icons.gold(chat.isFavorite ? 'star' : 'star-border',
             () => chat.toggleFavoriteState());
         return (<LayoutModalExit
             body={body}

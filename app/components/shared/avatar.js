@@ -228,7 +228,7 @@ export default class Avatar extends Component {
 
     get star() {
         return this.props.starred ?
-            <Text style={{ color: '#ffd700' }}>{'★ '}</Text> : null;
+            <Text style={{ color: vars.gold }}>{'★ '}</Text> : null;
     }
 
     get title() {

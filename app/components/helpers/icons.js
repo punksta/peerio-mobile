@@ -54,6 +54,10 @@ const icons = {
         return icons.basic(name, vars.darkIcon, onPress, style, size);
     },
 
+    gold(name, onPress, style, size) {
+        return icons.basic(name, vars.gold, onPress, style, size);
+    },
+
     darkNoPadding(name, onPress, style, size) {
         return icons.basic(name, vars.darkIcon, onPress, style, size, true);
     },
