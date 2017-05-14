@@ -81,7 +81,6 @@ export default class Files extends Component {
                 renderRow={this.item}
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={20}
-                onContentSizeChange={this.scroll}
                 enableEmptySections
                 ref={sv => (this.scrollView = sv)}
             />

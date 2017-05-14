@@ -45,16 +45,7 @@ export default class FileItem extends Component {
         const file = this.props.file;
         return (
             <View style={{ backgroundColor: 'white' }}>
-                <Swiper
-                    state={this.store}
-                    visible="checkBoxHidden"
-                    style={[swipeLeftToRightStyle]}
-                    shift={checkBoxWidth}
-                    onSwipeOut={() => this.select()}
-                    threshold={0.5}
-                    leftToRight>
-                    <FileInnerItem onPress={f => this.press(f)} file={file} />
-                </Swiper>
+                <FileInnerItem onPress={f => this.press(f)} file={file} />
                 <FileProgress file={file} />
             </View>
         );
