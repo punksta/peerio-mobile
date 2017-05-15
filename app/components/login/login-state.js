@@ -88,7 +88,7 @@ class LoginState extends RoutedState {
     @action login = (pin) => {
         const user = new User();
         user.username = this.username;
-        user.passphrase = pin || this.passphrase || 'such a secret passphrase';
+        user.passphrase = pin || this.passphrase;
         this.isInProgress = true;
         console.log(this.username);
         return new Promise(resolve => {
