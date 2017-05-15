@@ -74,7 +74,7 @@ export default class SignupStep1 extends Component {
                             hint={t('title_lastName')} />
                     </View>
                 </View>
-                <LanguagePickerBox />
+                {/* <LanguagePickerBox /> */}
                 <Text style={[style.text.info, { fontSize: 14 }]}>
                     <T k="title_TOSRequestText">{tosParser}</T>
                 </Text>
