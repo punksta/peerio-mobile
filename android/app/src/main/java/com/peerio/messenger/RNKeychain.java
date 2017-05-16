@@ -11,18 +11,26 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
+import android.security.KeyPairGeneratorSpec;
 import android.util.Log;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
+import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.security.Signature;
+import java.security.SignatureException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
+import java.security.interfaces.RSAPrivateKey;
+import java.util.Calendar;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -30,8 +38,9 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
-import javax.crypto.ShortBufferException;
 import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import javax.security.auth.x500.X500Principal;
 
 import android.util.Base64;
 
@@ -41,12 +50,12 @@ public class RNKeychain extends ReactContextBaseJavaModule {
     private static final String B64SEPARATOR = ",";
     private static final String TRANSFORMATION = "AES/GCM/NoPadding";
     private static final String ANDROID_KEY_STORE = "AndroidKeyStore";
-    private static final String ALIAS = "peerio-mobile-android-key";
+    private static final String ALIAS_AES = "peerio-mobile-android-key";
+    private static final String ALIAS_RSA = "peerio-mobile-android-key-rsa";
+    private static final String RSA_SIGN_CONSTANT = "Peerio Mobile Keystore";
     private KeyStore _keyStore;
     public RNKeychain(final ReactApplicationContext reactContext) {
         super(reactContext);
-        // TODO: WARNING: CURRENTLY ONLY PROVIDES ENCRYPTION TO ANDROID 6.0 AND HIGHER
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return;
         try {
             _keyStore = KeyStore.getInstance(ANDROID_KEY_STORE);
             _keyStore.load(null);
@@ -54,17 +63,42 @@ public class RNKeychain extends ReactContextBaseJavaModule {
             int nBefore = _keyStore.size();
 
             // Create the keys if necessary
-            if (!_keyStore.containsAlias(ALIAS)) {
-                final KeyGenerator keyGenerator = KeyGenerator
-                        .getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE);
+            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                // On Android 5, generate RSA key pair.
+                // We'll use private key from it for deriving AES-GCM key.
+                if (!_keyStore.containsAlias(ALIAS_RSA)) {
+                    Calendar start = Calendar.getInstance();
+                    Calendar end = Calendar.getInstance();
+                    end.add(Calendar.YEAR, 100);
+                    KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(this.getReactApplicationContext())
+                            .setAlias(ALIAS_RSA)
+                            .setSubject(new X500Principal("CN=Mobile KeyStore, O=Peerio Mobile KeyStore"))
+                            .setSerialNumber(BigInteger.ONE)
+                            .setKeySize(2048)
+                            .setStartDate(start.getTime())
+                            .setEndDate(end.getTime())
+                            .build();
 
-                final KeyGenParameterSpec keyGenParameterSpec = new KeyGenParameterSpec.Builder(ALIAS,
-                        KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-                        .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                        .build();
-                keyGenerator.init(keyGenParameterSpec);
-                keyGenerator.generateKey();
+                    final KeyPairGenerator keyPairGenerator = KeyPairGenerator
+                            .getInstance("RSA", ANDROID_KEY_STORE);
+
+                    keyPairGenerator.initialize(spec);
+                    keyPairGenerator.generateKeyPair();
+                }
+            } else {
+                // On Android 6 and later, generate AES-GCM key.
+                if (!_keyStore.containsAlias(ALIAS_AES)) {
+                    final KeyGenerator keyGenerator = KeyGenerator
+                            .getInstance(KeyProperties.KEY_ALGORITHM_AES, ANDROID_KEY_STORE);
+
+                    final KeyGenParameterSpec keyGenParameterSpec = new KeyGenParameterSpec.Builder(ALIAS_AES,
+                            KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                            .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                            .build();
+                    keyGenerator.init(keyGenParameterSpec);
+                    keyGenerator.generateKey();
+                }
             }
             int nAfter = _keyStore.size();
             Log.v(TAG, "Before = " + nBefore + " After = " + nAfter);
@@ -93,12 +127,35 @@ public class RNKeychain extends ReactContextBaseJavaModule {
     }
 
     private String serialize(String data, boolean decode) {
-        // TODO: WARNING: CURRENTLY ONLY PROVIDES ENCRYPTION TO ANDROID 6.0 AND HIGHER
-        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) return data;
         try {
-            final KeyStore.SecretKeyEntry secretKeyEntry =
-                    (KeyStore.SecretKeyEntry)_keyStore.getEntry(ALIAS, null);
-            final SecretKey secretKey = secretKeyEntry.getSecretKey();
+            SecretKey secretKey = null;
+            if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                // On Android 5 calculate AES-GCM key by getting an RSA key pair
+                // from KeyStore and deterministically (without padding) signing
+                // a constant string with it, then calculating a hash of the signature.
+                final KeyStore.PrivateKeyEntry privateKeyEntry =
+                        (KeyStore.PrivateKeyEntry) _keyStore.getEntry(ALIAS_RSA, null);
+                final RSAPrivateKey privateKey = (RSAPrivateKey) privateKeyEntry.getPrivateKey();
+
+                // Calculate signature of RSA_SIGN_CONSTANT.
+                Signature sig = Signature.getInstance("NONEwithRSA");
+                sig.initSign(privateKey);
+                sig.update(RSA_SIGN_CONSTANT.getBytes("UTF-8"));
+                byte[] signature = sig.sign();
+
+                // Hash signature.
+                MessageDigest md= MessageDigest.getInstance("SHA-256");
+                md.update(signature);
+                byte[] keyBytes = md.digest();
+
+                secretKey = new SecretKeySpec(keyBytes, "AES");
+            } else {
+                // On Android 6> get AES-GCM key directly from KeyStore.
+                final KeyStore.SecretKeyEntry secretKeyEntry =
+                        (KeyStore.SecretKeyEntry) _keyStore.getEntry(ALIAS_AES, null);
+                secretKey = secretKeyEntry.getSecretKey();
+            }
+
             Log.v(TAG, secretKey.toString());
             String result = null;
             if (decode) {
@@ -131,6 +188,7 @@ public class RNKeychain extends ReactContextBaseJavaModule {
         } catch (IllegalBlockSizeException e) {
             Log.e(TAG, Log.getStackTraceString(e));
         } catch (BadPaddingException e) {
+            // Won't be thrown when using GCM.
             Log.e(TAG, Log.getStackTraceString(e));
         } catch (InvalidAlgorithmParameterException e) {
             Log.e(TAG, Log.getStackTraceString(e));
@@ -140,7 +198,9 @@ public class RNKeychain extends ReactContextBaseJavaModule {
             Log.e(TAG, Log.getStackTraceString(e));
         } catch (KeyStoreException e) {
             Log.e(TAG, Log.getStackTraceString(e));
-        }
+        } catch (SignatureException e) {
+                Log.e(TAG, Log.getStackTraceString(e));
+            }
         return null;
     }
 
