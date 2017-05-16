@@ -37,7 +37,7 @@ export default class SettingsLevel2 extends Component {
                     title="2FA prompt"
                     onPress={() => this.twoFactorTest()} /> */}
                 <SettingsItem
-                    title="title_MP"
+                    title="title_showAccountKey"
                     icon="visibility"
                     disabled={!user.hasTouchIdCached}
                     onPress={() => settingsState.showPassphrase()} />

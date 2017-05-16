@@ -62,7 +62,7 @@ class SettingsState extends RoutedState {
                 </Text>
             );
             popupCopyCancel(
-                tx('title_AK'),
+                tx('title_AccountKey'),
                 tx('title_AKDetail'),
                 mp
             ).then(r => {
