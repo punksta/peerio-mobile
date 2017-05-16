@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.43.0"></a>
+# [3.43.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.42.0...v3.43.0) (2017-05-16)
+
+
+### Bug Fixes
+
+* **ui:** deactivate chat in chat view ([7944a5d](https://github.com/PeerioTechnologies/peerio-mobile/commit/7944a5d))
+
+
+
 <a name="3.42.0"></a>
 # [3.42.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.41.0...v3.42.0) (2017-05-16)
 
