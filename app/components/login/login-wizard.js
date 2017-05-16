@@ -31,7 +31,9 @@ export default class LoginWizard extends Wizard {
     loginClean() {
         const loginEnteredAction = () => {
             this.index++;
-            loginState.passphrase = '';
+            if (!process.env.PEERIO_PASSPHRASE) {
+                loginState.passphrase = '';
+            }
             // DISABLING pin for now
             // loginState.checkSavedUserPin();
         };
