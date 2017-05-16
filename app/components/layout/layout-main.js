@@ -26,11 +26,6 @@ export default class LayoutMain extends Component {
         reaction(() => uiState.appState, () => this.forceUpdate());
     }
 
-    get updateHack() {
-        return global.platform === 'android' && uiState.keyboardHeight === 0
-            ? 'updateAndroidHack' : '';
-    }
-
     get isFabVisible() {
         return routerMain.currentComponent && routerMain.currentComponent.isFabVisible;
     }
@@ -44,7 +39,6 @@ export default class LayoutMain extends Component {
         };
         return (
             <Animated.View
-                key={`fab${this.updateHack}`}
                 style={style}>
                 <Fab />
             </Animated.View>
@@ -77,7 +71,6 @@ export default class LayoutMain extends Component {
                 <HeaderMain />
                 <SnackBarConnection />
                 <View
-                    key={`page${this.updateHack}`}
                     style={{ flex: 1, flexGrow: 1 }}>
                     {currentPage}
                     <Bottom>

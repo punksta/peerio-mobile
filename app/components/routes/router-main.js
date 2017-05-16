@@ -1,6 +1,6 @@
 import React from 'react';
-import { LayoutAnimation, BackHandler } from 'react-native';
-import { observable, reaction, action } from 'mobx';
+import { LayoutAnimation, BackHandler, Platform } from 'react-native';
+import { observable, reaction, action, when } from 'mobx';
 import Router from './router';
 import uiState from '../layout/ui-state';
 import SettingsLevel1 from '../settings/settings-level-1';
@@ -115,7 +115,7 @@ class RouterMain extends Router {
     @action back() {
         if (this.currentIndex > 0) this.currentIndex--;
         this.onTransition(this.current, true);
-        LayoutAnimation.easeInEaseOut();
+        if (Platform.OS !== 'android') LayoutAnimation.easeInEaseOut();
         console.log(`router-main: transition to ${this.route}:${this.currentIndex}`);
     }
 
