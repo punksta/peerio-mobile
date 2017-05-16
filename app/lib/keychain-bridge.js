@@ -3,7 +3,7 @@ import { observable } from 'mobx';
 
 const { RNKeychain } = NativeModules;
 
-class TouchIdBridge {
+class KeychainBridge {
     get hasPlugin() { return !!RNKeychain; }
     @observable available = false;
 
@@ -39,4 +39,4 @@ class TouchIdBridge {
     }
 }
 
-export default new TouchIdBridge();
+export default new KeychainBridge();
