@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.42.0"></a>
+# [3.42.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.41.0...v3.42.0) (2017-05-16)
+
+
+### Bug Fixes
+
+* layout animation on android on back (from keyboard) ([ad9c743](https://github.com/PeerioTechnologies/peerio-mobile/commit/ad9c743))
+* **ui:** hunting for android bugs ([f63377c](https://github.com/PeerioTechnologies/peerio-mobile/commit/f63377c))
+* **ui:** removing extra help item ([12d6512](https://github.com/PeerioTechnologies/peerio-mobile/commit/12d6512))
+
+
+### Features
+
+* **crypto:** add android vault ([0b6d8fa](https://github.com/PeerioTechnologies/peerio-mobile/commit/0b6d8fa))
+* **crypto:** native crypto for android ([4ee5ad9](https://github.com/PeerioTechnologies/peerio-mobile/commit/4ee5ad9))
+* **libs:** add libsodium jni to project ([8c7931b](https://github.com/PeerioTechnologies/peerio-mobile/commit/8c7931b))
+* **ui:** hide language picker ([4442997](https://github.com/PeerioTechnologies/peerio-mobile/commit/4442997))
+* **ui:** selectable account key ([aa63243](https://github.com/PeerioTechnologies/peerio-mobile/commit/aa63243))
+* **ui:** use keychain and touchid for autologin ([43d4d9c](https://github.com/PeerioTechnologies/peerio-mobile/commit/43d4d9c))
+
+
+
 <a name="3.41.0"></a>
 # [3.41.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.40.0...v3.41.0) (2017-05-14)
 
