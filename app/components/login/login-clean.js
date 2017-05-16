@@ -11,7 +11,12 @@ import LoginWizardPage from './login-wizard-page';
 export default class LoginClean extends LoginWizardPage {
     items() {
         return [
-            <TextBox lowerCase key="u" state={loginState} name="username" hint={t('title_username')} />,
+            <TextBox
+                lowerCase key="u"
+                state={loginState}
+                name="username"
+                testID="usernameLogin"
+                hint={t('title_username')} />,
             <LanguagePickerBox key="lpp" />
         ];
     }

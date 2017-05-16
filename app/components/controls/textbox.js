@@ -174,7 +174,7 @@ export default class TextBox extends Component {
                             style={[textbox.inputContainer, icAlert]}>
                             <TextInput
                                 keyboardType={this.props.keyboardType}
-                                testID={`${this.props.name}`}
+                                testID={`${this.props.testID || this.props.name}`}
                                 style={[style.textbox, { fontSize },
                                 { height: vars.inputPaddedHeight, top: 0, marginRight: this.secretIcon ? 42 : 0 }]}
                                 ref={ref => (this.textinput = ref)}
@@ -209,6 +209,7 @@ TextBox.propTypes = {
     hint: React.PropTypes.any.isRequired,
     info: React.PropTypes.any,
     name: React.PropTypes.string.isRequired,
+    testID: React.PropTypes.string,
     returnKeyType: React.PropTypes.any,
     keyboardType: React.PropTypes.any,
     secureTextEntry: React.PropTypes.bool,
