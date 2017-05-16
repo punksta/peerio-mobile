@@ -71,8 +71,7 @@ export default class TextBox extends Component {
     }
 
     changeText = (text) => {
-        this._value = this.props.lowerCase ? text.toLowerCase() : text;
-        const tx = this._value;
+        const tx = this.props.lowerCase ? text.toLowerCase() : text;
         if (this.props.state) {
             this.props.state[this.props.name] = tx;
         } else {
