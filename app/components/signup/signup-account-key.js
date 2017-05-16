@@ -72,11 +72,11 @@ export default class SignupStep1 extends Component {
                         </View>}
                 </View>
                 <View style={paddedVertical}>
-						<Text style={normalText}>{t('title_AKwarn3')}</Text>
+                    <Text style={normalText}>{t('title_AKwarn3')}</Text>
                 </View>
                 <View style={paddedVertical}>
-						<Text style={normalText}>{t('title_yourAccountKey')}</Text>
-                    <Text style={passphraseText}>
+                    <Text style={normalText}>{t('title_yourAccountKey')}</Text>
+                    <Text style={passphraseText} selectable>
                         {signupState.passphrase}
                     </Text>
                 </View>
