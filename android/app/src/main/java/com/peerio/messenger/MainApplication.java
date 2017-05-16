@@ -11,7 +11,9 @@ import com.chirag.RNMail.RNMail;
 import com.idehub.Billing.InAppBillingBridgePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.zmxv.RNSound.RNSoundPackage;
+
 import cl.json.RNSharePackage;
+
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
@@ -20,6 +22,7 @@ import com.rnfs.RNFSPackage;
 import com.fileopener.FileOpenerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.RNFetchBlob.RNFetchBlobPackage;
+
 import org.pgsqlite.SQLitePluginPackage;
 // import com.facebook.stetho.Stetho;
 import com.facebook.soloader.SoLoader;
@@ -31,46 +34,47 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
-  public void onCreate() {
-    super.onCreate();
-    SoLoader.init(this, false);
-    RNWorkersManager.getInstance().init(this, BuildConfig.DEBUG);
-    RNWorkersManager.getInstance().startWorkers();
-    // Stetho.initializeWithDefaults(this);
-  }
-
-  private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
-    @Override
-    public boolean getUseDeveloperSupport() {
-      return BuildConfig.DEBUG;
+    public void onCreate() {
+        super.onCreate();
+        SoLoader.init(this, false);
+        RNWorkersManager.getInstance().init(this, BuildConfig.DEBUG);
+        RNWorkersManager.getInstance().startWorkers();
+        // Stetho.initializeWithDefaults(this);
     }
 
-    @Override
-    protected List<ReactPackage> getPackages() {
-      return Arrays.<ReactPackage>asList(
-          new MainReactPackage(),
-            new LinearGradientPackage(),
-          new RNWorkersPackage(),
-          new RNMail(),
-          new InAppBillingBridgePackage(),
-          new VectorIconsPackage(),
-          new RNSoundPackage(),
-          new ReactNativeRestartPackage(),
-          new RandomBytesPackage(),
-          new ReactNativePushNotificationPackage(),
-          new ImagePickerPackage(),
-          new FileOpenerPackage(),
-          new RNDeviceInfo(),
-          new RNFetchBlobPackage(),
-          new RNSharePackage(),
-          new SQLitePluginPackage(),
-          new RNFSPackage()
-      );
-    }
-  };
+    private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
+        @Override
+        public boolean getUseDeveloperSupport() {
+            return BuildConfig.DEBUG;
+        }
 
-  @Override
-  public ReactNativeHost getReactNativeHost() {
-      return mReactNativeHost;
-  }
+        @Override
+        protected List<ReactPackage> getPackages() {
+            return Arrays.<ReactPackage>asList(
+                    new MainReactPackage(),
+                    new RNSodiumPackage(),
+                    new LinearGradientPackage(),
+                    new RNWorkersPackage(),
+                    new RNMail(),
+                    new InAppBillingBridgePackage(),
+                    new VectorIconsPackage(),
+                    new RNSoundPackage(),
+                    new ReactNativeRestartPackage(),
+                    new RandomBytesPackage(),
+                    new ReactNativePushNotificationPackage(),
+                    new ImagePickerPackage(),
+                    new FileOpenerPackage(),
+                    new RNDeviceInfo(),
+                    new RNFetchBlobPackage(),
+                    new RNSharePackage(),
+                    new SQLitePluginPackage(),
+                    new RNFSPackage()
+            );
+        }
+    };
+
+    @Override
+    public ReactNativeHost getReactNativeHost() {
+        return mReactNativeHost;
+    }
 }
