@@ -31,7 +31,6 @@ export default class SettingsLevel1 extends Component {
                     {/* <SettingsItem title="title_settingsProfile" disabled /> */}
                     <SettingsItem title="title_settingsSecurity" onPress={() => settingsState.transition('security')} />
                     {/* <SettingsItem title="title_settingsPreferences" disabled /> */}
-                    <SettingsItem title="title_help" onPress={() => settingsState.routerMain.logs()} />
                     {this.spacer}
                     <SettingsItem title="title_storageUsage" icon={null} onPress={paymentCheckout}>
                         <PaymentStorageUsage />
