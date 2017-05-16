@@ -10,15 +10,15 @@ import LoginWizardPage from './login-wizard-page';
 @observer
 export default class LoginClean extends LoginWizardPage {
     items() {
-        return [
+        return (
             <TextBox
                 lowerCase key="u"
                 state={loginState}
                 name="username"
                 testID="usernameLogin"
-                hint={t('title_username')} />,
-            <LanguagePickerBox key="lpp" />
-        ];
+                hint={t('title_username')} />
+        );
+        /* <LanguagePickerBox key="lpp" /> */
     }
 
     buttons() {
