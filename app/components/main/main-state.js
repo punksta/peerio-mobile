@@ -1,7 +1,7 @@
 import React from 'react';
 import { observable, action, when } from 'mobx';
 import { User, chatStore, contactStore, TinyDb } from '../../lib/icebear';
-import touchid from '../touchid/touchid-bridge';
+import keychain from '../../lib/keychain-bridge';
 import { popupYesCancel } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
@@ -51,23 +51,25 @@ class MainState extends RoutedState {
         }
     }
 
-    @action async saveUserTouchId() {
+    @action async saveUserKeychain(secureWithTouchID) {
         const user = User.current;
-        await touchid.save(`user::${user.username}`, user.serializeAuthData());
-        console.log('main-state.js: touch id saved');
+        await keychain.delete(`user::${user.username}`);
+        await keychain.save(`user::${user.username}`, user.serializeAuthData(), secureWithTouchID);
+        console.log('main-state.js: keychain saved');
         user.hasTouchIdCached = true;
     }
 
     @action async damageUserTouchId() {
         const user = User.current;
-        await touchid.delete(`user::${user.username}`);
-        await touchid.save(`user::${user.username}`, 'blah');
+        await keychain.delete(`user::${user.username}`);
+        await keychain.save(`user::${user.username}`, 'blah');
         console.log('main-state.js: touch id damaged');
         user.hasTouchIdCached = true;
     }
 
     @action async saveUser() {
         const user = User.current;
+        user.autologinEnabled = true;
         user.hasPasscodeCached = await user.hasPasscode();
         await TinyDb.system.setValue('lastUsername', user.username);
         const skipTouchID = `${user.username}::skipTouchID`;
@@ -76,38 +78,26 @@ class MainState extends RoutedState {
             console.log('main-state.js: skip touch id');
             return;
         }
-        await touchid.load();
-        if (!touchid.available) {
-            console.log('main-state.js: touch id is not available');
-            return;
-        }
+        await keychain.load();
         const touchIdKey = `user::${user.username}::touchid`;
         if (await TinyDb.system.getValue(touchIdKey)) {
             console.log('main-state.js: touch id available and value is set');
             user.hasTouchIdCached = true;
             return;
         }
-        console.log('main-state.js: touch id available but value is not set');
-        console.log('main-state.js: offering to save');
-        if (await popupYesCancel(tx('title_touchID'), tx('dialog_enableTouchID'))) {
-            TinyDb.system.setValue(touchIdKey, true);
-            await this.saveUserTouchId();
-            return;
+        let secureWithTouchID = false;
+        if (keychain.available) {
+            console.log('main-state.js: touch id is not available');
+            console.log('main-state.js: touch id available but value is not set');
+            console.log('main-state.js: offering to save');
+            secureWithTouchID = await popupYesCancel(tx('title_touchID'), tx('dialog_enableTouchID'));
         }
-        console.log('main-state.js: user cancel touch id');
+        await this.saveUserKeychain(secureWithTouchID);
+        await TinyDb.system.setValue(touchIdKey, true);
         await TinyDb.system.setValue(skipTouchID, true);
     }
 }
 
 const mainState = new MainState();
-
-// mainState.showPopup({
-//     title: tx('title_MP'),
-//     text: 'blue zeppelin runs aboard all',
-//     buttons: [
-//         { id: 'skip', text: tx('button_skip') },
-//         { id: 'use', text: tx('button_useQR') }
-//     ]
-// });
 
 export default mainState;

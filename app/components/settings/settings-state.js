@@ -8,7 +8,7 @@ import { popupCopyCancel, popupYes } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
 import uiState from '../layout/ui-state';
 import { tx } from '../utils/translator';
-import touchId from '../touchid/touchid-bridge';
+import keychain from '../../lib/keychain-bridge';
 
 class SettingsState extends RoutedState {
     @observable subroute = null;
@@ -51,18 +51,10 @@ class SettingsState extends RoutedState {
     async showPassphrase() {
         const user = User.current;
         let passphrase = null;
-        if (touchId.available) {
-            const data = await touchId.get(`user::${user.username}`);
+        if (keychain.hasPlugin) {
+            const data = await keychain.get(`user::${user.username}`);
             if (data) passphrase = JSON.parse(data).passphrase;
         }
-        /* if (!passphrase) {
-            const hasPasscode = await user.hasPasscode();
-            if (!hasPasscode) {
-                popupYes(tx('title_MP'), tx('passcode_notSet'));
-                return;
-            }
-            passphrase = await this.routerModal.askPin();
-        } */
         if (passphrase) {
             const mp = (
                 <Text style={{ fontWeight: 'bold', fontSize: 14 }}>

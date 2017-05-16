@@ -35,9 +35,9 @@
 		02726F891EB33E3000D82BF5 /* RNSodium.m in Sources */ = {isa = PBXBuildFile; fileRef = 02726F881EB33E3000D82BF5 /* RNSodium.m */; };
 		029F0E641E55303400C8586F /* libRNShare.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 029F0E601E55301200C8586F /* libRNShare.a */; };
 		02A076271E6D8876008974C5 /* maincert.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = 02A075FF1E6D880E008974C5 /* maincert.com.cer */; };
+		02A5EE7C1ECA9ECC00ED05C1 /* RNKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A5EE7B1ECA9ECC00ED05C1 /* RNKeychain.m */; };
 		02BCD7291DFDE9AF000B8FCF /* libRNFileOpener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD7281DFDE9A2000B8FCF /* libRNFileOpener.a */; };
 		02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD72C1DFE1606000B8FCF /* QuickLook.framework */; };
-		02CC88781E1E8988002BB078 /* libRNTouchIDValue.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02CC88771E1E87D7002BB078 /* libRNTouchIDValue.a */; };
 		02D764D31D9B13B300E7E57C /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D763F21D9918E800E7E57C /* libRNVectorIcons.a */; };
 		02D7F9251E993C00002F7EF6 /* libRNWorkers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D7F9231E993BF7002F7EF6 /* libRNWorkers.a */; };
 		02DB41591DCD1B1C00E04176 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -316,13 +316,6 @@
 			remoteGlobalIDString = DB8F70EF1CD3047700E71D6D;
 			remoteInfo = RNFileOpener;
 		};
-		02CC88761E1E87D7002BB078 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 02CC88721E1E87D7002BB078 /* RNTouchIDValue.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
-			remoteInfo = RNTouchIDValue;
-		};
 		02D763F11D9918E800E7E57C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 53F9542E76844F59917732EA /* RNVectorIcons.xcodeproj */;
@@ -418,9 +411,10 @@
 		02726F871EB33E3000D82BF5 /* RNSodium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNSodium.h; path = peeriomobile/RNSodium.h; sourceTree = "<group>"; };
 		02726F881EB33E3000D82BF5 /* RNSodium.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNSodium.m; path = peeriomobile/RNSodium.m; sourceTree = "<group>"; };
 		02A075FF1E6D880E008974C5 /* maincert.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = maincert.com.cer; path = ../app/assets/maincert.com.cer; sourceTree = "<group>"; };
+		02A5EE7A1ECA9EC400ED05C1 /* RNKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNKeychain.h; sourceTree = "<group>"; };
+		02A5EE7B1ECA9ECC00ED05C1 /* RNKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNKeychain.m; sourceTree = "<group>"; };
 		02BCD7231DFDE9A2000B8FCF /* RNFileOpener.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFileOpener.xcodeproj; path = "../node_modules/react-native-file-opener/ios/RNFileOpener.xcodeproj"; sourceTree = "<group>"; };
 		02BCD72C1DFE1606000B8FCF /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
-		02CC88721E1E87D7002BB078 /* RNTouchIDValue.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNTouchIDValue.xcodeproj; path = "../node_modules/react-native-touch-id-value/RNTouchIDValue.xcodeproj"; sourceTree = "<group>"; };
 		02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = peeriomobile.entitlements; path = peeriomobile/peeriomobile.entitlements; sourceTree = "<group>"; };
 		02E096B21DAE398B00641B85 /* locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = locales; path = ../locales; sourceTree = "<group>"; };
 		02E096DB1DAE50E100641B85 /* dict */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dict; path = "../node_modules/peerio-copy/phrase/dict"; sourceTree = "<group>"; };
@@ -485,7 +479,6 @@
 				026B0DA91E0384EF00B24721 /* libRCTAnimation.a in Frameworks */,
 				0210710E1E03967000687D5E /* libRNFetchBlob.a in Frameworks */,
 				0222C3941E0C98B40084C586 /* libRCTPushNotification.a in Frameworks */,
-				02CC88781E1E8988002BB078 /* libRNTouchIDValue.a in Frameworks */,
 				029F0E641E55303400C8586F /* libRNShare.a in Frameworks */,
 				0235B5D81E65DE4B001D77D1 /* libSQLite.a in Frameworks */,
 				0235B6611E664F02001D77D1 /* libRNDeviceInfo.a in Frameworks */,
@@ -660,14 +653,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		02CC88731E1E87D7002BB078 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				02CC88771E1E87D7002BB078 /* libRNTouchIDValue.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		02D763E11D9918E800E7E57C /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -733,6 +718,8 @@
 				02420A511EA79E0D005FFB89 /* worker.jsbundle */,
 				02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */,
 				02321C5C1D80558E00282EB1 /* main.jsbundle */,
+				02A5EE7B1ECA9ECC00ED05C1 /* RNKeychain.m */,
+				02A5EE7A1ECA9EC400ED05C1 /* RNKeychain.h */,
 				02726F871EB33E3000D82BF5 /* RNSodium.h */,
 				02726F881EB33E3000D82BF5 /* RNSodium.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -772,7 +759,6 @@
 			isa = PBXGroup;
 			children = (
 				025935571E809AA300FAEE7E /* InAppUtils.xcodeproj */,
-				02CC88721E1E87D7002BB078 /* RNTouchIDValue.xcodeproj */,
 				0222C3701E0C989D0084C586 /* RCTPushNotification.xcodeproj */,
 				021071081E03965C00687D5E /* RNFetchBlob.xcodeproj */,
 				026B0DA01E0384D600B24721 /* RCTAnimation.xcodeproj */,
@@ -1015,10 +1001,6 @@
 				{
 					ProductGroup = 02210A6B1E01902A006D7AC0 /* Products */;
 					ProjectRef = 02210A6A1E01902A006D7AC0 /* RNSound.xcodeproj */;
-				},
-				{
-					ProductGroup = 02CC88731E1E87D7002BB078 /* Products */;
-					ProjectRef = 02CC88721E1E87D7002BB078 /* RNTouchIDValue.xcodeproj */;
 				},
 				{
 					ProductGroup = 02D763E11D9918E800E7E57C /* Products */;
@@ -1286,13 +1268,6 @@
 			remoteRef = 02BCD7271DFDE9A2000B8FCF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		02CC88771E1E87D7002BB078 /* libRNTouchIDValue.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNTouchIDValue.a;
-			remoteRef = 02CC88761E1E87D7002BB078 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		02D763F21D9918E800E7E57C /* libRNVectorIcons.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1416,6 +1391,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02A5EE7C1ECA9ECC00ED05C1 /* RNKeychain.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				02726F891EB33E3000D82BF5 /* RNSodium.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,

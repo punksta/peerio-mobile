@@ -2,7 +2,7 @@ import { when, observable, action, reaction } from 'mobx';
 import RNRestart from 'react-native-restart';
 import mainState from '../main/main-state';
 import { User, validation, fileStore, socket } from '../../lib/icebear';
-import touchId from '../touchid/touchid-bridge';
+import keychain from '../../lib/keychain-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
@@ -70,7 +70,7 @@ class LoginState extends RoutedState {
             .then(async () => {
                 if (this._resetTouchId) {
                     console.log('login-state.js: fixing touch id');
-                    await touchId.delete(`user::${this.username}`);
+                    await keychain.delete(`user::${this.username}`);
                     await mainState.saveUserTouchId();
                     this._resetTouchId = false;
                 }
@@ -124,7 +124,7 @@ class LoginState extends RoutedState {
         this.username = username;
         if (username) {
             this.isInProgress = true;
-            if (await this.triggerTouchId()) return;
+            if (await this.loadFromKeychain()) return;
             this.isInProgress = false;
         }
         console.log(`login-state.js: loaded`);
@@ -138,12 +138,10 @@ class LoginState extends RoutedState {
         // if (await user.hasPasscode()) this.saved();
     }
 
-    @action async triggerTouchId() {
-        await touchId.load();
-        if (!touchId.available) return false;
-        const data = await touchId.get(`user::${this.username}`);
-        // console.log('touchid data');
-        // console.log(data);
+    @action async loadFromKeychain() {
+        await keychain.load();
+        if (!keychain.hasPlugin) return false;
+        const data = await keychain.get(`user::${this.username}`);
         if (!data) return false;
         return Promise.resolve(data)
             .then(JSON.parse)

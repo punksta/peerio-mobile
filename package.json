@@ -85,7 +85,6 @@
     "react-native-share": "^1.0.19",
     "react-native-sound": "^0.9.0",
     "react-native-sqlcipher-storage": "git@github.com:PeerioTechnologies/react-native-sqlcipher-storage.git",
-    "react-native-touch-id-value": "1.0.3",
     "react-native-vector-icons": "^4.0.0",
     "readable-stream": "1.0.33",
     "rn-workers": "^0.1.6",

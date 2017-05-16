@@ -14,7 +14,6 @@ import { scryptNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import '../lib/sounds';
 import './utils/bridge';
-import './touchid/touchid-bridge';
 
 @observer
 export default class App extends Component {
