@@ -114,7 +114,7 @@ android {
     defaultConfig {
         applicationId "com.peerio.messenger"
         minSdkVersion 21
-        targetSdkVersion 24
+        targetSdkVersion 23
         versionCode code
         versionName packageJson.version
         ndk {
@@ -170,6 +170,7 @@ dependencies {
     compile project(':react-native-sqlcipher-storage')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
+    compile "com.github.joshjdevl.libsodiumjni:libsodium-jni-aar:1.0.6@aar"
     // compile "com.facebook.react:react-native:+"  // From node_modules
     compile ('com.google.android.gms:play-services-gcm:8.1.0') {
         force = true;
