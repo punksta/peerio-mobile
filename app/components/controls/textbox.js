@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, LayoutAnimation, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, LayoutAnimation, TouchableOpacity, Platform } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
@@ -71,7 +71,11 @@ export default class TextBox extends Component {
     }
 
     changeText = (text) => {
-        const tx = this.props.lowerCase ? text.toLowerCase() : text;
+        let tx = text;
+        const { Version, OS } = Platform;
+        if (OS !== 'android' || Version > 22) {
+            tx = this.props.lowerCase ? text.toLowerCase() : text;
+        }
         if (this.props.state) {
             this.props.state[this.props.name] = tx;
         } else {
@@ -187,6 +191,7 @@ export default class TextBox extends Component {
                                 onSubmitEditing={this.submit}
                                 autoCorrect={false}
                                 autoComplete={false}
+                                autoCapitalize="none"
                             />
                         </View>
                         {secretIcon}
