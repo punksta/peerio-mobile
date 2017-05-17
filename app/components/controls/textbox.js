@@ -12,6 +12,7 @@ export default class TextBox extends Component {
     @observable focused = false;
     @observable showSecret = false;
     @observable _value = '';
+    @observable selection = undefined;
 
     get nextField() {
         const byOrder = this.props.state.byOrder;
@@ -91,9 +92,16 @@ export default class TextBox extends Component {
         this.focused = true;
     }
 
+
+    onSelectionChange = ({ nativeEvent: { selection } }) => {
+        this._selection = selection;
+    }
+
     toggleSecret = () => {
         // we don't give user the ability to hide passphrase again, because Apple
         this.showSecret = true;
+        // reposition cursor
+        if (this._selection) this.selection = this._selection;
     }
 
     submit = () => {
@@ -186,9 +194,11 @@ export default class TextBox extends Component {
                                 secureTextEntry={this.props.secureTextEntry && !this.showSecret}
                                 value={this._value}
                                 maxLength={this.props.maxLength}
+                                selection={this.selection}
                                 onBlur={this.blur}
                                 onChangeText={this.changeText}
                                 onSubmitEditing={this.submit}
+                                onSelectionChange={this.onSelectionChange}
                                 autoCorrect={false}
                                 autoComplete={false}
                                 autoCapitalize="none"
