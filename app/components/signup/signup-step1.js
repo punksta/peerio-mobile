@@ -43,6 +43,7 @@ export default class SignupStep1 extends Component {
                     returnKeyType="next"
                     lowerCase
                     state={signupState}
+                    keyboardType="email-address"
                     name="username"
                     hint={t('title_username')} />
                 <TextBox

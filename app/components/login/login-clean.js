@@ -12,8 +12,9 @@ export default class LoginClean extends LoginWizardPage {
     items() {
         return (
             <TextBox
-                lowerCase key="u"
+                lowerCase key="usernameLogin"
                 state={loginState}
+                keyboardType="email-address"
                 name="username"
                 testID="usernameLogin"
                 hint={t('title_username')} />
