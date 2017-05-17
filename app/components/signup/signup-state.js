@@ -77,8 +77,6 @@ class SignupState extends RoutedState {
         user.firstName = firstName;
         user.lastName = lastName;
         user.localeCode = localeCode;
-        // newly signed up user is enabled for autologin by default
-        user.autologinEnabled = true;
         return user.createAccountAndLogin()
             .then(() => loginState.askAboutAutomaticLogin(user))
             .then(() => mainState.activateAndTransition(user))
