@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.45.0"></a>
+# [3.45.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.44.0...v3.45.0) (2017-05-17)
+
+
+### Bug Fixes
+
+* **copy:** show account key button ([5997e08](https://github.com/PeerioTechnologies/peerio-mobile/commit/5997e08))
+* **ui:** textinput updates ([f20df8d](https://github.com/PeerioTechnologies/peerio-mobile/commit/f20df8d))
+
+
+### Features
+
+* **ui:** automatic login configuration ([6bf6807](https://github.com/PeerioTechnologies/peerio-mobile/commit/6bf6807))
+* **ui:** hide language box ([eb8c822](https://github.com/PeerioTechnologies/peerio-mobile/commit/eb8c822))
+
+
+
 <a name="3.44.0"></a>
 # [3.44.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.43.0...v3.44.0) (2017-05-16)
 
