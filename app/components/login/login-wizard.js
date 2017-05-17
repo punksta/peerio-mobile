@@ -49,7 +49,7 @@ export default class LoginWizard extends Wizard {
 
     footer() {
         const s = wizard.footer.button.base;
-        return (this.index > 0 && s.index < 3) ? (
+        return (this.index > 0 && this.index < 3) ? (
             <View>
                 <Button style={s} disabled={loginState.isInProgress} onPress={() => (this.index--)} text={tu('button_back')} />
             </View>
