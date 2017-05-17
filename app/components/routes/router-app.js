@@ -1,3 +1,4 @@
+import { BackHandler } from 'react-native';
 import { when } from 'mobx';
 import Router from './router';
 import Login from '../login/login';
@@ -18,6 +19,14 @@ class RouterApp extends Router {
         this.add('main', LayoutMain, true);
 
         when(() => this.route === 'main', () => setTimeout(() => routerMain.initial(), 0));
+        BackHandler.addEventListener('hardwareBackPress', () => {
+            if (routes.modal.route) {
+                routes.modal.discard();
+                return true;
+            }
+            routes.main.back();
+            return true;
+        });
     }
 }
 

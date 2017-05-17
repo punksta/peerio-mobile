@@ -58,8 +58,6 @@ class RouterMain extends Router {
         await fileState.init();
         this.loading = false;
         this.chats();
-        // disable hardware back by default
-        BackHandler.addEventListener('hardwareBackPress', () => { this.back(); return true; });
     }
 
     add(key, components, routeState) {

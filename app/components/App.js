@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, PanResponder, AppState, ActivityIndicator, NativeModules, BackHandler, Platform } from 'react-native';
+import { View, Text, PanResponder, AppState, ActivityIndicator, NativeModules, Platform } from 'react-native';
 import { observer } from 'mobx-react/native';
 import PopupLayout from './layout/popup-layout';
 import ModalLayout from './layout/modal-layout';
@@ -64,8 +64,6 @@ export default class App extends Component {
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
 
         console.log(`App.js: ${Platform.OS} ${Platform.Version}`);
-        // disable hardware back by default
-        BackHandler.addEventListener('hardwareBackPress', () => true);
     }
 
     componentDidMount() {
