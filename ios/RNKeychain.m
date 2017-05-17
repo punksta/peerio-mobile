@@ -40,7 +40,7 @@ RCT_REMAP_METHOD(saveValue,
     // Should be the secret invalidated when passcode is removed? If not then use kSecAttrAccessibleWhenUnlocked
     SecAccessControlRef sacObject = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
                                                 kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
-                                                bForceTouchID ? kSecAccessControlTouchIDAny : NULL, &error);
+                                                bForceTouchID ? kSecAccessControlTouchIDAny : 0, &error);
     if (sacObject == NULL || error != NULL) {
         NSString *errorString = [NSString stringWithFormat:@"SecItemAdd can't create sacObject: %@", error];
         reject(@"touchid_keychain_save_error", errorString, error != nil ? (__bridge NSError *)error : nil);

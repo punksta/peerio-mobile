@@ -132,7 +132,11 @@ class LoginState extends RoutedState {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         await inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
         await User.removeLastAuthenticated();
-        await keychain.delete(`user::${User.current.username}`);
+        const username = User.current.username;
+        await TinyDb.system.removeValue(`${username}::${loginConfiguredKey}`);
+        await TinyDb.system.removeValue(`user::${username}::touchid`);
+        await TinyDb.system.removeValue(`${username}::skipTouchID`);
+        await keychain.delete(`user::${username}`);
         await RNRestart.Restart();
     }
 

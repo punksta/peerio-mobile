@@ -38,13 +38,10 @@ const flexRow = {
 export default class ProfileEdit extends Component {
     @observable firstName;
     @observable lastName;
-    contact = {};
 
     componentDidMount() {
-        const contact = contactStore.getContact(User.current.username);
-        this.firstName = contact.firstName;
-        this.lastName = contact.lastName;
-        this.contact = contact;
+        const { firstName, lastName } = User.current;
+        Object.assign(this, { firstName, lastName });
     }
 
     submit = () => {
@@ -66,7 +63,7 @@ export default class ProfileEdit extends Component {
     }
 
     render() {
-        const contact = this.contact;
+        const contact = contactStore.getContact(User.current.username);
         const { firstName, lastName, fingerprintSkylarFormatted, username } = contact;
         return (
             <ScrollView style={{ backgroundColor: vars.settingsBg }}>
