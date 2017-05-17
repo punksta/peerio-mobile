@@ -26,6 +26,7 @@ export default class LayoutModalExit extends Component {
             flex: 1,
             fontSize: 14,
             fontWeight: vars.font.weight.semiBold,
+            textAlign: 'center',
             color: 'rgba(0, 0, 0, .54)'
         };
         return (
