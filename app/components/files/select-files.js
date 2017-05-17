@@ -85,7 +85,7 @@ export default class SelectFiles extends Component {
     get data() {
         let result = fileStore.files.sort((f1, f2) => {
             return f2.uploadedAt - f1.uploadedAt;
-        }).filter(f => f.readyForDownload);
+        }).filter(f => f.readyForDownload && f.canShare);
         if (this.findFileText) {
             const text = this.findFileText.toLowerCase();
             result = result.filter(f => f.name.toLowerCase().indexOf(text) !== -1);
