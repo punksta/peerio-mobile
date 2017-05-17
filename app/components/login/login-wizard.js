@@ -10,6 +10,7 @@ import Logo from '../controls/logo';
 import Layout1 from '../layout/layout1';
 // import migrator from '../../lib/legacy/migrator';
 import Button from '../controls/button';
+import LoginAutomatic from './login-automatic';
 import LoginStart from './login-start';
 import LoginClean from './login-clean';
 import LoginPassword from './login-password';
@@ -19,10 +20,12 @@ const logoHeight = height * 0.33;
 
 @observer
 export default class LoginWizard extends Wizard {
-    pages = ['loginStart', 'loginClean', 'loginPassword'];
+    pages = ['loginStart', 'loginClean', 'loginPassword', 'loginAutomatic'];
 
     get index() { return loginState.current; }
     set index(i) { loginState.current = i; }
+
+    loginAutomatic = () => <LoginAutomatic />;
 
     loginStart() {
         return <LoginStart login={() => this.index++} />;
@@ -46,11 +49,11 @@ export default class LoginWizard extends Wizard {
 
     footer() {
         const s = wizard.footer.button.base;
-        return (this.index > 0) && (
+        return (this.index > 0 && s.index < 3) ? (
             <View>
                 <Button style={s} disabled={loginState.isInProgress} onPress={() => (this.index--)} text={tu('button_back')} />
             </View>
-        );
+        ) : null;
     }
 
     componentDidMount() {

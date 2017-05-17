@@ -1,6 +1,5 @@
 import { observable, action, when } from 'mobx';
-import mainState from '../main/main-state';
-import uiState from '../layout/ui-state';
+import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
 import { User, PhraseDictionary, validation, socket } from '../../lib/icebear';
 
@@ -78,16 +77,16 @@ class SignupState extends RoutedState {
         user.firstName = firstName;
         user.lastName = lastName;
         user.localeCode = localeCode;
-        return requestAnimationFrame(
-            () => user.createAccountAndLogin()
-                .then(() => user.setPasscode(pin))
-                .then(() => mainState.activateAndTransition(user))
-                .catch((e) => {
-                    console.log(e);
-                    this.reset();
-                })
-                .finally(() => (this.isInProgress = false))
-        );
+        // newly signed up user is enabled for autologin by default
+        user.autologinEnabled = true;
+        return user.createAccountAndLogin()
+            .then(() => loginState.askAboutAutomaticLogin(user))
+            .then(() => mainState.activateAndTransition(user))
+            .catch((e) => {
+                console.log(e);
+                this.reset();
+            })
+            .finally(() => (this.isInProgress = false));
     }
 }
 

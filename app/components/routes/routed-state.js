@@ -24,6 +24,8 @@ export default class RoutedState {
         return !![routes.main, routes.app].filter(a => a.route.startsWith(this._prefix)).length;
     }
 
+    get routerApp() { return this.routes.app; }
+
     get routerMain() { return this.routes.main; }
 
     get routerModal() { return this.routes.modal; }

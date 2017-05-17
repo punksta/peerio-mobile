@@ -14,10 +14,13 @@ class SettingsState extends RoutedState {
     @observable subroute = null;
     @observable stack = [];
     _prefix = 'settings';
+    _titles = {
+        security: 'title_settingsSecurity'
+    };
 
     get title() {
         const sr = this.subroute;
-        return sr ? tx(sr) : tx('title_settings');
+        return sr ? tx(this._titles[sr]) : tx('title_settings');
     }
 
     onTransition(active) {

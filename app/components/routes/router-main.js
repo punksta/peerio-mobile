@@ -33,6 +33,7 @@ class RouterMain extends Router {
     @observable currentIndex = 0;
     @observable suppressTransition = false;
     @observable loading = false;
+    @observable invoked = false;
 
     constructor() {
         super();
@@ -42,6 +43,8 @@ class RouterMain extends Router {
     }
 
     @action async initial() {
+        if (this.invoked) return;
+        this.invoked = true;
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
         this.add('chats', [<ChatList />, <Chat />], chatState);

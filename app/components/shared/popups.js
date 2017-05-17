@@ -76,6 +76,20 @@ function popupYesCancel(title, subTitle, text) {
     });
 }
 
+function popupYesSkip(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title,
+            subTitle: textControl(subTitle),
+            contents: textControl(text),
+            buttons: [
+                { id: 'no', text: t('button_skip'), action: () => resolve(false), secondary: true },
+                { id: 'yes', text: t('button_yes'), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
 function popupCopyCancel(title, subTitle, text) {
     return popupState.showPopupPromise(resolve => ({
         title,
@@ -139,6 +153,7 @@ locales.loadAssetFile('terms.txt').then(s => {
 module.exports = {
     popupYes,
     popupYesCancel,
+    popupYesSkip,
     popupInput,
     popupTOS,
     popupCopyCancel,

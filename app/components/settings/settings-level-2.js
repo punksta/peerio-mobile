@@ -39,7 +39,7 @@ export default class SettingsLevel2 extends Component {
                 <SettingsItem
                     title="title_showAccountKey"
                     icon="visibility"
-                    disabled={!user.hasTouchIdCached}
+                    disabled={!user.autologinEnabled}
                     onPress={() => settingsState.showPassphrase()} />
             </View>
         );

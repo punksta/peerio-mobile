@@ -2,7 +2,7 @@ import React from 'react';
 import { observable, action, when } from 'mobx';
 import { User, chatStore, contactStore, TinyDb } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
-import { popupYesCancel } from '../shared/popups';
+import { popupYesSkip } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
@@ -17,9 +17,16 @@ class MainState extends RoutedState {
         this._loading = v;
     }
 
-    @action async activateAndTransition(user) {
+    @action async activate(user) {
         User.current = user;
+        // preload app while we ask user about automatic login
+        this.routerMain.initial();
+    }
+
+    @action async activateAndTransition(user) {
+        this.activate(user);
         this.routes.app.main();
+        await this.saveUser();
     }
 
     @action async load() {
@@ -36,7 +43,7 @@ class MainState extends RoutedState {
     @action async init() {
         // disabling pin for now
         // await this.checkPin();
-        await this.saveUser();
+        // await this.saveUser();
     }
 
     @action async checkPin() {
@@ -69,8 +76,12 @@ class MainState extends RoutedState {
 
     @action async saveUser() {
         const user = User.current;
-        user.autologinEnabled = true;
-        user.hasPasscodeCached = await user.hasPasscode();
+        console.log(`mainstate.js: ${user.autologinEnabled}`);
+        if (!user.autologinEnabled) {
+            await keychain.delete(`user::${user.username}`);
+            return;
+        }
+        // user.hasPasscodeCached = await user.hasPasscode();
         await TinyDb.system.setValue('lastUsername', user.username);
         const skipTouchID = `${user.username}::skipTouchID`;
         const skipTouchIDValue = await TinyDb.system.getValue(skipTouchID);
@@ -90,7 +101,7 @@ class MainState extends RoutedState {
             console.log('main-state.js: touch id is not available');
             console.log('main-state.js: touch id available but value is not set');
             console.log('main-state.js: offering to save');
-            secureWithTouchID = await popupYesCancel(tx('title_touchID'), tx('dialog_enableTouchID'));
+            secureWithTouchID = await popupYesSkip(tx('title_touchID'), tx('dialog_enableTouchID'));
         }
         await this.saveUserKeychain(secureWithTouchID);
         await TinyDb.system.setValue(touchIdKey, true);

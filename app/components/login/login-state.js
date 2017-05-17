@@ -1,13 +1,15 @@
 import { when, observable, action, reaction } from 'mobx';
 import RNRestart from 'react-native-restart';
 import mainState from '../main/main-state';
-import { User, validation, fileStore, socket } from '../../lib/icebear';
+import { User, validation, fileStore, socket, TinyDb } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
 const { validators, addValidation } = validation;
+
+const loginConfiguredKey = 'loginConfigured';
 
 class LoginState extends RoutedState {
     @observable username = '';
@@ -18,12 +20,26 @@ class LoginState extends RoutedState {
     @observable passphraseValidationMessage = null;
     @observable changeUser = false;
     @observable current = 0;
+    @observable selectedAutomatic = null;
     _prefix = 'login';
     _resetTouchId = null;
 
     constructor() {
         super();
         reaction(() => this.passphrase, () => (this.passphraseValidationMessage = null));
+    }
+
+    @action async askAboutAutomaticLogin(user) {
+        const key = `${user.username}::${loginConfiguredKey}`;
+        const configured = await TinyDb.system.getValue(key);
+        if (configured) return Promise.resolve();
+        this.routerApp.loginAutomatic();
+        return new Promise(resolve => when(() => this.selectedAutomatic !== null,
+            async () => {
+                user.autologinEnabled = this.selectedAutomatic;
+                await TinyDb.system.setValue(key, true);
+                resolve();
+            }));
     }
 
     @action changeUserAction() {
@@ -65,6 +81,12 @@ class LoginState extends RoutedState {
         console.log(`login-state.js: logging in ${user.username}`);
         return user.login()
             .then(() => console.log('login-state.js: logged in'))
+            .then(async () => {
+                mainState.activate(user);
+                if (user.autologinEnabled) return;
+                // wait for user to answer
+                await this.askAboutAutomaticLogin(user);
+            })
             .then(() => mainState.activateAndTransition(user))
             .then(() => this.clean())
             .then(async () => {
@@ -100,6 +122,7 @@ class LoginState extends RoutedState {
         const user = new User();
         user.deserializeAuthData(data);
         this.isInProgress = true;
+        user.autologinEnabled = true;
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
         });
@@ -107,19 +130,17 @@ class LoginState extends RoutedState {
 
     async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
-        return (inProgress ? rnAlertYesNo(
-            tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true)
-        )
-            .then(() => User.removeLastAuthenticated())
-            .then(() => RNRestart.Restart())
-            .catch(() => null);
+        await inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
+        await User.removeLastAuthenticated();
+        await keychain.delete(`user::${User.current.username}`);
+        await RNRestart.Restart();
     }
 
     async load() {
         console.log(`login-state.js: loading`);
         const userData = await User.getLastAuthenticated();
         if (!userData) return;
-        const { username, firstName, lastName } = userData;
+        const { username /* , firstName, lastName */ } = userData;
         if (this.username && this.username !== username) return;
         this.username = username;
         if (username) {
@@ -127,11 +148,11 @@ class LoginState extends RoutedState {
             if (await this.loadFromKeychain()) return;
             this.isInProgress = false;
         }
-        console.log(`login-state.js: loaded`);
+        /* console.log(`login-state.js: loaded`);
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.current = 2;
+        this.current = 2; */
         // disabling PIN for now
         // const user = new User();
         // user.username = username;
