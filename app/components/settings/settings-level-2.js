@@ -12,6 +12,7 @@ import { popupInputCancel } from '../shared/popups';
 import { t, tx } from '../utils/translator';
 import payments from '../payments/payments';
 import PaymentsQuotas from '../payments/payments-quotas';
+import ProfileEdit from './profile-edit';
 
 const bgStyle = {
     flexGrow: 1,
@@ -56,15 +57,9 @@ export default class SettingsLevel2 extends Component {
         );
     }
 
-    quotas() {
-        return <PaymentsQuotas />;
-    }
+    quotas = () => <PaymentsQuotas />;
 
-    profile() {
-        return (
-            <View><Text>Profile</Text></View>
-        );
-    }
+    profile = () => <ProfileEdit />;
 
     settingsItem(title, prop) {
         const user = User.current;

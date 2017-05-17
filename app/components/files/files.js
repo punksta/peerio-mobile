@@ -55,7 +55,7 @@ export default class Files extends Component {
             this.data.length,
             this.maxLoadedIndex
         ], () => {
-            console.log(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
+            // console.log(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
             this.dataSource = this.dataSource.cloneWithRows(this.data.slice(0, this.maxLoadedIndex));
             this.forceUpdate();
         }, true);
@@ -68,7 +68,7 @@ export default class Files extends Component {
     }
 
     onEndReached = () => {
-        console.log('files.js: on end reached');
+        // console.log('files.js: on end reached');
         this.maxLoadedIndex += PAGE_SIZE;
     }
 

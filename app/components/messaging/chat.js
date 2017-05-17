@@ -25,7 +25,7 @@ export default class Chat extends Component {
     @observable contentHeight = 0;
     @observable scrollViewHeight = 0;
     @observable refreshing = false;
-    @observable maxSliceIndex = -1;
+    // @observable maxSliceIndex = -1;
     enableNextScroll = false;
     lastLength = 0;
     topComponentRef = null;
@@ -40,7 +40,7 @@ export default class Chat extends Component {
     }
 
     get data() {
-        return this.chat ? this.chat.messages.slice(-this.maxSliceIndex) : null;
+        return this.chat ? this.chat.messages : null;
     }
 
     get chat() {
@@ -56,7 +56,7 @@ export default class Chat extends Component {
             let { y } = e.nativeEvent.layout;
             const { height } = e.nativeEvent.layout;
             if (item.id === this.topChatID) {
-                console.log(`chat.js: scroll top ${y}, ${this.indicatorHeight}`);
+                // console.log(`chat.js: scroll top ${y}, ${this.indicatorHeight}`);
                 y -= this.indicatorHeight;
                 if (y < 0) y = 0;
                 this.topChatID = null;
@@ -106,11 +106,11 @@ export default class Chat extends Component {
                 if (this.chat.canGoDown) indicatorSpacing += this.indicatorHeight;
                 let y = this.contentHeight - this.scrollViewHeight;
                 if (y - indicatorSpacing < 0) {
-                    console.log('chat.js: less content than fit');
-                    if (this.chat && (this.maxSliceIndex < this.chat.messages.length)) {
-                        this.maxSliceIndex += 2;
+                    // console.log('chat.js: less content than fit');
+                    /* if (this.chat && (this.maxSliceIndex < this.chat.messages.length)) {
+                        this.maxSliceIndex += 10;
                         this.disableAnimateNextScroll = true;
-                    }
+                    } */
                     // this.chat.messages.length && this.chat.loadPreviousPage();
                     // y = 0;
                 }
