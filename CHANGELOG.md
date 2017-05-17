@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.46.0"></a>
+# [3.46.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.45.0...v3.46.0) (2017-05-17)
+
+
+### Features
+
+* **ui:** preferences ([023c5e3](https://github.com/PeerioTechnologies/peerio-mobile/commit/023c5e3))
+* **ui:** profile editing ([36a7edb](https://github.com/PeerioTechnologies/peerio-mobile/commit/36a7edb))
+* profile edit and bug fixes ([611bd43](https://github.com/PeerioTechnologies/peerio-mobile/commit/611bd43))
+
+
+
 <a name="3.45.0"></a>
 # [3.45.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.44.0...v3.45.0) (2017-05-17)
 
