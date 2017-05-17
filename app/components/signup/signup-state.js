@@ -45,7 +45,7 @@ class SignupState extends RoutedState {
 
     @action reset() { this.current = 0; }
 
-    generatePassphrase = () => PhraseDictionary.current.getPassphrase(5);
+    generatePassphrase = () => PhraseDictionary.current.getPassphrase(8);
 
     @action async next() {
         if (!this.isValid()) return;
