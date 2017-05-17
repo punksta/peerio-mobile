@@ -5,6 +5,7 @@ import {
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
+import ToggleItem from './toggle-item';
 import { User } from '../../lib/icebear';
 import settingsState from './settings-state';
 import { popupInputCancel } from '../shared/popups';
@@ -15,7 +16,7 @@ import PaymentsQuotas from '../payments/payments-quotas';
 const bgStyle = {
     flexGrow: 1,
     flex: 1,
-    paddingVertical: vars.listViewPaddingVertical,
+    paddingVertical: vars.listViewPaddingVertical / 2,
     paddingHorizontal: vars.listViewPaddingHorizontal,
     backgroundColor: vars.settingsBg
 };
@@ -57,6 +58,48 @@ export default class SettingsLevel2 extends Component {
 
     quotas() {
         return <PaymentsQuotas />;
+    }
+
+    profile() {
+        return (
+            <View><Text>Profile</Text></View>
+        );
+    }
+
+    settingsItem(title, prop) {
+        const user = User.current;
+        const state = user.settings;
+        const onPress = value => {
+            state[prop] = value;
+            user.saveSettings();
+        };
+        return (
+            <ToggleItem {...{ prop, title, state, onPress }} />
+        );
+    }
+
+    preferences = () => {
+        const text = {
+            color: vars.txtMedium,
+            marginBottom: 8,
+            marginLeft: 8
+        };
+        const spacer = {
+            height: 24
+        };
+
+        return (
+            <View style={bgStyle}>
+                <Text style={text}>{t('title_emailsDetail')}</Text>
+                {this.settingsItem('title_notificationsEmailMessage', 'messageNotifications')}
+                <View style={spacer} />
+                {this.settingsItem('title_promoConsent', 'subscribeToPromoEmails')}
+                <View style={spacer} />
+                {/* <Text style={text}>{t('title_soundsDetail')}</Text> */}
+                {/* <ToggleItem title="title_notificationsEmailMessage" /> */}
+                <View style={spacer} />
+            </View>
+        );
     }
 
     render() {

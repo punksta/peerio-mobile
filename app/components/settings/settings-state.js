@@ -15,7 +15,9 @@ class SettingsState extends RoutedState {
     @observable stack = [];
     _prefix = 'settings';
     _titles = {
-        security: 'title_settingsSecurity'
+        security: 'title_settingsSecurity',
+        profile: 'title_settingsProfile',
+        preferences: 'title_settingsPreferences'
     };
 
     get title() {

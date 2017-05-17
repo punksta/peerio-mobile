@@ -28,9 +28,9 @@ export default class SettingsLevel1 extends Component {
         return (
             <View style={bgStyle}>
                 <ScrollView contentContainerStyle={svStyle}>
-                    {/* <SettingsItem title="title_settingsProfile" disabled /> */}
+                    <SettingsItem title="title_settingsProfile" onPress={() => settingsState.transition('profile')} />
                     <SettingsItem title="title_settingsSecurity" onPress={() => settingsState.transition('security')} />
-                    {/* <SettingsItem title="title_settingsPreferences" disabled /> */}
+                    <SettingsItem title="title_settingsPreferences" onPress={() => settingsState.transition('preferences')} />
                     {this.spacer}
                     <SettingsItem title="title_storageUsage" icon={null} onPress={paymentCheckout}>
                         <PaymentStorageUsage />
