@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.46.0",
+  "version": "3.47.0",
   "private": true,
   "scripts": {
     "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && rn-nodeify --install 'crypto, stream, process, events, vm' --hack && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
@@ -25,7 +25,7 @@
     "build-ios-sim-debug": "cd ios && xcodebuild -project peeriomobile.xcodeproj -configuration Debug -scheme peeriomobile -destination platform='iOS Simulator,name=iPhone 6,OS=10.2' -derivedDataPath build",
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
     "testrun": ". scripts/run-tests.sh",
-    "testrun-nobuild": "PEERIO_IOS_SIM='iPhone 6 Plus' PEERIO_IOS_VERSION='10.2' py.test --platform=ios -s -x tests",
+    "testrun-nobuild": "PEERIO_IOS_SIM='iPhone 6' PEERIO_IOS_VERSION='10.2' py.test --platform=ios -s -x tests",
     "test": "bash scripts/setup_tests.sh && npm run testrun",
     "gp-peerio": "npm run build-android && bash scripts/release_android.sh && fastlane android alpha",
     "appium": "appium",

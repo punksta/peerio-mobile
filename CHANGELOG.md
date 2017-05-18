@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.47.0"></a>
+# [3.47.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.46.0...v3.47.0) (2017-05-18)
+
+
+### Bug Fixes
+
+* **files:** only share owned files ([d520da3](https://github.com/PeerioTechnologies/peerio-mobile/commit/d520da3))
+* **security:** increase passphrase length to 8 words ([34fcf36](https://github.com/PeerioTechnologies/peerio-mobile/commit/34fcf36))
+* **tests:** update tests ([bf1dc57](https://github.com/PeerioTechnologies/peerio-mobile/commit/bf1dc57))
+* **ui:** center username ([16b874b](https://github.com/PeerioTechnologies/peerio-mobile/commit/16b874b))
+* **ui:** do not enable automatic login without user tapping ([201ffee](https://github.com/PeerioTechnologies/peerio-mobile/commit/201ffee))
+* **ui:** fix minor bugs in cleaning/saving autologin data ([99d644a](https://github.com/PeerioTechnologies/peerio-mobile/commit/99d644a))
+* **ui:** keyboardType=email for username ([a0bb32d](https://github.com/PeerioTechnologies/peerio-mobile/commit/a0bb32d))
+* **ui:** login footer ([79d7b58](https://github.com/PeerioTechnologies/peerio-mobile/commit/79d7b58))
+* **ui:** set cursor to the same position it was before showing password ([575b2c6](https://github.com/PeerioTechnologies/peerio-mobile/commit/575b2c6))
+* **ui:** textbox autoCapitalize disable ([95f9d44](https://github.com/PeerioTechnologies/peerio-mobile/commit/95f9d44))
+
+
+### Features
+
+* key storage using RSA on Android 5 ([b986f6a](https://github.com/PeerioTechnologies/peerio-mobile/commit/b986f6a))
+* **logs:** log platform and platform version ([e0694ce](https://github.com/PeerioTechnologies/peerio-mobile/commit/e0694ce))
+* **ui:** autologin user toggle ([d56292d](https://github.com/PeerioTechnologies/peerio-mobile/commit/d56292d))
+* **ui:** back button to close modals ([043dd0f](https://github.com/PeerioTechnologies/peerio-mobile/commit/043dd0f))
+
+
+
 <a name="3.46.0"></a>
 # [3.46.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.45.0...v3.46.0) (2017-05-17)
 
