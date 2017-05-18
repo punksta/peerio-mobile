@@ -13,7 +13,7 @@ const logoHeight = height * 0.33;
 
 @observer
 export default class LoginAutomatic extends LoginWizardPage {
-    button(text, onPress, highlight) {
+    button(text, testID, onPress, highlight) {
         const buttonContainer = {
             marginHorizontal: vars.wizardPadding * 0.5,
             marginVertical: 20,
@@ -31,7 +31,7 @@ export default class LoginAutomatic extends LoginWizardPage {
             fontWeight: 'bold'
         };
         return (
-            <View style={buttonContainer} key={text}>
+            <View style={buttonContainer} key={text} testID={testID}>
                 {this._button(text, onPress, button, buttonText)}
             </View>
         );
@@ -61,9 +61,9 @@ export default class LoginAutomatic extends LoginWizardPage {
                     <Text style={noticeText}>{t('title_enableAutomatic')}</Text>
                 </View>
                 <View style={padded2}>
-                    {this.button('button_enable', () => (loginState.selectedAutomatic = true), true)}
+                    {this.button('button_enable', 'automaticLoginEnable', () => (loginState.selectedAutomatic = true), true)}
                     <Text style={normalText}>{t('title_enableAutomatic1')}</Text>
-                    {this.button('button_disable', () => (loginState.selectedAutomatic = false), false)}
+                    {this.button('button_disable', 'automaticLoginDisable', () => (loginState.selectedAutomatic = false), false)}
                     <Text style={normalText}>{t('title_enableAutomatic2')}</Text>
                 </View>
             </View>
