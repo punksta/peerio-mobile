@@ -22,8 +22,8 @@ export default class ToggleItem extends Component {
         return (
             <SettingsItem
                 {...this.props}
-                onPress={this.toggle} pointerEvents="box-none" icon={null}>
-                <Toggle active={this.active} />
+                untappable icon={null}>
+                <Toggle onPress={this.toggle} active={this.active} />
             </SettingsItem>
         );
     }

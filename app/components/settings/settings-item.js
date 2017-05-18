@@ -35,10 +35,11 @@ export default class SettingsItem extends Component {
         const offset = vars.retentionOffset;
         return (
             <TouchableOpacity
+                activeOpacity={this.props.untappable ? 1 : 0.3}
                 pressRetentionOffset={offset}
                 testID={this.props.title}
-                onPress={() => !this.props.disabled && this.press()}>
-                <View style={[itemContainerStyle]} pointerEvents="none">
+                onPress={() => !this.props.untappable && !this.props.disabled && this.press()}>
+                <View style={[itemContainerStyle]} pointerEvents={this.props.untappable ? undefined : 'none'}>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text style={{ color: this.props.disabled ? vars.txtLight : vars.txtDark }}>
                             {t(this.props.title)}
@@ -60,6 +61,7 @@ SettingsItem.propTypes = {
     children: React.PropTypes.any,
     title: React.PropTypes.any,
     disabled: React.PropTypes.bool,
+    untappable: React.PropTypes.bool,
     icon: React.PropTypes.string,
     onPress: React.PropTypes.any
 };

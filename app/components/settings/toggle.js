@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, LayoutAnimation } from 'react-native';
+import { View, LayoutAnimation, TouchableOpacity } from 'react-native';
 import { reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { vars, helpers } from '../../styles/styles';
@@ -44,17 +44,18 @@ export default class Toggle extends Component {
         };
 
         return (
-            <View style={outer}>
+            <TouchableOpacity style={outer} pressRetentionOffset={vars.retentionOffset} onPress={this.props.onPress}>
                 <View style={under} />
                 <View style={circleOuter}>
                     <View style={[circle, circleAll]} />
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }
 
 Toggle.propTypes = {
-    active: React.PropTypes.bool
+    active: React.PropTypes.bool,
+    onPress: React.PropTypes.any
 };
 

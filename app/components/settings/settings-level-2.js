@@ -7,7 +7,7 @@ import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
 import ToggleItem from './toggle-item';
 import { User } from '../../lib/icebear';
-import settingsState from './settings-state';
+import { mainState, settingsState } from '../states';
 import { popupInputCancel } from '../shared/popups';
 import { t, tx } from '../utils/translator';
 import payments from '../payments/payments';
@@ -73,6 +73,20 @@ export default class SettingsLevel2 extends Component {
         );
     }
 
+    autoLoginToggle() {
+        const user = User.current;
+        const state = user;
+        const prop = 'autologinEnabled';
+        const title = 'Automatically login user';
+        const onPress = () => {
+            user.autologinEnabled = !user.autologinEnabled;
+            mainState.saveUser();
+        };
+        return (
+            <ToggleItem {...{ prop, title, state, onPress }} />
+        );
+    }
+
     preferences = () => {
         const text = {
             color: vars.txtMedium,
@@ -89,6 +103,8 @@ export default class SettingsLevel2 extends Component {
                 {this.settingsItem('title_notificationsEmailMessage', 'messageNotifications')}
                 <View style={spacer} />
                 {this.settingsItem('title_promoConsent', 'subscribeToPromoEmails')}
+                <View style={spacer} />
+                {this.autoLoginToggle()}
                 <View style={spacer} />
                 {/* <Text style={text}>{t('title_soundsDetail')}</Text> */}
                 {/* <ToggleItem title="title_notificationsEmailMessage" /> */}
