@@ -7,7 +7,7 @@ import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
 import ToggleItem from './toggle-item';
 import { User } from '../../lib/icebear';
-import { mainState, settingsState } from '../states';
+import { mainState, chatState, settingsState } from '../states';
 import { popupInputCancel } from '../shared/popups';
 import { t, tx } from '../utils/translator';
 import payments from '../payments/payments';
@@ -87,6 +87,19 @@ export default class SettingsLevel2 extends Component {
         );
     }
 
+    unreadChatsToggle() {
+        const state = chatState.store;
+        const prop = 'unreadChatsAlwaysOnTop';
+        const title = 'title_unreadChatsOnTopDetail';
+        const onPress = () => {
+            state.unreadChatsAlwaysOnTop = !state.unreadChatsAlwaysOnTop;
+            User.current.saveSettings();
+        };
+        return (
+            <ToggleItem {...{ prop, title, state, onPress }} />
+        );
+    }
+
     preferences = () => {
         const text = {
             color: vars.txtMedium,
@@ -105,6 +118,8 @@ export default class SettingsLevel2 extends Component {
                 {this.settingsItem('title_promoConsent', 'subscribeToPromoEmails')}
                 <View style={spacer} />
                 {this.autoLoginToggle()}
+                <View style={spacer} />
+                {this.unreadChatsToggle()}
                 <View style={spacer} />
                 {/* <Text style={text}>{t('title_soundsDetail')}</Text> */}
                 {/* <ToggleItem title="title_notificationsEmailMessage" /> */}
