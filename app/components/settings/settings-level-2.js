@@ -77,7 +77,7 @@ export default class SettingsLevel2 extends Component {
         const user = User.current;
         const state = user;
         const prop = 'autologinEnabled';
-        const title = 'Automatically login user';
+        const title = 'title_autologinSetting';
         const onPress = () => {
             user.autologinEnabled = !user.autologinEnabled;
             mainState.saveUser();
