@@ -12,7 +12,8 @@ export default class TextBox extends Component {
     @observable focused = false;
     @observable showSecret = false;
     @observable _value = '';
-    @observable selection = undefined;
+    @observable start = 0;
+    @observable end = 0;
 
     get nextField() {
         const byOrder = this.props.state.byOrder;
@@ -93,15 +94,22 @@ export default class TextBox extends Component {
     }
 
 
-    onSelectionChange = ({ nativeEvent: { selection } }) => {
-        this._selection = selection;
+    onSelectionChange = ({ nativeEvent: { selection: { start, end } } }) => {
+        if (this._skip) {
+            console.log(`onSelectionChange: skip ${start}, ${end}`);
+            this._skip = false;
+            return;
+        }
+        console.log(`onSelectionChange: ${start}, ${end}`);
+        this.start = start;
+        this.end = end;
     }
 
     toggleSecret = () => {
         // we don't give user the ability to hide passphrase again, because Apple
         this.showSecret = true;
-        // reposition cursor
-        if (this._selection) this.selection = this._selection;
+        // prevent cursor skip
+        this._skip = true;
     }
 
     submit = () => {
@@ -167,6 +175,7 @@ export default class TextBox extends Component {
             fontSize = Math.floor(fontSize * astl / this.value.length);
         }
         const { secretIcon } = this;
+        const { start, end } = this;
         return (
             <View style={textbox.outerContainer}>
                 <View style={[style.outer]}>
@@ -194,7 +203,7 @@ export default class TextBox extends Component {
                                 secureTextEntry={this.props.secureTextEntry && !this.showSecret}
                                 value={this._value}
                                 maxLength={this.props.maxLength}
-                                selection={this.selection}
+                                selection={{ start, end }}
                                 onBlur={this.blur}
                                 onChangeText={this.changeText}
                                 onSubmitEditing={this.submit}
