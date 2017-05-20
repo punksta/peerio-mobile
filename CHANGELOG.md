@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.48.0"></a>
+# [3.48.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.47.0...v3.48.0) (2017-05-20)
+
+
+### Bug Fixes
+
+* **ui:** cursor positioning after secureTextEntry ([0f1ce52](https://github.com/PeerioTechnologies/peerio-mobile/commit/0f1ce52))
+* **ui:** secureTextEntry and keyboard-type email don't go together ([c2f00e0](https://github.com/PeerioTechnologies/peerio-mobile/commit/c2f00e0))
+
+
+### Features
+
+* **env:** switch to RN 0.45 ([a26878d](https://github.com/PeerioTechnologies/peerio-mobile/commit/a26878d))
+
+
+
 <a name="3.47.0"></a>
 # [3.47.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.46.0...v3.47.0) (2017-05-18)
 
