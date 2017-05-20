@@ -38,7 +38,6 @@ export default class Button extends Component {
 }
 
 Button.propTypes = {
-    onPress: React.PropTypes.func.isRequired,
     style: React.PropTypes.any,
     textStyle: React.PropTypes.any,
     text: React.PropTypes.any.isRequired,
