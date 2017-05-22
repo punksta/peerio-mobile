@@ -14,6 +14,7 @@ import { scryptNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import '../lib/sounds';
 import './utils/bridge';
+import socketResetIfDead from './utils/socket-reset';
 
 @observer
 export default class App extends Component {
@@ -89,6 +90,7 @@ export default class App extends Component {
         if (appState === 'active') {
             push.disableServerSide();
             clientApp.isFocused = true;
+            socketResetIfDead();
         }
         if (appState === 'background') {
             push.enableServerSide();
