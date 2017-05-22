@@ -21,6 +21,7 @@ const vars = {
     white: '#fff',
     whiteIcon: '#fff',
     notificationIcon: '#f00',
+    usernameHighlight: '#32CEC3',
     darkIcon: '#00000070',
     txtLight: '#bfdfef',
     txtAlert: '#ff0000aa',

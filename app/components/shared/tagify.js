@@ -21,7 +21,7 @@ export default (m, username) => {
         return result;
     };
 
-    const tagifyUsername = (t) => tagifyExact(t, `@${username}`, { backgroundColor: 'yellow' });
+    const tagifyUsername = (t) => tagifyExact(t, `@${username}`, { fontWeight: 'bold', backgroundColor: vars.usernameHighlight });
     // const tagifyB = (t) => tagify(t, /<\/*b>/, { fontWeight: 'bold' }, tagifyUsername);
     // const tagifyI = (t) => tagify(t, /<\/*i>/, { fontStyle: 'italic' }, tagifyB);
 
