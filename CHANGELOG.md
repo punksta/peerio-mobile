@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.50.0"></a>
+# [3.50.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.49.0...v3.50.0) (2017-05-22)
+
+
+### Bug Fixes
+
+* **ui:** task #4199 replace any mobile-implemented user search with icebear implementation ([ed940a3](https://github.com/PeerioTechnologies/peerio-mobile/commit/ed940a3))
+
+
+### Features
+
+* **network:** reset socket if it is not alive after 3 seconds ([df29b1e](https://github.com/PeerioTechnologies/peerio-mobile/commit/df29b1e))
+* **ui:** correct colors for self-mention ([ebc72e6](https://github.com/PeerioTechnologies/peerio-mobile/commit/ebc72e6))
+
+
+
 <a name="3.49.0"></a>
 # [3.49.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.48.0...v3.49.0) (2017-05-22)
 
