@@ -48,9 +48,7 @@ class ContactState extends RoutedState {
     }
 
     get filtered() {
-        const result = contactStore.contacts.filter(
-            c => !c.loading && !c.notFound && c.username.startsWith(this.findUserText)
-        );
+        const result = contactStore.filter(this.findUserText);
         return result.length ? result : this.found.filter(c => !c.loading && !c.notFound);
     }
 
