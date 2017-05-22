@@ -41,9 +41,9 @@ class Signup(common.testcase.TestCase):
         d.tap('popupButton_ok')
         d.wait_for_not_find('popupButton_ok')
         # confirm your email alert #2
-        d.wait_for_find('popupButton_ok')
-        d.tap('popupButton_ok')
-        d.wait_for_not_find('popupButton_ok')
+        # d.wait_for_find('popupButton_ok')
+        # d.tap('popupButton_ok')
+        # d.wait_for_not_find('popupButton_ok')
         d.tap('automaticLoginEnable')
         d.wait_for_find('Allow')
         d.tap('Allow')
