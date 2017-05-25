@@ -172,7 +172,7 @@ class LoginState extends RoutedState {
             .then(JSON.parse)
             .then(this.loginCached)
             .then(() => true)
-            .catch(e => {
+            .catch(() => {
                 console.log('login-state.js: logging in with touch id failed');
                 this._resetTouchId = true;
             });

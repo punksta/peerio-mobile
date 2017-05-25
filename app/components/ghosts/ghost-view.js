@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import Share from 'react-native-share';
 import moment from 'moment';

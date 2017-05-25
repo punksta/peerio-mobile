@@ -1,21 +1,10 @@
-import React, { Component } from 'react';
-import {
-    View
-} from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
-import Swiper from '../controls/swiper';
 import FileProgress from './file-progress';
 import FileInnerItem from './file-inner-item';
 import fileState from './file-state';
-
-const height = 64;
-const checkBoxWidth = height;
-
-const swipeLeftToRightStyle = {
-    borderWidth: 0,
-    borderColor: 'green'
-};
 
 export default class FileItem extends SafeComponent {
     @observable store = {

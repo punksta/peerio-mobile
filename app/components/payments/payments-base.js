@@ -1,5 +1,5 @@
 class PaymentsBase {
-    purchase(id) {
+    purchase(/* id */) {
         throw new Error('must override');
     }
 

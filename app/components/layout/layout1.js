@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';

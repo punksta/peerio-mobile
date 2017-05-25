@@ -68,7 +68,7 @@ class SignupState extends RoutedState {
         // this.passphrase = await this.generatePassphrase();
         // console.log(this.passphrase);
         const user = new User();
-        const { username, email, firstName, lastName, pin, passphrase } = this;
+        const { username, email, firstName, lastName, passphrase } = this;
         const localeCode = uiState.locale;
         console.log(`signup-state.js: ${username}`);
         user.username = username;

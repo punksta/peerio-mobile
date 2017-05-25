@@ -1,7 +1,7 @@
 import { observable, action, reaction, when } from 'mobx';
 import { warnings, socket } from '../../lib/icebear';
 import { popupYes, popupSystemWarning } from '../shared/popups';
-import { t, tx } from '../utils/translator';
+import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
 class SnackBarState extends RoutedState {

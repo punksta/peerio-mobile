@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable, when } from 'mobx';
+import { observable } from 'mobx';
 import Router from './router';
 import ComposeMessage from '../messaging/compose-message';
 import SelectFiles from '../files/select-files';

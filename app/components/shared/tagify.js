@@ -4,11 +4,11 @@ import * as linkify from 'linkifyjs';
 import { vars } from '../../styles/styles';
 
 export default (m, username) => {
-    const tagify = (t, r, s, n) => {
+    /* const tagify = (t, r, s, n) => {
         return t.split(r).map((token, i) => {
             return <Text key={i} style={i % 2 ? s : null}>{n ? n(token) : token}</Text>;
         });
-    };
+    }; */
 
     const tagifyExact = (t, r, s, n) => {
         const items = t.split(new RegExp(`${r}`));

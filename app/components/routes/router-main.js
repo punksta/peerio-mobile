@@ -1,6 +1,6 @@
 import React from 'react';
-import { LayoutAnimation, BackHandler, Platform } from 'react-native';
-import { observable, reaction, action, when } from 'mobx';
+import { LayoutAnimation, Platform } from 'react-native';
+import { observable, reaction, action } from 'mobx';
 import Router from './router';
 import uiState from '../layout/ui-state';
 import SettingsLevel1 from '../settings/settings-level-1';

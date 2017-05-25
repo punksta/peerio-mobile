@@ -1,6 +1,6 @@
 import React from 'react';
 import { t } from '../utils/translator';
-import LanguagePickerBox from '../controls/language-picker-box';
+// import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
 import Center from '../controls/center';
 import loginState from './login-state';

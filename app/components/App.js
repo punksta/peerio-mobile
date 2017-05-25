@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, PanResponder, AppState, ActivityIndicator, NativeModules, Platform } from 'react-native';
 import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';

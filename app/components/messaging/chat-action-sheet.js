@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import React from 'react';
 import ActionSheet from 'react-native-actionsheet';
-import { observable, when } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 
 export default class ChatActionSheet extends SafeComponent {

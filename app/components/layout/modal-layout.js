@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Animated, Dimensions, StatusBar, Platform } from 'react-native';
 import { reaction, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';

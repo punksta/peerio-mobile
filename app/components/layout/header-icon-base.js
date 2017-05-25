@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
-import {
-    View, TouchableOpacity
-} from 'react-native';
+import React from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
-import routerMain from '../routes/router-main';
 
 export default class HeaderIconBase extends SafeComponent {
     icon = '';

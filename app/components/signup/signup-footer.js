@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { tu } from 'peerio-translator';
 import SafeComponent from '../shared/safe-component';

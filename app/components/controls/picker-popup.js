@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { LayoutAnimation, Picker, View } from 'react-native';
 import _ from 'lodash';
 import SafeComponent from '../shared/safe-component';
-import { t, tu } from '../utils/translator';
+import { tu } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';

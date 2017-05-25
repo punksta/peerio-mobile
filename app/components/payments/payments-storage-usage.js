@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Linking } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { User } from '../../lib/icebear';
 import Bold from '../controls/bold';

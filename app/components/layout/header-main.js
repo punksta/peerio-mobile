@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import {
-    View, Text, TouchableOpacity
-} from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { gradient } from '../controls/effects';
 import routerMain from '../routes/router-main';

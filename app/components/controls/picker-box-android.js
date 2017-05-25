@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, TouchableOpacity, Picker } from 'react-native';
 import _ from 'lodash';
 import SafeComponent from '../shared/safe-component';

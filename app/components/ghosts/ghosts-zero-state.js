@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, ActivityIndicator, Text, Dimensions, Image } from 'react-native';
+import React from 'react';
+import { View, Text, Dimensions, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 
 const ghostZeroState = require('../../assets/ghost-zero-state.png');

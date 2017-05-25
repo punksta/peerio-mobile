@@ -1,10 +1,5 @@
-import React, { Component } from 'react';
-import {
-    View,
-    Text,
-    TouchableOpacity,
-    Animated
-} from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import { vars } from '../../styles/styles';

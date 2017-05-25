@@ -1,4 +1,3 @@
-import React from 'react';
 import { t, tu } from '../utils/translator';
 import { User } from '../../lib/icebear';
 import uiState from '../layout/ui-state';

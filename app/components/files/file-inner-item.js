@@ -1,10 +1,5 @@
-import React, { Component } from 'react';
-import {
-    Text,
-    Dimensions,
-    View,
-    TouchableOpacity
-} from 'react-native';
+import React from 'react';
+import { Text, Dimensions, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';

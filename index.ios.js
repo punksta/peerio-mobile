@@ -6,7 +6,7 @@ import './shim';
 import App from './app/components/App';
 
 global.platform = 'ios';
-global.DOMPurify = require('dompurify')
+global.DOMPurify = require('dompurify');
 
 const nicebear = () => (
     <App />

@@ -16,7 +16,7 @@ class KeyValueStorage {
                 // console.log(`key-value-storage.js: ${key}:${v}`);
                 return v || null;
             })
-            .catch(e => {
+            .catch(() => {
                 // console.error(`key-value-storage.js: error reading`);
                 // console.error(e);
                 return null;

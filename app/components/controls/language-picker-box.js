@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SafeComponent from '../shared/safe-component';
 import PickerBox from './picker-box';
 import LanguagePicker from './language-picker';

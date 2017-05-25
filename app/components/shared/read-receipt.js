@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { contactStore } from '../../lib/icebear';

@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import {
-    View, Text, TouchableOpacity
-} from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Menu, { MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
@@ -40,11 +38,6 @@ const shrinkFill = {
     flexShrink: 1
 };
 
-const boldText = {
-    fontWeight: 'bold',
-    fontSize: 18,
-    height: 36
-};
 
 export default class GhostItem extends SafeComponent {
     reloadGhosts() {

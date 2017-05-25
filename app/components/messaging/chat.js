@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import {
-    ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions, LayoutAnimation
-} from 'react-native';
-import { observable, when, reaction } from 'mobx';
+import React from 'react';
+import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
+import { observable, when } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
@@ -15,7 +13,7 @@ import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
 import ButtonText from '../controls/button-text';
 // max new items which are scrolled animated
-const maxScrollableLength = 3;
+// const maxScrollableLength = 3;
 
 const { width } = Dimensions.get('window');
 

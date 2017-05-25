@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Navigator } from 'react-native-deprecated-custom-components';
 import { reaction } from 'mobx';
 import BgPattern from '../controls/bg-pattern';
-import { navigator, vars } from '../../styles/styles';
+import { navigator } from '../../styles/styles';
 import { gradient } from '../controls/effects';
 import uiState from '../layout/ui-state';
 

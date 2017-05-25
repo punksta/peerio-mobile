@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -7,13 +7,6 @@ import Avatar from '../shared/avatar';
 import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
-
-const flexRow = {
-    flexDirection: 'row',
-    flex: 1,
-    flexGrow: 1,
-    alignItems: 'center'
-};
 
 export default class ChatInfo extends SafeComponent {
     @observable chatName = '';

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     View, ScrollView, Text, TextInput
 } from 'react-native';
@@ -17,14 +17,6 @@ const textinput = {
     height: vars.inputHeight,
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft
-};
-
-const bgStyle = {
-    flexGrow: 1,
-    flex: 1,
-    backgroundColor: 'red',
-    borderColor: 'yellow',
-    borderWidth: 4
 };
 
 const flexRow = {

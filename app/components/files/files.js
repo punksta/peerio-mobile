@@ -1,9 +1,5 @@
-import React, { Component } from 'react';
-import {
-    View,
-    ListView,
-    Animated
-} from 'react-native';
+import React from 'react';
+import { View, ListView, Animated } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FilesPlaceholder from './files-placeholder';

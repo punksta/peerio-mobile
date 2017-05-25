@@ -1,10 +1,5 @@
-import React, { Component } from 'react';
-import {
-    View,
-    ListView,
-    ScrollView,
-    Animated
-} from 'react-native';
+import React from 'react';
+import { View, ListView, ScrollView, Animated } from 'react-native';
 import { MenuContext } from 'react-native-menu';
 import { observable /* , reaction */ } from 'mobx';
 import SafeComponent from '../shared/safe-component';

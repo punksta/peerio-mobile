@@ -1,7 +1,3 @@
-import React, { Component } from 'react';
-import {
-    View, TouchableOpacity
-} from 'react-native';
 import routerMain from '../routes/router-main';
 import HeaderIconBase from './header-icon-base';
 

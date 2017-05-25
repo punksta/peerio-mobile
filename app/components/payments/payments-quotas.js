@@ -1,10 +1,7 @@
-import React, { Component } from 'react';
-import {
-    ScrollView, View, Text
-} from 'react-native';
+import React from 'react';
+import { ScrollView, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import { t, tx } from '../utils/translator';
 import { User } from '../../lib/icebear';
 
 const bgStyle = {

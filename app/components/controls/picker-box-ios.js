@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import uiState from '../layout/ui-state';

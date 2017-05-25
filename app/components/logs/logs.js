@@ -1,13 +1,5 @@
 import React, { Component } from 'react';
-import {
-    Text,
-    View,
-    TouchableOpacity,
-    ScrollView,
-    NativeModules,
-    Alert,
-    ListView
-} from 'react-native';
+import { Text, View, TouchableOpacity, NativeModules, Alert, ListView } from 'react-native';
 import stringify from 'json-stringify-safe';
 import moment from 'moment';
 import { vars } from '../../styles/styles';

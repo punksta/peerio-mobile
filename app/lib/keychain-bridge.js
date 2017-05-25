@@ -32,7 +32,7 @@ class KeychainBridge {
 
     delete(key) {
         console.log(`keychain-bridge.js: deleting ${key}`);
-        return RNKeychain.deleteValue(key).catch(e => {
+        return RNKeychain.deleteValue(key).catch(() => {
             console.log(`touchdid-bridge.js: error deleting ${key}`);
             return Promise.resolve(null);
         });

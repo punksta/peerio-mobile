@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
-import {
-    View, Text, TextInput, Clipboard
-} from 'react-native';
+import React from 'react';
+import { View, Text, TextInput, Clipboard } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import SettingsItem from './settings-item';
 import ButtonText from '../controls/button-text';
-import settingsState from './settings-state';
 import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
 

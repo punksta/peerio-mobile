@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import {
-    View, Text
-} from 'react-native';
+import React from 'react';
+import { View, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';

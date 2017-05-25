@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     View
 } from 'react-native';
-import { vars } from '../../styles/styles';
 
 export default class Center extends Component {
     render() {

@@ -1,5 +1,4 @@
-import React from 'react';
-import { t, tu } from '../utils/translator';
+import { tu } from '../utils/translator';
 import { User } from '../../lib/icebear';
 import PinModal from './pin-modal';
 

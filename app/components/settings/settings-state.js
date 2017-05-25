@@ -2,9 +2,8 @@ import React from 'react';
 import { Text, Clipboard, LayoutAnimation } from 'react-native';
 import { observable, action, reaction } from 'mobx';
 import RoutedState from '../routes/routed-state';
-import PinModal from '../controls/pin-modal';
 import { User } from '../../lib/icebear';
-import { popupCopyCancel, popupYes } from '../shared/popups';
+import { popupCopyCancel } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
 import uiState from '../layout/ui-state';
 import { tx } from '../utils/translator';
@@ -25,7 +24,7 @@ class SettingsState extends RoutedState {
         return sr ? tx(this._titles[sr]) : tx('title_settings');
     }
 
-    onTransition(active) {
+    onTransition(/* active */) {
         this.routerMain.isRightMenuVisible = false;
         this.routerMain.isLeftHamburgerVisible = false;
         if (this.reaction) return;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SafeComponent from '../shared/safe-component';
 import PickerBoxAndroid from './picker-box-android';
 import PickerBoxIos from './picker-box-ios';

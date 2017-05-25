@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { LayoutAnimation } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import PickerPopup from './picker-popup';

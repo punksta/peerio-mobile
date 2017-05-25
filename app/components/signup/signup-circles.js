@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SafeComponent from '../shared/safe-component';
 import signupState from '../signup/signup-state';
 import Circles from '../controls/circles';

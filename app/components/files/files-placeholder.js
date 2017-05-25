@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import {
-    View, Text, Dimensions, Image
-} from 'react-native';
+import React from 'react';
+import { View, Text, Dimensions, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');

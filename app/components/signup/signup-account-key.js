@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { wizard, vars } from '../../styles/styles';

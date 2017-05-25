@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Bold from './bold';
 import Italic from './italic';
 import Link from './link';

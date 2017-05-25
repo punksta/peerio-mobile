@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import {
-    View, Text, TextInput
-} from 'react-native';
+import React from 'react';
+import { View, Text, TextInput } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';

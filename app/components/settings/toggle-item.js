@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
-import { observable, reaction } from 'mobx';
+import React from 'react';
 import SafeComponent from '../shared/safe-component';
 import SettingsItem from './settings-item';
 import Toggle from './toggle';

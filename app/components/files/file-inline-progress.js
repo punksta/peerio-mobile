@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import fileState from '../files/file-state';

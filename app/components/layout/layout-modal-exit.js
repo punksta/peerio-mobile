@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import Layout1 from '../layout/layout1';
-import Center from '../controls/center';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 
@@ -15,9 +14,6 @@ export default class LayoutModalExit extends SafeComponent {
             padding: 4,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0
-        };
-        const style = {
-            flexGrow: 1
         };
         const textStyle = {
             flexGrow: 1,

@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import {
-    Text, Animated, TouchableWithoutFeedback
-} from 'react-native';
-import { reaction, computed } from 'mobx';
+import React from 'react';
+import { Text, Animated, TouchableWithoutFeedback } from 'react-native';
+import { reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { warnings, warningStates } from '../../lib/icebear';
 import { vars } from '../../styles/styles';

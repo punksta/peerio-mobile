@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
-import {
-    View, Text, Dimensions, Image
-} from 'react-native';
+import React from 'react';
+import { View, Text, Dimensions, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 
 const chatZeroState = require('../../assets/chat-zero-state.png');
-const arrowUpZeroState = require('../../assets/arrow-up-zero-state.png');
 
 export default class MessagingPlaceholder extends SafeComponent {
     constructor(props) {
@@ -30,11 +27,6 @@ export default class MessagingPlaceholder extends SafeComponent {
             flex: 1,
             flexGrow: 1,
             alignItems: 'stretch'
-        };
-        const imageStyle = {
-            flex: 1,
-            width: null,
-            height: null
         };
         const titleBlockStyle = {
             flex: 0,

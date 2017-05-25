@@ -1,3 +1,4 @@
+/* eslint-disable */
 const madge = require('madge');
 
 madge('app/components/App.js').then((res) => {

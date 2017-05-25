@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import contactState from '../contacts/contact-state';
 import { systemMessages } from '../../lib/icebear';
-import { t } from '../utils/translator';
 
 export default class ChatItem extends SafeComponent {
     renderThrow() {

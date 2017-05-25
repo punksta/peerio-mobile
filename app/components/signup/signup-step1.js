@@ -1,12 +1,9 @@
-import React, { Component } from 'react';
-import {
-    Text,
-    View
-} from 'react-native';
+import React from 'react';
+import { Text, View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import TextBox from '../controls/textbox';
 import Bold from '../controls/bold';
-import LanguagePickerBox from '../controls/language-picker-box';
+// import LanguagePickerBox from '../controls/language-picker-box';
 import { vars, wizard } from '../../styles/styles';
 import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';

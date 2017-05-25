@@ -1,6 +1,5 @@
 import React from 'react';
 import { View } from 'react-native';
-import SafeComponent from '../shared/safe-component';
 import Layout1 from '../layout/layout1';
 import SignupFooter from './signup-footer';
 import { wizard } from '../../styles/styles';

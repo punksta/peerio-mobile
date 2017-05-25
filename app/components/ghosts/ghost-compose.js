@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
-import {
-    View, Text, TextInput, TouchableOpacity
-} from 'react-native';
+import React from 'react';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { observable } from 'mobx';
-import { popupUpgrade } from '../shared/popups';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import GhostSendButton from './ghost-send-button';
 import icons from '../helpers/icons';
 import ProgressOverlay from '../shared/progress-overlay';
 import ghostState from './ghost-state';
-import { mailStore, errors } from '../../lib/icebear';
+import { mailStore } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import { vars } from '../../styles/styles';
 

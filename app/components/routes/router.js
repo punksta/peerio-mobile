@@ -1,4 +1,4 @@
-import { action, observable, when } from 'mobx';
+import { action, observable } from 'mobx';
 
 export default class Router {
     @observable route = '';

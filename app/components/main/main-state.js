@@ -1,6 +1,5 @@
-import React from 'react';
-import { observable, action, when } from 'mobx';
-import { User, chatStore, contactStore, TinyDb } from '../../lib/icebear';
+import { observable, action } from 'mobx';
+import { User, chatStore, TinyDb } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
 import { popupYesSkip } from '../shared/popups';
 import { tx } from '../utils/translator';

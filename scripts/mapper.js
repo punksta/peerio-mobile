@@ -1,3 +1,4 @@
+/* eslint-disable */
 const _ = require('lodash');
 const fs = require('fs');
 const o = require('peerio-copy/client_en.json');
