@@ -43,10 +43,12 @@ export default class App extends Component {
         console.stack = [];
         console.stackPush = (msg) => {
             const MAX = 100;
+            const STEP = 50;
             const index = console.stack.length;
             const delta = index - MAX;
             const time = new Date();
-            console.stack.splice(index, delta > 0 ? delta : 0, { msg, time });
+            console.stack.push({ msg, time });
+            if (delta > STEP) console.stack.splice(0, delta);
         };
 
         const log = console.log;
@@ -63,6 +65,7 @@ export default class App extends Component {
 
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
+
 
         console.log(`App.js: ${Platform.OS} ${Platform.Version}`);
     }
