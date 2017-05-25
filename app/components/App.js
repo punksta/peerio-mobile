@@ -92,7 +92,7 @@ export default class App extends SafeComponent {
         if (appState === 'active') {
             push.disableServerSide();
             clientApp.isFocused = true;
-            socketResetIfDead();
+            // socketResetIfDead();
         }
         if (appState === 'background') {
             push.enableServerSide();
