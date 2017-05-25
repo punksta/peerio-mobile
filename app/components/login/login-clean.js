@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
 import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
@@ -7,7 +6,6 @@ import Center from '../controls/center';
 import loginState from './login-state';
 import LoginWizardPage from './login-wizard-page';
 
-@observer
 export default class LoginClean extends LoginWizardPage {
     items() {
         return (

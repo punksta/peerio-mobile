@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, StatusBar, Dimensions } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { t } from '../utils/translator';
 import loginState from './login-state';
 import LoginWizardPage from './login-wizard-page';
@@ -11,7 +10,6 @@ import Layout1 from '../layout/layout1';
 const { height } = Dimensions.get('window');
 const logoHeight = height * 0.33;
 
-@observer
 export default class LoginAutomatic extends LoginWizardPage {
     button(text, testID, onPress, highlight) {
         const buttonContainer = {
@@ -70,7 +68,7 @@ export default class LoginAutomatic extends LoginWizardPage {
         );
     }
 
-    render() {
+    renderThrow() {
         const style = wizard;
         const body = (
             <View

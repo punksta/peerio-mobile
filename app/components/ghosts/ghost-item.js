@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {
     View, Text, TouchableOpacity
 } from 'react-native';
-import { observer } from 'mobx-react/native';
 import Menu, { MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
 import moment from 'moment';
+import SafeComponent from '../shared/safe-component';
 import ghostState from './ghost-state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
@@ -46,8 +46,7 @@ const boldText = {
     height: 36
 };
 
-@observer
-export default class GhostItem extends Component {
+export default class GhostItem extends SafeComponent {
     reloadGhosts() {
         // TODO: remove when client lib handles updates
         mailStore.loaded = false;
@@ -59,7 +58,7 @@ export default class GhostItem extends Component {
         ghostState.view(this.props.ghost);
     }
 
-    render() {
+    renderThrow() {
         const g = this.props.ghost;
         const text = g.expired ? (
             <Text style={[lightText, { color: vars.txtAlert }]}>{'EXPIRED'}</Text>

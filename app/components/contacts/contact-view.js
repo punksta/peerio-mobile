@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
@@ -13,10 +13,9 @@ const flexRow = {
     alignItems: 'center'
 };
 
-@observer
-export default class ContactView extends Component {
+export default class ContactView extends SafeComponent {
 
-    render() {
+    renderThrow() {
         const contact = this.props.contact || contactState.currentContact;
         const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted } = contact;
         const tofuErrorControl = tofuError && (

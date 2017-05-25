@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, ActivityIndicator } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { wizard, vars } from '../../styles/styles';
 import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t } from '../utils/translator';
 
-@observer
-export default class SignupStep1 extends Component {
+export default class SignupStep1 extends SafeComponent {
     constructor(props) {
         super(props);
         this.url = 'https://www.peerio.com/';
@@ -23,7 +22,7 @@ export default class SignupStep1 extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const style = wizard;
         const notice = {
             borderTopWidth: 1,

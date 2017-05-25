@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StatusBar, Animated, LayoutAnimation, Dimensions } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { reaction, observable } from 'mobx';
+import SafeComponent from '../shared/safe-component';
 import uiState from './ui-state';
 import InputMainContainer from './input-main-container';
 import Bottom from '../controls/bottom';
@@ -18,8 +18,7 @@ import routerModal from '../routes/router-modal';
 
 const { width, height } = Dimensions.get('window');
 
-@observer
-export default class LayoutMain extends Component {
+export default class LayoutMain extends SafeComponent {
     @observable modalVisible = false;
 
     componentDidMount() {
@@ -50,7 +49,7 @@ export default class LayoutMain extends Component {
             <SnackBar ref={sb => (this._snackBar = sb)} /> : null;
     }
 
-    render() {
+    renderThrow() {
         const outerStyle = {
             backgroundColor: '#fff',
             flex: 1,

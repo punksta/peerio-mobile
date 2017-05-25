@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, LayoutAnimation } from 'react-native';
 import { reaction } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import popupState from './popup-state';
 import ButtonText from '../controls/button-text';
 // import { vars } from '../../styles/styles';
 
-@observer
-export default class PopupLayout extends Component {
+export default class PopupLayout extends SafeComponent {
     componentDidMount() {
         reaction(() => popupState.activePopup, () => LayoutAnimation.easeInEaseOut());
     }
@@ -29,7 +28,7 @@ export default class PopupLayout extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const popup = popupState.activePopup;
         if (!popup) return null;
 

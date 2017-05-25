@@ -1,10 +1,8 @@
 import React from 'react';
-import { observer } from 'mobx-react/native';
 import { t, tu } from '../utils/translator';
 import { User } from '../../lib/icebear';
 import PinModal from './pin-modal';
 
-@observer
 export default class PinModalCreate extends PinModal {
     skipText = tu('button_skip');
     initialText = 'Create a device PIN';

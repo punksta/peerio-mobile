@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Dimensions, StatusBar } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { when } from 'mobx';
 import { tu } from '../utils/translator';
 import Wizard from '../wizard/wizard';
@@ -18,7 +17,6 @@ import LoginPassword from './login-password';
 const { height } = Dimensions.get('window');
 const logoHeight = height * 0.33;
 
-@observer
 export default class LoginWizard extends Wizard {
     pages = ['loginStart', 'loginClean', 'loginPassword', 'loginAutomatic'];
 
@@ -77,7 +75,7 @@ export default class LoginWizard extends Wizard {
         .catch(e => console.log(e)); */
     }
 
-    render() {
+    renderThrow() {
         const style = wizard;
         const body = (
             <View

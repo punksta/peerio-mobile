@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import {
     View, TouchableOpacity
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import routerMain from '../routes/router-main';
 
-@observer
-export default class HeaderIconBase extends Component {
+export default class HeaderIconBase extends SafeComponent {
     icon = '';
     action = () => { };
 
-    render() {
+    renderThrow() {
         return (
             <View style={{ flex: 0, borderWidth: 0, borderColor: 'red' }}>
                 <TouchableOpacity onPress={this.action}>

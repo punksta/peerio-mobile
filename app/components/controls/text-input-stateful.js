@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import {
     TextInput, View
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 
-@observer
-export default class TextInputStateful extends Component {
-    render() {
+export default class TextInputStateful extends SafeComponent {
+    renderThrow() {
         const s = this.props.state;
         return (
             <View style={{ borderBottomColor: vars.bg, borderBottomWidth: 1 }}>

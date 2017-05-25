@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import contactState from '../contacts/contact-state';
 import { systemMessages } from '../../lib/icebear';
 import { t } from '../utils/translator';
 
-@observer
-export default class ChatItem extends Component {
-    render() {
+export default class ChatItem extends SafeComponent {
+    renderThrow() {
         const i = this.props.message;
         if (!i.sender) return null;
         const key = i.id;

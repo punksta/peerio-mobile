@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text, TextInput, Clipboard
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
 import ButtonText from '../controls/button-text';
@@ -31,8 +31,7 @@ const whiteStyle = {
     backgroundColor: vars.white, paddingTop: 10, paddingHorizontal
 };
 
-@observer
-export default class SettingsLevel2 extends Component {
+export default class SettingsLevel2 extends SafeComponent {
     key2fa = `FY5DGKRMJHXCLJDJJAOISDUUSIA`;
 
     copyKey() {
@@ -40,7 +39,7 @@ export default class SettingsLevel2 extends Component {
         snackbarState.pushTemporary('2FA key has been copied to clipboard');
     }
 
-    render() {
+    renderThrow() {
         return (
             <View style={bgStyle}>
                 <View>

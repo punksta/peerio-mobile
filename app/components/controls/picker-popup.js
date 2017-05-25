@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { LayoutAnimation, Picker, View } from 'react-native';
-import { observer } from 'mobx-react/native';
 import _ from 'lodash';
+import SafeComponent from '../shared/safe-component';
 import { t, tu } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 
-@observer
-export default class PickerPopup extends Component {
+export default class PickerPopup extends SafeComponent {
     constructor(props) {
         super(props);
         this.onValueChange = this.onValueChange.bind(this);
@@ -42,7 +41,7 @@ export default class PickerPopup extends Component {
         this.value = keys[i];
     }
 
-    render() {
+    renderThrow() {
         const keys = _.keys(this.props.data);
         const i = keys.indexOf(this.value);
         const items = _.values(_.mapValues(this.props.data, (value, key) =>

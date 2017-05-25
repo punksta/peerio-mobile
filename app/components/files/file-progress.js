@@ -3,13 +3,12 @@ import {
     View
 } from 'react-native';
 import { observable, reaction } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 
 // const width = Dimensions.get('window').width;
 
-@observer
-export default class FileProgress extends Component {
+export default class FileProgress extends SafeComponent {
     // @observable width = 0;
     prevFile = null;
 
@@ -53,7 +52,7 @@ export default class FileProgress extends Component {
         });
     }
 
-    render() {
+    renderThrow() {
         const height = 4;
 
         const pbContainer = {

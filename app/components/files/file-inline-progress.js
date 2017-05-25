@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import fileState from '../files/file-state';
 import icons from '../helpers/icons';
 import FileProgress from './file-progress';
 
-@observer
-export default class FileInlineProgress extends Component {
-    render() {
+export default class FileInlineProgress extends SafeComponent {
+    renderThrow() {
         const rowStyle = {
             flexGrow: 1,
             flexShrink: 1,

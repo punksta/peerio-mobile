@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import {
-    View
-} from 'react-native';
-
-import { observer } from 'mobx-react/native';
+import { View } from 'react-native';
+import SafeComponent from '../shared/safe-component';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import { vars } from '../../styles/styles';
 
-@observer
-export default class Layout2 extends Component {
+export default class Layout2 extends SafeComponent {
     constructor(props) {
         super(props);
         this.layout = this.layout.bind(this);
@@ -23,7 +19,7 @@ export default class Layout2 extends Component {
         this.scrollViewTop = e.nativeEvent.contentOffset.y;
     }
 
-    render() {
+    renderThrow() {
         return (
             <View style={{
                 flex: 1,

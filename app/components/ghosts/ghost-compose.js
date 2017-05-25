@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import {
     View, Text, TextInput, TouchableOpacity
 } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import { popupUpgrade } from '../shared/popups';
+import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import GhostSendButton from './ghost-send-button';
 import icons from '../helpers/icons';
@@ -89,8 +89,7 @@ the onSubmitEditing event instead of inserting a
 newline into the field.
 `;
 
-@observer
-export default class ComposeMessage extends Component {
+export default class ComposeMessage extends SafeComponent {
     @observable recipients = __DEV__ ?
         ['seav@gmail.com', 'testvsov@bl.com', 'romeiro@romeiro.com'] : [];
     @observable typingRecipient = __DEV__ ? 'seavan@gmail.com' : '';
@@ -289,7 +288,7 @@ export default class ComposeMessage extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         return (
             <View style={[filler]}>
                 <View style={shadow}>

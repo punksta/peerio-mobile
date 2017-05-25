@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { View, LayoutAnimation, TouchableOpacity } from 'react-native';
 import { reaction } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars, helpers } from '../../styles/styles';
 
 const inactiveColor = '#9B9B9B';
 const activeColor = vars.bg;
 
-@observer
-export default class Toggle extends Component {
+export default class Toggle extends SafeComponent {
     componentDidMount() {
         reaction(() => this.props.active, () => LayoutAnimation.easeInEaseOut());
     }
 
-    render() {
+    renderThrow() {
         const { active } = this.props;
 
         const outer = {

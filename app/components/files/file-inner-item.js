@@ -5,8 +5,8 @@ import {
     View,
     TouchableOpacity
 } from 'react-native';
-import { observer } from 'mobx-react/native';
 import moment from 'moment';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import fileState from './file-state';
@@ -37,8 +37,7 @@ const fileInfoContainerStyle = {
     borderColor: 'green'
 };
 
-@observer
-export default class FileInnerItem extends Component {
+export default class FileInnerItem extends SafeComponent {
     onPress() {
         const file = this.props.file;
         this.props.onPress ? this.props.onPress(this.props.file)
@@ -67,7 +66,7 @@ export default class FileInnerItem extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const file = this.props.file;
         const action = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :

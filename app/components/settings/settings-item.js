@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View, TouchableOpacity, Text
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { t } from '../utils/translator';
@@ -18,8 +18,7 @@ const itemContainerStyle = {
     borderColor: 'green'
 };
 
-@observer
-export default class SettingsItem extends Component {
+export default class SettingsItem extends SafeComponent {
     press() {
         // console.log('settings-item.js: press');
         this.props.onPress && this.props.onPress();
@@ -31,7 +30,7 @@ export default class SettingsItem extends Component {
             : null;
     }
 
-    render() {
+    renderThrow() {
         const offset = vars.retentionOffset;
         return (
             <TouchableOpacity

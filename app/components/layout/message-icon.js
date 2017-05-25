@@ -3,14 +3,13 @@ import {
     View, TouchableOpacity
 } from 'react-native';
 import { observable, reaction } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import chatState from '../messaging/chat-state';
 import routerMain from '../routes/router-main';
 import { helpers } from '../../styles/styles';
 
-@observer
-export default class MessageIcon extends Component {
+export default class MessageIcon extends SafeComponent {
     @observable unread = false;
     lastCount = 0;
     componentDidMount() {
@@ -26,7 +25,7 @@ export default class MessageIcon extends Component {
         routerMain.toggleLeftMenu();
     }
 
-    render() {
+    renderThrow() {
         const dotStyle = {
             left: -4,
             top: -8,

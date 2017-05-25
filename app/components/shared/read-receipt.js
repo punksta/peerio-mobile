@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {
-    View, Text
-} from 'react-native';
-import { observer } from 'mobx-react/native';
+import { View, Text } from 'react-native';
+import SafeComponent from '../shared/safe-component';
 import { contactStore } from '../../lib/icebear';
 
 const circleDiameter = 18;
@@ -17,14 +15,13 @@ const circleStyle = {
     alignItems: 'center'
 };
 
-@observer
-export default class ReadReceipt extends Component {
+export default class ReadReceipt extends SafeComponent {
     constructor(props) {
         super(props);
         this.contact = contactStore.getContact(props.username);
     }
 
-    render() {
+    renderThrow() {
         const { color, letter } = this.contact;
         const circleOnline = {
             backgroundColor: color || '#ccc'

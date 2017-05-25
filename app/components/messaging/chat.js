@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {
     ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions, LayoutAnimation
 } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { observable, when, reaction } from 'mobx';
+import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import ChatItem from './chat-item';
@@ -19,9 +19,7 @@ const maxScrollableLength = 3;
 
 const { width } = Dimensions.get('window');
 
-
-@observer
-export default class Chat extends Component {
+export default class Chat extends SafeComponent {
     @observable contentHeight = 0;
     @observable scrollViewHeight = 0;
     @observable refreshing = false;
@@ -63,12 +61,12 @@ export default class Chat extends Component {
                 // y = Math.min(y, this.scrollViewHeight) / 2;
                 this.scrollView.scrollTo({ y, animated: false });
             }
-            /* if (item.id === this.bottomChatID) {
+            if (item.id === this.bottomChatID) {
                 console.log(`chat.js: scroll bottom`);
                 this.bottomChatID = null;
                 y = y + height - this.scrollViewHeight + this.indicatorHeight;
                 this.scrollView.scrollTo({ y, animated: false });
-            } */
+            }
         };
         return (
             <ChatItem
@@ -104,7 +102,7 @@ export default class Chat extends Component {
                 let indicatorSpacing = 0;
                 if (this.chat.canGoUp) indicatorSpacing += this.indicatorHeight;
                 if (this.chat.canGoDown) indicatorSpacing += this.indicatorHeight;
-                let y = this.contentHeight - this.scrollViewHeight;
+                const y = this.contentHeight - this.scrollViewHeight;
                 if (y - indicatorSpacing < 0) {
                     // console.log('chat.js: less content than fit');
                     /* if (this.chat && (this.maxSliceIndex < this.chat.messages.length)) {
@@ -234,6 +232,8 @@ export default class Chat extends Component {
     }
 
     get archiveNotice() {
+        // TODO: archive notice
+        /* eslint-disable */
         return true || this.props.archiveNotice ? (
             <Text style={{ textAlign: 'left', margin: 12, marginTop: 0, marginBottom: 16, color: vars.txtMedium }}>
                 {tx('title_chatArchive')}
@@ -281,7 +281,7 @@ export default class Chat extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         return (
             <View
                 style={{ flexGrow: 1, paddingBottom: 4 }}>

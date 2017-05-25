@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { View, PanResponder, TouchableOpacity } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
+import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
 import { inputMain } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { uiState, chatState } from '../states';
 
-@observer
-export default class InputMain extends Component {
+export default class InputMain extends SafeComponent {
     @observable value = '';
     get hasText() {
         return this.value && this.value.length;
@@ -57,7 +56,7 @@ export default class InputMain extends Component {
         this.input.ti.focus();
     }
 
-    render() {
+    renderThrow() {
         const { tiStyle, iconStyle, outerStyle, autoExpandingInputContainerStyle,
             sendIconStyleNormal, sendIconStyleActive } = inputMain;
         const icon = icons.white(this.hasText ? 'send' : 'thumb-up', this.send, iconStyle);

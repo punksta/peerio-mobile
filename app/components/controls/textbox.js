@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, LayoutAnimation, TouchableOpacity, Platform } from 'react-native';
 import { observable, reaction } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import { vars, textbox } from '../../styles/styles';
 import icons from '../helpers/icons';
 
-@observer
-export default class TextBox extends Component {
+export default class TextBox extends SafeComponent {
     @observable focused = false;
     @observable showSecret = false;
     @observable _value = '';
@@ -164,7 +163,7 @@ export default class TextBox extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         // console.log('re-render');
         const returnKeyType = this.props.returnKeyType || 'default';
         const style = this.focused ? textbox.focused : textbox.blurred;

@@ -4,7 +4,7 @@ import {
     View
 } from 'react-native';
 import moment from 'moment';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileProgress from './file-progress';
@@ -35,8 +35,7 @@ const hintStyle = {
 };
 
 
-@observer
-export default class FileView extends Component {
+export default class FileView extends SafeComponent {
     get file() {
         return fileState.currentFile || {};
     }
@@ -45,7 +44,7 @@ export default class FileView extends Component {
         return <FileActions file={this.file} />;
     }
 
-    render() {
+    renderThrow() {
         const { file } = this;
         let icon = 'image';
         if (file.downloading) icon = 'file-download';

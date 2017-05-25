@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { circles } from '../../styles/styles';
 
 const s = {
@@ -27,8 +27,7 @@ const dashText = {
     fontSize: 18
 };
 
-@observer
-export default class Circles extends Component {
+export default class Circles extends SafeComponent {
     active(i) {
         return (
             <View key={i} style={style.active} />
@@ -51,7 +50,7 @@ export default class Circles extends Component {
         return active ? this.active(i) : this.normal(i);
     }
 
-    render() {
+    renderThrow() {
         const items = [];
         for (let i = 0; i < this.props.count; ++i) {
             items.push(this.circle(i, this.props.current));

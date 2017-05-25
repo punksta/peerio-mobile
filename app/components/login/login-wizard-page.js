@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { tu } from '../utils/translator';
 import Button from '../controls/button';
 import { vars, wizard } from '../../styles/styles';
 
-@observer
-export default class LoginWizardPage extends Component {
+export default class LoginWizardPage extends SafeComponent {
     button(text, onPress, hidden) {
         const buttonContainer = {
             marginVertical: 20,
@@ -58,7 +57,7 @@ export default class LoginWizardPage extends Component {
         return i && <View style={flexer}>{i}</View>;
     }
 
-    render() {
+    renderThrow() {
         return (
             <View style={{ flexGrow: 1, paddingHorizontal: vars.wizardPadding }}>
                 {this.flexer(this.items())}

@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import {
     View, Text, TouchableOpacity
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { gradient } from '../controls/effects';
 import routerMain from '../routes/router-main';
 import { vars } from '../../styles/styles';
 import BackIcon from './back-icon';
 
-@observer
-export default class HeaderMain extends Component {
-    render() {
+export default class HeaderMain extends SafeComponent {
+    renderThrow() {
         let leftIcon = null;
         if (routerMain.isBackVisible) {
             leftIcon = <BackIcon />;

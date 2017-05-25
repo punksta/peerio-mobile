@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
+import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
 import Avatar from '../shared/avatar';
 import chatState from '../messaging/chat-state';
@@ -15,8 +15,7 @@ const flexRow = {
     alignItems: 'center'
 };
 
-@observer
-export default class ChatInfo extends Component {
+export default class ChatInfo extends SafeComponent {
     @observable chatName = '';
 
     componentDidMount() {
@@ -75,7 +74,7 @@ export default class ChatInfo extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const chat = chatState.currentChat;
         const body = (
             <View>

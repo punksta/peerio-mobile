@@ -3,8 +3,8 @@ import {
     View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { observer } from 'mobx-react/native';
 import { when } from 'mobx';
+import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
@@ -21,8 +21,7 @@ const actions = {
     share: () => contactState.share()
 };
 
-@observer
-export default class ContactSelector extends Component {
+export default class ContactSelector extends SafeComponent {
 
     userbox(contact, i) {
         const style = {
@@ -240,7 +239,7 @@ export default class ContactSelector extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const header = this.header();
         const body = this.body();
         const layoutStyle = {

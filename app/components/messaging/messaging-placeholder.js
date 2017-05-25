@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import {
     View, Text, Dimensions, Image
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 
 const chatZeroState = require('../../assets/chat-zero-state.png');
 const arrowUpZeroState = require('../../assets/arrow-up-zero-state.png');
 
-@observer
-export default class MessagingPlaceholder extends Component {
+export default class MessagingPlaceholder extends SafeComponent {
     constructor(props) {
         super(props);
         this.width = Dimensions.get('window').width;
@@ -82,7 +81,7 @@ export default class MessagingPlaceholder extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const s = {
             flex: 1,
             flexGrow: 1,

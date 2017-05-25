@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import chatState from './chat-state';
 import { User, contactStore } from '../../lib/icebear';
 import icons from '../helpers/icons';
 
-@observer
-export default class ChatListItem extends Component {
+export default class ChatListItem extends SafeComponent {
     get rightIcon() {
         const { chat } = this.props;
         return (
@@ -18,7 +17,7 @@ export default class ChatListItem extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const { chat } = this.props;
         const { mostRecentMessage, participants } = chat;
         // group chats have null for contact

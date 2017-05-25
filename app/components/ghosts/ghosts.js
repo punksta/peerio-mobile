@@ -7,14 +7,13 @@ import {
 } from 'react-native';
 import { MenuContext } from 'react-native-menu';
 import { observable /* , reaction */ } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import GhostsZeroState from './ghosts-zero-state';
 import ProgressOverlay from '../shared/progress-overlay';
 import GhostItem from './ghost-item';
 import { mailStore } from '../../lib/icebear';
 
-@observer
-export default class Ghosts extends Component {
+export default class Ghosts extends SafeComponent {
     constructor(props) {
         super(props);
         this.dataSource = new ListView.DataSource({
@@ -57,7 +56,7 @@ export default class Ghosts extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const body = this.data.length ?
             this.listView() : !mailStore.loading && <GhostsZeroState />;
 

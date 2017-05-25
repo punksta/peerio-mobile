@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import {
-    Text,
-    View,
-    ScrollView,
-    TouchableOpacity
-} from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import Share from 'react-native-share';
 import moment from 'moment';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 // import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
@@ -57,8 +52,7 @@ const filler = {
     flexGrow: 1
 };
 
-@observer
-export default class Ghost extends Component {
+export default class Ghost extends SafeComponent {
     get ghost() {
         return mailStore.selectedGhost;
     }
@@ -74,7 +68,7 @@ export default class Ghost extends Component {
         });
     }
 
-    render() {
+    renderThrow() {
         const g = this.ghost;
         if (!g) return null;
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import InputMain from './input-main';
 import chatState from '../messaging/chat-state';
@@ -8,8 +8,7 @@ import fileState from '../files/file-state';
 import imagePicker from '../helpers/imagepicker';
 import FileInlineProgress from '../files/file-inline-progress';
 
-@observer
-export default class InputMainContainer extends Component {
+export default class InputMainContainer extends SafeComponent {
     constructor(props) {
         super(props);
         this.send = this.send.bind(this);
@@ -63,7 +62,7 @@ export default class InputMainContainer extends Component {
         ));
     }
 
-    render() {
+    renderThrow() {
         const outer = {
             backgroundColor: '#fff'
         };

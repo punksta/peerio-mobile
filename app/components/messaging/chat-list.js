@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, ListView, Animated, Text } from 'react-native';
 import { observable, reaction } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import MessagingPlaceholder from './messaging-placeholder';
 import ChatListItem from './chat-list-item';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -10,8 +10,7 @@ import chatState from './chat-state';
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
-@observer
-export default class Files extends Component {
+export default class Files extends SafeComponent {
     constructor(props) {
         super(props);
         this.dataSource = new ListView.DataSource({
@@ -78,7 +77,7 @@ export default class Files extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const body = (this.data.length && chatState.store.loaded) ?
             this.listView() : <MessagingPlaceholder />;
 

@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {
-    View
-} from 'react-native';
-import { observer } from 'mobx-react/native';
+import { View } from 'react-native';
+import SafeComponent from '../shared/safe-component';
 
 const circleDiameter = 6;
 
@@ -23,9 +21,8 @@ const circleOffline = {
     backgroundColor: 'transparent'
 };
 
-@observer
-export default class OnlineCircle extends Component {
-    render() {
+export default class OnlineCircle extends SafeComponent {
+    renderThrow() {
         if (!this.props.visible) return null;
         return (
             <View style={[circleStyle, this.props.online ? circleOnline : circleOffline]} />

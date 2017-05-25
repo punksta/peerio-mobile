@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     View, Text
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
 import ToggleItem from './toggle-item';
@@ -22,8 +22,7 @@ const bgStyle = {
     backgroundColor: vars.settingsBg
 };
 
-@observer
-export default class SettingsLevel2 extends Component {
+export default class SettingsLevel2 extends SafeComponent {
     twoFactorTest() {
         popupInputCancel(`${tx('dialog_enter2FA')}:`);
     }
@@ -128,7 +127,7 @@ export default class SettingsLevel2 extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const view = this[settingsState.subroute];
         return view ? view() : null;
     }

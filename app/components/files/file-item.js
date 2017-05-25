@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {
     View
 } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
+import SafeComponent from '../shared/safe-component';
 import Swiper from '../controls/swiper';
 import FileProgress from './file-progress';
 import FileInnerItem from './file-inner-item';
@@ -17,8 +17,7 @@ const swipeLeftToRightStyle = {
     borderColor: 'green'
 };
 
-@observer
-export default class FileItem extends Component {
+export default class FileItem extends SafeComponent {
     @observable store = {
         get checkBoxHidden() {
             return !fileState.showSelection;
@@ -41,7 +40,7 @@ export default class FileItem extends Component {
         }
     }
 
-    render() {
+    renderThrow() {
         const file = this.props.file;
         return (
             <View style={{ backgroundColor: 'white' }}>

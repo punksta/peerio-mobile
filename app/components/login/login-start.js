@@ -1,11 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { observer } from 'mobx-react/native';
 import loginState from './login-state';
 import LoginWizardPage from './login-wizard-page';
 import ActivityOverlay from '../controls/activity-overlay';
 
-@observer
 export default class LoginStart extends LoginWizardPage {
     buttons() {
         return (

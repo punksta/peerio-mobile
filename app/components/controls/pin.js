@@ -7,16 +7,15 @@ import {
 } from 'react-native';
 import { t } from 'peerio-translator';
 import { observable } from 'mobx';
-import { observer } from 'mobx-react/native';
 import * as Animatable from 'react-native-animatable';
+import SafeComponent from '../shared/safe-component';
 import Circles from '../controls/circles';
 import Center from '../controls/center';
 import icons from '../helpers/icons';
 import { vars, circles, pin } from '../../styles/styles';
 import Util from '../helpers/util';
 
-@observer
-export default class Pin extends Component {
+export default class Pin extends SafeComponent {
     @observable message = '';
     @observable enteredPin = '';
     @observable pin = '';
@@ -184,7 +183,7 @@ export default class Pin extends Component {
         this.isSpinner = value;
     }
 
-    render() {
+    renderThrow() {
         const style = pin;
         const p = (text, subText, action) => ({ text, subText, action });
         const bs = this.pin.length ? p(null, 'backspace', () => this.backspace()) : p();

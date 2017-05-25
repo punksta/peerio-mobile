@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import {
     Text, TouchableOpacity
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 
-@observer
-export default class ButtonText extends Component {
-    render() {
+export default class ButtonText extends SafeComponent {
+    renderThrow() {
         const { text, secondary, onPress } = this.props;
         const textStyle = {
             color: secondary ? vars.txtDate : vars.bg,

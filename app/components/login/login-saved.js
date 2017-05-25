@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import Layout2 from '../layout/layout2';
 import Center from '../controls/center';
@@ -12,8 +12,7 @@ import { common, wizard } from '../../styles/styles';
 import loginState from './login-state';
 import forms from '../helpers/forms';
 
-@observer
-export default class LoginSaved extends Component {
+export default class LoginSaved extends SafeComponent {
     constructor(props) {
         super(props);
         forms.mixin(this, loginState);
@@ -35,7 +34,7 @@ export default class LoginSaved extends Component {
             });
     }
 
-    render() {
+    renderThrow() {
         const style = wizard;
         const body = (
             <View style={[style.containerFlexGrow, { marginTop: 20 }]}>

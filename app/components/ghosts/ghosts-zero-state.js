@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import {
-    View, ActivityIndicator, Text, Dimensions, Image
-} from 'react-native';
-import { observer } from 'mobx-react/native';
+import { View, ActivityIndicator, Text, Dimensions, Image } from 'react-native';
+import SafeComponent from '../shared/safe-component';
 
 const ghostZeroState = require('../../assets/ghost-zero-state.png');
 const arrowDownZeroState = require('../../assets/arrow-down-zero-state.png');
 
-@observer
-export default class GhostsZeroState extends Component {
+export default class GhostsZeroState extends SafeComponent {
     constructor(props) {
         super(props);
         this.width = Dimensions.get('window').width;
@@ -77,7 +74,7 @@ export default class GhostsZeroState extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const s = {
             flex: 1,
             justifyContent: 'space-between'

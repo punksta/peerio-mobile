@@ -3,7 +3,7 @@ import {
     View, ScrollView, Text, TextInput
 } from 'react-native';
 import { observable } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { User, contactStore } from '../../lib/icebear';
 import { t, tx } from '../utils/translator';
@@ -34,8 +34,7 @@ const flexRow = {
     alignItems: 'center'
 };
 
-@observer
-export default class ProfileEdit extends Component {
+export default class ProfileEdit extends SafeComponent {
     @observable firstName;
     @observable lastName;
 
@@ -62,7 +61,7 @@ export default class ProfileEdit extends Component {
         });
     }
 
-    render() {
+    renderThrow() {
         const contact = contactStore.getContact(User.current.username);
         const { firstName, lastName, fingerprintSkylarFormatted, username } = contact;
         return (

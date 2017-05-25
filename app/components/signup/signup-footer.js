@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { tu } from 'peerio-translator';
-
+import SafeComponent from '../shared/safe-component';
 import signupState from '../signup/signup-state';
 import { wizard } from '../../styles/styles';
 
 const style = wizard.footer;
 
-@observer
-export default class SignupFooter extends Component {
+export default class SignupFooter extends SafeComponent {
     button(text, active, onPress, testID) {
         const s = { opacity: active ? 1 : 0.7 };
         return (
@@ -24,7 +22,7 @@ export default class SignupFooter extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const next = this.button(
             tu('button_next'),
             !signupState.isInProgress && signupState.nextAvailable,

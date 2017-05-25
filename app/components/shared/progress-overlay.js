@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {
-    View, ActivityIndicator
-} from 'react-native';
-import { observer } from 'mobx-react/native';
+import { View, ActivityIndicator } from 'react-native';
+import SafeComponent from '../shared/safe-component';
 
 const overlay = {
     backgroundColor: '#00000020',
@@ -15,9 +13,8 @@ const overlay = {
     bottom: 0
 };
 
-@observer
-export default class ProgressOverlay extends Component {
-    render() {
+export default class ProgressOverlay extends SafeComponent {
+    renderThrow() {
         if (!this.props.enabled) return null;
         return (
             <View style={overlay}>

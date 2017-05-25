@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
 import { settingsState, snackbarState, mainState, loginState } from '../states';
@@ -18,13 +18,12 @@ const svStyle = {
     paddingHorizontal: vars.listViewPaddingHorizontal
 };
 
-@observer
-export default class SettingsLevel1 extends Component {
+export default class SettingsLevel1 extends SafeComponent {
     get spacer() {
         return <View style={{ height: 32 }} />;
     }
 
-    render() {
+    renderThrow() {
         return (
             <View style={bgStyle}>
                 <ScrollView contentContainerStyle={svStyle}>

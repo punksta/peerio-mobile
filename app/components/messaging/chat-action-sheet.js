@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import {
-    ScrollView, View, Text, TouchableOpacity, ActivityIndicator
-} from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import { observer } from 'mobx-react/native';
 import { observable, when } from 'mobx';
+import SafeComponent from '../shared/safe-component';
 
-@observer
-export default class ChatActionSheet extends Component {
+export default class ChatActionSheet extends SafeComponent {
     _message = null;
     _chat = null;
 
@@ -32,7 +29,7 @@ export default class ChatActionSheet extends Component {
         this._actionSheet.show();
     }
 
-    render() {
+    renderThrow() {
         return (
             <ActionSheet
                 ref={sheet => (this._actionSheet = sheet)}

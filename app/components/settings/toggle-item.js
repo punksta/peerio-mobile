@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import { observable, reaction } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import SettingsItem from './settings-item';
 import Toggle from './toggle';
 
-@observer
-export default class ToggleItem extends Component {
+export default class ToggleItem extends SafeComponent {
     get active() {
         return this.props.state[this.props.prop];
     }
@@ -18,7 +17,7 @@ export default class ToggleItem extends Component {
         onPress && onPress(!this.active);
     }
 
-    render() {
+    renderThrow() {
         return (
             <SettingsItem
                 {...this.props}

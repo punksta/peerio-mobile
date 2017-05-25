@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import {
     View, LayoutAnimation, Dimensions
 } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
+import SafeComponent from '../shared/safe-component';
 
 const { width } = Dimensions.get('window');
 
-@observer
-export default class Wizard extends Component {
+export default class Wizard extends SafeComponent {
     /**
      * Animation sequence (start with index 0)
      * 1. new index becomes 1 (this.index === 1)

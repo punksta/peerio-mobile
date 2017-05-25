@@ -3,7 +3,7 @@ import {
     Text,
     View
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import TextBox from '../controls/textbox';
 import Bold from '../controls/bold';
 import LanguagePickerBox from '../controls/language-picker-box';
@@ -12,8 +12,7 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t, T } from '../utils/translator';
 
-@observer
-export default class SignupStep1 extends Component {
+export default class SignupStep1 extends SafeComponent {
     constructor(props) {
         super(props);
         this.url = 'https://www.peerio.com/';
@@ -29,7 +28,7 @@ export default class SignupStep1 extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const style = wizard;
         const tosParser = {
             emphasis: text => <Bold>{text}</Bold>,

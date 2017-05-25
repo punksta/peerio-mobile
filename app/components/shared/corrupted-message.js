@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import {
-    Text
-} from 'react-native';
-import { observer } from 'mobx-react/native';
+import { Text } from 'react-native';
+import SafeComponent from '../shared/safe-component';
 
-@observer
-export default class CorruptedMessage extends Component {
-    render() {
+export default class CorruptedMessage extends SafeComponent {
+    renderThrow() {
         if (!this.props.visible) return null;
         return (
             <Text style={{ margin: 8 }}>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, PanResponder, AppState, ActivityIndicator, NativeModules, Platform } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';
 import ModalLayout from './layout/modal-layout';
 import RouteNavigator from './routes/route-navigator';
@@ -16,8 +16,7 @@ import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
 
-@observer
-export default class App extends Component {
+export default class App extends SafeComponent {
     constructor(props) {
         super(props);
         uiState.load();
@@ -113,7 +112,7 @@ export default class App extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         if (!uiState.locale) return this._placeHolder();
         return gradient({
             testID: 'appOuterViewBackground',

@@ -3,12 +3,11 @@ import {
     Text, Animated, TouchableWithoutFeedback
 } from 'react-native';
 import { reaction, computed } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { warnings, warningStates } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
 
-@observer
-export default class SnackbarBase extends Component {
+export default class SnackbarBase extends SafeComponent {
     constructor(props) {
         super(props);
         this.animatedHeight = new Animated.Value(0);
@@ -65,7 +64,7 @@ export default class SnackbarBase extends Component {
             .start(cb);
     }
 
-    render() {
+    renderThrow() {
         const s = {
             backgroundColor: vars.snackbarBg,
             justifyContent: 'center',

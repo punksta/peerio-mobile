@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {
     View, Text, TextInput
 } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
+import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
@@ -13,8 +13,7 @@ import icons from '../helpers/icons';
 import { fileStore } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
 
-@observer
-export default class SelectFiles extends Component {
+export default class SelectFiles extends SafeComponent {
     @observable findFileText = null;
 
     onChangeFindFileText(text) {
@@ -132,7 +131,7 @@ export default class SelectFiles extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const header = this.header();
         const body = this.body();
         const layoutStyle = {

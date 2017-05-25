@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Animated, Dimensions, StatusBar, Platform } from 'react-native';
 import { reaction, observable } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import routerModal from '../routes/router-modal';
 
-@observer
-export default class ModalLayout extends Component {
+export default class ModalLayout extends SafeComponent {
     @observable modal = null;
 
     constructor(props) {
@@ -30,7 +29,7 @@ export default class ModalLayout extends Component {
         });
     }
 
-    render() {
+    renderThrow() {
         const modalStyle = {
             position: 'absolute',
             left: 0,

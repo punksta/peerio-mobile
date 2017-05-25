@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Animated, Easing } from 'react-native';
 import { observable, reaction, when } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 
-@observer
-export default class Swiper extends Component {
+export default class Swiper extends SafeComponent {
     @observable width = 0;
 
     constructor(props) {
@@ -144,7 +143,7 @@ export default class Swiper extends Component {
         return true;
     }
 
-    render() {
+    renderThrow() {
         const containerStyle = this.props.style || {};
         let t = [];
         if (this.animatedX) {

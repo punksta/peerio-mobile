@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     Animated
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import { fileStore, chatStore } from '../../lib/icebear';
@@ -31,9 +31,7 @@ const bottomRowStyle = {
     padding: 0
 };
 
-
-@observer
-export default class Tabs extends Component {
+export default class Tabs extends SafeComponent {
 
     action(text, route, icon, bubble) {
         const color = routerMain.route === route ? vars.bg : vars.tabsFg;
@@ -56,7 +54,7 @@ export default class Tabs extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const animation = {
             overflow: 'hidden',
             height: (routerMain.currentIndex === 0) ? 56 : 0

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
+import SafeComponent from '../shared/safe-component';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 
-@observer
-export default class Layout1 extends Component {
+export default class Layout1 extends SafeComponent {
     @observable height = 0;
 
-    render() {
+    renderThrow() {
         const boxStyle = {
             flex: 1,
             flexGrow: 1,

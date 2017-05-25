@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import uiState from '../layout/ui-state';
 import icons from '../helpers/icons';
 
-@observer
-export default class PickerBoxIos extends Component {
+export default class PickerBoxIos extends SafeComponent {
     constructor(props) {
         super(props);
         this.focus = this.focus.bind(this);
@@ -20,7 +19,7 @@ export default class PickerBoxIos extends Component {
         uiState.showPicker(this.picker);
     }
 
-    render() {
+    renderThrow() {
         const focused = uiState.pickerVisible && uiState.picker === this.picker;
         const { shadow, background, textview, container, iconContainer, icon } =
             focused ? this.props.style.active : this.props.style.normal;

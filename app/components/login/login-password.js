@@ -1,6 +1,5 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { observer } from 'mobx-react/native';
 import { t, T } from '../utils/translator';
 import TextBox from '../controls/textbox';
 import Bold from '../controls/bold';
@@ -15,7 +14,6 @@ const textStyle = {
     color: vars.txtLight
 };
 
-@observer
 export default class LoginPassword extends LoginWizardPage {
     items() {
         const textParser = {

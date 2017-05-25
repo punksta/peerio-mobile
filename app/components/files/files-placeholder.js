@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import {
     View, Text, Dimensions, Image
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
 const arrowDownZeroState = require('../../assets/arrow-down-zero-state.png');
 
-@observer
-export default class FilesPlaceholder extends Component {
+export default class FilesPlaceholder extends SafeComponent {
     constructor(props) {
         super(props);
         this.width = Dimensions.get('window').width;
@@ -74,7 +73,7 @@ export default class FilesPlaceholder extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const s = {
             flex: 1,
             justifyContent: 'space-between'

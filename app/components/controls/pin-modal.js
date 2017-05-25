@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import Pin from './pin';
 import Button from './button';
 import { vars } from '../../styles/styles';
 import uiState from '../layout/ui-state';
 import BgPattern from '../controls/bg-pattern';
 
-@observer
-export default class PinModal extends Component {
+export default class PinModal extends SafeComponent {
     skipText = `SKIP`;
     initialText = `INITIAL`;
 
@@ -20,7 +19,7 @@ export default class PinModal extends Component {
         uiState.routerModal.discard();
     }
 
-    render() {
+    renderThrow() {
         const container = {
             flexGrow: 1,
             flex: 1,

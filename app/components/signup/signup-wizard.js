@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import Layout1 from '../layout/layout1';
 import SignupFooter from './signup-footer';
 import { wizard } from '../../styles/styles';
@@ -10,7 +10,6 @@ import SignupStep1 from './signup-step1';
 import SignupAccountKey from './signup-account-key';
 import signupState from './signup-state';
 
-@observer
 export default class SignupWizard extends Wizard {
     pages = ['signupStep1', 'signupAccountKey', 'loginAutomatic'];
 
@@ -28,7 +27,7 @@ export default class SignupWizard extends Wizard {
         return <SignupPin />;
     } */
 
-    render() {
+    renderThrow() {
         const style = wizard;
         const body = (
             <View

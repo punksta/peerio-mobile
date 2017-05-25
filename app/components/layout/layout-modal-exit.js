@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 
-@observer
-export default class LayoutModalExit extends Component {
+export default class LayoutModalExit extends SafeComponent {
     exitRow() {
         const container = {
             flexGrow: 1,
@@ -56,7 +55,7 @@ export default class LayoutModalExit extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const header = this.header();
         const layoutStyle = {
             backgroundColor: 'white'

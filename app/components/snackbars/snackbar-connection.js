@@ -1,10 +1,8 @@
-import { observer } from 'mobx-react/native';
 import SnackbarBase from './snackbar-base';
 import uiState from '../layout/ui-state';
 import { socket } from '../../lib/icebear';
 import { t } from '../utils/translator';
 
-@observer
 export default class SnackbarConnection extends SnackbarBase {
     get isVisible() { return uiState.appState === 'active' && !socket.connected; }
 

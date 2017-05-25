@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity, Dimensions, LayoutAnimation } from 'react-native';
 import { observable, reaction } from 'mobx';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileInlineProgress from '../files/file-inline-progress';
@@ -93,8 +93,7 @@ const systemMessageStyle = {
 
 const { width } = Dimensions.get('window');
 
-@observer
-export default class Avatar extends Component {
+export default class Avatar extends SafeComponent {
     @observable showError = false;
 
     componentDidMount() {
@@ -358,7 +357,7 @@ export default class Avatar extends Component {
         );
     }
 
-    render() {
+    renderThrow() {
         const inner = this.props.collapsed ? this.renderCollapsed() : this.renderFull();
         return this.renderOuter(inner);
     }

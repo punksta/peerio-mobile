@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ActivityIndicator, Text } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { tu } from '../utils/translator';
 import Button from '../controls/button';
 import Center from '../controls/center';
@@ -8,8 +8,7 @@ import signupState from '../signup/signup-state';
 import loginState from '../login/login-state';
 import { vars } from '../../styles/styles';
 
-@observer
-export default class LoginSignup extends Component {
+export default class LoginSignup extends SafeComponent {
     constructor(props) {
         super(props);
         this.signUp = this.signUp.bind(this);
@@ -70,7 +69,7 @@ export default class LoginSignup extends Component {
     }
 
 
-    render() {
+    renderThrow() {
         const center = {
             justifyContent: 'center',
             alignItems: 'center'

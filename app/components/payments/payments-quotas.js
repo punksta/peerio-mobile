@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
     ScrollView, View, Text
 } from 'react-native';
-import { observer } from 'mobx-react/native';
+import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { t, tx } from '../utils/translator';
 import { User } from '../../lib/icebear';
@@ -19,9 +19,8 @@ const header = {
     fontWeight: 'bold'
 };
 
-@observer
-export default class PaymentsQuotas extends Component {
-    render() {
+export default class PaymentsQuotas extends SafeComponent {
+    renderThrow() {
         const q = User.current.quota;
         return (
             <ScrollView style={bgStyle}>
