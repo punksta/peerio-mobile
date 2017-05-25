@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.55.0"></a>
+# [3.55.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.54.0...v3.55.0) (2017-05-25)
+
+
+### Bug Fixes
+
+* dancing ([baaf66a](https://github.com/PeerioTechnologies/peerio-mobile/commit/baaf66a))
+
+
+
 <a name="3.54.0"></a>
 # [3.54.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.53.0...v3.54.0) (2017-05-25)
 
