@@ -16,6 +16,7 @@ export default class SafeComponent extends Component {
             t += `Error getting object name\n`;
         }
         try {
+            if (__DEV__) console.error(err);
             t += JSON.stringify(err);
         } catch (e) {
             t += `Error getting exception text\n`;

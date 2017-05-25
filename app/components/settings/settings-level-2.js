@@ -20,12 +20,16 @@ const bgStyle = {
     backgroundColor: vars.settingsBg
 };
 
+const spacer = {
+    height: 24
+};
+
 export default class SettingsLevel2 extends SafeComponent {
     twoFactorTest() {
         popupInputCancel(`${tx('dialog_enter2FA')}:`);
     }
 
-    security() {
+    security = () => {
         const user = User.current;
         return (
             <View style={bgStyle}>
@@ -40,6 +44,7 @@ export default class SettingsLevel2 extends SafeComponent {
                     icon="visibility"
                     disabled={!user.autologinEnabled}
                     onPress={() => settingsState.showPassphrase()} />
+                {this.autoLoginToggle()}
             </View>
         );
     }
@@ -103,9 +108,6 @@ export default class SettingsLevel2 extends SafeComponent {
             marginBottom: 8,
             marginLeft: 8
         };
-        const spacer = {
-            height: 24
-        };
 
         return (
             <View style={bgStyle}>
@@ -113,8 +115,6 @@ export default class SettingsLevel2 extends SafeComponent {
                 {this.settingsItem('title_notificationsEmailMessage', 'messageNotifications')}
                 <View style={spacer} />
                 {this.settingsItem('title_promoConsent', 'subscribeToPromoEmails')}
-                <View style={spacer} />
-                {this.autoLoginToggle()}
                 <View style={spacer} />
                 {this.unreadChatsToggle()}
                 <View style={spacer} />
