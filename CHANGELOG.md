@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.53.0"></a>
+# [3.53.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.52.0...v3.53.0) (2017-05-25)
+
+
+### Bug Fixes
+
+* **ui:** memory leak ([ee22b34](https://github.com/PeerioTechnologies/peerio-mobile/commit/ee22b34))
+
+
+### Features
+
+* **errors:** handle react throw ([b8bf6c5](https://github.com/PeerioTechnologies/peerio-mobile/commit/b8bf6c5))
+* **errors:** switching to SafeComponent for rendering ([72b0f54](https://github.com/PeerioTechnologies/peerio-mobile/commit/72b0f54))
+* **ui:** move autologin to security ([14f7152](https://github.com/PeerioTechnologies/peerio-mobile/commit/14f7152))
+
+
+
 <a name="3.52.0"></a>
 # [3.52.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.51.0...v3.52.0) (2017-05-23)
 
