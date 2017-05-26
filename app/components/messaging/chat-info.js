@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -8,6 +9,7 @@ import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 
+@observer
 export default class ChatInfo extends SafeComponent {
     @observable chatName = '';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text, TextInput, LayoutAnimation, TouchableOpacity, Platform } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -7,6 +8,7 @@ import uiState from '../layout/ui-state';
 import { vars, textbox } from '../../styles/styles';
 import icons from '../helpers/icons';
 
+@observer
 export default class TextBox extends SafeComponent {
     @observable focused = false;
     @observable showSecret = false;

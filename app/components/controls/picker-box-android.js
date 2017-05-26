@@ -1,10 +1,12 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity, Picker } from 'react-native';
 import _ from 'lodash';
 import SafeComponent from '../shared/safe-component';
 import uiState from '../layout/ui-state';
 import { vars } from '../../styles/styles';
 
+@observer
 export default class PickerBoxAndroid extends SafeComponent {
     constructor(props) {
         super(props);

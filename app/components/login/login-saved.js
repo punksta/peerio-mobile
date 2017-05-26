@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
@@ -12,6 +13,7 @@ import { common, wizard } from '../../styles/styles';
 import loginState from './login-state';
 import forms from '../helpers/forms';
 
+@observer
 export default class LoginSaved extends SafeComponent {
     constructor(props) {
         super(props);

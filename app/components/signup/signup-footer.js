@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { tu } from 'peerio-translator';
 import SafeComponent from '../shared/safe-component';
@@ -7,6 +8,7 @@ import { wizard } from '../../styles/styles';
 
 const style = wizard.footer;
 
+@observer
 export default class SignupFooter extends SafeComponent {
     button(text, active, onPress, testID) {
         const s = { opacity: active ? 1 : 0.7 };

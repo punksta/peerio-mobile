@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { Text, View, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { wizard, vars } from '../../styles/styles';
@@ -6,6 +7,7 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t } from '../utils/translator';
 
+@observer
 export default class SignupStep1 extends SafeComponent {
     constructor(props) {
         super(props);

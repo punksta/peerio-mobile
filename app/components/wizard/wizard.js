@@ -1,10 +1,12 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, LayoutAnimation, Dimensions } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 
 const { width } = Dimensions.get('window');
 
+@observer
 export default class Wizard extends SafeComponent {
     /**
      * Animation sequence (start with index 0)

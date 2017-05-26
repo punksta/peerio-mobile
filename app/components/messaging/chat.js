@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
 import { observable, when } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -17,6 +18,7 @@ import ButtonText from '../controls/button-text';
 
 const { width } = Dimensions.get('window');
 
+@observer
 export default class Chat extends SafeComponent {
     @observable contentHeight = 0;
     @observable scrollViewHeight = 0;

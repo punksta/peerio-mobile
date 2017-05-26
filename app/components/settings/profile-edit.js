@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import {
     View, ScrollView, Text, TextInput
 } from 'react-native';
@@ -26,6 +27,7 @@ const flexRow = {
     alignItems: 'center'
 };
 
+@observer
 export default class ProfileEdit extends SafeComponent {
     @observable firstName;
     @observable lastName;

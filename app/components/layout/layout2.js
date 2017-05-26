@@ -1,9 +1,11 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import { vars } from '../../styles/styles';
 
+@observer
 export default class Layout2 extends SafeComponent {
     constructor(props) {
         super(props);

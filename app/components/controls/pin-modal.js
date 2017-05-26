@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import Pin from './pin';
@@ -7,6 +8,7 @@ import { vars } from '../../styles/styles';
 import uiState from '../layout/ui-state';
 import BgPattern from '../controls/bg-pattern';
 
+@observer
 export default class PinModal extends SafeComponent {
     skipText = `SKIP`;
     initialText = `INITIAL`;

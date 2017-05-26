@@ -1,9 +1,11 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { Text, View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 
 const diameter = 18;
 
+@observer
 export default class ErrorCircle extends SafeComponent {
     renderThrow() {
         if (!this.props.visible) return null;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -16,6 +17,7 @@ const itemContainerStyle = {
     borderColor: 'green'
 };
 
+@observer
 export default class SettingsItem extends SafeComponent {
     press() {
         // console.log('settings-item.js: press');

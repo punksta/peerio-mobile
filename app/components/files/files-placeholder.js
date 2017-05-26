@@ -1,10 +1,12 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text, Dimensions, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
 const arrowDownZeroState = require('../../assets/arrow-down-zero-state.png');
 
+@observer
 export default class FilesPlaceholder extends SafeComponent {
     constructor(props) {
         super(props);

@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { when } from 'mobx';
+import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
 import Layout1 from '../layout/layout1';
@@ -21,6 +22,7 @@ const actions = {
     share: () => contactState.share()
 };
 
+@observer
 export default class ContactSelector extends SafeComponent {
 
     userbox(contact, i) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
@@ -26,6 +27,7 @@ const bottomRowStyle = {
     padding: 0
 };
 
+@observer
 export default class Tabs extends SafeComponent {
 
     action(text, route, icon, bubble) {

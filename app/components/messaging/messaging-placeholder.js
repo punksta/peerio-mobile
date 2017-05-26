@@ -1,9 +1,11 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text, Dimensions, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 
 const chatZeroState = require('../../assets/chat-zero-state.png');
 
+@observer
 export default class MessagingPlaceholder extends SafeComponent {
     constructor(props) {
         super(props);

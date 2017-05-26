@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, PanResponder, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
@@ -8,6 +9,7 @@ import { inputMain } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { uiState, chatState } from '../states';
 
+@observer
 export default class InputMain extends SafeComponent {
     @observable value = '';
     get hasText() {
@@ -19,17 +21,6 @@ export default class InputMain extends SafeComponent {
         this.plus = this.plus.bind(this);
         this.send = this.send.bind(this);
         this.onChangeText = this.onChangeText.bind(this);
-    }
-
-    componentWillMount() {
-        this.panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: (/* evt, gestureState */) => {
-                requestAnimationFrame(() => {
-                    this.input.focus();
-                });
-                return true;
-            }
-        });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -57,6 +48,7 @@ export default class InputMain extends SafeComponent {
     }
 
     renderThrow() {
+        console.log('call render throw input-main');
         const { tiStyle, iconStyle, outerStyle, autoExpandingInputContainerStyle,
             sendIconStyleNormal, sendIconStyleActive } = inputMain;
         const icon = icons.white(this.hasText ? 'send' : 'thumb-up', this.send, iconStyle);

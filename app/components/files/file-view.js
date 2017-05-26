@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { Text, View } from 'react-native';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
@@ -31,7 +32,7 @@ const hintStyle = {
     color: 'rgba(0,0,0,.54)'
 };
 
-
+@observer
 export default class FileView extends SafeComponent {
     get file() {
         return fileState.currentFile || {};

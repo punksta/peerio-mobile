@@ -1,7 +1,6 @@
 import React from 'react';
-import {
-    View, Text
-} from 'react-native';
+import { View, Text } from 'react-native';
+import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { circles } from '../../styles/styles';
 
@@ -27,6 +26,7 @@ const dashText = {
     fontSize: 18
 };
 
+@observer
 export default class Circles extends SafeComponent {
     active(i) {
         return (

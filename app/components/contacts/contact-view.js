@@ -1,5 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
+import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
 import contactState from '../contacts/contact-state';
@@ -13,6 +14,7 @@ const flexRow = {
     alignItems: 'center'
 };
 
+@observer
 export default class ContactView extends SafeComponent {
 
     renderThrow() {

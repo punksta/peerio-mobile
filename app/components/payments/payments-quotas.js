@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { ScrollView, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -16,6 +17,7 @@ const header = {
     fontWeight: 'bold'
 };
 
+@observer
 export default class PaymentsQuotas extends SafeComponent {
     renderThrow() {
         const q = User.current.quota;

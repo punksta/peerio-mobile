@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { LayoutAnimation, Picker, View } from 'react-native';
 import _ from 'lodash';
 import SafeComponent from '../shared/safe-component';
@@ -7,6 +8,7 @@ import uiState from '../layout/ui-state';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 
+@observer
 export default class PickerPopup extends SafeComponent {
     constructor(props) {
         super(props);

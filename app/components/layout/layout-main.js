@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, StatusBar, Animated, Dimensions } from 'react-native';
 import { reaction, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -18,6 +19,7 @@ import routerModal from '../routes/router-modal';
 
 const { height } = Dimensions.get('window');
 
+@observer
 export default class LayoutMain extends SafeComponent {
     @observable modalVisible = false;
 

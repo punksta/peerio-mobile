@@ -1,9 +1,11 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, ScrollView } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 
+@observer
 export default class Layout1 extends SafeComponent {
     @observable height = 0;
 

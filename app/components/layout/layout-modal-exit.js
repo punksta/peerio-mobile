@@ -1,10 +1,12 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import Layout1 from '../layout/layout1';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 
+@observer
 export default class LayoutModalExit extends SafeComponent {
     exitRow() {
         const container = {

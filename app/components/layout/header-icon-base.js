@@ -1,8 +1,10 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 
+@observer
 export default class HeaderIconBase extends SafeComponent {
     icon = '';
     action = () => { };

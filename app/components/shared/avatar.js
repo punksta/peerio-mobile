@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity, Dimensions, LayoutAnimation } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -93,6 +94,7 @@ const systemMessageStyle = {
 
 const { width } = Dimensions.get('window');
 
+@observer
 export default class Avatar extends SafeComponent {
     @observable showError = false;
 

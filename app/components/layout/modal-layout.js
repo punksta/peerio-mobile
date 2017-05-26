@@ -1,10 +1,12 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { Animated, Dimensions, StatusBar, Platform } from 'react-native';
 import { reaction, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import routerModal from '../routes/router-modal';
 
+@observer
 export default class ModalLayout extends SafeComponent {
     @observable modal = null;
 

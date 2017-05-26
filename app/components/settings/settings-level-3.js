@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text, TextInput, Clipboard } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -27,6 +28,7 @@ const whiteStyle = {
     backgroundColor: vars.white, paddingTop: 10, paddingHorizontal
 };
 
+@observer
 export default class SettingsLevel2 extends SafeComponent {
     key2fa = `FY5DGKRMJHXCLJDJJAOISDUUSIA`;
 

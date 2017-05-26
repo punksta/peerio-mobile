@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Menu, { MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu';
 import moment from 'moment';
@@ -39,6 +40,7 @@ const shrinkFill = {
 };
 
 
+@observer
 export default class GhostItem extends SafeComponent {
     reloadGhosts() {
         // TODO: remove when client lib handles updates

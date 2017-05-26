@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, ListView, Animated } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -10,6 +11,7 @@ import chatState from './chat-state';
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
+@observer
 export default class Files extends SafeComponent {
     constructor(props) {
         super(props);

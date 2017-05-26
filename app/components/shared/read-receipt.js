@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { contactStore } from '../../lib/icebear';
@@ -15,6 +16,7 @@ const circleStyle = {
     alignItems: 'center'
 };
 
+@observer
 export default class ReadReceipt extends SafeComponent {
     constructor(props) {
         super(props);

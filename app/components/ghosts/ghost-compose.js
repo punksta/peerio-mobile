@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -86,6 +87,7 @@ the onSubmitEditing event instead of inserting a
 newline into the field.
 `;
 
+@observer
 export default class ComposeMessage extends SafeComponent {
     @observable recipients = __DEV__ ?
         ['seav@gmail.com', 'testvsov@bl.com', 'romeiro@romeiro.com'] : [];

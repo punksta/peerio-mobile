@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -6,6 +7,7 @@ import { vars } from '../../styles/styles';
 
 // const width = Dimensions.get('window').width;
 
+@observer
 export default class FileProgress extends SafeComponent {
     // @observable width = 0;
     prevFile = null;

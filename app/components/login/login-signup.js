@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, ActivityIndicator, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { tu } from '../utils/translator';
@@ -8,6 +9,7 @@ import signupState from '../signup/signup-state';
 import loginState from '../login/login-state';
 import { vars } from '../../styles/styles';
 
+@observer
 export default class LoginSignup extends SafeComponent {
     constructor(props) {
         super(props);

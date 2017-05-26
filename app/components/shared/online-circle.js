@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 
@@ -21,6 +22,7 @@ const circleOffline = {
     backgroundColor: 'transparent'
 };
 
+@observer
 export default class OnlineCircle extends SafeComponent {
     renderThrow() {
         if (!this.props.visible) return null;

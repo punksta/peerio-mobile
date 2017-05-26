@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
@@ -8,6 +9,7 @@ import fileState from '../files/file-state';
 import imagePicker from '../helpers/imagepicker';
 import FileInlineProgress from '../files/file-inline-progress';
 
+@observer
 export default class InputMainContainer extends SafeComponent {
     constructor(props) {
         super(props);

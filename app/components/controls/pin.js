@@ -1,10 +1,6 @@
 import React from 'react';
-import {
-    Text,
-    TouchableOpacity,
-    ActivityIndicator,
-    View
-} from 'react-native';
+import { observer } from 'mobx-react/native';
+import { Text, TouchableOpacity, ActivityIndicator, View } from 'react-native';
 import { t } from 'peerio-translator';
 import { observable } from 'mobx';
 import * as Animatable from 'react-native-animatable';
@@ -15,6 +11,7 @@ import icons from '../helpers/icons';
 import { vars, circles, pin } from '../../styles/styles';
 import Util from '../helpers/util';
 
+@observer
 export default class Pin extends SafeComponent {
     @observable message = '';
     @observable enteredPin = '';

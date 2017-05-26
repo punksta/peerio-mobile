@@ -1,8 +1,10 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { Animated, Easing } from 'react-native';
 import { observable, reaction, when } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 
+@observer
 export default class Swiper extends SafeComponent {
     @observable width = 0;
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { gradient } from '../controls/effects';
@@ -6,6 +7,7 @@ import routerMain from '../routes/router-main';
 import { vars } from '../../styles/styles';
 import BackIcon from './back-icon';
 
+@observer
 export default class HeaderMain extends SafeComponent {
     renderThrow() {
         let leftIcon = null;

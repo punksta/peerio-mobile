@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, ListView, ScrollView, Animated } from 'react-native';
 import { MenuContext } from 'react-native-menu';
 import { observable /* , reaction */ } from 'mobx';
@@ -8,6 +9,7 @@ import ProgressOverlay from '../shared/progress-overlay';
 import GhostItem from './ghost-item';
 import { mailStore } from '../../lib/icebear';
 
+@observer
 export default class Ghosts extends SafeComponent {
     constructor(props) {
         super(props);

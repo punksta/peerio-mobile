@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
@@ -6,6 +7,7 @@ import chatState from './chat-state';
 import { User, contactStore } from '../../lib/icebear';
 import icons from '../helpers/icons';
 
+@observer
 export default class ChatListItem extends SafeComponent {
     get rightIcon() {
         const { chat } = this.props;

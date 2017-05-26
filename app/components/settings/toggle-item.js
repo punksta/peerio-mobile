@@ -1,8 +1,10 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import SettingsItem from './settings-item';
 import Toggle from './toggle';
 
+@observer
 export default class ToggleItem extends SafeComponent {
     get active() {
         return this.props.state[this.props.prop];

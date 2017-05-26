@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text, TextInput } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -11,6 +12,7 @@ import icons from '../helpers/icons';
 import { fileStore } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
 
+@observer
 export default class SelectFiles extends SafeComponent {
     @observable findFileText = null;
 

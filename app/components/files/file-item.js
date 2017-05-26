@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -6,6 +7,7 @@ import FileProgress from './file-progress';
 import FileInnerItem from './file-inner-item';
 import fileState from './file-state';
 
+@observer
 export default class FileItem extends SafeComponent {
     @observable store = {
         get checkBoxHidden() {

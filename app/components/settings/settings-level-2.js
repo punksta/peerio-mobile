@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -24,6 +25,7 @@ const spacer = {
     height: 24
 };
 
+@observer
 export default class SettingsLevel2 extends SafeComponent {
     twoFactorTest() {
         popupInputCancel(`${tx('dialog_enter2FA')}:`);

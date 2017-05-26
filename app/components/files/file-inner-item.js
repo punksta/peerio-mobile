@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { Text, Dimensions, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
@@ -32,6 +33,7 @@ const fileInfoContainerStyle = {
     borderColor: 'green'
 };
 
+@observer
 export default class FileInnerItem extends SafeComponent {
     onPress() {
         const file = this.props.file;

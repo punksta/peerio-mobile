@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { Text, ActivityIndicator, View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
@@ -6,6 +7,7 @@ import ErrorCircle from './error-circle';
 
 const avatarDiameter = 36;
 
+@observer
 export default class AvatarCircle extends SafeComponent {
     renderThrow() {
         const { large, medium, contact, loading } = this.props;
