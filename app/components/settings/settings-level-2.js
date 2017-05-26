@@ -44,7 +44,6 @@ export default class SettingsLevel2 extends SafeComponent {
                 <SettingsItem
                     title="title_showAccountKey"
                     icon="visibility"
-                    disabled={!user.autologinEnabled}
                     onPress={() => settingsState.showPassphrase()} />
                 {this.autoLoginToggle()}
             </View>
