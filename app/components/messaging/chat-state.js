@@ -80,6 +80,10 @@ class ChatState extends RoutedState {
             !this.currentChat.loadingMessages;
     }
 
+    get canSendAck() {
+        return this.canSend && this.currentChat.canSendAck;
+    }
+
     @action addMessage(msg, files) {
         this.currentChat && (
             files ? this.currentChat.shareFiles(files) : this.currentChat.sendMessage(msg)

@@ -38,7 +38,7 @@ export default class InputMain extends SafeComponent {
     }
 
     send() {
-        if (!uiState.isAuthenticated) return;
+        if (!this.canSend) return;
         this.hasText ? this.props.send(this.value) : this.props.sendAck();
         this.value = '';
     }
@@ -47,12 +47,16 @@ export default class InputMain extends SafeComponent {
         this.input.ti.focus();
     }
 
+    get canSend() {
+        return uiState.isAuthenticated && (this.hasText ? chatState.canSend : chatState.canSendAck);
+    }
+
     renderThrow() {
         console.log('call render throw input-main');
         const { tiStyle, iconStyle, outerStyle, autoExpandingInputContainerStyle,
             sendIconStyleNormal, sendIconStyleActive } = inputMain;
         const icon = icons.white(this.hasText ? 'send' : 'thumb-up', this.send, iconStyle);
-        const sendIconStyle = uiState.isAuthenticated ? sendIconStyleActive : sendIconStyleNormal;
+        const sendIconStyle = this.canSend ? sendIconStyleActive : sendIconStyleNormal;
         const chatName = chatState.title;
         return (
             <View style={outerStyle}>
