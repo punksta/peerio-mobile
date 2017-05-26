@@ -110,7 +110,7 @@ export default class TextBox extends SafeComponent {
         // we don't give user the ability to hide passphrase again, because Apple
         this.showSecret = true;
         // prevent cursor skip
-        this._skip = true;
+        if (this.value && Platform.OS === 'android') this._skip = true;
     }
 
     submit = () => {
