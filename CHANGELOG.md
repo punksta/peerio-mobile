@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.56.0"></a>
+# [3.56.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.55.0...v3.56.0) (2017-05-26)
+
+
+### Bug Fixes
+
+* **ui:** added more convoluted logic for keeping cursor position cool ([589bca7](https://github.com/PeerioTechnologies/peerio-mobile/commit/589bca7))
+* **ui:** return observer everywhere ([98c99ea](https://github.com/PeerioTechnologies/peerio-mobile/commit/98c99ea))
+* **ui:** task #3392 ([2a9893f](https://github.com/PeerioTechnologies/peerio-mobile/commit/2a9893f))
+
+
+### Features
+
+* **android:** rounded icon ([8aaeb11](https://github.com/PeerioTechnologies/peerio-mobile/commit/8aaeb11))
+* **ui:** always allow viewing account key ([3c3f06e](https://github.com/PeerioTechnologies/peerio-mobile/commit/3c3f06e))
+
+
+
 <a name="3.55.0"></a>
 # [3.55.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.54.0...v3.55.0) (2017-05-25)
 
