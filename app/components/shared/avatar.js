@@ -155,7 +155,7 @@ export default class Avatar extends SafeComponent {
                 style={lastMessageTextStyle}>
                 {tagify(this.props.message || '', User.current.username)}
             </Text>
-        ) : null;
+        ) : this.props.messageComponent;
     }
 
     get systemMessage() {
@@ -375,6 +375,7 @@ Avatar.propTypes = {
     receipts: React.PropTypes.any,
     rightIcon: React.PropTypes.any,
     message: React.PropTypes.string,
+    messageComponent: React.PropTypes.any,
     title: React.PropTypes.string,
     systemMessage: React.PropTypes.any,
     online: React.PropTypes.bool,

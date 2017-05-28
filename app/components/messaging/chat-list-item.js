@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import chatState from './chat-state';
-import { User, contactStore } from '../../lib/icebear';
+import { User, contactStore, systemMessages } from '../../lib/icebear';
 import icons from '../helpers/icons';
+import { tx } from '../utils/translator';
 
 @observer
 export default class ChatListItem extends SafeComponent {
@@ -19,6 +20,23 @@ export default class ChatListItem extends SafeComponent {
         );
     }
 
+    renderMostRecentMessage(c) {
+        const m = c.mostRecentMessage;
+        if (!m) return '';
+        if (m.systemData) {
+            return <Text style={{ fontStyle: 'italic' }}>{systemMessages.getSystemMessageText(m)}</Text>;
+        }
+        let username = m.sender.username;
+        if (username === User.current.username) username = tx('title_you');
+        return (
+            <Text><Text style={{ fontWeight: 'bold' }}>{username}{`: `}</Text>
+                {m.files && m.files.length
+                    ? tx('title_filesShared', { count: m.files.length })
+                    : m.text}
+            </Text>
+        );
+    }
+
     renderThrow() {
         const { chat } = this.props;
         const { mostRecentMessage, participants } = chat;
@@ -29,9 +47,8 @@ export default class ChatListItem extends SafeComponent {
         // two participants
         if (participants && participants.length === 1) contact = participants[0];
         const key = chat.id;
-        const msg = mostRecentMessage ? mostRecentMessage.text : '';
         const timestamp = mostRecentMessage ? mostRecentMessage.messageTimestampText : null;
-        const text = msg ? msg.replace(/\n[ ]+/g, '\n') : '';
+        const message = this.renderMostRecentMessage(chat);
         const onPress = () => chatState.routerMain.chats(chat);
         const unread = chat.unreadCount > 0;
         return (
@@ -47,7 +64,7 @@ export default class ChatListItem extends SafeComponent {
                 contact={contact}
                 title={chat.name}
                 hideOnline
-                message={text}
+                messageComponent={message}
                 key={key}
                 onPress={onPress}
                 onPressAvatar={onPress}
