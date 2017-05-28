@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.58.0"></a>
+# [3.58.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.57.0...v3.58.0) (2017-05-28)
+
+
+### Features
+
+* **ui:** hide passphrase after showing it task #4093 ([374af23](https://github.com/PeerioTechnologies/peerio-mobile/commit/374af23))
+* **ui:** last message for system messages and files ([a23d41b](https://github.com/PeerioTechnologies/peerio-mobile/commit/a23d41b))
+* **ui:** socket reset with 30000 seconds timeout #4287 ([685de06](https://github.com/PeerioTechnologies/peerio-mobile/commit/685de06))
+* **ui:** warn when deleting shared files task #3883 ([6f21ec2](https://github.com/PeerioTechnologies/peerio-mobile/commit/6f21ec2))
+
+
+
 <a name="3.57.0"></a>
 # [3.57.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.56.0...v3.57.0) (2017-05-28)
 
