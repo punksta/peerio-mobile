@@ -160,7 +160,7 @@ export default class ContactSelector extends SafeComponent {
     }
 
     item(contact, i) {
-        const { username } = contact;
+        const { username, fullName } = contact;
         return (
             <Avatar
                 contact={contact}
@@ -168,6 +168,7 @@ export default class ContactSelector extends SafeComponent {
                 checkedKey={username}
                 checkedState={contactState.recipientsMap}
                 key={username || i}
+                title={fullName}
                 message={username}
                 hideOnline
                 onPress={() => contactState.toggle(contact)} />
