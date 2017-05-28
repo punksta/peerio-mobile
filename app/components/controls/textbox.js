@@ -108,7 +108,7 @@ export default class TextBox extends SafeComponent {
 
     toggleSecret = () => {
         // we don't give user the ability to hide passphrase again, because Apple
-        this.showSecret = true;
+        this.showSecret = !this.showSecret;
         // prevent cursor skip
         if (this.value && Platform.OS === 'android') this._skip = true;
     }
@@ -142,7 +142,7 @@ export default class TextBox extends SafeComponent {
     }
 
     get secretIcon() {
-        return !this.props.secureTextEntry || this.showSecret ? null : (
+        return !this.props.secureTextEntry ? null : (
             <View style={textbox.iconContainer}>
                 {icons.dark(
                     this.showSecret ? 'visibility-off' : 'visibility',
