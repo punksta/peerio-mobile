@@ -30,7 +30,9 @@ class FileState extends RoutedState {
     @action delete() {
         const f = this.currentFile ? [this.currentFile] : this.selected;
         const count = f.length;
-        const t = tx((count > 1) ? 'dialog_confirmDeleteFiles' : 'dialog_confirmDeleteFile', { count });
+        const shared = !!f.filter(i => !!i.shared).length;
+        let t = tx((count > 1) ? 'dialog_confirmDeleteFiles' : 'dialog_confirmDeleteFile', { count });
+        if (shared) t += `\n${tx('title_confirmRemoveSharedFiles')}`;
         rnAlertYesNo(t)
             .then(() => {
                 f.forEach(item => {
