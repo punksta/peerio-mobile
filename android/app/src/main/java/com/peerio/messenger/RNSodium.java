@@ -63,4 +63,56 @@ public class RNSodium extends ReactContextBaseJavaModule {
             promise.reject("RNSodium.java: scrypt error", "RNSodium.java: scrypt error");
         }
     }
+
+    @ReactMethod
+    public void signDetached(
+            final String messageB64,
+            final String secretKeyB64,
+            final Promise promise
+    ) {
+        byte[] message = Base64.decode(messageB64, Base64.DEFAULT);
+        byte[] secretKey = Base64.decode(secretKeyB64, Base64.DEFAULT);
+        final int signLength = 64;
+        byte[] buffer = new byte[signLength];
+        int[] bufferLength = new int[1];
+        bufferLength[0] = signLength;
+        int result = _sodium.crypto_sign_detached(
+                buffer,
+                bufferLength,
+                message,
+                message.length,
+                secretKey
+        );
+
+        if (result == 0) {
+            String resultB64 = Base64.encodeToString(buffer, Base64.DEFAULT);
+            promise.resolve(resultB64);
+        } else {
+            promise.reject("RNSodium.java: sign_detached error", "RNSodium.java: sign_detached error");
+        }
+    }
+
+    @ReactMethod
+    public void verifyDetached(
+            final String messageB64,
+            final String signatureB64,
+            final String publicKeyB64,
+            final Promise promise
+    ) {
+        byte[] message = Base64.decode(messageB64, Base64.DEFAULT);
+        byte[] signature = Base64.decode(signatureB64, Base64.DEFAULT);
+        byte[] publicKey = Base64.decode(publicKeyB64, Base64.DEFAULT);
+        int result = _sodium.crypto_sign_verify_detached(
+                signature,
+                message,
+                message.length,
+                publicKey
+        );
+
+        if (result == 0) {
+            promise.resolve(true);
+        } else {
+            promise.reject("RNSodium.java: verify_detached error", "RNSodium.java: verify_detached error");
+        }
+    }
 }

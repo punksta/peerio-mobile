@@ -1,5 +1,5 @@
 import { NativeModules } from 'react-native';
-import { b64ToBytes, bytesToB64 } from './worker';
+import { b64ToBytes, bytesToB64 } from './peerio-icebear/crypto/util';
 
 function scryptNative(password, salt, options, callback) {
     const passwordB64 = bytesToB64(password);
@@ -12,6 +12,22 @@ function scryptNative(password, salt, options, callback) {
         .then(() => console.log(`scrypt-worker.js: executed in ${(new Date()).getTime() - start}`));
 }
 
+function signDetachedNative(message, secretKey) {
+    const messageB64 = bytesToB64(message);
+    const secretKeyB64 = bytesToB64(secretKey);
+    return NativeModules.RNSodium.signDetached(messageB64, secretKeyB64)
+        .then(b64ToBytes);
+}
+
+function verifyDetachedNative(message, signature, publicKey) {
+    const messageB64 = bytesToB64(message);
+    const signatureB64 = bytesToB64(signature);
+    const publicKeyB64 = bytesToB64(publicKey);
+    return NativeModules.RNSodium.verifyDetached(messageB64, signatureB64, publicKeyB64);
+}
+
 module.exports = {
-    scryptNative
+    scryptNative,
+    signDetachedNative,
+    verifyDetachedNative
 };
