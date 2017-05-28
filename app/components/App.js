@@ -9,9 +9,7 @@ import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
 import { gradient } from './controls/effects';
 import { clientApp, crypto } from '../lib/icebear';
-import worker from '../lib/worker';
-import { scryptToWorker, signDetachedToWorker, verifyDetachedToWorker } from '../lib/scrypt-worker';
-import { scryptNative } from '../lib/scrypt-native';
+import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import '../lib/sounds';
 import './utils/bridge';
@@ -75,17 +73,18 @@ export default class App extends SafeComponent {
         AppState.addEventListener('change', this._handleAppStateChange);
         AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
         NativeModules.PrivacySnapshot && NativeModules.PrivacySnapshot.enabled(true);
-        worker.init()
-            .then(() => {
-                console.log('App.js: settings worker scrypt');
-                crypto.setScrypt(scryptToWorker);
-                if (NativeModules.RNSodium && NativeModules.RNSodium.scrypt) {
-                    console.log('App.js: using native scrypt');
-                    crypto.setScrypt(scryptNative);
-                }
-                console.log('App.js: settings worker sign/verify');
-                crypto.sign.setImplementation(signDetachedToWorker, verifyDetachedToWorker);
-            });
+        if (NativeModules.RNSodium && NativeModules.RNSodium.scrypt) {
+            console.log('App.js: using native scrypt');
+            crypto.setScrypt(scryptNative);
+        }
+        console.log('App.js: settings worker sign/verify');
+        if (NativeModules.RNSodium) {
+            const { signDetached, verifyDetached } = NativeModules.RNSodium;
+            if (signDetached && verifyDetached) {
+                // console.log('Using native implementation');
+                crypto.sign.setImplementation(signDetachedNative, verifyDetachedNative);
+            }
+        }
     }
 
     _handleAppStateChange(appState) {

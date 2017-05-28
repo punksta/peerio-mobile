@@ -15,7 +15,6 @@
     "ios-dev": "react-native run-ios",
     "ios-expandoo": "react-native run-ios --scheme expandoo --simulator \"iPhone 7\"",
     "android": "react-native run-android",
-    "android-worker-bundle": "./node_modules/.bin/react-native bundle --entry-file index.worker.js --bundle-output android/app/src/main/assets/index.worker.bundle --platform android --reset-cache",
     "android-signed": "npm run build-android && bash scripts/release_android.sh",
     "android-reinstall-gm": "adb shell pm uninstall -k com.peerio && adb install android/app/build/outputs/apk/app-x86-release-signed.apk",
     "lint": "eslint --fix --ext .js,.jsx .",

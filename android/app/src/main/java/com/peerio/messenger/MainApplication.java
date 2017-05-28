@@ -3,10 +3,8 @@ package com.peerio.messenger;
 import android.app.Application;
 import android.util.Log;
 
-import com.fabricio.vergal.RNWorkers.RNWorkersManager;
 import com.facebook.react.ReactApplication;
 import com.BV.LinearGradient.LinearGradientPackage;
-import com.fabricio.vergal.RNWorkers.RNWorkersPackage;
 import com.chirag.RNMail.RNMail;
 import com.idehub.Billing.InAppBillingBridgePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -37,8 +35,6 @@ public class MainApplication extends Application implements ReactApplication {
     public void onCreate() {
         super.onCreate();
         SoLoader.init(this, false);
-        RNWorkersManager.getInstance().init(this, BuildConfig.DEBUG);
-        RNWorkersManager.getInstance().startWorkers();
         // Stetho.initializeWithDefaults(this);
     }
 
@@ -55,7 +51,6 @@ public class MainApplication extends Application implements ReactApplication {
                     new RNSodiumPackage(),
                     new RNKeychainPackage(),
                     new LinearGradientPackage(),
-                    new RNWorkersPackage(),
                     new RNMail(),
                     new InAppBillingBridgePackage(),
                     new VectorIconsPackage(),
