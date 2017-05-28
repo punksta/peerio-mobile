@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.57.0"></a>
+# [3.57.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.56.0...v3.57.0) (2017-05-28)
+
+
+### Bug Fixes
+
+* **ui:** only show username once in contact selector task #4337 ([b116d8b](https://github.com/PeerioTechnologies/peerio-mobile/commit/b116d8b))
+
+
+### Features
+
+* **android:** removing workers ([531e0a3](https://github.com/PeerioTechnologies/peerio-mobile/commit/531e0a3))
+* **crypto:** adding native android implementation ([3b6cc12](https://github.com/PeerioTechnologies/peerio-mobile/commit/3b6cc12))
+* **crypto:** native sign/verify for iOS ([5c2bf49](https://github.com/PeerioTechnologies/peerio-mobile/commit/5c2bf49))
+
+
+
 <a name="3.56.0"></a>
 # [3.56.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.55.0...v3.56.0) (2017-05-26)
 
