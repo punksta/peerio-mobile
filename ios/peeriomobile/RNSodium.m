@@ -52,4 +52,54 @@ RCT_REMAP_METHOD(scrypt,
     }
 }
 
+RCT_REMAP_METHOD(signDetached,
+    messageB64:(NSString*)messageB64
+    secretKeyB64:(NSString*)secretKeyB64
+    resolver: (RCTPromiseResolveBlock)resolve
+    rejecter:(RCTPromiseRejectBlock)reject)
+{
+    NSData *message = [[NSData alloc] initWithBase64EncodedString:messageB64 options:0];
+    NSData *secretKey = [[NSData alloc] initWithBase64EncodedString:secretKeyB64 options:0];
+    unsigned long long signLength = 64;
+    NSMutableData *buffer = [NSMutableData dataWithLength:signLength];
+    int result = crypto_sign_detached(
+      buffer.mutableBytes,
+      &signLength,
+      message.bytes,
+      message.length,
+      secretKey.bytes
+    );
+    if (result == 0) {
+        NSString* resultB64 = [buffer base64Encoding];
+        resolve(resultB64);
+    } else {
+        reject(@"RNSodium.m: signDetached error", nil, nil);
+    }
+}
+
+RCT_REMAP_METHOD(verifyDetached,
+    messageB64:(NSString*)messageB64
+    signatureB64:(NSString*)signatureB64
+    publicKeyB64:(NSString*)publicKeyB64
+    resolver: (RCTPromiseResolveBlock)resolve
+    rejecter:(RCTPromiseRejectBlock)reject)
+{
+    NSData *message = [[NSData alloc] initWithBase64EncodedString:messageB64 options:0];
+    NSData *signature = [[NSData alloc] initWithBase64EncodedString:signatureB64 options:0];
+    NSData *publicKey = [[NSData alloc] initWithBase64EncodedString:publicKeyB64 options:0];
+    int signLength = 64;
+    NSMutableData *buffer = [NSMutableData dataWithLength:signLength];
+    int result = crypto_sign_verify_detached(
+      signature.bytes,
+      message.bytes,
+      message.length,
+      publicKey.bytes
+    );
+    if (result == 0) {
+        resolve(@"true");
+    } else {
+        reject(@"RNSodium.m: verifyDetached error", nil, nil);
+    }
+}
+
 @end

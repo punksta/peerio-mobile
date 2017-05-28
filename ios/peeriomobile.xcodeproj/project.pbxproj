@@ -25,7 +25,6 @@
 		0235B5DB1E65DEAF001D77D1 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */; };
 		0235B6611E664F02001D77D1 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B6561E664ECB001D77D1 /* libRNDeviceInfo.a */; };
 		023A731F1DA6D58B00E47992 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02FDD4B41DA6457E004E1D5A /* libRNRandomBytes.a */; };
-		02420A521EA79E0D005FFB89 /* worker.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 02420A511EA79E0D005FFB89 /* worker.jsbundle */; };
 		0248F0721E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
 		025373851EB3751800752E61 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 025373841EB3751800752E61 /* libsodium.a */; };
 		0253784B1EC4E1A000752E61 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0253781E1EC4E14700752E61 /* libBVLinearGradient.a */; };
@@ -39,7 +38,6 @@
 		02BCD7291DFDE9AF000B8FCF /* libRNFileOpener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD7281DFDE9A2000B8FCF /* libRNFileOpener.a */; };
 		02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD72C1DFE1606000B8FCF /* QuickLook.framework */; };
 		02D764D31D9B13B300E7E57C /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D763F21D9918E800E7E57C /* libRNVectorIcons.a */; };
-		02D7F9251E993C00002F7EF6 /* libRNWorkers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D7F9231E993BF7002F7EF6 /* libRNWorkers.a */; };
 		02DB41591DCD1B1C00E04176 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		02E096B31DAE398B00641B85 /* locales in Resources */ = {isa = PBXBuildFile; fileRef = 02E096B21DAE398B00641B85 /* locales */; };
 		02E096DA1DAE3B7600641B85 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E096D11DAE3B3B00641B85 /* libRNFS.a */; };
@@ -168,6 +166,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = DA5891D81BA9A9FC002B4DB2;
 			remoteInfo = RNDeviceInfo;
+		};
+		02445AC91EDB00B20099A0AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7ECE1E25DB7D00323FB7;
+			remoteInfo = "third-party";
+		};
+		02445ACB1EDB00B20099A0AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 139D7E881E25C6D100323FB7;
+			remoteInfo = "double-conversion";
 		};
 		0253781D1EC4E14700752E61 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -323,13 +335,6 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
-		02D7F9221E993BF7002F7EF6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 96E6790100DC4DB980CD4990 /* RNWorkers.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = BB2E77021E2A695C003CD6F3;
-			remoteInfo = RNWorkers;
-		};
 		02E096D01DAE3B3B00641B85 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 85F72AE1AB9C4B249FDE6333 /* RNFS.xcodeproj */;
@@ -402,7 +407,6 @@
 		02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		02321C5C1D80558E00282EB1 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.jsbundle; sourceTree = "<group>"; };
 		0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
-		02420A511EA79E0D005FFB89 /* worker.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = worker.jsbundle; sourceTree = "<group>"; };
 		0248F0711E5A59BF00C437A9 /* terms.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = terms.txt; path = ../app/assets/terms.txt; sourceTree = "<group>"; };
 		025373841EB3751800752E61 /* libsodium.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsodium.a; path = lib/libsodium.a; sourceTree = "<group>"; };
 		025935571E809AA300FAEE7E /* InAppUtils.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = InAppUtils.xcodeproj; path = "../node_modules/react-native-in-app-utils/InAppUtils.xcodeproj"; sourceTree = "<group>"; };
@@ -442,7 +446,6 @@
 		85F72AE1AB9C4B249FDE6333 /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		88D6237453EF462AAED942D1 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		91AFFC53E28140839A2B4730 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
-		96E6790100DC4DB980CD4990 /* RNWorkers.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNWorkers.xcodeproj; path = "../node_modules/rn-workers/ios/RNWorkers.xcodeproj"; sourceTree = "<group>"; };
 		A0F64612EAF249BC98CB3DE2 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		A7DDFAC6A6F74107A3D45471 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		B836295CD1B344EBB035E1B6 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
@@ -484,7 +487,6 @@
 				0235B6611E664F02001D77D1 /* libRNDeviceInfo.a in Frameworks */,
 				025935601E809AAF00FAEE7E /* libInAppUtils.a in Frameworks */,
 				02202B821E840B07006CDA9B /* libRNMail.a in Frameworks */,
-				02D7F9251E993C00002F7EF6 /* libRNWorkers.a in Frameworks */,
 				02F966301E9D493900FBECFF /* libRCTPrivacySnapshot.a in Frameworks */,
 				0253784B1EC4E1A000752E61 /* libBVLinearGradient.a in Frameworks */,
 			);
@@ -661,14 +663,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		02D7F8F61E993BF7002F7EF6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				02D7F9231E993BF7002F7EF6 /* libRNWorkers.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		02E096C21DAE3B3B00641B85 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -715,7 +709,6 @@
 			isa = PBXGroup;
 			children = (
 				02726F571EB33C7A00D82BF5 /* libsodium-ios */,
-				02420A511EA79E0D005FFB89 /* worker.jsbundle */,
 				02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */,
 				02321C5C1D80558E00282EB1 /* main.jsbundle */,
 				02A5EE7B1ECA9ECC00ED05C1 /* RNKeychain.m */,
@@ -742,6 +735,8 @@
 				0253B8351E6868F300554265 /* libcxxreact.a */,
 				0253B8371E6868F300554265 /* libjschelpers.a */,
 				0253B8391E6868F300554265 /* libjschelpers.a */,
+				02445ACA1EDB00B20099A0AE /* libthird-party.a */,
+				02445ACC1EDB00B20099A0AE /* libdouble-conversion.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -783,7 +778,6 @@
 				13F5AA2EEB8241769A00F172 /* SQLite.xcodeproj */,
 				0E103048E40D48F8B3368298 /* RNDeviceInfo.xcodeproj */,
 				450DEE9B4CC440CA96F796BA /* RNMail.xcodeproj */,
-				96E6790100DC4DB980CD4990 /* RNWorkers.xcodeproj */,
 				E324EB0D0FAE4F96A2D57F34 /* RCTPrivacySnapshot.xcodeproj */,
 				91AFFC53E28140839A2B4730 /* BVLinearGradient.xcodeproj */,
 			);
@@ -1007,10 +1001,6 @@
 					ProjectRef = 53F9542E76844F59917732EA /* RNVectorIcons.xcodeproj */;
 				},
 				{
-					ProductGroup = 02D7F8F61E993BF7002F7EF6 /* Products */;
-					ProjectRef = 96E6790100DC4DB980CD4990 /* RNWorkers.xcodeproj */;
-				},
-				{
 					ProductGroup = 0235B5B41E65DE24001D77D1 /* Products */;
 					ProjectRef = 13F5AA2EEB8241769A00F172 /* SQLite.xcodeproj */;
 				},
@@ -1126,6 +1116,20 @@
 			fileType = archive.ar;
 			path = libRNDeviceInfo.a;
 			remoteRef = 0235B6551E664ECB001D77D1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02445ACA1EDB00B20099A0AE /* libthird-party.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libthird-party.a";
+			remoteRef = 02445AC91EDB00B20099A0AE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		02445ACC1EDB00B20099A0AE /* libdouble-conversion.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libdouble-conversion.a";
+			remoteRef = 02445ACB1EDB00B20099A0AE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		0253781E1EC4E14700752E61 /* libBVLinearGradient.a */ = {
@@ -1275,13 +1279,6 @@
 			remoteRef = 02D763F11D9918E800E7E57C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		02D7F9231E993BF7002F7EF6 /* libRNWorkers.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNWorkers.a;
-			remoteRef = 02D7F9221E993BF7002F7EF6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		02E096D11DAE3B3B00641B85 /* libRNFS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1357,7 +1354,6 @@
 				B73DC4B1F0BD4E63BE1B4BD5 /* Foundation.ttf in Resources */,
 				02E096DC1DAE50E100641B85 /* dict in Resources */,
 				8390076B9DE5486982F0EBE9 /* Ionicons.ttf in Resources */,
-				02420A521EA79E0D005FFB89 /* worker.jsbundle in Resources */,
 				02DB41591DCD1B1C00E04176 /* Images.xcassets in Resources */,
 				1467A9A8E0304BE0953E715B /* Octicons.ttf in Resources */,
 				17093292DCFB4EFBB929257F /* Zocial.ttf in Resources */,
@@ -1382,7 +1378,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "cd $SRCROOT/..\nsource env.sh\n\nif [ \"$CONFIGURATION\" == \"Debug\" ] && [ -f \"ios/main.jsbundle\" ]; then\n    if lsof -Pi :8081 -sTCP:LISTEN -t >/dev/null ; then\n        echo \"Bundle RN: running sim and packager. skipping bundler.\"\n        exit 0\n    fi\nfi\n\nexport NODE_BINARY=node\n\n# clean up\nrm -f ios/main.jsbundle\nrm -f ios/worker.jsbundle\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n   ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\n    ./node_modules/.bin/react-native bundle --entry-file index.worker.js --bundle-output ios/worker.jsbundle --assets-dest --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.worker.js --bundle-output ios/worker.jsbundle --assets-dest --platform ios --reset-cache\nfi\n# check that command was successful\n\nif [ ! -f ios/main.jsbundle ]; then\n    echo \"JS compilation failed. Please check the sources\"\n    exit 1\nfi\n\nif [ ! -f ios/worker.jsbundle ]; then\n    echo \"JS worker compilation failed. Please check the sources\"\n    exit 1\nfi\n";
+			shellScript = "cd $SRCROOT/..\nsource env.sh\n\nif [ \"$CONFIGURATION\" == \"Debug\" ] && [ -f \"ios/main.jsbundle\" ]; then\n    if lsof -Pi :8081 -sTCP:LISTEN -t >/dev/null ; then\n        echo \"Bundle RN: running sim and packager. skipping bundler.\"\n        exit 0\n    fi\nfi\n\nexport NODE_BINARY=node\n\n# clean up\nrm -f ios/main.jsbundle\nrm -f ios/worker.jsbundle\nif [ \"$CONFIGURATION\" == \"Debug\" ]; then\n   ./node_modules/.bin/react-native bundle --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\nif [ \"$CONFIGURATION\" == \"Release\" ]; then\n    ./node_modules/.bin/react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --assets-dest \"$CONFIGURATION_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH\" --platform ios --reset-cache\nfi\n# check that command was successful\n\nif [ ! -f ios/main.jsbundle ]; then\n    echo \"JS compilation failed. Please check the sources\"\n    exit 1\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
