@@ -13,7 +13,7 @@ import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/s
 import push from '../lib/push';
 import '../lib/sounds';
 import './utils/bridge';
-// import socketResetIfDead from './utils/socket-reset';
+import socketResetIfDead from './utils/socket-reset';
 
 @observer
 export default class App extends SafeComponent {
@@ -93,7 +93,7 @@ export default class App extends SafeComponent {
         if (appState === 'active') {
             push.disableServerSide();
             clientApp.isFocused = true;
-            // socketResetIfDead();
+            socketResetIfDead();
         }
         if (appState === 'background') {
             push.enableServerSide();
