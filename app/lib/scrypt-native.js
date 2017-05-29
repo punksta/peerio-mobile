@@ -23,7 +23,7 @@ function verifyDetachedNative(message, signature, publicKey) {
     const messageB64 = bytesToB64(message);
     const signatureB64 = bytesToB64(signature);
     const publicKeyB64 = bytesToB64(publicKey);
-    return NativeModules.RNSodium.verifyDetached(messageB64, signatureB64, publicKeyB64);
+    return NativeModules.RNSodium.verifyDetached(messageB64, signatureB64, publicKeyB64).catch(() => false);
 }
 
 module.exports = {

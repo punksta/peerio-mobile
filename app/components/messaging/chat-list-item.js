@@ -22,7 +22,7 @@ export default class ChatListItem extends SafeComponent {
 
     renderMostRecentMessage(c) {
         const m = c.mostRecentMessage;
-        if (!m) return '';
+        if (!m) return null;
         if (m.systemData) {
             return <Text style={{ fontStyle: 'italic' }}>{systemMessages.getSystemMessageText(m)}</Text>;
         }

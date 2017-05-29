@@ -62,18 +62,22 @@ RCT_REMAP_METHOD(signDetached,
     NSData *secretKey = [[NSData alloc] initWithBase64EncodedString:secretKeyB64 options:0];
     unsigned long long signLength = 64;
     NSMutableData *buffer = [NSMutableData dataWithLength:signLength];
-    int result = crypto_sign_detached(
-      buffer.mutableBytes,
-      &signLength,
-      message.bytes,
-      message.length,
-      secretKey.bytes
-    );
-    if (result == 0) {
-        NSString* resultB64 = [buffer base64Encoding];
-        resolve(resultB64);
-    } else {
-        reject(@"RNSodium.m: signDetached error", nil, nil);
+    @try {
+      int result = crypto_sign_detached(
+        buffer.mutableBytes,
+        &signLength,
+        message.bytes,
+        message.length,
+        secretKey.bytes
+      );
+      if (result == 0) {
+          NSString* resultB64 = [buffer base64Encoding];
+          resolve(resultB64);
+      } else {
+          reject(@"RNSodium.m: signDetached error", nil, nil);
+      }
+    } @catch (NSException*) {
+      reject(@"RNSodium.m: signDetached exception", nil, nil);
     }
 }
 
@@ -84,21 +88,24 @@ RCT_REMAP_METHOD(verifyDetached,
     resolver: (RCTPromiseResolveBlock)resolve
     rejecter:(RCTPromiseRejectBlock)reject)
 {
+    @try {
     NSData *message = [[NSData alloc] initWithBase64EncodedString:messageB64 options:0];
     NSData *signature = [[NSData alloc] initWithBase64EncodedString:signatureB64 options:0];
     NSData *publicKey = [[NSData alloc] initWithBase64EncodedString:publicKeyB64 options:0];
     int signLength = 64;
-    NSMutableData *buffer = [NSMutableData dataWithLength:signLength];
-    int result = crypto_sign_verify_detached(
-      signature.bytes,
-      message.bytes,
-      message.length,
-      publicKey.bytes
-    );
-    if (result == 0) {
-        resolve(@"true");
-    } else {
-        reject(@"RNSodium.m: verifyDetached error", nil, nil);
+      int result = crypto_sign_verify_detached(
+        signature.bytes,
+        message.bytes,
+        message.length,
+        publicKey.bytes
+      );
+      if (result == 0) {
+          resolve([NSNumber numberWithInt:1]);
+      } else {
+          reject(@"RNSodium.m: verifyDetached error", nil, nil);
+      }
+    } @catch (NSException*) {
+        reject(@"RNSodium.m: verifyDetached exception", nil, nil);
     }
 }
 
