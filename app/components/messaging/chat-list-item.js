@@ -24,12 +24,12 @@ export default class ChatListItem extends SafeComponent {
         const m = c.mostRecentMessage;
         if (!m) return null;
         if (m.systemData) {
-            return <Text style={{ fontStyle: 'italic' }}>{systemMessages.getSystemMessageText(m)}</Text>;
+            return <Text numberOfLines={1} ellipsizeMode="tail" style={{ fontStyle: 'italic' }}>{systemMessages.getSystemMessageText(m)}</Text>;
         }
         let username = m.sender.username;
         if (username === User.current.username) username = tx('title_you');
         return (
-            <Text><Text style={{ fontWeight: 'bold' }}>{username}{`: `}</Text>
+            <Text numberOfLines={1} ellipsizeMode="tail"><Text style={{ fontWeight: 'bold' }}>{username}{`: `}</Text>
                 {m.files && m.files.length
                     ? tx('title_filesShared', { count: m.files.length })
                     : m.text}
