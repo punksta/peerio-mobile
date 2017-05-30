@@ -89,11 +89,13 @@ export default class App extends SafeComponent {
 
     _handleAppStateChange(appState) {
         console.log(`App.js: AppState change: ${appState}`);
+        if (uiState.appState === 'background' && appState === 'active') {
+            socketResetIfDead();
+        }
         uiState.appState = appState;
         if (appState === 'active') {
             push.disableServerSide();
             clientApp.isFocused = true;
-            socketResetIfDead();
         }
         if (appState === 'background') {
             push.enableServerSide();
