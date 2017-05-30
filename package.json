@@ -66,6 +66,7 @@
     "react-native-animatable": "^1.1.0",
     "react-native-billing": "^2.3.0",
     "react-native-cli": "^2.0.1",
+    "react-native-contacts": "git+https://github.com/PeerioTechnologies/react-native-contacts.git",
     "react-native-crypto": "^2.0.1",
     "react-native-deprecated-custom-components": "^0.1.0",
     "react-native-device-info": "https://github.com/PeerioTechnologies/react-native-device-info",

@@ -24,19 +24,24 @@ public class MainActivity extends ReactActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case 1: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
-                    if (context == null) {
-                        return;
-                    }
-                    context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                            .emit("CameraPermissionsGranted", "");
-                }
+        final int REACT_NATIVE_IMAGE_PICKER_PERMISSION = 1;
+        final int REACT_NATIVE_CONTACTS_PERMISSION = 2;
+        if (grantResults.length > 0) {
+            ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
+            if (context == null) {
+                return;
             }
+            String jsCallback = "";
+            switch (requestCode) {
+                case REACT_NATIVE_IMAGE_PICKER_PERMISSION: jsCallback = "CameraPermissionsGranted"; break;
+                case REACT_NATIVE_CONTACTS_PERMISSION: jsCallback = "ContactPermissionsGranted"; break;
+            }
+
+            context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                    .emit(jsCallback, grantResults[0] == PackageManager.PERMISSION_GRANTED);
         }
+
+
     }
 
 

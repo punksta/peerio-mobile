@@ -4,7 +4,7 @@ import { View, ScrollView } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
-import { settingsState, snackbarState, mainState, loginState } from '../states';
+import { settingsState, snackbarState, mainState, loginState, contactState } from '../states';
 import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-storage-usage';
 import { toggleConnection } from '../main/dev-menu-items';
 
@@ -44,6 +44,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {__DEV__ && <SettingsItem title="Toggle connection" onPress={toggleConnection} />}
                     {__DEV__ && <SettingsItem title="Damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
                     {__DEV__ && <SettingsItem title="Snackbar" onPress={() => snackbarState.pushTemporary('test')} />}
+                    {__DEV__ && <SettingsItem title="Test Contacts" onPress={() => contactState.testImport()} />}
                     {/* <SettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <SettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </ScrollView>

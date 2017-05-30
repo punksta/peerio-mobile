@@ -1,4 +1,6 @@
+import { DeviceEventEmitter } from 'react-native';
 import { observable, action, when } from 'mobx';
+import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
 import { contactStore } from '../../lib/icebear';
 import fileState from '../files/file-state';
@@ -7,6 +9,7 @@ import chatState from '../messaging/chat-state';
 class ContactState extends RoutedState {
     _prefix = 'contacts';
     store = contactStore;
+    _permissionHandler = null;
 
     @action async init() {
         return new Promise(resolve => when(() => !this.store.loading, resolve));
@@ -102,6 +105,93 @@ class ContactState extends RoutedState {
         this.recipients.forEach(username => file.share(username));
         this.exit();
     }
+
+    @action requestPermission() {
+        console.log('contact-state.js: requesting permissions');
+        return new Promise(resolve => RNContacts.requestPermission((err, permission) => {
+            if (err) {
+                console.error(err);
+                resolve('denied');
+                return;
+            }
+            resolve(permission);
+        }));
+    }
+
+    @action hasPermissions() {
+        return new Promise(resolve => {
+            console.log('contact-state.js: checking permissions');
+            RNContacts.checkPermission((err, permission) => {
+                console.log(`contact-state.js: permissions are: ${permission}`);
+                // Contacts.PERMISSION_AUTHORIZED || Contacts.PERMISSION_UNDEFINED || Contacts.PERMISSION_DENIED
+                if (err) {
+                    console.error(err);
+                    resolve('denied');
+                    return;
+                }
+                if (permission === 'requested') {
+                    this.createPermissionHandler(resolve);
+                    return;
+                }
+                if (permission !== 'authorized') {
+                    resolve(this.requestPermission());
+                    return;
+                }
+                resolve(permission);
+            });
+        }).then(permission => {
+            if (permission === 'authorized') {
+                console.log('contact-state.js: authorized');
+                return true;
+            }
+            if (permission === 'denied') {
+                console.log('contact-state.js: denied');
+            }
+            return false;
+        });
+    }
+
+    @action createPermissionHandler(resolve) {
+        this.resolvePermissionHandler(false);
+        this._permissionHandler = data => resolve(data ? 'authorized' : 'denied');
+    }
+
+    @action resolvePermissionHandler(data) {
+        if (this._permissionHandler) {
+            this._permissionHandler(data);
+            this._permissionHandler = null;
+        }
+    }
+
+    @action getContacts() {
+        return new Promise(resolve => RNContacts.getAllWithoutPhotos((err, contacts) => {
+            if (err) {
+                console.error(err);
+                resolve([]);
+                return;
+            }
+            resolve(contacts);
+        }));
+    }
+
+    @action async testImport() {
+        const hasPermissions = await this.hasPermissions();
+        if (!hasPermissions) return;
+        const contacts = await this.getContacts();
+        contacts.forEach(({ givenName, familyName, phoneNumbers }) => {
+            console.log(`${givenName} ${familyName}`);
+            console.log(JSON.stringify(phoneNumbers));
+        });
+    }
 }
 
-export default new ContactState();
+const contactState = new ContactState();
+
+// for android granting permissions
+DeviceEventEmitter.addListener('ContactPermissionsGranted', data => {
+    console.log(`contact-state.js: permissions result ${data}`);
+    contactState.resolvePermissionHandler(data);
+});
+
+
+export default contactState;

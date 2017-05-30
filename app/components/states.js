@@ -5,5 +5,6 @@ import settingsState from './settings/settings-state';
 import snackbarState from './snackbars/snackbar-state';
 import mainState from './main/main-state';
 import loginState from './login/login-state';
+import contactState from './contacts/contact-state';
 
-export { settingsState, snackbarState, mainState, loginState, uiState, chatState, fileState };
+export { settingsState, snackbarState, mainState, loginState, uiState, chatState, fileState, contactState };

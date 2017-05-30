@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.rt2zz.reactnativecontacts.ReactNativeContacts;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.chirag.RNMail.RNMail;
 import com.idehub.Billing.InAppBillingBridgePackage;
@@ -48,6 +49,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+                    new ReactNativeContacts(),
                     new RNSodiumPackage(),
                     new RNKeychainPackage(),
                     new LinearGradientPackage(),
