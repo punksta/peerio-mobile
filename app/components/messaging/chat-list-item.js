@@ -7,6 +7,7 @@ import chatState from './chat-state';
 import { User, contactStore, systemMessages } from '../../lib/icebear';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class ChatListItem extends SafeComponent {
@@ -29,10 +30,13 @@ export default class ChatListItem extends SafeComponent {
         let username = m.sender.username;
         if (username === User.current.username) username = tx('title_you');
         return (
-            <Text numberOfLines={1} ellipsizeMode="tail"><Text style={{ fontWeight: 'bold' }}>{username}{`: `}</Text>
-                {m.files && m.files.length
-                    ? tx('title_filesShared', { count: m.files.length })
-                    : m.text}
+            <Text numberOfLines={1} ellipsizeMode="tail">
+                <Text style={{ fontWeight: 'bold' }}>{username}{`: `}</Text>
+                <Text style={{ color: vars.txtMedium }}>
+                    {m.files && m.files.length
+                        ? tx('title_filesShared', { count: m.files.length })
+                        : m.text}
+                </Text>
             </Text>
         );
     }
