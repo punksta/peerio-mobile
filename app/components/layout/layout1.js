@@ -2,13 +2,22 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ScrollView } from 'react-native';
-import { observable } from 'mobx';
+import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import SnackBarConnection from '../snackbars/snackbar-connection';
+import uiState from '../layout/ui-state';
 
 @observer
 export default class Layout1 extends SafeComponent {
     @observable height = 0;
+
+    componentDidMount() {
+        uiState.currentScrollView = this._scrollView;
+    }
+
+    componentWillUnmount() {
+        uiState.currentScrollView = null;
+    }
 
     renderThrow() {
         const boxStyle = {
@@ -35,6 +44,7 @@ export default class Layout1 extends SafeComponent {
                 style={[boxStyle, this.props.style]}>
                 {this.props.header}
                 <ScrollView
+                    ref={ref => (this._scrollView = ref)}
                     contentContainerStyle={contentContainerStyle}
                     style={{ flex: 1, flexGrow: 1 }}
                     scrollEnabled={!this.props.noScroll}

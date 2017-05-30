@@ -2,13 +2,17 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Navigator } from 'react-native-deprecated-custom-components';
-import { reaction } from 'mobx';
+import { observer } from 'mobx-react/native';
+import { reaction, observable } from 'mobx';
 import BgPattern from '../controls/bg-pattern';
 import { navigator } from '../../styles/styles';
 import { gradient } from '../controls/effects';
 import uiState from '../layout/ui-state';
 
+@observer
 export default class RouteNavigator extends Component {
+    @observable route = null;
+
     componentDidMount() {
         const routes = this.props.routes;
         this.bindRouteroutes = reaction(() => routes.route, route => {
@@ -19,7 +23,8 @@ export default class RouteNavigator extends Component {
             routes.prevRoute = route;
             const rInfo = routes.routes[route];
             uiState.hideAll().then(() => {
-                if (rInfo.replace) {
+                this.route = rInfo;
+/*                if (rInfo.replace) {
                     console.log('reset route stack');
                     this.nav.immediatelyResetRouteStack([rInfo]);
                     return;
@@ -34,38 +39,28 @@ export default class RouteNavigator extends Component {
                     }
                 } else {
                     this.nav.push(rInfo);
-                }
+                } */
             });
-        });
+        }, true);
     }
 
     renderScene(route) {
-        const inner = React.createElement(route.component, { key: 'scene' });
-        this.scene = inner;
-        const hidden = { overflow: 'hidden' };
-        return gradient({
-            testID: `route${route.key}Scene`,
-            removeClippedSubviews: false,
-            key: route.key,
-            style: [navigator.card, hidden]
-        }, [<BgPattern key="bg" />, inner]);
-    }
-
-    configureScene(/* route, routeStack */) {
-        return Navigator.SceneConfigs.PushFromRight;
+        return React.createElement(route.component, { key: `scene${route.key}` });
     }
 
     render() {
+        const { route } = this;
+        const hidden = { overflow: 'hidden' };
+        const inner = route ? gradient({
+            testID: `route${route.key}Scene`,
+            removeClippedSubviews: false,
+            style: [navigator.card, hidden]
+        }, [<BgPattern key="bg" />, this.route ? this.renderScene(this.route) : null]) : null;
         return (
             <View
                 testID="navigatorContainer"
                 style={{ flex: 1 }}>
-                <Navigator
-                    testID="navigator"
-                    ref={nav => (this.nav = nav)}
-                    initialRoute={this.props.routes.first}
-                    configureScene={(route, routeStack) => this.configureScene(route, routeStack)}
-                    renderScene={route => this.renderScene(route)} />
+                {inner}
             </View>
         );
     }

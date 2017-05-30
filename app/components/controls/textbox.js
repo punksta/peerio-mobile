@@ -90,6 +90,8 @@ export default class TextBox extends SafeComponent {
     }
 
     focus = () => {
+        this.textinput.offsetY = this.offsetY;
+        this.textinput.offsetHeight = this.offsetHeight;
         uiState.focusedTextBox = this.textinput;
         this.textinput.focus();
         this.focused = true;
@@ -166,6 +168,13 @@ export default class TextBox extends SafeComponent {
         );
     }
 
+    layout = () => {
+        this._container.measure((frameX, frameY, frameWidth, frameHeight, pageX, pageY) => {
+            this.offsetY = pageY;
+            this.offsetHeight = frameHeight;
+        });
+    }
+
     renderThrow() {
         // console.log('re-render');
         const returnKeyType = this.props.returnKeyType || 'default';
@@ -179,7 +188,7 @@ export default class TextBox extends SafeComponent {
         const { secretIcon } = this;
         const { start, end } = this;
         return (
-            <View style={textbox.outerContainer}>
+            <View style={textbox.outerContainer} onLayout={this.layout} ref={ref => (this._container = ref)}>
                 <View style={[style.outer]}>
                     <View
                         style={[style.radius]}>

@@ -34,7 +34,7 @@ export default class SignupStep1 extends SafeComponent {
             tosLink: text => this.tosLink(text)
         };
         return (
-            <View style={[{ marginTop: 32, paddingHorizontal: vars.wizardPadding }]}>
+            <View style={[{ marginTop: 24, paddingHorizontal: vars.wizardPadding }]}>
                 <Text style={style.text.title}>{t('title_signupStep1')}</Text>
                 <Text testID="signupStep1Title" style={style.text.subTitle}>{t('title_settingsProfile')}</Text>
                 <TextBox
@@ -74,7 +74,7 @@ export default class SignupStep1 extends SafeComponent {
                     </View>
                 </View>
                 {/* <LanguagePickerBox /> */}
-                <Text style={[style.text.info, { fontSize: 14 }]}>
+                <Text style={[style.text.info, { fontSize: 14, marginBottom: 12 }]}>
                     <T k="title_TOSRequestText">{tosParser}</T>
                 </Text>
                 <View style={[{ flexGrow: 1 }]} />

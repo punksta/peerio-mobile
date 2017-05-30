@@ -59,7 +59,7 @@ export default class SignupStep1 extends SafeComponent {
             paddingVertical: 16
         }];
         return (
-            <View style={[{ marginTop: 32 }]}>
+            <View style={[{ marginTop: 24 }]}>
                 <View style={padded}>
                     <Text style={style.text.title}>{t('title_signupStep2')}</Text>
                     <Text testID="signupStep1Title" style={style.text.subTitle}>{t('title_AccountKey')}</Text>

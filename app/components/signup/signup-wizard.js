@@ -34,6 +34,6 @@ export default class SignupWizard extends Wizard {
                 {this.wizard()}
             </View>
         );
-        return <Layout1 body={body} noScroll={signupState.current === 1} footer={this.footer()} />;
+        return <Layout1 body={body} footer={this.footer()} />;
     }
 }

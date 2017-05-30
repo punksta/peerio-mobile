@@ -1,4 +1,4 @@
-import { Keyboard } from 'react-native';
+import { Keyboard, Dimensions } from 'react-native';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import moment from 'moment';
 import { observable, action, reaction, when } from 'mobx';
@@ -6,6 +6,8 @@ import translator from 'peerio-translator';
 import locales from '../../lib/locales';
 import { TinyDb, PhraseDictionary } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
+
+const { height } = Dimensions.get('window');
 
 class UIState extends RoutedState {
     @observable isFirstLogin = false;
@@ -20,6 +22,7 @@ class UIState extends RoutedState {
     @observable appState = 'active';
     @observable debugText = 'test';
     @observable externalViewer = false;
+    @observable currentScrollView = null;
     @observable languages = {
         en: `English`
         // fr: `French`,
@@ -83,15 +86,30 @@ class UIState extends RoutedState {
         const locale = this.locale || 'en';
         return TinyDb.system.setValue('state', { locale });
     }
+
+    @action scrollToTextBox() {
+        const { focusedTextBox, currentScrollView, keyboardHeight } = this;
+        if (focusedTextBox && currentScrollView) {
+            const y = focusedTextBox.offsetY - (height - keyboardHeight) + focusedTextBox.offsetHeight;
+            if (y > 0) {
+                currentScrollView.scrollTo({ y, animated: true });
+                when(() => this.keyboardHeight === 0, () => currentScrollView.scrollTo({ y: 0, animated: true }));
+            }
+        }
+    }
 }
 
 const uiState = new UIState();
 
 reaction(() => uiState.languageSelected, ls => uiState.setLocale(ls));
 
+reaction(() => uiState.keyboardHeight, ls => uiState.scrollToTextBox());
+
 reaction(() => uiState.focusedTextBox, () => {
-    if (uiState.focusedTextBox) {
+    const { focusedTextBox } = uiState;
+    if (focusedTextBox) {
         uiState.pickerVisible = false;
+        uiState.scrollToTextBox();
     }
 });
 
