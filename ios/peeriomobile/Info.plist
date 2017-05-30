@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string></string>
+	<string>Messenger</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -48,7 +48,7 @@
 	<key>NSContactsUsageDescription</key>
 	<string>Access your contacts to find and chat with them</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Access your location</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Upload images and photos to your encrypted storage</string>
 	<key>UIAppFonts</key>
