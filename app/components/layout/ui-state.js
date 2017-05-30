@@ -103,7 +103,7 @@ const uiState = new UIState();
 
 reaction(() => uiState.languageSelected, ls => uiState.setLocale(ls));
 
-reaction(() => uiState.keyboardHeight, ls => uiState.scrollToTextBox());
+reaction(() => uiState.keyboardHeight, () => uiState.scrollToTextBox());
 
 reaction(() => uiState.focusedTextBox, () => {
     const { focusedTextBox } = uiState;

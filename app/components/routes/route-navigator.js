@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Navigator } from 'react-native-deprecated-custom-components';
 import { observer } from 'mobx-react/native';
 import { reaction, observable } from 'mobx';
 import BgPattern from '../controls/bg-pattern';
@@ -17,29 +16,10 @@ export default class RouteNavigator extends Component {
         const routes = this.props.routes;
         this.bindRouteroutes = reaction(() => routes.route, route => {
             console.log(`route-navigator: ${routes.prevRoute}, ${route}`);
-
-            const newIndex = routes.routesList.indexOf(route);
-            const oldIndex = routes.routesList.indexOf(routes.prevRoute);
             routes.prevRoute = route;
             const rInfo = routes.routes[route];
             uiState.hideAll().then(() => {
                 this.route = rInfo;
-/*                if (rInfo.replace) {
-                    console.log('reset route stack');
-                    this.nav.immediatelyResetRouteStack([rInfo]);
-                    return;
-                }
-                if (newIndex === oldIndex - 1) {
-                    this.nav.pop();
-                } else if (newIndex < oldIndex) {
-                    try {
-                        this.nav.jumpTo(rInfo);
-                    } catch (e) {
-                        console.error(e);
-                    }
-                } else {
-                    this.nav.push(rInfo);
-                } */
             });
         }, true);
     }

@@ -32,7 +32,6 @@ export default class SettingsLevel2 extends SafeComponent {
     }
 
     security = () => {
-        const user = User.current;
         return (
             <View style={bgStyle}>
                 {/* <SettingsItem

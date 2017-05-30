@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ScrollView } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import uiState from '../layout/ui-state';
