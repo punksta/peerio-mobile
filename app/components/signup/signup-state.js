@@ -13,7 +13,7 @@ class SignupState extends RoutedState {
     @observable pin = '';
     @observable _current = 0;
     get current() { return this._current; }
-    set current(i) { uiState.hideAll().then(() => (this._current = i)) }
+    set current(i) { uiState.hideAll().then(() => (this._current = i)); }
     // two pages of signup wizard
     @observable count = 2;
     _prefix = 'signup';
