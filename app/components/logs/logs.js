@@ -9,7 +9,7 @@ const { RNMail } = NativeModules;
 
 const mapFormat = ({ time, msg }) => ({
     msg: msg && (typeof msg === 'string' ? msg : stringify(msg)),
-    time: moment(time).format('HH:mm:ss.SSS Z')
+    time: moment(time).format('HH:mm:ss.SSS')
 });
 
 const mapGlue = ({ msg, time }) => `${time}: ${msg}`;
