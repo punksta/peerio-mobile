@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text } from 'react-native';
@@ -37,5 +38,5 @@ export default class ReadReceipt extends SafeComponent {
 }
 
 ReadReceipt.propTypes = {
-    username: React.PropTypes.string
+    username: PropTypes.string
 };

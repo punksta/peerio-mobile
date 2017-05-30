@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
     View
@@ -20,6 +21,6 @@ export default class Center extends Component {
 }
 
 Center.propTypes = {
-    children: React.PropTypes.any.isRequired,
-    style: React.PropTypes.any
+    children: PropTypes.any.isRequired,
+    style: PropTypes.any
 };

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
@@ -29,9 +30,9 @@ export default class ToggleItem extends SafeComponent {
 }
 
 ToggleItem.propTypes = {
-    state: React.PropTypes.any,
-    prop: React.PropTypes.any,
-    title: React.PropTypes.any,
-    onPress: React.PropTypes.any
+    state: PropTypes.any,
+    prop: PropTypes.any,
+    title: PropTypes.any,
+    onPress: PropTypes.any
 };
 

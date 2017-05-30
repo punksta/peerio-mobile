@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Animated, Easing } from 'react-native';
@@ -174,25 +175,25 @@ export default class Swiper extends SafeComponent {
 }
 
 Swiper.propTypes = {
-    children: React.PropTypes.any.isRequired,
-    style: React.PropTypes.any,
+    children: PropTypes.any.isRequired,
+    style: PropTypes.any,
     // {observable({})} observable state
-    state: React.PropTypes.any,
+    state: PropTypes.any,
     // {Animated.Value} property in state which corresponds to swiper width
-    width: React.PropTypes.string,
+    width: PropTypes.string,
     // {Animated.Value} property in state which corresponds to swiper animation X
-    animated: React.PropTypes.string,
+    animated: PropTypes.string,
     // {boolean} property in state which corresponds to swiper state
-    visible: React.PropTypes.string.isRequired,
+    visible: PropTypes.string.isRequired,
     // swipe right to left
-    rightToLeft: React.PropTypes.bool,
+    rightToLeft: PropTypes.bool,
     // or left to right
-    leftToRight: React.PropTypes.bool,
+    leftToRight: PropTypes.bool,
     // expected swiper shift (if not present, will be width + extra
-    shift: React.PropTypes.any,
-    threshold: React.PropTypes.any,
+    shift: PropTypes.any,
+    threshold: PropTypes.any,
     // when swipe action is finished successfully
-    onSwipeOut: React.PropTypes.func,
+    onSwipeOut: PropTypes.func,
     // when swipe action is reset mid-swipe
-    onSwipeReset: React.PropTypes.func
+    onSwipeReset: PropTypes.func
 };

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import {
     View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation
@@ -265,6 +266,6 @@ export default class ContactSelector extends SafeComponent {
 }
 
 ContactSelector.propTypes = {
-    title: React.PropTypes.any,
-    action: React.PropTypes.string
+    title: PropTypes.any,
+    action: PropTypes.string
 };

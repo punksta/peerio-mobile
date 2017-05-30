@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text, TextInput, LayoutAnimation, TouchableOpacity, Platform } from 'react-native';
@@ -224,22 +225,22 @@ export default class TextBox extends SafeComponent {
 }
 
 TextBox.propTypes = {
-    onChangeText: React.PropTypes.func,
-    onSubmit: React.PropTypes.func,
-    value: React.PropTypes.any,
-    state: React.PropTypes.any,
-    valid: React.PropTypes.bool,
-    validationMessage: React.PropTypes.string,
-    hint: React.PropTypes.any.isRequired,
-    info: React.PropTypes.any,
-    name: React.PropTypes.string.isRequired,
-    testID: React.PropTypes.string,
-    returnKeyType: React.PropTypes.any,
-    keyboardType: React.PropTypes.any,
-    secureTextEntry: React.PropTypes.bool,
-    lowerCase: React.PropTypes.bool,
-    autoCapitalize: React.PropTypes.oneOf(['none', 'sentences', 'words', 'characters']),
-    autoCorrect: React.PropTypes.bool,
-    autoShrinkTextLimit: React.PropTypes.number,
-    maxLength: React.PropTypes.number
+    onChangeText: PropTypes.func,
+    onSubmit: PropTypes.func,
+    value: PropTypes.any,
+    state: PropTypes.any,
+    valid: PropTypes.bool,
+    validationMessage: PropTypes.string,
+    hint: PropTypes.any.isRequired,
+    info: PropTypes.any,
+    name: PropTypes.string.isRequired,
+    testID: PropTypes.string,
+    returnKeyType: PropTypes.any,
+    keyboardType: PropTypes.any,
+    secureTextEntry: PropTypes.bool,
+    lowerCase: PropTypes.bool,
+    autoCapitalize: PropTypes.oneOf(['none', 'sentences', 'words', 'characters']),
+    autoCorrect: PropTypes.bool,
+    autoShrinkTextLimit: PropTypes.number,
+    maxLength: PropTypes.number
 };

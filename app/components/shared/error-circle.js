@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, View, TouchableOpacity } from 'react-native';
@@ -44,9 +45,9 @@ export default class ErrorCircle extends SafeComponent {
 }
 
 ErrorCircle.propTypes = {
-    onPress: React.PropTypes.func,
-    visible: React.PropTypes.bool,
-    large: React.PropTypes.bool,
-    invert: React.PropTypes.bool
+    onPress: PropTypes.func,
+    visible: PropTypes.bool,
+    large: PropTypes.bool,
+    invert: PropTypes.bool
 };
 

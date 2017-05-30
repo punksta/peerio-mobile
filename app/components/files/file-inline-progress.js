@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
@@ -44,7 +45,7 @@ export default class FileInlineProgress extends SafeComponent {
 }
 
 FileInlineProgress.propTypes = {
-    file: React.PropTypes.string,
-    transparentOnFinishUpload: React.PropTypes.bool
+    file: PropTypes.string,
+    transparentOnFinishUpload: PropTypes.bool
 };
 

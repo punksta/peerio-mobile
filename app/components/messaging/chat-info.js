@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
@@ -93,5 +94,5 @@ export default class ChatInfo extends SafeComponent {
 }
 
 ChatInfo.propTypes = {
-    chat: React.PropTypes.any
+    chat: PropTypes.any
 };

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ActivityIndicator } from 'react-native';
@@ -27,5 +28,5 @@ export default class ProgressOverlay extends SafeComponent {
 }
 
 ProgressOverlay.propTypes = {
-    enabled: React.PropTypes.bool
+    enabled: PropTypes.bool
 };

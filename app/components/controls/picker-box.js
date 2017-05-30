@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
@@ -13,11 +14,11 @@ export default class PickerBox extends SafeComponent {
 }
 
 PickerBox.propTypes = {
-    value: React.PropTypes.any.isRequired,
-    name: React.PropTypes.string.isRequired,
-    picker: React.PropTypes.any.isRequired,
-    data: React.PropTypes.any.isRequired,
-    style: React.PropTypes.any.isRequired,
-    hint: React.PropTypes.any.isRequired
+    value: PropTypes.any.isRequired,
+    name: PropTypes.string.isRequired,
+    picker: PropTypes.any.isRequired,
+    data: PropTypes.any.isRequired,
+    style: PropTypes.any.isRequired,
+    hint: PropTypes.any.isRequired
 };
 

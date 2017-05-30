@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, ActivityIndicator, View } from 'react-native';
@@ -51,8 +52,8 @@ export default class AvatarCircle extends SafeComponent {
 }
 
 AvatarCircle.propTypes = {
-    contact: React.PropTypes.any,
-    loading: React.PropTypes.bool,
-    large: React.PropTypes.bool,
-    medium: React.PropTypes.bool
+    contact: PropTypes.any,
+    loading: PropTypes.bool,
+    large: PropTypes.bool,
+    medium: PropTypes.bool
 };

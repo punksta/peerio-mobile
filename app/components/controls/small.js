@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
     Text
@@ -18,6 +19,6 @@ export default class Small extends Component {
 }
 
 Small.propTypes = {
-    children: React.PropTypes.any.isRequired,
-    style: React.PropTypes.any
+    children: PropTypes.any.isRequired,
+    style: PropTypes.any
 };

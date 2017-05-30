@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 export default class Conditional extends Component {
@@ -16,6 +17,6 @@ export default class Conditional extends Component {
 }
 
 Conditional.propTypes = {
-    children: React.PropTypes.any.isRequired,
-    test: React.PropTypes.any
+    children: PropTypes.any.isRequired,
+    test: PropTypes.any
 };

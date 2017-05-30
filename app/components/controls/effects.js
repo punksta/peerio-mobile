@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 // very smart plugin developer ships two different files for iOS and Android
 import LinearGradient from 'react-native-linear-gradient'; // eslint-disable-line
@@ -11,9 +12,9 @@ function gradient(props, inner) {
 }
 
 gradient.propTypes = {
-    colors: React.PropTypes.any,
-    start: React.PropTypes.any,
-    end: React.PropTypes.any
+    colors: PropTypes.any,
+    start: PropTypes.any,
+    end: PropTypes.any
 };
 
 const effects = {

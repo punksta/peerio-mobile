@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -32,8 +33,8 @@ export default class ButtonText extends SafeComponent {
 }
 
 ButtonText.propTypes = {
-    text: React.PropTypes.any,
-    testID: React.PropTypes.any,
-    onPress: React.PropTypes.any,
-    secondary: React.PropTypes.bool
+    text: PropTypes.any,
+    testID: PropTypes.any,
+    onPress: PropTypes.any,
+    secondary: PropTypes.bool
 };

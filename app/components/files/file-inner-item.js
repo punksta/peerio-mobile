@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, Dimensions, View, TouchableOpacity } from 'react-native';
@@ -118,8 +119,8 @@ export default class FileInnerItem extends SafeComponent {
 }
 
 FileInnerItem.propTypes = {
-    onPress: React.PropTypes.func,
-    file: React.PropTypes.any.isRequired,
-    checkbox: React.PropTypes.string,
-    hideArrow: React.PropTypes.bool
+    onPress: PropTypes.func,
+    file: PropTypes.any.isRequired,
+    checkbox: PropTypes.string,
+    hideArrow: PropTypes.bool
 };

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ScrollView } from 'react-native';
@@ -52,14 +53,14 @@ export default class Layout1 extends SafeComponent {
 }
 
 Layout1.propTypes = {
-    body: React.PropTypes.any,
-    style: React.PropTypes.any,
-    footer: React.PropTypes.any,
-    header: React.PropTypes.any,
-    padding: React.PropTypes.any,
-    noScroll: React.PropTypes.bool,
-    noFitHeight: React.PropTypes.bool,
-    noAutoHide: React.PropTypes.bool,
-    noKeyboard: React.PropTypes.bool,
-    defaultBar: React.PropTypes.bool
+    body: PropTypes.any,
+    style: PropTypes.any,
+    footer: PropTypes.any,
+    header: PropTypes.any,
+    padding: PropTypes.any,
+    noScroll: PropTypes.bool,
+    noFitHeight: PropTypes.bool,
+    noAutoHide: PropTypes.bool,
+    noKeyboard: PropTypes.bool,
+    defaultBar: PropTypes.bool
 };

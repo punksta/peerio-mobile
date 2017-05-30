@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Navigator } from 'react-native-deprecated-custom-components';
@@ -17,23 +18,24 @@ export default class RouteNavigator extends Component {
             const oldIndex = routes.routesList.indexOf(routes.prevRoute);
             routes.prevRoute = route;
             const rInfo = routes.routes[route];
-            requestAnimationFrame(uiState.hideKeyboard);
-            if (rInfo.replace) {
-                console.log('reset route stack');
-                this.nav.immediatelyResetRouteStack([rInfo]);
-                return;
-            }
-            if (newIndex === oldIndex - 1) {
-                this.nav.pop();
-            } else if (newIndex < oldIndex) {
-                try {
-                    this.nav.jumpTo(rInfo);
-                } catch (e) {
-                    console.error(e);
+            uiState.hideAll().then(() => {
+                if (rInfo.replace) {
+                    console.log('reset route stack');
+                    this.nav.immediatelyResetRouteStack([rInfo]);
+                    return;
                 }
-            } else {
-                this.nav.push(rInfo);
-            }
+                if (newIndex === oldIndex - 1) {
+                    this.nav.pop();
+                } else if (newIndex < oldIndex) {
+                    try {
+                        this.nav.jumpTo(rInfo);
+                    } catch (e) {
+                        console.error(e);
+                    }
+                } else {
+                    this.nav.push(rInfo);
+                }
+            });
         });
     }
 
@@ -70,5 +72,5 @@ export default class RouteNavigator extends Component {
 }
 
 RouteNavigator.propTypes = {
-    routes: React.PropTypes.any.isRequired
+    routes: PropTypes.any.isRequired
 };

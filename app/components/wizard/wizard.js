@@ -3,6 +3,7 @@ import { observer } from 'mobx-react/native';
 import { View, LayoutAnimation, Dimensions } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
+import uiState from '../layout/ui-state';
 
 const { width } = Dimensions.get('window');
 
@@ -37,6 +38,10 @@ export default class Wizard extends SafeComponent {
             this.direction = (i >= this.currentIndex) ? 1 : -1;
             LayoutAnimation.easeInEaseOut();
         });
+    }
+
+    changeIndex(shift) {
+        uiState.hideAll().then(() => (this.index += shift));
     }
 
     _animatedContainer(key, item, index) {

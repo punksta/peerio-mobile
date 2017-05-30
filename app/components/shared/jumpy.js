@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
     View,
@@ -44,7 +45,7 @@ export default class Jumpy extends Component {
 }
 
 Jumpy.propTypes = {
-    children: React.PropTypes.any,
-    radius: React.PropTypes.number
+    children: PropTypes.any,
+    radius: PropTypes.number
 };
 

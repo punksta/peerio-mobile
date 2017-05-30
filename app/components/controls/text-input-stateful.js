@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { TextInput, View } from 'react-native';
@@ -27,7 +28,7 @@ export default class TextInputStateful extends SafeComponent {
 }
 
 TextInputStateful.propTypes = {
-    returnKeyType: React.PropTypes.any,
-    state: React.PropTypes.any.isRequired,
-    name: React.PropTypes.string
+    returnKeyType: PropTypes.any,
+    state: PropTypes.any.isRequired,
+    name: PropTypes.string
 };

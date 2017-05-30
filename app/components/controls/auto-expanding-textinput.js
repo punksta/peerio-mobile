@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { TextInput } from 'react-native';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { vars } from '../../styles/styles';
@@ -71,6 +72,6 @@ export default class AutoExpandingTextInput extends Component {
 }
 
 AutoExpandingTextInput.propTypes = {
-    style: React.PropTypes.any,
-    value: React.PropTypes.any
+    style: PropTypes.any,
+    value: PropTypes.any
 };

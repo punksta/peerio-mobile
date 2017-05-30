@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { View, Text } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -64,8 +65,8 @@ export default class Circles extends SafeComponent {
 }
 
 Circles.propTypes = {
-    count: React.PropTypes.number.isRequired,
-    current: React.PropTypes.number.isRequired,
-    fill: React.PropTypes.bool,
-    empty: React.PropTypes.bool
+    count: PropTypes.number.isRequired,
+    current: PropTypes.number.isRequired,
+    fill: PropTypes.bool,
+    empty: PropTypes.bool
 };

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
@@ -294,8 +295,8 @@ export default class Chat extends SafeComponent {
 }
 
 Chat.propTypes = {
-    hideInput: React.PropTypes.bool,
-    archiveUpgrade: React.PropTypes.bool,
-    archiveNotice: React.PropTypes.bool
+    hideInput: PropTypes.bool,
+    archiveUpgrade: PropTypes.bool,
+    archiveNotice: PropTypes.bool
 };
 

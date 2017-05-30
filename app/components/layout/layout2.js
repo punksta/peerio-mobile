@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
@@ -40,7 +41,7 @@ export default class Layout2 extends SafeComponent {
 }
 
 Layout2.propTypes = {
-    body: React.PropTypes.any,
-    footer: React.PropTypes.any
+    body: PropTypes.any,
+    footer: PropTypes.any
 };
 

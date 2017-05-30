@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
@@ -33,6 +34,6 @@ export default class OnlineCircle extends SafeComponent {
 }
 
 OnlineCircle.propTypes = {
-    visible: React.PropTypes.bool,
-    online: React.PropTypes.bool
+    visible: PropTypes.bool,
+    online: PropTypes.bool
 };

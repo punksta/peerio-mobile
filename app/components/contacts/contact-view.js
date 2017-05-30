@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -66,5 +67,5 @@ export default class ContactView extends SafeComponent {
 }
 
 ContactView.propTypes = {
-    contact: React.PropTypes.any
+    contact: PropTypes.any
 };

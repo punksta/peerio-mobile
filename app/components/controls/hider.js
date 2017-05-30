@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
     View, TouchableOpacity
@@ -21,8 +22,8 @@ export default class Hider extends Component {
 }
 
 Hider.propTypes = {
-    children: React.PropTypes.any.isRequired,
-    isLeft: React.PropTypes.bool,
-    onHide: React.PropTypes.func.isRequired
+    children: PropTypes.any.isRequired,
+    isLeft: PropTypes.bool,
+    onHide: PropTypes.func.isRequired
 };
 

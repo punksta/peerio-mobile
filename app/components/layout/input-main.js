@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -90,8 +91,8 @@ export default class InputMain extends SafeComponent {
 
 
 InputMain.propTypes = {
-    value: React.PropTypes.any,
-    plus: React.PropTypes.func.isRequired,
-    send: React.PropTypes.func.isRequired,
-    sendAck: React.PropTypes.func.isRequired
+    value: PropTypes.any,
+    plus: PropTypes.func.isRequired,
+    send: PropTypes.func.isRequired,
+    sendAck: PropTypes.func.isRequired
 };

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
@@ -43,5 +44,5 @@ export default class FileItem extends SafeComponent {
 }
 
 FileItem.propTypes = {
-    file: React.PropTypes.any.isRequired
+    file: PropTypes.any.isRequired
 };

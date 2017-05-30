@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity, Animated } from 'react-native';
@@ -68,7 +69,7 @@ export default class Tabs extends SafeComponent {
 }
 
 Tabs.propTypes = {
-    file: React.PropTypes.any,
+    file: PropTypes.any,
     // {Animated.Value} height
-    height: React.PropTypes.any
+    height: PropTypes.any
 };

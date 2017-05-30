@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity, Text } from 'react-native';
@@ -57,11 +58,11 @@ export default class SettingsItem extends SafeComponent {
 }
 
 SettingsItem.propTypes = {
-    children: React.PropTypes.any,
-    title: React.PropTypes.any,
-    disabled: React.PropTypes.bool,
-    untappable: React.PropTypes.bool,
-    icon: React.PropTypes.string,
-    onPress: React.PropTypes.any
+    children: PropTypes.any,
+    title: PropTypes.any,
+    disabled: PropTypes.bool,
+    untappable: PropTypes.bool,
+    icon: PropTypes.string,
+    onPress: PropTypes.any
 };
 

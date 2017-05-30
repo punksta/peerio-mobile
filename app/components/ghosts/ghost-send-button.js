@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
     View, TouchableOpacity
@@ -55,6 +56,6 @@ export default class GhostSendButton extends Component {
 }
 
 GhostSendButton.propTypes = {
-    send: React.PropTypes.func,
-    enabled: React.PropTypes.bool
+    send: PropTypes.func,
+    enabled: PropTypes.bool
 };

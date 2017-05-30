@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text } from 'react-native';
@@ -70,8 +71,8 @@ export default class LayoutModalExit extends SafeComponent {
 }
 
 LayoutModalExit.propTypes = {
-    title: React.PropTypes.string,
-    body: React.PropTypes.any,
-    onClose: React.PropTypes.any,
-    rightIcon: React.PropTypes.any
+    title: PropTypes.string,
+    body: PropTypes.any,
+    onClose: PropTypes.any,
+    rightIcon: PropTypes.any
 };

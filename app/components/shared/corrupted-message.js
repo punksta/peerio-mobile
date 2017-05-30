@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text } from 'react-native';
@@ -18,5 +19,5 @@ export default class CorruptedMessage extends SafeComponent {
 }
 
 CorruptedMessage.propTypes = {
-    visible: React.PropTypes.bool
+    visible: PropTypes.bool
 };

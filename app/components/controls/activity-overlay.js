@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { vars } from '../../styles/styles';
@@ -24,6 +25,6 @@ export default class ActivityOverlay extends Component {
 }
 
 ActivityOverlay.propTypes = {
-    visible: React.PropTypes.any,
-    large: React.PropTypes.any
+    visible: PropTypes.any,
+    large: PropTypes.any
 };

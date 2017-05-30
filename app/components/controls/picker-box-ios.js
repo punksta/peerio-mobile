@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, View, TouchableOpacity } from 'react-native';
@@ -52,9 +53,9 @@ export default class PickerBoxIos extends SafeComponent {
 }
 
 PickerBoxIos.propTypes = {
-    value: React.PropTypes.any.isRequired,
-    picker: React.PropTypes.any.isRequired,
-    data: React.PropTypes.any.isRequired,
-    style: React.PropTypes.any.isRequired,
-    hint: React.PropTypes.any.isRequired
+    value: PropTypes.any.isRequired,
+    picker: PropTypes.any.isRequired,
+    data: PropTypes.any.isRequired,
+    style: PropTypes.any.isRequired,
+    hint: PropTypes.any.isRequired
 };

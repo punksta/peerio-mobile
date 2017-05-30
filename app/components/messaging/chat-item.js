@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
@@ -44,8 +45,8 @@ export default class ChatItem extends SafeComponent {
 }
 
 ChatItem.propTypes = {
-    onLayout: React.PropTypes.func,
-    onPress: React.PropTypes.func,
-    onRetryCancel: React.PropTypes.func,
-    message: React.PropTypes.any.isRequired
+    onLayout: PropTypes.func,
+    onPress: PropTypes.func,
+    onRetryCancel: PropTypes.func,
+    message: PropTypes.any.isRequired
 };

@@ -1,7 +1,7 @@
 import { Keyboard } from 'react-native';
 import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import moment from 'moment';
-import { observable, action, reaction } from 'mobx';
+import { observable, action, reaction, when } from 'mobx';
 import translator from 'peerio-translator';
 import locales from '../../lib/locales';
 import { TinyDb, PhraseDictionary } from '../../lib/icebear';
@@ -54,6 +54,7 @@ class UIState extends RoutedState {
     @action hideAll() {
         this.hideKeyboard();
         this.hidePicker();
+        return new Promise(resolve => when(() => this.keyboardHeight === 0, resolve));
     }
 
     @action setLocale(lc) {

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
@@ -81,6 +82,6 @@ export default class FileProgress extends SafeComponent {
 }
 
 FileProgress.propTypes = {
-    file: React.PropTypes.any
+    file: PropTypes.any
 };
 

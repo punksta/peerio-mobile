@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
     View,
@@ -38,12 +39,12 @@ export default class Button extends Component {
 }
 
 Button.propTypes = {
-    style: React.PropTypes.any,
-    textStyle: React.PropTypes.any,
-    onPress: React.PropTypes.any,
-    text: React.PropTypes.any.isRequired,
-    caps: React.PropTypes.bool,
-    disabled: React.PropTypes.bool,
-    testID: React.PropTypes.string,
-    bold: React.PropTypes.bool
+    style: PropTypes.any,
+    textStyle: PropTypes.any,
+    onPress: PropTypes.any,
+    text: PropTypes.any.isRequired,
+    caps: PropTypes.bool,
+    disabled: PropTypes.bool,
+    testID: PropTypes.string,
+    bold: PropTypes.bool
 };

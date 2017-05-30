@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, TouchableOpacity, ActivityIndicator, View } from 'react-native';
@@ -230,14 +231,14 @@ export default class Pin extends SafeComponent {
 }
 
 Pin.propTypes = {
-    onConfirm: React.PropTypes.func,
-    onEnter: React.PropTypes.func,
-    onSuccess: React.PropTypes.func,
-    checkPin: React.PropTypes.func,
-    messageEnter: React.PropTypes.any,
-    messageWrong: React.PropTypes.any,
-    messageConfirm: React.PropTypes.any,
-    messageInitial: React.PropTypes.any,
-    preventSimplePin: React.PropTypes.bool,
-    inProgress: React.PropTypes.bool
+    onConfirm: PropTypes.func,
+    onEnter: PropTypes.func,
+    onSuccess: PropTypes.func,
+    checkPin: PropTypes.func,
+    messageEnter: PropTypes.any,
+    messageWrong: PropTypes.any,
+    messageConfirm: PropTypes.any,
+    messageInitial: PropTypes.any,
+    preventSimplePin: PropTypes.bool,
+    inProgress: PropTypes.bool
 };

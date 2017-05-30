@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { LayoutAnimation, Picker, View } from 'react-native';
@@ -103,7 +104,7 @@ export default class PickerPopup extends SafeComponent {
 }
 
 PickerPopup.propTypes = {
-    data: React.PropTypes.any.isRequired,
-    state: React.PropTypes.any.isRequired,
-    name: React.PropTypes.string.isRequired
+    data: PropTypes.any.isRequired,
+    state: PropTypes.any.isRequired,
+    name: PropTypes.string.isRequired
 };

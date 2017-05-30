@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text } from 'react-native';
@@ -78,5 +79,5 @@ export default class ChatListItem extends SafeComponent {
 }
 
 ChatListItem.propTypes = {
-    chat: React.PropTypes.any.isRequired
+    chat: PropTypes.any.isRequired
 };

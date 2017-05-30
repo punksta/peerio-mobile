@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
     Text, Linking
@@ -26,7 +27,7 @@ export default class Link extends Component {
 }
 
 Link.propTypes = {
-    children: React.PropTypes.any.isRequired,
-    style: React.PropTypes.any,
-    url: React.PropTypes.string
+    children: PropTypes.any.isRequired,
+    style: PropTypes.any,
+    url: PropTypes.string
 };

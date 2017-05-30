@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {
     View
@@ -20,5 +21,5 @@ export default class Bottom extends Component {
 }
 
 Bottom.propTypes = {
-    children: React.PropTypes.any
+    children: PropTypes.any
 };

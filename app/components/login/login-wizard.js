@@ -13,6 +13,7 @@ import LoginAutomatic from './login-automatic';
 import LoginStart from './login-start';
 import LoginClean from './login-clean';
 import LoginPassword from './login-password';
+import uiState from '../layout/ui-state';
 
 const { height } = Dimensions.get('window');
 const logoHeight = height * 0.33;
@@ -26,12 +27,12 @@ export default class LoginWizard extends Wizard {
     loginAutomatic = () => <LoginAutomatic />;
 
     loginStart() {
-        return <LoginStart login={() => this.index++} />;
+        return <LoginStart login={() => this.changeIndex(1)} />;
     }
 
     loginClean() {
         const loginEnteredAction = () => {
-            this.index++;
+            this.changeIndex(1);
             if (!process.env.PEERIO_PASSPHRASE) {
                 loginState.passphrase = '';
             }
@@ -42,14 +43,14 @@ export default class LoginWizard extends Wizard {
     }
 
     loginPassword() {
-        return <LoginPassword submit={() => loginState.login().catch(e => console.log(e))} />;
+        return <LoginPassword submit={() => uiState.hideAll().then(() => loginState.login()).catch(e => console.log(e))} />;
     }
 
     footer() {
         const s = wizard.footer.button.base;
         return (this.index > 0 && this.index < 3) ? (
             <View>
-                <Button style={s} disabled={loginState.isInProgress} onPress={() => (this.index--)} text={tu('button_back')} />
+                <Button style={s} disabled={loginState.isInProgress} onPress={() => this.changeIndex(-1)} text={tu('button_back')} />
             </View>
         ) : null;
     }

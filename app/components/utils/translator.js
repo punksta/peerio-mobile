@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Text } from 'react-native';
 import { t, has } from 'peerio-translator';
@@ -37,9 +38,9 @@ class T extends Component {
 }
 
 T.propTypes = {
-    children: React.PropTypes.any,
-    k: React.PropTypes.string,
-    uppercase: React.PropTypes.bool
+    children: PropTypes.any,
+    k: PropTypes.string,
+    uppercase: PropTypes.bool
 };
 
 module.exports = {
