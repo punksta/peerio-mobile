@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.61.0"></a>
+# [3.61.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.60.0...v3.61.0) (2017-05-30)
+
+
+### Bug Fixes
+
+* **ui:** don't reset socket on first launch ([d6e76f6](https://github.com/PeerioTechnologies/peerio-mobile/commit/d6e76f6))
+* **ui:** no more semi-transparent emojis on Android ([a8c9a25](https://github.com/PeerioTechnologies/peerio-mobile/commit/a8c9a25))
+
+
+### Features
+
+* **ui:** import contacts plugin ([2164362](https://github.com/PeerioTechnologies/peerio-mobile/commit/2164362))
+* **ui:** remove timezone from logs ([92ad58a](https://github.com/PeerioTechnologies/peerio-mobile/commit/92ad58a))
+
+
+
 <a name="3.60.0"></a>
 # [3.60.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.59.0...v3.60.0) (2017-05-29)
 
