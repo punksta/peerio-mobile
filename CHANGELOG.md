@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.62.0"></a>
+# [3.62.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.61.0...v3.62.0) (2017-05-31)
+
+
+### Bug Fixes
+
+* **ui:** android hide keyboard on transitions ([3f0b605](https://github.com/PeerioTechnologies/peerio-mobile/commit/3f0b605))
+* **ui:** android hide keyboard on transitions ([576c6a3](https://github.com/PeerioTechnologies/peerio-mobile/commit/576c6a3))
+* **ui:** fixes for iOS 9 ([feaef2c](https://github.com/PeerioTechnologies/peerio-mobile/commit/feaef2c))
+* **ui:** header alignment ([b79935d](https://github.com/PeerioTechnologies/peerio-mobile/commit/b79935d))
+
+
+### Features
+
+* **android:** new push notification icon ([2921aff](https://github.com/PeerioTechnologies/peerio-mobile/commit/2921aff))
+* **react:** migrate to newer PropTypes ([6f5b089](https://github.com/PeerioTechnologies/peerio-mobile/commit/6f5b089))
+* **ui:** autoscrolling on focus ([4c2c7ea](https://github.com/PeerioTechnologies/peerio-mobile/commit/4c2c7ea))
+* **ui:** email editor ([2c36bfe](https://github.com/PeerioTechnologies/peerio-mobile/commit/2c36bfe))
+* **ui:** fixes in scrolling textbox when showing keyboard ([b312572](https://github.com/PeerioTechnologies/peerio-mobile/commit/b312572))
+
+
+
 <a name="3.61.0"></a>
 # [3.61.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.60.0...v3.61.0) (2017-05-30)
 
