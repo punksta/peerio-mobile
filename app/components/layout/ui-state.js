@@ -6,6 +6,7 @@ import translator from 'peerio-translator';
 import locales from '../../lib/locales';
 import { TinyDb, PhraseDictionary } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
+import { vars } from '../../styles/styles';
 
 const { height } = Dimensions.get('window');
 
@@ -23,6 +24,7 @@ class UIState extends RoutedState {
     @observable debugText = 'test';
     @observable externalViewer = false;
     @observable currentScrollView = null;
+    @observable currentScrollViewPosition = 0;
     @observable languages = {
         en: `English`
         // fr: `French`,
@@ -90,8 +92,9 @@ class UIState extends RoutedState {
     @action scrollToTextBox() {
         const { focusedTextBox, currentScrollView, keyboardHeight } = this;
         if (focusedTextBox && currentScrollView) {
-            const y = focusedTextBox.offsetY - (height - keyboardHeight) + focusedTextBox.offsetHeight;
+            const y = focusedTextBox.offsetY - (height - keyboardHeight) + focusedTextBox.offsetHeight + this.currentScrollViewPosition;
             if (y > 0) {
+                console.log(`scroll to ${y}, for ${focusedTextBox.offsetY}, ${this.currentScrollViewPosition}`);
                 currentScrollView.scrollTo({ y, animated: true });
                 when(() => this.keyboardHeight === 0, () => currentScrollView.scrollTo({ y: 0, animated: true }));
             }
