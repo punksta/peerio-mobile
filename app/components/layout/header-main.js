@@ -53,13 +53,12 @@ export default class HeaderMain extends SafeComponent {
                     <Text
                         ellipsizeMode="middle"
                         numberOfLines={1}
-                        style={textStyle}>
+                        style={[textStyle, { paddingRight: leftIcon ? (32 + vars.iconSize) : 0 }]}>
                         {routerMain.title}
                         {titleAction && <Text style={{ fontSize: 14 }}>
                             {'  ▼  '}
                         </Text>}
                     </Text>
-                    {leftIcon && <View style={{ flex: 0, width: vars.iconLayoutSize }} />}
                 </View>
             </TouchableOpacity>
         );
