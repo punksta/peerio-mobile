@@ -63,13 +63,17 @@ export default class ProfileEdit extends SafeComponent {
     @observable lastName;
     @observable newEmailText = null;
     @observable newEmailTextValid = null;
+    @observable showValidationError = false;
     @observable showAddEmail = false;
 
     componentDidMount() {
         const { firstName, lastName } = User.current;
         Object.assign(this, { firstName, lastName });
         uiState.currentScrollView = this._scrollView;
-        reaction(() => this.newEmailText, async text => (this.newEmailTextValid = await emailFormatValidator(text)));
+        reaction(() => this.newEmailText, async text => {
+            this.showValidationError = false;
+            this.newEmailTextValid = await emailFormatValidator(text);
+        });
         reaction(() => User.current && User.current.addresses && User.current.addresses.length, () => LayoutAnimation.easeInEaseOut());
     }
 
@@ -105,6 +109,10 @@ export default class ProfileEdit extends SafeComponent {
     };
 
     async emailAction() {
+        if (this.newEmailText && !this.newEmailTextValid) {
+            this.showValidationError = true;
+            return;
+        }
         await uiState.hideAll();
         LayoutAnimation.easeInEaseOut();
         this.showAddEmail = !this.showAddEmail;
@@ -124,6 +132,15 @@ export default class ProfileEdit extends SafeComponent {
             text = this.newEmailText ? 'button_save' : 'button_cancel';
         }
         return this.renderButton1(text, () => this.emailAction(), this.newEmailText && this.showAddEmail && !this.newEmailTextValid);
+    }
+
+    get validationError() {
+        if (!this.showValidationError) return null;
+        return (
+            <Text numberOfLines={1} ellipsizeMode="tail" style={[textStatic, { color: vars.txtAlert }]}>
+                {tx('error_invalidEmail')}
+            </Text>
+        );
     }
 
     renderButton1(text, onPress, disabled) {
@@ -222,7 +239,7 @@ export default class ProfileEdit extends SafeComponent {
                     </View>
                 </View>
                 <View style={{ margin: 8 }}>
-                    <Text style={label}>{tx('title_contacts')}</Text>
+                    <Text style={label}>{tx('title_myContactInfo')}</Text>
                     {user.addresses.map(this.renderUserEmail)}
                     <View style={[textinputContainer, this.showAddEmail ? null : { height: 0 }]}>
                         {emailIcon}
@@ -239,8 +256,9 @@ export default class ProfileEdit extends SafeComponent {
                             onSubmitEditing={() => this.emailAction()}
                             style={textinput} />
                     </View>
-                    <View style={{ marginLeft: 8 }}>
+                    <View style={{ marginLeft: 8, flexDirection: 'row' }}>
                         {this.emailButton}
+                        {this.validationError}
                     </View>
                 </View>
                 <View style={{ margin: 18, marginTop: 8 }}>
