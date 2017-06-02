@@ -17,6 +17,12 @@ class Signup(common.testcase.TestCase):
         username = 't' + strftime("%Y%m%d%H%M%S")
         d = common.helper.getDriver()
         d.reset()
+        # push notification enable alert
+        d.wait_for_find('Allow')
+        d.tap('Allow')
+        d.wait_for_not_find('Allow')
+
+        sleep(1)
         d.screen('signup-step-0.png')
         d.tap('button_CreateAccount')
         sleep(2)
@@ -35,20 +41,23 @@ class Signup(common.testcase.TestCase):
         d.screen('signup-step-3.png')
         # pinEnter()
         # pinEnter()
-        # push notification enable alert
+
+
         # confirm your email alert
-        d.wait_for_find('popupButton_ok')
-        d.tap('popupButton_ok')
-        d.wait_for_not_find('popupButton_ok')
+        # d.wait_for_find('popupButton_ok')
+        # d.tap('popupButton_ok')
+        # d.wait_for_not_find('popupButton_ok')
+
         # confirm your email alert #2
         # d.wait_for_find('popupButton_ok')
         # d.tap('popupButton_ok')
         # d.wait_for_not_find('popupButton_ok')
+
+        # automatic login enable alert
+        d.wait_for_find('automaticLoginEnable')
         d.tap('automaticLoginEnable')
-        d.wait_for_find('Allow')
-        d.tap('Allow')
-        d.wait_for_not_find('Allow')
         sleep(3)
         d.screen('signup-step-4.png')
+
         # d.tap('pin-cancel')
         # d.wait_for_find('mainLayout')
