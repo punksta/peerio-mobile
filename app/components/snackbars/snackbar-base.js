@@ -79,7 +79,7 @@ export default class SnackbarBase extends SafeComponent {
         return (
             <TouchableWithoutFeedback onPress={() => this.tap()}>
                 <Animated.View style={s}>
-                    <Text style={textStyle}>{this.getText()}</Text>
+                    <Text numberOfLines={2} ellipsizeMode="tail" style={textStyle}>{this.getText()}</Text>
                 </Animated.View>
             </TouchableWithoutFeedback>
         );
