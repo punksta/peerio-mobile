@@ -70,6 +70,7 @@ export default class ProfileEdit extends SafeComponent {
         Object.assign(this, { firstName, lastName });
         uiState.currentScrollView = this._scrollView;
         reaction(() => this.newEmailText, async text => (this.newEmailTextValid = await emailFormatValidator(text)));
+        reaction(() => User.current && User.current.addresses && User.current.addresses.length, () => LayoutAnimation.easeInEaseOut());
     }
 
     componentWillUnmount() {
@@ -84,18 +85,12 @@ export default class ProfileEdit extends SafeComponent {
     submit = () => {
         const user = User.current;
         const { firstName, lastName } = user;
+        // do not save if no changes have been made
+        if (firstName === this.firstName && lastName === this.lastName) return;
         user.firstName = this.firstName;
         user.lastName = this.lastName;
         User.current.saveProfile().catch(() => {
             Object.assign(user, { firstName, lastName });
-        });
-    }
-
-    saveLastName = (val) => {
-        const prev = User.current.lastName;
-        User.current.lastName = val;
-        User.current.saveProfile().catch(() => {
-            User.current.lastName = prev;
         });
     }
 
@@ -144,15 +139,21 @@ export default class ProfileEdit extends SafeComponent {
         );
     }
 
+    renderText(text, style) {
+        return (
+            <View style={{ flexDirection: 'row', flex: 1, flexGrow: 1 }}>
+                <Text numberOfLines={1} ellipsizeMode="tail" style={[textStatic, style]}>
+                    {text}
+                </Text>
+            </View>
+        );
+    }
+
     renderUserEmail = (item) => {
         const canDelete = User.current.addresses.length > 1;
         const { address, confirmed, primary } = item;
-        const isPrimary = this.renderButton1(
-            'title_primaryEmail',
-            null
-        );
-        const resendLink = this.renderButton1(
-            'button_resend',
+        const confirmLink = this.renderButton1(
+            'button_confirm',
             () => User.current.resendEmailConfirmation(address)
         );
         const primaryLink = this.renderButton1(
@@ -163,14 +164,13 @@ export default class ProfileEdit extends SafeComponent {
         return (
             <View style={textinputContainer} key={address}>
                 {emailIcon}
-                <View style={{ flexDirection: 'row', flex: 1, flexGrow: 1, height: vars.inputHeight }}>
-                    <Text numberOfLines={1} ellipsizeMode="tail" style={textStatic}>
-                        {address}
-                    </Text>
+                <View style={{ height: vars.inputHeight, flex: 1, flexGrow: 1, paddingTop: 4 }}>
+                    {this.renderText(address)}
+                    {confirmed && primary ? this.renderText(tx('title_primaryEmail'), { color: vars.bg, marginTop: -8 }) : null}
+                    {!confirmed ? this.renderText(tx('error_unconfirmedEmail'), { color: vars.txtAlert, marginTop: -8 }) : null}
                 </View>
-                {confirmed && primary ? isPrimary : null}
                 {confirmed && !primary ? primaryLink : null}
-                {confirmed ? null : resendLink}
+                {confirmed ? null : confirmLink}
                 {(!primary && canDelete) ? deleteIcon : null}
             </View>
         );
