@@ -19,10 +19,8 @@ import ghostState from '../ghosts/ghost-state';
 import chatState from '../messaging/chat-state';
 import settingsState from '../settings/settings-state';
 import contactState from '../contacts/contact-state';
-import { enablePushNotifications } from '../../lib/push';
+// import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
-
-const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
 
 class RouterMain extends Router {
     // current route object
@@ -51,7 +49,7 @@ class RouterMain extends Router {
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
         this.loading = true;
-        if (EN === 'peeriomobile') await enablePushNotifications();
+        // if (EN === 'peeriomobile') await enablePushNotifications();
         await mainState.init();
         await chatState.init();
         await contactState.init();

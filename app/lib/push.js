@@ -1,6 +1,6 @@
 import PushNotification from 'react-native-push-notification';
 import { Platform } from 'react-native';
-import { when, reaction, observable } from 'mobx';
+import { when, observable } from 'mobx';
 import { socket } from '../lib/icebear';
 
 const pushState = observable({
@@ -12,20 +12,19 @@ function onRegister(token) {
     console.log(`push.js: OS: ${Platform.OS}, TOKEN: ${token.token}`);
     const payload = {};
     payload[Platform.OS] = token.token || token;
-    reaction(() => socket.authenticated, authenticated => {
-        if (!authenticated) {
-            console.log(`push.js: unregistered`);
-            pushState.registered = false;
-            return;
-        }
-        console.log(`push.js: sending registration OS: ${JSON.stringify(payload)}`);
+    const registerServerSide = () => {
+        console.log(`🚲 push.js: onAuthenticated`);
+        // TODO: remove when server is persisting tokensif (pushState.registered) return;
+        console.log(`🚲 push.js: sending registration OS: ${JSON.stringify(payload)}`);
         socket.send('/auth/mobile-device/register', payload)
         .then(r => {
-            console.log(`push.js: register result success ${JSON.stringify(r)}`);
+            console.log(`🚲 push.js: register result success ${JSON.stringify(r)}`);
             pushState.registered = true;
         })
-        .catch(e => console.log('push.js: error registering', e));
-    });
+        .catch(e => console.log('🚲 push.js: error registering', e));
+    };
+    if (socket.authenticated) registerServerSide();
+    socket.onAuthenticated(registerServerSide);
 }
 
 function enablePushNotifications() {
@@ -33,7 +32,7 @@ function enablePushNotifications() {
         onRegister,
 
         onNotification(notification) {
-            console.log('push.js: NOTIFICATION:', notification);
+            console.log('🚲 push.js: NOTIFICATION:', notification);
         },
 
         // GCM sender id
@@ -52,14 +51,14 @@ function enablePushNotifications() {
 
 function toggleServerSide(enable) {
     const action = enable ? 'enable' : 'disable';
-    console.log(`push.js: ${action} push waiting for socket`);
+    console.log(`🚲 push.js: ${action} push waiting for socket`);
     pushState.enabled = enable;
     when(() => pushState.registered && socket.authenticated, () => {
         if (enable !== pushState.enabled) return;
-        console.log(`push.js: ${action} push request`);
+        console.log(`🚲 push.js: ${action} push request`);
         const req = `/auth/push/${action}`;
         socket.send(req)
-            .then(r => console.log(`push.js: ${action} server ${r}`))
+            .then(r => console.log(`🚲 push.js: ${action} server ${r}`))
             .catch(e => console.error(e));
     });
 }
@@ -71,5 +70,8 @@ if (__DEV__) {
     const TEST_TOKEN = 'a41f1b2e8e9279c81dd9c69c56fd060d25c743354a146d4d9dcddcd9bf73b0e6';
     onRegister({ token: TEST_TOKEN });
 }
+
+const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
+if (EN === 'peeriomobile') enablePushNotifications();
 
 module.exports = { enablePushNotifications, enableServerSide, disableServerSide };

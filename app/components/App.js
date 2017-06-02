@@ -41,7 +41,7 @@ export default class App extends SafeComponent {
 
         console.stack = [];
         console.stackPush = (msg) => {
-            const MAX = 100;
+            const MAX = 300;
             const STEP = 50;
             const index = console.stack.length;
             const delta = index - MAX;
