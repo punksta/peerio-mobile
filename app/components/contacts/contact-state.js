@@ -106,6 +106,11 @@ class ContactState extends RoutedState {
         this.exit();
     }
 
+    // if we have no contacts except User.current
+    get empty() {
+        return this.store.contacts.length <= 1;
+    }
+
     @action requestPermission() {
         console.log('contact-state.js: requesting permissions');
         return new Promise(resolve => RNContacts.requestPermission((err, permission) => {

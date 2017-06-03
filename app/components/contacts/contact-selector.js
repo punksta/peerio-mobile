@@ -13,6 +13,7 @@ import Center from '../controls/center';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
 import Avatar from '../shared/avatar';
+import ContactsPlaceholder from './contacts-placeholder';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import contactState from './contact-state';
@@ -205,6 +206,7 @@ export default class ContactSelector extends SafeComponent {
     }
 
     body() {
+        if (contactState.empty) return <ContactsPlaceholder />;
         const found = contactState.filtered;
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
