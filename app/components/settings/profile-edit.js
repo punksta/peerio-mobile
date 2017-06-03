@@ -239,7 +239,7 @@ export default class ProfileEdit extends SafeComponent {
                     </View>
                 </View>
                 <View style={{ margin: 8 }}>
-                    <Text style={label}>{tx('title_myContactInfo')}</Text>
+                    <Text style={label}>{tx('title_email')}</Text>
                     {user.addresses.map(this.renderUserEmail)}
                     <View style={[textinputContainer, this.showAddEmail ? null : { height: 0 }]}>
                         {emailIcon}
