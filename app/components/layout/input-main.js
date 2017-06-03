@@ -53,7 +53,6 @@ export default class InputMain extends SafeComponent {
     }
 
     renderThrow() {
-        console.log('call render throw input-main');
         const { tiStyle, iconStyle, outerStyle, autoExpandingInputContainerStyle,
             sendIconStyleNormal, sendIconStyleActive } = inputMain;
         const icon = icons.white(this.hasText ? 'send' : 'thumb-up', this.send, iconStyle);
