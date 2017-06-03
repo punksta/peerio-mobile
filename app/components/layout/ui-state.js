@@ -6,7 +6,6 @@ import translator from 'peerio-translator';
 import locales from '../../lib/locales';
 import { TinyDb, PhraseDictionary } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
-import { vars } from '../../styles/styles';
 
 const { height } = Dimensions.get('window');
 

@@ -39,6 +39,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {this.spacer}
                     <SettingsItem title="title_help" onPress={() => settingsState.routerMain.logs()} />
                     {this.spacer}
+                    <SettingsItem title="title_settingsAccount" onPress={() => settingsState.transition('account')} />
                     <SettingsItem title="button_logout" onPress={() => loginState.signOut()} />
                     {this.spacer}
                     {__DEV__ && <SettingsItem title="Toggle connection" onPress={toggleConnection} />}

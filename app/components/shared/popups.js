@@ -1,23 +1,24 @@
 import React from 'react';
-import {
-    Text, WebView
-} from 'react-native';
+import { Text, WebView, View } from 'react-native';
 import { observable } from 'mobx';
-import { t, tu } from '../utils/translator';
+import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import { paymentCheckout } from '../payments/payments-storage-usage';
+import CheckBox from './checkbox';
 
 function textControl(str) {
     const text = {
         color: '#000000AA',
-        marginVertical: 12
+        marginVertical: 10
     };
 
-    return t && (
-        <Text style={text}>{str}</Text>
-    );
+    return <Text style={text}>{str}</Text>;
+}
+
+function checkBoxControl(str, checked, press) {
+    return <CheckBox text={str} isChecked={checked} onChange={press} />;
 }
 
 function inputControl(state) {
@@ -146,6 +147,28 @@ function popupTOS() {
     });
 }
 
+function popupDeleteAccount() {
+    let checked = false;
+    return popupState.showPopupPromise(resolve => ({
+        title: textControl(tx('title_accountDelete')),
+        contents: (
+            <View>
+                {textControl(tx('title_accountDeleteDescription1'))}
+                {textControl(tx('title_accountDeleteDescription2'))}
+                {textControl(tx('title_accountDeleteDescription3'))}
+                {checkBoxControl(tx('title_accountDeleteAllFiles'), checked, value => {
+                    checked = value;
+                    console.log(checked);
+                })}
+            </View>
+        ),
+        buttons: [
+            { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
+            { id: 'copy', text: tu('button_confirm'), action: () => resolve(true, checked) }
+        ]
+    }));
+}
+
 locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
@@ -159,5 +182,6 @@ module.exports = {
     popupCopyCancel,
     popupInputCancel,
     popupUpgrade,
-    popupSystemWarning
+    popupSystemWarning,
+    popupDeleteAccount
 };

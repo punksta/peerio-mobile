@@ -12,6 +12,7 @@ import { t, tx } from '../utils/translator';
 import payments from '../payments/payments';
 import PaymentsQuotas from '../payments/payments-quotas';
 import ProfileEdit from './profile-edit';
+import AccountEdit from './account-edit';
 
 const bgStyle = {
     flexGrow: 1,
@@ -62,6 +63,8 @@ export default class SettingsLevel2 extends SafeComponent {
     quotas = () => <PaymentsQuotas />;
 
     profile = () => <ProfileEdit />;
+
+    account = () => <AccountEdit />;
 
     settingsItem(title, prop) {
         const user = User.current;

@@ -16,6 +16,7 @@ class SettingsState extends RoutedState {
     _titles = {
         security: 'title_settingsSecurity',
         profile: 'title_settingsProfile',
+        account: 'title_settingsAccount',
         preferences: 'title_settingsPreferences'
     };
 

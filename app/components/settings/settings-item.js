@@ -12,7 +12,7 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingLeft: vars.iconSize,
+    paddingLeft: 10,
     marginBottom: 2,
     borderWidth: 0,
     borderColor: 'green'
