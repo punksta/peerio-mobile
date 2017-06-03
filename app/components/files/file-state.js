@@ -149,7 +149,7 @@ class FileState extends RoutedState {
     onTransition(active, file) {
         console.log('files on transition');
         active && fileStore.loadAllFiles();
-        clientApp.isInFilesView = active;
+        clientApp.isInFilesView = active && !!file;
         this.currentFile = active ? file : null;
     }
 
