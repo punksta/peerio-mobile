@@ -54,8 +54,8 @@ class SettingsState extends RoutedState {
 
     async showPassphrase() {
         const user = User.current;
-        let passphrase = null;
-        if (keychain.hasPlugin) {
+        let passphrase = user.passphrase;
+        if (!passphrase && keychain.hasPlugin) {
             const data = await keychain.get(`user::${user.username}`);
             if (data) passphrase = JSON.parse(data).passphrase;
         }
