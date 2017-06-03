@@ -61,7 +61,7 @@ export default class Tabs extends SafeComponent {
             <Animated.View style={[bottomRowStyle, animation]}>
                 {this.action(t('title_chats'), 'chats', 'forum', chatStore.unreadMessages)}
                 {this.action(t('title_files'), 'files', 'folder', fileStore.unreadFiles)}
-                {/* this.action(t('title_mail'), 'ghosts', 'mail') */}
+                {this.action(t('title_contacts'), 'contacts', 'people')}
                 {this.action(t('title_settings'), 'settings', 'settings')}
             </Animated.View>
         );

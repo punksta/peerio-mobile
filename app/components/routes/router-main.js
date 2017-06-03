@@ -12,6 +12,7 @@ import Chat from '../messaging/chat';
 import ChatList from '../messaging/chat-list';
 import Files from '../files/files';
 import FileView from '../files/file-view';
+import ContactList from '../contacts/contact-list';
 import Logs from '../logs/logs';
 import mainState from '../main/main-state';
 import fileState from '../files/file-state';
@@ -46,7 +47,7 @@ class RouterMain extends Router {
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
         this.add('chats', [<ChatList />, <Chat />], chatState);
-        // this.add('contacts', [<ContactList />], contactState);
+        this.add('contacts', [<ContactList />], contactState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
         this.loading = true;

@@ -25,7 +25,8 @@ export default class ContactList extends SafeComponent {
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
 
     get data() {
-        return contactState.store.contacts;
+        return [];
+        // return contactState.store.contacts;
     }
 
     componentWillUnmount() {
