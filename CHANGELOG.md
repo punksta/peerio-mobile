@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.64.0"></a>
+# [3.64.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.63.0...v3.64.0) (2017-06-03)
+
+
+### Bug Fixes
+
+* **unread:** optimize unread count updates ([8cade53](https://github.com/PeerioTechnologies/peerio-mobile/commit/8cade53))
+
+
+### Features
+
+* **ui:** account settings and delete account ([a5b4f98](https://github.com/PeerioTechnologies/peerio-mobile/commit/a5b4f98))
+* **ui:** first of the day ([12045d0](https://github.com/PeerioTechnologies/peerio-mobile/commit/12045d0))
+
+
+
 <a name="3.63.0"></a>
 # [3.63.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.62.0...v3.63.0) (2017-06-03)
 
