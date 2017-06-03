@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.63.0"></a>
+# [3.63.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.62.0...v3.63.0) (2017-06-03)
+
+
+### Bug Fixes
+
+* **pushes:** request pushes immediately ([fd1f35f](https://github.com/PeerioTechnologies/peerio-mobile/commit/fd1f35f))
+* **ui:** show passphrase even when logged in with automatic login ([3150718](https://github.com/PeerioTechnologies/peerio-mobile/commit/3150718))
+
+
+### Features
+
+* **ui:** ellipsize long-ass system warnings ([4c4915b](https://github.com/PeerioTechnologies/peerio-mobile/commit/4c4915b))
+* **ui:** hints for unconfirmed and primary emails ([543f6b2](https://github.com/PeerioTechnologies/peerio-mobile/commit/543f6b2))
+* **ui:** show error when entering invalid email ([5bcfe2d](https://github.com/PeerioTechnologies/peerio-mobile/commit/5bcfe2d))
+
+
+
 <a name="3.62.0"></a>
 # [3.62.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.61.0...v3.62.0) (2017-05-31)
 
