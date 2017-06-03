@@ -14,6 +14,7 @@ import push from '../lib/push';
 import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
+import MockComponent from './mocks';
 
 @observer
 export default class App extends SafeComponent {
@@ -27,8 +28,6 @@ export default class App extends SafeComponent {
                 return false;
             }
         });
-
-        routerApp.routes.loginStart.transition();
 
         if (console._errorOriginal) {
             console.error = console._errorOriginal;
@@ -85,6 +84,8 @@ export default class App extends SafeComponent {
                 crypto.sign.setImplementation(signDetachedNative, verifyDetachedNative);
             }
         }
+
+        if (!MockComponent) routerApp.routes.loginStart.transition();
     }
 
     _handleAppStateChange(appState) {
@@ -116,6 +117,7 @@ export default class App extends SafeComponent {
     }
 
     renderThrow() {
+        if (MockComponent) return <MockComponent />;
         if (!uiState.locale) return this._placeHolder();
         return gradient({
             testID: 'appOuterViewBackground',
