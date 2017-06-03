@@ -14,6 +14,7 @@ import ReadReceipt from './read-receipt';
 import CorruptedMessage from './corrupted-message';
 import tagify from './tagify';
 import { User } from '../../lib/icebear';
+import { tx } from '../utils/translator';
 
 const itemStyle = {
     flex: 1,
@@ -293,6 +294,27 @@ export default class Avatar extends SafeComponent {
         );
     }
 
+    get firstOfTheDay() {
+        const { timestamp, firstOfTheDay } = this.props;
+        if (!firstOfTheDay) return null;
+        const ts = timestamp.toLocaleDateString();
+        const separator = {
+            flex: 1,
+            flexGrow: 1,
+            borderBottomWidth: 1,
+            borderBottomColor: '#CFCFCF'
+        };
+        return (
+            <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', marginVertical: 8 }}>
+                <View style={separator} />
+                <Text style={{ flex: 0, color: vars.txtDark, marginHorizontal: 4, marginBottom: -8 }}>
+                    {ts === new Date().toLocaleDateString() ? tx('title_today') : ts}
+                </Text>
+                <View style={separator} />
+            </View>
+        );
+    }
+
     renderCollapsed() {
         return (
             <View style={{ flexGrow: 1 }}>
@@ -350,6 +372,7 @@ export default class Avatar extends SafeComponent {
             <View
                 style={{ backgroundColor: vars.white, opacity }}
                 onLayout={this.props.onLayout}>
+                {this.firstOfTheDay}
                 <TouchableOpacity
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={this.onPressAll}
@@ -371,6 +394,7 @@ Avatar.propTypes = {
     onPressAvatar: PropTypes.func,
     onRetryCancel: PropTypes.func,
     contact: PropTypes.any,
+    timestamp: PropTypes.any,
     timestampText: PropTypes.any,
     files: PropTypes.any,
     receipts: PropTypes.any,
@@ -379,6 +403,7 @@ Avatar.propTypes = {
     messageComponent: PropTypes.any,
     title: PropTypes.string,
     systemMessage: PropTypes.any,
+    firstOfTheDay: PropTypes.bool,
     online: PropTypes.bool,
     error: PropTypes.bool,
     loading: PropTypes.bool,

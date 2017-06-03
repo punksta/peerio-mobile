@@ -27,6 +27,8 @@ export default class ChatItem extends SafeComponent {
                 files={i.files}
                 receipts={i.receipts}
                 hideOnline
+                firstOfTheDay={i.firstOfTheDay}
+                timestamp={i.timestamp}
                 timestampText={i.messageTimestampText}
                 message={text}
                 systemMessage={systemMessageText}
