@@ -46,6 +46,7 @@ class RouterMain extends Router {
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
         this.add('chats', [<ChatList />, <Chat />], chatState);
+        // this.add('contacts', [<ContactList />], contactState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
         this.loading = true;
