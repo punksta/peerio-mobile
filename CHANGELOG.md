@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.65.0"></a>
+# [3.65.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.64.0...v3.65.0) (2017-06-06)
+
+
+### Features
+
+* rename com.peerio.messenger to com.peerio.app ([14c2d31](https://github.com/PeerioTechnologies/peerio-mobile/commit/14c2d31))
+
+
+
 <a name="3.64.0"></a>
 # [3.64.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.63.0...v3.64.0) (2017-06-03)
 
