@@ -106,9 +106,14 @@ class ContactState extends RoutedState {
         this.exit();
     }
 
+    get title() {
+        if (this.routerMain.currentIndex === 0) return 'Contacts';
+        return this.currentContact ? this.currentContact.username : '';
+    }
+
     // if we have no contacts except User.current
     get empty() {
-        return this.store.contacts.length <= 1;
+        return !this.store.contacts || (this.store.contacts.length <= 1);
     }
 
     @action requestPermission() {

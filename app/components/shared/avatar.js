@@ -45,7 +45,7 @@ const itemContainerStyle = {
 
 const nameContainerStyle = {
     borderWidth: 0,
-    borderColor: 'red',
+    borderColor: 'yellow',
     flexGrow: 1,
     flexShrink: 1,
     flexDirection: 'row',
@@ -228,9 +228,17 @@ export default class Avatar extends SafeComponent {
     }
 
     get avatar() {
+        const height = this.props.height;
+        const style = height ? {
+            alignSelf: 'center',
+            justifyContent: 'center',
+            height
+        } : {
+            alignSelf: 'flex-start'
+        };
         return (
             <TouchableOpacity
-                style={{ alignSelf: 'flex-start' }}
+                style={style}
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={this.props.onPressAvatar || this.onPressAll}>
                 <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
@@ -244,11 +252,11 @@ export default class Avatar extends SafeComponent {
     }
 
     get title() {
-        const { contact, title } = this.props;
+        const { contact, title, title2 } = this.props;
         return (
             <View style={nameContainerStyle}>
                 <View style={{ flexShrink: 1 }}>
-                    <Text ellipsizeMode="tail" numberOfLines={1}>
+                    <Text ellipsizeMode="tail" numberOfLines={title2 ? 2 : 1}>
                         {this.star}
                         <Text style={nameTextStyle}>
                             {title ||
@@ -259,6 +267,8 @@ export default class Avatar extends SafeComponent {
                                     </Text>
                                 </Text>}
                         </Text>
+                        {title2 ?
+                            <Text style={lastMessageTextStyle}>{'\n'}{title2}</Text> : null}
                     </Text>
                 </View>
                 <View style={{ flex: 0 }}>

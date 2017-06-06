@@ -1,33 +1,22 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView } from 'react-native';
+import { View, SectionList } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ContactsPlaceholder from './contacts-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import ContactItem from './contact-item';
+import ContactSectionHeader from './contact-section-header';
 import contactState from './contact-state';
 
-const INITIAL_LIST_SIZE = 10;
-const PAGE_SIZE = 2;
+const INITIAL_LIST_SIZE = 20;
 
 @observer
 export default class ContactList extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-    }
-
-    @observable dataSource = null;
+    dataSource = [];
     @observable refreshing = false
-    @observable maxLoadedIndex = INITIAL_LIST_SIZE;
 
-    get data() {
-        return [];
-        // return contactState.store.contacts;
-    }
+    get data() { return contactState.store.contacts; }
 
     componentWillUnmount() {
         this.reaction && this.reaction();
@@ -35,47 +24,51 @@ export default class ContactList extends SafeComponent {
     }
 
     componentDidMount() {
+        contactState.store.uiViewFilter = 'all';
         this.reaction = reaction(() => [
-            contactState.routerMain.route === 'files',
+            contactState.routerMain.route === 'contacts',
             contactState.routerMain.currentIndex === 0,
             this.data,
             this.data.length,
-            this.maxLoadedIndex
+            contactState.store.uiView
         ], () => {
-            // console.log(`contact-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
-            this.dataSource = this.dataSource.cloneWithRows(this.data.slice(0, this.maxLoadedIndex));
+            console.log(contactState.store.uiView.length);
+            console.log(`contact-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
+            this.dataSource = contactState.store.uiView.map(({ letter, items }) => {
+                console.log(letter);
+                return ({ data: items.slice(), key: letter });
+            });
             this.forceUpdate();
         }, true);
     }
 
-    item(contact) {
+    item({ item }) {
         return (
-            <ContactItem key={contact.id} contact={contact} />
+            <ContactItem contact={item} />
         );
     }
 
-    onEndReached = () => {
-        // console.log('files.js: on end reached');
-        this.maxLoadedIndex += PAGE_SIZE;
+    header({ section: /* data, */ { key } }) {
+        return <ContactSectionHeader key={key} title={key} />;
     }
 
     listView() {
         return (
-            <ListView
-                initialListSize={INITIAL_LIST_SIZE}
-                pageSize={PAGE_SIZE}
-                dataSource={this.dataSource}
-                renderRow={this.item}
-                onEndReached={this.onEndReached}
-                onEndReachedThreshold={20}
-                enableEmptySections
+            <SectionList
+                initialNumToRender={INITIAL_LIST_SIZE}
+                sections={this.dataSource}
+                keyExtractor={item => item.username}
+                renderItem={this.item}
+                renderSectionHeader={this.header}
                 ref={sv => (this.scrollView = sv)}
             />
         );
     }
 
+    get isFabVisible() { return true; }
+
     renderThrow() {
-        const body = this.data.length ?
+        const body = !contactState.empty ?
             this.listView() : !contactState.store.loading && <ContactsPlaceholder />;
 
         return (

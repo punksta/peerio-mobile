@@ -65,7 +65,7 @@ class ChatState extends RoutedState {
             when(() => !chatStore.loading, () => {
                 if (!chatStore.chats.length) this.loading = false;
                 c && this.activate(c);
-                console.log(`chat-state.js: active: ${c.active}, isFocused: ${clientApp.isFocused}, isInChatsView: ${clientApp.isInChatsView}`);
+                console.log(`chat-state.js: active: ${c && c.active}, isFocused: ${clientApp.isFocused}, isInChatsView: ${clientApp.isInChatsView}`);
             });
         }
     }
