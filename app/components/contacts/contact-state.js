@@ -3,6 +3,7 @@ import { observable, action, when } from 'mobx';
 import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
 import { contactStore } from '../../lib/icebear';
+import { tx } from '../utils/translator';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 
@@ -107,7 +108,7 @@ class ContactState extends RoutedState {
     }
 
     get title() {
-        if (this.routerMain.currentIndex === 0) return 'Contacts';
+        if (this.routerMain.currentIndex === 0) return tx('title_contacts');
         return this.currentContact ? this.currentContact.username : '';
     }
 
@@ -192,6 +193,16 @@ class ContactState extends RoutedState {
             console.log(`${givenName} ${familyName}`);
             console.log(JSON.stringify(phoneNumbers));
         });
+    }
+
+    onTransition(active, contact) {
+        console.log('contacts on transition');
+        this.currentContact = active ? contact : null;
+    }
+
+    fabAction() {
+        console.log(`contact-state.js: fab action`);
+        this.routerMain.contactAdd();
     }
 }
 

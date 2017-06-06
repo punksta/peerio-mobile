@@ -12,14 +12,11 @@ import Chat from '../messaging/chat';
 import ChatList from '../messaging/chat-list';
 import Files from '../files/files';
 import FileView from '../files/file-view';
+import ContactAdd from '../contacts/contact-add';
+import ContactView from '../contacts/contact-view';
 import ContactList from '../contacts/contact-list';
 import Logs from '../logs/logs';
-import mainState from '../main/main-state';
-import fileState from '../files/file-state';
-import ghostState from '../ghosts/ghost-state';
-import chatState from '../messaging/chat-state';
-import settingsState from '../settings/settings-state';
-import contactState from '../contacts/contact-state';
+import { fileState, mainState, ghostState, chatState, settingsState, contactState, contactAddState } from '../states';
 // import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
 
@@ -47,7 +44,8 @@ class RouterMain extends Router {
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
         this.add('chats', [<ChatList />, <Chat />], chatState);
-        this.add('contacts', [<ContactList />], contactState);
+        this.add('contacts', [<ContactList />, <ContactView nonModal />], contactState);
+        this.add('contactAdd', [<ContactAdd />], contactAddState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
         this.loading = true;

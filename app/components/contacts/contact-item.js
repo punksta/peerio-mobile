@@ -3,8 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
-
-// import contactState from './contact-state';
+import contactState from './contact-state';
 
 @observer
 export default class ContactItem extends SafeComponent {
@@ -13,6 +12,7 @@ export default class ContactItem extends SafeComponent {
         const { username, fullName } = contact;
         return (
             <Avatar
+                onPress={() => contactState.routerMain.contacts(contact)}
                 height={56}
                 contact={contact}
                 title={username}

@@ -11,7 +11,7 @@ import { t } from '../utils/translator';
 const flexRow = {
     flexDirection: 'row',
     flex: 1,
-    flexGrow: 1,
+    maxHeight: 140,
     alignItems: 'center'
 };
 
@@ -29,7 +29,7 @@ export default class ContactView extends SafeComponent {
             </View>
         );
         const body = (
-            <View>
+            <View style={{ flex: 1, flexGrow: 1 }}>
                 <View style={[flexRow, { backgroundColor: contact.color }]}>
                     <Text style={{
                         color: vars.white,
@@ -60,12 +60,15 @@ export default class ContactView extends SafeComponent {
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>
+                <View style={{ flex: 1, flexGrow: 1 }} />
             </View>
         );
-        return <LayoutModalExit body={body} title={username} onClose={() => contactState.routerModal.discard()} />;
+        return this.props.nonModal ? body :
+        <LayoutModalExit body={body} title={username} onClose={() => contactState.routerModal.discard()} />;
     }
 }
 
 ContactView.propTypes = {
-    contact: PropTypes.any
+    contact: PropTypes.any,
+    nonModal: PropTypes.any
 };

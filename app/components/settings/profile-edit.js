@@ -201,7 +201,8 @@ export default class ProfileEdit extends SafeComponent {
             <ScrollView
                 onScroll={this.onScroll}
                 keyboardShouldPersistTaps="handled"
-                style={{ backgroundColor: vars.settingsBg }} ref={ref => (this._scrollView = ref)}>
+                style={{ backgroundColor: vars.settingsBg }}
+                ref={ref => (this._scrollView = ref)}>
                 <View style={[flexRow, { backgroundColor: contact.color }]}>
                     <Text style={{
                         color: vars.white,
