@@ -112,7 +112,7 @@ android {
     version = packageJson.version
 
     defaultConfig {
-        applicationId "com.peerio.messenger"
+        applicationId "com.peerio.app"
         minSdkVersion 21
         targetSdkVersion 23
         versionCode code

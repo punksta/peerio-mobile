@@ -1,4 +1,4 @@
-package com.peerio.messenger;
+package com.peerio.app;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class RNSodiumPackage implements ReactPackage {
+public class RNKeychainPackage implements ReactPackage {
 
     @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
@@ -24,7 +24,7 @@ public class RNSodiumPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Arrays.<NativeModule>asList(
-                new RNSodium(reactContext)
+                new RNKeychain(reactContext)
         );
     }
 }

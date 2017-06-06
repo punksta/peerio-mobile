@@ -1,4 +1,4 @@
-package com.peerio.messenger;
+package com.peerio.app;
 
 import android.app.Application;
 import android.util.Log;
