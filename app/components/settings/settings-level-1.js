@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, Share } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
@@ -25,6 +25,13 @@ export default class SettingsLevel1 extends SafeComponent {
         return <View style={{ height: 32 }} />;
     }
 
+    testShare() {
+        const message = 'Chat and share files securely using Peerio. https://www.peerio.com';
+        const title = 'Peerio';
+        const url = 'https://www.peerio.com';
+        Share.share({ message, title, url });
+    }
+
     renderThrow() {
         return (
             <View style={bgStyle}>
@@ -46,6 +53,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {__DEV__ && <SettingsItem title="Damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
                     {__DEV__ && <SettingsItem title="Snackbar" onPress={() => snackbarState.pushTemporary('test')} />}
                     {__DEV__ && <SettingsItem title="Test Contacts" onPress={() => contactState.testImport()} />}
+                        {__DEV__ && <SettingsItem title="Test Share" onPress={() => this.testShare()} />}
                     {/* <SettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <SettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </ScrollView>
