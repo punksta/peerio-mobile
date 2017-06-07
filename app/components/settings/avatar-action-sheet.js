@@ -1,13 +1,21 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
+import RNFS from 'react-native-fs';
 import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-crop-picker';
 import FileOpener from 'react-native-file-opener';
 import SafeComponent from '../shared/safe-component';
+import { User, crypto } from '../../lib/icebear';
+
+const { b64ToBytes } = crypto.cryptoUtil;
 
 const SIZE_BASE = 428;
 const SIZE1 = 214;
 const SIZE2 = 64;
+
+const readFile = async path => RNFS.readFile(path, 'base64').then(b64ToBytes);
+
+export { SIZE1, SIZE2 };
 
 @observer
 export default class AvatarActionSheet extends SafeComponent {
@@ -33,17 +41,25 @@ export default class AvatarActionSheet extends SafeComponent {
 
     show = () => this._actionSheet.show();
 
+    async save(largePath, smallPath) {
+        const largeFile = await readFile(largePath);
+        // console.log(largeFile);
+        const smallFile = await readFile(smallPath);
+        // console.log(smallFile);
+        return User.current.saveAvatar([largeFile.buffer, smallFile.buffer]);
+    }
+
     async generateResize(path) {
         console.log(path);
         try {
-            await FileOpener.open(path, 'image/jpeg');
-            let resizedPath = null;
+            // await FileOpener.open(path, 'image/jpeg');
             console.log(`profile-edit: resizing to ${SIZE1}`);
-            resizedPath = await ImagePicker.resizeImageToMaxSize(path, SIZE1);
-            await FileOpener.open(resizedPath, 'image/png');
+            const resizedPathLarge = await ImagePicker.resizeImageToMaxSize(path, SIZE1);
+            // await FileOpener.open(resizedPathLarge, 'image/png');
             console.log(`profile-edit: resizing to ${SIZE2}`);
-            resizedPath = await ImagePicker.resizeImageToMaxSize(path, SIZE2);
-            await FileOpener.open(resizedPath, 'image/png');
+            const resizedPathSmall = await ImagePicker.resizeImageToMaxSize(path, SIZE2);
+            // await FileOpener.open(resizedPathSmall, 'image/png');
+            await this.save(resizedPathLarge, resizedPathSmall);
         } catch (e) {
             console.error(e);
         }

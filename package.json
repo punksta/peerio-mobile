@@ -72,7 +72,7 @@
     "react-native-device-info": "https://github.com/PeerioTechnologies/react-native-device-info",
     "react-native-file-opener": "https://github.com/PeerioTechnologies/react-native-file-opener.git",
     "react-native-fs": "https://github.com/PeerioTechnologies/react-native-fs.git",
-    "react-native-image-crop-picker": "^0.13.1",
+    "react-native-image-crop-picker": "https://github.com/PeerioTechnologies/react-native-image-crop-picker",
     "react-native-image-picker": "https://github.com/PeerioTechnologies/react-native-image-picker",
     "react-native-in-app-utils": "git+https://github.com/chirag04/react-native-in-app-utils.git",
     "react-native-linear-gradient": "^2.0.0",

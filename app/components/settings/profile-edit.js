@@ -1,13 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ScrollView, Text, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { Image, View, ScrollView, Text, TouchableOpacity, LayoutAnimation } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
 import { vars } from '../../styles/styles';
 import { User, contactStore, validation } from '../../lib/icebear';
 import { t, tx, tu } from '../utils/translator';
-import AvatarActionSheet from './avatar-action-sheet';
+import AvatarActionSheet, { SIZE2 } from './avatar-action-sheet';
 import icons from '../helpers/icons';
 import uiState from '../layout/ui-state';
 
@@ -195,6 +195,34 @@ export default class ProfileEdit extends SafeComponent {
         );
     }
 
+    get avatarLetter() {
+        const contact = contactStore.getContact(User.current.username);
+        const style = {
+            color: vars.white,
+            fontWeight: 'bold',
+            fontSize: 60,
+            marginHorizontal: 24,
+            marginVertical: 16
+        };
+        return (
+            <Text style={style}>
+                {contact.letter}
+            </Text >
+        );
+    }
+
+    get avatar() {
+        const contact = contactStore.getContact(User.current.username);
+        console.log(contact.mediumAvatarUrl);
+        const uri = contact.mediumAvatarUrl;
+        const size = SIZE2;
+        return (
+            <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={() => this._actionSheet.show()}>
+                <Image source={{ uri, cache: 'force-cache' }} key={uri} style={{ borderRadius: size / 2, width: size, height: size, margin: 16 }} />
+            </TouchableOpacity>
+        );
+    }
+
     renderThrow() {
         const contact = contactStore.getContact(User.current.username);
         const { firstName, lastName, fingerprintSkylarFormatted, username } = contact;
@@ -205,16 +233,8 @@ export default class ProfileEdit extends SafeComponent {
                 keyboardShouldPersistTaps="handled"
                 style={{ backgroundColor: vars.settingsBg }}
                 ref={ref => (this._scrollView = ref)}>
-                <View style={[flexRow, { backgroundColor: contact.color }]}>
-                    <Text style={{
-                        color: vars.white,
-                        fontWeight: 'bold',
-                        fontSize: 60,
-                        marginHorizontal: 24,
-                        marginVertical: 16
-                    }}>
-                        {contact.letter}
-                    </Text>
+                <View style={[flexRow, { backgroundColor: contact.hasAvatar ? vars.txtDate : contact.color }]}>
+                    {contact.hasAvatar ? this.avatar : this.avatarLetter}
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text
                             style={{
@@ -224,6 +244,9 @@ export default class ProfileEdit extends SafeComponent {
                                 marginVertical: 4
                             }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.white }}>@{username}</Text>
+                        <View style={{ position: 'absolute', right: 0, bottom: 0 }}>
+                            {icons.white('camera-alt', () => this._actionSheet.show())}
+                        </View>
                     </View>
                 </View>
                 <View style={{ margin: 8 }}>
@@ -233,12 +256,6 @@ export default class ProfileEdit extends SafeComponent {
                             onBlur={this.submit}
                             onChangeText={text => (this.firstName = text)}
                             placeholder={tx('title_firstName')} style={textinput} value={this.firstName} />
-                    </View>
-                    <View>
-                        {this.renderButton1(
-                            'Pick avatar',
-                            () => this._actionSheet.show()
-                        )}
                     </View>
                     <View style={textinputContainer}>
                         <SimpleTextBox
