@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.66.0"></a>
+# [3.66.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.65.0...v3.66.0) (2017-06-07)
+
+
+### Bug Fixes
+
+* **ui:** call camera thing ([60573cf](https://github.com/PeerioTechnologies/peerio-mobile/commit/60573cf))
+
+
+### Features
+
+* **ui:** pick and crop avatars ([e56db67](https://github.com/PeerioTechnologies/peerio-mobile/commit/e56db67))
+* **ui:** social share test invoker ([1350f36](https://github.com/PeerioTechnologies/peerio-mobile/commit/1350f36))
+
+
+
 <a name="3.65.0"></a>
 # [3.65.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.64.0...v3.65.0) (2017-06-06)
 
