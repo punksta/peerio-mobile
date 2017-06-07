@@ -7,6 +7,7 @@ import SimpleTextBox from '../shared/simple-text-box';
 import { vars } from '../../styles/styles';
 import { User, contactStore, validation } from '../../lib/icebear';
 import { t, tx, tu } from '../utils/translator';
+import AvatarActionSheet from './avatar-action-sheet';
 import icons from '../helpers/icons';
 import uiState from '../layout/ui-state';
 
@@ -143,6 +144,7 @@ export default class ProfileEdit extends SafeComponent {
         );
     }
 
+
     renderButton1(text, onPress, disabled) {
         return (
             <TouchableOpacity
@@ -232,6 +234,12 @@ export default class ProfileEdit extends SafeComponent {
                             onChangeText={text => (this.firstName = text)}
                             placeholder={tx('title_firstName')} style={textinput} value={this.firstName} />
                     </View>
+                    <View>
+                        {this.renderButton1(
+                            'Pick avatar',
+                            () => this._actionSheet.show()
+                        )}
+                    </View>
                     <View style={textinputContainer}>
                         <SimpleTextBox
                             onBlur={this.submit}
@@ -268,6 +276,7 @@ export default class ProfileEdit extends SafeComponent {
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>
+                <AvatarActionSheet ref={sheet => (this._actionSheet = sheet)} />
             </ScrollView>
         );
     }

@@ -1,4 +1,4 @@
-package com.peerio.messenger;
+package com.peerio.app;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
