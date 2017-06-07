@@ -2,7 +2,7 @@ import { DeviceEventEmitter } from 'react-native';
 import { observable, action, when } from 'mobx';
 import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
-import { contactStore } from '../../lib/icebear';
+import { contactStore, warnings } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
@@ -190,6 +190,8 @@ class ContactState extends RoutedState {
         if (!hasPermissions) return;
         const contacts = await this.getContacts();
         contacts.forEach(({ givenName, familyName, phoneNumbers }) => {
+            const display = `Imported ${givenName} ${familyName}`;
+            warnings.add(display);
             console.log(`${givenName} ${familyName}`);
             console.log(JSON.stringify(phoneNumbers));
         });
