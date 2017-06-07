@@ -3,7 +3,7 @@ import { observer } from 'mobx-react/native';
 import RNFS from 'react-native-fs';
 import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-crop-picker';
-import FileOpener from 'react-native-file-opener';
+// import FileOpener from 'react-native-file-opener';
 import SafeComponent from '../shared/safe-component';
 import { User, crypto } from '../../lib/icebear';
 
@@ -30,7 +30,7 @@ export default class AvatarActionSheet extends SafeComponent {
 
     _actionSheetMap = [
         { title: 'Pick from gallery...', action: () => this.pickCrop(false) },
-        { title: 'Take a picture', action: () => this._chat.pickCrop(true) },
+        { title: 'Take a picture', action: () => this.pickCrop(true) },
         { title: 'Cancel' }
     ];
 
