@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.68.0"></a>
+# [3.68.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.67.0...v3.68.0) (2017-06-08)
+
+
+### Bug Fixes
+
+* **android:** appCompat force to imagePicker ([0283ae7](https://github.com/PeerioTechnologies/peerio-mobile/commit/0283ae7))
+* **files:** switch to new file sharing flow ([eef19f3](https://github.com/PeerioTechnologies/peerio-mobile/commit/eef19f3))
+
+
+### Features
+
+* **files:** sharing update to SDK ([d9f207d](https://github.com/PeerioTechnologies/peerio-mobile/commit/d9f207d))
+* **ui:** homogenous look for android simpletextbox ([18a7690](https://github.com/PeerioTechnologies/peerio-mobile/commit/18a7690))
+
+
+
 <a name="3.67.0"></a>
 # [3.67.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.66.0...v3.67.0) (2017-06-08)
 
