@@ -21,7 +21,10 @@ export default class LoginPassword extends LoginWizardPage {
         };
         return [
             <Text key="1" style={textStyle}><T k="title_AKlogin">{textParser}</T></Text>,
-            <TextBox key="2" state={loginState} name="passphrase" hint={t('title_AccountKey')} secureTextEntry />
+            <TextBox key="2"
+                returnKeyType="go"
+                onSubmit={() => this.props.submit()}
+                state={loginState} name="passphrase" hint={t('title_AccountKey')} secureTextEntry />
         ];
     }
 
