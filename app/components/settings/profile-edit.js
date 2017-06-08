@@ -244,7 +244,8 @@ export default class ProfileEdit extends SafeComponent {
                                 marginVertical: 4
                             }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.white }}>@{username}</Text>
-                        <View style={{ position: 'absolute', right: 0, bottom: 0 }}>
+                        <View style={{ position: 'absolute', right: 0, bottom: 0, flexDirection: 'row' }}>
+                            {contact.hasAvatar && icons.white('delete', () => user.deleteAvatar())}
                             {icons.white('camera-alt', () => this._actionSheet.show())}
                         </View>
                     </View>
