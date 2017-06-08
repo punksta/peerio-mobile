@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, ActivityIndicator, View } from 'react-native';
+import { Text, ActivityIndicator, View, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import ErrorCircle from './error-circle';
@@ -35,16 +35,25 @@ export default class AvatarCircle extends SafeComponent {
             alignItems: 'center',
             backgroundColor: color || 'gray'
         }];
-        const inner = contact ? (
-            <Text style={{ color: 'white', textAlign: 'center', width: 14 * ratio, fontSize: 12 * ratio }}>
-                {letter}
-            </Text>
-        ) : icons.plainWhite('group');
+        let inner = <View style={coloredAvatarStyle}>{icons.plainWhite('group')}</View>;
+        if (contact) {
+            if (contact.hasAvatar) {
+                const uri = (large || medium) ? contact.largeAvatarUrl : contact.mediumAvatarUrl;
+                inner = <Image source={{ uri, cache: 'force-cache' }} key={uri} style={avatarStyle} />;
+            } else {
+                inner = (
+                    <View style={coloredAvatarStyle}>
+                        <Text style={{ color: 'white', textAlign: 'center', width: 14 * ratio, fontSize: 12 * ratio }}>
+                            {letter}
+                        </Text>
+                    </View>
+                );
+            }
+        }
+
         return (
             <View style={{ borderWidth: 0, borderColor: 'green' }}>
-                <View style={coloredAvatarStyle}>
-                    {inner}
-                </View>
+                {inner}
                 <ErrorCircle large={this.props.large} visible={tofuError} />
             </View>
         );

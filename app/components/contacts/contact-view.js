@@ -5,6 +5,7 @@ import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
 import contactState from '../contacts/contact-state';
+import AvatarCircle from '../shared/avatar-circle';
 import { vars } from '../../styles/styles';
 import { t } from '../utils/translator';
 
@@ -30,27 +31,19 @@ export default class ContactView extends SafeComponent {
         );
         const body = (
             <View style={{ flex: 1, flexGrow: 1 }}>
-                <View style={[flexRow, { backgroundColor: contact.color }]}>
-                    <Text style={{
-                        color: vars.white,
-                        fontWeight: 'bold',
-                        fontSize: 60,
-                        marginHorizontal: 24,
-                        marginVertical: 16
-                    }}>
-                        {contact.letter}
-                    </Text>
+                <View style={[flexRow, { backgroundColor: vars.lightGrayBg }]}>
+                    <AvatarCircle large contact={contact} />
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text
                             ellipsizeMode="tail"
                             numberOfLines={2}
                             style={{
                                 fontWeight: 'bold',
-                                color: vars.white,
+                                color: vars.txtDark,
                                 fontSize: 16,
                                 marginVertical: 4
                             }}>{firstName} {lastName}</Text>
-                        <Text style={{ color: vars.white }}>@{username}</Text>
+                        <Text style={{ color: vars.txtDark }}>@{username}</Text>
                     </View>
                 </View>
                 <View style={{ margin: 24 }}>
