@@ -9,7 +9,7 @@ import { User, crypto } from '../../lib/icebear';
 
 const { b64ToBytes } = crypto.cryptoUtil;
 
-const SIZE_BASE = 428;
+const SIZE_BASE = 856;
 const SIZE1 = 214;
 const SIZE2 = 64;
 

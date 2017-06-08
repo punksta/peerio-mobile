@@ -218,8 +218,7 @@ export default class ProfileEdit extends SafeComponent {
 
     get avatar() {
         const contact = contactStore.getContact(User.current.username);
-        console.log(contact.mediumAvatarUrl);
-        const uri = contact.mediumAvatarUrl;
+        const uri = contact.largeAvatarUrl;
         const size = SIZE2;
         return (
             <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={() => this._actionSheet.show()}>
