@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.69.0"></a>
+# [3.69.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.68.0...v3.69.0) (2017-06-08)
+
+
+### Bug Fixes
+
+* **ui:** avatar blurry image on retina screens ([a9d45be](https://github.com/PeerioTechnologies/peerio-mobile/commit/a9d45be))
+
+
+### Features
+
+* **ui:** avatars in lists and contactview ([59dda1b](https://github.com/PeerioTechnologies/peerio-mobile/commit/59dda1b))
+
+
+
 <a name="3.68.0"></a>
 # [3.68.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.67.0...v3.68.0) (2017-06-08)
 
