@@ -1,6 +1,5 @@
 import { Platform, NativeModules } from 'react-native';
 import RNFS from 'react-native-fs';
-import RNFetchBlob from 'peerio-react-native-fetch-blob';
 import FileOpener from 'react-native-file-opener';
 
 const icebear = require('./peerio-icebear');
@@ -21,11 +20,8 @@ export default (fileStream) => {
                         return this;
                     });
             }
-            return RNFetchBlob.fs.writeStream(this.filePath, 'base64', this.mode === 'append')
-                .then(fd => {
-                    this.fileDescriptor = fd;
-                    return this;
-                });
+            this.fileDescriptor = this.filePath;
+            return Promise.resolve(this);
         }
 
         close() {
@@ -70,7 +66,7 @@ export default (fileStream) => {
          * @return {Promise}
          */
         writeInternal(buffer) {
-            return this.fileDescriptor.write(bytesToB64(buffer)).return(buffer);
+            return RNFS.appendFile(this.fileDescriptor, bytesToB64(buffer), 'base64').return(buffer);
         }
 
         static getFullPath(name) {
