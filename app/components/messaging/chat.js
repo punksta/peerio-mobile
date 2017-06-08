@@ -244,7 +244,7 @@ export default class Chat extends SafeComponent {
 
     zeroStateItem() {
         const zsContainer = {
-            borderBottomWidth: 1,
+            borderBottomWidth: 0,
             borderBottomColor: '#CFCFCF',
             marginBottom: 8
         };

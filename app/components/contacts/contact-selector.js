@@ -4,11 +4,12 @@ import {
     View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { when } from 'mobx';
+import { when, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
 import Layout1 from '../layout/layout1';
+import ProgressOverlay from '../shared/progress-overlay';
 import Center from '../controls/center';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
@@ -19,13 +20,10 @@ import { vars } from '../../styles/styles';
 import contactState from './contact-state';
 import snackbarState from '../snackbars/snackbar-state';
 
-const actions = {
-    send: () => contactState.send(),
-    share: () => contactState.share()
-};
-
 @observer
 export default class ContactSelector extends SafeComponent {
+    @observable inProgress = false;
+    @observable clean = true;
 
     userbox(contact, i) {
         const style = {
@@ -121,7 +119,7 @@ export default class ContactSelector extends SafeComponent {
                     returnKeyType="go"
                     blurOnSubmit={false}
                     onSubmitEditing={() => this.onSubmit()}
-                    onChangeText={text => this.onChangeFindUserText(text)}
+                    onChangeText={text => { this.clean = !text.length; this.onChangeFindUserText(text) }}
                     autoCapitalize="none"
                     autoCorrect={false}
                     placeholder={tx('title_userSearch')}
@@ -157,8 +155,22 @@ export default class ContactSelector extends SafeComponent {
         );
     }
 
+    send() {
+        contactState.send();
+    }
+
+    async share() {
+        try {
+            this.inProgress = true;
+            await contactState.share();
+        } catch(e) {
+            console.error(e);
+        }
+        this.inProgress = false;
+    }
+
     action() {
-        actions[this.props.action]();
+        this[this.props.action]();
     }
 
     item(contact, i) {
@@ -206,13 +218,13 @@ export default class ContactSelector extends SafeComponent {
     }
 
     body() {
-        if (contactState.empty) return <ContactsPlaceholder />;
+        if (contactState.empty && this.clean) return <ContactsPlaceholder />;
         const found = contactState.filtered;
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
         // const result = findUserText && findUserText.length ? mockItems : chat;
         const result = mockItems;
-        const body = !found.length && contactState.loading ? activityIndicator : result;
+        const body = !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
         return (
             <View>
                 {body}

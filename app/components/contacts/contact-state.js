@@ -2,7 +2,7 @@ import { DeviceEventEmitter } from 'react-native';
 import { observable, action, when } from 'mobx';
 import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
-import { contactStore, warnings, chatStore } from '../../lib/icebear';
+import { contactStore, warnings, chatStore, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
@@ -52,7 +52,7 @@ class ContactState extends RoutedState {
     }
 
     get filtered() {
-        const result = contactStore.filter(this.findUserText);
+        const result = contactStore.filter(this.findUserText).filter(c => c.username !== User.current.username);
         return result.length ? result : this.found.filter(c => !c.loading && !c.notFound);
     }
 
@@ -100,13 +100,11 @@ class ContactState extends RoutedState {
         this.send(null, contact);
     }
 
-    @action share() {
+    @action async share() {
         const file = fileState.currentFile;
         if (!file) return;
-        chatStore.startChatAndShareFiles(this.recipients, file)
-            .then(() => {
-                // @seavan TODO: go to currently active chat
-            });
+        await chatStore.startChatAndShareFiles(this.recipients, file);
+        this.routerMain.chats(chatState.store.activeChat, true);
         this.exit();
     }
 
