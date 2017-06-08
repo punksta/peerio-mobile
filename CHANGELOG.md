@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.67.0"></a>
+# [3.67.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.66.0...v3.67.0) (2017-06-08)
+
+
+### Bug Fixes
+
+* **legacy:** removing awful legacy RNFetchBlob ([dcc24b5](https://github.com/PeerioTechnologies/peerio-mobile/commit/dcc24b5))
+
+
+### Features
+
+* **naming:** naming ([783d3cf](https://github.com/PeerioTechnologies/peerio-mobile/commit/783d3cf))
+* **ui:** avatar deletion ([c402d91](https://github.com/PeerioTechnologies/peerio-mobile/commit/c402d91))
+* **ui:** login on submit keyboard ([b3885ec](https://github.com/PeerioTechnologies/peerio-mobile/commit/b3885ec))
+
+
+
 <a name="3.66.0"></a>
 # [3.66.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.65.0...v3.66.0) (2017-06-07)
 
