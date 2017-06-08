@@ -11,9 +11,7 @@ import com.chirag.RNMail.RNMail;
 import com.idehub.Billing.InAppBillingBridgePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.zmxv.RNSound.RNSoundPackage;
-
 import cl.json.RNSharePackage;
-
 import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.bitgo.randombytes.RandomBytesPackage;
 import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
@@ -21,8 +19,6 @@ import com.imagepicker.ImagePickerPackage;
 import com.rnfs.RNFSPackage;
 import com.fileopener.FileOpenerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.RNFetchBlob.RNFetchBlobPackage;
-
 import org.pgsqlite.SQLitePluginPackage;
 // import com.facebook.stetho.Stetho;
 import com.facebook.soloader.SoLoader;
@@ -50,7 +46,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-            new PickerPackage(),
+                    new PickerPackage(),
                     new ReactNativeContacts(),
                     new RNSodiumPackage(),
                     new RNKeychainPackage(),
@@ -65,7 +61,6 @@ public class MainApplication extends Application implements ReactApplication {
                     new ImagePickerPackage(),
                     new FileOpenerPackage(),
                     new RNDeviceInfo(),
-                    new RNFetchBlobPackage(),
                     new RNSharePackage(),
                     new SQLitePluginPackage(),
                     new RNFSPackage()
