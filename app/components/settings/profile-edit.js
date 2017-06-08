@@ -109,11 +109,16 @@ export default class ProfileEdit extends SafeComponent {
         this.showAddEmail = false;
     };
 
-    async emailAction() {
+    validateNewEmail() {
         if (this.newEmailText && !this.newEmailTextValid) {
             this.showValidationError = true;
-            return;
+            return false;
         }
+        return true;
+    }
+
+    async emailAction() {
+        if (!this.validateNewEmail()) return;
         await uiState.hideAll();
         LayoutAnimation.easeInEaseOut();
         this.showAddEmail = !this.showAddEmail;
@@ -279,6 +284,7 @@ export default class ProfileEdit extends SafeComponent {
                             autoComplete={false}
                             autoCapitalize="none"
                             value={this.newEmailText}
+                            onBlur={() => this.validateNewEmail()}
                             onChangeText={text => (this.newEmailText = text)}
                             onSubmitEditing={() => this.emailAction()}
                             style={textinput} />

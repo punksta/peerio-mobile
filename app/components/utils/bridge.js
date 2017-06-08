@@ -1,3 +1,4 @@
+import { NativeModules } from 'react-native';
 import 'moment/locale/ru';
 import 'moment/locale/fr';
 import 'moment/locale/es';
