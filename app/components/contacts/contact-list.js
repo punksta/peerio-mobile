@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
 import { View, SectionList } from 'react-native';
 import { observable, reaction } from 'mobx';
@@ -82,3 +83,7 @@ export default class ContactList extends SafeComponent {
         );
     }
 }
+
+ContactList.propTypes = {
+    store: PropTypes.any
+};
