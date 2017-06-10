@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { contactStore } from '../../lib/icebear';
 
@@ -25,15 +25,18 @@ export default class ReadReceipt extends SafeComponent {
     }
 
     renderThrow() {
-        const { color, letter } = this.contact;
+        const { color, letter, mediumAvatarUrl } = this.contact;
         const circleOnline = {
             backgroundColor: color || '#ccc'
         };
-        return (
+        const letterView = (
             <View style={[circleStyle, circleOnline]}>
                 <Text style={{ fontSize: 9, color: 'white' }}>{letter}</Text>
             </View>
         );
+        const uri = mediumAvatarUrl;
+        const avatarView = <Image style={circleStyle} source={{ uri, cache: 'force-cache' }} key={uri} />;
+        return mediumAvatarUrl ? avatarView : letterView;
     }
 }
 
