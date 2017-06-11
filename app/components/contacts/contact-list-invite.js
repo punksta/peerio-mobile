@@ -18,6 +18,10 @@ export default class ContactListInvite extends SafeComponent {
 
     get layoutTitle() { return 'Invite contacts'; }
 
+    get leftIcon() {
+        return buttons.uppercaseWhiteButton('Done', () => contactAddState.routerMain.contacts());
+    }
+
     componentWillUnmount() {
         this.reaction && this.reaction();
         this.reaction = null;
