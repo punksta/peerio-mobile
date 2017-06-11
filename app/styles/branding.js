@@ -8,7 +8,7 @@ const brandingDefines = {
         bgGradient: '#32CEC3',
         tabsBg: '#f7f7f7',
         tabsFg: '#757575',
-        logo: require('../assets/peerio-logo-white.png')
+        logo: require('../assets/logo-with-tag.png')
     },
     expandoo: {
         bg: '#009dfd',
