@@ -88,6 +88,12 @@ class LoginState extends RoutedState {
                 // wait for user to answer
                 await this.askAboutAutomaticLogin(user);
             })
+            .catch(e => {
+                console.error(e);
+                User.current = null;
+                this.passphraseValidationMessage = tx('error_wrongAK');
+                return Promise.reject(new Error(this.error));
+            })
             .then(() => mainState.activateAndTransition(user))
             .then(() => this.clean())
             .then(async () => {
@@ -100,8 +106,6 @@ class LoginState extends RoutedState {
             })
             .catch(e => {
                 console.error(e);
-                User.current = null;
-                this.passphraseValidationMessage = tx('error_wrongAK');
                 return Promise.reject(new Error(this.error));
             })
             .finally(() => {
