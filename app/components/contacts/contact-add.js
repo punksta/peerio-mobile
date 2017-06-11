@@ -98,8 +98,8 @@ export default class ContactAdd extends SafeComponent {
     share() {
         const message = 'Chat and share files securely using Peerio. https://www.peerio.com';
         const title = 'Peerio';
-        const url = 'https://www.peerio.com';
-        Share.share({ message, title, url });
+        // const url = 'https://www.peerio.com';
+        Share.share({ message, title });
     }
 
     get emailButton() {
