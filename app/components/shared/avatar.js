@@ -228,6 +228,7 @@ export default class Avatar extends SafeComponent {
     }
 
     get avatar() {
+        if (this.props.hideAvatar) return null;
         const height = this.props.height;
         const style = height ? {
             alignSelf: 'center',

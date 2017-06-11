@@ -1,7 +1,10 @@
+import { observable } from 'mobx';
 import RoutedState from '../routes/routed-state';
 import { tx } from '../utils/translator';
 
 class ContactAddState extends RoutedState {
+    @observable imported = [];
+
     get title() {
         if (this.routerMain.currentIndex === 0) return tx('title_contacts');
         return '';

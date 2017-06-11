@@ -7,6 +7,7 @@ import { tx } from '../utils/translator';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 import { loadGroupSettings } from './contacts-groups';
+import contactAddState from './contact-add-state';
 
 class ContactState extends RoutedState {
     _prefix = 'contacts';
@@ -191,14 +192,50 @@ class ContactState extends RoutedState {
     @action async testImport() {
         const hasPermissions = await this.hasPermissions();
         if (!hasPermissions) return;
+        this.isInProgress = true;
         const contacts = await this.getContacts();
+        const emails = [];
+        const hash = {};
         contacts.forEach(contact => {
-            const { givenName, familyName, phoneNumbers } = contact;
-            const display = `Imported ${givenName} ${familyName}`;
-            warnings.add(display);
-            console.log(`${givenName} ${familyName}`);
-            console.log(JSON.stringify(contact));
+            const { givenName, familyName, emailAddresses } = contact;
+            const display = `contact-state.js: processing ${givenName} ${familyName}`;
+            console.log(display);
+            if (emailAddresses) {
+                emailAddresses.forEach(ea => {
+                    const { email } = ea;
+                    if (email) {
+                        console.log(`${email}: ${givenName} ${familyName}`);
+                        emails.push(email);
+                        hash[email] = observable({
+                            givenName,
+                            familyName,
+                            email,
+                            username: email,
+                            fullName: `${givenName} ${familyName}`,
+                            color: '#EFEFEF',
+                            invited: false
+                        });
+                    }
+                });
+            }
         });
+        this.store.importContacts(emails)
+            .then(success => {
+                console.error('contact-state.js: import success');
+                return success;
+            })
+            .catch(reject => {
+                return reject;
+            })
+            .then(data => {
+                const { imported, notFound } = data;
+                warnings.add(`Processed ${emails.length}, imported ${imported.length}`);
+                contactAddState.imported = notFound.map(email => hash[email]).filter(i => !!i);
+                this.routerMain.contactInvite();
+            })
+            .finally(() => {
+                this.isInProgress = false;
+            });
     }
 
     onTransition(active, contact) {

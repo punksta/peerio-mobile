@@ -11,6 +11,7 @@ import ProgressOverlay from '../shared/progress-overlay';
 import ContactItem from './contact-item';
 import ContactSectionHeader from './contact-section-header';
 import contactState from './contact-state';
+import { vars } from '../../styles/styles';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -112,7 +113,7 @@ export default class ContactList extends SafeComponent {
         const component = (this.mode === 'groups') ? <ContactsGroups /> : this.contactListComponent;
         return (
             <View
-                style={{ flex: 1 }}>
+                style={{ flex: 1, backgroundColor: vars.lightGrayBg }}>
                 <View style={{ flex: 1 }}>
                     {component}
                 </View>

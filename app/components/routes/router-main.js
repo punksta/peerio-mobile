@@ -15,6 +15,7 @@ import FileView from '../files/file-view';
 import ContactAdd from '../contacts/contact-add';
 import ContactView from '../contacts/contact-view';
 import ContactList from '../contacts/contact-list';
+import ContactListInvite from '../contacts/contact-list-invite';
 import Logs from '../logs/logs';
 import { fileState, mainState, ghostState, chatState, settingsState, contactState, contactAddState } from '../states';
 // import { enablePushNotifications } from '../../lib/push';
@@ -46,6 +47,7 @@ class RouterMain extends Router {
         this.add('chats', [<ChatList />, <Chat />], chatState);
         this.add('contacts', [<ContactList />, <ContactView nonModal />], contactState);
         this.add('contactAdd', [<ContactAdd />], contactAddState);
+        this.add('contactInvite', [<ContactListInvite />], contactAddState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
         this.loading = true;

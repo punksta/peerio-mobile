@@ -55,7 +55,7 @@ export default class HeaderMain extends SafeComponent {
                         ellipsizeMode="middle"
                         numberOfLines={1}
                         style={[textStyle, { paddingRight: !rightIcon && leftIcon ? (32 + vars.iconSize) : 0 }]}>
-                        {routerMain.title}
+                        {this.props.title || routerMain.title}
                         {titleAction && <Text style={{ fontSize: 14 }}>
                             {'  ▼  '}
                         </Text>}
