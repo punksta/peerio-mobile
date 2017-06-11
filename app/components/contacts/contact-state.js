@@ -192,11 +192,12 @@ class ContactState extends RoutedState {
         const hasPermissions = await this.hasPermissions();
         if (!hasPermissions) return;
         const contacts = await this.getContacts();
-        contacts.forEach(({ givenName, familyName, phoneNumbers }) => {
+        contacts.forEach(contact => {
+            const { givenName, familyName, phoneNumbers } = contact;
             const display = `Imported ${givenName} ${familyName}`;
             warnings.add(display);
             console.log(`${givenName} ${familyName}`);
-            console.log(JSON.stringify(phoneNumbers));
+            console.log(JSON.stringify(contact));
         });
     }
 
