@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.75.0"></a>
+# [3.75.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.74.0...v3.75.0) (2017-06-11)
+
+
+### Features
+
+* **ads:** temporarily disabling idfa for current release ([93cbf72](https://github.com/PeerioTechnologies/peerio-mobile/commit/93cbf72))
+
+
+
 <a name="3.74.0"></a>
 # [3.74.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.73.0...v3.74.0) (2017-06-11)
 
