@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, PanResponder, AppState, ActivityIndicator, NativeModules, Platform, AdSupportIOS } from 'react-native';
+import { View, Text, PanResponder, AppState, ActivityIndicator, NativeModules } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';
@@ -63,17 +63,6 @@ export default class App extends SafeComponent {
 
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
-
-
-        console.log(`App.js: ${NativeModules.AdSupport} ${Platform.OS} ${Platform.Version}`);
-
-        if (Platform.OS === 'ios') {
-            AdSupportIOS.getAdvertisingId(idfa => {
-                console.log(`App.js: tracking ${idfa}`);
-            }, e => {
-                console.log(`App.js: error retrieving idfa, ${e}`);
-            });
-        }
     }
 
     componentDidMount() {
