@@ -45,8 +45,8 @@ export default class ChatListItem extends SafeComponent {
     renderThrow() {
         const { chat } = this.props;
         const { mostRecentMessage, participants } = chat;
-        // group chats have empty for contact
-        let contact = {};
+        // group chats have null for contact
+        let contact = null;
         // no participants means chat with yourself
         if (!participants) contact = contactStore.getContact(User.current.username);
         // two participants

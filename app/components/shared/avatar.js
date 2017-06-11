@@ -261,7 +261,7 @@ export default class Avatar extends SafeComponent {
                         <Text style={nameTextStyle}>
                             {title ||
                                 <Text>
-                                    {contact.fullName}
+                                    {contact ? contact.fullName : ''}
                                     <Text style={{ color: vars.txtMedium, fontWeight: 'normal' }}>
                                         {' '}{contact.username}
                                     </Text>
