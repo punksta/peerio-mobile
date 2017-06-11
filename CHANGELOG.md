@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.71.0"></a>
+# [3.71.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.70.0...v3.71.0) (2017-06-11)
+
+
+### Bug Fixes
+
+* **ui:** don't fail on empty contact ([f3a2fd5](https://github.com/PeerioTechnologies/peerio-mobile/commit/f3a2fd5))
+* **ui:** fix group icons ([ddaf87c](https://github.com/PeerioTechnologies/peerio-mobile/commit/ddaf87c))
+* **ui:** no empty balloons ([460767d](https://github.com/PeerioTechnologies/peerio-mobile/commit/460767d))
+* **ui:** no extra url for share ([b27a055](https://github.com/PeerioTechnologies/peerio-mobile/commit/b27a055))
+* **ui:** set User.current before login and signup ([6db852d](https://github.com/PeerioTechnologies/peerio-mobile/commit/6db852d))
+
+
+### Features
+
+* **ui:** contact groups, favorites, invites ([1b10472](https://github.com/PeerioTechnologies/peerio-mobile/commit/1b10472))
+* **ui:** read receipts avatars ([5df3ebe](https://github.com/PeerioTechnologies/peerio-mobile/commit/5df3ebe))
+
+
+
 <a name="3.70.0"></a>
 # [3.70.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.69.0...v3.70.0) (2017-06-10)
 
