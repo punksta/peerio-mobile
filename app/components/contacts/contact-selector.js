@@ -77,12 +77,12 @@ export default class ContactSelector extends SafeComponent {
     onChangeFindUserText(text) {
         const items = text.split(/[ ,;]/);
         if (items.length > 1) {
-            contactState.findUserText = items[0];
+            contactState.findUserText = items[0].trim();
             this.onSubmit();
             return;
         }
         contactState.findUserText = text;
-        if (text && text.length > 0) {
+        if (text && text.trim().length > 0) {
             this.searchUser(text);
         }
     }
@@ -163,7 +163,7 @@ export default class ContactSelector extends SafeComponent {
         try {
             this.inProgress = true;
             await contactState.share();
-        } catch(e) {
+        } catch (e) {
             console.error(e);
         }
         this.inProgress = false;
@@ -191,7 +191,9 @@ export default class ContactSelector extends SafeComponent {
 
     searchUser(username, addImmediately) {
         console.log(`compose-message.js: searching for ${username}`);
-        const c = contactState.store.getContact(username);
+        const u = username.trim();
+        if (!u) return;
+        const c = contactState.store.getContact(u);
         if (addImmediately) {
             contactState.add(c);
             when(() => !c.loading, () => {
