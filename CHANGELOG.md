@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.73.0"></a>
+# [3.73.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.72.0...v3.73.0) (2017-06-11)
+
+
+### Bug Fixes
+
+* **ui:** 2 sec timeout before search ([a4c6298](https://github.com/PeerioTechnologies/peerio-mobile/commit/a4c6298))
+
+
+### Features
+
+* **ui:** batch import, invite ([8168cef](https://github.com/PeerioTechnologies/peerio-mobile/commit/8168cef))
+
+
+
 <a name="3.72.0"></a>
 # [3.72.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.71.0...v3.72.0) (2017-06-11)
 
