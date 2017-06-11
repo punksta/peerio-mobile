@@ -6,6 +6,7 @@ import { contactStore, warnings, chatStore, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
+import { loadGroupSettings } from './contacts-groups';
 
 class ContactState extends RoutedState {
     _prefix = 'contacts';
@@ -13,6 +14,7 @@ class ContactState extends RoutedState {
     _permissionHandler = null;
 
     @action async init() {
+        await loadGroupSettings();
         return new Promise(resolve => when(() => !this.store.loading, resolve));
     }
 

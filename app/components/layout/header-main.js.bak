@@ -11,7 +11,6 @@ import BackIcon from './back-icon';
 export default class HeaderMain extends SafeComponent {
     renderThrow() {
         let leftIcon = this.props.leftIcon || null;
-        let rightIcon = this.props.rightIcon || null;
         if (routerMain.isBackVisible) {
             leftIcon = <BackIcon />;
         }
@@ -37,6 +36,15 @@ export default class HeaderMain extends SafeComponent {
             paddingTop: vars.statusBarHeight,
             minHeight: vars.headerHeight
         };
+        const touchableStyle = {
+            flex: 1,
+            flexGrow: 1,
+            flexShrink: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'row',
+            borderWidth: 0
+        };
         const titleAction = routerMain.titleAction;
         return gradient({
             paddingTop: vars.statusBarHeight,
@@ -45,26 +53,24 @@ export default class HeaderMain extends SafeComponent {
             justifyContent: 'flex-end',
             backgroundColor: vars.bg
         },
-            <TouchableOpacity activeOpacity={titleAction ? 0.2 : 1} onPress={titleAction}
-                pressRetentionOffset={vars.retentionOffset}>
-                <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
-                    <View style={{ flex: 0 }}>
-                        {leftIcon}
-                    </View>
+            <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
+                <View style={{ flex: 0 }}>
+                    {leftIcon}
+                </View>
+                <TouchableOpacity style={touchableStyle}
+                    onPress={titleAction}
+                    pressRetentionOffset={vars.retentionOffset}>
                     <Text
                         ellipsizeMode="middle"
                         numberOfLines={1}
-                        style={[textStyle, { paddingRight: !rightIcon && leftIcon ? (32 + vars.iconSize) : 0 }]}>
+                        style={[textStyle, { paddingRight: leftIcon ? (32 + vars.iconSize) : 0 }]}>
                         {routerMain.title}
                         {titleAction && <Text style={{ fontSize: 14 }}>
                             {'  ▼  '}
                         </Text>}
                     </Text>
-                    <View style={{ flex: 0 }}>
-                        {rightIcon}
-                    </View>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
         );
     }
 }

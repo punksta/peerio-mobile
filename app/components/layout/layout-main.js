@@ -64,12 +64,12 @@ export default class LayoutMain extends SafeComponent {
         const pages = routerMain.pages;
         const currentPage = pages[routerMain.currentIndex];
         const currentComponent = routerMain.currentComponent;
-        const { actionsBar, showInput } = currentComponent;
+        const { actionsBar, showInput, leftIcon, rightIcon } = currentComponent;
 
         const animatedBlock = (
             <View
                 style={outerStyle}>
-                <HeaderMain />
+                <HeaderMain leftIcon={leftIcon} rightIcon={rightIcon} />
                 <SnackBarConnection />
                 <View
                     style={{ flex: 1, flexGrow: 1 }}>

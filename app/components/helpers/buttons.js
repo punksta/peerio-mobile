@@ -4,6 +4,19 @@ import { vars } from '../../styles/styles';
 import { tu } from '../utils/translator';
 
 export default {
+    uppercaseWhiteButton(text, onPress, disabled) {
+        return (
+            <TouchableOpacity
+                onPress={disabled ? null : onPress}
+                pressRetentionOffset={vars.pressRetentionOffset}
+                style={{ padding: 14, marginTop: 4, opacity: disabled ? 0 : 1 }}>
+                <Text style={{ backgroundColor: 'transparent', color: disabled ? vars.txtMedium : vars.white }}>
+                    {tu(text)}
+                </Text>
+            </TouchableOpacity>
+        );
+    },
+
     uppercaseBlueButton(text, onPress, disabled) {
         return (
             <TouchableOpacity
