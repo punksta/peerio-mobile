@@ -293,11 +293,11 @@ export default class Avatar extends SafeComponent {
         marginLeft = marginLeft < 0 ? marginLeft : 0;
         return (
             <View style={receiptRow}>
-                {receipts.map(u => (
-                    <View key={u} style={{
+                {receipts.map(r => (
+                    <View key={r.username} style={{
                         flex: 0, marginLeft, alignItems: 'flex-end', borderWidth: 0
                     }}>
-                        <ReadReceipt username={u} />
+                        <ReadReceipt username={r.username} />
                     </View>
                 ))}
             </View>

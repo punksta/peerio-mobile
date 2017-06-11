@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.72.0"></a>
+# [3.72.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.71.0...v3.72.0) (2017-06-11)
+
+
+### Bug Fixes
+
+* **login:** login error catch ([4ef2b21](https://github.com/PeerioTechnologies/peerio-mobile/commit/4ef2b21))
+* **ui:** read receipts ([c615a3e](https://github.com/PeerioTechnologies/peerio-mobile/commit/c615a3e))
+
+
+### Features
+
+* **ui:** delete account ([617fe2d](https://github.com/PeerioTechnologies/peerio-mobile/commit/617fe2d))
+
+
+
 <a name="3.71.0"></a>
 # [3.71.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.70.0...v3.71.0) (2017-06-11)
 

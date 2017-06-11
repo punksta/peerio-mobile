@@ -8,6 +8,8 @@ import { vars } from '../../styles/styles';
 import buttons from '../helpers/buttons';
 import popups from '../shared/popups';
 import { User } from '../../lib/icebear';
+import { loginState } from '../states';
+
 
 const label = {
     color: vars.txtDate,
@@ -44,8 +46,11 @@ export default class AccountEdit extends SafeComponent {
         );
     }
 
-    deleteAccount() {
-        popups.popupDeleteAccount();
+    async deleteAccount() {
+        if (await popups.popupDeleteAccount()) {
+            await User.current.deleteAccount(User.current.username);
+            loginState.signOut();
+        }
     }
 
     renderThrow() {
