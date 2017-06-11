@@ -16,14 +16,13 @@ class MainState extends RoutedState {
         this._loading = v;
     }
 
-    @action async activate(user) {
-        User.current = user;
+    @action async activate() {
         // preload app while we ask user about automatic login
         this.routerMain.initial();
     }
 
     @action async activateAndTransition(user) {
-        this.activate(user);
+        this.activate();
         this.routes.app.main();
         await this.saveUser();
     }

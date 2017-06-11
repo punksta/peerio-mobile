@@ -70,6 +70,7 @@ class SignupState extends RoutedState {
         // this.passphrase = await this.generatePassphrase();
         // console.log(this.passphrase);
         const user = new User();
+        User.current = user;
         const { username, email, firstName, lastName, passphrase } = this;
         const localeCode = uiState.locale;
         console.log(`signup-state.js: ${username}`);
@@ -84,6 +85,7 @@ class SignupState extends RoutedState {
             .then(() => mainState.activateAndTransition(user))
             .catch((e) => {
                 console.log(e);
+                User.current = null;
                 this.reset();
             })
             .finally(() => (this.isInProgress = false));

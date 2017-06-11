@@ -79,6 +79,7 @@ class LoginState extends RoutedState {
 
     @action _login(user) {
         console.log(`login-state.js: logging in ${user.username}`);
+        User.current = user;
         return user.login()
             .then(() => console.log('login-state.js: logged in'))
             .then(async () => {
@@ -99,6 +100,7 @@ class LoginState extends RoutedState {
             })
             .catch(e => {
                 console.error(e);
+                User.current = null;
                 this.passphraseValidationMessage = tx('error_wrongAK');
                 return Promise.reject(new Error(this.error));
             })
