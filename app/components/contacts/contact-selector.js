@@ -83,7 +83,7 @@ export default class ContactSelector extends SafeComponent {
         }
         contactState.findUserText = text;
         if (text && text.trim().length > 0) {
-            this.searchUser(text);
+            this.searchUserTimeout(text);
         }
     }
 
@@ -187,6 +187,11 @@ export default class ContactSelector extends SafeComponent {
                 hideOnline
                 onPress={() => contactState.toggle(contact)} />
         );
+    }
+
+    searchUserTimeout(username) {
+        if (this._searchTimeout) clearTimeout(this._searchTimeout);
+        this._searchTimeout = setTimeout(() => this.searchUser(username), 2000);
     }
 
     searchUser(username, addImmediately) {
