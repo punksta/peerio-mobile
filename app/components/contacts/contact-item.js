@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
+import { Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import contactState from './contact-state';
@@ -9,14 +10,14 @@ import contactState from './contact-state';
 export default class ContactItem extends SafeComponent {
     renderThrow() {
         const { contact } = this.props;
-        const { username, fullName } = contact;
+        const { username, fullName, email } = contact;
         return (
             <Avatar
                 onPress={() => contactState.routerMain.contacts(contact)}
                 height={56}
                 contact={contact}
-                title={username}
-                title2={fullName}
+                title={username || email}
+                title2={fullName || <Text style={{ fontStyle: 'italic' }}>(invited)</Text>}
                 hideOnline />
         );
     }

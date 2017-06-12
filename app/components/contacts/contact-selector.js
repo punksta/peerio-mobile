@@ -192,11 +192,13 @@ export default class ContactSelector extends SafeComponent {
 
     searchUserTimeout(username) {
         if (this._searchTimeout) clearTimeout(this._searchTimeout);
-        this._searchTimeout = setTimeout(() => this.searchUser(username), 2000);
+        this.inProgress = true;
+        this._searchTimeout = setTimeout(() => this.searchUser(username), 1000);
     }
 
     searchUser(username, addImmediately) {
         console.log(`compose-message.js: searching for ${username}`);
+        this.inProgress = false;
         const u = username.trim();
         if (!u) return;
         const c = contactState.store.getContact(u);
@@ -211,10 +213,10 @@ export default class ContactSelector extends SafeComponent {
             });
             return;
         }
-        contactState.loading = true;
+        this.inProgress = true;
         when(() => !c.loading, () => {
             console.log(`compose-message.js: search done for ${username}, not found: ${c.notFound}`);
-            contactState.loading = false;
+            this.inProgress = false;
             if (!c.notFound) {
                 console.log(`compose-message.js: adding contact`);
                 console.log(c);
