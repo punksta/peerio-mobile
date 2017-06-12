@@ -5,13 +5,13 @@ import { observable, reaction } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
+import ContactInviteItem from './contact-invite-item';
 import { vars } from '../../styles/styles';
-import { contactStore, validation } from '../../lib/icebear';
+import { contactStore, warnings } from '../../lib/icebear';
 import { tx, tu } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import contactState from './contact-state';
-
-const emailFormatValidator = validation.validators.emailFormat.action;
+import buttons from '../helpers/buttons';
 
 const textinputContainer = {
     backgroundColor: vars.white,
@@ -19,6 +19,16 @@ const textinputContainer = {
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden'
+};
+
+const inviteContainer = {
+    marginBottom: 2,
+    height: vars.inputHeight,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    overflow: 'hidden',
+    paddingLeft: vars.inputPaddingLeft
 };
 
 const buttonRow = {
@@ -57,7 +67,7 @@ const label = {
 export default class ContactAdd extends SafeComponent {
     @observable waiting = false;
     @observable notFound = false;
-    @observable suggestInviteEmail = '';
+    @observable toInvite = null;
     @observable query = '';
 
     componentDidMount() {
@@ -73,12 +83,21 @@ export default class ContactAdd extends SafeComponent {
         uiState.currentScrollViewPosition = y;
     }
 
+    inviteContactDuck(toInvite) {
+        if (!toInvite) return null;
+        const email = toInvite;
+        const fullName = toInvite;
+        const username = '';
+        const invited = false;
+        return observable({ fullName, username, invited, email });
+    }
+
     tryAdding() {
         this.query = this.query.toLocaleLowerCase().trim();
         if (!this.query) return;
         if (this.waiting) return;
         this.waiting = true;
-        this.suggestInviteEmail = '';
+        this.toInvite = null;
         this.notFound = false;
         contactStore.addContact(this.query)
             .then(found => {
@@ -88,11 +107,17 @@ export default class ContactAdd extends SafeComponent {
                     this.notFound = true;
                     const atInd = this.query.indexOf('@');
                     const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
-                    if (isEmail) this.suggestInviteEmail = this.query;
+                    if (isEmail) {
+                        warnings.add(`User not found on Peerio, please invite`);
+                        LayoutAnimation.easeInEaseOut();
+                        this.toInvite = this.inviteContactDuck(this.query);
+                    }
                 }
             })
-            .finally(() => { this.waiting = false; });
-        this.query = '';
+            .finally(() => {
+                this.query = '';
+                this.waiting = false;
+            });
     }
 
     share() {
@@ -142,6 +167,22 @@ export default class ContactAdd extends SafeComponent {
         );
     }
 
+    get inviteBlock() {
+        const mockContact = this.toInvite || {};
+        const { email, invited } = mockContact;
+        return (
+            <View style={{ overflow: 'hidden', height: email ? undefined : 0, opacity: invited ? 0.5 : 1 }}>
+                <View style={inviteContainer}>
+                    <Text>{email}</Text>
+                    {buttons.uppercaseBlueButton('Invite', () => {
+                        mockContact.invited = true;
+                        contactStore.invite(email);
+                    }, invited)}
+                </View>
+            </View >
+        );
+    }
+
     renderThrow() {
         return (
             <View style={{ flex: 1, flexGrow: 1 }}>
@@ -169,6 +210,7 @@ export default class ContactAdd extends SafeComponent {
                                     value={this.query} />
                                 {this.renderButton1('button_add', () => this.tryAdding())}
                             </View>
+                            {this.inviteBlock}
                         </View>
                         <View style={{ margin: 8 }}>
                             <View style={buttonRow}>
