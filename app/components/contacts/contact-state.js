@@ -231,8 +231,8 @@ class ContactState extends RoutedState {
             })
             .then(data => {
                 const { imported, notFound } = data;
-                warnings.add(`Processed ${emails.length} contact(s)`);
                 warnings.add(`Imported ${imported.length} contact(s)`);
+                warnings.add(`Processed ${emails.length} contact(s)`);
                 contactAddState.imported = notFound.map(email => hash[email]).filter(i => !!i);
                 if (notFound.length === 0) {
                     warnings.add(`No emails found to invite`);
