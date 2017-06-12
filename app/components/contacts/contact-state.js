@@ -192,7 +192,10 @@ class ContactState extends RoutedState {
 
     @action async testImport() {
         const hasPermissions = await this.hasPermissions();
-        if (!hasPermissions) return;
+        if (!hasPermissions) {
+            warnings.add('Please allow accessing contacts');
+            return;
+        }
         this.isInProgress = true;
         const contacts = await this.getContacts();
         const emails = [];
