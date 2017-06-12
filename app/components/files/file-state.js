@@ -129,16 +129,12 @@ class FileState extends RoutedState {
             when(() => socket.authenticated,
                 () => resolve(uploader(uri, fn)));
         }).then(file => {
-            // TODO: better way to check that file passed stat check
-            setTimeout(() => {
-                if (file.deleted) return;
-                popupInput(tx('title_fileName'), fileHelpers.getFileNameWithoutExtension(fn))
-                    .then(newFileName => {
-                        if (!newFileName) return Promise.resolve();
-                        file.name = `${newFileName}.${ext}`;
-                        return file.saveToServer();
-                    });
-            }, 500);
+            if (file.deleted) return;
+            popupInput(tx('title_fileName'), fileHelpers.getFileNameWithoutExtension(fn))
+                .then(newFileName => {
+                    if (!newFileName) return Promise.resolve();
+                    return file.rename(`${newFileName}.${ext}`);
+                });
         });
     }
 
