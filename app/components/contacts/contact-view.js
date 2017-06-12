@@ -5,9 +5,11 @@ import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
 import contactState from '../contacts/contact-state';
+import { contactStore } from '../../lib/icebear';
 import AvatarCircle from '../shared/avatar-circle';
 import { vars } from '../../styles/styles';
 import { t } from '../utils/translator';
+import icons from '../helpers/icons';
 
 const flexRow = {
     flexDirection: 'row',
@@ -18,10 +20,20 @@ const flexRow = {
 
 @observer
 export default class ContactView extends SafeComponent {
+    get contact() { return this.props.contact || contactState.currentContact; }
+
+    toggleFav() {
+        const { contact } = this;
+        contact.isAdded ? contactStore.removeContact(contact) : contactStore.addContact(contact);
+    }
+
+    startChat() {
+        contactState.sendTo(this.contact);
+    }
 
     renderThrow() {
-        const contact = this.props.contact || contactState.currentContact;
-        const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted } = contact;
+        const { contact } = this;
+        const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted, isAdded } = contact;
         const tofuErrorControl = tofuError && (
             <View style={{ backgroundColor: '#D0021B', flexGrow: 1, padding: 10 }}>
                 <Text style={{ color: vars.white }}>
@@ -31,7 +43,7 @@ export default class ContactView extends SafeComponent {
         );
         const body = (
             <View style={{ flex: 1, flexGrow: 1 }}>
-                <View style={[flexRow, { backgroundColor: vars.lightGrayBg }]}>
+                <View style={[flexRow, { backgroundColor: vars.lightGrayBg, paddingRight: 10 }]}>
                     <AvatarCircle large contact={contact} />
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text
@@ -45,6 +57,8 @@ export default class ContactView extends SafeComponent {
                             }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.txtDark }}>@{username}</Text>
                     </View>
+                    {icons.dark('forum', () => this.startChat())}
+                    {icons.dark(isAdded ? 'star' : 'star-border', () => this.toggleFav())}
                 </View>
                 <View style={{ margin: 24 }}>
                     {tofuErrorControl}
