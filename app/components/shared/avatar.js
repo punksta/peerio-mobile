@@ -37,6 +37,7 @@ const itemContainerStyle = {
     flexShrink: 1,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     paddingLeft: 8,
     paddingRight: 4,
     paddingBottom: 0
@@ -124,7 +125,10 @@ export default class Avatar extends SafeComponent {
         const icon = this.checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
             backgroundColor: color,
-            padding: 4
+            height: this.props.height,
+            width: this.props.height,
+            alignItems: 'center',
+            justifyContent: 'center'
         };
         return (
             <View style={outer} pointerEvents="none">
@@ -233,6 +237,8 @@ export default class Avatar extends SafeComponent {
         const style = height ? {
             alignSelf: 'center',
             justifyContent: 'center',
+            borderColor: 'red',
+            borderWidth: 0,
             height
         } : {
             alignSelf: 'flex-start'
@@ -352,7 +358,7 @@ export default class Avatar extends SafeComponent {
         return (
             <View style={[itemStyle, this.borderStyle, this.errorStyle, this.paddingStyle]}>
                 {this.checkbox}
-                <View style={[{ flexGrow: 1, maxWidth: width, flexShrink: 1 }]}>
+                <View style={[{ flexGrow: 1, maxWidth: width, flexShrink: 1, borderWidth: 0 }]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
                         style={itemContainerStyle}>
