@@ -156,10 +156,10 @@ function popupDeleteAccount() {
                 {textControl(tx('title_accountDeleteDescription1'))}
                 {textControl(tx('title_accountDeleteDescription2'))}
                 {textControl(tx('title_accountDeleteDescription3'))}
-                {checkBoxControl(tx('title_accountDeleteAllFiles'), checked, value => {
+                {/* checkBoxControl(tx('title_accountDeleteAllFiles'), checked, value => {
                     checked = value;
                     console.log(checked);
-                })}
+                }) */}
             </View>
         ),
         buttons: [
