@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.76.0"></a>
+# [3.76.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.75.0...v3.76.0) (2017-06-12)
+
+
+### Bug Fixes
+
+* **ui:** AK popup ([8182885](https://github.com/PeerioTechnologies/peerio-mobile/commit/8182885))
+* **ui:** avatar alignment and height in contact selector ([2aa96ac](https://github.com/PeerioTechnologies/peerio-mobile/commit/2aa96ac))
+* **ui:** chat start ui fixes ([87b4e95](https://github.com/PeerioTechnologies/peerio-mobile/commit/87b4e95))
+* **ui:** invited contacts display ([368c7e4](https://github.com/PeerioTechnologies/peerio-mobile/commit/368c7e4))
+* **ui:** misc fixes ([7f86121](https://github.com/PeerioTechnologies/peerio-mobile/commit/7f86121))
+* **ui:** uppercase on copy account ([3459717](https://github.com/PeerioTechnologies/peerio-mobile/commit/3459717))
+
+
+### Features
+
+* **ui:** invite in new chat window and misc fixes ([f0b603b](https://github.com/PeerioTechnologies/peerio-mobile/commit/f0b603b))
+* **ui:** invite via add window ([2fe393a](https://github.com/PeerioTechnologies/peerio-mobile/commit/2fe393a))
+
+
+
 <a name="3.75.0"></a>
 # [3.75.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.74.0...v3.75.0) (2017-06-11)
 
