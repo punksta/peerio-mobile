@@ -67,12 +67,12 @@ export default class ContactList extends SafeComponent {
                 this.dataSource = uiView.map(({ letter, items }) => {
                     return ({ data: items.slice(), key: letter });
                 });
-                this.dataSource.unshift({ data: addedContacts, key: `All (${contacts.length})` });
+                this.dataSource.unshift({ data: [], key: `All (${contacts.length})` });
             }
             groupSettings.favorites &&
-                this.dataSource.unshift({ data: addedContacts, key: `Favorites (${addedContacts.length})` });
+                this.dataSource.unshift({ data: addedContacts.slice(), key: `Favorites (${addedContacts.length})` });
             groupSettings.invited &&
-                this.dataSource.push({ data: invitedContacts, key: `Invited (${invitedContacts.length})` });
+                this.dataSource.push({ data: invitedContacts.slice(), key: `Invited (${invitedContacts.length})` });
             this.forceUpdate();
         }, true);
     }
