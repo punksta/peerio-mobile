@@ -11,7 +11,6 @@ export default class ContactsPlaceholder extends Component {
     importOrInvite() {
         contactState.routerModal.discard();
         contactState.routerMain.contactAdd();
-        setTimeout(() => contactState.testImport(), 1000);
     }
 
     render() {

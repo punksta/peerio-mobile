@@ -60,9 +60,6 @@ export default class ContactListInvite extends SafeComponent {
         );
     }
 
-    get isFabVisible() { return true; }
-
-
     renderThrow() {
         return (
             <View

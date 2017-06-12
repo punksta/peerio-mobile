@@ -102,7 +102,7 @@ export default class ContactList extends SafeComponent {
         );
     }
 
-    get isFabVisible() { return true; }
+    get isFabVisible() { return this.mode === 'list'; }
 
     get contactListComponent() {
         return !contactState.empty ?
