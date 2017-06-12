@@ -63,6 +63,11 @@ function toggleServerSide(enable) {
     });
 }
 
+function clearBadge() {
+    console.log(`🚲 push.js: clear badge`);
+    PushNotification.setApplicationIconBadgeNumber(0);
+}
+
 const enableServerSide = () => toggleServerSide(true);
 const disableServerSide = () => toggleServerSide(false);
 
@@ -74,4 +79,4 @@ if (__DEV__) {
 const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
 if (EN === 'peeriomobile') enablePushNotifications();
 
-module.exports = { enablePushNotifications, enableServerSide, disableServerSide };
+module.exports = { enablePushNotifications, enableServerSide, disableServerSide, clearBadge };

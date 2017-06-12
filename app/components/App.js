@@ -63,6 +63,8 @@ export default class App extends SafeComponent {
 
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
+
+        push.clearBadge();
     }
 
     componentDidMount() {
@@ -92,6 +94,7 @@ export default class App extends SafeComponent {
         }
         uiState.appState = appState;
         if (appState === 'active') {
+            push.clearBadge();
             push.disableServerSide();
             clientApp.isFocused = true;
         }
