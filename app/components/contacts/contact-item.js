@@ -11,9 +11,11 @@ export default class ContactItem extends SafeComponent {
     renderThrow() {
         const { contact } = this.props;
         const { username, fullName, email } = contact;
+        const isInvited = !username;
         return (
             <Avatar
-                onPress={() => contactState.routerMain.contacts(contact)}
+                onPress={() => !isInvited && contactState.routerMain.contacts(contact)}
+                noTap={isInvited}
                 height={56}
                 contact={contact}
                 title={username || email}

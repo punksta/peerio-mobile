@@ -118,7 +118,8 @@ class ContactState extends RoutedState {
 
     // if we have no contacts except User.current
     get empty() {
-        return !this.store.contacts || (this.store.contacts.length <= 1);
+        return !this.store.contacts || (this.store.contacts.length <= 1
+            && !this.store.contacts.filter(u => User.current.username !== u.username).length);
     }
 
     @action requestPermission() {
@@ -219,9 +220,10 @@ class ContactState extends RoutedState {
                 });
             }
         });
+        // emails = ['seavan@gmail.com'];
         this.store.importContacts(emails)
             .then(success => {
-                console.error('contact-state.js: import success');
+                console.log('contact-state.js: import success');
                 return success;
             })
             .catch(reject => {
@@ -229,8 +231,13 @@ class ContactState extends RoutedState {
             })
             .then(data => {
                 const { imported, notFound } = data;
-                warnings.add(`Processed ${emails.length}, imported ${imported.length}`);
+                warnings.add(`Processed ${emails.length} contact(s)`);
+                warnings.add(`Imported ${imported.length} contact(s)`);
                 contactAddState.imported = notFound.map(email => hash[email]).filter(i => !!i);
+                if (notFound.length === 0) {
+                    warnings.add(`No emails found to invite`);
+                    return;
+                }
                 this.routerMain.contactInvite();
             })
             .finally(() => {

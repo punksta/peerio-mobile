@@ -54,6 +54,7 @@ export default class Layout1 extends SafeComponent {
                         {this.props.footer}
                     </View>
                 </ScrollView>
+                {this.props.footerAbsolute}
                 <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     <SnackBarConnection />
                 </View>
@@ -66,6 +67,7 @@ Layout1.propTypes = {
     body: PropTypes.any,
     style: PropTypes.any,
     footer: PropTypes.any,
+    footerAbsolute: PropTypes.any,
     header: PropTypes.any,
     padding: PropTypes.any,
     noScroll: PropTypes.bool,

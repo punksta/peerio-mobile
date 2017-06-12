@@ -7,7 +7,7 @@ import { contactStore } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
 
 @observer
-export default class ContactItem extends SafeComponent {
+export default class ContactInviteItem extends SafeComponent {
     invite() {
         const { contact } = this.props;
         contact.invited = true;
@@ -20,6 +20,7 @@ export default class ContactItem extends SafeComponent {
         const title = invited ? 'Invited' : 'Invite';
         return (
             <Avatar
+                noTap
                 sending={invited}
                 height={56}
                 contact={contact}
@@ -31,6 +32,6 @@ export default class ContactItem extends SafeComponent {
     }
 }
 
-ContactItem.propTypes = {
+ContactInviteItem.propTypes = {
     contact: PropTypes.any.isRequired
 };

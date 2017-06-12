@@ -94,7 +94,7 @@ export default class ContactList extends SafeComponent {
             <SectionList
                 initialNumToRender={INITIAL_LIST_SIZE}
                 sections={this.dataSource}
-                keyExtractor={item => item.username}
+                keyExtractor={item => item.username || item.email}
                 renderItem={this.item}
                 renderSectionHeader={this.header}
                 ref={sv => (this.scrollView = sv)}

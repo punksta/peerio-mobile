@@ -9,12 +9,12 @@ import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
 import Layout1 from '../layout/layout1';
-import ProgressOverlay from '../shared/progress-overlay';
 import Center from '../controls/center';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
 import Avatar from '../shared/avatar';
 import ContactsPlaceholder from './contacts-placeholder';
+import ContactInviteItem from './contact-invite-item';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import contactState from './contact-state';
@@ -24,6 +24,16 @@ import snackbarState from '../snackbars/snackbar-state';
 export default class ContactSelector extends SafeComponent {
     @observable inProgress = false;
     @observable clean = true;
+    @observable toInvite = null;
+
+    get inviteContactDuck() {
+        if (!this.toInvite) return null;
+        const email = this.toInvite;
+        const fullName = this.toInvite;
+        const username = '';
+        const invited = false;
+        return observable({ fullName, username, invited, email });
+    }
 
     userbox(contact, i) {
         const style = {
@@ -75,6 +85,7 @@ export default class ContactSelector extends SafeComponent {
     }
 
     onChangeFindUserText(text) {
+        this.toInvite = null;
         const items = text.split(/[ ,;]/);
         if (items.length > 1) {
             contactState.findUserText = items[0].trim();
@@ -88,6 +99,11 @@ export default class ContactSelector extends SafeComponent {
     }
 
     onSubmit() {
+        if (this.toInvite) {
+            contactState.findUserText = '';
+            return;
+        }
+
         if (!contactState.findUserText && contactState.recipients.length) {
             this.action();
             return;
@@ -120,7 +136,7 @@ export default class ContactSelector extends SafeComponent {
                     blurOnSubmit
                     onBlur={() => this.onSubmit()}
                     onSubmitEditing={() => this.onSubmit()}
-                    onChangeText={text => { this.clean = !text.length; this.onChangeFindUserText(text) }}
+                    onChangeText={text => { this.clean = !text.length; this.onChangeFindUserText(text); }}
                     autoCapitalize="none"
                     autoCorrect={false}
                     placeholder={tx('title_userSearch')}
@@ -184,7 +200,8 @@ export default class ContactSelector extends SafeComponent {
                 checkedState={contactState.recipientsMap}
                 key={username || i}
                 title={fullName}
-                message={username}
+                title2={username}
+                height={56}
                 hideOnline
                 onPress={() => contactState.toggle(contact)} />
         );
@@ -222,6 +239,9 @@ export default class ContactSelector extends SafeComponent {
                 console.log(c);
                 contactState.found = [c];
             } else {
+                if (username.indexOf('@') !== -1) {
+                    this.toInvite = username;
+                }
                 contactState.found = [];
             }
         });
@@ -235,8 +255,11 @@ export default class ContactSelector extends SafeComponent {
         // const result = findUserText && findUserText.length ? mockItems : chat;
         const result = mockItems;
         const body = !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
+        const invite = this.inviteContactDuck;
+        const inviteControl = invite ? <ContactInviteItem contact={invite} /> : null;
         return (
             <View>
+                {inviteControl}
                 {body}
             </View>
         );
@@ -283,7 +306,7 @@ export default class ContactSelector extends SafeComponent {
                 defaultBar
                 body={body}
                 header={header}
-                footer={snackbar}
+                footerAbsolute={snackbar}
                 style={layoutStyle} />
         );
     }
