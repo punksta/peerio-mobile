@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.77.0"></a>
+# [3.77.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.76.0...v3.77.0) (2017-06-13)
+
+
+### Bug Fixes
+
+* **build:** android app name ([0e8bae3](https://github.com/PeerioTechnologies/peerio-mobile/commit/0e8bae3))
+
+
+### Features
+
+* **ui:** add contacts to favorites via contact view ([49681ca](https://github.com/PeerioTechnologies/peerio-mobile/commit/49681ca))
+* **ui:** better rename ([dbb26d7](https://github.com/PeerioTechnologies/peerio-mobile/commit/dbb26d7))
+* **ui:** clear badge on app start and resume ([cbd423e](https://github.com/PeerioTechnologies/peerio-mobile/commit/cbd423e))
+* **ui:** error for disallowing accessing contacts ([cf2ab52](https://github.com/PeerioTechnologies/peerio-mobile/commit/cf2ab52))
+* **ui:** remove delete all files checkbox ([6f058ab](https://github.com/PeerioTechnologies/peerio-mobile/commit/6f058ab))
+* **ui:** swap imported and processed ([7c70a26](https://github.com/PeerioTechnologies/peerio-mobile/commit/7c70a26))
+
+
+
 <a name="3.76.0"></a>
 # [3.76.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.75.0...v3.76.0) (2017-06-12)
 
