@@ -319,12 +319,13 @@ export default class Avatar extends SafeComponent {
             flex: 1,
             flexGrow: 1,
             borderBottomWidth: 1,
-            borderBottomColor: '#CFCFCF'
+            borderBottomColor: '#CFCFCF',
+            height: 11
         };
         return (
-            <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', marginVertical: 8 }}>
+            <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', justifyContent: 'flex-start', marginVertical: 8 }}>
                 <View style={separator} />
-                <Text style={{ flex: 0, color: vars.txtDark, marginHorizontal: 4, marginBottom: -8 }}>
+                <Text style={{ flex: 0, color: vars.txtDark, marginHorizontal: 4 }}>
                     {ts === new Date().toLocaleDateString() ? tx('title_today') : ts}
                 </Text>
                 <View style={separator} />
