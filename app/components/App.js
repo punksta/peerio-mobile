@@ -55,6 +55,14 @@ export default class App extends SafeComponent {
             Array.from(arguments).forEach(console.stackPush);
         };
 
+        const warn = console.warn;
+        console.warn = function() {
+            // __DEV__ && log.apply(console, arguments);
+            Array.from(arguments).forEach(console.stackPush);
+        };
+
+        console.disableYellowBox = true;
+
         const error = console.error;
         console.error = function() {
             __DEV__ && error.apply(console, arguments);
