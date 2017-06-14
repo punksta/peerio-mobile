@@ -25,6 +25,7 @@ export default {
                 customCallback(response.customButton);
             } else {
                 let source = null;
+                if (response.isAndroidCamera) response.fileName = null;
                 if (Platform.OS === 'ios') {
                     source = { uri: response.uri.replace('file://', ''), isStatic: true };
                 } else {
