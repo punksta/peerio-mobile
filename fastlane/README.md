@@ -56,6 +56,11 @@ Deploy a new version to the App Store
 fastlane android alpha
 ```
 
+### android beta
+```
+fastlane android beta
+```
+
 
 ----
 

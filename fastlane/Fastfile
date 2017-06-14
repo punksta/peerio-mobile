@@ -28,8 +28,8 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
-    sh("rm -f ../*.ipa")
-    sh("rm -f ../*.dSYM.*")
+    # sh("rm -f ../*.ipa")
+    # sh("rm -f ../*.dSYM.*")
     increment_build_number
     gym
     pilot(skip_waiting_for_build_processing: true)
@@ -79,6 +79,24 @@ platform :android do
   )
   end
 end
+
+platform :android do
+  lane :beta do
+  supply(
+    track: "beta",
+    apk_paths: [
+    "android/app/build/outputs/apk/app-armeabi-v7a-release-signed.apk",
+    "android/app/build/outputs/apk/app-x86-release-signed.apk" ],
+    json_key: "gp-service.json",
+    package_name: "com.peerio.app",
+    skip_upload_metadata: true,
+    skip_upload_screenshots: true,
+    skip_upload_images: true,
+    validate_only: false
+  )
+  end
+end
+
 
 # More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
 # All available actions: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Actions.md
