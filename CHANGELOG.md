@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.79.0"></a>
+# [3.79.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.78.0...v3.79.0) (2017-06-14)
+
+
+### Bug Fixes
+
+* **ui:** android day marker ([2a84626](https://github.com/PeerioTechnologies/peerio-mobile/commit/2a84626))
+* **ui:** android force date for filename ([ad2003c](https://github.com/PeerioTechnologies/peerio-mobile/commit/ad2003c))
+
+
+
 <a name="3.78.0"></a>
 # [3.78.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.77.0...v3.78.0) (2017-06-14)
 
