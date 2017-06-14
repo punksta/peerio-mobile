@@ -5,6 +5,7 @@ import { Text, ActivityIndicator, View, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import ErrorCircle from './error-circle';
+import { vars } from '../../styles/styles';
 
 const avatarDiameter = 36;
 
@@ -21,7 +22,6 @@ export default class AvatarCircle extends SafeComponent {
             width,
             height,
             borderRadius: width / 2,
-            backgroundColor: '#CFCFCF',
             margin: 4 * ratio
         };
         if (loading) {
