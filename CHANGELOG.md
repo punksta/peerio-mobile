@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.78.0"></a>
+# [3.78.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.77.0...v3.78.0) (2017-06-14)
+
+
+### Bug Fixes
+
+* **ui:** avatar background on android ([ca96be9](https://github.com/PeerioTechnologies/peerio-mobile/commit/ca96be9))
+
+
+
 <a name="3.77.0"></a>
 # [3.77.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.76.0...v3.77.0) (2017-06-13)
 
