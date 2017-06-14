@@ -70,7 +70,7 @@ export default class ContactList extends SafeComponent {
                 this.dataSource.unshift({ data: [], key: `All (${contacts.length})` });
             }
             groupSettings.favorites &&
-                this.dataSource.unshift({ data: addedContacts.slice(), key: `Favorites (${addedContacts.length})` });
+                this.dataSource.unshift({ data: addedContacts.slice(), key: `Favourites (${addedContacts.length})` });
             groupSettings.invited &&
                 this.dataSource.push({ data: invitedContacts.slice(), key: `Invited (${invitedContacts.length})` });
             this.forceUpdate();
