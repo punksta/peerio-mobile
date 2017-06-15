@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.80.0"></a>
+# [3.80.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.79.0...v3.80.0) (2017-06-15)
+
+
+### Features
+
+* **ads:** bring back idfa ([4162fa9](https://github.com/PeerioTechnologies/peerio-mobile/commit/4162fa9))
+* **ads:** idfa lib and server call ([449ec25](https://github.com/PeerioTechnologies/peerio-mobile/commit/449ec25))
+* **copy:** social share urls and text ([b9680c1](https://github.com/PeerioTechnologies/peerio-mobile/commit/b9680c1))
+* **ui:** disable auto start chat on submit keyboard in contact selector ([c15bc50](https://github.com/PeerioTechnologies/peerio-mobile/commit/c15bc50))
+* **ui:** move invited checkbox to bottom ([fab6cce](https://github.com/PeerioTechnologies/peerio-mobile/commit/fab6cce))
+* **ui:** show deleted flag next to avatar ([1a37fa3](https://github.com/PeerioTechnologies/peerio-mobile/commit/1a37fa3))
+
+
+
 <a name="3.79.0"></a>
 # [3.79.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.78.0...v3.79.0) (2017-06-14)
 
