@@ -135,7 +135,6 @@ export default class ContactSelector extends SafeComponent {
                     returnKeyType="done"
                     blurOnSubmit
                     onBlur={() => this.onSubmit()}
-                    onSubmitEditing={() => this.onSubmit()}
                     onChangeText={text => { this.clean = !text.length; this.onChangeFindUserText(text); }}
                     autoCapitalize="none"
                     autoCorrect={false}
