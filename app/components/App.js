@@ -11,6 +11,7 @@ import { gradient } from './controls/effects';
 import { clientApp, crypto } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
+import { enableIdfa } from '../lib/idfa';
 import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
@@ -57,7 +58,7 @@ export default class App extends SafeComponent {
 
         const warn = console.warn;
         console.warn = function() {
-            // __DEV__ && log.apply(console, arguments);
+            __DEV__ && warn.apply(console, arguments);
             Array.from(arguments).forEach(console.stackPush);
         };
 
@@ -73,15 +74,7 @@ export default class App extends SafeComponent {
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
 
         push.clearBadge();
-        console.log(`App.js: ${NativeModules.AdSupport} ${Platform.OS} ${Platform.Version}`);
-
-        if (Platform.OS === 'ios') {
-            AdSupportIOS.getAdvertisingId(idfa => {
-                console.log(`App.js: tracking ${idfa}`);
-            }, e => {
-                console.log(`App.js: error retrieving idfa, ${e}`);
-            });
-        }
+        enableIdfa();
     }
 
     componentDidMount() {
