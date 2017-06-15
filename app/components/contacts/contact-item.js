@@ -10,7 +10,7 @@ import contactState from './contact-state';
 export default class ContactItem extends SafeComponent {
     renderThrow() {
         const { contact } = this.props;
-        const { username, fullName, email } = contact;
+        const { username, fullName, email, isDeleted } = contact;
         const isInvited = !username;
         return (
             <Avatar
@@ -18,6 +18,7 @@ export default class ContactItem extends SafeComponent {
                 noTap={isInvited}
                 height={56}
                 contact={contact}
+                isDeleted={isDeleted}
                 title={username || email}
                 title2={fullName || <Text style={{ fontStyle: 'italic' }}>(invited)</Text>}
                 hideOnline />

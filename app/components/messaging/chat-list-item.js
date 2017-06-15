@@ -43,14 +43,19 @@ export default class ChatListItem extends SafeComponent {
     }
 
     renderThrow() {
+        if (!this.props || !this.props.chat) return null;
         const { chat } = this.props;
         const { mostRecentMessage, participants } = chat;
         // group chats have null for contact
         let contact = null;
+        let isDeleted = false;
         // no participants means chat with yourself
         if (!participants) contact = contactStore.getContact(User.current.username);
         // two participants
-        if (participants && participants.length === 1) contact = participants[0];
+        if (participants && participants.length === 1) {
+            contact = participants[0];
+            isDeleted = contact.isDeleted;
+        }
         const key = chat.id;
         const timestamp = mostRecentMessage ? mostRecentMessage.messageTimestampText : null;
         const message = this.renderMostRecentMessage(chat);
@@ -69,6 +74,7 @@ export default class ChatListItem extends SafeComponent {
                 contact={contact}
                 title={chat.name}
                 hideOnline
+                isDeleted={isDeleted}
                 messageComponent={message}
                 key={key}
                 onPress={onPress}

@@ -9,6 +9,7 @@ import { systemMessages } from '../../lib/icebear';
 @observer
 export default class ChatItem extends SafeComponent {
     renderThrow() {
+        if (!this.props || !this.props.message) return null;
         const i = this.props.message;
         if (!i.sender) return null;
         const key = i.id;
@@ -24,6 +25,7 @@ export default class ChatItem extends SafeComponent {
                 sendError={i.sendError}
                 sending={i.sending}
                 contact={i.sender}
+                isDeleted={i.sender ? i.sender.isDeleted : false}
                 files={i.files}
                 receipts={i.receipts}
                 hideOnline

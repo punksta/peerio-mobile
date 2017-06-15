@@ -9,6 +9,7 @@ import { vars } from '../../styles/styles';
 import FileInlineProgress from '../files/file-inline-progress';
 import AvatarCircle from './avatar-circle';
 import ErrorCircle from './error-circle';
+import DeletedCircle from './deleted-circle';
 import OnlineCircle from './online-circle';
 import ReadReceipt from './read-receipt';
 import CorruptedMessage from './corrupted-message';
@@ -249,6 +250,7 @@ export default class Avatar extends SafeComponent {
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={this.props.onPressAvatar || this.onPressAll}>
                 <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
+                <DeletedCircle visible={this.props.isDeleted} />
             </TouchableOpacity>
         );
     }
@@ -438,6 +440,7 @@ Avatar.propTypes = {
     ellipsize: PropTypes.bool,
     unread: PropTypes.bool,
     starred: PropTypes.bool,
+    isDeleted: PropTypes.bool,
     disableMessageTapping: PropTypes.bool,
     extraPaddingVertical: PropTypes.number,
     extraPaddingTop: PropTypes.number,
