@@ -74,10 +74,10 @@ export default class ContactsGroups extends Component {
         return (
             <View style={bgStyle}>
                 <Text style={text}>{'Your groups'}</Text>
-                {this.checkBoxItem('Favorites', 'favorites')}
-                {this.checkBoxItem('Invited', 'invited')}
-                <View style={spacer} />
+                {this.checkBoxItem('Favourites', 'favorites')}
                 {this.checkBoxItem('All contacts', 'all')}
+                <View style={spacer} />
+                {this.checkBoxItem('Invited', 'invited')}
             </View>
         );
     }
