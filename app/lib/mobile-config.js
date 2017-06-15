@@ -18,7 +18,8 @@ export default (c, icebear) => {
         proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
         proAccount: 'https://account.peerio.com',
         helpCenter: 'https://peerio.zendesk.com/',
-        contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new'
+        contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new',
+        socialShareUrl: 'https://www.peerio.com/preview'
     };
 
     setUrlMap(cfg.translator.urlMap);

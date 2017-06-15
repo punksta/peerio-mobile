@@ -7,7 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
 import ContactInviteItem from './contact-invite-item';
 import { vars } from '../../styles/styles';
-import { contactStore, warnings } from '../../lib/icebear';
+import { contactStore, warnings, User, config } from '../../lib/icebear';
 import { tx, tu } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import contactState from './contact-state';
@@ -121,9 +121,14 @@ export default class ContactAdd extends SafeComponent {
     }
 
     share() {
-        const message = 'Chat and share files securely using Peerio. https://www.peerio.com';
-        const title = 'Peerio';
+        const urls = config.translator.urlMap;
+        const message = tx('title_socialShareInviteContent', {
+            socialShareUrl: urls.socialShareUrl,
+            username: User.current.username
+        });
+        const title = tx('title_socialShareInvite');
         // const url = 'https://www.peerio.com';
+        console.log(title, message);
         Share.share({ message, title });
     }
 
