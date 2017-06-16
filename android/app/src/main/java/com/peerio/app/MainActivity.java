@@ -44,6 +44,10 @@ public class MainActivity extends ReactActivity {
 
     }
 
+    @Override
+    public void invokeDefaultOnBackPressed() {
+        moveTaskToBack(true);
+    }
 
     /**
      * Returns the name of the main component registered from JavaScript.
