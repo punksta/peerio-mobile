@@ -33,7 +33,7 @@ export default class ContactView extends SafeComponent {
 
     renderThrow() {
         const { contact } = this;
-        const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted, isAdded } = contact;
+        const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted, isAdded, isDeleted } = contact;
         const tofuErrorControl = tofuError && (
             <View style={{ backgroundColor: '#D0021B', flexGrow: 1, padding: 10 }}>
                 <Text style={{ color: vars.white }}>
@@ -62,6 +62,7 @@ export default class ContactView extends SafeComponent {
                 </View>
                 <View style={{ margin: 24 }}>
                     {tofuErrorControl}
+                    {isDeleted && <Text style={{ color: vars.txtAlert }}>{t('title_accountDeleted')}</Text>}
                     <Text style={{ color: vars.txtDate, marginVertical: 10 }}>{t('title_publicKey')}</Text>
                     <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: 16 }} numberOfLines={2}>
                         {fingerprintSkylarFormatted}
