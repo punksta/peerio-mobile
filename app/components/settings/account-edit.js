@@ -48,8 +48,13 @@ export default class AccountEdit extends SafeComponent {
 
     async deleteAccount() {
         if (await popups.popupDeleteAccount()) {
-            await User.current.deleteAccount(User.current.username);
-            loginState.signOut();
+            try {
+                await User.current.deleteAccount(User.current.username);
+                loginState.signOut();
+            } catch (e) {
+                console.log('account-edit.js: error deleting account');
+                console.error(e);
+            }
         }
     }
 
