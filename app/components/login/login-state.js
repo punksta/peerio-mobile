@@ -1,7 +1,7 @@
 import { when, observable, action, reaction } from 'mobx';
 import RNRestart from 'react-native-restart';
 import mainState from '../main/main-state';
-import { User, validation, fileStore, socket, TinyDb } from '../../lib/icebear';
+import { User, validation, fileStore, socket, TinyDb, warnings } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { tx } from '../utils/translator';
@@ -106,6 +106,16 @@ class LoginState extends RoutedState {
             })
             .catch(e => {
                 console.error(e);
+                if (user.deleted) {
+                    console.error('deleted');
+                    this.passphraseValidationMessage = tx('title_accountDeleted');
+                    warnings.addSevere('title_accountDeleted', 'error_accountSuspendedTitle');
+                }
+                if (user.blacklisted) {
+                    console.error('suspended');
+                    this.passphraseValidationMessage = tx('error_accountSuspendedTitle');
+                    warnings.addSevere('error_accountSuspendedText', 'error_accountSuspendedTitle');
+                }
                 return Promise.reject(new Error(this.error));
             })
             .finally(() => {
