@@ -187,6 +187,13 @@ class LoginState extends RoutedState {
         return Promise.resolve(data)
             .then(JSON.parse)
             .then(this.loginCached)
+            .then(() => {
+                // Temporary: if passphrase was stored unpadded,
+                // resave user data, so that it's padded.
+                if (!data.paddedPassphrase) {
+                    return mainState.saveUserKeychain(/* secureWithTouchId? */);
+                }
+            })
             .then(() => true)
             .catch(() => {
                 console.log('login-state.js: logging in with touch id failed');
