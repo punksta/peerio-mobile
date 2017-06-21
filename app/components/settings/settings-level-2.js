@@ -117,8 +117,6 @@ export default class SettingsLevel2 extends SafeComponent {
                 <Text style={text}>{t('title_emailsDetail')}</Text>
                 {this.settingsItem('title_notificationsEmailMessage', 'messageNotifications')}
                 <View style={spacer} />
-                {this.settingsItem('title_promoConsent', 'subscribeToPromoEmails')}
-                <View style={spacer} />
                 {this.unreadChatsToggle()}
                 <View style={spacer} />
                 {/* <Text style={text}>{t('title_soundsDetail')}</Text> */}
