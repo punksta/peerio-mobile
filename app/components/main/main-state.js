@@ -21,7 +21,7 @@ class MainState extends RoutedState {
         this.routerMain.initial();
     }
 
-    @action async activateAndTransition(user) {
+    @action async activateAndTransition(/* user */) {
         this.activate();
         this.routes.app.main();
         await this.saveUser();
@@ -101,7 +101,22 @@ class MainState extends RoutedState {
             await TinyDb.system.setValue(skipTouchID, true);
             await TinyDb.system.setValue(touchIdKey, secureWithTouchID);
         }
+        user.secureWithTouchID = secureWithTouchID;
         await this.saveUserKeychain(secureWithTouchID);
+    }
+
+    @action async saveUserTouchID(value) {
+        const user = User.current;
+        const touchIdKey = `user::${user.username}::touchid`;
+        let { secureWithTouchID } = user;
+        secureWithTouchID = value;
+        try {
+            await this.saveUserKeychain(secureWithTouchID);
+            await TinyDb.system.setValue(touchIdKey, secureWithTouchID);
+            user.secureWithTouchID = secureWithTouchID;
+        } catch (e) {
+            console.error(e);
+        }
     }
 }
 

@@ -19,7 +19,7 @@
     "android-reinstall-gm": "adb shell pm uninstall -k com.peerio && adb install android/app/build/outputs/apk/app-x86-release-signed.apk",
     "lint": "eslint --fix --ext .js,.jsx .",
     "localize": "tx pull -af",
-    "release": "standard-version -r minor && git push --follow-tags origin master",
+    "release": "$(git tag | xargs git tag -d) && standard-version -r minor && git push --follow-tags origin master",
     "link": "react-native link",
     "build-ios-sim-debug": "cd ios && xcodebuild -project peeriomobile.xcodeproj -configuration Debug -scheme peeriomobile -destination platform='iOS Simulator,name=iPhone 6,OS=10.2' -derivedDataPath build",
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",

@@ -31,7 +31,7 @@ export default class SignupStep1 extends SafeComponent {
         const style = wizard;
         const tosParser = {
             emphasis: text => <Bold>{text}</Bold>,
-            tosLink: text => this.tosLink(text)
+            tosButton: text => this.tosLink(text)
         };
         return (
             <View style={[{ marginTop: 24, paddingHorizontal: vars.wizardPadding }]}>

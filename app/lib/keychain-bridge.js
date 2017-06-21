@@ -39,4 +39,6 @@ class KeychainBridge {
     }
 }
 
-export default new KeychainBridge();
+const keychain = new KeychainBridge();
+global.keychain = keychain;
+export default keychain;
