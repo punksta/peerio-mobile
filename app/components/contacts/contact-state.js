@@ -118,8 +118,11 @@ class ContactState extends RoutedState {
 
     // if we have no contacts except User.current
     get empty() {
-        return !this.store.contacts || (this.store.contacts.length <= 1
-            && !this.store.contacts.filter(u => User.current.username !== u.username).length);
+        const { addedContacts, invitedContacts, contacts } = this.store;
+        return !contacts || (contacts.length <= 1
+            && !contacts.filter(u => User.current.username !== u.username).length)
+            && !invitedContacts.length
+            && !addedContacts.length;
     }
 
     @action requestPermission() {

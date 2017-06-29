@@ -63,6 +63,8 @@ const label = {
     marginLeft: 10
 };
 
+const labelDark = [label, { color: vars.txtDark }];
+
 @observer
 export default class ContactAdd extends SafeComponent {
     @observable waiting = false;
@@ -194,16 +196,12 @@ export default class ContactAdd extends SafeComponent {
                 <ScrollView
                     onScroll={this.onScroll}
                     keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={{ flex: 1, flexGrow: 1, justifyContent: 'center' }}
                     style={{ backgroundColor: vars.settingsBg }}
                     ref={ref => (this._scrollView = ref)}>
-                    <View style={{ flex: 0 }}>
-                        <View style={{ margin: 8 }}>
-                            <View style={buttonRow}>
-                                <Text style={label}>{tx('Find your contacts')}</Text>
-                                {this.renderButton1('title_importContacts', () => contactState.testImport())}
-                            </View>
-                        </View>
+                    <View style={{ marginTop: 20 }}>
+                        {contactState.empty && <View style={{ margin: 8 }}>
+                            <Text style={labelDark}>{tx('title_contactZeroState')}</Text>
+                        </View>}
                         <View style={{ margin: 8 }}>
                             <Text style={label}>{tx('Add a contact')}</Text>
                             <View style={textinputContainer}>
@@ -219,7 +217,13 @@ export default class ContactAdd extends SafeComponent {
                         </View>
                         <View style={{ margin: 8 }}>
                             <View style={buttonRow}>
-                                <Text style={label}>{tx('Invite contacts on social networks')}</Text>
+                                <Text style={labelDark}>{tx('Find your contacts')}</Text>
+                                {this.renderButton1('title_importContacts', () => contactState.testImport())}
+                            </View>
+                        </View>
+                        <View style={{ margin: 8 }}>
+                            <View style={buttonRow}>
+                                <Text style={labelDark}>{tx('Invite contacts on social networks')}</Text>
                                 {this.renderButton1('button_share', () => this.share())}
                             </View>
                         </View>
