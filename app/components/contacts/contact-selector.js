@@ -15,6 +15,7 @@ import SnackBar from '../snackbars/snackbar';
 import Avatar from '../shared/avatar';
 import ContactsPlaceholder from './contacts-placeholder';
 import ContactInviteItem from './contact-invite-item';
+import ContactLegacyItem from './contact-legacy-item';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import contactState from './contact-state';
@@ -25,6 +26,7 @@ export default class ContactSelector extends SafeComponent {
     @observable inProgress = false;
     @observable clean = true;
     @observable toInvite = null;
+    @observable legacyContact = null;
 
     get inviteContactDuck() {
         if (!this.toInvite) return null;
@@ -86,6 +88,7 @@ export default class ContactSelector extends SafeComponent {
 
     onChangeFindUserText(text) {
         this.toInvite = null;
+        this.legacyContact = null;
         const items = text.split(/[ ,;]/);
         if (items.length > 1) {
             contactState.findUserText = items[0].trim();
@@ -224,6 +227,14 @@ export default class ContactSelector extends SafeComponent {
                 if (c.notFound) {
                     LayoutAnimation.easeInEaseOut();
                     contactState.remove(c);
+                    if (c.isLegacy) {
+                        snackbarState.pushTemporary(t('title_inviteLegacy'));
+                        if (this._searchTimeout) {
+                            clearTimeout(this._searchTimeout);
+                            this._searchTimeout = null;
+                        }
+                        return;
+                    }
                     snackbarState.pushTemporary(t('error_usernameNotFound'));
                 }
             });
@@ -238,6 +249,10 @@ export default class ContactSelector extends SafeComponent {
                 console.log(c);
                 contactState.found = [c];
             } else {
+                if (c.isLegacy) {
+                    this.legacyContact = c;
+                    return;
+                }
                 if (username.indexOf('@') !== -1) {
                     this.toInvite = username;
                 }
@@ -256,9 +271,12 @@ export default class ContactSelector extends SafeComponent {
         const body = !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
         const invite = this.inviteContactDuck;
         const inviteControl = invite ? <ContactInviteItem contact={invite} /> : null;
+        const legacy = this.legacyContact;
+        const legacyControl = legacy ? <ContactLegacyItem contact={legacy} /> : null;
         return (
             <View>
                 {inviteControl}
+                {legacyControl}
                 {body}
             </View>
         );
