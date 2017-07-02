@@ -70,10 +70,18 @@ export default class ContactAdd extends SafeComponent {
     @observable waiting = false;
     @observable notFound = false;
     @observable toInvite = null;
+    @observable showValidationError = false;
     @observable query = '';
 
     componentDidMount() {
         uiState.currentScrollView = this._scrollView;
+        reaction(() => this.query, () => {
+            this.toInvite = null;
+            if (this.showValidationError) {
+                LayoutAnimation.easeInEaseOut();
+                this.showValidationError = false;
+            }
+        });
     }
 
     componentWillUnmount() {
@@ -110,14 +118,17 @@ export default class ContactAdd extends SafeComponent {
                     const atInd = this.query.indexOf('@');
                     const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
                     if (isEmail) {
-                        warnings.add(`User not found on Peerio, please invite`);
+                        warnings.add(`User is not found on Peerio, please invite`);
                         LayoutAnimation.easeInEaseOut();
                         this.toInvite = this.inviteContactDuck(this.query);
+                    } else {
+                        this.showValidationError = true;
+                        LayoutAnimation.easeInEaseOut();
                     }
                 }
             })
             .finally(() => {
-                this.query = '';
+                // this.query = '';
                 this.waiting = false;
             });
     }
@@ -145,8 +156,8 @@ export default class ContactAdd extends SafeComponent {
     get validationError() {
         if (!this.showValidationError) return null;
         return (
-            <Text numberOfLines={1} ellipsizeMode="tail" style={[textStatic, { color: vars.txtAlert }]}>
-                {tx('error_invalidEmail')}
+            <Text numberOfLines={1} ellipsizeMode="tail" style={[label, { color: vars.txtAlert }]}>
+                {tx('error_invalidEmailOrUsername')}
             </Text>
         );
     }
@@ -214,6 +225,7 @@ export default class ContactAdd extends SafeComponent {
                                 {this.renderButton1('button_add', () => this.tryAdding())}
                             </View>
                             {this.inviteBlock}
+                            {this.validationError}
                         </View>
                         <View style={{ margin: 8 }}>
                             <View style={buttonRow}>
