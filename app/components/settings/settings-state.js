@@ -17,7 +17,8 @@ class SettingsState extends RoutedState {
         security: 'title_settingsSecurity',
         profile: 'title_settingsProfile',
         account: 'title_settingsAccount',
-        preferences: 'title_settingsPreferences'
+        preferences: 'title_settingsPreferences',
+        upgrade: 'button_upgrade'
     };
 
     get title() {

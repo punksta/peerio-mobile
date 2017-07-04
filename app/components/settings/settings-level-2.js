@@ -13,6 +13,7 @@ import payments from '../payments/payments';
 import PaymentsQuotas from '../payments/payments-quotas';
 import ProfileEdit from './profile-edit';
 import AccountEdit from './account-edit';
+import AccountUpgrade from './account-upgrade';
 import keychain from '../../lib/keychain-bridge';
 
 const bgStyle = {
@@ -67,6 +68,8 @@ export default class SettingsLevel2 extends SafeComponent {
     profile = () => <ProfileEdit />;
 
     account = () => <AccountEdit />;
+
+    upgrade = () => <AccountUpgrade />;
 
     settingsItem(title, prop) {
         const user = User.current;
