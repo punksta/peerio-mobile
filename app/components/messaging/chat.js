@@ -14,6 +14,7 @@ import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
 import ButtonText from '../controls/button-text';
+import { upgradeForArchive } from '../payments/payments';
 // max new items which are scrolled animated
 // const maxScrollableLength = 3;
 
@@ -268,6 +269,7 @@ export default class Chat extends SafeComponent {
         ));
         return (
             <View style={zsContainer}>
+                {upgradeForArchive()}
                 {this.archiveUpgrade}
                 <View style={{ flexDirection: 'row', marginRight: 48, paddingLeft: -marginLeft }}>{avatars}</View>
                 <Text style={{ textAlign: 'left', margin: 12, color: vars.txtDark }}>

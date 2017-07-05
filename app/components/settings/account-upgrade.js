@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
+import { observable } from 'mobx';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { tx, tu } from '../utils/translator';
@@ -7,6 +8,7 @@ import { vars } from '../../styles/styles';
 import buttons from '../helpers/buttons';
 import { User } from '../../lib/icebear';
 import payments from '../payments/payments';
+import ChoiceItem from './choice-item';
 
 const margin = 18;
 const marginLeft = margin;
@@ -64,41 +66,48 @@ const professionalPlanInfo =
 Unlimited upload file size
 Unlimited Message Archive`;
 
+const premiumYearlyID = 'com.peerio.storage.50.yearly';
+const premiumMonthlyID = 'com.peerio.storage.50.monthly';
+const professionalYearlyID = 'com.peerio.storage.50.yearly';
+const professionalMonthlyID = 'com.peerio.storage.50.monthly';
+
 const plans = [{
     title: 'Basic',
     price: 'Free',
     info: basicPlanInfo,
     isCurrent: true,
     canUpgradeTo: false
-}, {
+}, observable({
     title: 'Premium',
     priceOptions: [{
-        title: 'yearly',
-        iosID: 'com.peerio.storage.50.yearly',
+        title: 'Billed annually',
+        id: premiumYearlyID,
         price: '$2.99/month'
     }, {
-        title: 'monthly',
-        iosID: 'com.peerio.storage.50.monthly',
+        title: 'Billed monthly',
+        id: premiumMonthlyID,
         price: '$3.99/month'
     }],
     includes: premiumIncludesInfo,
     info: premiumPlanInfo,
-    canUpgradeTo: true
-}, {
+    canUpgradeTo: true,
+    selected: premiumYearlyID
+}), observable({
     title: 'Professional',
     priceOptions: [{
-        title: 'yearly',
-        iosID: 'com.peerio.storage.50.yearly',
+        title: 'Billed annually',
+        id: professionalYearlyID,
         price: '$9.99/month'
     }, {
-        title: 'monthly',
-        iosID: 'com.peerio.storage.50.monthly',
+        title: 'Billed monthly',
+        id: professionalMonthlyID,
         price: '$12.99/month'
     }],
     includes: professionalIncludesInfo,
     info: professionalPlanInfo,
-    canUpgradeTo: true
-}];
+    canUpgradeTo: true,
+    selected: professionalYearlyID
+})];
 
 @observer
 export default class AccountUpgrade extends SafeComponent {
@@ -136,14 +145,16 @@ export default class AccountUpgrade extends SafeComponent {
         let actionButton = null;
         if (plan.isCurrent) actionButton = <Text style={smallLabel}>(current)</Text>;
         let price = plan.price;
+        let choiceItem = null;
         if (plan.priceOptions && plan.priceOptions.length) {
-            const priceOptions = plan.priceOptions[0];
+            const priceOptions = plan.priceOptions.filter(p => p.id === plan.selected)[0];
             price = priceOptions.price;
             if (!plan.isCurrent && plan.canUpgradeTo) {
                 actionButton = this.renderButton1(
-                    'button_upgrade', () => payments.purchase(priceOptions.iosID)
+                    'button_upgrade', () => payments.purchase(plan.selected)
                 );
             }
+            choiceItem = <ChoiceItem title="Billed annually" options={plan.priceOptions} state={plan} />;
         }
         return (
             <View key={plan.title}>
@@ -154,6 +165,9 @@ export default class AccountUpgrade extends SafeComponent {
                 )}
                 <View style={{ marginLeft }}>
                     {this.label('Features')}
+                </View>
+                <View style={{ margin: marginWhite }}>
+                    {choiceItem}
                 </View>
                 <View style={{ backgroundColor: vars.white, margin: marginWhite, padding: paddingWhite }}>
                     {plan.includes && <Text style={descIncludesLabel}>{plan.includes}</Text>}

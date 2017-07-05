@@ -43,7 +43,7 @@ class SettingsState extends RoutedState {
     @action transition(subroute) {
         console.log(`settings-state.js: transition ${subroute}`);
         LayoutAnimation.easeInEaseOut();
-        this.routerMain.route = 'settings';
+        this.routerMain.settings();
         if (subroute) {
             this.subroute = subroute;
             this.stack.push(subroute);
