@@ -1,5 +1,6 @@
 import { NativeModules, AlertIOS } from 'react-native';
 import PaymentsBase from './payments-base';
+import { socket } from '../../lib/icebear';
 
 const { InAppUtils } = NativeModules;
 
@@ -11,6 +12,11 @@ const products = [
 class PaymentsIos extends PaymentsBase {
     loaded = false;
     products = [];
+
+    premiumYearlyID = 'com.peerio.storage.50.yearly';
+    premiumMonthlyID = 'com.peerio.storage.50.monthly';
+    professionalYearlyID = 'com.peerio.storage.50.yearly';
+    professionalMonthlyID = 'com.peerio.storage.50.monthly';
 
     async load() {
         if (this.loaded) return Promise.resolve(this.products);
@@ -28,21 +34,33 @@ class PaymentsIos extends PaymentsBase {
             if (response && response.productIdentifier) {
                 console.log('payments-ios.js: purchase successful');
                 console.log(response);
-                AlertIOS.alert('Purchase Successful', `Your Transaction ID is + ${response.transactionReceipt}`);
                 resolve(response);
             }
             if (error) {
                 console.log('payments-ios.js: purchase unsuccessful');
-                AlertIOS.alert('Purchase Unsuccessful', `${id}`);
                 console.log(error);
+                AlertIOS.alert(`Purchase is unsuccessful: ${id}, please contact support`);
                 reject(error);
             }
         }));
     }
 
     async purchase(id) {
-        await this.load();
-        return await this.purchaseProduct(id);
+        try {
+            await this.load();
+            const response = await this.purchaseProduct(id);
+            if (!response.transactionReceipt) throw new Error('payments-ios.js: receipt is empty');
+            const payload = {
+                store: 'ios',
+                receipt: response.transactionReceipt
+            };
+            const serverResponse = await socket.send('/auth/paid-plans/mobile-purchase/register', payload);
+            console.log(serverResponse);
+            console.log(`🚲 payments-ios.js: register result success ${id}`);
+        } catch (e) {
+            console.log('🚲 payments-ios.js: error registering');
+            console.error(e);
+        }
     }
 
     test() {

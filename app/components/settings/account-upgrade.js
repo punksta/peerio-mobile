@@ -5,8 +5,6 @@ import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { tx, tu } from '../utils/translator';
 import { vars } from '../../styles/styles';
-import buttons from '../helpers/buttons';
-import { User } from '../../lib/icebear';
 import payments from '../payments/payments';
 import ChoiceItem from './choice-item';
 
@@ -66,10 +64,8 @@ const professionalPlanInfo =
 Unlimited upload file size
 Unlimited Message Archive`;
 
-const premiumYearlyID = 'com.peerio.storage.50.yearly';
-const premiumMonthlyID = 'com.peerio.storage.50.monthly';
-const professionalYearlyID = 'com.peerio.storage.50.yearly';
-const professionalMonthlyID = 'com.peerio.storage.50.monthly';
+const { premiumYearlyID, premiumMonthlyID, professionalYearlyID, professionalMonthlyID }
+    = payments;
 
 const plans = [{
     title: 'Basic',
