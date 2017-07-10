@@ -6,6 +6,7 @@ function signapk(){
   echo ==========================================================
   echo "SIGNING: $1 => $2"
   echo ==========================================================
+  zip -d $1 'META-INF/*.SF' 'META-INF/*.RSA'
   jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 -keystore peerio.keystore -storepass:file peerio.keystorepass $1 peerio_release_key
 
   echo ========== VERIFYING ==========
@@ -19,6 +20,9 @@ DATE=`date +%Y-%m-%d`
 
 signapk ./android/app/build/outputs/apk/app-armeabi-v7a-release-unsigned.apk ./android/app/build/outputs/apk/app-armeabi-v7a-release-signed.apk
 signapk ./android/app/build/outputs/apk/app-x86-release-unsigned.apk ./android/app/build/outputs/apk/app-x86-release-signed.apk
+
+signapk ./android/app/build/outputs/apk/app-armeabi-v7a-debug.apk ./android/app/build/outputs/apk/app-armeabi-v7a-debug-signed.apk
+signapk ./android/app/build/outputs/apk/app-x86-debug-unaligned.apk ./android/app/build/outputs/apk/app-x86-debug-signed.apk
 
 echo ============================================
 echo "||             BUILD SUCCESS              ||"
