@@ -43,45 +43,48 @@ class FileState extends RoutedState {
             .catch(() => null);
     }
 
-    remindAboutEncryption() {
+    async remindAboutEncryption() {
+        if (Platform.OS !== 'android') return;
         let text = null;
         switch (global.fileEncryptionStatus) {
-            case undefined: case 2: break;
-            case 1: text = 'androidEncryptionStatusPartial'; break;
-            default: text = 'androidEncryptionStatusOff';
+            case undefined: case 2: return;
+            case 1: text = 'dialog_androidEncryptionStatusPartial'; break;
+            default: text = 'dialog_androidEncryptionStatusOff';
         }
-        return text ? TinyDb.system.getValue('fileEncryptionStatusShown')
-            .then(shown => (shown ?
-                Promise.reject(new Error('file-state.js: already shown')) : Promise.resolve()))
-            .then(() => rnAlertYesNo(null, tx(text)))
-            .then(() => Linking.openURL('https://support.google.com/nexus/answer/2844831?hl=en'))
-            .catch(e => console.log(e))
-            .finally(() => TinyDb.system.setValue('fileEncryptionStatusShown', true)) : Promise.resolve();
+        if (await TinyDb.system.getValue('fileEncryptionStatusShown')) return;
+        try {
+            await rnAlertYesNo(null, tx(text));
+            Linking.openURL('https://support.google.com/nexus/answer/2844831?hl=en');
+        } catch (e) {
+            console.log('file-state: user tap cancelled');
+        }
+        await TinyDb.system.setValue('fileEncryptionStatusShown', true);
     }
 
-    remindAboutExternal() {
-        return Platform.OS === 'android' ?
-            TinyDb.system.getValue('saved_toExternalShown')
-                .then(shown => (shown ?
-                    Promise.reject(new Error('file-state.js: already shown')) : Promise.resolve()))
-                .then(() => rnAlertYesNo(null, tx('dialog_toExternal')))
-                .then(() => {
-                    TinyDb.system.setValue('saved_toExternalShown', true);
-                    return Promise.resolve(true);
-                })
-                .catch(() => Promise.resolve(false)) : Promise.resolve(true);
+    async remindAboutExternal() {
+        if (Platform.OS !== 'android') return true;
+        if (await TinyDb.system.getValue('saved_toExternalShown')) return true;
+        try {
+            await rnAlertYesNo(null, tx('dialog_toExternal'));
+            TinyDb.system.setValue('saved_toExternalShown', true);
+        } catch (e) {
+            return false;
+        }
+        return true;
     }
 
-    @action download(fp) {
-        this.remindAboutEncryption().then(() => this.remindAboutExternal()).then(r => {
-            if (!r) return;
-            const singleFile = fp || this.currentFile;
-            const f = singleFile ? [singleFile] : this.selected;
-            f.forEach(file => {
-                file.selected = false;
-                if (file.downloading || file.uploading) return;
-                file.readyForDownload && file.download(file.cachePath);
-            });
+    @action async download(fp) {
+        await this.remindAboutEncryption();
+        if (!await this.remindAboutExternal()) {
+            console.log('file-state.js: user denied saving to external');
+            return;
+        }
+        const singleFile = fp || this.currentFile;
+        const f = singleFile ? [singleFile] : this.selected;
+        f.forEach(file => {
+            file.selected = false;
+            if (file.downloading || file.uploading) return;
+            file.readyForDownload && file.download(file.cachePath);
         });
     }
 

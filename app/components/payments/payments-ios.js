@@ -13,10 +13,10 @@ class PaymentsIos extends PaymentsBase {
     loaded = false;
     products = [];
 
-    premiumYearlyID = 'com.peerio.storage.50.yearly';
-    premiumMonthlyID = 'com.peerio.storage.50.monthly';
-    professionalYearlyID = 'com.peerio.storage.50.yearly';
-    professionalMonthlyID = 'com.peerio.storage.50.monthly';
+    premiumYearlyID = 'com.peerio.app.messenger.premium.20.yearly';
+    premiumMonthlyID = 'com.peerio.app.messenger.premium.20.monthly';
+    professionalYearlyID = 'com.peerio.app.messenger.professional.500.yearly';
+    professionalMonthlyID = 'com.peerio.app.messenger.professional.500.monthly';
 
     async load() {
         if (this.loaded) return Promise.resolve(this.products);
