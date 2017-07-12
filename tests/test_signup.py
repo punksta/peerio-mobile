@@ -17,6 +17,7 @@ class Signup(common.testcase.TestCase):
         username = 't' + strftime("%Y%m%d%H%M%S")
         d = common.helper.getDriver()
         d.reset()
+        d.screen('signup-step-a.png')
         # push notification enable alert
         d.wait_for_find('Allow')
         d.tap('Allow')
