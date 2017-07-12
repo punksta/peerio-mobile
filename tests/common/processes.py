@@ -7,6 +7,7 @@ import commands
 import re
 
 def startAppium():
+    return
     atexit.register(killAppium)
     path = ['node_modules/.bin/appium']
     appiumProcess = subprocess.Popen(path,
@@ -19,9 +20,11 @@ def startAppium():
             return True
 
 def killAppium():
+    return
     os.system("ps -A | grep [a]ppium | awk '{print $1}' | xargs kill -9")
 
 def restartAppium():
+    return
     killAppium()
     startAppium()
 
