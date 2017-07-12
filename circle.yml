@@ -28,4 +28,4 @@ compile:
 test:
   override:
     - mkdir -p $CIRCLE_TEST_REPORTS/py.test
-    - virtualenv .pyenv && source .pyenv/bin/activate && PEERIO_IOS_SIM="iPhone 7" PEERIO_IOS_VERSION="10.3" py.test --platform=ios -s -x tests --junitxml=$CIRCLE_TEST_REPORTS/py.test/junit.xml
+    - virtualenv .pyenv && source .pyenv/bin/activate && PEERIO_IOS_SIM="iPhone 7" PEERIO_IOS_VERSION="10.2" py.test --platform=ios -s -x tests --junitxml=$CIRCLE_TEST_REPORTS/py.test/junit.xml
