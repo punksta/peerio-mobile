@@ -6,7 +6,7 @@ machine:
     XCODE_SCHEME: peeriomobile
     PATH: '$PATH:$HOME/node/node-v7.3.0-darwin-x64/bin'
   xcode:
-    version: 8.0
+    version: 9.0
 
 dependencies:
   pre:
