@@ -78,7 +78,6 @@ export default class ChoiceItem extends SafeComponent {
 }
 
 ChoiceItem.propTypes = {
-    title: PropTypes.any,
     options: PropTypes.any,
     state: PropTypes.any,
     onPress: PropTypes.any
