@@ -33,7 +33,7 @@
     "commit-msg": "validate-commit-msg"
   },
   "dependencies": {
-    "@peerio/peerio-icebear": "1.5.0",
+    "@peerio/peerio-icebear": "^1.5.0",
     "babel-cli": "6.22.2",
     "base64-js": "1.2.0",
     "blake2s-js": "1.2.2",
@@ -94,7 +94,7 @@
     "vm-browserify": "0.0.4"
   },
   "devDependencies": {
-    "appium": "1.6.3",
+    "appium": "1.6.5",
     "authorize-ios": "^1.0.4",
     "babel-eslint": "^6.1.2",
     "babel-plugin-console-kungfu": "git+https://github.com/PeerioTechnologies/babel-plugin-console-kungfu.git",
