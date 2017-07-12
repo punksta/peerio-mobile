@@ -5,8 +5,6 @@ import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
 class SnackBarState extends RoutedState {
-    @observable items = [];
-
     constructor(props) {
         super(props);
         reaction(() => warnings.current, sw => {
@@ -20,6 +18,10 @@ class SnackBarState extends RoutedState {
     get text() {
         const w = warnings.current;
         return w ? tx(w.content, w.data) : null;
+    }
+
+    @action pop() {
+        warnings.current && warnings.current.dismiss();
     }
 
     @action pushTemporary(text) { warnings.add(text); }
