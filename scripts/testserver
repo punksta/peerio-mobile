@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ps -A | grep [a]ppium | awk '{print $1}' | xargs kill -9
+./node_modules/.bin/appium &
