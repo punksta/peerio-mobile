@@ -19,9 +19,9 @@ class Signup(common.testcase.TestCase):
         d.reset()
         d.screen('signup-step-a.png')
         # push notification enable alert
-        d.wait_for_find('Allow')
-        d.tap('Allow')
-        d.wait_for_not_find('Allow')
+        # d.wait_for_find('Allow')
+        # d.tap('Allow')
+        # d.wait_for_not_find('Allow')
 
         sleep(1)
         d.screen('signup-step-0.png')
