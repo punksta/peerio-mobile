@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.90.0",
+  "version": "3.91.0",
   "private": true,
   "scripts": {
     "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && rn-nodeify --install 'crypto, stream, process, events, vm' --hack && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
@@ -112,7 +112,7 @@
     "husky": "^0.13.1",
     "madge": "^1.6.0",
     "mocha": "3.2.0",
-    "npm-run-all": "^4.0.1",
+    "npm-run-all": "^4.0.2",
     "opt-cli": "^1.5.1",
     "repeating-cli": "^2.0.0",
     "rn-nodeify": "github:mvayngrib/rn-nodeify",
