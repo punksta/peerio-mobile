@@ -69,7 +69,6 @@ export default class SignupStep1 extends SafeComponent {
                         <ActivityIndicator size="large" color={vars.white} /> :
                         <View>
                             <Text style={noticeText}>{t('title_AKwarn1')}</Text>
-                            <Text style={noticeText2}>{t('title_AKwarn2')}</Text>
                         </View>}
                 </View>
                 <View style={paddedVertical}>
