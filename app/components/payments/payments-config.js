@@ -34,6 +34,8 @@ class BasicPlan {
     title = 'Basic';
     price = 'Free';
     info = basicPlanInfo;
+    storage = '1 GB';
+    uploadFileSize = '500 MB';
     canUpgradeTo = false;
 
     get isCurrent() {
@@ -66,6 +68,8 @@ class PaidPlan {
 
 class PremiumPlan extends PaidPlan {
     title = 'Premium';
+    storage = '20 GB';
+    uploadFileSize = '2 GB';
     priceOptions = [{
         title: 'Billed annually',
         id: premiumYearlyID,
@@ -83,7 +87,9 @@ class PremiumPlan extends PaidPlan {
 }
 
 class ProfessionalPlan extends PaidPlan {
-    title = 'Professional';
+    title = 'Pro';
+    storage = '500 GB';
+    uploadFileSize = 'Unlimited';
     priceOptions = [{
         title: 'Billed annually',
         id: professionalYearlyID,

@@ -1,0 +1,95 @@
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
+import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
+import { observer } from 'mobx-react/native';
+import { observable, reaction } from 'mobx';
+import { vars } from '../../styles/styles';
+import icons from '../helpers/icons';
+
+const { width } = Dimensions.get('window');
+
+@observer
+export default class AccountUpgradeNavigator extends Component {
+    circle(checked, index) {
+        const filled = index === this.props.selected;
+        const w = 40;
+        const s = {
+            width: w,
+            height: w,
+            borderRadius: w / 2,
+            borderColor: 'white',
+            borderWidth: 3,
+            backgroundColor: filled ? 'white' : 'transparent',
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+        const inner = checked ? icons.plainWhite('check', w / 1.5) : null;
+        return (
+            <TouchableOpacity
+                onPress={() => this.props.onJumpTo(index)}
+                pressRetentionOffset={vars.pressRetentionOffset}
+                style={{ alignItems: 'center' }}>
+                <View key={`${index}${filled}${checked}`} style={s}>{inner}</View>
+            </TouchableOpacity>
+        );
+    }
+
+    get line() {
+        const s = {
+            borderBottomWidth: 4,
+            borderColor: 'white',
+            flex: 1,
+            flexGrow: 1,
+            width: 40,
+            height: 20
+        };
+        return <View style={s} />;
+    }
+
+    render() {
+        const navigator = {
+            position: 'absolute',
+            bottom: 120,
+            width,
+            paddingHorizontal: 24
+        };
+        const row = {
+            flex: 1,
+            flexGrow: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between'
+        };
+        const t = {
+            color: 'white',
+            backgroundColor: 'transparent',
+            marginTop: 6,
+            width: 40,
+            textAlign: 'center'
+        };
+        const t1 = [t];
+        const t2 = [t, { width: 120 }];
+        const t3 = [t];
+
+        return (
+            <View style={navigator} key="navigator">
+                <View style={row}>
+                    {this.circle(true, 0)}
+                    {this.line}
+                    {this.circle(false, 1)}
+                    {this.line}
+                    {this.circle(false, 2)}
+                </View>
+                <View style={row}>
+                    <Text style={t1}>Basic</Text>
+                    <Text style={t2}>Premium</Text>
+                    <Text style={t3}>Pro</Text>
+                </View>
+            </View>
+        );
+    }
+}
+
+AccountUpgradeNavigator.propTypes = {
+    selected: PropTypes.number,
+    onJumpTo: PropTypes.any
+};

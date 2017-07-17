@@ -1,4 +1,4 @@
-import MockContactList from './mock-contact-list';
+import MockUpgrade from './mock-upgrade';
 
-export default null;
-// export default __DEV__ ? MockContactList : null;
+// export default null;
+export default __DEV__ ? MockUpgrade : null;
