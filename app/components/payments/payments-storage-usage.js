@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { User } from '../../lib/icebear';
 import Bold from '../controls/bold';
-import payments from './payments';
 import settingsState from '../settings/settings-state';
 import buttons from '../helpers/buttons';
 
@@ -19,7 +18,7 @@ class PaymentStorageUsage extends SafeComponent {
                     <Bold>{u.fileQuotaUsedPercent}% of {u.fileQuotaTotalFmt}</Bold>
                     <View style={{ width: 20 }} />
                     {buttons.uppercaseBlueButton('button_upgrade',
-                        () => settingsState.transition('upgrade'))}
+                        () => settingsState.upgrade())}
                 </View>
             </View>
         );
@@ -27,7 +26,7 @@ class PaymentStorageUsage extends SafeComponent {
 }
 
 const paymentCheckout = () => {
-    settingsState.transition('upgrade');
+    settingsState.upgrade();
     // Linking.openURL('https://www.peerio.com/checkout.html');
 };
 

@@ -1,10 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ActivityIndicator } from 'react-native';
 import { observer } from 'mobx-react/native';
 import AccountUpgradeToggle from './account-upgrade-toggle';
-import { vars } from '../../styles/styles';
-
+import payments from '../payments/payments';
 
 const topTitleText = {
     fontSize: 37,
@@ -27,6 +26,10 @@ const featureListText = [topTitleText, {
 
 const featureListTextMedium = [featureListText, {
     fontSize: 21
+}];
+
+const planFooterInfo = [featureListTextMedium, {
+    textAlign: 'center'
 }];
 
 const featureSmallText = {
@@ -59,6 +62,7 @@ const borderView = {
 
 @observer
 export default class AccountUpgradePlan extends Component {
+
     largeSmallTextRow(largeTextString, smallTextString) {
         return (
             <View style={textRow}>
@@ -102,10 +106,26 @@ export default class AccountUpgradePlan extends Component {
     }
 
     get priceOptions() {
-        const { priceOptions } = this.props.plan;
-        if (!priceOptions) return this.alwaysFree;
-        return priceOptions.map(({ title, price }, i) =>
-            <AccountUpgradeToggle text1={price} text2={title.toLowerCase()} left={i === 0} highlight={i > 0} />);
+        const { priceOptions, canUpgradeTo, isCurrent } = this.props.plan;
+        // if (!priceOptions) return this.alwaysFree;
+        if (isCurrent) return <Text style={planFooterInfo}>This is your current plan</Text>;
+        if (!canUpgradeTo) return <Text style={planFooterInfo}>Cannot upgrade to this plan right now</Text>;
+        return (
+            <View style={{ flexDirection: 'row' }}>
+                {priceOptions.map(({ title, price, id }, i) => (
+                    <AccountUpgradeToggle
+                        onPress={() => payments.purchase(id)}
+                        text1={price}
+                        text2={title.toLowerCase()}
+                        left={i === 0}
+                        highlight={i > 0} />
+                ))}
+            </View>
+        );
+    }
+
+    get footer() {
+        return payments.inProgress ? <ActivityIndicator color="white" style={{ marginBottom: 30 }} /> : this.priceOptions;
     }
 
     render() {
@@ -128,9 +148,7 @@ export default class AccountUpgradePlan extends Component {
                     </View>
                 </View>
                 <View style={block1}>
-                    <View style={{ flexDirection: 'row' }}>
-                        {this.priceOptions}
-                    </View>
+                    {this.footer}
                 </View>
             </View>
         );

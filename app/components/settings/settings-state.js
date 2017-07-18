@@ -54,6 +54,10 @@ class SettingsState extends RoutedState {
         }
     }
 
+    upgrade() {
+        this.routerModal.accountUpgradeSwiper();
+    }
+
     async showPassphrase() {
         const user = User.current;
         let passphrase = user.passphrase;
