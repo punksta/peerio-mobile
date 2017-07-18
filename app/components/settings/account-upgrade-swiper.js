@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Dimensions, LayoutAnimation } from 'react-native';
+import { ScrollView, Dimensions, LayoutAnimation, View, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
 import { gradient, bicolor } from '../controls/effects';
@@ -7,13 +7,15 @@ import { vars } from '../../styles/styles';
 import AccountUpgradeNavigator from './account-upgrade-navigator';
 import AccountUpgradePlan from './account-upgrade-plan';
 import plans from '../payments/payments-config';
+import icons from '../helpers/icons';
+import routerModal from '../routes/router-modal';
 
 const { width } = Dimensions.get('window');
 
 const card = {
     width,
     backgroundColor: 'transparent',
-    paddingTop: vars.statusBarHeight + 30
+    paddingTop: 36
 };
 
 const basicColor = '#82A9BE';
@@ -28,15 +30,29 @@ export default class AccountUpgradeSwiper extends Component {
 
     componentDidMount() {
         reaction(() => this.selected, () => LayoutAnimation.easeInEaseOut());
+        this.jumpTo(2);
     }
 
-    jumpTo = (index) => {
-        this._scrollView.scrollTo({ x: index * width, y: 0 });
+    jumpTo = (index, skipAnimated) => {
+        this._scrollView.scrollTo({ x: index * width, y: 0, animated: !skipAnimated });
     }
 
     handleScroll = event => {
         const x = event.nativeEvent.contentOffset.x;
         this.selected = Math.round(x / width);
+    }
+
+    get exitRow() {
+        const s = {
+            position: 'absolute',
+            top: vars.statusBarHeight + 12,
+            right: 12
+        };
+        return (
+            <View style={s} key="exitRow">
+                {icons.white('close', () => routerModal.discard(), { backgroundColor: 'transparent' })}
+            </View>
+        );
     }
 
     render() {
@@ -51,6 +67,7 @@ export default class AccountUpgradeSwiper extends Component {
                 {gradient({ style: card }, <AccountUpgradePlan plan={plans[1]} />, basicColor, premiumColor)}
                 {gradient({ style: card }, <AccountUpgradePlan plan={plans[2]} />, premiumColor, proColor)}
             </ScrollView>,
+            this.exitRow,
             <AccountUpgradeNavigator key="navigator" selected={this.selected} onJumpTo={this.jumpTo} />
         ]), basicColor, proColor);
     }

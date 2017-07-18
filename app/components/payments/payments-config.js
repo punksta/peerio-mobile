@@ -30,6 +30,12 @@ Unlimited Message Archive`;
 const { premiumYearlyID, premiumMonthlyID, professionalYearlyID, professionalMonthlyID }
     = payments;
 
+const serverPlans = ['icebear_premium_monthly', 'icebear_premium_monthly', 'icebear_pro_monthly', 'icebear_pro_yearly'];
+
+function getActivePlans() {
+    return User.current ? User.current.activePlans : [];
+}
+
 class BasicPlan {
     title = 'Basic';
     price = 'Free';
@@ -39,7 +45,7 @@ class BasicPlan {
     canUpgradeTo = false;
 
     get isCurrent() {
-        return User.current.activePlans.length === 0;
+        return getActivePlans().filter(p => serverPlans.indexOf(p) !== -1).length === 0;
     }
 
     setDefaultSelected = () => {};
@@ -49,7 +55,7 @@ class PaidPlan {
     @observable selected;
 
     get intersectServer() {
-        return this.priceOptions.filter(p => User.current.activePlans.indexOf(p.serverID) !== -1);
+        return this.priceOptions.filter(p => getActivePlans().indexOf(p.serverID) !== -1);
     }
 
     get isCurrent() {
@@ -57,7 +63,7 @@ class PaidPlan {
     }
 
     get canUpgradeTo() {
-        return User.current.activePlans.length === 0;
+        return getActivePlans().length === 0;
     }
 
     setDefaultSelected() {
@@ -71,15 +77,15 @@ class PremiumPlan extends PaidPlan {
     storage = '20 GB';
     uploadFileSize = '2 GB';
     priceOptions = [{
-        title: 'Billed annually',
-        id: premiumYearlyID,
-        serverID: 'icebear_premium_yearly',
-        price: '$2.99/month'
-    }, {
         title: 'Billed monthly',
         id: premiumMonthlyID,
         serverID: 'icebear_premium_monthly',
         price: '$3.99/month'
+    }, {
+        title: 'Billed annually',
+        id: premiumYearlyID,
+        serverID: 'icebear_premium_yearly',
+        price: '$2.99/month'
     }];
     includes = premiumIncludesInfo;
     info = premiumPlanInfo;
@@ -91,15 +97,15 @@ class ProfessionalPlan extends PaidPlan {
     storage = '500 GB';
     uploadFileSize = 'Unlimited';
     priceOptions = [{
-        title: 'Billed annually',
-        id: professionalYearlyID,
-        serverID: 'icebear_pro_yearly',
-        price: '$9.99/month'
-    }, {
         title: 'Billed monthly',
         id: professionalMonthlyID,
         serverID: 'icebear_pro_monthly',
         price: '$12.99/month'
+    }, {
+        title: 'Billed annually',
+        id: professionalYearlyID,
+        serverID: 'icebear_pro_yearly',
+        price: '$9.99/month'
     }];
     includes = professionalIncludesInfo;
     info = professionalPlanInfo;

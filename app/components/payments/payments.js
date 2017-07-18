@@ -27,7 +27,7 @@ function upgradeMessage(title) {
         <View style={container}>
             <Text style={text}>{title}</Text>
             {buttons.uppercaseBlueButton('button_upgrade',
-                () => settingsState.transition('upgrade'))}
+                () => settingsState.upgrade())}
         </View>
     );
 }

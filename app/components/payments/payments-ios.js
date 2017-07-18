@@ -39,13 +39,14 @@ class PaymentsIos extends PaymentsBase {
             if (error) {
                 console.log('payments-ios.js: purchase unsuccessful');
                 console.log(error);
-                AlertIOS.alert(`Purchase is unsuccessful: ${id}, please contact support`);
+                AlertIOS.alert(`Purchase is unsuccessful`, `Error purchasing ${id}, please contact support`);
                 reject(error);
             }
         }));
     }
 
     async purchase(id) {
+        this.inProgress = true;
         try {
             await this.load();
             const response = await this.purchaseProduct(id);
@@ -61,6 +62,7 @@ class PaymentsIos extends PaymentsBase {
             console.log('🚲 payments-ios.js: error registering');
             console.error(e);
         }
+        this.inProgress = false;
     }
 
     test() {

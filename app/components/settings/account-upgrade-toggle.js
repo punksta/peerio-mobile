@@ -32,7 +32,10 @@ export default class AccountUpgradeToggle extends Component {
         }];
 
         return (
-            <TouchableOpacity pressRetentionOffest={vars.pressRetentionOffest} style={toggleContainer}>
+            <TouchableOpacity
+                onPress={this.props.onPress}
+                pressRetentionOffest={vars.pressRetentionOffest}
+                style={toggleContainer}>
                 <Text style={text1Style}>{text1}</Text>
                 <Text style={text2Style}>{text2}</Text>
             </TouchableOpacity>
@@ -41,6 +44,7 @@ export default class AccountUpgradeToggle extends Component {
 }
 
 AccountUpgradeToggle.propTypes = {
+    onPress: PropTypes.any,
     highlight: PropTypes.bool,
     left: PropTypes.bool,
     text1: PropTypes.string,

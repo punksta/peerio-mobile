@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View, Text, Dimensions, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, reaction } from 'mobx';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import plans from '../payments/payments-config';
 
 const { width } = Dimensions.get('window');
 
@@ -46,6 +46,8 @@ export default class AccountUpgradeNavigator extends Component {
         return <View style={s} />;
     }
 
+    plan = index => this.circle(plans[index].isCurrent, index);
+
     render() {
         const navigator = {
             position: 'absolute',
@@ -73,11 +75,11 @@ export default class AccountUpgradeNavigator extends Component {
         return (
             <View style={navigator} key="navigator">
                 <View style={row}>
-                    {this.circle(true, 0)}
+                    {this.plan(0)}
                     {this.line}
-                    {this.circle(false, 1)}
+                    {this.plan(1)}
                     {this.line}
-                    {this.circle(false, 2)}
+                    {this.plan(2)}
                 </View>
                 <View style={row}>
                     <Text style={t1}>Basic</Text>

@@ -8,6 +8,7 @@ import ContactView from '../contacts/contact-view';
 import ChatInfo from '../messaging/chat-info';
 import PinModalCreate from '../controls/pin-modal-create';
 import PinModalAsk from '../controls/pin-modal-ask';
+import AccountUpgradeSwiper from '../settings/account-upgrade-swiper';
 import routes from './routes';
 
 class RouterModal extends Router {
@@ -24,6 +25,7 @@ class RouterModal extends Router {
         this.add('createPin', PinModalCreate, true);
         this.add('askPin', PinModalAsk, true);
         this.add('chatInfo', ChatInfo);
+        this.add('accountUpgradeSwiper', AccountUpgradeSwiper, true, true);
     }
 
     add(route, component, isWhite) {

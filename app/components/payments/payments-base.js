@@ -1,6 +1,9 @@
+import { observable } from 'mobx';
 import { User } from '../../lib/icebear';
 
 class PaymentsBase {
+    @observable inProgress = false;
+
     get canUpgradeUser() {
         return true;
     }

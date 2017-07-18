@@ -25,7 +25,7 @@ class PaymentsAndroid extends PaymentsBase {
             console.log(productDetails);
         } catch (err) {
             console.log(err);
-            Alert.alert(`payments-android.js: purchase is unsuccessful: ${productId}, please contact support`);
+            Alert.alert(`Purchase is unsuccessful`, `${productId}, please contact support`);
         } finally {
             await InAppBilling.close();
         }
@@ -33,6 +33,7 @@ class PaymentsAndroid extends PaymentsBase {
     }
 
     async purchase(id) {
+        this.inProgress = true;
         try {
             const { receiptSignature, receiptData, purchaseToken } = await this.purchaseProduct(id);
             if (!receiptSignature) throw new Error('payments-android.js: receiptSignature is empty');
@@ -53,9 +54,10 @@ class PaymentsAndroid extends PaymentsBase {
             console.log(`🚲 payments-android.js: register result success ${id}`);
         } catch (e) {
             console.log('🚲 payments-android.js: error registering');
-            Alert.alert(`payments-android.js: registration is unsuccessful: ${id}, please contact support`);
+            Alert.alert(`Purchase is unsuccessful`, `${id}, please contact support`);
             console.error(e);
         }
+        this.inProgress = false;
     }
 
     test() {
