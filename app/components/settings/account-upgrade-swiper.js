@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Dimensions, LayoutAnimation, View, StatusBar } from 'react-native';
+import { ScrollView, Dimensions, LayoutAnimation, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
 import { gradient, bicolor } from '../controls/effects';
@@ -9,6 +9,9 @@ import AccountUpgradePlan from './account-upgrade-plan';
 import plans from '../payments/payments-config';
 import icons from '../helpers/icons';
 import routerModal from '../routes/router-modal';
+import { User } from '../../lib/icebear';
+import { t } from '../utils/translator';
+import { popupYes } from '../shared/popups';
 
 const { width } = Dimensions.get('window');
 
@@ -30,7 +33,14 @@ export default class AccountUpgradeSwiper extends Component {
 
     componentDidMount() {
         reaction(() => this.selected, () => LayoutAnimation.easeInEaseOut());
-        this.jumpTo(2);
+        setTimeout(() => this._scrollView.scrollToEnd({ animated: false }), 0);
+        if (User.current) {
+            console.log('account-upgrade-swiper: active plans');
+            User.current && console.log(User.current.activePlans);
+            if (User.current.addresses.filter(e => e.confirmed).length === 0) {
+                popupYes('', '', t('error_upgradingAccountNoConfirmedEmail')).then(() => routerModal.discard());
+            }
+        }
     }
 
     jumpTo = (index, skipAnimated) => {

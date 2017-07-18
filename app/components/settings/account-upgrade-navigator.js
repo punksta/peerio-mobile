@@ -23,7 +23,8 @@ export default class AccountUpgradeNavigator extends Component {
             alignItems: 'center',
             justifyContent: 'center'
         };
-        const inner = checked ? icons.plainWhite('check', w / 1.5) : null;
+        const iconRender = checked && filled ? icons.plaindark : icons.plainWhite;
+        const inner = checked ? iconRender('check', w / 1.5) : null;
         return (
             <TouchableOpacity
                 onPress={() => this.props.onJumpTo(index)}
