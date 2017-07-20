@@ -4,19 +4,25 @@ import { socket } from '../../lib/icebear';
 
 const { InAppUtils } = NativeModules;
 
+const premiumYearlyID = 'com.peerio.app.messenger.premium.20.yearly';
+const premiumMonthlyID = 'com.peerio.app.messenger.premium.20.monthly';
+const professionalYearlyID = 'com.peerio.app.messenger.professional.500.yearly';
+const professionalMonthlyID = 'com.peerio.app.messenger.professional.500.monthly';
+
 const products = [
-    'com.peerio.storage.50.yearly',
-    'com.peerio.storage.50.monthly'
+    premiumYearlyID,
+    premiumMonthlyID,
+    professionalYearlyID,
+    professionalMonthlyID
 ];
 
 class PaymentsIos extends PaymentsBase {
     loaded = false;
-    products = [];
 
-    premiumYearlyID = 'com.peerio.app.messenger.premium.20.yearly';
-    premiumMonthlyID = 'com.peerio.app.messenger.premium.20.monthly';
-    professionalYearlyID = 'com.peerio.app.messenger.professional.500.yearly';
-    professionalMonthlyID = 'com.peerio.app.messenger.professional.500.monthly';
+    premiumYearlyID = premiumYearlyID;
+    premiumMonthlyID = premiumMonthlyID;
+    professionalYearlyID = professionalYearlyID;
+    professionalMonthlyID = professionalMonthlyID;
 
     async load() {
         if (this.loaded) return Promise.resolve(this.products);
