@@ -17,7 +17,10 @@ const premiumPlanInfo =
 `20 GB of secure storage
 2 GB max upload file size
 Unlimited Message Archive
-Premium support`;
+Premium support
+
+The subscription will renew at the end of selected billing period
+`;
 
 const professionalIncludesInfo =
 `Includes features of Premium and Basic Plans`;
@@ -26,7 +29,10 @@ const professionalPlanInfo =
 `500 GB of secure storage
 Unlimited upload file size
 Unlimited Message Archive
-Premium support`;
+Premium support
+
+The subscription will renew at the end of selected billing period
+`;
 
 const { premiumYearlyID, premiumMonthlyID, professionalYearlyID, professionalMonthlyID }
     = payments;

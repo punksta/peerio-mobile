@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Text, View, ActivityIndicator } from 'react-native';
+import { Text, View, ActivityIndicator, TouchableOpacity, Linking } from 'react-native';
 import { observer } from 'mobx-react/native';
 import AccountUpgradeToggle from './account-upgrade-toggle';
 import payments from '../payments/payments';
+import { vars } from '../../styles/styles';
 
 const topTitleText = {
     fontSize: 37,
@@ -145,6 +146,22 @@ export default class AccountUpgradePlan extends Component {
                     <View style={block1}>
                         {includes && this.featureText(includes)}
                         {info.split('\n').map(this.featureText)}
+                        <TouchableOpacity
+                            onPress={() => Linking.openURL('https://peerio.com/conditions.html')}
+                            pressRetentionOffset={vars.pressRetentionOffset}>
+                            <Text style={featureSmallText}>
+                                <Text>{'Terms of Use: '}</Text>
+                                <Text style={{ textDecorationLine: 'underline' }}>https://peerio.com/conditions.html</Text>
+                            </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => Linking.openURL('https://peerio.com/privacy.html')}
+                            pressRetentionOffset={vars.pressRetentionOffset}>
+                            <Text style={featureSmallText}>
+                                <Text>{'Privacy Policy: '}</Text>
+                                <Text style={{ textDecorationLine: 'underline' }}>https://peerio.com/privacy.html</Text>
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={block1}>
