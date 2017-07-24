@@ -131,7 +131,7 @@ class LoginState extends RoutedState {
         console.log(this.username);
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
-        });
+        }).then(() => mainState.saveUser());
     }
 
     @action loginCached = (data) => {

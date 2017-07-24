@@ -24,7 +24,7 @@ class MainState extends RoutedState {
     @action async activateAndTransition(/* user */) {
         this.activate();
         this.routes.app.main();
-        await this.saveUser();
+        // await this.saveUser();
     }
 
     @action async load() {

@@ -88,6 +88,7 @@ class SignupState extends RoutedState {
                 User.current = null;
                 this.reset();
             })
+            .then(() => mainState.saveUser())
             .finally(() => (this.isInProgress = false));
     }
 }
