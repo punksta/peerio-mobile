@@ -168,15 +168,6 @@ class LoginState extends RoutedState {
             if (await this.loadFromKeychain()) return;
             this.isInProgress = false;
         }
-        /* console.log(`login-state.js: loaded`);
-        this.username = username;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.current = 2; */
-        // disabling PIN for now
-        // const user = new User();
-        // user.username = username;
-        // if (await user.hasPasscode()) this.saved();
     }
 
     @action async loadFromKeychain() {

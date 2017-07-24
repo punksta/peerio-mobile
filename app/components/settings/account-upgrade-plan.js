@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Text, View, ActivityIndicator, TouchableOpacity, Linking } from 'react-native';
+import { Text, View, ActivityIndicator, TouchableOpacity, Linking, ScrollView } from 'react-native';
 import { observer } from 'mobx-react/native';
 import AccountUpgradeToggle from './account-upgrade-toggle';
 import payments from '../payments/payments';
@@ -133,7 +133,7 @@ export default class AccountUpgradePlan extends Component {
         const { title, includes, info, storage } = this.props.plan;
         return (
             <View style={{ flexDirection: 'column', flexGrow: 1, flex: 1, justifyContent: 'space-between' }}>
-                <View>
+                <ScrollView style={{ marginBottom: 120 }}>
                     <View style={block1}>
                         <Text style={topTitleText}>
                             Peerio <Text style={boldText}>{title}</Text>
@@ -163,7 +163,7 @@ export default class AccountUpgradePlan extends Component {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                </View>
+                </ScrollView>
                 <View style={block1}>
                     {this.footer}
                 </View>

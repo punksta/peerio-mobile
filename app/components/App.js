@@ -1,5 +1,8 @@
 import React from 'react';
-import { View, Text, PanResponder, AppState, ActivityIndicator, NativeModules, Platform, AdSupportIOS } from 'react-native';
+import { View, Text, PanResponder,
+    AppState, ActivityIndicator, NativeModules,
+    Dimensions, PixelRatio, Platform, AdSupportIOS } from 'react-native';
+import deviceInfo from 'react-native-device-info';
 import { observer } from 'mobx-react/native';
 import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';
@@ -16,6 +19,8 @@ import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
 import MockComponent from './mocks';
+
+const { height, width } = Dimensions.get('window');
 
 @observer
 export default class App extends SafeComponent {
@@ -129,9 +134,11 @@ export default class App extends SafeComponent {
     renderThrow() {
         if (MockComponent) return <MockComponent />;
         if (!uiState.locale) return this._placeHolder();
+        const tabletHack = { top: 100, height: height - 100, left: 0, right: 0 };
+        console.log(`App.js: screen specs: ${width}, ${height}, ${PixelRatio.get()}`);
         return gradient({
             testID: 'appOuterViewBackground',
-            style: { flexGrow: 1 }
+            style: (height < 500) ? tabletHack : { flex: 1, flexGrow: 1 }
         }, [
             <RouteNavigator key="navigator" routes={routerApp} />,
             <ModalLayout key="modals" />,
