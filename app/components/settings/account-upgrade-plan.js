@@ -137,7 +137,7 @@ export default class AccountUpgradePlan extends Component {
         }];
         const popup = () => {
             popupControl(
-                <ScrollView>
+                <View style={{ flex: 1, flexGrow: 1 }}>
                     <Text style={featureSmallText}>
                         {text}
                     </Text>
@@ -164,7 +164,7 @@ Account will be charged for renewal within 24-hours prior to the end of the curr
                             <Text style={{ textDecorationLine: 'underline' }}>Privacy Policy</Text>
                         </Text>
                     </TouchableOpacity>
-                </ScrollView>
+                </View>
             );
         };
         return (
