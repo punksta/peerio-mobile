@@ -137,7 +137,7 @@ export default class AccountUpgradePlan extends Component {
             textAlign: 'center',
             marginTop: 18
         }];
-        const popupTextStyle = [featureSmallText, { color: vars.txtDark }];
+        const popupTextStyle = { color: vars.txtDark, fontSize: 12 };
         const popup = () => {
             popupControl(
                 <ScrollView style={{ flex: 1, flexGrow: 1 }}>
