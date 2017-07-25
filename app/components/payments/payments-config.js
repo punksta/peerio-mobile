@@ -19,7 +19,7 @@ const premiumPlanInfo =
 Unlimited Message Archive
 Premium support
 
-The subscription will renew at the end of selected billing period
+The subscription will automatically renew at the end of selected billing period
 `;
 
 const professionalIncludesInfo =
@@ -31,7 +31,7 @@ Unlimited upload file size
 Unlimited Message Archive
 Premium support
 
-The subscription will renew at the end of selected billing period
+The subscription will automatically renew at the end of selected billing period
 `;
 
 const { premiumYearlyID, premiumMonthlyID, professionalYearlyID, professionalMonthlyID }
