@@ -131,17 +131,20 @@ export default class AccountUpgradePlan extends Component {
     }
 
     subscriptionInfo(text) {
+        console.log('subscription info');
+        console.log(text);
         const textStyle = [featureListTextMedium, {
             textAlign: 'center',
             marginTop: 18
         }];
+        const popupTextStyle = [featureSmallText, { color: vars.txtDark }];
         const popup = () => {
             popupControl(
-                <View style={{ flex: 1, flexGrow: 1 }}>
-                    <Text style={featureSmallText}>
+                <ScrollView style={{ flex: 1, flexGrow: 1 }}>
+                    <Text style={popupTextStyle}>
                         {text}
                     </Text>
-                    <Text style={featureSmallText}>
+                    <Text style={popupTextStyle}>
                         {
 `
 Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period
@@ -153,18 +156,18 @@ Account will be charged for renewal within 24-hours prior to the end of the curr
                     <TouchableOpacity
                         onPress={() => Linking.openURL('https://peerio.com/conditions.html')}
                         pressRetentionOffset={vars.pressRetentionOffset}>
-                        <Text style={featureSmallText}>
+                        <Text style={popupTextStyle}>
                             <Text style={{ textDecorationLine: 'underline' }}>Terms of Use</Text>
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={() => Linking.openURL('https://peerio.com/privacy.html')}
                         pressRetentionOffset={vars.pressRetentionOffset}>
-                        <Text style={featureSmallText}>
+                        <Text style={popupTextStyle}>
                             <Text style={{ textDecorationLine: 'underline' }}>Privacy Policy</Text>
                         </Text>
                     </TouchableOpacity>
-                </View>
+                </ScrollView>
             );
         };
         return (
