@@ -18,9 +18,16 @@ const premiumPlanInfo =
 2 GB max upload file size
 Unlimited Message Archive
 Premium support
-
-The subscription will automatically renew at the end of selected billing period
 `;
+
+const premiumPaymentInfo =
+`You will be charged:
+
+$3.99 USD each month if you choose to be billed monthly
+
+$34.99 USD each year, if you choose to be billed yearly
+
+Prices may vary according to local currency`;
 
 const professionalIncludesInfo =
 `Includes features of Premium and Basic Plans`;
@@ -30,9 +37,16 @@ const professionalPlanInfo =
 Unlimited upload file size
 Unlimited Message Archive
 Premium support
-
-The subscription will automatically renew at the end of selected billing period
 `;
+
+const professionalPaymentInfo =
+`You will be charged:
+
+$12.99 USD each month if you choose to be billed monthly
+
+$118.99 USD each year, if you choose to be billed yearly
+
+Prices may vary according to local currency`;
 
 const { premiumYearlyID, premiumMonthlyID, professionalYearlyID, professionalMonthlyID }
     = payments;
@@ -102,6 +116,7 @@ class PremiumPlan extends PaidPlan {
     includes = premiumIncludesInfo;
     info = premiumPlanInfo;
     selected = premiumYearlyID;
+    paymentInfo = premiumPaymentInfo;
 }
 
 class ProfessionalPlan extends PaidPlan {
@@ -121,6 +136,7 @@ class ProfessionalPlan extends PaidPlan {
     }];
     includes = professionalIncludesInfo;
     info = professionalPlanInfo;
+    paymentInfo = professionalPaymentInfo;
 }
 
 export default [new BasicPlan(), new PremiumPlan(), new ProfessionalPlan()];

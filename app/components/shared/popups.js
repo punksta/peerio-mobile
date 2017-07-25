@@ -169,6 +169,19 @@ function popupDeleteAccount() {
     }));
 }
 
+function popupControl(contents) {
+    console.log(`popups.js: popup control`);
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            fullScreen: 1,
+            contents,
+            buttons: [{
+                id: 'ok', text: tu('button_ok'), action: resolve
+            }]
+        });
+    });
+}
+
 locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
@@ -183,5 +196,6 @@ module.exports = {
     popupInputCancel,
     popupUpgrade,
     popupSystemWarning,
-    popupDeleteAccount
+    popupDeleteAccount,
+    popupControl
 };

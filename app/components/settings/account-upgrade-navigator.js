@@ -6,7 +6,7 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import plans from '../payments/payments-config';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 @observer
 export default class AccountUpgradeNavigator extends Component {
@@ -52,7 +52,7 @@ export default class AccountUpgradeNavigator extends Component {
     render() {
         const navigator = {
             position: 'absolute',
-            bottom: 120,
+            bottom: 140,
             width,
             paddingHorizontal: 24
         };
@@ -72,6 +72,8 @@ export default class AccountUpgradeNavigator extends Component {
         const t1 = [t];
         const t2 = [t, { width: 120 }];
         const t3 = [t];
+
+        if (height < 500) return null;
 
         return (
             <View style={navigator} key="navigator">
