@@ -130,7 +130,7 @@ export default class AccountUpgradePlan extends Component {
         return payments.inProgress ? <ActivityIndicator color="white" style={{ marginBottom: 30 }} /> : this.priceOptions;
     }
 
-    get subscriptionInfo() {
+    subscriptionInfo(text) {
         const textStyle = [featureListTextMedium, {
             textAlign: 'center',
             marginTop: 18
@@ -139,7 +139,7 @@ export default class AccountUpgradePlan extends Component {
             popupControl(
                 <ScrollView>
                     <Text style={featureSmallText}>
-                        {this.props.plan.paymentInfo}
+                        {text}
                     </Text>
                     <Text style={featureSmallText}>
                         {
@@ -197,7 +197,7 @@ Account will be charged for renewal within 24-hours prior to the end of the curr
                 </ScrollView>
                 <View style={block1}>
                     {this.footer}
-                    {paymentInfo && this.subscriptionInfo}
+                    {paymentInfo && this.subscriptionInfo(paymentInfo)}
                 </View>
             </View>
         );
