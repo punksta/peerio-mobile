@@ -5,6 +5,7 @@ import { observer } from 'mobx-react/native';
 import AccountUpgradeToggle from './account-upgrade-toggle';
 import payments from '../payments/payments';
 import { vars } from '../../styles/styles';
+import { popupControl } from '../shared/popups';
 
 const topTitleText = {
     fontSize: 37,
@@ -129,11 +130,60 @@ export default class AccountUpgradePlan extends Component {
         return payments.inProgress ? <ActivityIndicator color="white" style={{ marginBottom: 30 }} /> : this.priceOptions;
     }
 
+    subscriptionInfo(text) {
+        console.log('subscription info');
+        console.log(text);
+        const textStyle = [featureListTextMedium, {
+            textAlign: 'center',
+            marginTop: 18
+        }];
+        const popupTextStyle = [featureSmallText, { color: vars.txtDark }];
+        const popup = () => {
+            popupControl(
+                <ScrollView style={{ flex: 1, flexGrow: 1 }}>
+                    <Text style={popupTextStyle}>
+                        {text}
+                    </Text>
+                    <Text style={popupTextStyle}>
+                        {
+`
+Subscription automatically renews unless auto-renew is turned off at least 24-hours before the end of the current period
+
+Account will be charged for renewal within 24-hours prior to the end of the current period
+`
+                        }
+                    </Text>
+                    <TouchableOpacity
+                        onPress={() => Linking.openURL('https://peerio.com/conditions.html')}
+                        pressRetentionOffset={vars.pressRetentionOffset}>
+                        <Text style={popupTextStyle}>
+                            <Text style={{ textDecorationLine: 'underline' }}>Terms of Use</Text>
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => Linking.openURL('https://peerio.com/privacy.html')}
+                        pressRetentionOffset={vars.pressRetentionOffset}>
+                        <Text style={popupTextStyle}>
+                            <Text style={{ textDecorationLine: 'underline' }}>Privacy Policy</Text>
+                        </Text>
+                    </TouchableOpacity>
+                </ScrollView>
+            );
+        };
+        return (
+            <TouchableOpacity onPress={popup} pressRetentionOffset={vars.pressRetentionOffset}>
+                <Text style={textStyle}>
+                    {'Subscription details >'}
+                </Text>
+            </TouchableOpacity>
+        );
+    }
+
     render() {
-        const { title, includes, info, storage } = this.props.plan;
+        const { title, includes, info, storage, paymentInfo } = this.props.plan;
         return (
             <View style={{ flexDirection: 'column', flexGrow: 1, flex: 1, justifyContent: 'space-between' }}>
-                <ScrollView style={{ marginBottom: 120 }}>
+                <ScrollView>
                     <View style={block1}>
                         <Text style={topTitleText}>
                             Peerio <Text style={boldText}>{title}</Text>
@@ -146,26 +196,11 @@ export default class AccountUpgradePlan extends Component {
                     <View style={block1}>
                         {includes && this.featureText(includes)}
                         {info.split('\n').map(this.featureText)}
-                        <TouchableOpacity
-                            onPress={() => Linking.openURL('https://peerio.com/conditions.html')}
-                            pressRetentionOffset={vars.pressRetentionOffset}>
-                            <Text style={featureSmallText}>
-                                <Text>{'Terms of Use: '}</Text>
-                                <Text style={{ textDecorationLine: 'underline' }}>https://peerio.com/conditions.html</Text>
-                            </Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={() => Linking.openURL('https://peerio.com/privacy.html')}
-                            pressRetentionOffset={vars.pressRetentionOffset}>
-                            <Text style={featureSmallText}>
-                                <Text>{'Privacy Policy: '}</Text>
-                                <Text style={{ textDecorationLine: 'underline' }}>https://peerio.com/privacy.html</Text>
-                            </Text>
-                        </TouchableOpacity>
                     </View>
                 </ScrollView>
                 <View style={block1}>
                     {this.footer}
+                    {paymentInfo && this.subscriptionInfo(paymentInfo)}
                 </View>
             </View>
         );

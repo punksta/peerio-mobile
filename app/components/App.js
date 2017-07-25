@@ -134,7 +134,7 @@ export default class App extends SafeComponent {
     renderThrow() {
         if (MockComponent) return <MockComponent />;
         if (!uiState.locale) return this._placeHolder();
-        const tabletHack = { top: 100, height: height - 100, left: 0, right: 0 };
+        const tabletHack = { top: 0, height, left: 0, right: 0 };
         console.log(`App.js: screen specs: ${width}, ${height}, ${PixelRatio.get()}`);
         return gradient({
             testID: 'appOuterViewBackground',
