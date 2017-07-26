@@ -20,6 +20,7 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import contactState from './contact-state';
 import snackbarState from '../snackbars/snackbar-state';
+import buttons from '../helpers/buttons';
 
 @observer
 export default class ContactSelector extends SafeComponent {
@@ -292,24 +293,73 @@ export default class ContactSelector extends SafeComponent {
         );
     }
 
+    get limitReached() {
+        return this.props.limit && (contactState.recipients.length >= this.props.limit);
+    }
+
+    get limitInfo() {
+        const current = contactState.recipients.length;
+        const max = this.props.limit;
+        if (!max || !current) return null;
+        const s = {
+            backgroundColor: vars.lightGrayBg,
+            flexDirection: 'row',
+            justifyContent: 'flex-end'
+        };
+        const textStyle = {
+            color: this.limitReached ? vars.txtAlert : vars.txtDate,
+            margin: 4,
+            marginRight: 16,
+            fontSize: 12
+        };
+        return (
+            <View style={s}>
+                <Text style={textStyle}>{current}/{max} people in this chat</Text>
+            </View>
+        );
+    }
+
     header() {
         const tbSearch = this.textbox();
         const userRow = this.userboxline();
         const exitRow = this.exitRow();
         const recipients = contactState.recipients;
         return (
-            <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
-                {this.lineBlock(exitRow)}
+            <View style={{ paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight * 2 }}>
+                {this.props.hideHeader ? null : this.lineBlock(exitRow)}
                 {/* TODO combine recipients and search */}
                 {recipients.length ? this.lineBlock(userRow) : null}
-                {this.lineBlock(tbSearch)}
+                {this.limitInfo}
+                {!this.limitReached && this.lineBlock(tbSearch)}
+            </View>
+        );
+    }
+
+    get upgradeOffer() {
+        const offerStyle = {
+            backgroundColor: '#d9f1ef',
+            padding: 12
+        };
+        return (
+            <View style={{ flex: 1, flexGrow: 1, backgroundColor: vars.lightGrayBg }}>
+                <View style={offerStyle}>
+                    <Text>
+                        {`👋 Hi there, want to add more people to this chat?`}
+                        {`Check out our `}<Text style={{ fontWeight: 'bold' }}>upgrade plans</Text>
+                        {` or `}<Text style={{ fontWeight: 'bold' }}>delete an existing channel</Text>
+                        {` to create a new one `}
+                    </Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                        {buttons.uppercaseBlueButton('Upgrade')}
+                    </View>
+                </View>
             </View>
         );
     }
 
     renderThrow() {
         const header = this.header();
-        const body = this.body();
+        const body = this.limitReached ? this.upgradeOffer : this.body();
         const layoutStyle = {
             backgroundColor: 'white'
         };
@@ -330,6 +380,9 @@ export default class ContactSelector extends SafeComponent {
 }
 
 ContactSelector.propTypes = {
+    topRow: PropTypes.any,
+    hideHeader: PropTypes.any,
     title: PropTypes.any,
+    limit: PropTypes.any,
     action: PropTypes.string
 };

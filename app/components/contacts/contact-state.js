@@ -11,7 +11,7 @@ import contactAddState from './contact-add-state';
 
 class ContactState extends RoutedState {
     _prefix = 'contacts';
-    store = contactStore;
+    @observable store = contactStore;
     _permissionHandler = null;
 
     @action async init() {
@@ -55,7 +55,7 @@ class ContactState extends RoutedState {
     }
 
     get filtered() {
-        const result = contactStore.filter(this.findUserText).filter(c => c.username !== User.current.username);
+        const result = this.store.filter(this.findUserText).filter(c => c.username !== User.current.username);
         return result.length ? result : this.found.filter(c => !c.loading && !c.notFound);
     }
 

@@ -1,4 +1,4 @@
-import MockUpgrade from './mock-upgrade';
+import MockChannelCreate from './mock-channel-create';
 
-export default null;
-// export default __DEV__ ? MockUpgrade : null;
+// export default null;
+export default __DEV__ ? MockChannelCreate : null;

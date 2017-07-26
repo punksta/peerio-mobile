@@ -132,8 +132,8 @@ export default class App extends SafeComponent {
     }
 
     renderThrow() {
-        if (MockComponent) return <MockComponent />;
         if (!uiState.locale) return this._placeHolder();
+        if (MockComponent) return <MockComponent />;
         const tabletHack = { top: 0, height, left: 0, right: 0 };
         console.log(`App.js: screen specs: ${width}, ${height}, ${PixelRatio.get()}`);
         return gradient({
