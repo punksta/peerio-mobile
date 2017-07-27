@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import ContactSelector from '../contacts/contact-selector';
-import { t } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import { vars } from '../../styles/styles';
 

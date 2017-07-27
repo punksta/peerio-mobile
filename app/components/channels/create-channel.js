@@ -123,7 +123,6 @@ export default class CreateChannel extends Component {
     }
 
     get createChatRow() {
-        const h = 60;
         const hideStyle = {
             height: this.step > 0 ? 0 : 60,
             overflow: 'hidden'
@@ -175,7 +174,6 @@ export default class CreateChannel extends Component {
     }
 
     render() {
-        const s = { flex: 1, flexGrow: 1, backgroundColor: vars.lightGrayBg };
         return (
             <View style={fillView}>
                 {this.exitRow}
