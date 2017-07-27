@@ -21,13 +21,15 @@ Premium support
 `;
 
 const premiumPaymentInfo =
-`You will be charged:
+`
+Monthly plans will be charged $3.99 USD each month.
 
-$3.99 USD each month if you choose to be billed monthly
+Annual plans will be charged $34.99 USD each year.
 
-$34.99 USD each year, if you choose to be billed yearly
+These prices may vary according to your location and local currency.
 
-Prices may vary according to local currency`;
+Your subscription will renew automatically at the end of each billing period unless you disable auto-renew at least 24-hours before the end of your current billing period. If your subscription is renewed, your account will be charged for renewal within 24-hours prior to the end of the current period.
+`;
 
 const professionalIncludesInfo =
 `Includes features of Premium and Basic Plans`;
@@ -40,13 +42,15 @@ Premium support
 `;
 
 const professionalPaymentInfo =
-`You will be charged:
+`
+Monthly plans will be charged $12.99 USD each month.
 
-$12.99 USD each month if you choose to be billed monthly
+Annual plans will be charged $118.99 USD each year.
 
-$118.99 USD each year, if you choose to be billed yearly
+These prices may vary according to your location and local currency.
 
-Prices may vary according to local currency`;
+Your subscription will renew automatically at the end of each billing period unless you disable auto-renew at least 24-hours before the end of your current billing period. If your subscription is renewed, your account will be charged for renewal within 24-hours prior to the end of the current period.
+`;
 
 const { premiumYearlyID, premiumMonthlyID, professionalYearlyID, professionalMonthlyID }
     = payments;
