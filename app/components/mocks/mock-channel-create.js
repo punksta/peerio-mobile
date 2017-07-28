@@ -6,41 +6,7 @@ import ComposeMessage from '../messaging/compose-message';
 import CreateChannel from '../channels/create-channel';
 import contactState from '../contacts/contact-state';
 import { User } from '../../lib/icebear';
-
-function createMockContact(username) {
-    return {
-        username,
-        firstName: 'First',
-        lastName: 'Last',
-        fullName: 'First Last'
-    };
-}
-
-const sampleSet = [
-    createMockContact('seavan'),
-    createMockContact('floh'),
-    createMockContact('anri'),
-    createMockContact('seavan'),
-    createMockContact('oscar'),
-    createMockContact('delhi'),
-    createMockContact('paul'),
-    createMockContact('saumya'),
-    createMockContact('arthur'),
-    createMockContact('armen'),
-    createMockContact('ruben'),
-    createMockContact('zaragoz'),
-    createMockContact('eren'),
-    createMockContact('skylar')
-];
-
-class MockContactStore {
-    addedContacts = [];
-    invitedContacts = [];
-    contacts = sampleSet;
-    filter() {
-        return sampleSet;
-    }
-}
+import mockContactStore from './mock-contact-store';
 
 @observer
 export default class MockChannelCreate extends Component {
@@ -49,7 +15,7 @@ export default class MockChannelCreate extends Component {
     componentDidMount() {
         reaction(() => this.isChatMode, () => LayoutAnimation.easeInEaseOut());
         User.current = {};
-        contactState.store = new MockContactStore();
+        contactState.store = mockContactStore;
     }
 
     createChannel = () => { this.isChatMode = false; }
