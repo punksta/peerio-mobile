@@ -196,6 +196,7 @@ export default class ContactSelector extends SafeComponent {
         const { username, fullName } = contact;
         return (
             <Avatar
+                starred={contact.isAdded}
                 contact={contact}
                 checkbox
                 checkedKey={username}
