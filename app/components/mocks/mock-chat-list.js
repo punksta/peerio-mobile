@@ -17,11 +17,22 @@ class MockChatStore {
         for (let i = 0; i < 15; ++i) {
             this.chats.push(this.createMock());
         }
+        for (let i = 0; i < 2; ++i) {
+            this.chats.push(this.createMockChannel());
+        }
     }
 
     createMock() {
         return observable({
-            title: randomWords(3, ' '),
+            title: randomWords({ min: 3, max: 5, join: ' ' }),
+            participants: [mockContactStore.createMock()]
+        });
+    }
+
+    createMockChannel() {
+        return observable({
+            isChannel: true,
+            title: randomWords({ min: 1, max: 4, join: '-' }),
             participants: [mockContactStore.createMock()]
         });
     }

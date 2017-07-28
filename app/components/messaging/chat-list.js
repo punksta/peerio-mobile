@@ -5,8 +5,10 @@ import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import MessagingPlaceholder from './messaging-placeholder';
 import ChatListItem from './chat-list-item';
+import ChannelListItem from './channel-list-item';
 import ProgressOverlay from '../shared/progress-overlay';
 import chatState from './chat-state';
+import ChatSectionHeader from './chat-section-header';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -16,7 +18,8 @@ export default class Files extends SafeComponent {
     constructor(props) {
         super(props);
         this.dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
+            rowHasChanged: (r1, r2) => r1 !== r2,
+            sectionHeaderHasChanged: (r1, r2) => r1 !== r2
         });
     }
 
@@ -45,13 +48,24 @@ export default class Files extends SafeComponent {
             this.maxLoadedIndex
         ], () => {
             console.log(`chat-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
-            this.dataSource = this.dataSource.cloneWithRows(this.data.slice(0, this.maxLoadedIndex));
+            this.dataSource = this.dataSource.cloneWithRowsAndSections({
+                title_channels: this.data.filter(d => !!d.isChannel),
+                title_directMessages: this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex)
+            });
             this.forceUpdate();
         }, true);
     }
 
+    sectionHeader = (data, key) => {
+        const titles = {
+            title_channels: 'Channels',
+            title_directMessages: 'Direct messages'
+        };
+        return <ChatSectionHeader title={titles[key]} />;
+    }
+
     item(chat) {
-        return (
+        return chat.isChannel ? <ChannelListItem chat={chat} /> : (
             <ChatListItem key={chat.id} chat={chat} />
         );
     }
@@ -70,6 +84,7 @@ export default class Files extends SafeComponent {
                 pageSize={PAGE_SIZE}
                 dataSource={this.dataSource}
                 renderRow={this.item}
+                renderSectionHeader={this.sectionHeader}
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={20}
                 onContentSizeChange={this.scroll}
@@ -85,8 +100,8 @@ export default class Files extends SafeComponent {
 
         return (
             <View
-                style={{ flexGrow: 1 }}>
-                <View style={{ flexGrow: 1 }}>
+                style={{ flexGrow: 1, flex: 1 }}>
+                <View style={{ flexGrow: 1, flex: 1 }}>
                     {body}
                 </View>
                 <ProgressOverlay enabled={chatState.store.loading} />
