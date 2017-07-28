@@ -26,7 +26,7 @@ export default class ChannelListItem extends SafeComponent {
 
         return (
             <View style={{ backgroundColor: vars.bg }}>
-                <TouchableOpacity style={containerStyle}>
+                <TouchableOpacity style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text style={textStyle}>
                         {`# ${title}`}
                     </Text>

@@ -9,6 +9,7 @@ import ChannelListItem from './channel-list-item';
 import ProgressOverlay from '../shared/progress-overlay';
 import chatState from './chat-state';
 import ChatSectionHeader from './chat-section-header';
+import ChatChannelInviteSection from './chat-channel-invites-section';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -50,6 +51,7 @@ export default class Files extends SafeComponent {
             console.log(`chat-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
                 title_channels: this.data.filter(d => !!d.isChannel),
+                title_channelInvites: 2,
                 title_directMessages: this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex)
             });
             this.forceUpdate();
@@ -61,7 +63,8 @@ export default class Files extends SafeComponent {
             title_channels: 'Channels',
             title_directMessages: 'Direct messages'
         };
-        return <ChatSectionHeader title={titles[key]} />;
+        return key === 'title_channelInvites' ?
+            <ChatChannelInviteSection data={data} /> : <ChatSectionHeader title={titles[key]} />;
     }
 
     item(chat) {

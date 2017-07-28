@@ -5,7 +5,7 @@ import contactState from '../contacts/contact-state';
 import sounds from '../../lib/sounds';
 
 class ChatState extends RoutedState {
-    store = chatStore;
+    @observable store = chatStore;
     _loading = true;
 
     constructor() {

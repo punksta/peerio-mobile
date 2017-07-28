@@ -30,6 +30,32 @@ export default {
         );
     },
 
+    uppercaseBlueButtonNoPadding(text, onPress, disabled) {
+        return (
+            <TouchableOpacity
+                onPress={disabled ? null : onPress}
+                pressRetentionOffset={vars.pressRetentionOffset}
+                style={{ paddingRight: 12 }}>
+                <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
+                    {tu(text)}
+                </Text>
+            </TouchableOpacity>
+        );
+    },
+
+    uppercaseGrayButtonNoPadding(text, onPress, disabled) {
+        return (
+            <TouchableOpacity
+                onPress={disabled ? null : onPress}
+                pressRetentionOffset={vars.pressRetentionOffset}
+                style={{ paddingRight: 12 }}>
+                <Text style={{ fontWeight: 'bold', color: disabled ? vars.lightGrayBg : vars.txtDate }}>
+                    {tu(text)}
+                </Text>
+            </TouchableOpacity>
+        );
+    },
+
     uppercaseRedButton(text, onPress, disabled) {
         return (
             <TouchableOpacity

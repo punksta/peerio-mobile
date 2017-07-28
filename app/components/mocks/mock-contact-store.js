@@ -1,13 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, StatusBar, LayoutAnimation } from 'react-native';
-import { observable, reaction } from 'mobx';
-import { observer } from 'mobx-react/native';
 import randomWords from 'random-words';
 import capitalize from 'capitalize';
-import ComposeMessage from '../messaging/compose-message';
-import CreateChannel from '../channels/create-channel';
-import contactState from '../contacts/contact-state';
-import { User } from '../../lib/icebear';
 
 function createMockContact(username) {
     return {
