@@ -217,7 +217,6 @@ export default class ContactSelector extends SafeComponent {
     }
 
     searchUser(username, addImmediately) {
-        console.log(`compose-message.js: searching for ${username}`);
         this.inProgress = false;
         const u = username.trim();
         if (!u) return;
@@ -243,7 +242,6 @@ export default class ContactSelector extends SafeComponent {
         }
         this.inProgress = true;
         when(() => !c.loading, () => {
-            console.log(`compose-message.js: search done for ${username}, not found: ${c.notFound}`);
             this.inProgress = false;
             if (!c.notFound) {
                 console.log(`compose-message.js: adding contact`);

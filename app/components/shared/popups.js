@@ -161,7 +161,7 @@ function popupTOS() {
 }
 
 function popupDeleteAccount() {
-    // let checked = false;
+    let checked = false;
     return popupState.showPopupPromise(resolve => ({
         title: textControl(tx('title_accountDelete')),
         contents: (

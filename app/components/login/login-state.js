@@ -79,7 +79,7 @@ class LoginState extends RoutedState {
     }
 
     @action _login(user) {
-        console.log(`login-state.js: logging in ${user.username}`);
+        console.log(`login-state.js: logging in`);
         User.current = user;
         return user.login()
             .then(() => console.log('login-state.js: logged in'))
@@ -129,7 +129,6 @@ class LoginState extends RoutedState {
         user.username = this.username;
         user.passphrase = (pin || this.passphrase).trim();
         this.isInProgress = true;
-        console.log(this.username);
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
         }).then(() => mainState.saveUser());
