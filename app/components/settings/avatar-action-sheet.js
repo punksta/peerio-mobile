@@ -50,7 +50,6 @@ export default class AvatarActionSheet extends SafeComponent {
     }
 
     async generateResize(path) {
-        console.log(path);
         try {
             // await FileOpener.open(path, 'image/jpeg');
             console.log(`profile-edit: resizing to ${SIZE1}`);
