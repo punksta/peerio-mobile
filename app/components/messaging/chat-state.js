@@ -6,16 +6,20 @@ import sounds from '../../lib/sounds';
 
 class ChatState extends RoutedState {
     @observable store = chatStore;
+
+    // to be able to easily refactor, keep the name "chatStore"
+    get chatStore() { return this.store; }
+
     _loading = true;
 
     constructor() {
         super();
-        chatStore.events.on(chatStore.EVENT_TYPES.messagesReceived, () => {
+        this.chatStore.events.on(this.chatStore.EVENT_TYPES.messagesReceived, () => {
             console.log('chat-state.js: messages received');
             sounds.received();
         });
 
-        reaction(() => chatStore.activeChat, chat => {
+        reaction(() => this.chatStore.activeChat, chat => {
             if (chat) {
                 console.log(`chat-store switched to ${chat.id}`);
                 console.log(`chat-store: loading ${chat.id}`);
@@ -25,12 +29,12 @@ class ChatState extends RoutedState {
     }
 
     @action async init() {
-        this.store.loadAllChats();
-        return new Promise(resolve => when(() => !this.store.loading, resolve));
+        this.chatStore.loadAllChats();
+        return new Promise(resolve => when(() => !this.chatStore.loading, resolve));
     }
 
     get currentChat() {
-        return chatStore.activeChat;
+        return this.chatStore.activeChat;
     }
 
     @observable _loading = true;
@@ -38,7 +42,7 @@ class ChatState extends RoutedState {
     get loading() {
         const c = this.currentChat;
         return this._loading ||
-            chatStore.loading || c && (c.loadingMeta || c.loadingInitialPage);
+            this.chatStore.loading || c && (c.loadingMeta || c.loadingInitialPage);
     }
 
     set loading(v) {
@@ -53,7 +57,7 @@ class ChatState extends RoutedState {
     activate(chat) {
         if (chat.id) {
             console.log(`chat-state.js: activating chat ${chat.id}`);
-            chatStore.activate(chat.id);
+            this.chatStore.activate(chat.id);
         }
     }
 
@@ -62,8 +66,8 @@ class ChatState extends RoutedState {
         clientApp.isInChatsView = active && !!c;
         this.loading = c && c.loadingMeta;
         if (active) {
-            when(() => !chatStore.loading, () => {
-                if (!chatStore.chats.length) this.loading = false;
+            when(() => !this.chatStore.loading, () => {
+                if (!this.chatStore.chats.length) this.loading = false;
                 c && this.activate(c);
                 console.log(`chat-state.js: active: ${c && c.active}, isFocused: ${clientApp.isFocused}, isInChatsView: ${clientApp.isInChatsView}`);
             });
@@ -72,7 +76,7 @@ class ChatState extends RoutedState {
 
     get unreadMessages() {
         let r = 0;
-        chatStore.chats.forEach(c => (r += c.unreadCount));
+        this.chatStore.chats.forEach(c => (r += c.unreadCount));
         return r;
     }
 
