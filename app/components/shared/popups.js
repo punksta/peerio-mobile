@@ -91,6 +91,19 @@ function popupYesSkip(title, subTitle, text) {
     });
 }
 
+function popupSignOutAutologin(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title: t('button_logout'),
+            contents: textControl(t('title_confirmSignout')),
+            buttons: [
+                { id: 'no', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
+                { id: 'yes', text: tu('button_logout'), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
 function popupCopyCancel(title, subTitle, text) {
     return popupState.showPopupPromise(resolve => ({
         title,
@@ -197,5 +210,6 @@ module.exports = {
     popupUpgrade,
     popupSystemWarning,
     popupDeleteAccount,
-    popupControl
+    popupControl,
+    popupSignOutAutologin
 };

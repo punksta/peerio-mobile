@@ -4,6 +4,7 @@ import mainState from '../main/main-state';
 import { User, validation, fileStore, socket, TinyDb, warnings } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
+import { popupSignOutAutologin } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
@@ -78,7 +79,7 @@ class LoginState extends RoutedState {
     }
 
     @action _login(user) {
-        console.log(`login-state.js: logging in ${user.username}`);
+        console.log(`login-state.js: logging in`);
         User.current = user;
         return user.login()
             .then(() => console.log('login-state.js: logged in'))
@@ -128,7 +129,6 @@ class LoginState extends RoutedState {
         user.username = this.username;
         user.passphrase = (pin || this.passphrase).trim();
         this.isInProgress = true;
-        console.log(this.username);
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
         }).then(() => mainState.saveUser());
@@ -147,6 +147,7 @@ class LoginState extends RoutedState {
     async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         await inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
+        if (User.current.autologinEnabled && !await popupSignOutAutologin()) return;
         await User.removeLastAuthenticated();
         const username = User.current.username;
         await TinyDb.system.removeValue(`${username}::${loginConfiguredKey}`);

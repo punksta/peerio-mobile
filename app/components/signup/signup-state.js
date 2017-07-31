@@ -73,7 +73,6 @@ class SignupState extends RoutedState {
         User.current = user;
         const { username, email, firstName, lastName, passphrase } = this;
         const localeCode = uiState.locale;
-        console.log(`signup-state.js: ${username}`);
         user.username = username;
         user.email = email;
         user.passphrase = __DEV__ && process.env.PEERIO_QUICK_SIGNUP ? 'icebear' : passphrase;
