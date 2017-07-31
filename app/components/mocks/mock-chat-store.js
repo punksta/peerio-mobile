@@ -11,9 +11,12 @@ class MockChannel {
     @observable participants = [];
     @observable isFavorite = false;
     @observable isMuted = false;
+    @observable adminMap = observable.map();
 
     constructor() {
         for (let i = 0; i < 8; ++i) this.participants.push(mockContactStore.createMock());
+        this.addAdmin(this.participants[0]);
+        this.addAdmin(this.participants[1]);
     }
 
     toggleFavoriteState() {
@@ -27,6 +30,26 @@ class MockChannel {
     removeChannelMember(contact) {
         const i = this.participants.indexOf(contact);
         if (i !== -1) this.participants.splice(i, 1);
+    }
+
+    isAdmin(contact) {
+        return this.adminMap.has(contact.username);
+    }
+
+    addAdmin(contact) {
+        this.adminMap.set(contact.username, contact);
+    }
+
+    removeAdmin(contact) {
+        this.adminMap.delete(contact.username);
+    }
+
+    sendInvites(contacts) {
+        contacts.forEach(i => {
+            if (this.participants.filter(p => p.username === i.username).length === 0) {
+                this.participants.push(i);
+            }
+        });
     }
 }
 

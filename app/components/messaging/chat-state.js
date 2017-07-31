@@ -2,6 +2,7 @@ import { observable, action, when, reaction } from 'mobx';
 import { chatStore, clientApp } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
 import contactState from '../contacts/contact-state';
+import fileState from '../files/file-state';
 import sounds from '../../lib/sounds';
 
 class ChatState extends RoutedState {
@@ -87,6 +88,23 @@ class ChatState extends RoutedState {
 
     get canSendAck() {
         return this.canSend && this.currentChat.canSendAck;
+    }
+
+    @action startChat(recipients) {
+        const chat = this.store.startChat(recipients);
+        this.loading = true;
+        when(() => !chat.loadingMeta, () => {
+            this.loading = false;
+            this.routerMain.chats(chat, true);
+        });
+    }
+
+
+    @action async startChatAndShareFiles(recipients) {
+        const file = fileState.currentFile;
+        if (!file) return;
+        await this.store.startChatAndShareFiles(recipients, file);
+        this.routerMain.chats(this.store.activeChat, true);
     }
 
     @action addMessage(msg, files) {

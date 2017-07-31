@@ -5,7 +5,7 @@ import { reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import popupState from './popup-state';
 import ButtonText from '../controls/button-text';
-// import { vars } from '../../styles/styles';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class PopupLayout extends SafeComponent {
@@ -50,6 +50,9 @@ export default class PopupLayout extends SafeComponent {
 
         const container = {
             flexGrow: popup.fullScreen,
+            borderRadius: 8,
+            borderTopColor: vars.yellowLine,
+            borderTopWidth: 6,
             shadowColor: '#000000',
             shadowOpacity: 0.2,
             shadowRadius: 8,
@@ -64,7 +67,8 @@ export default class PopupLayout extends SafeComponent {
 
         const title = {
             fontWeight: 'bold',
-            fontSize: 16
+            fontSize: 16,
+            marginBottom: 8
         };
 
         const buttonBar = {
@@ -79,7 +83,7 @@ export default class PopupLayout extends SafeComponent {
             <View style={popupNonAnimatedStyle}>
                 <View style={container}>
                     <View style={{ padding: 20, flexGrow: 1, flexShrink: 1 }}>
-                        <Text style={title} ellipsizeMode="tail" numberOfLines={1}>{popup.title}</Text>
+                        {popup.title && <Text style={title} ellipsizeMode="tail" numberOfLines={1}>{popup.title}</Text>}
                         {popup.subTitle}
                         {popup.contents}
                     </View>

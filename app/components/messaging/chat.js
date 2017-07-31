@@ -111,11 +111,11 @@ export default class Chat extends SafeComponent {
                 // console.log('chat.js: auto scroll');
                 if (!this.refreshing && !this.disableNextScroll) {
                     console.log('chat.js: auto scrolling');
-                    this.scrollView.scrollTo({ y, animated });
+                    this.scrollView.scrollTo({ y, animated: !this.waitForScrollToEnd });
                 }
 
                 if (this.waitForScrollToEnd) {
-                    setTimeout(() => (this.waitForScrollToEnd = false), 200);
+                    this.waitForScrollToEnd = false;
                 }
                 this.animateNextScroll = false;
                 this.disableNextScroll = false;
@@ -172,6 +172,7 @@ export default class Chat extends SafeComponent {
             <ScrollView
                 onLayout={this.layoutScrollView}
                 style={{ flexGrow: 1, opacity: this.waitForScrollToEnd ? 0 : 1 }}
+                contentContainerStyle={{ transform: [{ scaleY: -1 }] }}
                 initialListSize={1}
                 onContentSizeChange={this.contentSizeChanged}
                 scrollEnabled={this.scrollEnabled}

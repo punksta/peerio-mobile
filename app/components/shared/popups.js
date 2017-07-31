@@ -11,10 +11,16 @@ import CheckBox from './checkbox';
 function textControl(str) {
     const text = {
         color: '#000000AA',
-        marginVertical: 10
+        marginVertical: 10,
+        lineHeight: 22
     };
 
-    return <Text style={text}>{str}</Text>;
+    let formatted = str;
+    if (typeof str === 'string') {
+        formatted = str.replace('\n', '\n\n');
+    }
+
+    return <Text style={text}>{formatted}</Text>;
 }
 
 function checkBoxControl(str, checked, press) {
@@ -116,6 +122,18 @@ function popupCopyCancel(title, subTitle, text) {
     }));
 }
 
+function popupCancelConfirm(title, subTitle, text) {
+    return popupState.showPopupPromise(resolve => ({
+        title,
+        subTitle: textControl(subTitle),
+        contents: textControl(text),
+        buttons: [
+            { id: 'cancel', text: tu('button_cancel'), secondary: true, action: () => resolve(false) },
+            { id: 'confirm', text: tu('button_confirm'), action: () => resolve(true) }
+        ]
+    }));
+}
+
 function popupInput(title, value) {
     return new Promise((resolve) => {
         const o = observable({ value });
@@ -211,5 +229,6 @@ module.exports = {
     popupSystemWarning,
     popupDeleteAccount,
     popupControl,
-    popupSignOutAutologin
+    popupSignOutAutologin,
+    popupCancelConfirm
 };

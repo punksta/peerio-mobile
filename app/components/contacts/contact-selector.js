@@ -21,13 +21,17 @@ import { vars } from '../../styles/styles';
 import contactState from './contact-state';
 import snackbarState from '../snackbars/snackbar-state';
 import buttons from '../helpers/buttons';
+import ContactCollection from './contact-collection';
 
 @observer
 export default class ContactSelector extends SafeComponent {
+    @observable recipients = new ContactCollection();
     @observable inProgress = false;
     @observable clean = true;
     @observable toInvite = null;
     @observable legacyContact = null;
+    @observable found = [];
+    @observable findUserText;
 
     get inviteContactDuck() {
         if (!this.toInvite) return null;
@@ -55,7 +59,7 @@ export default class ContactSelector extends SafeComponent {
         };
 
         return (
-            <TouchableOpacity key={i} onPress={() => contactState.remove(contact)} >
+            <TouchableOpacity key={i} onPress={() => this.recipients.remove(contact)} >
                 <View style={style}>
                     <Text style={textStyle}>{contact.username}</Text>
                     <Icon
@@ -78,7 +82,7 @@ export default class ContactSelector extends SafeComponent {
             paddingLeft: 8,
             flexWrap: 'wrap'
         };
-        const boxes = contactState.recipients.map((c, i) => this.userbox(c, i));
+        const boxes = this.recipients.items.map((c, i) => this.userbox(c, i));
 
         return (
             <View style={container}>
@@ -92,11 +96,11 @@ export default class ContactSelector extends SafeComponent {
         this.legacyContact = null;
         const items = text.split(/[ ,;]/);
         if (items.length > 1) {
-            contactState.findUserText = items[0].trim();
+            this.findUserText = items[0].trim();
             this.onSubmit();
             return;
         }
-        contactState.findUserText = text;
+        this.findUserText = text;
         if (text && text.trim().length > 0) {
             this.searchUserTimeout(text);
         }
@@ -104,16 +108,17 @@ export default class ContactSelector extends SafeComponent {
 
     onSubmit() {
         if (this.toInvite) {
-            contactState.findUserText = '';
+            this.findUserText = '';
             return;
         }
 
-        if (!contactState.findUserText && contactState.recipients.length) {
+        if (!this.findUserText && this.recipients.items.length) {
             this.action();
             return;
         }
-        this.searchUser(contactState.findUserText, true);
-        contactState.findUserText = '';
+
+        this.searchUser(this.findUserText, true);
+        this.findUserText = '';
     }
 
     textbox() {
@@ -135,7 +140,7 @@ export default class ContactSelector extends SafeComponent {
                 {icons.dark('search')}
                 <TextInput
                     underlineColorAndroid={'transparent'}
-                    value={contactState.findUserText}
+                    value={this.findUserText}
                     returnKeyType="done"
                     blurOnSubmit
                     onBlur={() => this.onSubmit()}
@@ -167,30 +172,21 @@ export default class ContactSelector extends SafeComponent {
         };
         return (
             <View style={container}>
-                {icons.dark('close', () => contactState.exit())}
+                {icons.dark('close', this.props.onExit)}
                 <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
-                {contactState.recipients.length ?
+                {this.recipients.items.length ?
                     icons.text(t('button_go'), () => this.action()) : icons.placeholder()}
             </View>
         );
     }
 
-    send() {
-        contactState.send();
-    }
-
-    async share() {
-        try {
-            this.inProgress = true;
-            await contactState.share();
-        } catch (e) {
-            console.error(e);
-        }
+    async action() {
+        const { action } = this.props;
+        if (!action) return;
+        this.inProgress = true;
+        await action(this.recipients.items);
         this.inProgress = false;
-    }
-
-    action() {
-        this[this.props.action]();
+        this.props.onExit && this.props.onExit();
     }
 
     item(contact, i) {
@@ -201,20 +197,20 @@ export default class ContactSelector extends SafeComponent {
                 contact={contact}
                 checkbox
                 checkedKey={username}
-                checkedState={contactState.recipientsMap}
+                checkedState={this.recipients.itemsMap}
                 key={username || i}
                 title={fullName}
                 title2={username}
                 height={56}
                 hideOnline
-                onPress={() => contactState.toggle(contact)} />
+                onPress={() => this.recipients.toggle(contact)} />
         );
     }
 
     searchUserTimeout(username) {
         if (this._searchTimeout) clearTimeout(this._searchTimeout);
         this.inProgress = true;
-        this._searchTimeout = setTimeout(() => this.searchUser(username), 1000);
+        this._searchTimeout = setTimeout(() => this.searchUser(username), 500);
     }
 
     searchUser(username, addImmediately) {
@@ -223,11 +219,11 @@ export default class ContactSelector extends SafeComponent {
         if (!u) return;
         const c = contactState.store.getContact(u);
         if (addImmediately) {
-            contactState.add(c);
+            this.recipients.add(c);
             when(() => !c.loading, () => {
                 if (c.notFound) {
                     LayoutAnimation.easeInEaseOut();
-                    contactState.remove(c);
+                    this.recipients.remove(c);
                     if (c.isLegacy) {
                         snackbarState.pushTemporary(t('title_inviteLegacy'));
                         if (this._searchTimeout) {
@@ -246,8 +242,7 @@ export default class ContactSelector extends SafeComponent {
             this.inProgress = false;
             if (!c.notFound) {
                 console.log(`compose-message.js: adding contact`);
-                console.log(c);
-                contactState.found = [c];
+                this.found = [c];
             } else {
                 if (c.isLegacy) {
                     this.legacyContact = c;
@@ -256,14 +251,14 @@ export default class ContactSelector extends SafeComponent {
                 if (username.indexOf('@') !== -1) {
                     this.toInvite = username;
                 }
-                contactState.found = [];
+                this.found = [];
             }
         });
     }
 
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
-        const found = contactState.filtered;
+        const found = contactState.getFiltered(this.findUserText);
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
         // const result = findUserText && findUserText.length ? mockItems : chat;
@@ -293,11 +288,11 @@ export default class ContactSelector extends SafeComponent {
     }
 
     get limitReached() {
-        return this.props.limit && (contactState.recipients.length >= this.props.limit);
+        return this.props.limit && (this.recipients.items.length >= this.props.limit);
     }
 
     get limitInfo() {
-        const current = contactState.recipients.length;
+        const current = this.recipients.items.length;
         const max = this.props.limit;
         if (!max || !current) return null;
         const s = {
@@ -322,7 +317,7 @@ export default class ContactSelector extends SafeComponent {
         const tbSearch = this.textbox();
         const userRow = this.userboxline();
         const exitRow = this.exitRow();
-        const recipients = contactState.recipients;
+        const recipients = this.recipients.items;
         return (
             <View style={{ paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight * 2 }}>
                 {this.props.hideHeader ? null : this.lineBlock(exitRow)}
@@ -383,5 +378,6 @@ ContactSelector.propTypes = {
     hideHeader: PropTypes.any,
     title: PropTypes.any,
     limit: PropTypes.any,
-    action: PropTypes.string
+    action: PropTypes.func.isRequired,
+    onExit: PropTypes.func.isRequired
 };

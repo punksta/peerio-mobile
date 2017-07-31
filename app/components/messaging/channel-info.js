@@ -10,6 +10,7 @@ import Avatar from '../shared/avatar';
 import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import { popupCancelConfirm } from '../shared/popups';
 
 const textStyle = {
     color: vars.txtDate,
@@ -19,6 +20,15 @@ const textStyle = {
     fontWeight: 'bold'
 };
 
+const leaveTitle = 'Leave Channel!';
+const leaveMessage =
+`If you wish to leave, you will no longer be able to access the shared files and chat history
+To rejoin this channel, please ask the admin to add you again`;
+
+const deleteTitle = 'Delete Channel!';
+const deleteMessage =
+`If you delete the channel, you will no longer be able to access the shared files and chat history`;
+
 @observer
 export default class ChannelInfo extends SafeComponent {
     @observable channelTopic = '';
@@ -26,6 +36,18 @@ export default class ChannelInfo extends SafeComponent {
     componentDidMount() {
         const chat = chatState.currentChat;
         this.channelTopic = chat.topic;
+    }
+
+    leaveChannel = async () => {
+        if (await popupCancelConfirm(leaveTitle, leaveMessage)) {
+            chatState.routerModal.discard();
+        }
+    }
+
+    deleteChannel = async () => {
+        if (await popupCancelConfirm(deleteTitle, deleteMessage)) {
+            chatState.routerModal.discard();
+        }
     }
 
     lineBlock(content, noBorder) {
@@ -62,6 +84,7 @@ export default class ChannelInfo extends SafeComponent {
             alignItems: 'center',
             flexGrow: 1
         };
+        const isAdmin = chatState.currentChat.isAdmin(contact);
         return (
             <View style={row}>
                 <View style={{ flex: 1, flexGrow: 1, paddingLeft: 4 }}>
@@ -72,19 +95,30 @@ export default class ChannelInfo extends SafeComponent {
                         message={''}
                         hideOnline />
                 </View>
-                <Menu onSelect={action => action()}>
-                    <MenuTrigger
-                        renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
-                        style={{ padding: vars.iconPadding }}>
-                        {icons.plaindark('more-vert')}
-                    </MenuTrigger>
-                    <MenuOptions>
-                        <MenuOption
-                            value={() => chatState.currentChat.removeChannelMember(contact)}>
-                            <Text>Remove</Text>
-                        </MenuOption>
-                    </MenuOptions>
-                </Menu>
+                <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
+                    {isAdmin && <View style={{ backgroundColor: vars.bg, borderRadius: 4, padding: 4, overflow: 'hidden' }}>
+                        <Text style={{ color: vars.white, fontSize: 10 }}>ADMIN</Text>
+                    </View>}
+                    <Menu onSelect={action => action()}>
+                        <MenuTrigger
+                            renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
+                            style={{ padding: vars.iconPadding }}>
+                            {icons.plaindark('more-vert')}
+                        </MenuTrigger>
+                        <MenuOptions>
+                            <MenuOption
+                                value={() => isAdmin ?
+                                    chatState.currentChat.removeAdmin(contact) :
+                                    chatState.currentChat.addAdmin(contact)}>
+                                <Text>{isAdmin ? 'Remove admin' : 'Make admin'}</Text>
+                            </MenuOption>
+                            <MenuOption
+                                value={() => chatState.currentChat.removeChannelMember(contact)}>
+                                <Text>Remove</Text>
+                            </MenuOption>
+                        </MenuOptions>
+                    </Menu>
+                </View>
             </View>
         );
     }
@@ -118,7 +152,10 @@ export default class ChannelInfo extends SafeComponent {
                     {this.lineBlock(this.action('Delete channel', 'delete', this.deleteChannel))}
                     {chat.participants && this.lineBlock(
                         <View style={{ paddingVertical: 8 }}>
-                            <Text style={[textStyle, { marginBottom: 12 }]}>Members</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
+                                <Text style={[textStyle, { marginBottom: 12 }]}>Members</Text>
+                                {icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
+                            </View>
                             {chat.participants.map(this.participant)}
                         </View>
                     )}

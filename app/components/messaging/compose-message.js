@@ -4,6 +4,7 @@ import { View, Text } from 'react-native';
 import ContactSelector from '../contacts/contact-selector';
 import buttons from '../helpers/buttons';
 import { vars } from '../../styles/styles';
+import chatState from './chat-state';
 
 const fillView = { flex: 1, flexGrow: 1 };
 const rowCenter = {
@@ -35,7 +36,10 @@ export default class ComposeMessage extends Component {
     render() {
         return (
             <View style={fillView}>
-                <ContactSelector action="send" title="New direct message" limit={4} />
+                <ContactSelector
+                    onExit={() => chatState.routerModal.discard()}
+                    action={contacts => chatState.startChat(contacts)}
+                    title="New direct message" limit={4} />
                 {this.createChannelRow}
             </View>
         );

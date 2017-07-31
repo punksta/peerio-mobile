@@ -14,7 +14,6 @@ const sampleSet = [
     createMockContact('seavan'),
     createMockContact('floh'),
     createMockContact('anri'),
-    createMockContact('seavan'),
     createMockContact('oscar'),
     createMockContact('delhi'),
     createMockContact('paul'),
@@ -38,8 +37,8 @@ class MockContactStore {
         }
     }
 
-    filter() {
-        return sampleSet;
+    filter(text) {
+        return text ? sampleSet.filter(c => c.username.indexOf(text) !== -1) : sampleSet;
     }
 
     createMock() {
@@ -52,6 +51,10 @@ class MockContactStore {
             lastName,
             fullName: `${firstName} ${lastName}`
         };
+    }
+
+    getContact(username) {
+        return { username, loading: false, notFound: true };
     }
 }
 
