@@ -43,9 +43,9 @@ export default class ChatChannelInvitesSection extends SafeComponent {
 
         return (
             <View style={{ backgroundColor: vars.bg }}>
-                <TouchableOpacity disabled={!!onPress} style={style} pressRetentionOffset={vars.pressRetentionOffset}>
+                <TouchableOpacity disabled={!onPress} style={style} pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text style={textStyle}>{title}</Text>
-                    <View style={circleStyle}><Text style={textCircleStyle}>{data}</Text></View>
+                    {onPress && <View style={circleStyle}><Text style={textCircleStyle}>{data}</Text></View>}
                 </TouchableOpacity>
             </View>
         );

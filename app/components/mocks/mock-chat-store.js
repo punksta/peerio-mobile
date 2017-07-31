@@ -15,7 +15,7 @@ class MockChatStore {
         for (let i = 0; i < 2; ++i) {
             this.chats.push(this.createMockChannel());
         }
-        for (let i = 0; i < 12; ++i) {
+        for (let i = 0; i < 4; ++i) {
             this.invites.push(this.createInvite());
         }
     }
@@ -38,7 +38,7 @@ class MockChatStore {
     createInvite() {
         return observable({
             id: randomWords({ min: 7, max: 7, join: ':' }),
-            title: randomWords({ min: 1, max: 4, join: '-' }),
+            title: randomWords({ min: 1, max: 3, join: '-' }),
             invitedBy: mockContactStore.createMock()
         });
     }

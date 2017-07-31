@@ -17,7 +17,7 @@ export default class ChannelInviteListItem extends SafeComponent {
         const containerStyle = {
             paddingLeft: 24,
             paddingRight: 10,
-            paddingVertical: 8,
+            paddingVertical: 12,
             justifyContent: 'space-between',
             alignItems: 'center',
             borderBottomWidth: 1,
