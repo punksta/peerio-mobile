@@ -37,7 +37,7 @@ export default class AccountUpgradeSwiper extends Component {
         setTimeout(() => {
             topPlanIndex === -1 ?
                 this._scrollView.scrollToEnd({ animated: false }) :
-                this._scrollView.scrollTo({ x: topPlanIndex * width, animated: false })
+                this._scrollView.scrollTo({ x: topPlanIndex * width, animated: false });
         }, 0);
         if (User.current) {
             console.log('account-upgrade-swiper: active plans');
