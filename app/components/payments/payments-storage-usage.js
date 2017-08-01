@@ -6,12 +6,14 @@ import { User } from '../../lib/icebear';
 import Bold from '../controls/bold';
 import settingsState from '../settings/settings-state';
 import buttons from '../helpers/buttons';
+import plans from '../payments/payments-config';
 
 @observer
 class PaymentStorageUsage extends SafeComponent {
     renderThrow() {
         const u = User.current;
         if (!u) return null;
+        if (plans.userHasPaidPlan()) return null;
         return (
             <View style={{ marginHorizontal: 10 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
