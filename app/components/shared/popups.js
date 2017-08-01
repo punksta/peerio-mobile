@@ -11,10 +11,16 @@ import CheckBox from './checkbox';
 function textControl(str) {
     const text = {
         color: '#000000AA',
-        marginVertical: 10
+        marginVertical: 10,
+        lineHeight: 22
     };
 
-    return <Text style={text}>{str}</Text>;
+    let formatted = str;
+    if (typeof str === 'string') {
+        formatted = str.replace('\n', '\n\n');
+    }
+
+    return <Text style={text}>{formatted}</Text>;
 }
 
 function checkBoxControl(str, checked, press) {
@@ -49,8 +55,8 @@ function popupYes(title, subTitle, text) {
     return new Promise((resolve) => {
         popupState.showPopup({
             title,
-            subTitle: textControl(subTitle),
-            contents: textControl(text),
+            subTitle: subTitle ? textControl(subTitle) : null,
+            contents: text ? textControl(text) : null,
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: resolve
             }]
@@ -112,6 +118,18 @@ function popupCopyCancel(title, subTitle, text) {
         buttons: [
             { id: 'cancel', text: tu('button_close'), action: () => resolve(false) },
             { id: 'copy', text: tu('title_copy'), action: () => resolve(true) }
+        ]
+    }));
+}
+
+function popupCancelConfirm(title, subTitle, text) {
+    return popupState.showPopupPromise(resolve => ({
+        title,
+        subTitle: textControl(subTitle),
+        contents: textControl(text),
+        buttons: [
+            { id: 'cancel', text: tu('button_cancel'), secondary: true, action: () => resolve(false) },
+            { id: 'confirm', text: tu('button_confirm'), action: () => resolve(true) }
         ]
     }));
 }
@@ -211,5 +229,6 @@ module.exports = {
     popupSystemWarning,
     popupDeleteAccount,
     popupControl,
-    popupSignOutAutologin
+    popupSignOutAutologin,
+    popupCancelConfirm
 };
