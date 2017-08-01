@@ -64,7 +64,9 @@ export default class Files extends SafeComponent {
             title_directMessages: 'Direct messages'
         };
         return key === 'title_channelInvites' ?
-            <ChatChannelInviteSection data={data} /> : <ChatSectionHeader title={titles[key]} />;
+            <ChatChannelInviteSection
+                title="Channel invites"
+                data={data} onPress={() => chatState.routerMain.channelInviteList()} /> : <ChatSectionHeader title={titles[key]} />;
     }
 
     item(chat) {

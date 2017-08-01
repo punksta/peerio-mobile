@@ -9,6 +9,7 @@ import buttons from '../helpers/buttons';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import SimpleTextBox from '../shared/simple-text-box';
+import ChannelUpgradeOffer from './channel-upgrade-offer';
 import contactState from '../contacts/contact-state';
 
 const fillView = { flex: 1, flexGrow: 1 };
@@ -116,7 +117,7 @@ export default class CreateChannel extends Component {
             <View style={container}>
                 {icons.dark('close')}
                 <Text style={textStyle}>{'New channel'}</Text>
-                {this.isReady ?
+                {this.isValid ?
                     icons.text(t('button_go'), () => this.step2()) : icons.placeholder()}
             </View>
         );
@@ -136,25 +137,6 @@ export default class CreateChannel extends Component {
             </View>
         );
     }
-
-    get upgradeOffer() {
-        const offerStyle = {
-            backgroundColor: '#d9f1ef',
-            padding: 12
-        };
-        return (
-            <View style={offerStyle}>
-                <Text>
-                    {`👋 Hi there, basic Peerio accounts have access to`}
-                    <Text style={{ fontWeight: 'bold' }}> 2 free channels</Text>, enjoy 1 more channel on this account!
-                </Text>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    {buttons.uppercaseBlueButton('Upgrade')}
-                </View>
-            </View>
-        );
-    }
-
 
     renderTextBox(labelText, placeholderText, property) {
         return (
@@ -186,12 +168,9 @@ export default class CreateChannel extends Component {
                     onScroll={this.handleScroll}
                     key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
                     <View style={card}>
-                        {this.upgradeOffer}
+                        <ChannelUpgradeOffer />
                         {this.renderTextBox('Channel name', '# Name', 'channelName')}
                         {this.renderTextBox('Purpose (optional)', 'What is it about', 'channelPurpose')}
-                        <View style={rowCenter2}>
-                            {this.isValid && buttons.uppercaseBlueButton('Add users', () => this.step2())}
-                        </View>
                     </View>
                     <View style={card}>
                         <ContactSelector hideHeader />

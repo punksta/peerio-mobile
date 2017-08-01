@@ -9,6 +9,7 @@ import chatState from './chat-state';
 import { vars } from '../../styles/styles';
 import ChannelInviteListItem from './channel-invite-list-item';
 import ChatChannelInvitesSection from './chat-channel-invites-section';
+import ChannelUpgradeOffer from '../channels/channel-upgrade-offer';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -69,6 +70,7 @@ export default class ChannelInviteList extends SafeComponent {
         return (
             <View
                 style={{ flexGrow: 1, flex: 1, backgroundColor: vars.white }}>
+                <ChannelUpgradeOffer />
                 {this.listView()}
             </View>
         );

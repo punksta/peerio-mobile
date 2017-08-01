@@ -2,6 +2,12 @@ import { observable } from 'mobx';
 import randomWords from 'random-words';
 import capitalize from 'capitalize';
 import mockContactStore from './mock-contact-store';
+import { popupCancelConfirm } from '../shared/popups';
+
+const channelPaywallTitle = `2 Channels`;
+const channelPaywallMessage =
+`Peerio's basic account gets you access to 2 free channels.
+If you would like to join or create another channel, please delete an existing one or check out our upgrade plans`;
 
 class MockChannel {
     @observable messages = [];
@@ -86,11 +92,21 @@ class MockChatStore {
     }
 
     createInvite() {
-        return observable({
+        const invite = observable({
             id: randomWords({ min: 7, max: 7, join: ':' }),
             title: randomWords({ min: 1, max: 3, join: '-' }),
             invitedBy: mockContactStore.createMock()
         });
+
+        invite.acceptInvite = () => {
+            popupCancelConfirm(channelPaywallTitle, channelPaywallMessage);
+        };
+
+        invite.rejectInvite = () => {
+            this.invites.splice(this.invites.indexOf(invite), 1);
+        };
+
+        return invite;
     }
 }
 

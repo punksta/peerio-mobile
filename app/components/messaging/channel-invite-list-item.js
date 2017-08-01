@@ -45,8 +45,8 @@ export default class ChannelInviteListItem extends SafeComponent {
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={smallTextStyle}>Invited by {chat.invitedBy.fullName}</Text>
                             <View style={{ flexDirection: 'row' }}>
-                                {buttons.uppercaseBlueButtonNoPadding('Accept')}
-                                {buttons.uppercaseGrayButtonNoPadding('Reject')}
+                                {buttons.uppercaseBlueButtonNoPadding('Accept', () => chat.acceptInvite())}
+                                {buttons.uppercaseGrayButtonNoPadding('Reject', () => chat.rejectInvite())}
                             </View>
                         </View>
                     </View>
