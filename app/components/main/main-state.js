@@ -24,7 +24,6 @@ class MainState extends RoutedState {
     @action async activateAndTransition(/* user */) {
         this.activate();
         this.routes.app.main();
-        // await this.saveUser();
     }
 
     @action async load() {
@@ -41,7 +40,6 @@ class MainState extends RoutedState {
     @action async init() {
         // disabling pin for now
         // await this.checkPin();
-        // await this.saveUser();
     }
 
     @action async checkPin() {
@@ -56,18 +54,32 @@ class MainState extends RoutedState {
         }
     }
 
+    @action async getKeychainKey(cachedUsername) {
+        const username = cachedUsername || User.current.username;
+        return (await TinyDb.system.getValue(`user::${username}::keychain`)) || `user::${username}`;
+    }
+
     @action async saveUserKeychain(secureWithTouchID) {
         const user = User.current;
-        await keychain.delete(`user::${user.username}`);
-        await keychain.save(`user::${user.username}`, user.serializeAuthData(), secureWithTouchID);
+        let keychainKey = await this.getKeychainKey();
+        try {
+            await keychain.delete(keychainKey);
+        } catch (e) {
+            console.error(e);
+        }
+        keychainKey = `user::${user.username}::${(new Date().getTime())}`;
+        console.log(`main-state.js: keychain key: ${keychainKey}`);
+        await TinyDb.system.setValue(`user::${user.username}::keychain`, keychainKey);
+        await keychain.save(keychainKey, user.serializeAuthData(), secureWithTouchID);
         console.log('main-state.js: keychain saved');
         user.hasTouchIdCached = true;
     }
 
     @action async damageUserTouchId() {
         const user = User.current;
-        await keychain.delete(`user::${user.username}`);
-        await keychain.save(`user::${user.username}`, 'blah');
+        const keychainKey = await this.getKeychainKey();
+        await keychain.delete(keychainKey);
+        await keychain.save(keychainKey, 'blah');
         console.log('main-state.js: touch id damaged');
         user.hasTouchIdCached = true;
     }
@@ -76,10 +88,14 @@ class MainState extends RoutedState {
         const user = User.current;
         console.log(`mainstate.js: ${user.autologinEnabled}`);
         if (!user.autologinEnabled) {
-            await keychain.delete(`user::${user.username}`);
+            const keychainKey = await this.getKeychainKey();
+            try {
+                await keychain.delete(keychainKey);
+            } catch (e) {
+                console.error(e);
+            }
             return;
         }
-        // user.hasPasscodeCached = await user.hasPasscode();
         await TinyDb.system.setValue('lastUsername', user.username);
         const skipTouchID = `${user.username}::skipTouchID`;
         const skipTouchIDValue = await TinyDb.system.getValue(skipTouchID);
@@ -102,6 +118,7 @@ class MainState extends RoutedState {
             await TinyDb.system.setValue(touchIdKey, secureWithTouchID);
         }
         user.secureWithTouchID = secureWithTouchID;
+        console.log('main-state.js: saving user');
         await this.saveUserKeychain(secureWithTouchID);
     }
 
