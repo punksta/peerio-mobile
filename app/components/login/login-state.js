@@ -152,8 +152,13 @@ class LoginState extends RoutedState {
         const username = User.current.username;
         await TinyDb.system.removeValue(`${username}::${loginConfiguredKey}`);
         await TinyDb.system.removeValue(`user::${username}::touchid`);
+        await TinyDb.system.removeValue(`user::${username}::keychain`);
         await TinyDb.system.removeValue(`${username}::skipTouchID`);
-        await keychain.delete(`user::${username}`);
+        try {
+            await keychain.delete(await mainState.getKeychainKey());
+        } catch (e) {
+            console.log(e);
+        }
         await RNRestart.Restart();
     }
 
