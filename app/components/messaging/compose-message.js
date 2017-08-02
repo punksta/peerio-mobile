@@ -8,6 +8,7 @@ import chatState from './chat-state';
 
 const fillView = { flex: 1, flexGrow: 1 };
 const rowCenter = {
+    backgroundColor: vars.white,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

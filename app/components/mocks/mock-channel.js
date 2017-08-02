@@ -22,7 +22,7 @@ export default class MockChannelCreate extends Component {
     @observable showChannelInfo = false;
     @observable showAddPeople = false;
     componentWillMount() {
-        User.current = {};
+        User.current = { activePlans: [] };
         contactState.store = mockContactStore;
         chatState.store = mockChatStore;
         routerMain.current = observable({
