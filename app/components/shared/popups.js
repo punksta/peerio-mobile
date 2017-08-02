@@ -55,8 +55,8 @@ function popupYes(title, subTitle, text) {
     return new Promise((resolve) => {
         popupState.showPopup({
             title,
-            subTitle: textControl(subTitle),
-            contents: textControl(text),
+            subTitle: subTitle ? textControl(subTitle) : null,
+            contents: text ? textControl(text) : null,
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: resolve
             }]

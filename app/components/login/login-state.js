@@ -152,8 +152,13 @@ class LoginState extends RoutedState {
         const username = User.current.username;
         await TinyDb.system.removeValue(`${username}::${loginConfiguredKey}`);
         await TinyDb.system.removeValue(`user::${username}::touchid`);
+        await TinyDb.system.removeValue(`user::${username}::keychain`);
         await TinyDb.system.removeValue(`${username}::skipTouchID`);
-        await keychain.delete(`user::${username}`);
+        try {
+            await keychain.delete(await mainState.getKeychainKey());
+        } catch (e) {
+            console.log(e);
+        }
         await RNRestart.Restart();
     }
 
@@ -174,12 +179,16 @@ class LoginState extends RoutedState {
     @action async loadFromKeychain() {
         await keychain.load();
         if (!keychain.hasPlugin) return false;
-        const data = await keychain.get(`user::${this.username}`);
+        const data = await keychain.get(await mainState.getKeychainKey(this.username));
         if (!data) return false;
         return Promise.resolve(data)
             .then(JSON.parse)
             .then(this.loginCached)
-            .then(() => true)
+            .then(async () => {
+                const touchIdKey = `user::${User.current.username}::touchid`;
+                User.current.secureWithTouchID = !!await TinyDb.system.getValue(touchIdKey);
+                return true;
+            })
             .catch(() => {
                 console.log('login-state.js: logging in with touch id failed');
                 this._resetTouchId = true;

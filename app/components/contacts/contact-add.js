@@ -1,16 +1,17 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ScrollView, Text, TouchableOpacity, LayoutAnimation, Share } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, when } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
 import ContactInviteItem from './contact-invite-item';
 import { vars } from '../../styles/styles';
 import { contactStore, warnings, User, config } from '../../lib/icebear';
-import { tx, tu } from '../utils/translator';
+import { tx, tu, t } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import contactState from './contact-state';
+import snackbarState from '../snackbars/snackbar-state';
 import buttons from '../helpers/buttons';
 
 const textinputContainer = {
@@ -109,28 +110,28 @@ export default class ContactAdd extends SafeComponent {
         this.waiting = true;
         this.toInvite = null;
         this.notFound = false;
-        contactStore.addContact(this.query)
-            .then(found => {
-                if (found) {
-                    this.query = '';
-                } else {
-                    this.notFound = true;
-                    const atInd = this.query.indexOf('@');
-                    const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
-                    if (isEmail) {
-                        warnings.add(`User is not found on Peerio, please invite`);
-                        LayoutAnimation.easeInEaseOut();
-                        this.toInvite = this.inviteContactDuck(this.query);
-                    } else {
-                        this.showValidationError = true;
-                        LayoutAnimation.easeInEaseOut();
-                    }
+        const contact = contactStore.getContact(this.query);
+        when(() => !contact.loading, () => {
+            const { notFound, isLegacy } = contact;
+            if (notFound) {
+                this.notFound = true;
+                const atInd = this.query.indexOf('@');
+                const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
+                if (isEmail) {
+                    warnings.add(`User is not found on Peerio, please invite`);
+                    LayoutAnimation.easeInEaseOut();
+                    this.toInvite = this.inviteContactDuck(this.query);
+                } else if (!isLegacy) {
+                    this.showValidationError = true;
+                    LayoutAnimation.easeInEaseOut();
                 }
-            })
-            .finally(() => {
-                // this.query = '';
-                this.waiting = false;
-            });
+                isLegacy && snackbarState.pushTemporary(t('title_inviteLegacy'));
+            } else {
+                this.query = '';
+                contactStore.addContact(contact);
+            }
+            this.waiting = false;
+        });
     }
 
     share() {
