@@ -40,25 +40,9 @@ class Signup(common.testcase.TestCase):
         sleep(5)
         d.tap('signupNext')
         d.screen('signup-step-3.png')
-        # pinEnter()
-        # pinEnter()
-
-
-        # confirm your email alert
-        # d.wait_for_find('popupButton_ok')
-        # d.tap('popupButton_ok')
-        # d.wait_for_not_find('popupButton_ok')
-
-        # confirm your email alert #2
-        # d.wait_for_find('popupButton_ok')
-        # d.tap('popupButton_ok')
-        # d.wait_for_not_find('popupButton_ok')
 
         # automatic login enable alert
         d.wait_for_find('automaticLoginEnable')
-        d.tap('automaticLoginEnable')
         sleep(3)
         d.screen('signup-step-4.png')
 
-        # d.tap('pin-cancel')
-        # d.wait_for_find('mainLayout')
