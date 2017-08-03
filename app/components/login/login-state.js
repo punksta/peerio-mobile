@@ -30,17 +30,10 @@ class LoginState extends RoutedState {
         reaction(() => this.passphrase, () => (this.passphraseValidationMessage = null));
     }
 
-    @action async askAboutAutomaticLogin(user) {
+    @action async enableAutomaticLogin(user) {
+        user.autologinEnabled = true;
         const key = `${user.username}::${loginConfiguredKey}`;
-        const configured = await TinyDb.system.getValue(key);
-        if (configured) return Promise.resolve();
-        this.routerApp.loginAutomatic();
-        return new Promise(resolve => when(() => this.selectedAutomatic !== null,
-            async () => {
-                user.autologinEnabled = this.selectedAutomatic;
-                await TinyDb.system.setValue(key, true);
-                resolve();
-            }));
+        await TinyDb.system.setValue(key, user.autologinEnabled);
     }
 
     @action changeUserAction() {

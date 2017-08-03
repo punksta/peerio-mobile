@@ -80,7 +80,7 @@ class SignupState extends RoutedState {
         user.lastName = lastName;
         user.localeCode = localeCode;
         return user.createAccountAndLogin()
-            .then(() => loginState.askAboutAutomaticLogin(user))
+            .then(() => loginState.enableAutomaticLogin(user))
             .then(() => mainState.activateAndTransition(user))
             .catch((e) => {
                 console.log(e);
