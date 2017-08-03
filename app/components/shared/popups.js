@@ -100,11 +100,11 @@ function popupYesSkip(title, subTitle, text) {
 function popupSignOutAutologin(title, subTitle, text) {
     return new Promise((resolve) => {
         popupState.showPopup({
-            title: t('button_logout'),
-            contents: textControl(t('title_confirmSignout')),
+            title: t('title_gotYourKeys'),
+            contents: textControl(t('title_signOutConfirmKeys')),
             buttons: [
-                { id: 'no', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
-                { id: 'yes', text: tu('button_logout'), action: () => resolve(true) }
+                { id: 'no', text: tu('button_getKey'), action: () => resolve(false) },
+                { id: 'yes', text: tu('button_lock'), action: () => resolve(true), secondary: true }
             ]
         });
     });
@@ -217,7 +217,8 @@ locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
 
-module.exports = {
+
+export {
     popupYes,
     popupYesCancel,
     popupYesSkip,
