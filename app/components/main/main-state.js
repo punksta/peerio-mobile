@@ -113,7 +113,8 @@ class MainState extends RoutedState {
         if (!user.hasTouchIdCached && !skipTouchIDValue && keychain.available) {
             console.log('main-state.js: touch id available but value is not set');
             console.log('main-state.js: offering to save');
-            secureWithTouchID = await popupYesSkip(tx('title_touchID'), tx('dialog_enableTouchID'));
+            // TODO: disable touch id offering for now
+            secureWithTouchID = false; // await popupYesSkip(tx('title_touchID'), tx('dialog_enableTouchID'));
             await TinyDb.system.setValue(skipTouchID, true);
             await TinyDb.system.setValue(touchIdKey, secureWithTouchID);
         }
