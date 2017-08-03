@@ -41,8 +41,3 @@ class Signup(common.testcase.TestCase):
         d.tap('signupNext')
         d.screen('signup-step-3.png')
 
-        # automatic login enable alert
-        d.wait_for_find('automaticLoginEnable')
-        sleep(3)
-        d.screen('signup-step-4.png')
-
