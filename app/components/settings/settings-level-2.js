@@ -47,7 +47,6 @@ export default class SettingsLevel2 extends SafeComponent {
                     title="title_showAccountKey"
                     icon="visibility"
                     onPress={() => settingsState.showPassphrase()} />
-                {this.autoLoginToggle()}
                 {this.touchIdToggle()}
             </View>
         );
