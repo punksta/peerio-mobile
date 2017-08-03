@@ -81,7 +81,7 @@ class LoginState extends RoutedState {
                 mainState.activate(user);
                 if (user.autologinEnabled) return;
                 // wait for user to answer
-                await this.askAboutAutomaticLogin(user);
+                await this.enableAutomaticLogin(user);
             })
             .catch(e => {
                 console.error(e);
