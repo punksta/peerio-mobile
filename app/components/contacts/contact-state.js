@@ -53,7 +53,7 @@ class ContactState extends RoutedState {
     }
 
     getFiltered(findUserText) {
-        const result = this.store.filter(findUserText).filter(c => c.username !== User.current.username);
+        const result = this.store.filter(findUserText || '').filter(c => c.username !== User.current.username);
         return result.length ? result : this.found.filter(c => !c.loading && !c.notFound);
     }
 

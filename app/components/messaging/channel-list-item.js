@@ -11,7 +11,7 @@ import { User, contactStore } from '../../lib/icebear';
 export default class ChannelListItem extends SafeComponent {
     renderThrow() {
         const { chat } = this.props;
-        const { title } = chat;
+        const { name } = chat;
         if (!chat) return null;
         const containerStyle = {
             height: 40,
@@ -28,7 +28,7 @@ export default class ChannelListItem extends SafeComponent {
             <View style={{ backgroundColor: vars.bg }}>
                 <TouchableOpacity style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text style={textStyle}>
-                        {`# ${title}`}
+                        {`# ${name}`}
                     </Text>
                 </TouchableOpacity>
             </View>

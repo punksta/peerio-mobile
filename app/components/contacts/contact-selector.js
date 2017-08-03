@@ -378,6 +378,6 @@ ContactSelector.propTypes = {
     hideHeader: PropTypes.any,
     title: PropTypes.any,
     limit: PropTypes.any,
-    action: PropTypes.func.isRequired,
-    onExit: PropTypes.func.isRequired
+    action: PropTypes.func,
+    onExit: PropTypes.func
 };

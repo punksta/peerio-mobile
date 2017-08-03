@@ -6,6 +6,7 @@ import buttons from '../helpers/buttons';
 import { vars } from '../../styles/styles';
 import chatState from './chat-state';
 
+const LIMIT_PEOPLE = 8;
 const fillView = { flex: 1, flexGrow: 1 };
 const rowCenter = {
     backgroundColor: vars.white,
@@ -28,8 +29,10 @@ export default class ComposeMessage extends Component {
     get createChannelRow() {
         return (
             <View style={rowCenter}>
-                <Text numberOfLines={2} style={bottomRowText}>Need to chat with more than 8 people?</Text>
-                {buttons.uppercaseBlueButton('Create channel', () => this.props.createChannel())}
+                <Text numberOfLines={2} style={bottomRowText}>
+                    {`Need to chat with more than ${LIMIT_PEOPLE} people?`}
+                </Text>
+                {buttons.uppercaseBlueButton('Create channel', () => chatState.routerModal.createChannel())}
             </View>
         );
     }
@@ -40,13 +43,9 @@ export default class ComposeMessage extends Component {
                 <ContactSelector
                     onExit={() => chatState.routerModal.discard()}
                     action={contacts => chatState.startChat(contacts)}
-                    title="New direct message" limit={4} />
+                    title="New direct message" limit={LIMIT_PEOPLE} />
                 {this.createChannelRow}
             </View>
         );
     }
 }
-
-ComposeMessage.propTypes = {
-    createChannel: PropTypes.any
-};

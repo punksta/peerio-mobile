@@ -2,6 +2,7 @@ import React from 'react';
 import { observable } from 'mobx';
 import Router from './router';
 import ComposeMessage from '../messaging/compose-message';
+import CreateChannel from '../channels/create-channel';
 import ChannelAddPeople from '../messaging/channel-add-people';
 import SelectFiles from '../files/select-files';
 import FileShare from '../files/file-share';
@@ -21,6 +22,7 @@ class RouterModal extends Router {
         super();
         routes.modal = this;
         this.add('compose', ComposeMessage);
+        this.add('createChannel', CreateChannel);
         this.add('channelAddPeople', ChannelAddPeople);
         this.add('shareFileTo', FileShare);
         this.add('selectFiles', SelectFiles);

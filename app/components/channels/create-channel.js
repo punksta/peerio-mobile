@@ -11,8 +11,9 @@ import icons from '../helpers/icons';
 import SimpleTextBox from '../shared/simple-text-box';
 import ChannelUpgradeOffer from './channel-upgrade-offer';
 import contactState from '../contacts/contact-state';
+import chatState from '../messaging/chat-state';
 
-const fillView = { flex: 1, flexGrow: 1 };
+const fillView = { flex: 1, flexGrow: 1, backgroundColor: vars.white };
 
 const rowCenter = {
     flexDirection: 'row',
@@ -84,8 +85,17 @@ export default class CreateChannel extends Component {
         this.step = Math.round(x / width);
     }
 
-    step2() {
-        setTimeout(() => this._scrollView.scrollToEnd(), 0);
+    next() {
+        if (this.step === 0) {
+            setTimeout(() => this._scrollView.scrollToEnd(), 0);
+        } else {
+            chatState.store.startChat(
+                this._contactSelector.recipients.items || [],
+                true,
+                this.channelName,
+                this.channelPurpose
+            );
+        }
     }
 
     get isValid() {
@@ -118,7 +128,7 @@ export default class CreateChannel extends Component {
                 {icons.dark('close')}
                 <Text style={textStyle}>{'New channel'}</Text>
                 {this.isValid ?
-                    icons.text(t('button_go'), () => this.step2()) : icons.placeholder()}
+                    icons.text(t('button_go'), () => this.next()) : icons.placeholder()}
             </View>
         );
     }
@@ -132,7 +142,7 @@ export default class CreateChannel extends Component {
             <View style={hideStyle}>
                 <View style={[rowCenter, { height: 60 }]}>
                     <Text numberOfLines={2} style={bottomRowText}>{`Don't need a channel? Use chat instead`}</Text>
-                    {buttons.uppercaseBlueButton('Create chat', () => this.props.createChat())}
+                    {buttons.uppercaseBlueButton('Create chat', () => chatState.routerModal.compose())}
                 </View>
             </View>
         );
@@ -173,7 +183,7 @@ export default class CreateChannel extends Component {
                         {this.renderTextBox('Purpose (optional)', 'What is it about', 'channelPurpose')}
                     </View>
                     <View style={card}>
-                        <ContactSelector hideHeader />
+                        <ContactSelector hideHeader ref={ref => (this._contactSelector = ref)} />
                     </View>
                 </ScrollView>
                 {this.createChatRow}
