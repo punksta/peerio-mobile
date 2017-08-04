@@ -89,12 +89,7 @@ export default class CreateChannel extends Component {
         if (this.step === 0) {
             setTimeout(() => this._scrollView.scrollToEnd(), 0);
         } else {
-            chatState.store.startChat(
-                this._contactSelector.recipients.items || [],
-                true,
-                this.channelName,
-                this.channelPurpose
-            );
+            this._contactSelector.action();
         }
     }
 
@@ -183,7 +178,12 @@ export default class CreateChannel extends Component {
                         {this.renderTextBox('Purpose (optional)', 'What is it about', 'channelPurpose')}
                     </View>
                     <View style={card}>
-                        <ContactSelector hideHeader ref={ref => (this._contactSelector = ref)} />
+                        <ContactSelector
+                            action={async contacts => {
+                                await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
+                                chatState.routerModal.discard();
+                            }}
+                            hideHeader ref={ref => (this._contactSelector = ref)} />
                     </View>
                 </ScrollView>
                 {this.createChatRow}

@@ -394,10 +394,10 @@ export default class Avatar extends SafeComponent {
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={this.onPressAll}
                     activeOpacity={activeOpacity}
-                    style={{ backgroundColor: vars.white, opacity }}
+                    style={{ backgroundColor: vars.white }}
                     onLayout={this.props.onLayout}>
                     {this.firstOfTheDay}
-                    <View>
+                    <View style={{ opacity }}>
                         {inner}
                     </View>
                 </TouchableOpacity >

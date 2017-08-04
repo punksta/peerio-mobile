@@ -171,7 +171,7 @@ export default class Chat extends SafeComponent {
         return (
             <ScrollView
                 onLayout={this.layoutScrollView}
-                style={{ flexGrow: 1, opacity: this.waitForScrollToEnd ? 0 : 1 }}
+                style={{ flexGrow: 1, backgroundColor: vars.white }}
                 contentContainerStyle={{ transform: [{ scaleY: -1 }] }}
                 initialListSize={1}
                 onContentSizeChange={this.contentSizeChanged}

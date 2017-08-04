@@ -26,7 +26,9 @@ export default class ChannelListItem extends SafeComponent {
 
         return (
             <View style={{ backgroundColor: vars.bg }}>
-                <TouchableOpacity style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
+                <TouchableOpacity
+                    onPress={() => chatState.routerMain.chats(chat)}
+                    style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text style={textStyle}>
                         {`# ${name}`}
                     </Text>

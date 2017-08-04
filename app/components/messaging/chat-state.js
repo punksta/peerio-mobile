@@ -90,8 +90,8 @@ class ChatState extends RoutedState {
         return this.canSend && this.currentChat.canSendAck;
     }
 
-    @action startChat(recipients) {
-        const chat = this.store.startChat(recipients);
+    @action startChat(recipients, isChannel = false, name, purpose) {
+        const chat = this.store.startChat(recipients, isChannel, name, purpose);
         this.loading = true;
         when(() => !chat.loadingMeta, () => {
             this.loading = false;
