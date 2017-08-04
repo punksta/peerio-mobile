@@ -75,6 +75,12 @@ export default class App extends SafeComponent {
             Array.from(arguments).forEach(console.stackPush);
         };
 
+        const debug = console.debug;
+        console.debug = function() {
+            __DEV__ && debug.apply(console, arguments);
+            __DEV__ && Array.from(arguments).forEach(console.stackPush);
+        };
+
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
 

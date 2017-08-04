@@ -14,14 +14,14 @@ export default {
             }
         };
         lastCall = () => ImagePicker.showImagePicker(options, (response) => {
-            console.log('imagepicker.js: response = ', response);
+            console.debug('imagepicker.js: response = ', response);
             lastCall = null;
             if (response.didCancel) {
                 console.log('imagepicker.js: user cancelled image picker');
             } else if (response.error) {
                 console.log('imagepicker.js: ', response.error);
             } else if (response.customButton) {
-                console.log('imagepicker.js:', response.customButton);
+                console.debug('imagepicker.js:', response.customButton);
                 customCallback(response.customButton);
             } else {
                 let source = null;

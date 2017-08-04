@@ -26,16 +26,9 @@ export default (fileStream) => {
 
         close() {
             if (this.fileDescriptor == null) return Promise.resolve();
-            if (this.mode === 'read') {
-                this.fileDescriptor = null;
-                console.log('imagepicker.js successfully read: ', this.filePath);
-                return Promise.resolve();
-            }
-            return this.fileDescriptor.close()
-                .then(() => {
-                    console.log('imagepicker.js successfully written: ', this.filePath);
-                    this.fileDescriptor = null;
-                });
+            this.fileDescriptor = null;
+            console.debug(`imagepicker.js successfully ${this.mode}: ${this.filePath}`);
+            return Promise.resolve();
         }
 
         /**
@@ -81,7 +74,7 @@ export default (fileStream) => {
          * Launch external viewer
          */
         static launchViewer(path) {
-            console.log(`rn-file-stream.js: opening viewer for ${path}`);
+            console.debug(`rn-file-stream.js: opening viewer for ${path}`);
             return FileOpener.open(path, 'image/jpeg');
         }
 
