@@ -212,7 +212,7 @@ export default class Chat extends SafeComponent {
         const shift = shiftX < 0 ? shiftX : 0;
         const marginLeft = shift < -w ? (-w + 1) : shift;
         const avatars = (participants || []).map(contact => (
-            <View style={{ marginLeft, width: w }}>
+            <View key={contact.username} style={{ marginLeft, width: w }}>
                 <TouchableOpacity
                     style={{ flex: 0 }}
                     pressRetentionOffset={vars.pressRetentionOffset}

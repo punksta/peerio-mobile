@@ -8,7 +8,8 @@ const fillView = { flex: 1, flexGrow: 1 };
 export default class ChannelAddPeople extends Component {
 
     addPeople = (contacts) => {
-        chatState.currentChat.sendInvites(contacts);
+        console.log(JSON.stringify(contacts));
+        chatState.currentChat.addParticipants(contacts);
     }
 
     render() {
