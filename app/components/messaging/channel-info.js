@@ -34,18 +34,20 @@ export default class ChannelInfo extends SafeComponent {
     @observable channelTopic = '';
 
     componentDidMount() {
-        const chat = chatState.currentChat;
-        this.channelTopic = chat.topic;
+        this.chat = chatState.currentChat;
+        this.channelTopic = this.chat.purpose;
     }
 
     leaveChannel = async () => {
         if (await popupCancelConfirm(leaveTitle, leaveMessage)) {
+            await this.chat.leave();
             chatState.routerModal.discard();
         }
     }
 
     deleteChannel = async () => {
         if (await popupCancelConfirm(deleteTitle, deleteMessage)) {
+            await this.chat.delete();
             chatState.routerModal.discard();
         }
     }
@@ -60,11 +62,6 @@ export default class ChannelInfo extends SafeComponent {
         );
     }
 
-    hideChat = () => {
-        chatState.currentChat.hide();
-        chatState.routerModal.discard();
-    }
-
     action(title, icon, action) {
         return (
             <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={action}>
@@ -77,6 +74,7 @@ export default class ChannelInfo extends SafeComponent {
     }
 
     participant = (contact, i) => {
+        const { chat } = this;
         const { username } = contact;
         const row = {
             flexDirection: 'row',
@@ -108,12 +106,12 @@ export default class ChannelInfo extends SafeComponent {
                         <MenuOptions>
                             <MenuOption
                                 value={() => isAdmin ?
-                                    chatState.currentChat.removeAdmin(contact) :
-                                    chatState.currentChat.addAdmin(contact)}>
+                                    chat.removeAdmin(contact) :
+                                    chat.addAdmin(contact)}>
                                 <Text>{isAdmin ? 'Remove admin' : 'Make admin'}</Text>
                             </MenuOption>
                             <MenuOption
-                                value={() => chatState.currentChat.removeChannelMember(contact)}>
+                                value={() => chat.removeChannelMember(contact)}>
                                 <Text>Remove</Text>
                             </MenuOption>
                         </MenuOptions>
@@ -125,7 +123,9 @@ export default class ChannelInfo extends SafeComponent {
 
     topicTextBox() {
         const chat = chatState.currentChat;
-        const update = () => console.log(this.channelTopic);
+        const update = () => {
+            chat.changePurpose(this.channelTopic);
+        };
         return (
             <View>
                 <Text style={textStyle}>Topic</Text>
@@ -146,9 +146,9 @@ export default class ChannelInfo extends SafeComponent {
                 <View>
                     {this.lineBlock(this.topicTextBox())}
                     {this.lineBlock(this.action('Leave channel', 'remove-circle-outline', this.leaveChannel), true)}
-                    {this.lineBlock(this.action('Mute channel',
+                    {/* this.lineBlock(this.action('Mute channel',
                         chat.isMuted ? 'notifications-off' : 'notifications-none',
-                        () => chat.toggleMuted()))}
+                        () => chat.toggleMuted())) */}
                     {this.lineBlock(this.action('Delete channel', 'delete', this.deleteChannel))}
                     {chat.participants && this.lineBlock(
                         <View style={{ paddingVertical: 8 }}>

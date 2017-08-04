@@ -120,7 +120,9 @@ class ChatState extends RoutedState {
 
     get titleAction() {
         if (this.routerMain.currentIndex === 0) return null;
-        return this.currentChat ? (() => this.routerModal.chatInfo()) : null;
+        return this.currentChat ? (() => {
+            this.currentChat.isChannel ? this.routerModal.channelInfo() : this.routerModal.chatInfo();
+        }) : null;
     }
 
     fabAction() {
