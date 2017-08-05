@@ -70,6 +70,7 @@
     "react-native-crypto": "2.0.1",
     "react-native-device-info": "git+https://github.com/PeerioTechnologies/react-native-device-info.git",
     "react-native-file-opener": "git+https://github.com/PeerioTechnologies/react-native-file-opener.git",
+    "react-native-file-picker": "0.0.8",
     "react-native-fs": "git+https://github.com/PeerioTechnologies/react-native-fs.git",
     "react-native-image-crop-picker": "git+https://github.com/PeerioTechnologies/react-native-image-crop-picker.git",
     "react-native-image-picker": "git+https://github.com/PeerioTechnologies/react-native-image-picker.git",
