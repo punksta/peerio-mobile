@@ -9,7 +9,7 @@ class PaymentsBase {
     }
 
     get showFileUpgradeOffer() {
-        return this.canUpgradeUser && User.current.fileQuotaUsedPercent >= 0;
+        return this.canUpgradeUser && User.current.fileQuotaUsedPercent >= 90;
     }
 
     get showArchiveUpgradeOffer() {
