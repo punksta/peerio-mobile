@@ -19,30 +19,31 @@ export default {
 
     show(_customButtons, imageCallback, customCallback) {
         const customButtons = _customButtons || [];
-        let chooseFromLibraryButtonTitle;
-        if (Platform.OS === 'android') {
-            chooseFromLibraryButtonTitle = null;
-            customButtons.push({ name: ANDROID_PICK_ACTION, title: 'Choose from Library' });
-        }
         const options = {
             customButtons,
             noData: true,
-            chooseFromLibraryButtonTitle,
             storageOptions: {
                 skipBackup: true,
                 waitUntilSaved: true
             }
         };
+
+        if (Platform.OS === 'android') {
+            options.customButtons.push({ name: ANDROID_PICK_ACTION, title: 'Choose from Library' });
+            options.chooseFromLibraryButtonTitle = null;
+        }
+
         lastCall = async () => {
             let response = await showImagePicker(options);
-            console.debug('imagepicker.js: response = ', response);
+            console.log(`imagepicker.js: got response`);
+            console.debug(response);
             lastCall = null;
             if (response.didCancel) {
                 console.log('imagepicker.js: user cancelled image picker');
             } else if (response.error) {
                 console.log('imagepicker.js: ', response.error);
-            } else if (response.customButton !== ANDROID_PICK_ACTION) {
-                console.debug('imagepicker.js:', response.customButton);
+            } else if (customCallback && response.customButton !== ANDROID_PICK_ACTION) {
+                console.log('imagepicker.js:', response.customButton);
                 customCallback(response.customButton);
             } else {
                 let source = null;

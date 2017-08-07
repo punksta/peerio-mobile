@@ -27,7 +27,7 @@ export default (fileStream) => {
         close() {
             if (this.fileDescriptor == null) return Promise.resolve();
             this.fileDescriptor = null;
-            console.debug(`imagepicker.js successfully ${this.mode}: ${this.filePath}`);
+            console.debug(`rn-file-stream.js successfully ${this.mode}: ${this.filePath}`);
             return Promise.resolve();
         }
 
