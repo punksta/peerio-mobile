@@ -138,6 +138,10 @@ class LoginState extends RoutedState {
         });
     }
 
+    async restart() {
+        await RNRestart.Restart();
+    }
+
     async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         await inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);

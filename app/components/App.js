@@ -11,7 +11,7 @@ import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
 import { gradient } from './controls/effects';
-import { clientApp, crypto } from '../lib/icebear';
+import { clientApp, crypto, startSocket } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import { enableIdfa } from '../lib/idfa';
@@ -75,8 +75,16 @@ export default class App extends SafeComponent {
             Array.from(arguments).forEach(console.stackPush);
         };
 
+        const debug = console.debug;
+        console.debug = function() {
+            __DEV__ && debug.apply(console, arguments);
+            __DEV__ && Array.from(arguments).forEach(console.stackPush);
+        };
+
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
+
+        startSocket();
 
         push.clearBadge();
         enableIdfa();
