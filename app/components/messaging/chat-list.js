@@ -45,6 +45,8 @@ export default class Files extends SafeComponent {
         this.reaction = reaction(() => [
             chatState.routerMain.route === 'chats',
             chatState.routerMain.currentIndex === 0,
+            chatInviteStore.received,
+            chatInviteStore.received.length,
             this.data,
             this.data.length,
             this.maxLoadedIndex

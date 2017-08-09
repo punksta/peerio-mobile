@@ -57,9 +57,10 @@ export default class ChannelInviteList extends SafeComponent {
     listView() {
         return (
             <SectionList
+                style={{ flex: 1, flexGrow: 1 }}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 sections={this.dataSource}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id || item.kegDbId}
                 renderItem={this.item}
                 renderSectionHeader={this.header}
                 ref={sv => (this.scrollView = sv)}
