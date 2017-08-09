@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ListView, Animated } from 'react-native';
 import { observable, reaction } from 'mobx';
+import { chatInviteStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import MessagingPlaceholder from './messaging-placeholder';
 import ChatListItem from './chat-list-item';
@@ -51,7 +52,7 @@ export default class Files extends SafeComponent {
             console.log(`chat-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
                 title_channels: this.data.filter(d => !!d.isChannel),
-                title_channelInvites: 2,
+                title_channelInvites: chatInviteStore.received.length,
                 title_directMessages: this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex)
             });
             this.forceUpdate();
@@ -100,7 +101,7 @@ export default class Files extends SafeComponent {
     }
 
     renderThrow() {
-        const body = (this.data.length && chatState.store.loaded) ?
+        const body = ((this.data.length || chatInviteStore.received.length) && chatState.store.loaded) ?
             this.listView() : <MessagingPlaceholder />;
 
         return (

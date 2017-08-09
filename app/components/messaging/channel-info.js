@@ -106,9 +106,9 @@ export default class ChannelInfo extends SafeComponent {
                         </MenuTrigger>
                         <MenuOptions>
                             <MenuOption
-                                onSelect={() => isAdmin ?
-                                    chat.removeAdmin(contact) :
-                                    chat.addAdmin(contact)}>
+                                onSelect={() => (isAdmin ?
+                                    chat.demoteAdmin(contact) :
+                                    chat.promoteToAdmin(contact))}>
                                 <Text>{isAdmin ? 'Remove admin' : 'Make admin'}</Text>
                             </MenuOption>
                             <MenuOption

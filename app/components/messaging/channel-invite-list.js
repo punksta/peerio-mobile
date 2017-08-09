@@ -7,6 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import chatState from './chat-state';
 import { vars } from '../../styles/styles';
+import { chatInviteStore } from '../../lib/icebear';
 import ChannelInviteListItem from './channel-invite-list-item';
 import ChatChannelInvitesSection from './chat-channel-invites-section';
 import ChannelUpgradeOffer from '../channels/channel-upgrade-offer';
@@ -23,7 +24,7 @@ export default class ChannelInviteList extends SafeComponent {
         this.header = this.header.bind(this);
     }
 
-    get data() { return chatState.store.invites; }
+    get data() { return chatInviteStore.received || []; }
 
     componentWillUnmount() {
         this.reaction && this.reaction();
@@ -45,7 +46,7 @@ export default class ChannelInviteList extends SafeComponent {
 
     item({ item }) {
         return (
-            <ChannelInviteListItem chat={item} />
+            <ChannelInviteListItem invitation={item} />
         );
     }
 

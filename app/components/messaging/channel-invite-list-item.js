@@ -4,16 +4,15 @@ import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
+import { chatInviteStore } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
-import chatState from './chat-state';
-import { User, contactStore } from '../../lib/icebear';
 
 @observer
 export default class ChannelInviteListItem extends SafeComponent {
     renderThrow() {
-        const { chat } = this.props;
-        const { title } = chat;
-        if (!chat) return null;
+        const { invitation } = this.props;
+        if (!invitation) return null;
+        const { kegDbId, title, username /* , timestamp */ } = invitation;
         const containerStyle = {
             paddingLeft: 24,
             paddingRight: 10,
@@ -40,13 +39,13 @@ export default class ChannelInviteListItem extends SafeComponent {
                 <TouchableOpacity style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
                     <View style={{ flexGrow: 1 }}>
                         <Text style={textStyle}>
-                            {`# ${title}`}
+                            {`# ${kegDbId}`}
                         </Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={smallTextStyle}>Invited by {chat.invitedBy.fullName}</Text>
+                            <Text style={smallTextStyle}>Invited by {username}</Text>
                             <View style={{ flexDirection: 'row' }}>
-                                {buttons.uppercaseBlueButtonNoPadding('Accept', () => chat.acceptInvite())}
-                                {buttons.uppercaseGrayButtonNoPadding('Reject', () => chat.rejectInvite())}
+                                {buttons.uppercaseBlueButtonNoPadding('Accept', () => chatInviteStore.acceptInvite(kegDbId))}
+                                {buttons.uppercaseGrayButtonNoPadding('Reject', () => chatInviteStore.rejectInvite(kegDbId))}
                             </View>
                         </View>
                     </View>
@@ -57,5 +56,5 @@ export default class ChannelInviteListItem extends SafeComponent {
 }
 
 ChannelInviteListItem.propTypes = {
-    chat: PropTypes.any.isRequired
+    invitation: PropTypes.any.isRequired
 };
