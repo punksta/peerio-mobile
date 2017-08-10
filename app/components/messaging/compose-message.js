@@ -10,6 +10,7 @@ const LIMIT_PEOPLE = 8;
 const fillView = { flex: 1, flexGrow: 1 };
 const rowCenter = {
     backgroundColor: vars.white,
+    flex: 0,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

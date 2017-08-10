@@ -33,7 +33,7 @@ export default class ChannelInviteListItem extends SafeComponent {
             color: vars.txtDate,
             fontSize: 12
         };
-
+        console.log(`kegDbID: `, invitation);
         return (
             <View style={{ backgroundColor: vars.bg }}>
                 <TouchableOpacity style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>

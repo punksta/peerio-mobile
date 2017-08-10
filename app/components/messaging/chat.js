@@ -171,8 +171,7 @@ export default class Chat extends SafeComponent {
         return (
             <ScrollView
                 onLayout={this.layoutScrollView}
-                style={{ flexGrow: 1, backgroundColor: vars.white }}
-                contentContainerStyle={{ transform: [{ scaleY: -1 }] }}
+                style={{ flexGrow: 1, flex: 1, backgroundColor: vars.white }}
                 initialListSize={1}
                 onContentSizeChange={this.contentSizeChanged}
                 scrollEnabled={this.scrollEnabled}
@@ -243,7 +242,9 @@ export default class Chat extends SafeComponent {
             <View
                 style={{ flexGrow: 1, paddingBottom: 4 }}>
                 {this.chat && !this.chat.canGoUp && upgradeForArchive()}
-                {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
+                <View style={{ flex: 1, flexGrow: 1 }}>
+                    {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
+                </View>
                 <ProgressOverlay enabled={chatState.loading} />
                 <ChatActionSheet ref={sheet => (this._actionSheet = sheet)} />
             </View>

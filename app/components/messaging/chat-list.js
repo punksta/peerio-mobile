@@ -54,7 +54,7 @@ export default class Files extends SafeComponent {
             console.log(`chat-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
                 title_channels: this.data.filter(d => !!d.isChannel),
-                title_channelInvites: chatInviteStore.received.length,
+                title_channelInvites: [chatInviteStore.received.length],
                 title_directMessages: this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex)
             });
             this.forceUpdate();
@@ -73,6 +73,7 @@ export default class Files extends SafeComponent {
     }
 
     item(chat) {
+        if (!chat.id) return null;
         return chat.isChannel ? <ChannelListItem chat={chat} /> : (
             <ChatListItem key={chat.id} chat={chat} />
         );

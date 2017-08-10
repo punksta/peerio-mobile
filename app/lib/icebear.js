@@ -15,7 +15,7 @@ icebear.overrideServer = async function(value) {
     return value ?
         await TinyDb.system.setValue(OVERRIDE_SERVER_KEY, value) :
         await TinyDb.system.removeValue(OVERRIDE_SERVER_KEY);
-}
+};
 
 icebear.startSocket = async function() {
     const serverOverride = await TinyDb.system.getValue(OVERRIDE_SERVER_KEY);
@@ -28,4 +28,6 @@ icebear.startSocket = async function() {
 };
 
 global.icebear = icebear;
+// eslingignore
+if (window) window.icebear = icebear;
 module.exports = icebear;

@@ -367,6 +367,7 @@ export default class ContactSelector extends SafeComponent {
                 defaultBar
                 body={body}
                 header={header}
+                noFitHeight
                 footerAbsolute={snackbar}
                 style={layoutStyle} />
         );

@@ -30,7 +30,7 @@ export default class Layout1 extends SafeComponent {
 
         const contentContainerStyle = {
             flexGrow: 1,
-            minHeight: this.height
+            minHeight: this.props.noFitHeight ? undefined : this.height
         };
 
         const fillerStyle = {

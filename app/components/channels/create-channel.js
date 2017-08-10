@@ -76,18 +76,16 @@ export default class CreateChannel extends Component {
     @observable step = 0;
 
     componentDidMount() {
-        reaction(() => this.step, v => this._scrollView.scrollTo({ x: width * v }));
+        reaction(() => this.step, v => {
+            this._disableScrollUpdate = true;
+            setTimeout(() => this._scrollView.scrollToEnd(), 0);
+        });
         reaction(() => this.step, () => LayoutAnimation.easeInEaseOut());
-    }
-
-    handleScroll = event => {
-        const x = event.nativeEvent.contentOffset.x;
-        this.step = Math.round(x / width);
     }
 
     next() {
         if (this.step === 0) {
-            setTimeout(() => this._scrollView.scrollToEnd(), 0);
+            this.step = 1;
         } else {
             this._contactSelector.action();
         }
@@ -120,7 +118,7 @@ export default class CreateChannel extends Component {
         };
         return (
             <View style={container}>
-                {icons.dark('close')}
+                {icons.dark('close', () => chatState.routerModal.discard())}
                 <Text style={textStyle}>{'New channel'}</Text>
                 {this.isValid ?
                     icons.text(t('button_go'), () => this.next()) : icons.placeholder()}
@@ -166,11 +164,9 @@ export default class CreateChannel extends Component {
                 {this.exitRow}
                 <ScrollView
                     keyboardShouldPersistTaps="handled"
-                    scrollEnabled={this.isValid}
-                    scrollEventThrottle={0}
+                    scrollEnabled={false}
                     showsHorizontalScrollIndicator={false}
                     ref={sv => (this._scrollView = sv)}
-                    onScroll={this.handleScroll}
                     key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
                     <View style={card}>
                         <ChannelUpgradeOffer />

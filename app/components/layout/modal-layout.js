@@ -43,17 +43,6 @@ export default class ModalLayout extends SafeComponent {
         const modalAnimatedStyle = [modalStyle, { transform: transformModal }];
         const sbStyle = routerModal.current && routerModal.current.isWhite ? 'light-content' : 'default';
 
-        if (Platform.OS === 'android' && this.modal) {
-            return (
-                <View style={modalStyle}>
-                    {this.modal}
-                    <StatusBar
-                        barStyle={!routerModal.animating && routerModal.current ? sbStyle : undefined}
-                        hidden={Platform.OS !== 'android' && !this.modal} />
-                </View>
-            );
-        }
-
         return (
             <Animated.View style={modalAnimatedStyle}>
                 {this.modal}

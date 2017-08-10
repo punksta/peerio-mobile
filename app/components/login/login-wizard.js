@@ -69,7 +69,7 @@ export default class LoginWizard extends Wizard {
                 });
             }
         });
-        when(() => socket.connected, this.switchServerValue = config.socketServerUrl);
+        when(() => socket.connected, () => (this.switchServerValue = config.socketServerUrl));
     }
 
     _counter = 0;
