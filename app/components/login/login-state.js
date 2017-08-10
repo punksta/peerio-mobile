@@ -179,8 +179,8 @@ class LoginState extends RoutedState {
             }
         } catch (e) {
             console.error(e);
-            this.isInProgress = false;
         }
+        this.isInProgress = false;
     }
 
     @action async loadFromKeychain() {
