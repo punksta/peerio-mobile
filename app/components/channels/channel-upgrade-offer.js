@@ -41,7 +41,7 @@ export default class ChannelUpgradeOffer extends Component {
                 </View>
             );
         }
-        if (leftChannels < User.current.channelLimit || defaultChannelLimit) {
+        if (leftChannels <= 0) {
             channelLimitView = (
                 <View style={offerStyle}>
                     <Text>
