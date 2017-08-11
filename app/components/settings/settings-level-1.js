@@ -7,6 +7,7 @@ import SettingsItem from './settings-item';
 import { settingsState, snackbarState, mainState, loginState, contactState } from '../states';
 import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-storage-usage';
 import { toggleConnection } from '../main/dev-menu-items';
+import plans from '../payments/payments-config';
 
 const bgStyle = {
     flexGrow: 1,
@@ -33,6 +34,10 @@ export default class SettingsLevel1 extends SafeComponent {
     }
 
     renderThrow() {
+        const plan = plans.topPlan();
+        const upgradeItem = plan ?
+            <SettingsItem title={`View my ${plan.title} plan`} onPress={() => settingsState.upgrade()} /> :
+            <SettingsItem title="button_upgrade" onPress={() => settingsState.upgrade()} />;
         return (
             <View style={bgStyle}>
                 <ScrollView contentContainerStyle={svStyle}>
@@ -45,7 +50,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     </SettingsItem>
                     <SettingsItem title="title_help" onPress={() => settingsState.routerMain.logs()} />
                     {this.spacer}
-                    <SettingsItem title="button_upgrade" onPress={() => settingsState.upgrade()} />
+                    {upgradeItem}
                     <SettingsItem title="title_settingsAccount" onPress={() => settingsState.transition('account')} />
                     {this.spacer}
                     <SettingsItem title="button_logout" onPress={() => loginState.signOut()} />

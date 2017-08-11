@@ -6,7 +6,7 @@ import ToggleItem from './toggle-item';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import buttons from '../helpers/buttons';
-import popups from '../shared/popups';
+import { popupDeleteAccount } from '../shared/popups';
 import { User } from '../../lib/icebear';
 import { loginState } from '../states';
 
@@ -47,7 +47,7 @@ export default class AccountEdit extends SafeComponent {
     }
 
     async deleteAccount() {
-        if (await popups.popupDeleteAccount()) {
+        if (await popupDeleteAccount()) {
             try {
                 await User.current.deleteAccount(User.current.username);
                 loginState.signOut();

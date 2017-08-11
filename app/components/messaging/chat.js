@@ -25,6 +25,8 @@ export default class Chat extends SafeComponent {
     @observable contentHeight = 0;
     @observable scrollViewHeight = 0;
     @observable refreshing = false;
+    @observable waitForScrollToEnd = true;
+    @observable scrollEnabled = false;
     // @observable maxSliceIndex = -1;
     enableNextScroll = false;
     lastLength = 0;
@@ -81,7 +83,6 @@ export default class Chat extends SafeComponent {
 
     layoutScrollView = (event) => {
         console.log('chat.js: layout scroll view');
-        // this.scrollView.scrollToEnd();
         this.scrollViewHeight = event.nativeEvent.layout.height;
         this.contentSizeChanged();
     }
@@ -105,20 +106,16 @@ export default class Chat extends SafeComponent {
                 if (this.chat.canGoUp) indicatorSpacing += this.indicatorHeight;
                 if (this.chat.canGoDown) indicatorSpacing += this.indicatorHeight;
                 const y = this.contentHeight - this.scrollViewHeight;
-                if (y - indicatorSpacing < 0) {
-                    // console.log('chat.js: less content than fit');
-                    /* if (this.chat && (this.maxSliceIndex < this.chat.messages.length)) {
-                        this.maxSliceIndex += 10;
-                        this.disableAnimateNextScroll = true;
-                    } */
-                    // this.chat.messages.length && this.chat.loadPreviousPage();
-                    // y = 0;
-                }
+                this.scrollEnabled = y - indicatorSpacing > 0;
                 const animated = !this.disableAnimateNextScroll;
                 // console.log('chat.js: auto scroll');
                 if (!this.refreshing && !this.disableNextScroll) {
                     console.log('chat.js: auto scrolling');
-                    this.scrollView.scrollTo({ y, animated });
+                    this.scrollView.scrollTo({ y, animated: !this.waitForScrollToEnd });
+                }
+
+                if (this.waitForScrollToEnd) {
+                    this.waitForScrollToEnd = false;
                 }
                 this.animateNextScroll = false;
                 this.disableNextScroll = false;
@@ -151,7 +148,6 @@ export default class Chat extends SafeComponent {
             if (!contentHeight || !scrollViewHeight || !chat) return;
             const y = nativeEvent.contentOffset.y;
             const h = this.contentHeight - this.scrollViewHeight;
-            // console.log(`chat.js: ${y}, ${h}`);
             if (y < this.indicatorHeight / 2) {
                 this._onGoUp();
             }
@@ -164,18 +160,6 @@ export default class Chat extends SafeComponent {
         this._updater = setTimeout(updater, 500);
     }
 
-    /* onViewableItemsChanged = ({ viewableItems, changed }) => {
-        if (!viewableItems || !viewableItems.length) return;
-        const updater = () => {
-            this._onGoUp();
-        };
-        if (this._updater) clearTimeout(this._updater);
-        if (viewableItems[0].index === 0) {
-            this._updater = setTimeout(updater, 1000);
-        }
-        // console.log(viewableItems);
-    } */
-
     listView() {
         if (chatState.loading) return null;
         const refreshControlTop = this.chat.canGoUp ? (
@@ -184,26 +168,13 @@ export default class Chat extends SafeComponent {
         const refreshControlBottom = this.chat.canGoDown ? (
             <ActivityIndicator size="large" style={{ padding: 10 }} />
         ) : null;
-        /* return (
-            <FlatList
-                ListFooterComponent={this.chat.canGoDown ? ActivityIndicator : null}
-                ListHeaderComponent={this.chat.canGoUp ? ActivityIndicator : null}
-                onScroll={this.onScroll}
-                onViewableItemsChanged={this.onViewableItemsChanged}
-                onContentSizeChange={this.contentSizeChanged}
-                onLayout={this.layoutScrollView}
-                ref={sv => (this.scrollView = sv)}
-                initialNumToRender={10}
-                keyExtractor={item => item.id}
-                data={this.data}
-                renderItem={this.item} />
-        ); */
         return (
             <ScrollView
                 onLayout={this.layoutScrollView}
-                style={{ flexGrow: 1 }}
+                style={{ flexGrow: 1, flex: 1, backgroundColor: vars.white }}
                 initialListSize={1}
                 onContentSizeChange={this.contentSizeChanged}
+                scrollEnabled={this.scrollEnabled}
                 scrollEventThrottle={0}
                 onScroll={this.onScroll}
                 keyboardShouldPersistTaps="never"
@@ -215,22 +186,6 @@ export default class Chat extends SafeComponent {
                 {refreshControlBottom}
             </ScrollView>
         );
-    }
-
-    get archiveUpgrade() {
-        const upgradeContainer = {
-            backgroundColor: vars.lightGrayBg,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            paddingLeft: 12
-        };
-        return this.props.archiveUpgrade ? (
-            <View style={upgradeContainer}>
-                <Text style={{ color: vars.txtDark }}>{tx('button_upgradeForArchive')}</Text>
-                <ButtonText text={tx('upgrade')} />
-            </View>
-        ) : null;
     }
 
     get archiveNotice() {
@@ -256,7 +211,7 @@ export default class Chat extends SafeComponent {
         const shift = shiftX < 0 ? shiftX : 0;
         const marginLeft = shift < -w ? (-w + 1) : shift;
         const avatars = (participants || []).map(contact => (
-            <View style={{ marginLeft, width: w }}>
+            <View key={contact.username} style={{ marginLeft, width: w }}>
                 <TouchableOpacity
                     style={{ flex: 0 }}
                     pressRetentionOffset={vars.pressRetentionOffset}
@@ -269,8 +224,6 @@ export default class Chat extends SafeComponent {
         ));
         return (
             <View style={zsContainer}>
-                {upgradeForArchive()}
-                {this.archiveUpgrade}
                 <View style={{ flexDirection: 'row', marginRight: 48, paddingLeft: -marginLeft }}>{avatars}</View>
                 <Text style={{ textAlign: 'left', margin: 12, color: vars.txtDark }}>
                     {tx('title_chatBeginning')}
@@ -288,7 +241,10 @@ export default class Chat extends SafeComponent {
         return (
             <View
                 style={{ flexGrow: 1, paddingBottom: 4 }}>
-                {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
+                {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
+                <View style={{ flex: 1, flexGrow: 1 }}>
+                    {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
+                </View>
                 <ProgressOverlay enabled={chatState.loading} />
                 <ChatActionSheet ref={sheet => (this._actionSheet = sheet)} />
             </View>
@@ -298,7 +254,6 @@ export default class Chat extends SafeComponent {
 
 Chat.propTypes = {
     hideInput: PropTypes.bool,
-    archiveUpgrade: PropTypes.bool,
     archiveNotice: PropTypes.bool
 };
 

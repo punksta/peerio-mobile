@@ -29,6 +29,7 @@ export default class Logs extends Component {
     sendLogs() {
         const subject = `Peerio Support // logs from ${User.current.username}`;
         const recipients = ['support@peerio.com'];
+        if (console.logVersion) console.logVersion();
         const body = `<pre>${console.stack.map(mapFormat).map(mapGlue).join('\n')}</pre>`;
         RNMail.mail(
             { subject, recipients, body, isHTML: true },

@@ -138,6 +138,10 @@ class LoginState extends RoutedState {
         });
     }
 
+    async restart() {
+        await RNRestart.Restart();
+    }
+
     async signOut() {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         await inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
@@ -162,35 +166,49 @@ class LoginState extends RoutedState {
 
     async load() {
         console.log(`login-state.js: loading`);
-        const userData = await User.getLastAuthenticated();
-        if (!userData) return;
-        const { username /* , firstName, lastName */ } = userData;
-        if (this.username && this.username !== username) return;
-        this.username = username;
-        if (username) {
-            this.isInProgress = true;
-            if (await this.loadFromKeychain()) return;
-            this.isInProgress = false;
+        const load = async () => {
+            await new Promise(resolve => when(() => socket.connected, resolve));
+            const userData = await User.getLastAuthenticated();
+            if (!userData) return;
+            const { username /* , firstName, lastName */ } = userData;
+            if (this.username && this.username !== username) return;
+            this.username = username;
+            if (username) {
+                await this.loadFromKeychain();
+            }
+        };
+        this.isInProgress = true;
+        try {
+            await load();
+        } catch (e) {
+            console.error(e);
         }
+        this.isInProgress = false;
     }
 
     @action async loadFromKeychain() {
         await keychain.load();
         if (!keychain.hasPlugin) return false;
-        const data = await keychain.get(await mainState.getKeychainKey(this.username));
+        let data = await keychain.get(await mainState.getKeychainKey(this.username));
         if (!data) return false;
-        return Promise.resolve(data)
-            .then(JSON.parse)
-            .then(this.loginCached)
-            .then(async () => {
-                const touchIdKey = `user::${User.current.username}::touchid`;
-                User.current.secureWithTouchID = !!await TinyDb.system.getValue(touchIdKey);
-                return true;
-            })
-            .catch(() => {
-                console.log('login-state.js: logging in with touch id failed');
-                this._resetTouchId = true;
-            });
+        try {
+            const touchIdKey = `user::${this.username}::touchid`;
+            const secureWithTouchID = !!await TinyDb.system.getValue(touchIdKey);
+            data = JSON.parse(data);
+            await this.loginCached(data);
+            User.current.secureWithTouchID = secureWithTouchID;
+            // Temporary: if passphrase was stored unpadded,
+            // resave user data, so that it's padded.
+            if (!data.paddedPassphrase) {
+                console.log('login-state.js: resaving data with padding');
+                await mainState.saveUserKeychain(secureWithTouchID);
+            }
+            return true;
+        } catch (e) {
+            console.log('login-state.js: logging in with keychain failed');
+            this._resetTouchId = true;
+        }
+        return false;
     }
 }
 

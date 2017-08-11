@@ -3,7 +3,6 @@ import { when } from 'mobx';
 import { socket } from '../lib/icebear';
 
 function enableIdfa() {
-    console.log(`App.js: ${NativeModules.AdSupport} ${Platform.OS} ${Platform.Version}`);
     if (Platform.OS === 'ios') {
         AdSupportIOS.getAdvertisingId(idfa => {
             console.log(`App.js: tracking ${idfa}`);

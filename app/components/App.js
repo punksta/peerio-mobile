@@ -11,7 +11,7 @@ import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
 import { gradient } from './controls/effects';
-import { clientApp, crypto } from '../lib/icebear';
+import { clientApp, crypto, startSocket, config } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import { enableIdfa } from '../lib/idfa';
@@ -75,8 +75,20 @@ export default class App extends SafeComponent {
             Array.from(arguments).forEach(console.stackPush);
         };
 
+        const debug = console.debug;
+        console.debug = function() {
+            __DEV__ && debug.apply(console, arguments);
+            __DEV__ && Array.from(arguments).forEach(console.stackPush);
+        };
+
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
+
+        console.logVersion = () => {
+            console.log(`App.js: app version ${config.appVersion}, OS: ${Platform.OS}, OS version: ${Platform.Version}`);
+            console.log(`App.js: screen specs: ${width}, ${height}, ${PixelRatio.get()}`);
+        };
+        startSocket();
 
         push.clearBadge();
         enableIdfa();
@@ -132,10 +144,9 @@ export default class App extends SafeComponent {
     }
 
     renderThrow() {
-        if (MockComponent) return <MockComponent />;
         if (!uiState.locale) return this._placeHolder();
+        if (MockComponent) return <MockComponent />;
         const tabletHack = { top: 0, height, left: 0, right: 0 };
-        console.log(`App.js: screen specs: ${width}, ${height}, ${PixelRatio.get()}`);
         return gradient({
             testID: 'appOuterViewBackground',
             style: (height < 500) ? tabletHack : { flex: 1, flexGrow: 1 }

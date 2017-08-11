@@ -73,6 +73,7 @@ class BasicPlan {
     storage = '1 GB';
     uploadFileSize = '500 MB';
     canUpgradeTo = false;
+    isFreePlan = true;
 
     get isCurrent() {
         return getActivePlans().filter(p => serverPlans.indexOf(p) !== -1).length === 0;
@@ -143,4 +144,24 @@ class ProfessionalPlan extends PaidPlan {
     paymentInfo = professionalPaymentInfo;
 }
 
-export default [new BasicPlan(), new PremiumPlan(), new ProfessionalPlan()];
+const plans = [new BasicPlan(), new PremiumPlan(), new ProfessionalPlan()];
+
+plans.topPlan = function() {
+    const p = plans.filter(s => s.isCurrent && !s.isFreePlan);
+    return p.length ? p[p.length - 1] : null;
+};
+
+plans.topPlanIndex = function() {
+    let result = -1;
+    for (let i = 0; i < plans.length; ++i) {
+        const s = plans[i];
+        if (s.isCurrent && !s.isFreePlan) result = i;
+    }
+    return result;
+};
+
+plans.userHasPaidPlan = function() {
+    return !!plans.topPlan();
+};
+
+export default plans;

@@ -54,7 +54,7 @@ export default class SelectFiles extends SafeComponent {
             flexDirection: 'row',
             alignItems: 'center',
             padding: 4,
-            paddingTop: 0,
+            paddingTop: vars.statusBarHeight,
             paddingBottom: 0
         };
         const style = {

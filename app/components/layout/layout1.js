@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ScrollView } from 'react-native';
 import { observable } from 'mobx';
+import { MenuContext } from 'react-native-popup-menu';
 import SafeComponent from '../shared/safe-component';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import uiState from '../layout/ui-state';
@@ -29,7 +30,7 @@ export default class Layout1 extends SafeComponent {
 
         const contentContainerStyle = {
             flexGrow: 1,
-            minHeight: this.height
+            minHeight: this.props.noFitHeight ? undefined : this.height
         };
 
         const fillerStyle = {
@@ -38,27 +39,29 @@ export default class Layout1 extends SafeComponent {
         };
 
         return (
-            <View
-                onLayout={event => (this.height = event.nativeEvent.layout.height)}
-                testID="layout1"
-                style={[boxStyle, this.props.style]}>
-                {this.props.header}
-                <ScrollView
-                    ref={ref => (this._scrollView = ref)}
-                    contentContainerStyle={contentContainerStyle}
-                    style={{ flex: 1, flexGrow: 1 }}
-                    scrollEnabled={!this.props.noScroll}
-                    keyboardShouldPersistTaps="handled">
-                    <View style={fillerStyle}>
-                        {this.props.body}
-                        {this.props.footer}
+            <MenuContext>
+                <View
+                    onLayout={event => (this.height = event.nativeEvent.layout.height)}
+                    testID="layout1"
+                    style={[boxStyle, this.props.style]}>
+                    {this.props.header}
+                    <ScrollView
+                        ref={ref => (this._scrollView = ref)}
+                        contentContainerStyle={contentContainerStyle}
+                        style={{ flex: 1, flexGrow: 1 }}
+                        scrollEnabled={!this.props.noScroll}
+                        keyboardShouldPersistTaps="handled">
+                        <View style={fillerStyle}>
+                            {this.props.body}
+                            {this.props.footer}
+                        </View>
+                    </ScrollView>
+                    {this.props.footerAbsolute}
+                    <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                        <SnackBarConnection />
                     </View>
-                </ScrollView>
-                {this.props.footerAbsolute}
-                <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
-                    <SnackBarConnection />
                 </View>
-            </View>
+            </MenuContext>
         );
     }
 }
