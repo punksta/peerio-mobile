@@ -241,7 +241,7 @@ export default class Chat extends SafeComponent {
         return (
             <View
                 style={{ flexGrow: 1, paddingBottom: 4 }}>
-                {this.chat && !this.chat.canGoUp && upgradeForArchive()}
+                {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
                 <View style={{ flex: 1, flexGrow: 1 }}>
                     {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
                 </View>
