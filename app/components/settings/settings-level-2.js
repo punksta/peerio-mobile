@@ -13,6 +13,8 @@ import payments from '../payments/payments';
 import PaymentsQuotas from '../payments/payments-quotas';
 import ProfileEdit from './profile-edit';
 import AccountEdit from './account-edit';
+import AccountUpgrade from './account-upgrade';
+import keychain from '../../lib/keychain-bridge';
 
 const bgStyle = {
     flexGrow: 1,
@@ -45,7 +47,7 @@ export default class SettingsLevel2 extends SafeComponent {
                     title="title_showAccountKey"
                     icon="visibility"
                     onPress={() => settingsState.showPassphrase()} />
-                {this.autoLoginToggle()}
+                {this.touchIdToggle()}
             </View>
         );
     }
@@ -65,6 +67,8 @@ export default class SettingsLevel2 extends SafeComponent {
     profile = () => <ProfileEdit />;
 
     account = () => <AccountEdit />;
+
+    upgrade = () => <AccountUpgrade />;
 
     settingsItem(title, prop) {
         const user = User.current;
@@ -86,6 +90,20 @@ export default class SettingsLevel2 extends SafeComponent {
         const onPress = () => {
             user.autologinEnabled = !user.autologinEnabled;
             mainState.saveUser();
+        };
+        return (
+            <ToggleItem {...{ prop, title, state, onPress }} />
+        );
+    }
+
+    touchIdToggle() {
+        if (!keychain.available) return null;
+        const user = User.current;
+        const state = user;
+        const prop = 'secureWithTouchID';
+        const title = 'dialog_enableTouchID';
+        const onPress = () => {
+            mainState.saveUserTouchID(!user.secureWithTouchID);
         };
         return (
             <ToggleItem {...{ prop, title, state, onPress }} />
@@ -116,8 +134,6 @@ export default class SettingsLevel2 extends SafeComponent {
             <View style={bgStyle}>
                 <Text style={text}>{t('title_emailsDetail')}</Text>
                 {this.settingsItem('title_notificationsEmailMessage', 'messageNotifications')}
-                <View style={spacer} />
-                {this.settingsItem('title_promoConsent', 'subscribeToPromoEmails')}
                 <View style={spacer} />
                 {this.unreadChatsToggle()}
                 <View style={spacer} />

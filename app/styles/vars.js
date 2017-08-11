@@ -15,6 +15,7 @@ const vars = {
     bgGradient,
     tabsBg,
     tabsFg,
+    yellowLine: '#f5e23e',
     disabled: '#00000020',
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',

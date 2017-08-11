@@ -6,6 +6,10 @@ import SafeComponent from '../shared/safe-component';
 import fileState from '../files/file-state';
 import icons from '../helpers/icons';
 import FileProgress from './file-progress';
+import FileSignatureError from './file-signature-error';
+import { vars } from '../../styles/styles';
+import { popupYes } from '../shared/popups';
+
 
 @observer
 export default class FileInlineProgress extends SafeComponent {
@@ -20,9 +24,12 @@ export default class FileInlineProgress extends SafeComponent {
         };
         const file = fileState.store.getById(this.props.file);
         if (file === null) return null;
+        if (file.signatureError) return <FileSignatureError />;
         const exists = file && !file.isPartialDownload && file.cached;
         return (
-            <TouchableOpacity onPress={() => (exists ? file.launchViewer() : fileState.download(file))}>
+            <TouchableOpacity
+                pressRetentionOffset={vars.pressRetentionOffset}
+                onPress={() => (exists ? file.launchViewer() : fileState.download(file))}>
                 <View>
                     <View style={rowStyle}>
                         <Text

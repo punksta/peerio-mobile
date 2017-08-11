@@ -1,16 +1,17 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ScrollView, Text, TouchableOpacity, LayoutAnimation, Share } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, when } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
 import ContactInviteItem from './contact-invite-item';
 import { vars } from '../../styles/styles';
 import { contactStore, warnings, User, config } from '../../lib/icebear';
-import { tx, tu } from '../utils/translator';
+import { tx, tu, t } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import contactState from './contact-state';
+import snackbarState from '../snackbars/snackbar-state';
 import buttons from '../helpers/buttons';
 
 const textinputContainer = {
@@ -63,15 +64,25 @@ const label = {
     marginLeft: 10
 };
 
+const labelDark = [label, { color: vars.txtDark }];
+
 @observer
 export default class ContactAdd extends SafeComponent {
     @observable waiting = false;
     @observable notFound = false;
     @observable toInvite = null;
+    @observable showValidationError = false;
     @observable query = '';
 
     componentDidMount() {
         uiState.currentScrollView = this._scrollView;
+        reaction(() => this.query, () => {
+            this.toInvite = null;
+            if (this.showValidationError) {
+                LayoutAnimation.easeInEaseOut();
+                this.showValidationError = false;
+            }
+        });
     }
 
     componentWillUnmount() {
@@ -99,25 +110,28 @@ export default class ContactAdd extends SafeComponent {
         this.waiting = true;
         this.toInvite = null;
         this.notFound = false;
-        contactStore.addContact(this.query)
-            .then(found => {
-                if (found) {
-                    this.query = '';
-                } else {
-                    this.notFound = true;
-                    const atInd = this.query.indexOf('@');
-                    const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
-                    if (isEmail) {
-                        warnings.add(`User not found on Peerio, please invite`);
-                        LayoutAnimation.easeInEaseOut();
-                        this.toInvite = this.inviteContactDuck(this.query);
-                    }
+        const contact = contactStore.getContact(this.query);
+        when(() => !contact.loading, () => {
+            const { notFound, isLegacy } = contact;
+            if (notFound) {
+                this.notFound = true;
+                const atInd = this.query.indexOf('@');
+                const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
+                if (isEmail) {
+                    warnings.add(`User is not found on Peerio, please invite`);
+                    LayoutAnimation.easeInEaseOut();
+                    this.toInvite = this.inviteContactDuck(this.query);
+                } else if (!isLegacy) {
+                    this.showValidationError = true;
+                    LayoutAnimation.easeInEaseOut();
                 }
-            })
-            .finally(() => {
+                isLegacy && snackbarState.pushTemporary(t('title_inviteLegacy'));
+            } else {
                 this.query = '';
-                this.waiting = false;
-            });
+                contactStore.addContact(contact);
+            }
+            this.waiting = false;
+        });
     }
 
     share() {
@@ -143,8 +157,8 @@ export default class ContactAdd extends SafeComponent {
     get validationError() {
         if (!this.showValidationError) return null;
         return (
-            <Text numberOfLines={1} ellipsizeMode="tail" style={[textStatic, { color: vars.txtAlert }]}>
-                {tx('error_invalidEmail')}
+            <Text numberOfLines={1} ellipsizeMode="tail" style={[label, { color: vars.txtAlert }]}>
+                {tx('error_invalidEmailOrUsername')}
             </Text>
         );
     }
@@ -194,16 +208,12 @@ export default class ContactAdd extends SafeComponent {
                 <ScrollView
                     onScroll={this.onScroll}
                     keyboardShouldPersistTaps="handled"
-                    contentContainerStyle={{ flex: 1, flexGrow: 1, justifyContent: 'center' }}
                     style={{ backgroundColor: vars.settingsBg }}
                     ref={ref => (this._scrollView = ref)}>
-                    <View style={{ flex: 0 }}>
-                        <View style={{ margin: 8 }}>
-                            <View style={buttonRow}>
-                                <Text style={label}>{tx('Find your contacts')}</Text>
-                                {this.renderButton1('title_importContacts', () => contactState.testImport())}
-                            </View>
-                        </View>
+                    <View style={{ marginTop: 20 }}>
+                        {contactState.empty && <View style={{ margin: 8 }}>
+                            <Text style={labelDark}>{tx('title_contactZeroState')}</Text>
+                        </View>}
                         <View style={{ margin: 8 }}>
                             <Text style={label}>{tx('Add a contact')}</Text>
                             <View style={textinputContainer}>
@@ -216,10 +226,17 @@ export default class ContactAdd extends SafeComponent {
                                 {this.renderButton1('button_add', () => this.tryAdding())}
                             </View>
                             {this.inviteBlock}
+                            {this.validationError}
                         </View>
                         <View style={{ margin: 8 }}>
                             <View style={buttonRow}>
-                                <Text style={label}>{tx('Invite contacts on social networks')}</Text>
+                                <Text style={labelDark}>{tx('Find your contacts')}</Text>
+                                {this.renderButton1('title_importContacts', () => contactState.testImport())}
+                            </View>
+                        </View>
+                        <View style={{ margin: 8 }}>
+                            <View style={buttonRow}>
+                                <Text style={labelDark}>{tx('Invite contacts on social networks')}</Text>
                                 {this.renderButton1('button_share', () => this.share())}
                             </View>
                         </View>

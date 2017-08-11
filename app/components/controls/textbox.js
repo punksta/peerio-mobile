@@ -100,11 +100,9 @@ export default class TextBox extends SafeComponent {
 
     onSelectionChange = ({ nativeEvent: { selection: { start, end } } }) => {
         if (this._skip) {
-            console.log(`onSelectionChange: skip ${start}, ${end}`);
             this._skip = false;
             return;
         }
-        console.log(`onSelectionChange: ${start}, ${end}`);
         this.start = start;
         this.end = end;
     }

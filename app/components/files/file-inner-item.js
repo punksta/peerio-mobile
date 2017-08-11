@@ -7,6 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import fileState from './file-state';
+import FileSignatureError from './file-signature-error';
 
 const width = Dimensions.get('window').width;
 const height = 64;
@@ -66,6 +67,7 @@ export default class FileInnerItem extends SafeComponent {
 
     renderThrow() {
         const file = this.props.file;
+        if (file.signatureError) return <View style={{ marginHorizontal: 6 }}><FileSignatureError /></View>;
         const action = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
             icons.dark('keyboard-arrow-right', action);

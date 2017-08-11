@@ -20,6 +20,11 @@ DATE=`date +%Y-%m-%d`
 signapk ./android/app/build/outputs/apk/app-armeabi-v7a-release-unsigned.apk ./android/app/build/outputs/apk/app-armeabi-v7a-release-signed.apk
 signapk ./android/app/build/outputs/apk/app-x86-release-unsigned.apk ./android/app/build/outputs/apk/app-x86-release-signed.apk
 
+zip -d ./android/app/build/outputs/apk/app-armeabi-v7a-debug.apk 'META-INF/*.SF' 'META-INF/*.RSA'
+zip -d ./android/app/build/outputs/apk/app-x86-debug-unaligned.apk 'META-INF/*.SF' 'META-INF/*.RSA'
+signapk ./android/app/build/outputs/apk/app-armeabi-v7a-debug.apk ./android/app/build/outputs/apk/app-armeabi-v7a-debug-signed.apk
+signapk ./android/app/build/outputs/apk/app-x86-debug-unaligned.apk ./android/app/build/outputs/apk/app-x86-debug-signed.apk
+
 echo ============================================
 echo "||             BUILD SUCCESS              ||"
 echo ============================================

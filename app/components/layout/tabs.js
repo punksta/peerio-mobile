@@ -6,6 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import { fileStore, chatStore } from '../../lib/icebear';
+import contactState from '../contacts/contact-state';
 import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
 
@@ -61,7 +62,8 @@ export default class Tabs extends SafeComponent {
             <Animated.View style={[bottomRowStyle, animation]}>
                 {this.action(t('title_chats'), 'chats', 'forum', chatStore.unreadMessages)}
                 {this.action(t('title_files'), 'files', 'folder', fileStore.unreadFiles)}
-                {this.action(t('title_contacts'), 'contacts', 'people')}
+                {this.action(t('title_contacts'),
+                    contactState.empty ? 'contactAdd' : 'contacts', 'people')}
                 {this.action(t('title_settings'), 'settings', 'settings')}
             </Animated.View>
         );

@@ -2,12 +2,16 @@ import React from 'react';
 import { observable } from 'mobx';
 import Router from './router';
 import ComposeMessage from '../messaging/compose-message';
+import CreateChannel from '../channels/create-channel';
+import ChannelAddPeople from '../messaging/channel-add-people';
 import SelectFiles from '../files/select-files';
 import FileShare from '../files/file-share';
 import ContactView from '../contacts/contact-view';
 import ChatInfo from '../messaging/chat-info';
+import ChannelInfo from '../messaging/channel-info';
 import PinModalCreate from '../controls/pin-modal-create';
 import PinModalAsk from '../controls/pin-modal-ask';
+import AccountUpgradeSwiper from '../settings/account-upgrade-swiper';
 import routes from './routes';
 
 class RouterModal extends Router {
@@ -18,12 +22,16 @@ class RouterModal extends Router {
         super();
         routes.modal = this;
         this.add('compose', ComposeMessage);
+        this.add('createChannel', CreateChannel);
+        this.add('channelAddPeople', ChannelAddPeople);
         this.add('shareFileTo', FileShare);
         this.add('selectFiles', SelectFiles);
         this.add('contactView', ContactView);
         this.add('createPin', PinModalCreate, true);
         this.add('askPin', PinModalAsk, true);
         this.add('chatInfo', ChatInfo);
+        this.add('channelInfo', ChannelInfo);
+        this.add('accountUpgradeSwiper', AccountUpgradeSwiper, true, true);
     }
 
     add(route, component, isWhite) {

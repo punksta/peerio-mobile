@@ -11,10 +11,16 @@ import CheckBox from './checkbox';
 function textControl(str) {
     const text = {
         color: '#000000AA',
-        marginVertical: 10
+        marginVertical: 10,
+        lineHeight: 22
     };
 
-    return <Text style={text}>{str}</Text>;
+    let formatted = str;
+    if (typeof str === 'string') {
+        formatted = str.replace('\n', '\n\n');
+    }
+
+    return <Text style={text}>{formatted}</Text>;
 }
 
 function checkBoxControl(str, checked, press) {
@@ -49,8 +55,8 @@ function popupYes(title, subTitle, text) {
     return new Promise((resolve) => {
         popupState.showPopup({
             title,
-            subTitle: textControl(subTitle),
-            contents: textControl(text),
+            subTitle: subTitle ? textControl(subTitle) : null,
+            contents: text ? textControl(text) : null,
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: resolve
             }]
@@ -91,6 +97,19 @@ function popupYesSkip(title, subTitle, text) {
     });
 }
 
+function popupSignOutAutologin(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title: t('title_gotYourKeys'),
+            contents: textControl(t('title_signOutConfirmKeys')),
+            buttons: [
+                { id: 'no', text: tu('button_getKey'), action: () => resolve(false) },
+                { id: 'yes', text: tu('button_lock'), action: () => resolve(true), secondary: true }
+            ]
+        });
+    });
+}
+
 function popupCopyCancel(title, subTitle, text) {
     return popupState.showPopupPromise(resolve => ({
         title,
@@ -99,6 +118,18 @@ function popupCopyCancel(title, subTitle, text) {
         buttons: [
             { id: 'cancel', text: tu('button_close'), action: () => resolve(false) },
             { id: 'copy', text: tu('title_copy'), action: () => resolve(true) }
+        ]
+    }));
+}
+
+function popupCancelConfirm(title, subTitle, text) {
+    return popupState.showPopupPromise(resolve => ({
+        title,
+        subTitle: textControl(subTitle),
+        contents: textControl(text),
+        buttons: [
+            { id: 'cancel', text: tu('button_cancel'), secondary: true, action: () => resolve(false) },
+            { id: 'confirm', text: tu('button_confirm'), action: () => resolve(true) }
         ]
     }));
 }
@@ -169,11 +200,25 @@ function popupDeleteAccount() {
     }));
 }
 
+function popupControl(contents) {
+    console.log(`popups.js: popup control`);
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            fullScreen: 1,
+            contents,
+            buttons: [{
+                id: 'ok', text: tu('button_ok'), action: resolve
+            }]
+        });
+    });
+}
+
 locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
 
-module.exports = {
+
+export {
     popupYes,
     popupYesCancel,
     popupYesSkip,
@@ -183,5 +228,8 @@ module.exports = {
     popupInputCancel,
     popupUpgrade,
     popupSystemWarning,
-    popupDeleteAccount
+    popupDeleteAccount,
+    popupControl,
+    popupSignOutAutologin,
+    popupCancelConfirm
 };

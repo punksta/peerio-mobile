@@ -16,6 +16,7 @@ import ContactAdd from '../contacts/contact-add';
 import ContactView from '../contacts/contact-view';
 import ContactList from '../contacts/contact-list';
 import ContactListInvite from '../contacts/contact-list-invite';
+import ChannelInviteList from '../messaging/channel-invite-list';
 import Logs from '../logs/logs';
 import { fileState, mainState, ghostState, chatState, settingsState, contactState, contactAddState } from '../states';
 // import { enablePushNotifications } from '../../lib/push';
@@ -37,19 +38,20 @@ class RouterMain extends Router {
         routes.main = this;
         reaction(() => this.currentIndex, i => (this.isBackVisible = i > 0));
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
-    }
-
-    @action async initial() {
-        if (this.invoked) return;
-        this.invoked = true;
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
         this.add('chats', [<ChatList />, <Chat />], chatState);
         this.add('contacts', [<ContactList />, <ContactView nonModal />], contactState);
         this.add('contactAdd', [<ContactAdd />], contactAddState);
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
+        this.add('channelInviteList', [<ChannelInviteList />], chatState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: 'Logs' });
+    }
+
+    @action async initial() {
+        if (this.invoked) return;
+        this.invoked = true;
         this.loading = true;
         // if (EN === 'peeriomobile') await enablePushNotifications();
         await mainState.init();

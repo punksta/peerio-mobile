@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Animated } from 'react-native';
+import { View, ListView, Animated, Text } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FilesPlaceholder from './files-placeholder';
@@ -8,6 +8,7 @@ import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileActions from './file-actions';
 import fileState from './file-state';
+import { upgradeForFiles } from '../payments/payments';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -92,6 +93,7 @@ export default class Files extends SafeComponent {
             <View
                 style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
+                    {upgradeForFiles()}
                     {body}
                 </View>
                 <FileActions height={this.actionsHeight} />

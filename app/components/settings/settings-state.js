@@ -17,7 +17,8 @@ class SettingsState extends RoutedState {
         security: 'title_settingsSecurity',
         profile: 'title_settingsProfile',
         account: 'title_settingsAccount',
-        preferences: 'title_settingsPreferences'
+        preferences: 'title_settingsPreferences',
+        upgrade: 'button_upgrade'
     };
 
     get title() {
@@ -42,7 +43,7 @@ class SettingsState extends RoutedState {
     @action transition(subroute) {
         console.log(`settings-state.js: transition ${subroute}`);
         LayoutAnimation.easeInEaseOut();
-        this.routerMain.route = 'settings';
+        this.routerMain.settings();
         if (subroute) {
             this.subroute = subroute;
             this.stack.push(subroute);
@@ -51,6 +52,10 @@ class SettingsState extends RoutedState {
             this.routerMain.currentIndex = 0;
             this.stack.clear();
         }
+    }
+
+    upgrade() {
+        this.routerModal.accountUpgradeSwiper();
     }
 
     async showPassphrase() {

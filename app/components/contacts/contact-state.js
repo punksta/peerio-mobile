@@ -2,16 +2,14 @@ import { DeviceEventEmitter } from 'react-native';
 import { observable, action, when } from 'mobx';
 import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
-import { contactStore, warnings, chatStore, User } from '../../lib/icebear';
+import { contactStore, warnings, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
-import fileState from '../files/file-state';
-import chatState from '../messaging/chat-state';
 import { loadGroupSettings } from './contacts-groups';
 import contactAddState from './contact-add-state';
 
 class ContactState extends RoutedState {
     _prefix = 'contacts';
-    store = contactStore;
+    @observable store = contactStore;
     _permissionHandler = null;
 
     @action async init() {
@@ -54,61 +52,13 @@ class ContactState extends RoutedState {
         return !!this.findByUsername(c.username).length;
     }
 
-    get filtered() {
-        const result = contactStore.filter(this.findUserText).filter(c => c.username !== User.current.username);
+    getFiltered(findUserText) {
+        const result = this.store.filter(findUserText || '').filter(c => c.username !== User.current.username);
         return result.length ? result : this.found.filter(c => !c.loading && !c.notFound);
-    }
-
-    @action add(c) {
-        if (this.exists(c)) return;
-        this.findUserText = '';
-        this.recipients.push(c);
-        this.recipientsMap.set(c.username, c);
-    }
-
-    @action remove(c) {
-        const existing = this.findByUsername(c.username);
-        existing.forEach(e => {
-            const i = this.recipients.indexOf(e);
-            if (i === -1) return;
-            this.recipients.splice(i, 1);
-        });
-        this.recipientsMap.delete(c.username);
-    }
-
-    @action toggle(c) {
-        this.exists(c) ? this.remove(c) : this.add(c);
-    }
-
-    @action clear() {
-        this.loading = false;
-        this.findUserText = '';
-        this.recipients = [];
-        this.found = [];
-        this.recipientsMap.clear();
-    }
-
-    @action send(text, recipient) {
-        const chat = chatState.store.startChat(recipient ? [recipient] : this.recipients);
-        this.exit();
-        chatState.loading = true;
-        when(() => !chat.loadingMeta, () => {
-            chatState.loading = false;
-            this.routerMain.chats(chat, true);
-            text && chat.sendMessage(text);
-        });
     }
 
     @action sendTo(contact) {
         this.send(null, contact);
-    }
-
-    @action async share() {
-        const file = fileState.currentFile;
-        if (!file) return;
-        await chatStore.startChatAndShareFiles(this.recipients, file);
-        this.routerMain.chats(chatState.store.activeChat, true);
-        this.exit();
     }
 
     get title() {
@@ -118,8 +68,11 @@ class ContactState extends RoutedState {
 
     // if we have no contacts except User.current
     get empty() {
-        return !this.store.contacts || (this.store.contacts.length <= 1
-            && !this.store.contacts.filter(u => User.current.username !== u.username).length);
+        const { addedContacts, invitedContacts, contacts } = this.store;
+        return !contacts || (contacts.length <= 1
+            && !contacts.filter(u => User.current.username !== u.username).length)
+            && !invitedContacts.length
+            && !addedContacts.length;
     }
 
     @action requestPermission() {

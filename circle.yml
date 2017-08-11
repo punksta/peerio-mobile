@@ -1,12 +1,11 @@
 machine:
   pre:
     - pip install --user --ignore-installed --upgrade --verbose virtualenv
-    - ln -s ~/Library/Python/2.7/bin/virtualenv /usr/local/bin/virtualenv
   environment:
     XCODE_SCHEME: peeriomobile
     PATH: '$PATH:$HOME/node/node-v7.3.0-darwin-x64/bin'
   xcode:
-    version: 8.0
+    version: 8.3
 
 dependencies:
   pre:
@@ -28,4 +27,4 @@ compile:
 test:
   override:
     - mkdir -p $CIRCLE_TEST_REPORTS/py.test
-    - virtualenv .pyenv && source .pyenv/bin/activate && PEERIO_IOS_SIM="iPhone 7" PEERIO_IOS_VERSION="10.0" py.test --platform=ios -s -x tests --junitxml=$CIRCLE_TEST_REPORTS/py.test/junit.xml
+    - npm run testserver:test

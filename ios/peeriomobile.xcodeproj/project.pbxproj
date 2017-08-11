@@ -1558,7 +1558,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
 				PROVISIONING_PROFILE = "8af779d7-8d20-405a-b046-26c189b7ce9e";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1628,7 +1627,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
 				PROVISIONING_PROFILE = "1f70bad6-eabe-4771-adb8-bb46b73b0b2e";
-				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

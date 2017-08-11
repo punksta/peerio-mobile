@@ -1,3 +1,4 @@
+import randomWords from 'random-words';
 import { observable, action, when } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
@@ -73,7 +74,6 @@ class SignupState extends RoutedState {
         User.current = user;
         const { username, email, firstName, lastName, passphrase } = this;
         const localeCode = uiState.locale;
-        console.log(`signup-state.js: ${username}`);
         user.username = username;
         user.email = email;
         user.passphrase = __DEV__ && process.env.PEERIO_QUICK_SIGNUP ? 'icebear' : passphrase;
@@ -81,13 +81,14 @@ class SignupState extends RoutedState {
         user.lastName = lastName;
         user.localeCode = localeCode;
         return user.createAccountAndLogin()
-            .then(() => loginState.askAboutAutomaticLogin(user))
+            .then(() => loginState.enableAutomaticLogin(user))
             .then(() => mainState.activateAndTransition(user))
             .catch((e) => {
                 console.log(e);
                 User.current = null;
                 this.reset();
             })
+            .then(() => mainState.saveUser())
             .finally(() => (this.isInProgress = false));
     }
 }
@@ -103,7 +104,7 @@ if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
     when(() => !process.env.PEERIO_AUTOLOGIN && signupState.isConnected && signupState.isActive, () => {
         const s = signupState;
         const rnd = new Date().getTime();
-        s.username = `t${rnd}`;
+        s.username = randomWords({ min: 2, max: 2, join: 'o' });
         s.email = `seavan+${rnd}@gmail.com`;
         s.firstName = 'First';
         s.lastName = 'Last';

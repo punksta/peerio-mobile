@@ -42,6 +42,10 @@ const icons = {
         return icons.plain(name, size, vars.darkIcon);
     },
 
+    plainalert(name, size) {
+        return icons.plain(name, size, vars.txtAlert);
+    },
+
     plainWhite(name, size) {
         return icons.plain(name, size, vars.whiteIcon);
     },

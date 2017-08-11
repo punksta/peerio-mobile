@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Animated, Dimensions, StatusBar, Platform } from 'react-native';
+import { Animated, Dimensions, StatusBar, Platform, View } from 'react-native';
 import { reaction, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -41,11 +41,13 @@ export default class ModalLayout extends SafeComponent {
         };
         const transformModal = [{ translateY: this.modalAnimated }];
         const modalAnimatedStyle = [modalStyle, { transform: transformModal }];
+        const sbStyle = routerModal.current && routerModal.current.isWhite ? 'light-content' : 'default';
+
         return (
             <Animated.View style={modalAnimatedStyle}>
                 {this.modal}
                 <StatusBar
-                    barStyle={this.modalVisible ? 'default' : undefined}
+                    barStyle={!routerModal.animating && routerModal.current ? sbStyle : undefined}
                     hidden={Platform.OS !== 'android' && !this.modal} />
             </Animated.View>
         );
