@@ -166,9 +166,10 @@ class LoginState extends RoutedState {
 
     async load() {
         console.log(`login-state.js: loading`);
-        this.isInProgress = true;
         try {
+            this.isInProgress = true;
             await new Promise(resolve => when(() => socket.connected, resolve));
+            this.isInProgress = false;
             const userData = await User.getLastAuthenticated();
             if (!userData) return;
             const { username /* , firstName, lastName */ } = userData;
