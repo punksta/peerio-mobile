@@ -42,7 +42,7 @@ export default {
                 console.log('imagepicker.js: user cancelled image picker');
             } else if (response.error) {
                 console.log('imagepicker.js: ', response.error);
-            } else if (customCallback && response.customButton !== ANDROID_PICK_ACTION) {
+            } else if (customCallback && response.customButton && response.customButton !== ANDROID_PICK_ACTION) {
                 console.log('imagepicker.js:', response.customButton);
                 customCallback(response.customButton);
             } else {
