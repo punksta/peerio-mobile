@@ -24,8 +24,22 @@ class RouterApp extends Router {
                 routes.modal.discard();
                 return true;
             }
-            routes.main.back();
-            return true;
+            // go back from signupStep1
+            if (this.route === 'signupStep1') {
+                this.loginStart();
+                return true;
+            }
+            // allow to back from main state when index is 0
+            if (this.route === 'main') {
+                if (routes.main.currentIndex > 0) {
+                    routes.main.back();
+                } else if (routes.main.isInitialRoute) {
+                    return false;
+                }
+                routes.main.initialRoute();
+                return true;
+            }
+            return false;
         });
     }
 }

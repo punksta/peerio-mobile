@@ -32,6 +32,7 @@ class RouterMain extends Router {
     @observable suppressTransition = false;
     @observable loading = false;
     @observable invoked = false;
+    _initialRoute = 'chats';
 
     constructor() {
         super();
@@ -49,6 +50,14 @@ class RouterMain extends Router {
         this.add('logs', [<Logs />], { title: 'Logs' });
     }
 
+    @action initialRoute() {
+        this[this._initialRoute](null, true);
+    }
+
+    get isInitialRoute() {
+        return this.route === this._initialRoute;
+    }
+
     @action async initial() {
         if (this.invoked) return;
         this.invoked = true;
@@ -59,7 +68,7 @@ class RouterMain extends Router {
         await contactState.init();
         await fileState.init();
         this.loading = false;
-        this.chats();
+        this.initialRoute();
     }
 
     add(key, components, routeState) {

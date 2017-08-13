@@ -166,6 +166,8 @@ class LoginState extends RoutedState {
 
     async load() {
         console.log(`login-state.js: loading`);
+
+        setTimeout(() => { this.isInProgress = false; }, 0);
         const load = async () => {
             await new Promise(resolve => when(() => socket.connected, resolve));
             const userData = await User.getLastAuthenticated();
@@ -177,13 +179,15 @@ class LoginState extends RoutedState {
                 await this.loadFromKeychain();
             }
         };
-        this.isInProgress = true;
+        // TODO: fix this android hack for LayoutAnimation easeInEaseOut on transitions
+        setTimeout(() => { this.isInProgress = true; }, 0);
         try {
             await load();
         } catch (e) {
             console.error(e);
         }
-        this.isInProgress = false;
+        // TODO: fix this android hack for LayoutAnimation easeInEaseOut on transitions
+        setTimeout(() => { this.isInProgress = false; }, 0);
     }
 
     @action async loadFromKeychain() {
