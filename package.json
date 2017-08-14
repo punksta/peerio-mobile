@@ -34,7 +34,7 @@
     "commit-msg": "validate-commit-msg"
   },
   "dependencies": {
-    "@peerio/peerio-icebear": "git+https://github.com/PeerioTechnologies/peerio-icebear.git#feat-unique-cache-file-paths",
+    "@peerio/peerio-icebear": "git+https://github.com/PeerioTechnologies/peerio-icebear.git#dev",
     "babel-cli": "6.22.2",
     "base64-js": "1.2.0",
     "blake2s-js": "1.2.2",
@@ -123,7 +123,7 @@
     "rn-nodeify": "github:mvayngrib/rn-nodeify",
     "semantic-release": "6.3.2",
     "sinon": "^1.17.7",
-    "sinon-chai": "^2.12.0",
+    "sinon-chai": "^2.13.0",
     "standard-version": "^4.0.0",
     "user-home-cli": "^1.0.1",
     "validate-commit-message": "3.0.1"
