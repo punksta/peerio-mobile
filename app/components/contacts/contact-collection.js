@@ -1,17 +1,8 @@
-import { DeviceEventEmitter } from 'react-native';
-import { observable, action, when } from 'mobx';
-import RNContacts from 'react-native-contacts';
-import RoutedState from '../routes/routed-state';
-import { contactStore, warnings, chatStore, User } from '../../lib/icebear';
-import { tx } from '../utils/translator';
-import fileState from '../files/file-state';
-import chatState from '../messaging/chat-state';
-import { loadGroupSettings } from './contacts-groups';
-import contactAddState from './contact-add-state';
+import { observable, action } from 'mobx';
 
 class MappedCollection {
-    getKey(item) {
-        throw new Error('Must override getKey');
+    getKey(/* item */) {
+        throw new Error(`contact-collection.js: must override getKey`);
     }
 
     @observable items = [];

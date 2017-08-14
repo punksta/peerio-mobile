@@ -119,7 +119,7 @@ export default class CreateChannel extends Component {
         return (
             <View style={container}>
                 {icons.dark('close', () => chatState.routerModal.discard())}
-                <Text style={textStyle}>{'New channel'}</Text>
+                <Text style={textStyle}>{tx('button_createChannel')}</Text>
                 {this.isValid ?
                     icons.text(t('button_go'), () => this.next()) : icons.placeholder()}
             </View>
@@ -134,8 +134,8 @@ export default class CreateChannel extends Component {
         return (
             <View style={hideStyle}>
                 <View style={[rowCenter, { height: 60 }]}>
-                    <Text numberOfLines={2} style={bottomRowText}>{`Don't need a channel? Use chat instead`}</Text>
-                    {buttons.uppercaseBlueButton('Create chat', () => chatState.routerModal.compose())}
+                    <Text numberOfLines={2} style={bottomRowText}>{tx('title_goCreateChat')}</Text>
+                    {buttons.uppercaseBlueButton(tx('button_createChannel'), () => chatState.routerModal.compose())}
                 </View>
             </View>
         );
@@ -170,8 +170,8 @@ export default class CreateChannel extends Component {
                     key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
                     <View style={card}>
                         <ChannelUpgradeOffer />
-                        {this.renderTextBox('Channel name', '# Name', 'channelName')}
-                        {this.renderTextBox('Purpose (optional)', 'What is it about', 'channelPurpose')}
+                        {this.renderTextBox(tx('title_channelName'), tx('title_channelNamePlaceholder'), 'channelName')}
+                        {this.renderTextBox(tx('title_channelPurpose'), tx('title_channelPurposePlaceholder'), 'channelPurpose')}
                     </View>
                     <View style={card}>
                         <ContactSelector

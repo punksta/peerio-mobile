@@ -1,13 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
-import { View, SectionList, Text } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { View, SectionList } from 'react-native';
+import { reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import ContactInviteItem from './contact-invite-item';
 import ContactSectionHeader from './contact-section-header';
 import contactAddState from './contact-add-state';
+import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -16,10 +16,10 @@ export default class ContactListInvite extends SafeComponent {
     dataSource = [];
     get data() { return contactAddState.imported; }
 
-    get layoutTitle() { return 'Invite contacts'; }
+    get layoutTitle() { return tx('button_inviteEmailContact'); }
 
     get leftIcon() {
-        return buttons.uppercaseWhiteButton('Done', () => contactAddState.routerMain.contacts());
+        return buttons.uppercaseWhiteButton(tx('button_done'), () => contactAddState.routerMain.contacts());
     }
 
     componentWillUnmount() {
@@ -32,7 +32,7 @@ export default class ContactListInvite extends SafeComponent {
             this.data,
             this.data.length
         ], () => {
-            this.dataSource = [{ data: this.data.slice(), key: 'Invite your contacts to Peerio' }];
+            this.dataSource = [{ data: this.data.slice(), key: tx('title_inviteToPeerio') }];
             this.forceUpdate();
         }, true);
     }

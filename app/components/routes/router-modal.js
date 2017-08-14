@@ -9,7 +9,6 @@ import FileShare from '../files/file-share';
 import ContactView from '../contacts/contact-view';
 import ChatInfo from '../messaging/chat-info';
 import ChannelInfo from '../messaging/channel-info';
-import PinModalCreate from '../controls/pin-modal-create';
 import PinModalAsk from '../controls/pin-modal-ask';
 import AccountUpgradeSwiper from '../settings/account-upgrade-swiper';
 import routes from './routes';
@@ -27,7 +26,6 @@ class RouterModal extends Router {
         this.add('shareFileTo', FileShare);
         this.add('selectFiles', SelectFiles);
         this.add('contactView', ContactView);
-        this.add('createPin', PinModalCreate, true);
         this.add('askPin', PinModalAsk, true);
         this.add('chatInfo', ChatInfo);
         this.add('channelInfo', ChannelInfo);

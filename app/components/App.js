@@ -99,14 +99,13 @@ export default class App extends SafeComponent {
         AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
         NativeModules.PrivacySnapshot && NativeModules.PrivacySnapshot.enabled(true);
         if (NativeModules.RNSodium && NativeModules.RNSodium.scrypt) {
-            console.log('App.js: using native scrypt');
+            console.log(`App.js: using native scrypt`);
             crypto.setScrypt(scryptNative);
         }
-        console.log('App.js: settings worker sign/verify');
+        console.log(`App.js: settings worker sign/verify`);
         if (NativeModules.RNSodium) {
             const { signDetached, verifyDetached } = NativeModules.RNSodium;
             if (signDetached && verifyDetached) {
-                // console.log('Using native implementation');
                 crypto.sign.setImplementation(signDetachedNative, verifyDetachedNative);
             }
         }

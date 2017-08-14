@@ -344,7 +344,7 @@ export default class ContactSelector extends SafeComponent {
                         {` to create a new one `}
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        {buttons.uppercaseBlueButton('Upgrade')}
+                        {buttons.uppercaseBlueButton(tx('button_upgrade'))}
                     </View>
                 </View>
             </View>

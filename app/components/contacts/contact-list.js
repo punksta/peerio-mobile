@@ -12,6 +12,7 @@ import ContactItem from './contact-item';
 import ContactSectionHeader from './contact-section-header';
 import contactState from './contact-state';
 import { vars } from '../../styles/styles';
+import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -23,11 +24,11 @@ export default class ContactList extends SafeComponent {
     @observable refreshing = false
 
     groupsIcon(disabled) {
-        return buttons.uppercaseWhiteButton('Groups', () => (this.mode = 'groups'), disabled);
+        return buttons.uppercaseWhiteButton(tx('title_contactGroups'), () => (this.mode = 'groups'), disabled);
     }
 
     doneIcon(disabled) {
-        return buttons.uppercaseWhiteButton('Done', () => (this.mode = 'list'), disabled);
+        return buttons.uppercaseWhiteButton(tx('button_done'), () => (this.mode = 'list'), disabled);
     }
 
     get leftIcon() {
@@ -70,9 +71,9 @@ export default class ContactList extends SafeComponent {
                 this.dataSource.unshift({ data: [], key: `All (${contacts.length})` });
             }
             groupSettings.favorites &&
-                this.dataSource.unshift({ data: addedContacts.slice(), key: `Favourites (${addedContacts.length})` });
+                this.dataSource.unshift({ data: addedContacts.slice(), key: `${tx('title_favoriteContacts')} (${addedContacts.length})` });
             groupSettings.invited &&
-                this.dataSource.push({ data: invitedContacts.slice(), key: `Invited (${invitedContacts.length})` });
+                this.dataSource.push({ data: invitedContacts.slice(), key: `${tx('title_invitedContacts')} (${invitedContacts.length})` });
             this.forceUpdate();
         }, true);
     }
@@ -89,7 +90,7 @@ export default class ContactList extends SafeComponent {
 
     listView() {
         const { all, invited, favorites } = groupSettings;
-        if (!all && !invited && !favorites) return <View><Text>No groups are selected</Text></View>;
+        if (!all && !invited && !favorites) return <View><Text>{tx('title_contactGroupsNotSelected')}</Text></View>;
         return (
             <SectionList
                 initialNumToRender={INITIAL_LIST_SIZE}

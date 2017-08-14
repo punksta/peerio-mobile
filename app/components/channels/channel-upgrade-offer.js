@@ -5,6 +5,7 @@ import { observer } from 'mobx-react/native';
 import { User } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
 import chatState from '../messaging/chat-state';
+import { t, tx } from '../utils/translator';
 
 @observer
 export default class ChannelUpgradeOffer extends Component {
@@ -24,7 +25,7 @@ export default class ChannelUpgradeOffer extends Component {
                     <Text style={{ fontWeight: 'bold' }}> {defaultChannelLimit} free channels</Text>, enjoy {leftChannels} more channel on this account!
                 </Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    {buttons.uppercaseBlueButton('Upgrade')}
+                    {buttons.uppercaseBlueButton(tx('button_upgrade'))}
                 </View>
             </View>
         );
@@ -36,7 +37,7 @@ export default class ChannelUpgradeOffer extends Component {
                         <Text style={{ fontWeight: 'bold' }}> {User.current.channelLimit} channels</Text>, enjoy {leftChannels} more channel on this account!
                 </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        {buttons.uppercaseBlueButton('Upgrade')}
+                        {buttons.uppercaseBlueButton(tx('button_upgrade'))}
                     </View>
                 </View>
             );
@@ -49,7 +50,7 @@ export default class ChannelUpgradeOffer extends Component {
                         <Text style={{ fontWeight: 'bold' }}> {User.current.channelLimit} channels</Text>, please upgrade.
                 </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        {buttons.uppercaseBlueButton('Upgrade')}
+                        {buttons.uppercaseBlueButton(tx('button_upgrade'))}
                     </View>
                 </View>
             );
