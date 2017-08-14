@@ -25,7 +25,8 @@ class KeychainBridge {
         console.log(`keychain-bridge.js: requesting ${key}`);
         return RNKeychain.getValue(key).catch(e => {
             console.log(`keychain-bridge.js: returned error from ${key}`);
-            console.log(e);
+            console.log(e.message);
+            console.log(e.stack);
             return Promise.resolve(null);
         });
     }
