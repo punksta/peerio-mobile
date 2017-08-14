@@ -55,8 +55,7 @@ RCT_REMAP_METHOD(saveValue,
     NSDictionary *attributes = @{
         (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
         (__bridge id)kSecAttrService: key,
-        (__bridge id)kSecValueData: secretPasswordTextData,
-        (__bridge id)kSecUseNoAuthenticationUI: @YES,
+        (__bridge id)kSecValueData: secretPasswordTextData,        
         (__bridge id)kSecAttrAccessControl: (__bridge_transfer id)sacObject
     };
 
