@@ -4,7 +4,7 @@ import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import { contactStore } from '../../lib/icebear';
-import { t } from '../utils/translator';
+import { t, tx } from '../utils/translator';
 
 @observer
 export default class ContactLegacyItem extends SafeComponent {
@@ -23,7 +23,7 @@ export default class ContactLegacyItem extends SafeComponent {
                 sending={invited}
                 height={56}
                 contact={contact}
-                title2={t('title_inviteLegacy')}
+                message={tx('title_inviteLegacy')}
                 title={fullName}
                 hideOnline />
         );
