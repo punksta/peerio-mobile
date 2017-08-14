@@ -54,7 +54,7 @@ export default class Files extends SafeComponent {
             console.log(`chat-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
                 title_channels: this.data.filter(d => !!d.isChannel),
-                title_channelInvites: [chatInviteStore.received.length],
+                title_channelInvites: [],
                 title_directMessages: this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex)
             });
             this.forceUpdate();
@@ -66,10 +66,11 @@ export default class Files extends SafeComponent {
             title_channels: 'Channels',
             title_directMessages: 'Direct messages'
         };
+        const invitesCount = chatInviteStore.received.length;
         return key === 'title_channelInvites' ?
             <ChatChannelInviteSection
                 title="Channel invites"
-                data={data} onPress={() => chatState.routerMain.channelInviteList()} /> : <ChatSectionHeader title={titles[key]} />;
+                data={invitesCount} onPress={() => chatState.routerMain.channelInviteList()} /> : <ChatSectionHeader title={titles[key]} />;
     }
 
     item(chat) {
