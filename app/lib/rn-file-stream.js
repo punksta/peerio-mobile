@@ -1,6 +1,7 @@
 import { Platform, NativeModules } from 'react-native';
 import RNFS from 'react-native-fs';
 import FileOpener from 'react-native-file-opener';
+import pathUtils from 'path';
 
 const icebear = require('./peerio-icebear');
 
@@ -20,6 +21,7 @@ export default (fileStream) => {
                         return this;
                     });
             }
+            RNFS.mkdir(pathUtils.dirname(this.filePath));
             this.fileDescriptor = this.filePath;
             return Promise.resolve(this);
         }
@@ -62,8 +64,8 @@ export default (fileStream) => {
             return RNFS.appendFile(this.fileDescriptor, bytesToB64(buffer), 'base64').return(buffer);
         }
 
-        static getFullPath(name) {
-            return `${ROOT}/${name}`;
+        static getFullPath(uid, name) {
+            return `${ROOT}/${uid}/${name}`;
         }
 
         static exists(path) {
