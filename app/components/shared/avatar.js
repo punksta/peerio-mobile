@@ -195,7 +195,7 @@ export default class Avatar extends SafeComponent {
         };
         return this.props.sendError ?
             <View style={notSentMessageStyle}>
-                <Text style={{ color: vars.txtAlert }}>Message not sent</Text>
+                <Text style={{ color: vars.txtAlert }}>{tx('error_messageSendFail')}</Text>
             </View> : null;
     }
 

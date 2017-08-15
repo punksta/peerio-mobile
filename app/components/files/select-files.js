@@ -74,7 +74,7 @@ export default class SelectFiles extends SafeComponent {
         return (
             <View style={container}>
                 {icons.dark('close', () => fileState.exitSelectFiles())}
-                <Center style={style}><Text style={textStyle}>Share to chat</Text></Center>
+                <Center style={style}><Text style={textStyle}>{tx('title_shareToChat')}</Text></Center>
                 { selected ?
                     icons.text(t('button_go'), () => fileState.submitSelectFiles(), goStyle) : icons.placeholder()}
             </View>

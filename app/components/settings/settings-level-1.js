@@ -27,8 +27,8 @@ export default class SettingsLevel1 extends SafeComponent {
     }
 
     testShare() {
-        const message = 'Chat and share files securely using Peerio. https://www.peerio.com';
-        const title = 'Peerio';
+        const message = 'chat and share files securely using Peerio. https://www.peerio.com';
+        const title = 'peerio';
         const url = 'https://www.peerio.com';
         Share.share({ message, title, url });
     }
@@ -55,11 +55,11 @@ export default class SettingsLevel1 extends SafeComponent {
                     {this.spacer}
                     <SettingsItem title="button_logout" onPress={() => loginState.signOut()} />
                     {this.spacer}
-                    {__DEV__ && <SettingsItem title="Toggle connection" onPress={toggleConnection} />}
-                    {__DEV__ && <SettingsItem title="Damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
-                    {__DEV__ && <SettingsItem title="Snackbar" onPress={() => snackbarState.pushTemporary('test')} />}
-                    {__DEV__ && <SettingsItem title="Test Contacts" onPress={() => contactState.testImport()} />}
-                    {__DEV__ && <SettingsItem title="Test Share" onPress={() => this.testShare()} />}
+                    {__DEV__ && <SettingsItem title="toggle connection" onPress={toggleConnection} />}
+                    {__DEV__ && <SettingsItem title="damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
+                    {__DEV__ && <SettingsItem title="snackbar" onPress={() => snackbarState.pushTemporary('test')} />}
+                    {__DEV__ && <SettingsItem title="test Contacts" onPress={() => contactState.testImport()} />}
+                    {__DEV__ && <SettingsItem title="test Share" onPress={() => this.testShare()} />}
                     {/* <SettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <SettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </ScrollView>

@@ -8,6 +8,7 @@ import { vars } from '../../styles/styles';
 import FileProgress from './file-progress';
 import FileActions from './file-actions';
 import { fileState } from '../states';
+import { tx } from '../utils/translator';
 
 const firstRowStyle = {
     flex: 0,
@@ -70,12 +71,12 @@ export default class FileView extends SafeComponent {
                             </View>
                             <View style={secondRowStyle}>
                                 <View style={{ flexGrow: 1 }}>
-                                    <Text style={hintStyle}>File size</Text>
+                                    <Text style={hintStyle}>{tx('title_fileSize')}</Text>
                                     <Text>{file.sizeFormatted} {file.ext}</Text>
                                 </View>
 
                                 <View style={{ flexGrow: 1 }}>
-                                    <Text style={hintStyle}>Uploaded</Text>
+                                    <Text style={hintStyle}>{tx('title_uploaded')}</Text>
                                     <Text>{moment(file.uploadedAt).format(`MMM DD, YYYY`)}</Text>
                                 </View>
                             </View>

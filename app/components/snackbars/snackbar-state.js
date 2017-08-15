@@ -29,7 +29,7 @@ class SnackBarState extends RoutedState {
 
 const snackbarState = new SnackBarState();
 when(() => socket.throttled, () => {
-    popupYes('Authentication error', '425 Throttled', 'Your account has been throttled due to unusual activity')
+    popupYes(`Authentication error`, '425 Throttled', `Your account has been throttled due to unusual activity`)
         .then(() => (socket.throttled = false));
 });
 
