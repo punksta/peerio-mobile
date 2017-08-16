@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text, Dimensions, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
+import { tx } from '../utils/translator';
 
 const chatZeroState = require('../../assets/chat-zero-state.png');
 
@@ -46,7 +47,9 @@ export default class MessagingPlaceholder extends SafeComponent {
         return (
             <View style={outerContainerStyle}>
                 <View style={[titleBlockStyle, { marginTop: 16 }]}>
-                    <Text style={headerStyle}>Have a{'\n'}conversation</Text>
+                    <Text style={headerStyle}>
+                        {tx('title_haveAConversation')}
+                    </Text>
                 </View>
                 <View style={{
                     borderColor: 'red',
@@ -66,9 +69,15 @@ export default class MessagingPlaceholder extends SafeComponent {
                 </View>
                 <View style={textHintContainer}>
                     <View style={{ flex: 1 }}>
-                        <Text style={infoStyle}>Direct messages</Text>
-                        <Text style={infoStyle}>Multiparty chat</Text>
-                        <Text style={infoStyle}>Share files in chat</Text>
+                        <Text style={infoStyle}>
+                            {tx('title_directMessages')}
+                        </Text>
+                        <Text style={infoStyle}>
+                            {tx('title_channels')}
+                        </Text>
+                        <Text style={infoStyle}>
+                            {tx('title_uploadShareAndManage')}
+                        </Text>
                     </View>
                 </View>
             </View>

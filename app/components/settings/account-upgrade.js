@@ -108,7 +108,7 @@ export default class AccountUpgrade extends SafeComponent {
                     actionButton
                 )}
                 <View style={{ marginLeft }}>
-                    {this.label('Features')}
+                    {this.label(tx('title_features'))}
                 </View>
                 <View style={{ margin: marginWhite }}>
                     {choiceItem}

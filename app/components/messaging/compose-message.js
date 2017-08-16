@@ -1,10 +1,11 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import ContactSelector from '../contacts/contact-selector';
 import buttons from '../helpers/buttons';
 import { vars } from '../../styles/styles';
 import chatState from './chat-state';
+import { tx } from '../utils/translator';
+
 
 const LIMIT_PEOPLE = 8;
 const fillView = { flex: 1, flexGrow: 1 };
@@ -33,7 +34,7 @@ export default class ComposeMessage extends Component {
                 <Text numberOfLines={2} style={bottomRowText}>
                     {`Need to chat with more than ${LIMIT_PEOPLE} people?`}
                 </Text>
-                {buttons.uppercaseBlueButton('Create channel', () => chatState.routerModal.createChannel())}
+                {buttons.uppercaseBlueButton(tx('button_createChannel'), () => chatState.routerModal.createChannel())}
             </View>
         );
     }

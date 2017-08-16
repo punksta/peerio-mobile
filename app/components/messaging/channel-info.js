@@ -11,6 +11,7 @@ import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { popupCancelConfirm } from '../shared/popups';
+import { tx, tu } from '../utils/translator';
 
 const textStyle = {
     color: vars.txtDate,
@@ -20,12 +21,12 @@ const textStyle = {
     fontWeight: 'bold'
 };
 
-const leaveTitle = 'Leave Channel!';
+const leaveTitle = tx('button_leaveChannel');
 const leaveMessage =
 `If you wish to leave, you will no longer be able to access the shared files and chat history
 To rejoin this channel, please ask the admin to add you again`;
 
-const deleteTitle = 'Delete Channel!';
+const deleteTitle = tx('button_deleteChannel');
 const deleteMessage =
 `If you delete the channel, you will no longer be able to access the shared files and chat history`;
 
@@ -96,7 +97,9 @@ export default class ChannelInfo extends SafeComponent {
                 </View>
                 <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
                     {isAdmin && <View style={{ backgroundColor: vars.bg, borderRadius: 4, padding: 4, overflow: 'hidden' }}>
-                        <Text style={{ color: vars.white, fontSize: 10 }}>ADMIN</Text>
+                        <Text style={{ color: vars.white, fontSize: 10 }}>
+                            {tu('title_admin')}
+                        </Text>
                     </View>}
                     <Menu>
                         <MenuTrigger
@@ -109,11 +112,13 @@ export default class ChannelInfo extends SafeComponent {
                                 onSelect={() => (isAdmin ?
                                     chat.demoteAdmin(contact) :
                                     chat.promoteToAdmin(contact))}>
-                                <Text>{isAdmin ? 'Remove admin' : 'Make admin'}</Text>
+                                <Text>{isAdmin ?
+                                    tx('button_makeAdmin') : tx('button_demoteAdmin')}
+                                </Text>
                             </MenuOption>
                             <MenuOption
                                 onSelect={() => chat.removeParticipant(contact)}>
-                                <Text>Remove</Text>
+                                <Text>{tx('button_remove')}</Text>
                             </MenuOption>
                         </MenuOptions>
                     </Menu>
@@ -129,7 +134,7 @@ export default class ChannelInfo extends SafeComponent {
         };
         return (
             <View>
-                <Text style={textStyle}>Topic</Text>
+                <Text style={textStyle}>{tx('title_channelPurpose')}</Text>
                 <TextInput
                     onChangeText={text => (this.channelTopic = text)}
                     onBlur={update}
@@ -145,15 +150,14 @@ export default class ChannelInfo extends SafeComponent {
         const body = (
             <View>
                 {this.lineBlock(this.topicTextBox())}
-                {this.lineBlock(this.action('Leave channel', 'remove-circle-outline', this.leaveChannel), true)}
-                {/* this.lineBlock(this.action('Mute channel',
-                        chat.isMuted ? 'notifications-off' : 'notifications-none',
-                        () => chat.toggleMuted())) */}
-                {this.lineBlock(this.action('Delete channel', 'delete', this.deleteChannel))}
+                {this.lineBlock(this.action(tx('button_leaveChannel'), 'remove-circle-outline', this.leaveChannel), true)}
+                {this.lineBlock(this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel))}
                 {chat.participants && this.lineBlock(
                     <View style={{ paddingVertical: 8 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: 12 }]}>Members</Text>
+                            <Text style={[textStyle, { marginBottom: 12 }]}>
+                                {tx('title_members')}
+                            </Text>
                             {icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
                         </View>
                         {chat.participants.map(this.participant)}

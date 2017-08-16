@@ -11,6 +11,7 @@ import { chatInviteStore } from '../../lib/icebear';
 import ChannelInviteListItem from './channel-invite-list-item';
 import ChatChannelInvitesSection from './chat-channel-invites-section';
 import ChannelUpgradeOffer from '../channels/channel-upgrade-offer';
+import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -39,7 +40,7 @@ export default class ChannelInviteList extends SafeComponent {
             this.data.length,
             this.maxLoadedIndex
         ], () => {
-            this.dataSource = [{ data: this.data.slice(), key: 'Recent Invitations' }];
+            this.dataSource = [{ data: this.data.slice(), key: tx('title_channelRecentInvitations') }];
             this.forceUpdate();
         }, true);
     }

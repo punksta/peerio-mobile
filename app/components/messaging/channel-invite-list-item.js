@@ -6,6 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { chatInviteStore } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
+import { tx } from '../utils/translator';
 
 @observer
 export default class ChannelInviteListItem extends SafeComponent {
@@ -42,10 +43,12 @@ export default class ChannelInviteListItem extends SafeComponent {
                             {`# ${kegDbId}`}
                         </Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={smallTextStyle}>Invited by {username}</Text>
+                            <Text style={smallTextStyle}>
+                                {tx('title_invitedBy', { username, timestamp: null })}
+                            </Text>
                             <View style={{ flexDirection: 'row' }}>
-                                {buttons.uppercaseBlueButtonNoPadding('Accept', () => chatInviteStore.acceptInvite(kegDbId))}
-                                {buttons.uppercaseGrayButtonNoPadding('Reject', () => chatInviteStore.rejectInvite(kegDbId))}
+                                {buttons.uppercaseBlueButtonNoPadding(tx('button_accept'), () => chatInviteStore.acceptInvite(kegDbId))}
+                                {buttons.uppercaseGrayButtonNoPadding(tx('button_decline'), () => chatInviteStore.rejectInvite(kegDbId))}
                             </View>
                         </View>
                     </View>

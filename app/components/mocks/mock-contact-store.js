@@ -2,11 +2,13 @@ import randomWords from 'random-words';
 import capitalize from 'capitalize';
 
 function createMockContact(username) {
+    const firstName = capitalize(randomWords());
+    const lastName = capitalize(randomWords());
     return {
         username,
-        firstName: 'First',
-        lastName: 'Last',
-        fullName: 'First Last'
+        firstName,
+        lastName,
+        fullName: `${firstName} ${lastName}`
     };
 }
 

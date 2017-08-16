@@ -6,6 +6,7 @@ import settingsState from '../settings/settings-state';
 import { vars } from '../../styles/styles';
 import buttons from '../helpers/buttons';
 import plans from './payments-config';
+import { tx } from '../utils/translator';
 
 const payments = (Platform.OS === 'android') ? new PaymentsAndroid() : new PaymentsIos();
 
@@ -34,11 +35,13 @@ function upgradeMessage(title) {
 }
 
 function upgradeForFiles() {
-    return !plans.userHasPaidPlan() && payments.showFileUpgradeOffer ? upgradeMessage('You\'re out of storage') : null;
+    return !plans.userHasPaidPlan() && payments.showFileUpgradeOffer ?
+        upgradeMessage(tx('title_outOfStorage')) : null;
 }
 
 function upgradeForArchive() {
-    return !plans.userHasPaidPlan() && payments.showArchiveUpgradeOffer ? upgradeMessage('Upgrade to access your archive') : null;
+    return !plans.userHasPaidPlan() && payments.showArchiveUpgradeOffer ?
+        upgradeMessage(tx('title_upgradeForArchive')) : null;
 }
 
 export { upgradeForFiles, upgradeForArchive };

@@ -4,6 +4,7 @@ import RoutedState from '../routes/routed-state';
 import contactState from '../contacts/contact-state';
 import fileState from '../files/file-state';
 import sounds from '../../lib/sounds';
+import { tx } from '../utils/translator';
 
 class ChatState extends RoutedState {
     @observable store = chatStore;
@@ -51,7 +52,7 @@ class ChatState extends RoutedState {
     }
 
     get title() {
-        if (this.routerMain.currentIndex === 0) return 'Chats';
+        if (this.routerMain.currentIndex === 0) return tx('title_chats');
         return this.currentChat ? this.currentChat.name : '';
     }
 

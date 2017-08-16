@@ -119,7 +119,7 @@ export default class CreateChannel extends Component {
         return (
             <View style={container}>
                 {icons.dark('close', () => chatState.routerModal.discard())}
-                <Text style={textStyle}>{tx('button_createChannel')}</Text>
+                <Text style={textStyle}>{tx('button_createChat')}</Text>
                 {this.isValid ?
                     icons.text(t('button_go'), () => this.next()) : icons.placeholder()}
             </View>

@@ -36,7 +36,7 @@ export default class FileSignatureError extends SafeComponent {
                 pressRetentionOffset={vars.pressRetentionOffset}>
                 <View style={container}>
                     {icons.plainalert('error-outline')}
-                    <Text style={text}>{'This file could not be verified'}</Text>
+                    <Text style={text}>{tx('error_invalidFileSignature')}</Text>
                 </View>
             </TouchableOpacity>
         );

@@ -1,6 +1,7 @@
 import { observable } from 'mobx';
 import payments from '../payments/payments';
 import { User } from '../../lib/icebear';
+import { tx } from '../utils/translator';
 
 const basicPlanInfo =
 `Secure Messaging
@@ -67,8 +68,8 @@ function getActivePlans() {
 }
 
 class BasicPlan {
-    title = 'Basic';
-    price = 'Free';
+    title = tx('title_basicPlan');
+    price = tx('title_free');
     info = basicPlanInfo;
     storage = '1 GB';
     uploadFileSize = '500 MB';
@@ -104,16 +105,16 @@ class PaidPlan {
 }
 
 class PremiumPlan extends PaidPlan {
-    title = 'Premium';
+    title = tx('title_premiumPlan');
     storage = '20 GB';
     uploadFileSize = '2 GB';
     priceOptions = [{
-        title: 'Billed monthly',
+        title: tx('title_billedMonthly'),
         id: premiumMonthlyID,
         serverID: 'icebear_premium_monthly',
         price: '$3.99 USD/month'
     }, {
-        title: 'Billed annually',
+        title: tx('title_billedAnnually'),
         id: premiumYearlyID,
         serverID: 'icebear_premium_yearly',
         price: '$2.99 USD/month'
@@ -125,16 +126,16 @@ class PremiumPlan extends PaidPlan {
 }
 
 class ProfessionalPlan extends PaidPlan {
-    title = 'Pro';
+    title = tx('title_proPlan');
     storage = '500 GB';
-    uploadFileSize = 'Unlimited';
+    uploadFileSize = tx('title_unlimited');
     priceOptions = [{
-        title: 'Billed monthly',
+        title: tx('title_billedMonthly'),
         id: professionalMonthlyID,
         serverID: 'icebear_pro_monthly',
         price: '$12.99 USD/month'
     }, {
-        title: 'Billed annually',
+        title: tx('title_billedAnnually'),
         id: professionalYearlyID,
         serverID: 'icebear_pro_yearly',
         price: '$9.99 USD/month'
