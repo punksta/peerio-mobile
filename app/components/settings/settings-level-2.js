@@ -37,12 +37,12 @@ export default class SettingsLevel2 extends SafeComponent {
     security = () => {
         return (
             <View style={bgStyle}>
-                {/* <SettingsItem
-                    title={t('title_2FA')}
-                    onPress={() => settingsState.transition('twoFactorAuth')} />
                 <SettingsItem
+                    title="title_2FA"
+                    onPress={() => settingsState.transition('twoFactorAuth')} />
+                {__DEV__ && <SettingsItem
                     title="2FA prompt"
-                    onPress={() => this.twoFactorTest()} /> */}
+                    onPress={() => this.twoFactorTest()} />}
                 <SettingsItem
                     title="title_showAccountKey"
                     icon="visibility"

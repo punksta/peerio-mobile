@@ -1,5 +1,5 @@
 import { observable, action, when, reaction } from 'mobx';
-import { chatStore, clientApp } from '../../lib/icebear';
+import { chatStore, clientApp, warnings } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
 import contactState from '../contacts/contact-state';
 import fileState from '../files/file-state';
@@ -92,12 +92,18 @@ class ChatState extends RoutedState {
     }
 
     @action startChat(recipients, isChannel = false, name, purpose) {
-        const chat = this.store.startChat(recipients, isChannel, name, purpose);
-        this.loading = true;
-        when(() => !chat.loadingMeta, () => {
+        try {
+            const chat = this.store.startChat(recipients, isChannel, name, purpose);
+            this.loading = true;
+            when(() => !chat.loadingMeta, () => {
+                this.loading = false;
+                this.routerMain.chats(chat, true);
+            });
+        } catch (e) {
             this.loading = false;
-            this.routerMain.chats(chat, true);
-        });
+            warnings.add(e.message);
+            console.error(e);
+        }
     }
 
 

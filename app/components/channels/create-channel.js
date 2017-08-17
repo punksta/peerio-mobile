@@ -24,13 +24,6 @@ const rowCenter = {
     borderTopColor: vars.lightGrayBg
 };
 
-const rowCenter2 = {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 10
-};
-
 const bottomRowText = {
     flexShrink: 1,
     flex: 1,
@@ -76,7 +69,7 @@ export default class CreateChannel extends Component {
     @observable step = 0;
 
     componentDidMount() {
-        reaction(() => this.step, v => {
+        reaction(() => this.step, () => {
             this._disableScrollUpdate = true;
             setTimeout(() => this._scrollView.scrollToEnd(), 0);
         });
