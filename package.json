@@ -34,7 +34,7 @@
     "commit-msg": "validate-commit-msg"
   },
   "dependencies": {
-    "@peerio/peerio-icebear": "^2.2.0",
+    "@peerio/peerio-icebear": "git+ssh://git@github.com/PeerioTechnologies/peerio-icebear.git#dev",
     "babel-cli": "6.22.2",
     "base64-js": "1.2.0",
     "blake2s-js": "1.2.2",
