@@ -1,14 +1,11 @@
 import React from 'react';
-import { View, Text, Platform } from 'react-native';
-import PaymentsIos from './payments-ios';
-import PaymentsAndroid from './payments-android';
+import { View, Text } from 'react-native';
 import settingsState from '../settings/settings-state';
 import { vars } from '../../styles/styles';
 import buttons from '../helpers/buttons';
 import plans from './payments-config';
+import paymentsNative from './payments-native';
 import { tx } from '../utils/translator';
-
-const payments = (Platform.OS === 'android') ? new PaymentsAndroid() : new PaymentsIos();
 
 function upgradeMessage(title) {
     const container = {
@@ -35,14 +32,14 @@ function upgradeMessage(title) {
 }
 
 function upgradeForFiles() {
-    return !plans.userHasPaidPlan() && payments.showFileUpgradeOffer ?
+    return !plans.userHasPaidPlan() && paymentsNative.showFileUpgradeOffer ?
         upgradeMessage(tx('title_outOfStorage')) : null;
 }
 
 function upgradeForArchive() {
-    return !plans.userHasPaidPlan() && payments.showArchiveUpgradeOffer ?
+    return !plans.userHasPaidPlan() && paymentsNative.showArchiveUpgradeOffer ?
         upgradeMessage(tx('title_upgradeForArchive')) : null;
 }
 
 export { upgradeForFiles, upgradeForArchive };
-export default payments;
+export default paymentsNative;

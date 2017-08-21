@@ -1,5 +1,5 @@
 import { observable } from 'mobx';
-import payments from '../payments/payments';
+import paymentsNative from '../payments/payments-native';
 import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 
@@ -54,7 +54,7 @@ Your subscription will renew automatically at the end of each billing period unl
 `;
 
 const { premiumYearlyID, premiumMonthlyID, professionalYearlyID, professionalMonthlyID }
-    = payments;
+    = paymentsNative;
 
 const serverPlans = [
     'icebear_premium_monthly',
