@@ -7,6 +7,7 @@ import Bold from '../controls/bold';
 import settingsState from '../settings/settings-state';
 import buttons from '../helpers/buttons';
 import plans from '../payments/payments-config';
+import { addSystemWarningAction } from '../shared/popups';
 
 @observer
 class PaymentStorageUsage extends SafeComponent {
@@ -31,5 +32,7 @@ const paymentCheckout = () => {
     settingsState.upgrade();
     // Linking.openURL('https://www.peerio.com/checkout.html');
 };
+
+addSystemWarningAction('UPGRADE', paymentCheckout);
 
 module.exports = { PaymentStorageUsage, paymentCheckout };

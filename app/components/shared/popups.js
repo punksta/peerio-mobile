@@ -5,7 +5,6 @@ import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
-import { paymentCheckout } from '../payments/payments-storage-usage';
 import CheckBox from './checkbox';
 
 function textControl(str) {
@@ -33,9 +32,16 @@ function inputControl(state) {
     );
 }
 
-const swActions = {
-    UPGRADE: paymentCheckout
-};
+const swActions = {};
+
+/**
+ * Hook action to a system warning action type
+ * @param {string} type
+ * @param {func} action
+ */
+function addSystemWarningAction(type, action) {
+    swActions[type] = action;
+}
 
 function popupSystemWarning(title, contents, buttons) {
     const button = (text, action) => ({ id: 'ok', text, action });
@@ -219,6 +225,7 @@ locales.loadAssetFile('terms.txt').then(s => {
 
 
 export {
+    addSystemWarningAction,
     popupYes,
     popupYesCancel,
     popupYesSkip,
