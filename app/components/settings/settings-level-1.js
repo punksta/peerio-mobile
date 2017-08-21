@@ -4,7 +4,7 @@ import { View, ScrollView, Share } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
-import { settingsState, snackbarState, mainState, loginState, contactState } from '../states';
+import { settingsState, snackbarState, mainState, loginState, contactState, chatState } from '../states';
 import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-storage-usage';
 import { toggleConnection } from '../main/dev-menu-items';
 import plans from '../payments/payments-config';
@@ -31,6 +31,13 @@ export default class SettingsLevel1 extends SafeComponent {
         const title = 'peerio';
         const url = 'https://www.peerio.com';
         Share.share({ message, title, url });
+    }
+
+    testNullActiveChat() {
+        chatState.routerMain.chats(chatState.store.chats[0]);
+        setTimeout(() => {
+            chatState.store.activeChat = null;
+        }, 5000);
     }
 
     renderThrow() {
@@ -60,6 +67,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {__DEV__ && <SettingsItem title="snackbar" onPress={() => snackbarState.pushTemporary('test')} />}
                     {__DEV__ && <SettingsItem title="test Contacts" onPress={() => contactState.testImport()} />}
                     {__DEV__ && <SettingsItem title="test Share" onPress={() => this.testShare()} />}
+                    {__DEV__ && <SettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}
                     {/* <SettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <SettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </ScrollView>
