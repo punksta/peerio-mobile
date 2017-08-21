@@ -8,7 +8,7 @@ import AccountUpgradeNavigator from './account-upgrade-navigator';
 import AccountUpgradePlan from './account-upgrade-plan';
 import plans from '../payments/payments-config';
 import icons from '../helpers/icons';
-import routerModal from '../routes/router-modal';
+import routes from '../routes/routes';
 import { User } from '../../lib/icebear';
 import { t } from '../utils/translator';
 import { popupYes } from '../shared/popups';
@@ -43,7 +43,7 @@ export default class AccountUpgradeSwiper extends Component {
             console.log('account-upgrade-swiper: active plans');
             User.current && console.log(User.current.activePlans);
             if (User.current.addresses.filter(e => e.confirmed).length === 0) {
-                popupYes('', '', t('error_upgradingAccountNoConfirmedEmail')).then(() => routerModal.discard());
+                popupYes('', '', t('error_upgradingAccountNoConfirmedEmail')).then(() => routes.modal.discard());
             }
         }
     }
@@ -65,7 +65,7 @@ export default class AccountUpgradeSwiper extends Component {
         };
         return (
             <View style={s} key="exitRow">
-                {icons.white('close', () => routerModal.discard(), { backgroundColor: 'transparent' })}
+                {icons.white('close', () => routes.modal.discard(), { backgroundColor: 'transparent' })}
             </View>
         );
     }
