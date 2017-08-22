@@ -1,4 +1,5 @@
 import React from 'react';
+import { reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, Text, TextInput, Clipboard } from 'react-native';
 import SafeComponent from '../shared/safe-component';
@@ -6,6 +7,8 @@ import { vars } from '../../styles/styles';
 import ButtonText from '../controls/button-text';
 import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
+import { popupInputCancel, popupInput } from '../shared/popups';
+import { clientApp } from '../../lib/icebear';
 
 const paddingVertical = vars.listViewPaddingVertical;
 const paddingHorizontal = vars.listViewPaddingHorizontal;
@@ -27,6 +30,22 @@ const labelStyle = {
 const whiteStyle = {
     backgroundColor: vars.white, paddingTop: 10, paddingHorizontal
 };
+
+async function twoFactorAuthPopup(active2FARequest) {
+    if (!active2FARequest) return;
+    const { cancelable, submit, cancel } = active2FARequest;
+    const fn = cancelable ? popupInputCancel : popupInput;
+    const result = await fn(tx('title_2FA'), tx('dialog_enter2FA'));
+    if (result === false) {
+        cancel();
+        return;
+    }
+    submit(result);
+}
+
+reaction(() => clientApp.active2FARequest, twoFactorAuthPopup);
+
+export { twoFactorAuthPopup };
 
 @observer
 export default class TwoFactorAuth extends SafeComponent {

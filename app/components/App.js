@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Text, PanResponder,
     AppState, ActivityIndicator, NativeModules,
-    Dimensions, PixelRatio, Platform, AdSupportIOS } from 'react-native';
-import deviceInfo from 'react-native-device-info';
+    Dimensions, PixelRatio, Platform } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';

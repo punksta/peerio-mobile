@@ -133,7 +133,7 @@ class FileState extends RoutedState {
                 () => resolve(uploader(uri, fn)));
         }).then(file => {
             if (file.deleted) return;
-            popupInput(tx('title_fileName'), fileHelpers.getFileNameWithoutExtension(fn))
+            popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fn))
                 .then(newFileName => {
                     if (!newFileName) return Promise.resolve();
                     return file.rename(`${newFileName}.${ext}`);

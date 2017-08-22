@@ -5,9 +5,9 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
 import ToggleItem from './toggle-item';
-import { User } from '../../lib/icebear';
+import { User, clientApp } from '../../lib/icebear';
 import { mainState, chatState, settingsState } from '../states';
-import { popupInputCancel } from '../shared/popups';
+import { twoFactorAuthPopup } from './two-factor-auth';
 import { t, tx } from '../utils/translator';
 import payments from '../payments/payments';
 import PaymentsQuotas from '../payments/payments-quotas';
@@ -30,8 +30,10 @@ const spacer = {
 
 @observer
 export default class SettingsLevel2 extends SafeComponent {
-    twoFactorTest() {
-        popupInputCancel(`${tx('dialog_enter2FA')}:`);
+    testTwoFactorAuthPrompt(cancelable) {
+        clientApp.create2FARequest(cancelable ? 'backupCodes' : 'login',
+            result => console.log(`settings-level-2.js: ${result}`),
+            () => console.log(`settings-level-2.js: cancelled 2fa`));
     }
 
     security = () => {
@@ -42,7 +44,10 @@ export default class SettingsLevel2 extends SafeComponent {
                     onPress={() => settingsState.transition('twoFactorAuth')} />
                 {__DEV__ && <SettingsItem
                     title="2FA prompt"
-                    onPress={() => this.twoFactorTest()} />}
+                    onPress={() => this.testTwoFactorAuthPrompt(false)} />}
+                {__DEV__ && <SettingsItem
+                    title="2FA prompt cancellable"
+                    onPress={() => this.testTwoFactorAuthPrompt(true)} />}
                 <SettingsItem
                     title="title_showAccountKey"
                     icon="visibility"

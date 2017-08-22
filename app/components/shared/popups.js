@@ -140,11 +140,12 @@ function popupCancelConfirm(title, subTitle, text) {
     }));
 }
 
-function popupInput(title, value) {
+function popupInput(title, subTitle, value) {
     return new Promise((resolve) => {
         const o = observable({ value });
         popupState.showPopup({
             title,
+            subTitle: textControl(subTitle),
             contents: inputControl(o),
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: () => resolve(o.value)
@@ -153,14 +154,15 @@ function popupInput(title, value) {
     });
 }
 
-function popupInputCancel(title, value) {
+function popupInputCancel(title, subTitle, value) {
     return new Promise((resolve) => {
         const o = observable({ value });
         popupState.showPopup({
             title,
+            subTitle: textControl(subTitle),
             contents: inputControl(o),
             buttons: [{
-                id: 'cancel', text: t('button_cancel'), secondary: true
+                id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
             }, {
                 id: 'ok', text: tu('button_ok'), action: () => resolve(o.value)
             }]
