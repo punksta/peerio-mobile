@@ -1,14 +1,16 @@
 import React from 'react';
-import { reaction } from 'mobx';
+import { reaction, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, Text, TextInput, Clipboard } from 'react-native';
+import { View, Text, TextInput, Clipboard, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import ButtonText from '../controls/button-text';
 import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
 import { popupInputCancel, popupInput } from '../shared/popups';
-import { clientApp } from '../../lib/icebear';
+import { clientApp, User } from '../../lib/icebear';
+import buttons from '../helpers/buttons';
+import TwoFactorAuthCodes from './two-factor-auth-codes';
+import TwoFactorAuthCodesGenerate from './two-factor-auth-codes-generate';
 
 const paddingVertical = vars.listViewPaddingVertical;
 const paddingHorizontal = vars.listViewPaddingHorizontal;
@@ -49,14 +51,46 @@ export { twoFactorAuthPopup };
 
 @observer
 export default class TwoFactorAuth extends SafeComponent {
-    key2fa = `FY5DGKRMJHXCLJDJJAOISDUUSIA`;
+    @observable key2fa;
+    @observable confirmCode;
+    @observable backupCodes = [];
+    @observable showGeneratedCodes;
+    @observable showReissueCodes;
+
+    async componentWillMount() {
+        try {
+            this.key2fa = await User.current.setup2fa();
+            __DEV__ && console.log(`two-factor-auth.js: ${this.key2fa}`);
+        } catch (e) {
+            // TODO: remove it and depend on SDK
+            if (e.code === 400) {
+                console.log('two-factor-auth.js: already enabled');
+                this.showReissueCodes = true;
+            }
+        }
+    }
 
     copyKey() {
         Clipboard.setString(this.key2fa);
         snackbarState.pushTemporary('2FA key has been copied to clipboard');
     }
 
+    async confirm() {
+        this.backupCodes = await User.current.confirm2faSetup(this.confirmCode, true);
+    }
+
+    get key2FAControl() {
+        if (!this.key2fa) return <ActivityIndicator />;
+        return (
+            <Text style={{ fontWeight: 'bold' }}>
+                {this.key2fa}
+            </Text>
+        );
+    }
+
     renderThrow() {
+        if (this.showReissueCodes) return <TwoFactorAuthCodesGenerate />;
+        if (this.showGeneratedCodes) return <TwoFactorAuthCodes />;
         return (
             <View style={bgStyle}>
                 <View>
@@ -69,14 +103,12 @@ export default class TwoFactorAuth extends SafeComponent {
                         {tx('title_2FASecretKey')}
                     </Text>
                     <View style={whiteStyle}>
-                        <Text style={{ fontWeight: 'bold' }}>
-                            {this.key2fa}
-                        </Text>
+                        {this.key2FAControl}
                         <View style={{
                             flexDirection: 'row',
                             justifyContent: 'flex-end'
                         }}>
-                            <ButtonText text={tx('button_2FACopyKey')} onPress={() => this.copyKey()} />
+                            {buttons.uppercaseBlueButton(tx('button_2FACopyKey'), () => this.copyKey(), !this.key2fa)}
                         </View>
                     </View>
                 </View>
@@ -101,8 +133,11 @@ export default class TwoFactorAuth extends SafeComponent {
                             marginVertical: 8,
                             height: vars.inputHeight,
                             flexGrow: 1
-                        }} value="123456" />
-                        <ButtonText text={tx('button_confirm')} />
+                        }}
+                            onChangeText={text => { this.confirmCode = text; }}
+                            value={this.confirmCode} />
+                        {buttons.uppercaseBlueButton(tx('button_confirm'),
+                            () => this.confirm(), !this.confirmCode || !this.key2fa)}
                     </View>
                 </View>
             </View>
