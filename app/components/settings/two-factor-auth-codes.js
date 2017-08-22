@@ -10,6 +10,7 @@ import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import { User } from '../../lib/icebear';
+import routes from '../routes/routes';
 
 const paddingVertical = vars.listViewPaddingVertical;
 const paddingHorizontal = vars.listViewPaddingHorizontal;
@@ -83,7 +84,7 @@ export default class TwoFactorAuthCodes extends SafeComponent {
     @observable codes = [];
 
     componentDidMount() {
-        this.codes = this.randomCodes;
+        this.codes = this.props.codes || this.randomCodes;
     }
 
     get randomCodes() {
@@ -110,6 +111,11 @@ export default class TwoFactorAuthCodes extends SafeComponent {
         console.log(filePath);
         await FileOpener.open(filePath, mimeType);
         // await RNFS.unlink(filePath);
+    }
+
+    disable2fa() {
+        User.current.disable2fa();
+        routes.main.settings('security');
     }
 
     renderThrow() {
@@ -147,7 +153,7 @@ authenticator app.`}
                     </View>
                 </View>
                 <View style={{ left: paddingHorizontal + 12, bottom: paddingVertical, position: 'absolute' }}>
-                    {buttons.uppercaseRedButton('button_2FADeactivate', () => User.current.disable2fa())}
+                    {buttons.uppercaseRedButton('button_2FADeactivate', this.disable2fa)}
                 </View>
             </View>
         );

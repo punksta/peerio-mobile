@@ -53,8 +53,7 @@ export { twoFactorAuthPopup };
 export default class TwoFactorAuth extends SafeComponent {
     @observable key2fa;
     @observable confirmCode;
-    @observable backupCodes = [];
-    @observable showGeneratedCodes;
+    @observable backupCodes;
     @observable showReissueCodes;
 
     async componentWillMount() {
@@ -65,8 +64,11 @@ export default class TwoFactorAuth extends SafeComponent {
             // TODO: remove it and depend on SDK
             if (e.code === 400) {
                 console.log('two-factor-auth.js: already enabled');
-                this.showReissueCodes = true;
+                User.current.twoFAEnabled = true;
             }
+        }
+        if (User.current.twoFAEnabled) {
+            this.showReissueCodes = true;
         }
     }
 
@@ -76,7 +78,9 @@ export default class TwoFactorAuth extends SafeComponent {
     }
 
     async confirm() {
-        this.backupCodes = await User.current.confirm2faSetup(this.confirmCode, true);
+        const { confirmCode } = this;
+        this.confirmCode = null;
+        this.backupCodes = await User.current.confirm2faSetup(confirmCode, true);
     }
 
     get key2FAControl() {
@@ -90,7 +94,7 @@ export default class TwoFactorAuth extends SafeComponent {
 
     renderThrow() {
         if (this.showReissueCodes) return <TwoFactorAuthCodesGenerate />;
-        if (this.showGeneratedCodes) return <TwoFactorAuthCodes />;
+        if (this.backupCodes) return <TwoFactorAuthCodes codes={this.backupCodes} />;
         return (
             <View style={bgStyle}>
                 <View>
