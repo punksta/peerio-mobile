@@ -19,7 +19,7 @@ export default class Link extends Component {
             textDecorationLine: 'underline'
         }, this.props.style];
         return (
-            <Text style={style} onPress={this.open}>
+            <Text style={style} onPress={this.props.onPress || this.open}>
                 {this.props.children}
             </Text>
         );
@@ -28,6 +28,7 @@ export default class Link extends Component {
 
 Link.propTypes = {
     children: PropTypes.any.isRequired,
+    onPress: PropTypes.any,
     style: PropTypes.any,
     url: PropTypes.string
 };

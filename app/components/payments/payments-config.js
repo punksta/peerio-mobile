@@ -58,7 +58,7 @@ const { premiumYearlyID, premiumMonthlyID, professionalYearlyID, professionalMon
 
 const serverPlans = [
     'icebear_premium_monthly',
-    'icebear_premium_monthly',
+    'icebear_premium_yearly',
     'icebear_pro_monthly',
     'icebear_pro_yearly'
 ];
@@ -68,8 +68,8 @@ function getActivePlans() {
 }
 
 class BasicPlan {
-    title = tx('title_basicPlan');
-    price = tx('title_free');
+    title = 'title_basicPlan';
+    price = 'title_free';
     info = basicPlanInfo;
     storage = '1 GB';
     uploadFileSize = '500 MB';
@@ -105,16 +105,16 @@ class PaidPlan {
 }
 
 class PremiumPlan extends PaidPlan {
-    title = tx('title_premiumPlan');
+    title = 'title_premiumPlan';
     storage = '20 GB';
     uploadFileSize = '2 GB';
     priceOptions = [{
-        title: tx('title_billedMonthly'),
+        title: 'title_billedMonthly',
         id: premiumMonthlyID,
         serverID: 'icebear_premium_monthly',
         price: '$3.99 USD/month'
     }, {
-        title: tx('title_billedAnnually'),
+        title: 'title_billedAnnually',
         id: premiumYearlyID,
         serverID: 'icebear_premium_yearly',
         price: '$2.99 USD/month'
@@ -126,16 +126,16 @@ class PremiumPlan extends PaidPlan {
 }
 
 class ProfessionalPlan extends PaidPlan {
-    title = tx('title_proPlan');
+    title = 'title_proPlan';
     storage = '500 GB';
     uploadFileSize = tx('title_unlimited');
     priceOptions = [{
-        title: tx('title_billedMonthly'),
+        title: 'title_billedMonthly',
         id: professionalMonthlyID,
         serverID: 'icebear_pro_monthly',
         price: '$12.99 USD/month'
     }, {
-        title: tx('title_billedAnnually'),
+        title: 'title_billedAnnually',
         id: professionalYearlyID,
         serverID: 'icebear_pro_yearly',
         price: '$9.99 USD/month'

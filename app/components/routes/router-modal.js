@@ -11,6 +11,7 @@ import ChatInfo from '../messaging/chat-info';
 import ChannelInfo from '../messaging/channel-info';
 import PinModalAsk from '../controls/pin-modal-ask';
 import AccountUpgradeSwiper from '../settings/account-upgrade-swiper';
+import popupState from '../layout/popup-state';
 import routes from './routes';
 
 class RouterModal extends Router {
@@ -36,6 +37,7 @@ class RouterModal extends Router {
         const r = super.add(route, component);
         r.isWhite = isWhite;
         this[route] = () => {
+            popupState.discardAllPopups();
             this.flushResolver();
             r.transition();
             return new Promise(resolve => {

@@ -119,7 +119,7 @@ export default class AccountUpgradePlan extends Component {
                     <AccountUpgradeToggle
                         onPress={() => payments.purchase(id)}
                         text1={price}
-                        text2={title.toLowerCase()}
+                        text2={tx(title).toLowerCase()}
                         left={i === 0}
                         highlight={i > 0} />
                 ))}
@@ -188,7 +188,7 @@ export default class AccountUpgradePlan extends Component {
                 <ScrollView>
                     <View style={block1}>
                         <Text style={topTitleText}>
-                            {tx('title_appName')} <Text style={boldText}>{title}</Text>
+                            {tx('title_appName')} <Text style={boldText}>{tx(title)}</Text>
                         </Text>
                     </View>
                     <View style={borderView}>

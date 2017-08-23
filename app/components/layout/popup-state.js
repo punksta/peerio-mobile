@@ -1,24 +1,28 @@
-import { observable, action } from 'mobx';
+import { observable } from 'mobx';
 
-const popupState = observable({
-    popupControls: [],
+class PopupState {
+    @observable popupControls = [];
 
     get activePopup() {
         const pc = this.popupControls;
         return pc.length ? pc[pc.length - 1] : null;
-    },
+    }
 
-    showPopup: action.bound(function(popup) {
+    showPopup = popup => {
         this.popupControls.push(popup);
-    }),
+    }
 
-    showPopupPromise: action.bound(function(caller) {
+    showPopupPromise = caller => {
         return new Promise((resolve, reject) => this.showPopup(caller(resolve, reject)));
-    }),
+    }
 
-    discardPopup: action.bound(function() {
+    discardPopup = () => {
         this.popupControls.pop();
-    })
-});
+    }
 
-export default popupState;
+    discardAllPopups() {
+        this.popupControls.splice(0, this.popupControls.length);
+    }
+}
+
+export default new PopupState();
