@@ -42,7 +42,7 @@ async function twoFactorAuthPopup(active2FARequest) {
         cancel();
         return;
     }
-    submit(result);
+    submit(result, true);
 }
 
 reaction(() => clientApp.active2FARequest, twoFactorAuthPopup);
