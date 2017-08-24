@@ -84,7 +84,7 @@ export default class App extends SafeComponent {
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
 
         console.logVersion = () => {
-            console.log(`App.js: app version ${config.appVersion}, OS: ${Platform.OS}, OS version: ${Platform.Version}`);
+            console.log(`App.js: app version ${config.appVersion}, SDK version: ${config.sdkVersion}, OS: ${Platform.OS}, OS version: ${Platform.Version}`);
             console.log(`App.js: screen specs: ${width}, ${height}, ${PixelRatio.get()}`);
         };
         startSocket();
