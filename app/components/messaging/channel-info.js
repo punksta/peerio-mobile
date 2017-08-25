@@ -113,7 +113,7 @@ export default class ChannelInfo extends SafeComponent {
                                     chat.demoteAdmin(contact) :
                                     chat.promoteToAdmin(contact))}>
                                 <Text>{isAdmin ?
-                                    tx('button_makeAdmin') : tx('button_demoteAdmin')}
+                                    tx('button_demoteAdmin') : tx('button_makeAdmin')}
                                 </Text>
                             </MenuOption>
                             <MenuOption
@@ -156,7 +156,7 @@ export default class ChannelInfo extends SafeComponent {
                     <View style={{ paddingVertical: 8 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
                             <Text style={[textStyle, { marginBottom: 12 }]}>
-                                {tx('title_members')}
+                                {tx('title_Members')}
                             </Text>
                             {icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
                         </View>

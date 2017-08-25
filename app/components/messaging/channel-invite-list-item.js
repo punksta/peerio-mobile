@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import moment from 'moment';
 import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
@@ -13,7 +14,7 @@ export default class ChannelInviteListItem extends SafeComponent {
     renderThrow() {
         const { invitation } = this.props;
         if (!invitation) return null;
-        const { kegDbId, title, username /* , timestamp */ } = invitation;
+        const { kegDbId, channelName, username, timestamp } = invitation;
         const containerStyle = {
             paddingLeft: 24,
             paddingRight: 10,
@@ -40,11 +41,12 @@ export default class ChannelInviteListItem extends SafeComponent {
                 <TouchableOpacity style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
                     <View style={{ flexGrow: 1 }}>
                         <Text style={textStyle}>
-                            {`# ${kegDbId}`}
+                            {`# ${channelName}`}
                         </Text>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Text style={smallTextStyle}>
-                                {tx('title_invitedBy', { username, timestamp: null })}
+                                {tx('title_invitedBy', { username,
+                                    timestamp: `\n${moment(timestamp).format('llll')}` })}
                             </Text>
                             <View style={{ flexDirection: 'row' }}>
                                 {buttons.uppercaseBlueButtonNoPadding(tx('button_accept'), () => chatInviteStore.acceptInvite(kegDbId))}
