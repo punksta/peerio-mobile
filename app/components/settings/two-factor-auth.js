@@ -139,11 +139,13 @@ export default class TwoFactorAuth extends SafeComponent {
                         paddingHorizontal
                     }}>
                         <TextInput style={{
-                            color: vars.txtDate,
+                            color: vars.txtDark,
                             marginVertical: 8,
                             height: vars.inputHeight,
                             flexGrow: 1
                         }}
+                            placeholderTextColor={vars.txtDate}
+                            placeholder="123456"
                             onChangeText={text => { this.confirmCode = text; }}
                             value={this.confirmCode} />
                         {buttons.uppercaseBlueButton(tx('button_confirm'),
