@@ -100,7 +100,7 @@
     "vm-browserify": "0.0.4"
   },
   "devDependencies": {
-    "appium": "^1.6.5",
+    "appium": "1.6.5",
     "authorize-ios": "^1.0.4",
     "babel-eslint": "^6.1.2",
     "babel-plugin-console-kungfu": "git+https://github.com/PeerioTechnologies/babel-plugin-console-kungfu.git",
