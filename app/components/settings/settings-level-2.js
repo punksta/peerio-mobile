@@ -32,7 +32,7 @@ const spacer = {
 export default class SettingsLevel2 extends SafeComponent {
     testTwoFactorAuthPrompt(cancelable) {
         clientApp.create2FARequest(cancelable ? 'backupCodes' : 'login',
-            result => console.log(`settings-level-2.js: ${result}`),
+            (result, trust) => console.log(`settings-level-2.js: ${result}, ${trust}`),
             () => console.log(`settings-level-2.js: cancelled 2fa`));
     }
 

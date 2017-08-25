@@ -6,7 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
-import { popupInputCancel, popupInput } from '../shared/popups';
+import { popupInputCancelCheckbox } from '../shared/popups';
 import { clientApp, User } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
 import TwoFactorAuthCodes from './two-factor-auth-codes';
@@ -36,13 +36,19 @@ const whiteStyle = {
 async function twoFactorAuthPopup(active2FARequest) {
     if (!active2FARequest) return;
     const { cancelable, submit, cancel } = active2FARequest;
-    const fn = cancelable ? popupInputCancel : popupInput;
-    const result = await fn(tx('title_2FA'), tx('dialog_enter2FA'));
+    const result = await popupInputCancelCheckbox(
+        tx('title_2FA'),
+        tx('dialog_enter2FA'),
+        tx('title_trustThisDevice'),
+        false,
+        cancelable
+    );
     if (result === false) {
         cancel();
         return;
     }
-    submit(result, true);
+    const { value, checked } = result;
+    submit(value, checked);
 }
 
 reaction(() => clientApp.active2FARequest, twoFactorAuthPopup);

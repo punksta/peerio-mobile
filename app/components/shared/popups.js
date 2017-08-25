@@ -154,18 +154,27 @@ function popupInput(title, subTitle, value) {
     });
 }
 
-function popupInputCancel(title, subTitle, value) {
+function popupInputCancelCheckbox(title, subTitle, checkBoxText, checked, cancelable) {
     return new Promise((resolve) => {
-        const o = observable({ value });
+        const o = observable({ value: '', checked });
+        const buttons = [];
+        cancelable && buttons.push({
+            id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
+        });
+        buttons.push({
+            id: 'ok', text: tu('button_ok'), action: () => resolve(o)
+        });
+        const contents = (
+            <View>
+                {checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; })}
+                {inputControl(o)}
+            </View>
+        );
         popupState.showPopup({
             title,
             subTitle: textControl(subTitle),
-            contents: inputControl(o),
-            buttons: [{
-                id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
-            }, {
-                id: 'ok', text: tu('button_ok'), action: () => resolve(o.value)
-            }]
+            contents,
+            buttons
         });
     });
 }
@@ -187,7 +196,7 @@ function popupTOS() {
 }
 
 function popupDeleteAccount() {
-    let checked = false;
+    // let checked = false;
     return popupState.showPopupPromise(resolve => ({
         title: textControl(tx('title_accountDelete')),
         contents: (
@@ -234,7 +243,7 @@ export {
     popupInput,
     popupTOS,
     popupCopyCancel,
-    popupInputCancel,
+    popupInputCancelCheckbox,
     popupUpgrade,
     popupSystemWarning,
     popupDeleteAccount,

@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
+
 
 @observer
 export default class CheckBox extends Component {
@@ -12,6 +14,9 @@ export default class CheckBox extends Component {
     }
 
     render() {
+        const { isChecked } = this.props;
+        const borderColor = isChecked ? vars.bg : 'gray';
+        const backgroundColor = isChecked ? vars.subtleBg : undefined;
         const container = {
             flexDirection: 'row',
             flexGrow: 1,
@@ -22,20 +27,22 @@ export default class CheckBox extends Component {
         const checkbox = {
             borderRadius: 2,
             borderWidth: 2,
-            borderColor: this.props.isChecked ? vars.bg : 'gray',
-            backgroundColor: this.props.isChecked ? vars.subtleBg : undefined,
+            borderColor,
+            backgroundColor,
             height: 16,
             width: 16,
             marginHorizontal: 8
         };
         const text = {
-            color: this.props.isChecked ? vars.bg : '#000000AA',
+            color: '#000000AA',
             height: 16
         };
         return (
             <TouchableOpacity onPress={() => this.toggle()} pressRetentionOffset={vars.retentionOffset} style={container}>
                 <Text style={text}>{this.props.text}</Text>
-                <View style={checkbox} />
+                <View style={checkbox}>
+                    {this.props.isChecked && <Icon name="check" color={borderColor} />}
+                </View>
             </TouchableOpacity>
         );
     }
