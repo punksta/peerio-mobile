@@ -3,10 +3,10 @@
   "version": "3.133.0",
   "private": true,
   "scripts": {
-    "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && rn-nodeify --install 'crypto, stream, process, events, vm' --hack && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
+    "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
     "commit": "git-cz",
     "code:packager": "./node_modules/react-native/packager/packager.sh --reset-cache",
-    "icebear:compile": "babel node_modules/@peerio/peerio-icebear/src -d app/lib/peerio-icebear",
+    "icebear:compile": "babel node_modules/@peerio/peerio-icebear/src -d app/lib/peerio-icebear && bash ./scripts/remove-require-crypto.sh",
     "icebear:watch": "npm run icebear:compile -- -w",
     "start": "source env.sh && npm-run-all -l -p icebear:watch code:packager",
     "expandoo": "source env-expandoo.sh && ./node_modules/react-native/packager/packager.sh --reset-cache",
@@ -41,7 +41,6 @@
     "bluebird": "3.5.0",
     "buffer": "5.0.6",
     "capitalize": "^1.0.0",
-    "dompurify": "^0.9.0",
     "eventemitter3": "2.0.3",
     "events": "1.1.1",
     "file-loader": "0.9.0",
@@ -70,7 +69,6 @@
     "react-native-billing": "2.3.0",
     "react-native-cli": "2.0.1",
     "react-native-contacts": "git+https://github.com/PeerioTechnologies/react-native-contacts.git",
-    "react-native-crypto": "2.0.1",
     "react-native-device-info": "git+https://github.com/PeerioTechnologies/react-native-device-info.git",
     "react-native-file-opener": "git+https://github.com/PeerioTechnologies/react-native-file-opener.git",
     "react-native-file-picker": "0.0.8",
@@ -91,13 +89,9 @@
     "react-native-sound": "0.9.0",
     "react-native-sqlcipher-storage": "git+ssh://git@github.com/PeerioTechnologies/react-native-sqlcipher-storage.git",
     "react-native-vector-icons": "4.0.0",
-    "readable-stream": "1.0.33",
-    "rn-workers": "git+https://github.com/PeerioTechnologies/react-native-workers.git",
     "scrypt-async": "1.3.1",
     "socket.io-client": "^2.0.3",
-    "stream-browserify": "1.0.0",
-    "tweetnacl": "1.0.0",
-    "vm-browserify": "0.0.4"
+    "tweetnacl": "1.0.0"
   },
   "devDependencies": {
     "appium": "1.6.5",
@@ -121,7 +115,6 @@
     "npm-run-all": "^4.0.2",
     "opt-cli": "^1.5.2",
     "repeating-cli": "^2.0.0",
-    "rn-nodeify": "github:mvayngrib/rn-nodeify",
     "semantic-release": "6.3.2",
     "sinon": "^1.17.7",
     "sinon-chai": "^2.13.0",
@@ -150,26 +143,6 @@
       "subjectPattern": ".+",
       "helpMessage": "Convention: https://goo.gl/3TgTsh"
     }
-  },
-  "react-native": {
-    "crypto": "react-native-crypto",
-    "_stream_transform": "readable-stream/transform",
-    "_stream_readable": "readable-stream/readable",
-    "_stream_writable": "readable-stream/writable",
-    "_stream_duplex": "readable-stream/duplex",
-    "_stream_passthrough": "readable-stream/passthrough",
-    "stream": "stream-browserify",
-    "vm": "vm-browserify"
-  },
-  "browser": {
-    "crypto": "react-native-crypto",
-    "_stream_transform": "readable-stream/transform",
-    "_stream_readable": "readable-stream/readable",
-    "_stream_writable": "readable-stream/writable",
-    "_stream_duplex": "readable-stream/duplex",
-    "_stream_passthrough": "readable-stream/passthrough",
-    "stream": "stream-browserify",
-    "vm": "vm-browserify"
   },
   "standard-version": {
     "skip": {
