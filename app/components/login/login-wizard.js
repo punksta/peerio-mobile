@@ -131,7 +131,7 @@ export default class LoginWizard extends Wizard {
 
     get debugLogs() {
         return (
-            <View style={{ backgroundColor: 'white', flexGrow: 1 }}><Logs /></View>
+            <View style={{ backgroundColor: 'white', flex: 0, height: height * 0.5 }}><Logs /></View>
         );
     }
 
