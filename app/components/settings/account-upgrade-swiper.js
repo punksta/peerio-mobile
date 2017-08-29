@@ -43,7 +43,7 @@ export default class AccountUpgradeSwiper extends Component {
             console.log('account-upgrade-swiper: active plans');
             User.current && console.log(User.current.activePlans);
             if (User.current.addresses.filter(e => e.confirmed).length === 0) {
-                // popupYes('', '', t('error_upgradingAccountNoConfirmedEmail')).then(() => routes.modal.discard());
+                popupYes('', '', t('error_upgradingAccountNoConfirmedEmail')).then(() => routes.modal.discard());
             }
         }
     }
