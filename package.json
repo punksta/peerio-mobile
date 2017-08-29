@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.133.0",
+  "version": "3.134.0",
   "private": true,
   "scripts": {
     "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
@@ -112,7 +112,7 @@
     "husky": "^0.13.1",
     "madge": "^1.6.0",
     "mocha": "3.2.0",
-    "npm-run-all": "^4.0.2",
+    "npm-run-all": "^4.1.1",
     "opt-cli": "^1.5.2",
     "repeating-cli": "^2.0.0",
     "semantic-release": "6.3.2",
