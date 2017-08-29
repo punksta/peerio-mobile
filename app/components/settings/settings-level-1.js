@@ -8,6 +8,7 @@ import { settingsState, snackbarState, mainState, loginState, contactState, chat
 import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-storage-usage';
 import { toggleConnection } from '../main/dev-menu-items';
 import plans from '../payments/payments-config';
+import { tx } from '../utils/translator';
 
 const bgStyle = {
     flexGrow: 1,
@@ -43,7 +44,7 @@ export default class SettingsLevel1 extends SafeComponent {
     renderThrow() {
         const plan = plans.topPlan();
         const upgradeItem = plan ?
-            <SettingsItem title={`View my ${plan.title} plan`} onPress={() => settingsState.upgrade()} /> :
+            <SettingsItem title={`View my ${tx(plan.title)} plan`} onPress={() => settingsState.upgrade()} /> :
             <SettingsItem title="button_upgrade" onPress={() => settingsState.upgrade()} />;
         return (
             <View style={bgStyle}>

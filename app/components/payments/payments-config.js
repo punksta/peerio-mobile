@@ -126,7 +126,7 @@ class PremiumPlan extends PaidPlan {
 }
 
 class ProfessionalPlan extends PaidPlan {
-    title = 'title_proPlan';
+    title = tx('title_proPlan');
     storage = '500 GB';
     uploadFileSize = tx('title_unlimited');
     priceOptions = [{

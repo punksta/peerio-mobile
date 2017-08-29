@@ -106,8 +106,8 @@ if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
         const rnd = new Date().getTime();
         s.username = randomWords({ min: 2, max: 2, join: 'o' });
         s.email = `seavan+${rnd}@gmail.com`;
-        s.firstName = randomWords({ min: 1, max: 1 });
-        s.lastName = randomWords({ min: 1, max: 1 });
+        s.firstName = randomWords();
+        s.lastName = randomWords();
     });
 }
 
