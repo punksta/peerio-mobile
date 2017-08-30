@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import { View, Text, Platform } from 'react-native';
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
+// import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import RNFS from 'react-native-fs';
 import FileOpener from 'react-native-file-opener';
 import SafeComponent from '../shared/safe-component';
@@ -55,6 +55,7 @@ const column = { flex: 0.5, alignItems: 'center' };
 
 const textStyle = { color: vars.txtDark, fontWeight: 'bold', marginVertical: 10 };
 
+/*
 function uuidv4() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
         const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -70,13 +71,10 @@ function formatTableHTML(codes) {
     result = `<table>${result}</table>`;
     return result;
 }
+*/
 
 function formatTableTxt(codes) {
-    let result = '';
-    for (let i = 1; i < codes.length; i += 2) {
-        result += `${codes[i - 1]} ${codes[i]}\n`;
-    }
-    return `Your backup codes: \n\n${result}`;
+    return `Your backup codes: \n\n${codes.join('\n')}`;
 }
 
 @observer
