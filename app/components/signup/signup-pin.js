@@ -21,7 +21,7 @@ export default class SignupPin extends Component {
                 <Pin
                     preventSimplePin
                     messageInitial={t('title_createPIN')}
-                    ref={pin => (this.pin = pin)}
+                    ref={pin => { this.pin = pin; }}
                     onConfirm={pin => this.usePin(pin)} />
             </View>
         );

@@ -11,7 +11,7 @@ import BackIcon from './back-icon';
 export default class HeaderMain extends SafeComponent {
     renderThrow() {
         let leftIcon = this.props.leftIcon || null;
-        let rightIcon = this.props.rightIcon || null;
+        const rightIcon = this.props.rightIcon || null;
         if (routerMain.isBackVisible) {
             leftIcon = <BackIcon />;
         }

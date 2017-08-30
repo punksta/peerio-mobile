@@ -89,7 +89,7 @@ class FileState extends RoutedState {
     }
 
     @action resetSelection() {
-        this.selected.forEach(f => (f.selected = false));
+        this.selected.forEach(f => { f.selected = false; });
     }
 
     @action selectFiles() {

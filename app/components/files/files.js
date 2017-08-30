@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Animated, Text } from 'react-native';
+import { View, ListView, Animated } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FilesPlaceholder from './files-placeholder';
@@ -80,7 +80,7 @@ export default class Files extends SafeComponent {
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={20}
                 enableEmptySections
-                ref={sv => (this.scrollView = sv)}
+                ref={sv => { this.scrollView = sv; }}
             />
         );
     }

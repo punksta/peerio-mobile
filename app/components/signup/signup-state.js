@@ -14,7 +14,7 @@ class SignupState extends RoutedState {
     @observable pin = '';
     @observable _current = 0;
     get current() { return this._current; }
-    set current(i) { uiState.hideAll().then(() => (this._current = i)); }
+    set current(i) { uiState.hideAll().then(() => { this._current = i; }); }
     // two pages of signup wizard
     @observable count = 2;
     _prefix = 'signup';
@@ -89,7 +89,7 @@ class SignupState extends RoutedState {
                 this.reset();
             })
             .then(() => mainState.saveUser())
-            .finally(() => (this.isInProgress = false));
+            .finally(() => { this.isInProgress = false; });
     }
 }
 

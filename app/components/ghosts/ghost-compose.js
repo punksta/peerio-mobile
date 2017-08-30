@@ -118,7 +118,7 @@ export default class ComposeMessage extends SafeComponent {
                     ghostState.view(g);
                     console.log(`ghost-compose.js: sent ${g.ghostId}`);
                 })
-                .finally(() => (this.inProgress = false));
+                .finally(() => { this.inProgress = false; });
         }, 100);
     }
 
@@ -253,7 +253,7 @@ export default class ComposeMessage extends SafeComponent {
                     autoCorrect={false}
                     autoComplete={false}
                     value={this.subject}
-                    onChangeText={text => (this.subject = text)}
+                    onChangeText={text => { this.subject = text; }}
                     style={textboxInput} />
                 {icons.dark('attach-file', () => this.addFiles())}
             </View>
@@ -299,7 +299,7 @@ export default class ComposeMessage extends SafeComponent {
                     underlineColorAndroid={'transparent'}
                     multiline
                     value={this.value}
-                    onChangeText={text => (this.value = text)}
+                    onChangeText={text => { this.value = text; }}
                     style={[filler, textArea]} />
                 <GhostSendButton enabled={this.isValid} send={() => this.send()} />
                 <ProgressOverlay enabled={this.inProgress} />

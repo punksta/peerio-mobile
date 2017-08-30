@@ -64,7 +64,7 @@ export default class AccountEdit extends SafeComponent {
                 contentContainerStyle={{ flex: 1, flexGrow: 1 }}
                 onScroll={this.onScroll}
                 keyboardShouldPersistTaps="handled"
-                style={{ backgroundColor: vars.settingsBg }} ref={ref => (this._scrollView = ref)}>
+                style={{ backgroundColor: vars.settingsBg }} ref={ref => { this._scrollView = ref; }}>
                 <View style={{ margin: 8 }}>
                     {this.label('title_promoConsentRequestTitle')}
                     {this.toggle('title_promoConsent', 'subscribeToPromoEmails')}

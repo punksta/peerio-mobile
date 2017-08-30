@@ -10,8 +10,8 @@ class ContactAddState extends RoutedState {
         return '';
     }
 
-    onTransition(active, contact) {
-        console.log('contacts add on transition');
+    onTransition(/* active, contact */) {
+        console.log('contact-add-state.js: contacts add on transition');
     }
 }
 

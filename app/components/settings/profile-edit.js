@@ -236,7 +236,7 @@ export default class ProfileEdit extends SafeComponent {
                 onScroll={this.onScroll}
                 keyboardShouldPersistTaps="handled"
                 style={{ backgroundColor: vars.settingsBg }}
-                ref={ref => (this._scrollView = ref)}>
+                ref={ref => { this._scrollView = ref; }}>
                 <View style={[flexRow, { backgroundColor: contact.hasAvatar ? vars.txtDate : contact.color }]}>
                     {contact.hasAvatar ? this.avatar : this.avatarLetter}
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
@@ -259,13 +259,13 @@ export default class ProfileEdit extends SafeComponent {
                     <View style={textinputContainer}>
                         <SimpleTextBox
                             onBlur={this.submit}
-                            onChangeText={text => (this.firstName = text)}
+                            onChangeText={text => { this.firstName = text; }}
                             placeholder={tx('title_firstName')} style={textinput} value={this.firstName} />
                     </View>
                     <View style={textinputContainer}>
                         <SimpleTextBox
                             onBlur={this.submit}
-                            onChangeText={text => (this.lastName = text)}
+                            onChangeText={text => { this.lastName = text; }}
                             placeholder={tx('title_lastName')} style={textinput} value={this.lastName} />
                     </View>
                 </View>
@@ -276,7 +276,7 @@ export default class ProfileEdit extends SafeComponent {
                         {emailIcon}
                         <SimpleTextBox
                             key={user.addresses.length}
-                            ref={ref => (this._addEmailBox = ref)}
+                            ref={ref => { this._addEmailBox = ref; }}
                             placeholder={tx('title_email')}
                             keyboardType="email-address"
                             autoCorrect={false}
@@ -284,7 +284,7 @@ export default class ProfileEdit extends SafeComponent {
                             autoCapitalize="none"
                             value={this.newEmailText}
                             onBlur={() => this.validateNewEmail()}
-                            onChangeText={text => (this.newEmailText = text)}
+                            onChangeText={text => { this.newEmailText = text; }}
                             onSubmitEditing={() => this.emailAction()}
                             style={textinput} />
                     </View>
@@ -299,7 +299,7 @@ export default class ProfileEdit extends SafeComponent {
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>
-                <AvatarActionSheet ref={sheet => (this._actionSheet = sheet)} />
+                <AvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
             </ScrollView>
         );
     }

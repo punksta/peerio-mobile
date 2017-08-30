@@ -33,7 +33,7 @@ export default class ChatActionSheet extends SafeComponent {
     renderThrow() {
         return (
             <ActionSheet
-                ref={sheet => (this._actionSheet = sheet)}
+                ref={sheet => { this._actionSheet = sheet; }}
                 options={this.retryCancelActionSheet.map(i => i.title)}
                 cancelButtonIndex={this.CANCEL_INDEX}
                 destructiveButtonIndex={this.DELETE_INDEX}

@@ -28,7 +28,7 @@ class LoginState extends RoutedState {
 
     constructor() {
         super();
-        reaction(() => this.passphrase, () => (this.passphraseValidationMessage = null));
+        reaction(() => this.passphrase, () => { this.passphraseValidationMessage = null; });
     }
 
     @action async enableAutomaticLogin(user) {

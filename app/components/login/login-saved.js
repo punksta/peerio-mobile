@@ -26,7 +26,7 @@ export default class LoginSaved extends SafeComponent {
     checkPin(pin, pinControl) {
         pinControl.spinner(true);
         loginState.login(pin)
-            .then(() => (this.count = 0))
+            .then(() => { this.count = 0; })
             .catch(() => {
                 console.error('login-saved.js: login error');
                 setTimeout(() => {

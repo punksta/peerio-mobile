@@ -75,7 +75,7 @@ export default class AccountUpgradeSwiper extends Component {
             <ScrollView
                 scrollEventThrottle={0}
                 showsHorizontalScrollIndicator={false}
-                ref={sv => (this._scrollView = sv)}
+                ref={sv => { this._scrollView = sv; }}
                 onScroll={this.handleScroll}
                 key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
                 {gradient({ style: card }, <AccountUpgradePlan plan={plans[0]} />, basicColor, basicColor)}

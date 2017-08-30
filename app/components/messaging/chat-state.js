@@ -77,7 +77,7 @@ class ChatState extends RoutedState {
 
     get unreadMessages() {
         let r = 0;
-        this.chatStore.chats.forEach(c => (r += c.unreadCount));
+        this.chatStore.chats.forEach(c => { r += c.unreadCount; });
         return r;
     }
 

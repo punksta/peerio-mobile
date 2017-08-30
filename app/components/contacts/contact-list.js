@@ -24,11 +24,11 @@ export default class ContactList extends SafeComponent {
     @observable refreshing = false
 
     groupsIcon(disabled) {
-        return buttons.uppercaseWhiteButton(tx('title_contactGroups'), () => (this.mode = 'groups'), disabled);
+        return buttons.uppercaseWhiteButton(tx('title_contactGroups'), () => { this.mode = 'groups'; }, disabled);
     }
 
     doneIcon(disabled) {
-        return buttons.uppercaseWhiteButton(tx('button_done'), () => (this.mode = 'list'), disabled);
+        return buttons.uppercaseWhiteButton(tx('button_done'), () => { this.mode = 'list'; }, disabled);
     }
 
     get leftIcon() {
@@ -98,7 +98,7 @@ export default class ContactList extends SafeComponent {
                 keyExtractor={item => item.username || item.email}
                 renderItem={this.item}
                 renderSectionHeader={this.header}
-                ref={sv => (this.scrollView = sv)}
+                ref={sv => { this.scrollView = sv; }}
             />
         );
     }

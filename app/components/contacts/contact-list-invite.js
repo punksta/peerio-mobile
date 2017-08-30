@@ -55,7 +55,7 @@ export default class ContactListInvite extends SafeComponent {
                 keyExtractor={item => item.username}
                 renderItem={this.item}
                 renderSectionHeader={this.header}
-                ref={sv => (this.scrollView = sv)}
+                ref={sv => { this.scrollView = sv; }}
             />
         );
     }

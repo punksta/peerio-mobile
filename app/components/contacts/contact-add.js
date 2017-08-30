@@ -208,7 +208,7 @@ export default class ContactAdd extends SafeComponent {
                     onScroll={this.onScroll}
                     keyboardShouldPersistTaps="handled"
                     style={{ backgroundColor: vars.settingsBg }}
-                    ref={ref => (this._scrollView = ref)}>
+                    ref={ref => { this._scrollView = ref; }}>
                     <View style={{ marginTop: 20 }}>
                         {contactState.empty && <View style={{ margin: 8 }}>
                             <Text style={labelDark}>{tx('title_contactZeroState')}</Text>
@@ -219,7 +219,7 @@ export default class ContactAdd extends SafeComponent {
                                 <SimpleTextBox
                                     autoCorrect={false}
                                     autoCapitalize="none"
-                                    onChangeText={text => (this.query = text)}
+                                    onChangeText={text => { this.query = text; }}
                                     placeholder={tx('title_userSearch')} style={textinput}
                                     value={this.query} />
                                 {this.renderButton1('button_add', () => this.tryAdding())}

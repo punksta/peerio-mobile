@@ -103,7 +103,7 @@ function popupYesSkip(title, subTitle, text) {
     });
 }
 
-function popupSignOutAutologin(title, subTitle, text) {
+function popupSignOutAutologin() {
     return new Promise((resolve) => {
         popupState.showPopup({
             title: t('title_gotYourKeys'),

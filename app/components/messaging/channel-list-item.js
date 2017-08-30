@@ -5,7 +5,6 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import chatState from './chat-state';
-import { User, contactStore } from '../../lib/icebear';
 
 @observer
 export default class ChannelListItem extends SafeComponent {

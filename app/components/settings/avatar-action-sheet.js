@@ -80,7 +80,7 @@ export default class AvatarActionSheet extends SafeComponent {
     renderThrow() {
         return (
             <ActionSheet
-                ref={sheet => (this._actionSheet = sheet)}
+                ref={sheet => { this._actionSheet = sheet; }}
                 options={this._actionSheetMap.map(i => i.title)}
                 cancelButtonIndex={this.CANCEL_INDEX}
                 onPress={this.actionPress}

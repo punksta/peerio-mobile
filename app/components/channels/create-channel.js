@@ -142,7 +142,7 @@ export default class CreateChannel extends Component {
                     <SimpleTextBox
                         autoCorrect={false}
                         autoCapitalize="none"
-                        onChangeText={text => (this[property] = text)}
+                        onChangeText={text => { this[property] = text; }}
                         placeholder={tx(placeholderText)} style={textinput}
                         value={this[property]} />
                 </View>
@@ -159,7 +159,7 @@ export default class CreateChannel extends Component {
                     keyboardShouldPersistTaps="handled"
                     scrollEnabled={false}
                     showsHorizontalScrollIndicator={false}
-                    ref={sv => (this._scrollView = sv)}
+                    ref={sv => { this._scrollView = sv; }}
                     key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
                     <View style={card}>
                         <ChannelUpgradeOffer />
@@ -172,7 +172,7 @@ export default class CreateChannel extends Component {
                                 await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
                                 chatState.routerModal.discard();
                             }}
-                            hideHeader ref={ref => (this._contactSelector = ref)} />
+                            hideHeader ref={ref => { this._contactSelector = ref; }} />
                     </View>
                 </ScrollView>
                 {this.createChatRow}

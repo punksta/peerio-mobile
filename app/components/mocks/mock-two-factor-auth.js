@@ -5,10 +5,9 @@ import PopupLayout from '../layout/popup-layout';
 import { User } from '../../lib/icebear';
 import chatState from '../messaging/chat-state';
 import mockChatStore from './mock-chat-store';
-import { vars } from '../../styles/styles';
 import HeaderMain from '../layout/header-main';
-import TwoFactorAuth from '../settings/two-factor-auth';
-import TwoFactorAuthCodes from '../settings/two-factor-auth-codes';
+// import TwoFactorAuth from '../settings/two-factor-auth';
+// import TwoFactorAuthCodes from '../settings/two-factor-auth-codes';
 import TwoFactorAuthCodesGenerate from '../settings/two-factor-auth-codes-generate';
 
 @observer

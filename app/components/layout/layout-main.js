@@ -48,7 +48,7 @@ export default class LayoutMain extends SafeComponent {
 
     get snackBar() {
         return !this.modal && !routerMain.currentComponent.suppressMainSnackBar ?
-            <SnackBar ref={sb => (this._snackBar = sb)} /> : null;
+            <SnackBar ref={sb => { this._snackBar = sb; }} /> : null;
     }
 
     renderThrow() {

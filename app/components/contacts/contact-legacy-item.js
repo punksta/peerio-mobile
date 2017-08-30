@@ -4,7 +4,7 @@ import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import { contactStore } from '../../lib/icebear';
-import { t, tx } from '../utils/translator';
+import { tx } from '../utils/translator';
 
 @observer
 export default class ContactLegacyItem extends SafeComponent {
@@ -16,7 +16,7 @@ export default class ContactLegacyItem extends SafeComponent {
 
     renderThrow() {
         const { contact } = this.props;
-        const { username, fullName, invited } = contact;
+        const { fullName, invited } = contact;
         return (
             <Avatar
                 noTap

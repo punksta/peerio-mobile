@@ -69,7 +69,7 @@ export default class LoginWizard extends Wizard {
                 });
             }
         });
-        when(() => socket.connected, () => (this.switchServerValue = config.socketServerUrl));
+        when(() => socket.connected, () => { this.switchServerValue = config.socketServerUrl; });
     }
 
     _counter = 0;
@@ -113,7 +113,7 @@ export default class LoginWizard extends Wizard {
         return (
             <View>
                 <View style={{ flexDirection: 'row', flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: 24 }}>
-                    <Button style={s} onPress={() => (this.showDebugLogs = !this.showDebugLogs)} text="Show logs" />
+                    <Button style={s} onPress={() => { this.showDebugLogs = !this.showDebugLogs; }} text="Show logs" />
                     <Button style={s} onPress={() => this.debugServer(this.switchServerValue)} text="Override server" />
                     <Button style={s} onPress={() => this.debugServer(null)} text="Reset" />
                 </View>
@@ -122,7 +122,7 @@ export default class LoginWizard extends Wizard {
                         autoCorrect={false}
                         autoCapitalize="none"
                         value={this.switchServerValue}
-                        onChangeText={text => (this.switchServerValue = text)}
+                        onChangeText={text => { this.switchServerValue = text; }}
                         style={input} />
                 </View>
             </View>

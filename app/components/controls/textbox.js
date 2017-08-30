@@ -186,7 +186,7 @@ export default class TextBox extends SafeComponent {
         const { secretIcon } = this;
         const { start, end } = this;
         return (
-            <View style={textbox.outerContainer} onLayout={this.layout} ref={ref => (this._container = ref)}>
+            <View style={textbox.outerContainer} onLayout={this.layout} ref={ref => { this._container = ref; }}>
                 <View style={[style.outer]}>
                     <View
                         style={[style.radius]}>
@@ -206,7 +206,7 @@ export default class TextBox extends SafeComponent {
                                 testID={`${this.props.testID || this.props.name}`}
                                 style={[style.textbox, { fontSize },
                                 { height: vars.inputPaddedHeight, top: 0, marginRight: this.secretIcon ? 42 : 0 }]}
-                                ref={ref => (this.textinput = ref)}
+                                ref={ref => { this.textinput = ref; }}
                                 underlineColorAndroid={'transparent'}
                                 returnKeyType={returnKeyType}
                                 secureTextEntry={this.props.secureTextEntry && !this.showSecret}

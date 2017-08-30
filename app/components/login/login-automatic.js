@@ -59,9 +59,9 @@ export default class LoginAutomatic extends LoginWizardPage {
                     <Text style={noticeText}>{t('title_enableAutomatic')}</Text>
                 </View>
                 <View style={padded2}>
-                    {this.button('button_enable', 'automaticLoginEnable', () => (loginState.selectedAutomatic = true), true)}
+                    {this.button('button_enable', 'automaticLoginEnable', () => { loginState.selectedAutomatic = true; }, true)}
                     <Text style={normalText}>{t('title_enableAutomatic1')}</Text>
-                    {this.button('button_disable', 'automaticLoginDisable', () => (loginState.selectedAutomatic = false), false)}
+                    {this.button('button_disable', 'automaticLoginDisable', () => { loginState.selectedAutomatic = false; }, false)}
                     <Text style={normalText}>{t('title_enableAutomatic2')}</Text>
                 </View>
             </View>

@@ -77,7 +77,7 @@ export default class Logs extends Component {
                 dataSource={this.dataSource}
                 renderRow={this.item}
                 enableEmptySections
-                ref={sv => (this.scrollView = sv)}
+                ref={sv => { this.scrollView = sv; }}
             />
         );
     }

@@ -38,7 +38,7 @@ class RouterMain extends Router {
     constructor() {
         super();
         routes.main = this;
-        reaction(() => this.currentIndex, i => (this.isBackVisible = i > 0));
+        reaction(() => this.currentIndex, i => { this.isBackVisible = i > 0; });
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);

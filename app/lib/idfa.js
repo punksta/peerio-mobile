@@ -1,4 +1,4 @@
-import { Platform, AdSupportIOS, NativeModules } from 'react-native';
+import { Platform, AdSupportIOS } from 'react-native';
 import { when } from 'mobx';
 import { socket } from '../lib/icebear';
 

@@ -57,7 +57,7 @@ export default class Wizard extends SafeComponent {
     }
 
     changeIndex(shift) {
-        uiState.hideAll().then(() => (this.index += shift));
+        uiState.hideAll().then(() => { this.index += shift; });
     }
 
     _animatedContainer(key, item, index) {

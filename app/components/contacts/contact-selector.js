@@ -148,7 +148,7 @@ export default class ContactSelector extends SafeComponent {
                     autoCapitalize="none"
                     autoCorrect={false}
                     placeholder={tx('title_userSearch')}
-                    ref={ti => (this.textInput = ti)} style={style} />
+                    ref={ti => { this.textInput = ti; }} style={style} />
             </View>
         );
     }

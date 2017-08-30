@@ -63,7 +63,7 @@ export default class ChatInfo extends SafeComponent {
         const update = () => chat.rename(this.chatName);
         return (
             <TextInput
-                onChangeText={text => (this.chatName = text)}
+                onChangeText={text => { this.chatName = text; }}
                 onBlur={update}
                 onEndEditing={update}
                 value={this.chatName}

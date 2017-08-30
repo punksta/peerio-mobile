@@ -41,12 +41,12 @@ export default class Layout1 extends SafeComponent {
         return (
             <MenuContext>
                 <View
-                    onLayout={event => (this.height = event.nativeEvent.layout.height)}
+                    onLayout={event => { this.height = event.nativeEvent.layout.height; }}
                     testID="layout1"
                     style={[boxStyle, this.props.style]}>
                     {this.props.header}
                     <ScrollView
-                        ref={ref => (this._scrollView = ref)}
+                        ref={ref => { this._scrollView = ref; }}
                         contentContainerStyle={contentContainerStyle}
                         style={{ flex: 1, flexGrow: 1 }}
                         scrollEnabled={!this.props.noScroll}

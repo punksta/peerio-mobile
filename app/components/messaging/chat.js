@@ -13,10 +13,6 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
-import ButtonText from '../controls/button-text';
-import { upgradeForArchive } from '../payments/payments';
-// max new items which are scrolled animated
-// const maxScrollableLength = 3;
 
 const { width } = Dimensions.get('window');
 
@@ -107,7 +103,6 @@ export default class Chat extends SafeComponent {
                 if (this.chat.canGoDown) indicatorSpacing += this.indicatorHeight;
                 const y = this.contentHeight - this.scrollViewHeight;
                 this.scrollEnabled = y - indicatorSpacing > 0;
-                const animated = !this.disableAnimateNextScroll;
                 // console.log('chat.js: auto scroll');
                 if (!this.refreshing && !this.disableNextScroll) {
                     console.log('chat.js: auto scrolling');
@@ -130,7 +125,7 @@ export default class Chat extends SafeComponent {
         this.refreshing = true;
         this.topChatID = this.data[0].id;
         this.chat.loadPreviousPage();
-        when(() => !this.chat.loadingTopPage, () => setTimeout(() => (this.refreshing = false), 1000));
+        when(() => !this.chat.loadingTopPage, () => setTimeout(() => { this.refreshing = false; }, 1000));
     }
 
     _onGoDown() {
@@ -138,7 +133,7 @@ export default class Chat extends SafeComponent {
         this.refreshing = true;
         this.bottomChatID = this.data[this.data.length - 1].id;
         this.chat.loadNextPage();
-        when(() => !this.chat.loadingBottomPage, () => setTimeout(() => (this.refreshing = false), 1000));
+        when(() => !this.chat.loadingBottomPage, () => setTimeout(() => { this.refreshing = false; }, 1000));
     }
 
     onScroll = (event) => {
@@ -163,7 +158,8 @@ export default class Chat extends SafeComponent {
     listView() {
         if (chatState.loading) return null;
         const refreshControlTop = this.chat.canGoUp ? (
-            <ActivityIndicator size="large" style={{ padding: 10 }} onLayout={e => (this.indicatorHeight = e.nativeEvent.layout.height)} />
+            <ActivityIndicator size="large" style={{ padding: 10 }}
+                onLayout={e => { this.indicatorHeight = e.nativeEvent.layout.height; }} />
         ) : null;
         const refreshControlBottom = this.chat.canGoDown ? (
             <ActivityIndicator size="large" style={{ padding: 10 }} />
@@ -179,7 +175,7 @@ export default class Chat extends SafeComponent {
                 onScroll={this.onScroll}
                 keyboardShouldPersistTaps="never"
                 enableEmptySections
-                ref={sv => (this.scrollView = sv)}>
+                ref={sv => { this.scrollView = sv; }}>
                 {this.chat.canGoUp ? refreshControlTop : this.zeroStateItem()}
                 {this.data.map(this.item)}
                 {this.chat.limboMessages && this.chat.limboMessages.map(this.item)}

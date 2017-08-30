@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Animated, Dimensions, StatusBar, Platform, View } from 'react-native';
+import { Animated, Dimensions, StatusBar, Platform } from 'react-native';
 import { reaction, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -23,10 +23,10 @@ export default class ModalLayout extends SafeComponent {
                 this.modal = modal;
                 routerModal.animating = true;
                 Animated.timing(this.modalAnimated, { toValue: 0, duration })
-                    .start(() => (routerModal.animating = false));
+                    .start(() => { routerModal.animating = false; });
             } else {
                 Animated.timing(this.modalAnimated, { toValue: this.height, duration })
-                    .start(() => (this.modal = null));
+                    .start(() => { this.modal = null; });
             }
         });
     }

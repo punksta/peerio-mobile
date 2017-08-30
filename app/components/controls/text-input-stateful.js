@@ -17,7 +17,7 @@ export default class TextInputStateful extends SafeComponent {
                     underlineColorAndroid={'transparent'}
                     value={s.value}
                     selectTextOnFocus
-                    onChangeText={text => (s.value = text)}
+                    onChangeText={text => { s.value = text; }}
                     autoCapitalize={'none'}
                     autoCorrect={false}
                     autoComplete={false}

@@ -100,7 +100,7 @@ export default class Files extends SafeComponent {
                 onEndReachedThreshold={20}
                 onContentSizeChange={this.scroll}
                 enableEmptySections
-                ref={sv => (this.scrollView = sv)}
+                ref={sv => { this.scrollView = sv; }}
             />
         );
     }

@@ -43,7 +43,7 @@ export default class SelectFiles extends SafeComponent {
                     autoCapitalize="none"
                     autoCorrect={false}
                     placeholder={tx('title_search')}
-                    ref={ti => (this.textInput = ti)} style={style} />
+                    ref={ti => { this.textInput = ti; }} style={style} />
             </View>
         );
     }
