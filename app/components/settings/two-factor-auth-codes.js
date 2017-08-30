@@ -76,7 +76,7 @@ function formatTableTxt(codes) {
     for (let i = 1; i < codes.length; i += 2) {
         result += `${codes[i - 1]} ${codes[i]}\n`;
     }
-    return result;
+    return `Your backup codes: \n\n${result}`;
 }
 
 @observer
@@ -100,14 +100,14 @@ export default class TwoFactorAuthCodes extends SafeComponent {
         let mimeType = 'application/pdf';
         let filePath = '';
 
-        if (Platform.OS === 'android') {
-            mimeType = 'text/plain';
-            filePath = `${RNFS.ExternalDirectoryPath}/${uuidv4()}.txt`;
-            await RNFS.writeFile(filePath, formatTableTxt(this.codes), 'utf8');
-        } else {
+        // if (Platform.OS === 'android') {
+        mimeType = 'text/plain';
+        filePath = `${Platform.OS === 'android' ? RNFS.ExternalDirectoryPath : RNFS.DocumentDirectoryPath}/backup codes for ${User.current.username}.txt`;
+        await RNFS.writeFile(filePath, formatTableTxt(this.codes), 'utf8');
+        /* } else {
             const html = formatTableHTML(this.codes);
             filePath = (await RNHTMLtoPDF.convert({ html })).filePath;
-        }
+        } */
         console.log(filePath);
         await FileOpener.open(filePath, mimeType);
         // await RNFS.unlink(filePath);
