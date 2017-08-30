@@ -21,7 +21,7 @@ function onRegister(token) {
             console.log(`🚲 push.js: register result success ${JSON.stringify(r)}`);
             pushState.registered = true;
         })
-        .catch(e => console.log('🚲 push.js: error registering', e));
+        .catch(e => console.log('🚲 push.js: error registering', JSON.stringify(e)));
     };
     if (socket.authenticated) registerServerSide();
     socket.onAuthenticated(registerServerSide);
@@ -76,7 +76,6 @@ if (__DEV__) {
     onRegister({ token: TEST_TOKEN });
 }
 
-const EN = process.env.EXECUTABLE_NAME || 'peeriomobile';
-if (EN === 'peeriomobile') enablePushNotifications();
+enablePushNotifications();
 
 module.exports = { enablePushNotifications, enableServerSide, disableServerSide, clearBadge };
