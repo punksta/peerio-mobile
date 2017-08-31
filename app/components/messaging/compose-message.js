@@ -7,7 +7,7 @@ import chatState from './chat-state';
 import { tx } from '../utils/translator';
 
 
-const LIMIT_PEOPLE = 8;
+const LIMIT_PEOPLE = 1;
 const fillView = { flex: 1, flexGrow: 1 };
 const rowCenter = {
     backgroundColor: vars.white,
@@ -32,7 +32,7 @@ export default class ComposeMessage extends Component {
         return (
             <View style={rowCenter}>
                 <Text numberOfLines={2} style={bottomRowText}>
-                    {`Need to chat with more than ${LIMIT_PEOPLE} people?`}
+                    {`Need to chat with more than ${LIMIT_PEOPLE} person?`}
                 </Text>
                 {buttons.uppercaseBlueButton(tx('button_createChannel'), () => chatState.routerModal.createChannel())}
             </View>
@@ -43,6 +43,7 @@ export default class ComposeMessage extends Component {
         return (
             <View style={fillView}>
                 <ContactSelector
+                    autoStart
                     onExit={() => chatState.routerModal.discard()}
                     action={contacts => chatState.startChat(contacts)}
                     title="New direct message" limit={LIMIT_PEOPLE} />
