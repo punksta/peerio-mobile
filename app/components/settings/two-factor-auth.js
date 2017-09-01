@@ -1,7 +1,7 @@
 import React from 'react';
 import { reaction, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, Text, TextInput, Clipboard, ActivityIndicator } from 'react-native';
+import { ScrollView, View, Text, TextInput, Clipboard, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import snackbarState from '../snackbars/snackbar-state';
@@ -102,10 +102,10 @@ export default class TwoFactorAuth extends SafeComponent {
         if (this.showReissueCodes) return <TwoFactorAuthCodesGenerate />;
         if (this.backupCodes) return <TwoFactorAuthCodes codes={this.backupCodes} />;
         return (
-            <View style={bgStyle}>
+            <ScrollView style={bgStyle}>
                 <View>
                     <Text style={{ color: vars.txtDark }}>
-                        {tx('title_2FADetail')}
+                        {tx('title_2FADetailDesktop')}
                     </Text>
                 </View>
                 <View style={{ marginVertical }}>
@@ -152,7 +152,12 @@ export default class TwoFactorAuth extends SafeComponent {
                             () => this.confirm(), !this.confirmCode || !this.key2fa)}
                     </View>
                 </View>
-            </View>
+                <View>
+                    <Text style={{ color: vars.txtDark }}>
+                        {tx('title_authAppsDetails')}
+                    </Text>
+                </View>
+            </ScrollView>
         );
     }
 }

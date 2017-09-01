@@ -19,7 +19,9 @@ export default (c, icebear) => {
         proAccount: 'https://account.peerio.com',
         helpCenter: 'https://peerio.zendesk.com/',
         contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new',
-        socialShareUrl: 'https://www.peerio.com/'
+        socialShareUrl: 'https://www.peerio.com/',
+        googleAuth: 'https://support.google.com/accounts/answer/1066447?hl=en',
+        authy: 'https://authy.com/'
     };
 
     setUrlMap(cfg.translator.urlMap);
