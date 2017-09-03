@@ -161,6 +161,7 @@ class LoginState extends RoutedState {
         } catch (e) {
             console.log(e);
         }
+        await User.current.signout();
         await RNRestart.Restart();
     }
 
