@@ -35,11 +35,12 @@ const whiteStyle = {
 
 async function twoFactorAuthPopup(active2FARequest) {
     if (!active2FARequest) return;
+    console.log(JSON.stringify(active2FARequest));
     const { cancelable, submit, cancel } = active2FARequest;
     const result = await popupInputCancelCheckbox(
         tx('title_2FA'),
         tx('dialog_enter2FA'),
-        tx('title_trustThisDevice'),
+        cancelable ? null : tx('title_trustThisDevice'),
         false,
         cancelable
     );

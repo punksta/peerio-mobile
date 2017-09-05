@@ -166,7 +166,7 @@ function popupInputCancelCheckbox(title, subTitle, checkBoxText, checked, cancel
         });
         const contents = (
             <View>
-                {checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; })}
+                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; })}
                 {inputControl(o)}
             </View>
         );
