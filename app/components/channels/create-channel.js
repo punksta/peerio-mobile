@@ -12,6 +12,7 @@ import SimpleTextBox from '../shared/simple-text-box';
 import ChannelUpgradeOffer from './channel-upgrade-offer';
 import contactState from '../contacts/contact-state';
 import chatState from '../messaging/chat-state';
+import { User } from '../../lib/icebear';
 
 const fillView = { flex: 1, flexGrow: 1, backgroundColor: vars.white };
 
@@ -59,7 +60,8 @@ const { width } = Dimensions.get('window');
 
 const card = {
     width,
-    backgroundColor: vars.lightGrayBg
+    backgroundColor: vars.lightGrayBg,
+    flexGrow: 1
 };
 
 @observer
@@ -151,30 +153,40 @@ export default class CreateChannel extends Component {
         );
     }
 
+    get scrollView() {
+        return (
+            <ScrollView
+                keyboardShouldPersistTaps="handled"
+                scrollEnabled={false}
+                showsHorizontalScrollIndicator={false}
+                ref={sv => { this._scrollView = sv; }}
+                key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
+                <View style={card}>
+                    <ChannelUpgradeOffer />
+                    {this.renderTextBox(tx('title_channelName'), tx('title_channelNamePlaceholder'), 'channelName')}
+                    {this.renderTextBox(tx('title_channelPurpose'), tx('title_channelPurposePlaceholder'), 'channelPurpose')}
+                </View>
+                <View style={card}>
+                    <ContactSelector
+                        action={async contacts => {
+                            await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
+                            chatState.routerModal.discard();
+                        }}
+                        hideHeader ref={ref => { this._contactSelector = ref; }} />
+                </View>
+            </ScrollView>
+        );
+    }
+
+    get paywall() {
+        return <View style={card}><ChannelUpgradeOffer /></View>;
+    }
+
     render() {
         return (
             <View style={fillView}>
                 {this.exitRow}
-                <ScrollView
-                    keyboardShouldPersistTaps="handled"
-                    scrollEnabled={false}
-                    showsHorizontalScrollIndicator={false}
-                    ref={sv => { this._scrollView = sv; }}
-                    key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
-                    <View style={card}>
-                        <ChannelUpgradeOffer />
-                        {this.renderTextBox(tx('title_channelName'), tx('title_channelNamePlaceholder'), 'channelName')}
-                        {this.renderTextBox(tx('title_channelPurpose'), tx('title_channelPurposePlaceholder'), 'channelPurpose')}
-                    </View>
-                    <View style={card}>
-                        <ContactSelector
-                            action={async contacts => {
-                                await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
-                                chatState.routerModal.discard();
-                            }}
-                            hideHeader ref={ref => { this._contactSelector = ref; }} />
-                    </View>
-                </ScrollView>
+                {User.current.channelsLeft <= 0 ? this.paywall : this.scrollView}
                 {this.createChatRow}
             </View>
         );
