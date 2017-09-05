@@ -10,15 +10,15 @@ function a(text, url) {
         const action = routes[type][route];
         if (action) return <Link onPress={action}>{text}</Link>;
     }
-    return <Link url={url}>{text}</Link>;
+    return <Link key={url} url={url}>{text}</Link>;
 }
 
 function b(text) {
-    return <Bold>{text}</Bold>;
+    return <Bold key={text}>{text}</Bold>;
 }
 
 function i(text) {
-    return <Italic>{text}</Italic>;
+    return <Italic key={text}>{text}</Italic>;
 }
 
 module.exports = {
