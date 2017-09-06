@@ -5,7 +5,7 @@ import settingsState from '../settings/settings-state';
 import { User, validation, fileStore, socket, TinyDb, warnings } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
-import { popupSignOutAutologin } from '../shared/popups';
+import { popupSignOutAutologin, popupYesCancel } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
@@ -195,7 +195,10 @@ class LoginState extends RoutedState {
         await keychain.load();
         if (!keychain.hasPlugin) return false;
         let data = await keychain.get(await mainState.getKeychainKey(this.username));
-        if (!data) return false;
+        if (!data) {
+            return await popupYesCancel(null, 'Error reading data from keychain. Try again?')
+                && await this.loadFromKeychain();
+        }
         try {
             const touchIdKey = `user::${this.username}::touchid`;
             const secureWithTouchID = !!await TinyDb.system.getValue(touchIdKey);

@@ -80,7 +80,7 @@ function popupYesCancel(title, subTitle, text) {
         popupState.showPopup({
             title,
             subTitle: textControl(subTitle),
-            contents: textControl(text),
+            contents: text ? textControl(text) : null,
             buttons: [
                 { id: 'no', text: t('button_no'), action: () => resolve(false), secondary: true },
                 { id: 'yes', text: t('button_yes'), action: () => resolve(true) }
