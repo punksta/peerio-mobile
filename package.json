@@ -80,7 +80,7 @@
     "react-native-linear-gradient": "2.0.0",
     "react-native-mail": "3.0.1",
     "react-native-menu": "^0.21.0",
-    "react-native-popup-menu": "^0.8.0",
+    "react-native-popup-menu": "^0.8.1",
     "react-native-privacy-snapshot": "git+https://github.com/PeerioTechnologies/react-native-privacy-snapshot.git",
     "react-native-push-notification": "3.0.0",
     "react-native-randombytes": "2.1.0",
