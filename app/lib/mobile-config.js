@@ -21,7 +21,11 @@ export default (c, icebear) => {
         contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new',
         socialShareUrl: 'https://www.peerio.com/',
         googleAuth: 'https://support.google.com/accounts/answer/1066447?hl=en',
-        authy: 'https://authy.com/'
+        iosApp: 'https://itunes.apple.com/app/peerio-2/id1245026608',
+        androidApp: 'https://play.google.com/store/apps/details?id=com.peerio.app',
+        googleAuthA: 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en',
+        googleAuthI: 'https://itunes.apple.com/app/google-authenticator/id388497605',
+        authy: 'https://authy.com'
     };
 
     setUrlMap(cfg.translator.urlMap);
