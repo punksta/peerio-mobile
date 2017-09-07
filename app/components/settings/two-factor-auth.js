@@ -9,6 +9,7 @@ import { tx } from '../utils/translator';
 import { popupInputCancelCheckbox } from '../shared/popups';
 import { clientApp, User } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
+import loginState from '../login/login-state';
 import TwoFactorAuthCodes from './two-factor-auth-codes';
 import TwoFactorAuthCodesGenerate from './two-factor-auth-codes-generate';
 
@@ -36,15 +37,18 @@ const whiteStyle = {
 async function twoFactorAuthPopup(active2FARequest) {
     if (!active2FARequest) return;
     console.log(JSON.stringify(active2FARequest));
-    const { cancelable, submit, cancel, type } = active2FARequest;
+    const { submit, cancel, type } = active2FARequest;
     const result = await popupInputCancelCheckbox(
         tx('title_2FA'),
         tx('dialog_enter2FA'),
         type === 'login' ? tx('title_trustThisDevice') : null,
         false,
-        cancelable
+        true
     );
     if (result === false) {
+        if (type === 'login') {
+            await loginState.signOut(true);
+        }
         cancel();
         return;
     }
