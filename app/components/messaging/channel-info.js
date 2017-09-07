@@ -164,13 +164,9 @@ export default class ChannelInfo extends SafeComponent {
                 )}
             </View>
         );
-        const rightIcon = chat.isFavorite ?
-            icons.gold('star', () => chat.toggleFavoriteState()) :
-            icons.dark('star-border', () => chat.toggleFavoriteState());
         return (<LayoutModalExit
             body={body}
             title={`# ${chat.name}`}
-            rightIcon={rightIcon}
             onClose={() => chatState.routerModal.discard()} />);
     }
 }
