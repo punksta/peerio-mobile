@@ -5,6 +5,10 @@ import Link from './link';
 import routes from '../routes/routes';
 
 function a(text, url) {
+    if (!url) {
+        console.error(`tag-handlers.js: bad ${text} link`);
+        return text;
+    }
     if (url.startsWith('route:')) {
         const [, type, route] = url.split(':');
         const action = routes[type][route];
