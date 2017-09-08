@@ -20,9 +20,6 @@ const textStyle = {
     fontWeight: 'bold'
 };
 
-const deleteMessage =
-`If you delete the channel, you will no longer be able to access the shared files and chat history`;
-
 @observer
 export default class ChannelInfo extends SafeComponent {
     @observable channelTopic = '';
@@ -41,7 +38,7 @@ export default class ChannelInfo extends SafeComponent {
     }
 
     deleteChannel = async () => {
-        if (await popupCancelConfirm(tx('button_deleteChannel'), deleteMessage)) {
+        if (await popupCancelConfirm(tx('button_deleteChannel'), tx('title_confirmChannelDelete'))) {
             await this.chat.delete();
             chatState.routerModal.discard();
         }
