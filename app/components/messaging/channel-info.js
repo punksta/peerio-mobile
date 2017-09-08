@@ -20,12 +20,6 @@ const textStyle = {
     fontWeight: 'bold'
 };
 
-const leaveTitle = tx('button_leaveChannel');
-const leaveMessage =
-`If you wish to leave, you will no longer be able to access the shared files and chat history
-To rejoin this channel, please ask the admin to add you again`;
-
-const deleteTitle = tx('button_deleteChannel');
 const deleteMessage =
 `If you delete the channel, you will no longer be able to access the shared files and chat history`;
 
@@ -40,14 +34,14 @@ export default class ChannelInfo extends SafeComponent {
     }
 
     leaveChannel = async () => {
-        if (await popupCancelConfirm(leaveTitle, leaveMessage)) {
+        if (await popupCancelConfirm(tx('button_leaveChannel'), tx('title_confirmChannelLeave'))) {
             await this.chat.leave();
             chatState.routerModal.discard();
         }
     }
 
     deleteChannel = async () => {
-        if (await popupCancelConfirm(deleteTitle, deleteMessage)) {
+        if (await popupCancelConfirm(tx('button_deleteChannel'), deleteMessage)) {
             await this.chat.delete();
             chatState.routerModal.discard();
         }

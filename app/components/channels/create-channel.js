@@ -114,7 +114,7 @@ export default class CreateChannel extends Component {
         return (
             <View style={container}>
                 {icons.dark('close', () => chatState.routerModal.discard())}
-                <Text style={textStyle}>{tx('button_createChat')}</Text>
+                <Text style={textStyle}>{tx('button_createChannel')}</Text>
                 {this.isValid ?
                     icons.text(t('button_go'), () => this.next()) : icons.placeholder()}
             </View>
@@ -130,7 +130,7 @@ export default class CreateChannel extends Component {
             <View style={hideStyle}>
                 <View style={[rowCenter, { height: 60 }]}>
                     <Text numberOfLines={2} style={bottomRowText}>{tx('title_goCreateChat')}</Text>
-                    {buttons.uppercaseBlueButton(tx('button_createChannel'), () => chatState.routerModal.compose())}
+                    {buttons.uppercaseBlueButton(tx('button_createChat'), () => chatState.routerModal.compose())}
                 </View>
             </View>
         );
