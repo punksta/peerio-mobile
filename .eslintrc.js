@@ -18,7 +18,8 @@ module.exports = {
         'no-multi-assign': 0,
         'no-unused-vars': 1,
         'react/no-array-index-key': 0,
-        'max-len': 0
+        'max-len': 0,
+        'space-before-function-paren': 0
     },
     globals: {
         'requestAnimationFrame': false,
