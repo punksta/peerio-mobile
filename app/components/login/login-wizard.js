@@ -16,6 +16,7 @@ import LoginClean from './login-clean';
 import LoginPassword from './login-password';
 import Logs from '../logs/logs';
 import uiState from '../layout/ui-state';
+import consoleOverride from '../../lib/console-override';
 
 const { height } = Dimensions.get('window');
 const logoHeight = height * 0.33;
@@ -114,6 +115,9 @@ export default class LoginWizard extends Wizard {
             <View>
                 <View style={{ flexDirection: 'row', flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: 24 }}>
                     <Button style={s} onPress={() => { this.showDebugLogs = !this.showDebugLogs; }} text="Show logs" />
+                    <Button style={s}
+                        onPress={() => { consoleOverride.verbose = !consoleOverride.verbose; }}
+                        text={consoleOverride.verbose ? 'Verbose On' : 'Verbose Off'} />
                     <Button style={s} onPress={() => this.debugServer(this.switchServerValue)} text="Override server" />
                     <Button style={s} onPress={() => this.debugServer(null)} text="Reset" />
                 </View>

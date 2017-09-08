@@ -14,6 +14,7 @@ import { clientApp, crypto, startSocket, config } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import { enableIdfa } from '../lib/idfa';
+import consoleOverride from '../lib/console-override';
 import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
@@ -34,63 +35,19 @@ export default class App extends SafeComponent {
             }
         });
 
-        if (console._errorOriginal) {
-            console.error = console._errorOriginal;
-        }
-
-        global.ErrorUtils && global.ErrorUtils.setGlobalHandler((...args) => {
-            console.error(`App.js: unhandled error`);
-            console.error(args);
-        });
-
-        console.stack = [];
-        console.stackPush = (msg) => {
-            const MAX = 300;
-            const STEP = 50;
-            const index = console.stack.length;
-            const delta = index - MAX;
-            const time = new Date();
-            console.stack.push({ msg, time });
-            if (delta > STEP) console.stack.splice(0, delta);
-        };
-
-        const log = console.log;
-        console.log = function() {
-            __DEV__ && log.apply(console, arguments);
-            Array.from(arguments).forEach(console.stackPush);
-        };
-
-        const warn = console.warn;
-        console.warn = function() {
-            __DEV__ && warn.apply(console, arguments);
-            Array.from(arguments).forEach(console.stackPush);
-        };
-
-        console.disableYellowBox = true;
-
-        const error = console.error;
-        console.error = function() {
-            __DEV__ && error.apply(console, arguments);
-            Array.from(arguments).forEach(console.stackPush);
-        };
-
-        const debug = console.debug;
-        console.debug = function() {
-            __DEV__ && debug.apply(console, arguments);
-            __DEV__ && Array.from(arguments).forEach(console.stackPush);
+        console.logVersion = () => {
+            console.log(`App.js: app version ${config.appVersion}, SDK version: ${config.sdkVersion}, OS: ${Platform.OS}, OS version: ${Platform.Version}`);
+            console.log(`App.js: screen specs: ${width}, ${height}, ${PixelRatio.get()}`);
         };
 
         this._handleAppStateChange = this._handleAppStateChange.bind(this);
         this._handleMemoryWarning = this._handleMemoryWarning.bind(this);
 
-        console.logVersion = () => {
-            console.log(`App.js: app version ${config.appVersion}, SDK version: ${config.sdkVersion}, OS: ${Platform.OS}, OS version: ${Platform.Version}`);
-            console.log(`App.js: screen specs: ${width}, ${height}, ${PixelRatio.get()}`);
-        };
-        startSocket();
-
-        push.clearBadge();
-        enableIdfa();
+        consoleOverride.configureConsole().then(() => {
+            startSocket();
+            push.clearBadge();
+            enableIdfa();
+        });
     }
 
     componentDidMount() {
