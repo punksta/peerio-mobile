@@ -21,7 +21,7 @@ import Logs from '../logs/logs';
 import { fileState, mainState, ghostState, chatState, settingsState, contactState, contactAddState } from '../states';
 // import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
-import { tx } from '../utils/translator';
+import { T } from '../utils/translator';
 
 class RouterMain extends Router {
     // current route object
@@ -48,7 +48,7 @@ class RouterMain extends Router {
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
         this.add('channelInviteList', [<ChannelInviteList />], chatState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
-        this.add('logs', [<Logs />], { title: tx('title_logs') });
+        this.add('logs', [<Logs />], { title: <T k="title_logs" /> });
     }
 
     @action initialRoute() {
