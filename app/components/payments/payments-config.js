@@ -9,7 +9,8 @@ const basicPlanInfo =
 Portability across devices
 Secure File Storage & Sharing
 1 GB of secure Peerio Vault storage
-500M max upload file size`;
+500M max upload file size
+2 rooms`;
 
 const premiumIncludesInfo =
 `Includes features of Basic Plan`;
@@ -17,7 +18,8 @@ const premiumIncludesInfo =
 const premiumPlanInfo =
 `20 GB of secure storage
 2 GB max upload file size
-Unlimited Message Archive
+5 rooms
+Unlimited message archive
 Premium support
 `;
 
@@ -38,7 +40,8 @@ const professionalIncludesInfo =
 const professionalPlanInfo =
 `500 GB of secure storage
 Unlimited upload file size
-Unlimited Message Archive
+Unlimited rooms
+Unlimited message archive
 Premium support
 `;
 
