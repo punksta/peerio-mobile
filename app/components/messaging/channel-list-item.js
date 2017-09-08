@@ -10,17 +10,36 @@ import chatState from './chat-state';
 export default class ChannelListItem extends SafeComponent {
     renderThrow() {
         const { chat } = this.props;
-        const { name } = chat;
+        const { name, unread } = chat;
         if (!chat) return null;
         const containerStyle = {
             height: 40,
             paddingHorizontal: 24,
-            justifyContent: 'center',
-            backgroundColor: vars.lightGrayBg
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            backgroundColor: vars.lightGrayBg,
+            flexDirection: 'row'
         };
 
         const textStyle = {
             color: vars.txtDark
+        };
+
+        const circleRadius = 12;
+        const circleStyle = {
+            width: circleRadius * 2,
+            height: circleRadius * 2,
+            borderRadius: circleRadius,
+            backgroundColor: vars.bg,
+            overflow: 'hidden',
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+
+        const textCircleStyle = {
+            fontSize: 10,
+            fontWeight: 'bold',
+            color: vars.white
         };
 
         return (
@@ -31,6 +50,7 @@ export default class ChannelListItem extends SafeComponent {
                     <Text style={textStyle}>
                         {`# ${name}`}
                     </Text>
+                    {unread > 0 && <View style={circleStyle}><Text style={textCircleStyle}>{unread}</Text></View>}
                 </TouchableOpacity>
             </View>
         );
