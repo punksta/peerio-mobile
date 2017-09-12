@@ -58,24 +58,10 @@ export default class ChatInfo extends SafeComponent {
         );
     }
 
-    renameTextBox() {
-        const chat = chatState.currentChat;
-        const update = () => chat.rename(this.chatName);
-        return (
-            <TextInput
-                onChangeText={text => { this.chatName = text; }}
-                onBlur={update}
-                onEndEditing={update}
-                value={this.chatName}
-                style={{ paddingLeft: 18, height: vars.inputHeight, color: vars.txtDark }} />
-        );
-    }
-
     renderThrow() {
         const chat = chatState.currentChat;
         const body = (
             <View>
-                {this.lineBlock(this.renameTextBox())}
                 {this.lineBlock(this.action(tx('button_hideChat'), 'remove-circle-outline', this.hideChat))}
                 {chat.participants && this.lineBlock(
                     <View style={{ paddingVertical: 8 }}>
