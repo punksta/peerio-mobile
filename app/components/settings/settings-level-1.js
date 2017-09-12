@@ -58,7 +58,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     </SettingsItem>
                     <SettingsItem title="title_help" onPress={() => settingsState.routerMain.logs()} />
                     {this.spacer}
-                    {upgradeItem}
+                    {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
                     <SettingsItem title="title_settingsAccount" onPress={() => settingsState.transition('account')} />
                     {this.spacer}
                     <SettingsItem title="button_logout" onPress={() => loginState.signOut()} />

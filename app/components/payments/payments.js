@@ -32,12 +32,12 @@ function upgradeMessage(title) {
 }
 
 function upgradeForFiles() {
-    return !plans.userHasPaidPlan() && paymentsNative.showFileUpgradeOffer ?
+    return !process.env.PEERIO_DISABLE_PAYMENTS && !plans.userHasPaidPlan() && paymentsNative.showFileUpgradeOffer ?
         upgradeMessage(tx('title_outOfStorage')) : null;
 }
 
 function upgradeForArchive() {
-    return !plans.userHasPaidPlan() && paymentsNative.showArchiveUpgradeOffer ?
+    return !process.env.PEERIO_DISABLE_PAYMENTS && !plans.userHasPaidPlan() && paymentsNative.showArchiveUpgradeOffer ?
         upgradeMessage(tx('title_upgradeForArchive')) : null;
 }
 

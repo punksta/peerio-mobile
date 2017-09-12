@@ -9,6 +9,7 @@ import { tx, T } from '../utils/translator';
 export default class ChannelUpgradeOffer extends Component {
     render() {
         if (User.current.channelLimit === Number.MAX_SAFE_INTEGER) return null;
+        if (process.env.PEERIO_DISABLE_PAYMENTS) return null;
 
         const offerStyle = {
             backgroundColor: '#d9f1ef',
