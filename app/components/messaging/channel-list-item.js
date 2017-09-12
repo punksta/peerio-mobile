@@ -10,7 +10,7 @@ import chatState from './chat-state';
 export default class ChannelListItem extends SafeComponent {
     renderThrow() {
         const { chat } = this.props;
-        const { name, unread } = chat;
+        const { name, unreadCount } = chat;
         if (!chat) return null;
         const containerStyle = {
             height: 40,
@@ -50,7 +50,7 @@ export default class ChannelListItem extends SafeComponent {
                     <Text style={textStyle}>
                         {`# ${name}`}
                     </Text>
-                    {unread > 0 && <View style={circleStyle}><Text style={textCircleStyle}>{unread}</Text></View>}
+                    {unreadCount > 0 && <View style={circleStyle}><Text style={textCircleStyle}>{unreadCount}</Text></View>}
                 </TouchableOpacity>
             </View>
         );
