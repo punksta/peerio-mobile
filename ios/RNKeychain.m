@@ -55,7 +55,8 @@ RCT_REMAP_METHOD(saveValue,
     NSDictionary *attributes = @{
         (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
         (__bridge id)kSecAttrService: key,
-        (__bridge id)kSecValueData: secretPasswordTextData,        
+        (__bridge id)kSecValueData: secretPasswordTextData,
+        (__bridge id)kSecUseNoAuthenticationUI: @YES,
         (__bridge id)kSecAttrAccessControl: (__bridge_transfer id)sacObject
     };
 
@@ -80,7 +81,7 @@ RCT_REMAP_METHOD(getValue,
         (__bridge id)kSecAttrService: key,
         (__bridge id)kSecReturnData: @YES,
     };
-    
+
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         CFTypeRef dataTypeRef = NULL;
         NSString *message;
@@ -105,7 +106,7 @@ RCT_REMAP_METHOD(deleteValue,
         (__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
         (__bridge id)kSecAttrService: key
     };
-    
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         OSStatus status = SecItemDelete((__bridge CFDictionaryRef)query);
         NSString *errorString = [self keychainErrorToString:status];
@@ -122,7 +123,7 @@ RCT_REMAP_METHOD(deleteValue,
 
 - (NSString *)keychainErrorToString:(OSStatus)error {
     NSString *message = [NSString stringWithFormat:@"%ld", (long)error];
-    
+
     switch (error) {
         case errSecSuccess:
             message = @"success";
@@ -131,11 +132,11 @@ RCT_REMAP_METHOD(deleteValue,
         case errSecDuplicateItem:
             message = @"error item already exists";
             break;
-        
+
         case errSecItemNotFound :
             message = @"error item not found";
             break;
-        
+
         case errSecAuthFailed:
             message = @"error item authentication failed";
             break;
@@ -143,7 +144,7 @@ RCT_REMAP_METHOD(deleteValue,
         default:
             break;
     }
-    
+
     return message;
 }
 
