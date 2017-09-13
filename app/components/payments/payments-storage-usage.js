@@ -14,13 +14,13 @@ class PaymentStorageUsage extends SafeComponent {
     renderThrow() {
         const u = User.current;
         if (!u) return null;
-        if (plans.userHasPaidPlan()) return null;
+        const hideUpgrade = plans.userHasPaidPlan() || process.env.PEERIO_DISABLE_PAYMENTS;
         return (
             <View style={{ marginHorizontal: 10 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Bold>{u.fileQuotaUsedPercent}% of {u.fileQuotaTotalFmt}</Bold>
                     <View style={{ width: 20 }} />
-                    {!process.env.PEERIO_DISABLE_PAYMENTS && buttons.uppercaseBlueButton('button_upgrade',
+                    {!hideUpgrade && buttons.uppercaseBlueButton('button_upgrade',
                         () => settingsState.upgrade())}
                 </View>
             </View>
