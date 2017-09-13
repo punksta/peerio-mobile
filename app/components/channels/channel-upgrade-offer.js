@@ -4,6 +4,7 @@ import { observer } from 'mobx-react/native';
 import { User } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
 import { tx, T } from '../utils/translator';
+import settingsState from '../settings/settings-state';
 
 @observer
 export default class ChannelUpgradeOffer extends Component {
@@ -22,7 +23,7 @@ export default class ChannelUpgradeOffer extends Component {
                     <T k="title_channelUpgradeOffer">{{ limit: User.current.channelLimit }}</T>
                 </Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    {buttons.uppercaseBlueButton(tx('button_upgrade'))}
+                    {buttons.uppercaseBlueButton(tx('button_upgrade'), () => settingsState.upgrade())}
                 </View>
             </View>
         );
