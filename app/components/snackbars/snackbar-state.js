@@ -1,4 +1,4 @@
-import { observable, action, reaction, when } from 'mobx';
+import { action, reaction, when } from 'mobx';
 import { warnings, socket } from '../../lib/icebear';
 import { popupYes, popupSystemWarning } from '../shared/popups';
 import { tx } from '../utils/translator';
@@ -29,8 +29,8 @@ class SnackBarState extends RoutedState {
 
 const snackbarState = new SnackBarState();
 when(() => socket.throttled, () => {
-    popupYes('Authentication error', '425 Throttled', 'Your account has been throttled due to unusual activity')
-        .then(() => (socket.throttled = false));
+    popupYes(`Authentication error`, '425 Throttled', `Your account has been throttled due to unusual activity`)
+        .then(() => { socket.throttled = false; });
 });
 
 export default snackbarState;

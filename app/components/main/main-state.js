@@ -1,8 +1,6 @@
 import { observable, action } from 'mobx';
 import { User, chatStore, TinyDb } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
-import { popupYesSkip } from '../shared/popups';
-import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
 class MainState extends RoutedState {

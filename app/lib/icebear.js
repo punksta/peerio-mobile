@@ -28,6 +28,6 @@ icebear.startSocket = async function() {
 };
 
 global.icebear = icebear;
-// eslingignore
+// eslint-disable-next-line
 if (window) window.icebear = icebear;
 module.exports = icebear;

@@ -49,7 +49,7 @@ export default class FileActions extends SafeComponent {
         // uiState.externalViewer = true;
         return Promise.resolve()
             .then(() => this.props.file.launchViewer())
-            .finally(() => (uiState.externalViewer = false));
+            .finally(() => { uiState.externalViewer = false; });
     }
 
     renderThrow() {

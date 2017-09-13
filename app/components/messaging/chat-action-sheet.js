@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import ActionSheet from 'react-native-actionsheet';
 import SafeComponent from '../shared/safe-component';
+import { tx } from '../utils/translator';
 
 @observer
 export default class ChatActionSheet extends SafeComponent {
@@ -13,9 +14,9 @@ export default class ChatActionSheet extends SafeComponent {
     CANCEL_INDEX = 2;
 
     retryCancelActionSheet = [
-        { title: 'Retry Send', action: () => this._message.send() },
-        { title: 'Delete Message', action: () => this._chat.removeMessage(this._message) },
-        { title: 'Cancel' }
+        { title: tx('button_retry'), action: () => this._message.send() },
+        { title: tx('button_delete'), action: () => this._chat.removeMessage(this._message) },
+        { title: tx('button_cancel') }
     ];
 
     retryCancelPress = index => {
@@ -32,7 +33,7 @@ export default class ChatActionSheet extends SafeComponent {
     renderThrow() {
         return (
             <ActionSheet
-                ref={sheet => (this._actionSheet = sheet)}
+                ref={sheet => { this._actionSheet = sheet; }}
                 options={this.retryCancelActionSheet.map(i => i.title)}
                 cancelButtonIndex={this.CANCEL_INDEX}
                 destructiveButtonIndex={this.DELETE_INDEX}

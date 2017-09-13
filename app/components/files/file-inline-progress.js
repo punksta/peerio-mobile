@@ -8,7 +8,6 @@ import icons from '../helpers/icons';
 import FileProgress from './file-progress';
 import FileSignatureError from './file-signature-error';
 import { vars } from '../../styles/styles';
-import { popupYes } from '../shared/popups';
 
 
 @observer
@@ -23,9 +22,10 @@ export default class FileInlineProgress extends SafeComponent {
             marginBottom: 8
         };
         const file = fileState.store.getById(this.props.file);
-        if (file === null) return null;
+        if (!file) return null;
         if (file.signatureError) return <FileSignatureError />;
         const exists = file && !file.isPartialDownload && file.cached;
+        const title = `${file.name} (${file.sizeFormatted})`;
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.pressRetentionOffset}
@@ -36,7 +36,7 @@ export default class FileInlineProgress extends SafeComponent {
                             style={{ flexGrow: 1, flexShrink: 1, opacity: 0.7, fontWeight: 'bold' }}
                             ellipsizeMode="tail"
                             numberOfLines={1}>
-                            {file.name} ({file.sizeFormatted})
+                            {title}
                         </Text>
                         <View style={{ flex: 0 }}>
                             {!file.uploading && this.props.transparentOnFinishUpload && <ActivityIndicator />}

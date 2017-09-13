@@ -6,6 +6,7 @@ import { vars } from '../../styles/styles';
 import SettingsItem from '../settings/settings-item';
 import icons from '../helpers/icons';
 import { TinyDb } from '../../lib/icebear';
+import { tx } from '../utils/translator';
 // import SafeComponent from '../shared/safe-component';
 
 const bgStyle = {
@@ -73,11 +74,11 @@ export default class ContactsGroups extends Component {
     render() {
         return (
             <View style={bgStyle}>
-                <Text style={text}>{'Your groups'}</Text>
-                {this.checkBoxItem('Favourites', 'favorites')}
-                {this.checkBoxItem('All contacts', 'all')}
+                <Text style={text}>{tx('title_contactGroups')}</Text>
+                {this.checkBoxItem(tx('title_favoriteContacts'), 'favorites')}
+                {this.checkBoxItem(tx('title_invitedContacts'), 'all')}
                 <View style={spacer} />
-                {this.checkBoxItem('Invited', 'invited')}
+                {this.checkBoxItem(tx('title_allContacts'), 'invited')}
             </View>
         );
     }

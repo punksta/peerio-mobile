@@ -14,8 +14,6 @@ import mockContactStore from './mock-contact-store';
 import mockChatStore from './mock-chat-store';
 import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
-import { popupSystemWarning } from '../shared/popups';
-import { vars } from '../../styles/styles';
 
 @observer
 export default class MockChannelCreate extends Component {

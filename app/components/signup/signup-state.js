@@ -14,7 +14,7 @@ class SignupState extends RoutedState {
     @observable pin = '';
     @observable _current = 0;
     get current() { return this._current; }
-    set current(i) { uiState.hideAll().then(() => (this._current = i)); }
+    set current(i) { uiState.hideAll().then(() => { this._current = i; }); }
     // two pages of signup wizard
     @observable count = 2;
     _prefix = 'signup';
@@ -89,7 +89,7 @@ class SignupState extends RoutedState {
                 this.reset();
             })
             .then(() => mainState.saveUser())
-            .finally(() => (this.isInProgress = false));
+            .finally(() => { this.isInProgress = false; });
     }
 }
 
@@ -106,8 +106,8 @@ if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
         const rnd = new Date().getTime();
         s.username = randomWords({ min: 2, max: 2, join: 'o' });
         s.email = `seavan+${rnd}@gmail.com`;
-        s.firstName = 'First';
-        s.lastName = 'Last';
+        s.firstName = randomWords();
+        s.lastName = randomWords();
     });
 }
 

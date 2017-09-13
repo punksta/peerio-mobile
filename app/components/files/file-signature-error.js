@@ -5,11 +5,7 @@ import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import { popupYes } from '../shared/popups';
-
-const titleUnverifiedFile = 'Unverified file';
-const messageUnverifiedFile =
-`There are problems with this file's signature.
-It may be forged or damaged. Upload and share file again`;
+import { tx } from '../utils/translator';
 
 @observer
 export default class FileSignatureError extends SafeComponent {
@@ -32,7 +28,7 @@ export default class FileSignatureError extends SafeComponent {
             marginLeft: 6
         };
 
-        const showAlert = () => popupYes(titleUnverifiedFile, null, messageUnverifiedFile);
+        const showAlert = () => popupYes(tx('title_invalidFileSignature'), null, tx('error_invalidFileSignature'));
 
         return (
             <TouchableOpacity
@@ -40,7 +36,7 @@ export default class FileSignatureError extends SafeComponent {
                 pressRetentionOffset={vars.pressRetentionOffset}>
                 <View style={container}>
                     {icons.plainalert('error-outline')}
-                    <Text style={text}>{'This file could not be verified'}</Text>
+                    <Text style={text}>{tx('error_invalidFileSignature')}</Text>
                 </View>
             </TouchableOpacity>
         );

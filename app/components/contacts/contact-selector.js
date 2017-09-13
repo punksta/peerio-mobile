@@ -4,7 +4,7 @@ import {
     View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { when, observable } from 'mobx';
+import { when, observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
@@ -32,6 +32,12 @@ export default class ContactSelector extends SafeComponent {
     @observable legacyContact = null;
     @observable found = [];
     @observable findUserText;
+
+    componentDidMount() {
+        this.recipients.items.observe(() => {
+            if (this.recipients.items.length && this.props.autoStart) this.action();
+        });
+    }
 
     get inviteContactDuck() {
         if (!this.toInvite) return null;
@@ -148,7 +154,7 @@ export default class ContactSelector extends SafeComponent {
                     autoCapitalize="none"
                     autoCorrect={false}
                     placeholder={tx('title_userSearch')}
-                    ref={ti => (this.textInput = ti)} style={style} />
+                    ref={ti => { this.textInput = ti; }} style={style} />
             </View>
         );
     }
@@ -195,7 +201,7 @@ export default class ContactSelector extends SafeComponent {
             <Avatar
                 starred={contact.isAdded}
                 contact={contact}
-                checkbox
+                checkbox={this.props.limit > 1}
                 checkedKey={username}
                 checkedState={this.recipients.itemsMap}
                 key={username || i}
@@ -344,7 +350,7 @@ export default class ContactSelector extends SafeComponent {
                         {` to create a new one `}
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        {buttons.uppercaseBlueButton('Upgrade')}
+                        {buttons.uppercaseBlueButton(tx('button_upgrade'))}
                     </View>
                 </View>
             </View>

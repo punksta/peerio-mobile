@@ -21,6 +21,7 @@ import Logs from '../logs/logs';
 import { fileState, mainState, ghostState, chatState, settingsState, contactState, contactAddState } from '../states';
 // import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
+import { T } from '../utils/translator';
 
 class RouterMain extends Router {
     // current route object
@@ -32,11 +33,12 @@ class RouterMain extends Router {
     @observable suppressTransition = false;
     @observable loading = false;
     @observable invoked = false;
+    _initialRoute = 'chats';
 
     constructor() {
         super();
         routes.main = this;
-        reaction(() => this.currentIndex, i => (this.isBackVisible = i > 0));
+        reaction(() => this.currentIndex, i => { this.isBackVisible = i > 0; });
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
         this.add('files', [<Files />, <FileView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
@@ -46,7 +48,15 @@ class RouterMain extends Router {
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
         this.add('channelInviteList', [<ChannelInviteList />], chatState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
-        this.add('logs', [<Logs />], { title: 'Logs' });
+        this.add('logs', [<Logs />], { title: <T k="title_logs" /> });
+    }
+
+    @action initialRoute() {
+        this[this._initialRoute](null, true);
+    }
+
+    get isInitialRoute() {
+        return this.route === this._initialRoute;
     }
 
     @action async initial() {
@@ -59,7 +69,7 @@ class RouterMain extends Router {
         await contactState.init();
         await fileState.init();
         this.loading = false;
-        this.chats();
+        this.initialRoute();
     }
 
     add(key, components, routeState) {

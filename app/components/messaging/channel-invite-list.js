@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
-import { View, SectionList, Text } from 'react-native';
+import { View, SectionList } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
-import buttons from '../helpers/buttons';
 import chatState from './chat-state';
 import { vars } from '../../styles/styles';
 import { chatInviteStore } from '../../lib/icebear';
 import ChannelInviteListItem from './channel-invite-list-item';
 import ChatChannelInvitesSection from './chat-channel-invites-section';
 import ChannelUpgradeOffer from '../channels/channel-upgrade-offer';
+import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -39,7 +39,7 @@ export default class ChannelInviteList extends SafeComponent {
             this.data.length,
             this.maxLoadedIndex
         ], () => {
-            this.dataSource = [{ data: this.data.slice(), key: 'Recent Invitations' }];
+            this.dataSource = [{ data: this.data.slice(), key: tx('title_channelRecentInvitations') }];
             this.forceUpdate();
         }, true);
     }
@@ -63,7 +63,7 @@ export default class ChannelInviteList extends SafeComponent {
                 keyExtractor={item => item.id || item.kegDbId}
                 renderItem={this.item}
                 renderSectionHeader={this.header}
-                ref={sv => (this.scrollView = sv)}
+                ref={sv => { this.scrollView = sv; }}
             />
         );
     }

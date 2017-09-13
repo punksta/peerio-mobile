@@ -9,7 +9,7 @@ const { RNMail } = NativeModules;
 
 const mapFormat = ({ time, msg }) => ({
     msg: msg && (typeof msg === 'string' ? msg : stringify(msg)),
-    time: moment(time).format('HH:mm:ss.SSS')
+    time: moment(time).format(`HH:mm:ss.SSS`)
 });
 
 const mapGlue = ({ msg, time }) => `${time}: ${msg}`;
@@ -27,13 +27,13 @@ export default class Logs extends Component {
     }
 
     sendLogs() {
-        const subject = `Peerio Support // logs from ${User.current.username}`;
+        const subject = `Peerio Support // logs from ${User.current ? User.current.username : 'n/a'}`;
         const recipients = ['support@peerio.com'];
         if (console.logVersion) console.logVersion();
         const body = `<pre>${console.stack.map(mapFormat).map(mapGlue).join('\n')}</pre>`;
         RNMail.mail(
             { subject, recipients, body, isHTML: true },
-            (error) => error && Alert.alert('Error sending logs', error)
+            (error) => error && Alert.alert(`Error sending logs`, error)
         );
     }
 
@@ -55,7 +55,9 @@ export default class Logs extends Component {
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={() => this.sendLogs()}>
                     <View style={s}>
-                        <Text style={{ color: 'white' }}>Send Logs</Text>
+                        <Text style={{ color: 'white' }}>
+                            {`Send Logs`}
+                        </Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -75,7 +77,7 @@ export default class Logs extends Component {
                 dataSource={this.dataSource}
                 renderRow={this.item}
                 enableEmptySections
-                ref={sv => (this.scrollView = sv)}
+                ref={sv => { this.scrollView = sv; }}
             />
         );
     }

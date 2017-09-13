@@ -5,7 +5,7 @@ import settingsState from '../settings/settings-state';
 import { User, validation, fileStore, socket, TinyDb, warnings } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
-import { popupSignOutAutologin } from '../shared/popups';
+import { popupSignOutAutologin, popupYesCancel } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 
@@ -28,7 +28,7 @@ class LoginState extends RoutedState {
 
     constructor() {
         super();
-        reaction(() => this.passphrase, () => (this.passphraseValidationMessage = null));
+        reaction(() => this.passphrase, () => { this.passphraseValidationMessage = null; });
     }
 
     @action async enableAutomaticLogin(user) {
@@ -142,10 +142,10 @@ class LoginState extends RoutedState {
         await RNRestart.Restart();
     }
 
-    async signOut() {
+    async signOut(force) {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
-        await inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
-        if (User.current.autologinEnabled && !await popupSignOutAutologin()) {
+        await !force && inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
+        if (!force && User.current.autologinEnabled && !await popupSignOutAutologin()) {
             this.routerMain.settings();
             settingsState.transition('security');
             return;
@@ -167,41 +167,56 @@ class LoginState extends RoutedState {
 
     async load() {
         console.log(`login-state.js: loading`);
-        try {
-            this.isInProgress = true;
+
+        setTimeout(() => { this.isInProgress = false; }, 0);
+        const load = async () => {
             await new Promise(resolve => when(() => socket.connected, resolve));
-            this.isInProgress = false;
             const userData = await User.getLastAuthenticated();
             if (!userData) return;
             const { username /* , firstName, lastName */ } = userData;
             if (this.username && this.username !== username) return;
             this.username = username;
             if (username) {
-                if (await this.loadFromKeychain()) return;
+                await this.loadFromKeychain();
             }
+        };
+        // TODO: fix this android hack for LayoutAnimation easeInEaseOut on transitions
+        setTimeout(() => { this.isInProgress = true; }, 0);
+        try {
+            await load();
         } catch (e) {
             console.error(e);
         }
-        this.isInProgress = false;
+        // TODO: fix this android hack for LayoutAnimation easeInEaseOut on transitions
+        setTimeout(() => { this.isInProgress = false; }, 0);
     }
 
     @action async loadFromKeychain() {
         await keychain.load();
         if (!keychain.hasPlugin) return false;
-        const data = await keychain.get(await mainState.getKeychainKey(this.username));
-        if (!data) return false;
-        return Promise.resolve(data)
-            .then(JSON.parse)
-            .then(this.loginCached)
-            .then(async () => {
-                const touchIdKey = `user::${User.current.username}::touchid`;
-                User.current.secureWithTouchID = !!await TinyDb.system.getValue(touchIdKey);
-                return true;
-            })
-            .catch(() => {
-                console.log('login-state.js: logging in with touch id failed');
-                this._resetTouchId = true;
-            });
+        let data = await keychain.get(await mainState.getKeychainKey(this.username));
+        if (!data) {
+            return await popupYesCancel(null, 'Error reading data from keychain. Try again?')
+                && await this.loadFromKeychain();
+        }
+        try {
+            const touchIdKey = `user::${this.username}::touchid`;
+            const secureWithTouchID = !!await TinyDb.system.getValue(touchIdKey);
+            data = JSON.parse(data);
+            await this.loginCached(data);
+            User.current.secureWithTouchID = secureWithTouchID;
+            // Temporary: if passphrase was stored unpadded,
+            // resave user data, so that it's padded.
+            if (!data.paddedPassphrase) {
+                console.log('login-state.js: resaving data with padding');
+                await mainState.saveUserKeychain(secureWithTouchID);
+            }
+            return true;
+        } catch (e) {
+            console.log('login-state.js: logging in with keychain failed');
+            this._resetTouchId = true;
+        }
+        return false;
     }
 }
 

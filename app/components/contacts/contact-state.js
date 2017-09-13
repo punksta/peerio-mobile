@@ -146,7 +146,7 @@ class ContactState extends RoutedState {
     @action async testImport() {
         const hasPermissions = await this.hasPermissions();
         if (!hasPermissions) {
-            warnings.add('Please allow accessing contacts');
+            warnings.add(tx('title_contactsAllowAccess'));
             return;
         }
         this.isInProgress = true;
@@ -187,8 +187,8 @@ class ContactState extends RoutedState {
             })
             .then(data => {
                 const { imported, notFound } = data;
-                warnings.add(`Imported ${imported.length} contact(s)`);
-                warnings.add(`Processed ${emails.length} contact(s)`);
+                warnings.add(tx('title_contactsImported', { count: imported.length }));
+                warnings.add(tx('title_contactsProcessed', { count: emails.length }));
                 contactAddState.imported = notFound.map(email => hash[email]).filter(i => !!i);
                 if (notFound.length === 0) {
                     warnings.add(`No emails found to invite`);
@@ -215,7 +215,7 @@ class ContactState extends RoutedState {
 const contactState = new ContactState();
 
 // for android granting permissions
-DeviceEventEmitter.addListener('ContactPermissionsGranted', data => {
+DeviceEventEmitter.addListener(`ContactPermissionsGranted`, data => {
     console.log(`contact-state.js: permissions result ${data}`);
     contactState.resolvePermissionHandler(data);
 });

@@ -1,9 +1,9 @@
 import { observable, action, when, reaction } from 'mobx';
-import { chatStore, clientApp } from '../../lib/icebear';
+import { chatStore, clientApp, warnings } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
 import contactState from '../contacts/contact-state';
-import fileState from '../files/file-state';
 import sounds from '../../lib/sounds';
+import { tx } from '../utils/translator';
 
 class ChatState extends RoutedState {
     @observable store = chatStore;
@@ -25,7 +25,7 @@ class ChatState extends RoutedState {
                 console.log(`chat-store switched to ${chat.id}`);
                 console.log(`chat-store: loading ${chat.id}`);
                 this.loading = false;
-            }
+            } else if (this.routerMain && this.routerMain.route === 'chats') this.routerMain.chats();
         }, true);
     }
 
@@ -50,7 +50,7 @@ class ChatState extends RoutedState {
     }
 
     get title() {
-        if (this.routerMain.currentIndex === 0) return 'Chats';
+        if (this.routerMain.currentIndex === 0) return tx('title_chats');
         return this.currentChat ? this.currentChat.name : '';
     }
 
@@ -76,7 +76,7 @@ class ChatState extends RoutedState {
 
     get unreadMessages() {
         let r = 0;
-        this.chatStore.chats.forEach(c => (r += c.unreadCount));
+        this.chatStore.chats.forEach(c => { r += c.unreadCount; });
         return r;
     }
 
@@ -90,17 +90,22 @@ class ChatState extends RoutedState {
     }
 
     @action startChat(recipients, isChannel = false, name, purpose) {
-        const chat = this.store.startChat(recipients, isChannel, name, purpose);
-        this.loading = true;
-        when(() => !chat.loadingMeta, () => {
+        try {
+            const chat = this.store.startChat(recipients, isChannel, name, purpose);
+            this.loading = true;
+            when(() => !chat.loadingMeta, () => {
+                this.loading = false;
+                this.routerMain.chats(chat, true);
+            });
+        } catch (e) {
             this.loading = false;
-            this.routerMain.chats(chat, true);
-        });
+            warnings.add(e.message);
+            console.error(e);
+        }
     }
 
 
-    @action async startChatAndShareFiles(recipients) {
-        const file = fileState.currentFile;
+    @action async startChatAndShareFiles(recipients, file) {
         if (!file) return;
         await this.store.startChatAndShareFiles(recipients, file);
         this.routerMain.chats(this.store.activeChat, true);

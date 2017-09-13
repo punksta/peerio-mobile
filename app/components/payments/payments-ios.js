@@ -45,7 +45,7 @@ class PaymentsIos extends PaymentsBase {
             if (error) {
                 console.log('payments-ios.js: purchase unsuccessful');
                 console.log(error);
-                AlertIOS.alert(`Purchase is unsuccessful`, `Error purchasing ${id}, please contact support, ${error}, ${this.products}`);
+                AlertIOS.alert(`Purchase is unsuccessful`, `Error purchasing ${id}, please contact support`);
                 reject(error);
             }
         }));

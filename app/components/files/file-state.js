@@ -89,7 +89,7 @@ class FileState extends RoutedState {
     }
 
     @action resetSelection() {
-        this.selected.forEach(f => (f.selected = false));
+        this.selected.forEach(f => { f.selected = false; });
     }
 
     @action selectFiles() {
@@ -131,14 +131,14 @@ class FileState extends RoutedState {
         return new Promise(resolve => {
             when(() => socket.authenticated,
                 () => resolve(uploader(uri, fn)));
-        }).then(file => {
+        }).then(file => when(() => file.size, () => {
             if (file.deleted) return;
-            popupInput(tx('title_fileName'), fileHelpers.getFileNameWithoutExtension(fn))
+            popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fn))
                 .then(newFileName => {
                     if (!newFileName) return Promise.resolve();
                     return file.rename(`${newFileName}.${ext}`);
                 });
-        });
+        }));
     }
 
     cancelUpload(file) {

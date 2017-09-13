@@ -5,7 +5,6 @@ import { observable, reaction, when } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
-import ContactInviteItem from './contact-invite-item';
 import { vars } from '../../styles/styles';
 import { contactStore, warnings, User, config } from '../../lib/icebear';
 import { tx, tu, t } from '../utils/translator';
@@ -193,7 +192,7 @@ export default class ContactAdd extends SafeComponent {
             <View style={{ overflow: 'hidden', height: email ? undefined : 0, opacity: invited ? 0.5 : 1 }}>
                 <View style={inviteContainer}>
                     <Text>{email}</Text>
-                    {buttons.uppercaseBlueButton('Invite', () => {
+                    {buttons.uppercaseBlueButton(tx('button_invite'), () => {
                         mockContact.invited = true;
                         contactStore.invite(email);
                     }, invited)}
@@ -209,18 +208,18 @@ export default class ContactAdd extends SafeComponent {
                     onScroll={this.onScroll}
                     keyboardShouldPersistTaps="handled"
                     style={{ backgroundColor: vars.settingsBg }}
-                    ref={ref => (this._scrollView = ref)}>
+                    ref={ref => { this._scrollView = ref; }}>
                     <View style={{ marginTop: 20 }}>
                         {contactState.empty && <View style={{ margin: 8 }}>
                             <Text style={labelDark}>{tx('title_contactZeroState')}</Text>
                         </View>}
                         <View style={{ margin: 8 }}>
-                            <Text style={label}>{tx('Add a contact')}</Text>
+                            <Text style={label}>{tx('button_addAContact')}</Text>
                             <View style={textinputContainer}>
                                 <SimpleTextBox
                                     autoCorrect={false}
                                     autoCapitalize="none"
-                                    onChangeText={text => (this.query = text)}
+                                    onChangeText={text => { this.query = text; }}
                                     placeholder={tx('title_userSearch')} style={textinput}
                                     value={this.query} />
                                 {this.renderButton1('button_add', () => this.tryAdding())}
@@ -230,13 +229,13 @@ export default class ContactAdd extends SafeComponent {
                         </View>
                         <View style={{ margin: 8 }}>
                             <View style={buttonRow}>
-                                <Text style={labelDark}>{tx('Find your contacts')}</Text>
+                                <Text style={labelDark}>{tx('title_findContacts')}</Text>
                                 {this.renderButton1('title_importContacts', () => contactState.testImport())}
                             </View>
                         </View>
                         <View style={{ margin: 8 }}>
                             <View style={buttonRow}>
-                                <Text style={labelDark}>{tx('Invite contacts on social networks')}</Text>
+                                <Text style={labelDark}>{tx('title_shareSocial')}</Text>
                                 {this.renderButton1('button_share', () => this.share())}
                             </View>
                         </View>

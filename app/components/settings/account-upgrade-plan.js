@@ -6,6 +6,7 @@ import AccountUpgradeToggle from './account-upgrade-toggle';
 import payments from '../payments/payments';
 import { vars } from '../../styles/styles';
 import { popupControl } from '../shared/popups';
+import { tx } from '../utils/translator';
 
 const topTitleText = {
     fontSize: 37,
@@ -102,7 +103,7 @@ export default class AccountUpgradePlan extends Component {
     get alwaysFree() {
         return (
             <View style={{ alignItems: 'center', justifyContent: 'center', flexGrow: 1, height: 100 }}>
-                <Text style={featureListTextMedium}>Always free!</Text>
+                <Text style={featureListTextMedium}>{tx('title_alwaysFree')}</Text>
             </View>
         );
     }
@@ -110,15 +111,15 @@ export default class AccountUpgradePlan extends Component {
     get priceOptions() {
         const { priceOptions, canUpgradeTo, isCurrent } = this.props.plan;
         // if (!priceOptions) return this.alwaysFree;
-        if (isCurrent) return <Text style={planFooterInfo}>This is your current plan</Text>;
-        if (!canUpgradeTo) return <Text style={planFooterInfo}>Cannot upgrade to this plan right now</Text>;
+        if (isCurrent) return <Text style={planFooterInfo}>{tx('title_yourCurrentPlan')}</Text>;
+        if (!canUpgradeTo) return <Text style={planFooterInfo}>{tx('title_cannotUpgradePlan')}</Text>;
         return (
             <View style={{ flexDirection: 'row' }}>
                 {priceOptions.map(({ title, price, id }, i) => (
                     <AccountUpgradeToggle
                         onPress={() => payments.purchase(id)}
                         text1={price}
-                        text2={title.toLowerCase()}
+                        text2={tx(title).toLowerCase()}
                         left={i === 0}
                         highlight={i > 0} />
                 ))}
@@ -152,7 +153,9 @@ export default class AccountUpgradePlan extends Component {
                             onPress={() => Linking.openURL('https://peerio.com/conditions.html')}
                             pressRetentionOffset={vars.pressRetentionOffset}>
                             <Text style={popupTextStyle}>
-                                <Text style={{ textDecorationLine: 'underline' }}>Terms of Use</Text>
+                                <Text style={{ textDecorationLine: 'underline' }}>
+                                    {tx('title_termsOfUse')}
+                                </Text>
                             </Text>
                         </TouchableOpacity>
                         <Text style={popupTextStyle}>{'   |   '}</Text>
@@ -160,7 +163,9 @@ export default class AccountUpgradePlan extends Component {
                             onPress={() => Linking.openURL('https://peerio.com/privacy.html')}
                             pressRetentionOffset={vars.pressRetentionOffset}>
                             <Text style={popupTextStyle}>
-                                <Text style={{ textDecorationLine: 'underline' }}>Privacy Policy</Text>
+                                <Text style={{ textDecorationLine: 'underline' }}>
+                                    {tx('title_privacyPolicy')}
+                                </Text>
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -170,7 +175,7 @@ export default class AccountUpgradePlan extends Component {
         return (
             <TouchableOpacity onPress={popup} pressRetentionOffset={vars.pressRetentionOffset}>
                 <Text style={textStyle}>
-                    {'Subscription details >'}
+                    {`${tx('title_subscriptionDetails')} >`}
                 </Text>
             </TouchableOpacity>
         );
@@ -183,12 +188,11 @@ export default class AccountUpgradePlan extends Component {
                 <ScrollView>
                     <View style={block1}>
                         <Text style={topTitleText}>
-                            Peerio <Text style={boldText}>{title}</Text>
+                            {tx('title_appName')} <Text style={boldText}>{tx(title)}</Text>
                         </Text>
                     </View>
                     <View style={borderView}>
-                        {this.largeSmallTextRow(storage, 'Encrypted storage')}
-                        {/* this.mediumSmallTextRow(uploadFileSize, 'Max file size') */}
+                        {this.largeSmallTextRow(storage, tx('title_encryptedStorage'))}
                     </View>
                     <View style={block1}>
                         {includes && this.featureText(includes)}

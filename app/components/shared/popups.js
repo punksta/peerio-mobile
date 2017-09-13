@@ -5,7 +5,6 @@ import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
-import { paymentCheckout } from '../payments/payments-storage-usage';
 import CheckBox from './checkbox';
 
 function textControl(str) {
@@ -33,9 +32,16 @@ function inputControl(state) {
     );
 }
 
-const swActions = {
-    UPGRADE: paymentCheckout
-};
+const swActions = {};
+
+/**
+ * Hook action to a system warning action type
+ * @param {string} type
+ * @param {func} action
+ */
+function addSystemWarningAction(type, action) {
+    swActions[type] = action;
+}
 
 function popupSystemWarning(title, contents, buttons) {
     const button = (text, action) => ({ id: 'ok', text, action });
@@ -74,7 +80,7 @@ function popupYesCancel(title, subTitle, text) {
         popupState.showPopup({
             title,
             subTitle: textControl(subTitle),
-            contents: textControl(text),
+            contents: text ? textControl(text) : null,
             buttons: [
                 { id: 'no', text: t('button_no'), action: () => resolve(false), secondary: true },
                 { id: 'yes', text: t('button_yes'), action: () => resolve(true) }
@@ -97,7 +103,7 @@ function popupYesSkip(title, subTitle, text) {
     });
 }
 
-function popupSignOutAutologin(title, subTitle, text) {
+function popupSignOutAutologin() {
     return new Promise((resolve) => {
         popupState.showPopup({
             title: t('title_gotYourKeys'),
@@ -134,11 +140,12 @@ function popupCancelConfirm(title, subTitle, text) {
     }));
 }
 
-function popupInput(title, value) {
+function popupInput(title, subTitle, value) {
     return new Promise((resolve) => {
         const o = observable({ value });
         popupState.showPopup({
             title,
+            subTitle: textControl(subTitle),
             contents: inputControl(o),
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: () => resolve(o.value)
@@ -147,17 +154,27 @@ function popupInput(title, value) {
     });
 }
 
-function popupInputCancel(title, value) {
+function popupInputCancelCheckbox(title, subTitle, checkBoxText, checked, cancelable) {
     return new Promise((resolve) => {
-        const o = observable({ value });
+        const o = observable({ value: '', checked });
+        const buttons = [];
+        cancelable && buttons.push({
+            id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
+        });
+        buttons.push({
+            id: 'ok', text: tu('button_ok'), action: () => resolve(o)
+        });
+        const contents = (
+            <View>
+                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; })}
+                {inputControl(o)}
+            </View>
+        );
         popupState.showPopup({
             title,
-            contents: inputControl(o),
-            buttons: [{
-                id: 'cancel', text: t('button_cancel'), secondary: true
-            }, {
-                id: 'ok', text: tu('button_ok'), action: () => resolve(o.value)
-            }]
+            subTitle: textControl(subTitle),
+            contents,
+            buttons
         });
     });
 }
@@ -179,7 +196,7 @@ function popupTOS() {
 }
 
 function popupDeleteAccount() {
-    let checked = false;
+    const checked = false;
     return popupState.showPopupPromise(resolve => ({
         title: textControl(tx('title_accountDelete')),
         contents: (
@@ -219,13 +236,14 @@ locales.loadAssetFile('terms.txt').then(s => {
 
 
 export {
+    addSystemWarningAction,
     popupYes,
     popupYesCancel,
     popupYesSkip,
     popupInput,
     popupTOS,
     popupCopyCancel,
-    popupInputCancel,
+    popupInputCancelCheckbox,
     popupUpgrade,
     popupSystemWarning,
     popupDeleteAccount,

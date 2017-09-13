@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, LayoutAnimation, Dimensions } from 'react-native';
+import { View, LayoutAnimation, Dimensions, BackHandler } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import uiState from '../layout/ui-state';
@@ -40,8 +40,24 @@ export default class Wizard extends SafeComponent {
         });
     }
 
+    _handleBack = () => {
+        if (this.index > 0) {
+            this.index--;
+            return true;
+        }
+        return false;
+    };
+
+    componentWillMount() {
+        BackHandler.addEventListener('hardwareBackPress', this._handleBack);
+    }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this._handleBack);
+    }
+
     changeIndex(shift) {
-        uiState.hideAll().then(() => (this.index += shift));
+        uiState.hideAll().then(() => { this.index += shift; });
     }
 
     _animatedContainer(key, item, index) {

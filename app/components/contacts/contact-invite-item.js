@@ -5,6 +5,7 @@ import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import { contactStore } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
+import { tx } from '../utils/translator';
 
 @observer
 export default class ContactInviteItem extends SafeComponent {
@@ -17,7 +18,7 @@ export default class ContactInviteItem extends SafeComponent {
     renderThrow() {
         const { contact } = this.props;
         const { username, fullName, invited } = contact;
-        const title = invited ? 'Invited' : 'Invite';
+        const title = invited ? tx('title_invitedContacts') : tx('button_invite');
         return (
             <Avatar
                 noTap

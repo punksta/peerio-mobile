@@ -1,6 +1,7 @@
 import { observable } from 'mobx';
-import payments from '../payments/payments';
+import paymentsNative from '../payments/payments-native';
 import { User } from '../../lib/icebear';
+import { tx } from '../utils/translator';
 
 const basicPlanInfo =
 `Secure Messaging
@@ -8,7 +9,8 @@ const basicPlanInfo =
 Portability across devices
 Secure File Storage & Sharing
 1 GB of secure Peerio Vault storage
-500M max upload file size`;
+500M max upload file size
+2 rooms`;
 
 const premiumIncludesInfo =
 `Includes features of Basic Plan`;
@@ -16,7 +18,8 @@ const premiumIncludesInfo =
 const premiumPlanInfo =
 `20 GB of secure storage
 2 GB max upload file size
-Unlimited Message Archive
+5 rooms
+Unlimited message archive
 Premium support
 `;
 
@@ -37,7 +40,8 @@ const professionalIncludesInfo =
 const professionalPlanInfo =
 `500 GB of secure storage
 Unlimited upload file size
-Unlimited Message Archive
+Unlimited rooms
+Unlimited message archive
 Premium support
 `;
 
@@ -53,11 +57,11 @@ Your subscription will renew automatically at the end of each billing period unl
 `;
 
 const { premiumYearlyID, premiumMonthlyID, professionalYearlyID, professionalMonthlyID }
-    = payments;
+    = paymentsNative;
 
 const serverPlans = [
     'icebear_premium_monthly',
-    'icebear_premium_monthly',
+    'icebear_premium_yearly',
     'icebear_pro_monthly',
     'icebear_pro_yearly'
 ];
@@ -67,8 +71,8 @@ function getActivePlans() {
 }
 
 class BasicPlan {
-    title = 'Basic';
-    price = 'Free';
+    title = 'title_basicPlan';
+    price = 'title_free';
     info = basicPlanInfo;
     storage = '1 GB';
     uploadFileSize = '500 MB';
@@ -104,16 +108,16 @@ class PaidPlan {
 }
 
 class PremiumPlan extends PaidPlan {
-    title = 'Premium';
+    title = 'title_premiumPlan';
     storage = '20 GB';
     uploadFileSize = '2 GB';
     priceOptions = [{
-        title: 'Billed monthly',
+        title: 'title_billedMonthly',
         id: premiumMonthlyID,
         serverID: 'icebear_premium_monthly',
         price: '$3.99 USD/month'
     }, {
-        title: 'Billed annually',
+        title: 'title_billedAnnually',
         id: premiumYearlyID,
         serverID: 'icebear_premium_yearly',
         price: '$2.99 USD/month'
@@ -125,16 +129,16 @@ class PremiumPlan extends PaidPlan {
 }
 
 class ProfessionalPlan extends PaidPlan {
-    title = 'Pro';
+    title = tx('title_proPlan');
     storage = '500 GB';
-    uploadFileSize = 'Unlimited';
+    uploadFileSize = tx('title_unlimited');
     priceOptions = [{
-        title: 'Billed monthly',
+        title: 'title_billedMonthly',
         id: professionalMonthlyID,
         serverID: 'icebear_pro_monthly',
         price: '$12.99 USD/month'
     }, {
-        title: 'Billed annually',
+        title: 'title_billedAnnually',
         id: professionalYearlyID,
         serverID: 'icebear_pro_yearly',
         price: '$9.99 USD/month'

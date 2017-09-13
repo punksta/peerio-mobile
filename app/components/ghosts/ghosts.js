@@ -46,7 +46,7 @@ export default class Ghosts extends SafeComponent {
                     dataSource={this.dataSource}
                     renderRow={this.item}
                     enableEmptySections
-                    ref={sv => (this.scrollView = sv)}>
+                    ref={sv => { this.scrollView = sv; }}>
                     {this.data.map(i => this.item(i))}
                 </ScrollView>
             </MenuContext>

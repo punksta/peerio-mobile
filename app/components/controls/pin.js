@@ -129,7 +129,7 @@ export default class Pin extends SafeComponent {
                         this.isSpinner = false;
                         this.shake();
                     })
-                    .finally(() => (this.isSpinner = false));
+                    .finally(() => { this.isSpinner = false; });
                 return;
             }
             if (this.isConfirm) {

@@ -33,7 +33,7 @@ export default class PinModal extends SafeComponent {
                 <BgPattern />
                 <Pin
                     preventSimplePin={this.preventSimplePin}
-                    ref={pin => (this.pin = pin)}
+                    ref={pin => { this.pin = pin; }}
                     onConfirm={this.onConfirm}
                     onSuccess={r => this.onSuccess(r)}
                     onEnter={this.onEnter}

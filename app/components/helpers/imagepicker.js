@@ -1,5 +1,6 @@
 import { Platform, DeviceEventEmitter, NativeModules } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import { tx } from '../utils/translator';
 
 const { FilePickerManager } = NativeModules;
 
@@ -29,7 +30,7 @@ export default {
         };
 
         if (Platform.OS === 'android') {
-            options.customButtons.push({ name: ANDROID_PICK_ACTION, title: 'Choose from Library' });
+            options.customButtons.push({ name: ANDROID_PICK_ACTION, title: tx('button_pickFromLibrary') });
             options.chooseFromLibraryButtonTitle = null;
         }
 
@@ -62,7 +63,7 @@ export default {
 };
 
 // for android granting permissions
-DeviceEventEmitter.addListener('CameraPermissionsGranted', () => {
+DeviceEventEmitter.addListener(`CameraPermissionsGranted`, () => {
     console.log('imagepicker.js: permissions granted');
     if (lastCall) lastCall();
 });

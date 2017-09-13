@@ -30,6 +30,19 @@ export default {
         );
     },
 
+    uppercaseBlueBgButton(text, onPress, disabled) {
+        return (
+            <TouchableOpacity
+                onPress={disabled ? null : onPress}
+                pressRetentionOffset={vars.pressRetentionOffset}
+                style={{ borderRadius: 2, paddingHorizontal: 16, paddingVertical: 10, backgroundColor: disabled ? vars.txtMedium : vars.bg }}>
+                <Text style={{ fontWeight: 'bold', color: vars.white }}>
+                    {tu(text)}
+                </Text>
+            </TouchableOpacity>
+        );
+    },
+
     uppercaseBlueButtonNoPadding(text, onPress, disabled) {
         return (
             <TouchableOpacity

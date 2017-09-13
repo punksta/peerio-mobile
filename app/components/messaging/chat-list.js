@@ -11,6 +11,7 @@ import ProgressOverlay from '../shared/progress-overlay';
 import chatState from './chat-state';
 import ChatSectionHeader from './chat-section-header';
 import ChatChannelInviteSection from './chat-channel-invites-section';
+import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -54,7 +55,7 @@ export default class Files extends SafeComponent {
             console.log(`chat-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
                 title_channels: this.data.filter(d => !!d.isChannel),
-                title_channelInvites: [chatInviteStore.received.length],
+                title_channelInvites: [],
                 title_directMessages: this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex)
             });
             this.forceUpdate();
@@ -63,13 +64,14 @@ export default class Files extends SafeComponent {
 
     sectionHeader = (data, key) => {
         const titles = {
-            title_channels: 'Channels',
-            title_directMessages: 'Direct messages'
+            title_channels: tx('title_channels'),
+            title_directMessages: tx('title_directMessages')
         };
+        const invitesCount = chatInviteStore.received.length;
         return key === 'title_channelInvites' ?
             <ChatChannelInviteSection
                 title="Channel invites"
-                data={data} onPress={() => chatState.routerMain.channelInviteList()} /> : <ChatSectionHeader title={titles[key]} />;
+                data={invitesCount} onPress={() => chatState.routerMain.channelInviteList()} /> : <ChatSectionHeader title={titles[key]} />;
     }
 
     item(chat) {
@@ -98,7 +100,7 @@ export default class Files extends SafeComponent {
                 onEndReachedThreshold={20}
                 onContentSizeChange={this.scroll}
                 enableEmptySections
-                ref={sv => (this.scrollView = sv)}
+                ref={sv => { this.scrollView = sv; }}
             />
         );
     }

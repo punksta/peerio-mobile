@@ -45,10 +45,9 @@ global.WebSocket = function(url) {
     return r;
 };
 
-const cryptoShim = require('react-native-crypto');
-global.cryptoShim = cryptoShim;
+const { randomBytes } = require('react-native-randombytes');
+global.cryptoShim = { randomBytes };
 
-const randomBytes = cryptoShim.randomBytes;
 console.log(`shim.js: checking randomBytes`);
 console.log(randomBytes(8));
 

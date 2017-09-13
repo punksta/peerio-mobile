@@ -5,6 +5,7 @@ import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import plans from '../payments/payments-config';
+import { tx } from '../utils/translator';
 
 const { width, height } = Dimensions.get('window');
 
@@ -85,9 +86,9 @@ export default class AccountUpgradeNavigator extends Component {
                     {this.plan(2)}
                 </View>
                 <View style={row}>
-                    <Text style={t1}>Basic</Text>
-                    <Text style={t2}>Premium</Text>
-                    <Text style={t3}>Pro</Text>
+                    <Text style={t1}>{tx('title_basicPlan')}</Text>
+                    <Text style={t2}>{tx('title_premiumPlan')}</Text>
+                    <Text style={t3}>{tx('title_proPlan')}</Text>
                 </View>
             </View>
         );

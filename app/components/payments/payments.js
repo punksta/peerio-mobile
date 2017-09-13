@@ -1,13 +1,11 @@
 import React from 'react';
-import { View, Text, Platform } from 'react-native';
-import PaymentsIos from './payments-ios';
-import PaymentsAndroid from './payments-android';
+import { View, Text } from 'react-native';
 import settingsState from '../settings/settings-state';
 import { vars } from '../../styles/styles';
 import buttons from '../helpers/buttons';
 import plans from './payments-config';
-
-const payments = (Platform.OS === 'android') ? new PaymentsAndroid() : new PaymentsIos();
+import paymentsNative from './payments-native';
+import { tx } from '../utils/translator';
 
 function upgradeMessage(title) {
     const container = {
@@ -34,12 +32,14 @@ function upgradeMessage(title) {
 }
 
 function upgradeForFiles() {
-    return !plans.userHasPaidPlan() && payments.showFileUpgradeOffer ? upgradeMessage('You\'re out of storage') : null;
+    return !process.env.PEERIO_DISABLE_PAYMENTS && !plans.userHasPaidPlan() && paymentsNative.showFileUpgradeOffer ?
+        upgradeMessage(tx('title_outOfStorage')) : null;
 }
 
 function upgradeForArchive() {
-    return !plans.userHasPaidPlan() && payments.showArchiveUpgradeOffer ? upgradeMessage('Upgrade to access your archive') : null;
+    return !process.env.PEERIO_DISABLE_PAYMENTS && !plans.userHasPaidPlan() && paymentsNative.showArchiveUpgradeOffer ?
+        upgradeMessage(tx('title_upgradeForArchive')) : null;
 }
 
 export { upgradeForFiles, upgradeForArchive };
-export default payments;
+export default paymentsNative;

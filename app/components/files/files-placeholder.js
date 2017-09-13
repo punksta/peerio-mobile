@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text, Dimensions, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
+import { tx } from '../utils/translator';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
 const arrowDownZeroState = require('../../assets/arrow-down-zero-state.png');
@@ -50,7 +51,7 @@ export default class FilesPlaceholder extends SafeComponent {
                     width: this.width,
                     justifyContent: 'center' }}>
                     <View style={{ flex: 0, alignItems: 'center', marginTop: 40 }}>
-                        <Text style={infoStyle}>Upload, share and manage</Text>
+                        <Text style={infoStyle}>{tx('title_uploadShareAndManage')}</Text>
                     </View>
                     <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: 20, paddingRight: 20 }}>
                         <Image source={fileUploadZeroState}
@@ -58,7 +59,7 @@ export default class FilesPlaceholder extends SafeComponent {
                                style={{ flex: 1, width: null, height: null }} />
                     </View>
                     <View style={{ flex: 0.5 }}>
-                        <Text style={headerStyle}>Upload something.</Text>
+                        <Text style={headerStyle}>{tx('title_uploadSomething')}</Text>
                         <View style={titleBlockStyle}>
                             <View style={{ flex: 1, flexGrow: 0.5, borderWidth: 0, borderColor: 'red' }} />
                             <View style={{ flex: 1, borderWidth: 0, borderColor: 'green', justifyContent: 'flex-end' }}>

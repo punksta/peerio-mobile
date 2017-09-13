@@ -9,7 +9,7 @@ import { vars } from '../../styles/styles';
 export default class ChatChannelInvitesSection extends SafeComponent {
     renderThrow() {
         const { data, onPress, title } = this.props;
-        if (!data) return null;
+        if (!data || data <= 0) return null;
 
         const style = {
             height: 48,

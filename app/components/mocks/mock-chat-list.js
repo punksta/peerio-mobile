@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { View, LayoutAnimation, StatusBar } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { View, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
 import PopupLayout from '../layout/popup-layout';
 import ChatList from '../messaging/chat-list';
@@ -9,7 +8,6 @@ import { User } from '../../lib/icebear';
 import chatState from '../messaging/chat-state';
 import mockChatStore from './mock-chat-store';
 import { vars } from '../../styles/styles';
-import HeaderMain from '../layout/header-main';
 
 @observer
 export default class MockChatList extends Component {
