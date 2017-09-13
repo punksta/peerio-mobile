@@ -30,6 +30,7 @@ class ChatState extends RoutedState {
     }
 
     @action async init() {
+        this.chatStore.loadAllChats();
         return new Promise(resolve => when(() => this.chatStore.loaded, resolve));
     }
 
