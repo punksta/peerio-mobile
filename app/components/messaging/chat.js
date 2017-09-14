@@ -149,7 +149,7 @@ export default class Chat extends SafeComponent {
             if (y >= h - this.indicatorHeight / 2) {
                 this._onGoDown();
             }
-            this.disableNextScroll = y < h - this.indicatorHeight;
+            // this.disableNextScroll = y < h - this.indicatorHeight;
         };
         if (this._updater) clearTimeout(this._updater);
         this._updater = setTimeout(updater, 500);
