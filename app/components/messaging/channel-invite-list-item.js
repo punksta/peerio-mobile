@@ -5,12 +5,18 @@ import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import { chatInviteStore } from '../../lib/icebear';
+import { chatInviteStore, chatStore } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
+import routerMain from '../routes/router-main';
 import { tx } from '../utils/translator';
 
 @observer
 export default class ChannelInviteListItem extends SafeComponent {
+    async acceptInvite(id) {
+        await chatInviteStore.acceptInvite(id);
+        routerMain.chats(chatStore.activeChat);
+    }
+
     renderThrow() {
         const { invitation } = this.props;
         if (!invitation) return null;
@@ -49,7 +55,7 @@ export default class ChannelInviteListItem extends SafeComponent {
                                     timestamp: `\n${moment(timestamp).format('llll')}` })}
                             </Text>
                             <View style={{ flexDirection: 'row' }}>
-                                {buttons.uppercaseBlueButtonNoPadding(tx('button_accept'), () => chatInviteStore.acceptInvite(kegDbId))}
+                                {buttons.uppercaseBlueButtonNoPadding(tx('button_accept'), () => this.acceptInvite(kegDbId))}
                                 {buttons.uppercaseGrayButtonNoPadding(tx('button_decline'), () => chatInviteStore.rejectInvite(kegDbId))}
                             </View>
                         </View>
