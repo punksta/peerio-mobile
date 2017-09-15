@@ -1,5 +1,4 @@
 import { Keyboard, Dimensions } from 'react-native';
-import dismissKeyboard from 'react-native/Libraries/Utilities/dismissKeyboard';
 import moment from 'moment';
 import { observable, action, reaction, when } from 'mobx';
 import translator from 'peerio-translator';
@@ -51,7 +50,7 @@ class UIState extends RoutedState {
     }
 
     @action hideKeyboard() {
-        dismissKeyboard();
+        Keyboard.dismiss();
         setTimeout(() => { this.pickerVisible = false; }, 0);
     }
 
