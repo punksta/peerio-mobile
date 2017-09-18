@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.148.0"></a>
+# [3.148.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.147.0...v3.148.0) (2017-09-18)
+
+
+### Bug Fixes
+
+* use documented method ([e35ec0d](https://github.com/PeerioTechnologies/peerio-mobile/commit/e35ec0d))
+* **android:** tapping go with open keyboard in modal caused problems ([3cb6e4b](https://github.com/PeerioTechnologies/peerio-mobile/commit/3cb6e4b))
+
+
+
 <a name="3.81.0"></a>
 # [3.81.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.80.0...v3.81.0) (2017-06-15)
 
