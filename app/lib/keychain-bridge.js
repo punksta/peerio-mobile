@@ -14,7 +14,7 @@ class KeychainBridge {
     }
 
     save(key, value, secureWithTouchID) {
-        console.log(`keychain-bridge.js: saving ${key}:${value.length}`);
+        console.debug(`keychain-bridge.js: saving ${key}:${value.length}`);
         return RNKeychain.saveValue(value, key, secureWithTouchID).catch(e => {
             console.log(`keychain-bridge.js: error saving ${key}`);
             console.log(e);
@@ -22,7 +22,7 @@ class KeychainBridge {
     }
 
     get(key) {
-        console.log(`keychain-bridge.js: requesting ${key}`);
+        console.debug(`keychain-bridge.js: requesting ${key}`);
         return RNKeychain.getValue(key).catch(e => {
             console.log(`keychain-bridge.js: returned error from ${key}`);
             console.log(e.message);
@@ -31,9 +31,9 @@ class KeychainBridge {
     }
 
     delete(key) {
-        console.log(`keychain-bridge.js: deleting ${key}`);
+        console.debug(`keychain-bridge.js: deleting ${key}`);
         return RNKeychain.deleteValue(key).catch(() => {
-            console.log(`touchdid-bridge.js: error deleting ${key}`);
+            console.debug(`touchdid-bridge.js: error deleting ${key}`);
             return Promise.resolve(null);
         });
     }
