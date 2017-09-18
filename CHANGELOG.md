@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.149.0"></a>
+# [3.149.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.148.0...v3.149.0) (2017-09-18)
+
+
+### Bug Fixes
+
+* move log level to debug for touchid keychain ([7b87511](https://github.com/PeerioTechnologies/peerio-mobile/commit/7b87511))
+
+
+### Features
+
+* enable native google idfa tracking ([75a86cd](https://github.com/PeerioTechnologies/peerio-mobile/commit/75a86cd))
+
+
+
 <a name="3.148.0"></a>
 # [3.148.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.147.0...v3.148.0) (2017-09-18)
 
