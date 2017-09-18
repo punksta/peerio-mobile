@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Animated, Dimensions, StatusBar, Platform } from 'react-native';
+import { Animated, Dimensions, StatusBar, Platform, ScrollView } from 'react-native';
 import { reaction, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -31,6 +31,17 @@ export default class ModalLayout extends SafeComponent {
         });
     }
 
+    get androidTapContainer() {
+        const grow = { flex: 1, flexGrow: 1 };
+        return (
+            <ScrollView
+                keyboardShouldPersistTaps="never"
+                contentContainerStyle={grow} style={grow} scrollEnabled={false}>
+                {this.modal}
+            </ScrollView>
+        );
+    }
+
     renderThrow() {
         const modalStyle = {
             position: 'absolute',
@@ -42,10 +53,9 @@ export default class ModalLayout extends SafeComponent {
         const transformModal = [{ translateY: this.modalAnimated }];
         const modalAnimatedStyle = [modalStyle, { transform: transformModal }];
         const sbStyle = routerModal.current && routerModal.current.isWhite ? 'light-content' : 'default';
-
         return (
             <Animated.View style={modalAnimatedStyle}>
-                {this.modal}
+                {Platform.OS === 'android' ? this.androidTapContainer : this.modal}
                 <StatusBar
                     barStyle={!routerModal.animating && routerModal.current ? sbStyle : undefined}
                     hidden={Platform.OS !== 'android' && !this.modal} />

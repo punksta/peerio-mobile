@@ -50,6 +50,9 @@
 		02E096DA1DAE3B7600641B85 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E096D11DAE3B3B00641B85 /* libRNFS.a */; };
 		02E096DC1DAE50E100641B85 /* dict in Resources */ = {isa = PBXBuildFile; fileRef = 02E096DB1DAE50E100641B85 /* dict */; };
 		02F966301E9D493900FBECFF /* libRCTPrivacySnapshot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F966101E9D490700FBECFF /* libRCTPrivacySnapshot.a */; };
+		02F9ECA81F7079E2006F0003 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F9ECA71F7079E2006F0003 /* AdSupport.framework */; };
+		02F9ECDF1F707D01006F0003 /* libGoogleConversionTracking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F9ECDE1F707D00006F0003 /* libGoogleConversionTracking.a */; };
+		02F9ECE41F708433006F0003 /* RNACTReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F9ECE31F708433006F0003 /* RNACTReporter.m */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -474,6 +477,12 @@
 		02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = peeriomobile.entitlements; path = peeriomobile/peeriomobile.entitlements; sourceTree = "<group>"; };
 		02E096B21DAE398B00641B85 /* locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = locales; path = ../locales; sourceTree = "<group>"; };
 		02E096DB1DAE50E100641B85 /* dict */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dict; path = "../node_modules/peerio-copy/phrase/dict"; sourceTree = "<group>"; };
+		02F9ECA71F7079E2006F0003 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		02F9ECDC1F707CDF006F0003 /* peerio-mobile */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "peerio-mobile"; path = ..; sourceTree = "<group>"; };
+		02F9ECDE1F707D00006F0003 /* libGoogleConversionTracking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleConversionTracking.a; path = lib/libGoogleConversionTracking.a; sourceTree = "<group>"; };
+		02F9ECE21F707D63006F0003 /* ACTReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACTReporter.h; path = include/ACTReporter.h; sourceTree = "<group>"; };
+		02F9ECE31F708433006F0003 /* RNACTReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNACTReporter.m; path = peeriomobile/RNACTReporter.m; sourceTree = "<group>"; };
+		02F9ECE51F708491006F0003 /* RNACTReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNACTReporter.h; sourceTree = "<group>"; };
 		081BA9E7BB014EC9A1CF87BA /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
 		0E103048E40D48F8B3368298 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -514,6 +523,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02F9ECDF1F707D01006F0003 /* libGoogleConversionTracking.a in Frameworks */,
+				02F9ECA81F7079E2006F0003 /* AdSupport.framework in Frameworks */,
 				0235B5DB1E65DEAF001D77D1 /* libsqlite3.0.tbd in Frameworks */,
 				02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */,
 				025373851EB3751800752E61 /* libsodium.a in Frameworks */,
@@ -733,6 +744,9 @@
 		02BCD72B1DFE1606000B8FCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				02F9ECDE1F707D00006F0003 /* libGoogleConversionTracking.a */,
+				02F9ECDC1F707CDF006F0003 /* peerio-mobile */,
+				02F9ECA71F7079E2006F0003 /* AdSupport.framework */,
 				025373841EB3751800752E61 /* libsodium.a */,
 				0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */,
 				02BCD72C1DFE1606000B8FCF /* QuickLook.framework */,
@@ -796,10 +810,13 @@
 				02726F571EB33C7A00D82BF5 /* libsodium-ios */,
 				02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */,
 				02321C5C1D80558E00282EB1 /* main.jsbundle */,
+				02F9ECE21F707D63006F0003 /* ACTReporter.h */,
 				02A5EE7B1ECA9ECC00ED05C1 /* RNKeychain.m */,
 				02A5EE7A1ECA9EC400ED05C1 /* RNKeychain.h */,
 				02726F871EB33E3000D82BF5 /* RNSodium.h */,
+				02F9ECE51F708491006F0003 /* RNACTReporter.h */,
 				02726F881EB33E3000D82BF5 /* RNSodium.m */,
+				02F9ECE31F708433006F0003 /* RNACTReporter.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -1519,6 +1536,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02A5EE7C1ECA9ECC00ED05C1 /* RNKeychain.m in Sources */,
+				02F9ECE41F708433006F0003 /* RNACTReporter.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				02726F891EB33E3000D82BF5 /* RNSodium.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,

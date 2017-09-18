@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.147.0",
+  "version": "3.149.0",
   "private": true,
   "scripts": {
     "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
@@ -34,7 +34,7 @@
     "commit-msg": "validate-commit-msg"
   },
   "dependencies": {
-    "@peerio/peerio-icebear": "2.6.1",
+    "@peerio/peerio-icebear": "2.8.0",
     "babel-cli": "6.22.2",
     "base64-js": "1.2.0",
     "blake2s-js": "1.2.2",
@@ -80,7 +80,7 @@
     "react-native-linear-gradient": "2.0.0",
     "react-native-mail": "3.0.1",
     "react-native-menu": "^0.21.0",
-    "react-native-popup-menu": "^0.8.1",
+    "react-native-popup-menu": "^0.8.2",
     "react-native-privacy-snapshot": "git+https://github.com/PeerioTechnologies/react-native-privacy-snapshot.git",
     "react-native-push-notification": "3.0.0",
     "react-native-randombytes": "2.1.0",
@@ -142,11 +142,6 @@
       "maxSubjectLength": 100,
       "subjectPattern": ".+",
       "helpMessage": "Convention: https://goo.gl/3TgTsh"
-    }
-  },
-  "standard-version": {
-    "skip": {
-      "changelog": true
     }
   }
 }
