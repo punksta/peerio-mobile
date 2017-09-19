@@ -8,7 +8,7 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #include <React/RCTLog.h>
-#include "ACTReporter.h"
+#include "include/ACTReporter.h"
 #include "RNACTReporter.h"
 
 @implementation RNACTReporter
