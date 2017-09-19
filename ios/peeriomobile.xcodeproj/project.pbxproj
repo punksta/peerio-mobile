@@ -13,6 +13,10 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		02182F021F463733009492F8 /* libRNHTMLtoPDF.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02182EF51F463722009492F8 /* libRNHTMLtoPDF.a */; };
+		021C855E1F70C02C0046FFF4 /* include in Resources */ = {isa = PBXBuildFile; fileRef = 021C855B1F70C02C0046FFF4 /* include */; };
+		021C855F1F70C02C0046FFF4 /* RNACTReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 021C855D1F70C02C0046FFF4 /* RNACTReporter.m */; };
+		021C85931F70C0580046FFF4 /* libGoogleConversionTracking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C85911F70C0390046FFF4 /* libGoogleConversionTracking.a */; };
+		021C85951F70C0620046FFF4 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C85941F70C0620046FFF4 /* AdSupport.framework */; };
 		02202B821E840B07006CDA9B /* libRNMail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02202B791E840AF7006CDA9B /* libRNMail.a */; };
 		02210A811E019037006D7AC0 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02210A7F1E01902A006D7AC0 /* libRNSound.a */; };
 		02210A841E0191BA006D7AC0 /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 02210A831E0191BA006D7AC0 /* sounds */; };
@@ -50,9 +54,6 @@
 		02E096DA1DAE3B7600641B85 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02E096D11DAE3B3B00641B85 /* libRNFS.a */; };
 		02E096DC1DAE50E100641B85 /* dict in Resources */ = {isa = PBXBuildFile; fileRef = 02E096DB1DAE50E100641B85 /* dict */; };
 		02F966301E9D493900FBECFF /* libRCTPrivacySnapshot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F966101E9D490700FBECFF /* libRCTPrivacySnapshot.a */; };
-		02F9ECA81F7079E2006F0003 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F9ECA71F7079E2006F0003 /* AdSupport.framework */; };
-		02F9ECDF1F707D01006F0003 /* libGoogleConversionTracking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F9ECDE1F707D00006F0003 /* libGoogleConversionTracking.a */; };
-		02F9ECE41F708433006F0003 /* RNACTReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F9ECE31F708433006F0003 /* RNACTReporter.m */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -452,6 +453,11 @@
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
 		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
+		021C855B1F70C02C0046FFF4 /* include */ = {isa = PBXFileReference; lastKnownFileType = folder; path = include; sourceTree = "<group>"; };
+		021C855C1F70C02C0046FFF4 /* RNACTReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNACTReporter.h; sourceTree = "<group>"; };
+		021C855D1F70C02C0046FFF4 /* RNACTReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNACTReporter.m; sourceTree = "<group>"; };
+		021C85911F70C0390046FFF4 /* libGoogleConversionTracking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleConversionTracking.a; path = lib/libGoogleConversionTracking.a; sourceTree = "<group>"; };
+		021C85941F70C0620046FFF4 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		02210A6A1E01902A006D7AC0 /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
 		02210A831E0191BA006D7AC0 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = ../app/sounds; sourceTree = "<group>"; };
 		0221BCCC1DDC6D3C00706A4F /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
@@ -477,12 +483,6 @@
 		02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = peeriomobile.entitlements; path = peeriomobile/peeriomobile.entitlements; sourceTree = "<group>"; };
 		02E096B21DAE398B00641B85 /* locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = locales; path = ../locales; sourceTree = "<group>"; };
 		02E096DB1DAE50E100641B85 /* dict */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dict; path = "../node_modules/peerio-copy/phrase/dict"; sourceTree = "<group>"; };
-		02F9ECA71F7079E2006F0003 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		02F9ECDC1F707CDF006F0003 /* peerio-mobile */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "peerio-mobile"; path = ..; sourceTree = "<group>"; };
-		02F9ECDE1F707D00006F0003 /* libGoogleConversionTracking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleConversionTracking.a; path = lib/libGoogleConversionTracking.a; sourceTree = "<group>"; };
-		02F9ECE21F707D63006F0003 /* ACTReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ACTReporter.h; path = include/ACTReporter.h; sourceTree = "<group>"; };
-		02F9ECE31F708433006F0003 /* RNACTReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNACTReporter.m; path = peeriomobile/RNACTReporter.m; sourceTree = "<group>"; };
-		02F9ECE51F708491006F0003 /* RNACTReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNACTReporter.h; sourceTree = "<group>"; };
 		081BA9E7BB014EC9A1CF87BA /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
 		0E103048E40D48F8B3368298 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -523,8 +523,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02F9ECDF1F707D01006F0003 /* libGoogleConversionTracking.a in Frameworks */,
-				02F9ECA81F7079E2006F0003 /* AdSupport.framework in Frameworks */,
+				021C85951F70C0620046FFF4 /* AdSupport.framework in Frameworks */,
 				0235B5DB1E65DEAF001D77D1 /* libsqlite3.0.tbd in Frameworks */,
 				02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */,
 				025373851EB3751800752E61 /* libsodium.a in Frameworks */,
@@ -560,6 +559,7 @@
 				029F85611EE8052000C0CC31 /* libimageCropPicker.a in Frameworks */,
 				029F85771EEBBAB400C0CC31 /* libRCTAdSupport.a in Frameworks */,
 				02182F021F463733009492F8 /* libRNHTMLtoPDF.a in Frameworks */,
+				021C85931F70C0580046FFF4 /* libGoogleConversionTracking.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -744,9 +744,8 @@
 		02BCD72B1DFE1606000B8FCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				02F9ECDE1F707D00006F0003 /* libGoogleConversionTracking.a */,
-				02F9ECDC1F707CDF006F0003 /* peerio-mobile */,
-				02F9ECA71F7079E2006F0003 /* AdSupport.framework */,
+				021C85941F70C0620046FFF4 /* AdSupport.framework */,
+				021C85911F70C0390046FFF4 /* libGoogleConversionTracking.a */,
 				025373841EB3751800752E61 /* libsodium.a */,
 				0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */,
 				02BCD72C1DFE1606000B8FCF /* QuickLook.framework */,
@@ -807,16 +806,16 @@
 		13B07FAE1A68108700A75B9A /* peeriomobile */ = {
 			isa = PBXGroup;
 			children = (
+				021C855B1F70C02C0046FFF4 /* include */,
+				021C855C1F70C02C0046FFF4 /* RNACTReporter.h */,
+				021C855D1F70C02C0046FFF4 /* RNACTReporter.m */,
 				02726F571EB33C7A00D82BF5 /* libsodium-ios */,
 				02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */,
 				02321C5C1D80558E00282EB1 /* main.jsbundle */,
-				02F9ECE21F707D63006F0003 /* ACTReporter.h */,
 				02A5EE7B1ECA9ECC00ED05C1 /* RNKeychain.m */,
 				02A5EE7A1ECA9EC400ED05C1 /* RNKeychain.h */,
 				02726F871EB33E3000D82BF5 /* RNSodium.h */,
-				02F9ECE51F708491006F0003 /* RNACTReporter.h */,
 				02726F881EB33E3000D82BF5 /* RNSodium.m */,
-				02F9ECE31F708433006F0003 /* RNACTReporter.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -1500,6 +1499,7 @@
 				CF69BA63107E428598B08410 /* EvilIcons.ttf in Resources */,
 				51CAD96E068B4E2EAA239290 /* FontAwesome.ttf in Resources */,
 				B73DC4B1F0BD4E63BE1B4BD5 /* Foundation.ttf in Resources */,
+				021C855E1F70C02C0046FFF4 /* include in Resources */,
 				02E096DC1DAE50E100641B85 /* dict in Resources */,
 				8390076B9DE5486982F0EBE9 /* Ionicons.ttf in Resources */,
 				02DB41591DCD1B1C00E04176 /* Images.xcassets in Resources */,
@@ -1536,7 +1536,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02A5EE7C1ECA9ECC00ED05C1 /* RNKeychain.m in Sources */,
-				02F9ECE41F708433006F0003 /* RNACTReporter.m in Sources */,
+				021C855F1F70C02C0046FFF4 /* RNACTReporter.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				02726F891EB33E3000D82BF5 /* RNSodium.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
