@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Dimensions, StatusBar, TextInput, LayoutAnimation } from 'react-native';
 import { when, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
@@ -23,40 +23,18 @@ const logoHeight = height * 0.33;
 
 @observer
 export default class LoginWizard extends Wizard {
-    pages = ['loginStart', 'loginClean', 'loginPassword', 'loginAutomatic'];
+    pages = ['loginStart', 'loginClean'];
 
     get index() { return loginState.current; }
     set index(i) { loginState.current = i; }
-
-    loginAutomatic = () => <LoginAutomatic />;
 
     loginStart() {
         return <LoginStart login={() => this.changeIndex(1)} />;
     }
 
     loginClean() {
-        const loginEnteredAction = () => {
-            this.changeIndex(1);
-            if (!process.env.PEERIO_PASSPHRASE) {
-                loginState.passphrase = '';
-            }
-            // DISABLING pin for now
-            // loginState.checkSavedUserPin();
-        };
-        return <LoginClean submit={loginEnteredAction} />;
-    }
-
-    loginPassword() {
-        return <LoginPassword submit={() => uiState.hideAll().then(() => loginState.login()).catch(e => console.log(e))} />;
-    }
-
-    footer() {
-        const s = wizard.footer.button.base;
-        return (this.index > 0 && this.index < 3) ? (
-            <View>
-                <Button style={s} disabled={loginState.isInProgress} onPress={() => this.changeIndex(-1)} text={tu('button_back')} />
-            </View>
-        ) : null;
+        const submit = () => uiState.hideAll().then(() => loginState.login()).catch(e => console.log(e));
+        return <LoginClean submit={submit} />;
     }
 
     componentDidMount() {
@@ -144,13 +122,10 @@ export default class LoginWizard extends Wizard {
         const body = (
             <View
                 style={[style.containerFlex]}>
-                <View style={{ height: logoHeight, justifyContent: 'center' }}>
-                    {this.showDebugMenu ? this.debugMenu : <Logo onPress={() => this.debugTap()} />}
-                </View>
                 {this.showDebugLogs ? this.debugLogs : this.wizard()}
                 <StatusBar barStyle="light-content" />
             </View>
         );
-        return <Layout1 body={body} footer={this.footer()} />;
+        return <Layout1 body={body} />;
     }
 }

@@ -2,7 +2,7 @@ import randomWords from 'random-words';
 import { observable, action, when } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
-import { User, PhraseDictionary, validation, socket } from '../../lib/icebear';
+import { User, PhraseDictionary, validation, socket, crypto } from '../../lib/icebear';
 
 const { validators, addValidation } = validation;
 
@@ -48,7 +48,7 @@ class SignupState extends RoutedState {
 
     @action reset() { this.current = 0; }
 
-    generatePassphrase = () => PhraseDictionary.current.getPassphrase(8);
+    generatePassphrase = () => crypto.keys.getRandomAccountKeyHex();
 
     @action async next() {
         if (!this.isValid()) return;
@@ -95,10 +95,10 @@ class SignupState extends RoutedState {
 
 const signupState = new SignupState();
 
-addValidation(signupState, 'username', validators.username, 0);
-addValidation(signupState, 'email', validators.email, 1);
-addValidation(signupState, 'firstName', validators.firstName, 2);
-addValidation(signupState, 'lastName', validators.lastName, 3);
+addValidation(signupState, 'firstName', validators.firstName, 0);
+addValidation(signupState, 'lastName', validators.lastName, 1);
+addValidation(signupState, 'username', validators.username, 2);
+addValidation(signupState, 'email', validators.email, 3);
 
 if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
     when(() => !process.env.PEERIO_AUTOLOGIN && signupState.isConnected && signupState.isActive, () => {

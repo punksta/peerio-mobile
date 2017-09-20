@@ -15,7 +15,6 @@ export default class SignupWizard extends Wizard {
     get index() { return signupState.current; }
     set index(i) { signupState.current = i; }
 
-    footer = () => <SignupFooter />;
     signupStep1 = () => <SignupStep1 />;
     signupAccountKey = () => <SignupAccountKey />;
     loginAutomatic = () => <LoginAutomatic />;
@@ -34,6 +33,6 @@ export default class SignupWizard extends Wizard {
                 {this.wizard()}
             </View>
         );
-        return <Layout1 body={body} footer={this.footer()} />;
+        return <Layout1 body={body} />;
     }
 }

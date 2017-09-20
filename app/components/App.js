@@ -66,7 +66,7 @@ export default class App extends SafeComponent {
             }
         }
 
-        if (!MockComponent) routerApp.routes.loginStart.transition();
+        if (!MockComponent) routerApp.routes.signupStep1.transition();
     }
 
     _handleAppStateChange(appState) {

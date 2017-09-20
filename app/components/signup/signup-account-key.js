@@ -1,89 +1,104 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, ActivityIndicator } from 'react-native';
-import SafeComponent from '../shared/safe-component';
-import { wizard, vars } from '../../styles/styles';
+import { Text, View, Clipboard } from 'react-native';
+import ActivityOverlay from '../controls/activity-overlay';
+import { vars } from '../../styles/styles';
 import signupState from './signup-state';
-import { popupTOS } from '../shared/popups';
-import { t } from '../utils/translator';
+import { t, tx } from '../utils/translator';
+import buttons from '../helpers/buttons';
+import LoginWizardPage, {
+    header, inner, circleTopSmall, title2, row, container
+} from '../login/login-wizard-page';
+
+const formStyle = {
+    padding: 20,
+    justifyContent: 'space-between'
+};
+
+const addPhotoText = {
+    fontSize: 14,
+    color: vars.txtMedium,
+    textAlign: 'center'
+};
+
+const addPhotoPlus = [addPhotoText, {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: vars.white
+}];
+
+const textNormal = {
+    color: vars.txtDark,
+    fontSize: 16,
+    lineHeight: 24
+};
+
+const accountKeyText = {
+    color: vars.txtDark,
+    fontFamily: 'Verdana',
+    fontWeight: 'bold',
+    fontSize: 18,
+    width: 240
+};
+
+const accountKeyRow = {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+};
+
+const smallText = {
+    fontSize: 12,
+    marginVertical: 8,
+    color: vars.txtDark
+};
+
+const accountKeyView = {
+    marginVertical: 10
+};
 
 @observer
-export default class SignupStep1 extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.url = 'https://www.peerio.com/';
-    }
-
-    tosLink(text) {
+export default class SignupStep1 extends LoginWizardPage {
+    get body() {
         return (
-            <Text
-                onPress={popupTOS}
-                style={{ textDecorationLine: 'underline' }}>
-                {text}
-            </Text>
+            <View>
+                <View style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]}>
+                    <View>
+                        <Text style={addPhotoPlus}>AK</Text>
+                    </View>
+                </View>
+                <Text style={textNormal}>Hello {signupState.firstName || signupState.username},</Text>
+                <Text style={textNormal}>Passwords are way stronger when computers make them. This Account Key was generated just for you.</Text>
+                <View style={accountKeyView}>
+                    <Text style={smallText}>Your Account Key</Text>
+                    <View style={accountKeyRow}>
+                        <Text style={accountKeyText} selectable>
+                            {signupState.passphrase}
+                        </Text>
+                        {buttons.uppercaseBlueButton(tx('Copy'), () => Clipboard.setString(signupState.passphrase))}
+                    </View>
+                </View>
+                <Text style={textNormal}>Peerio cannot access any of your data, including this Account Key, saving a backup may help you in the future.</Text>
+            </View>
         );
     }
 
-    renderThrow() {
-        const style = wizard;
-        const notice = {
-            borderTopWidth: 1,
-            borderBottomWidth: 1,
-            borderColor: vars.white,
-            backgroundColor: '#505050A0',
-            paddingVertical: 14,
-            height: 100,
-            justifyContent: 'center',
-            paddingHorizontal: vars.wizardPadding
-        };
-        const normalText = {
-            color: vars.white,
-            marginBottom: 6
-        };
-        const noticeText = {
-            color: vars.white,
-            fontSize: 24
-        };
-        const noticeText2 = {
-            color: vars.white,
-            fontWeight: 'bold',
-            fontSize: 32
-        };
-        const passphraseText = [noticeText2, {
-            fontSize: 24
-        }];
-        const padded = {
-            paddingHorizontal: vars.wizardPadding
-        };
-        const paddedVertical = [padded, {
-            paddingVertical: 16
-        }];
+    render() {
         return (
-            <View style={[{ marginTop: 24 }]}>
-                <View style={padded}>
-                    <Text style={style.text.title}>{t('title_signupStep2')}</Text>
-                    <Text testID="signupStep1Title" style={style.text.subTitle}>{t('title_AccountKey')}</Text>
+            <View style={container}>
+                <View style={header}>
+                    {/* TODO: peerio copy */}
+                    <Text style={title2}>Account Key</Text>
                 </View>
-                <View style={notice}>
-                    {signupState.isInProgress ?
-                        <ActivityIndicator size="large" color={vars.white} /> :
-                        <View>
-                            <Text style={noticeText}>{t('title_AKwarn1')}</Text>
-                        </View>}
+                <View style={inner}>
+                    <View style={formStyle}>
+                        {this.body}
+                    </View>
                 </View>
-                <View style={paddedVertical}>
-                    <Text style={normalText}>{t('title_AKwarn3')}</Text>
+                <View style={[row, { justifyContent: 'space-between' }]}>
+                    {this.button('button_back', () => signupState.prev())}
+                    {this.button('button_next', () => signupState.next(), false, !signupState.nextAvailable)}
                 </View>
-                <View style={paddedVertical}>
-                    <Text style={normalText}>{t('title_yourAccountKey')}</Text>
-                    <Text style={passphraseText} selectable>
-                        {signupState.passphrase}
-                    </Text>
-                </View>
-                <View style={paddedVertical}>
-                    <Text style={normalText}>{t('title_AKwarn4')}</Text>
-                </View>
-                <View style={[{ flexGrow: 1 }]} />
+                <ActivityOverlay large visible={signupState.isInProgress} />
             </View>
         );
     }
