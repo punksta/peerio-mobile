@@ -18,6 +18,8 @@ class SignupState extends RoutedState {
     // two pages of signup wizard
     @observable count = 2;
     _prefix = 'signup';
+    avatarBuffers = null;
+    @observable avatarData = null;
 
     get nextAvailable() {
         switch (this.current) {
@@ -72,7 +74,7 @@ class SignupState extends RoutedState {
         // console.log(this.passphrase);
         const user = new User();
         User.current = user;
-        const { username, email, firstName, lastName, passphrase } = this;
+        const { username, email, firstName, lastName, passphrase, avatarBuffers } = this;
         const localeCode = uiState.locale;
         user.username = username;
         user.email = email;
@@ -89,6 +91,7 @@ class SignupState extends RoutedState {
                 this.reset();
             })
             .then(() => mainState.saveUser())
+            .then(() => avatarBuffers && User.current.saveAvatar(avatarBuffers))
             .finally(() => { this.isInProgress = false; });
     }
 }

@@ -14,7 +14,8 @@ const SIZE_BASE = 856;
 const SIZE1 = 214;
 const SIZE2 = 64;
 
-const readFile = async path => RNFS.readFile(path, 'base64').then(b64ToBytes);
+const readFileB64 = async path => RNFS.readFile(path, 'base64');
+const readFile = async path => readFileB64(path).then(b64ToBytes);
 
 export { SIZE1, SIZE2 };
 
@@ -43,11 +44,12 @@ export default class AvatarActionSheet extends SafeComponent {
     show = () => this._actionSheet.show();
 
     async save(largePath, smallPath) {
-        const largeFile = await readFile(largePath);
+        const largeFileB64 = await readFileB64(largePath);
+        const largeFile = await b64ToBytes(largeFileB64);
         // console.log(largeFile);
         const smallFile = await readFile(smallPath);
         // console.log(smallFile);
-        return User.current.saveAvatar([largeFile.buffer, smallFile.buffer]);
+        return this.props.onSave([largeFile.buffer, smallFile.buffer], largeFileB64);
     }
 
     async generateResize(path) {
@@ -73,7 +75,7 @@ export default class AvatarActionSheet extends SafeComponent {
             mediaType: 'photo',
             cropping: true
         });
-        console.log(data);
+        console.debug(data);
         await this.generateResize(data.path);
     }
 

@@ -77,7 +77,7 @@ const title3 = {
 export {
     header, inner, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
-    container };
+    container, topCircleSizeSmall };
 
 @observer
 export default class LoginWizardPage extends SafeComponent {

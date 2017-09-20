@@ -36,7 +36,7 @@ export default {
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={{ borderRadius: 2, paddingHorizontal: 16, paddingVertical: 10, backgroundColor: disabled ? vars.txtMedium : vars.bg }}>
-                <Text style={{ fontWeight: 'bold', color: vars.white }}>
+                <Text style={{ fontWeight: 'bold', textAlign: 'center', color: vars.white }}>
                     {tu(text)}
                 </Text>
             </TouchableOpacity>

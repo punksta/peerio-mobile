@@ -9,6 +9,7 @@ import buttons from '../helpers/buttons';
 import LoginWizardPage, {
     header, inner, circleTopSmall, title2, row, container
 } from '../login/login-wizard-page';
+import SignupAvatar from './signup-avatar';
 
 const formStyle = {
     padding: 20,
@@ -58,13 +59,19 @@ const accountKeyView = {
 
 @observer
 export default class SignupStep1 extends LoginWizardPage {
+    get avatarPlaceholder() {
+        return (
+            <View>
+                <Text style={addPhotoPlus}>AK</Text>
+            </View>
+        );
+    }
+
     get body() {
         return (
             <View>
                 <View style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]}>
-                    <View>
-                        <Text style={addPhotoPlus}>AK</Text>
-                    </View>
+                    {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}
                 </View>
                 <Text style={textNormal}>Hello {signupState.firstName || signupState.username},</Text>
                 <Text style={textNormal}>Passwords are way stronger when computers make them. This Account Key was generated just for you.</Text>
@@ -78,6 +85,9 @@ export default class SignupStep1 extends LoginWizardPage {
                     </View>
                 </View>
                 <Text style={textNormal}>Peerio cannot access any of your data, including this Account Key, saving a backup may help you in the future.</Text>
+                <View style={{ width: 200, alignSelf: 'center', alignItems: 'center', marginTop: 24 }}>
+                    {buttons.uppercaseBlueBgButton(tx('Save Account Key'))}
+                </View>
             </View>
         );
     }

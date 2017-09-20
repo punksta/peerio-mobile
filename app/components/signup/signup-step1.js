@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { observable } from 'mobx';
 import TextBox from '../controls/textbox';
 // import LanguagePickerBox from '../controls/language-picker-box';
 import { vars } from '../../styles/styles';
@@ -8,8 +9,10 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t } from '../utils/translator';
 import LoginWizardPage, {
-    header, inner, circleTopSmall, title3, title2, row, container
+    header, inner, circleTopSmall, title3, title2, row, container, topCircleSizeSmall
 } from '../login/login-wizard-page';
+import AvatarActionSheet from '../settings/avatar-action-sheet';
+import SignupAvatar from './signup-avatar';
 
 const formStyle = {
     padding: 20,
@@ -35,30 +38,36 @@ const addPhotoPlus = [addPhotoText, {
 
 @observer
 export default class SignupStep1 extends LoginWizardPage {
-    constructor(props) {
-        super(props);
-        this.url = 'https://www.peerio.com/';
+    saveAvatar = (buffers, base64File) => {
+        signupState.avatarBuffers = buffers;
+        signupState.avatarData = base64File;
     }
 
-    tosLink(text) {
+    get avatar() {
         return (
-            <Text
-                onPress={popupTOS}
-                style={{ textDecorationLine: 'underline' }}>
-                {text}
-            </Text>
+            <View style={circleTopSmall}>
+                <SignupAvatar />
+            </View>
+        );
+    }
+
+    get avatarSelector() {
+        return (
+            <View style={circleTopSmall}>
+                <Text style={addPhotoPlus}>+</Text>
+                <Text style={addPhotoText}>Add photo (optional)</Text>
+            </View>
         );
     }
 
     get body() {
         return (
             <View>
-                <View style={circleTopSmall}>
-                    <TouchableOpacity>
-                        <Text style={addPhotoPlus}>+</Text>
-                        <Text style={addPhotoText}>Add photo (optional)</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                    onPress={() => this._actionSheet.show()}
+                    pressRetentionOffset={vars.pressRetentionOffset}>
+                    {signupState.avatarData ? this.avatar : this.avatarSelector}
+                </TouchableOpacity>
                 <TextBox
                     returnKeyType="next"
                     state={signupState}
@@ -115,6 +124,9 @@ export default class SignupStep1 extends LoginWizardPage {
                     {/* TODO: peerio copy */}
                     <Text style={title3}>Already have an account? Sign in instead.</Text>
                 </View>
+                <AvatarActionSheet
+                    onSave={this.saveAvatar}
+                    ref={sheet => { this._actionSheet = sheet; }} />
             </View>
         );
     }
