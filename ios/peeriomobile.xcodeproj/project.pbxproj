@@ -67,6 +67,7 @@
 		8390076B9DE5486982F0EBE9 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED79A42A8D3144739CE4C04B /* Ionicons.ttf */; };
 		8560D839D75A4E9590C8B1F5 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 372E848CA7B444A09B937444 /* SimpleLineIcons.ttf */; };
 		86F7F88564164E3CA0B1265B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0F64612EAF249BC98CB3DE2 /* Entypo.ttf */; };
+		A8D88F54A3AD4C6BBD791F2E /* libRNViewShot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 05531B7D074A403FA593CAD1 /* libRNViewShot.a */; };
 		B73DC4B1F0BD4E63BE1B4BD5 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B836295CD1B344EBB035E1B6 /* Foundation.ttf */; };
 		CF69BA63107E428598B08410 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 21D883CDAA7C4E718E6EE873 /* EvilIcons.ttf */; };
 		E19FDAE0C2454345A5CE2523 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4FC9400FF0F74C249A550AC2 /* MaterialCommunityIcons.ttf */; };
@@ -268,6 +269,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 46E6943D1B289730000B634E;
 			remoteInfo = InAppUtilsTests;
+		};
+		026818901F7423DE00A42812 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 06978AC5F624491ABD988984 /* RNViewShot.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNViewShot;
 		};
 		026B0D781E037FED00B24721 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -483,6 +491,8 @@
 		02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = peeriomobile.entitlements; path = peeriomobile/peeriomobile.entitlements; sourceTree = "<group>"; };
 		02E096B21DAE398B00641B85 /* locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = locales; path = ../locales; sourceTree = "<group>"; };
 		02E096DB1DAE50E100641B85 /* dict */ = {isa = PBXFileReference; lastKnownFileType = folder; name = dict; path = "../node_modules/peerio-copy/phrase/dict"; sourceTree = "<group>"; };
+		05531B7D074A403FA593CAD1 /* libRNViewShot.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNViewShot.a; sourceTree = "<group>"; };
+		06978AC5F624491ABD988984 /* RNViewShot.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNViewShot.xcodeproj; path = "../node_modules/react-native-view-shot/ios/RNViewShot.xcodeproj"; sourceTree = "<group>"; };
 		081BA9E7BB014EC9A1CF87BA /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
 		0E103048E40D48F8B3368298 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -560,6 +570,7 @@
 				029F85771EEBBAB400C0CC31 /* libRCTAdSupport.a in Frameworks */,
 				02182F021F463733009492F8 /* libRNHTMLtoPDF.a in Frameworks */,
 				021C85931F70C0580046FFF4 /* libGoogleConversionTracking.a in Frameworks */,
+				A8D88F54A3AD4C6BBD791F2E /* libRNViewShot.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -688,6 +699,14 @@
 			children = (
 				0259355D1E809AA400FAEE7E /* libInAppUtils.a */,
 				0259355F1E809AA400FAEE7E /* InAppUtilsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0268185F1F7423DE00A42812 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				026818911F7423DE00A42812 /* libRNViewShot.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -884,6 +903,7 @@
 				EBD14F572C0F4C24BF45471F /* RCTContacts.xcodeproj */,
 				2E792C39C6774D5F9DDB3025 /* imageCropPicker.xcodeproj */,
 				F4D6BC722669437087D93FA5 /* RNHTMLtoPDF.xcodeproj */,
+				06978AC5F624491ABD988984 /* RNViewShot.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1120,6 +1140,10 @@
 					ProjectRef = 53F9542E76844F59917732EA /* RNVectorIcons.xcodeproj */;
 				},
 				{
+					ProductGroup = 0268185F1F7423DE00A42812 /* Products */;
+					ProjectRef = 06978AC5F624491ABD988984 /* RNViewShot.xcodeproj */;
+				},
+				{
 					ProductGroup = 0235B5B41E65DE24001D77D1 /* Products */;
 					ProjectRef = 13F5AA2EEB8241769A00F172 /* SQLite.xcodeproj */;
 				},
@@ -1319,6 +1343,13 @@
 			fileType = wrapper.cfbundle;
 			path = InAppUtilsTests.xctest;
 			remoteRef = 0259355E1E809AA400FAEE7E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		026818911F7423DE00A42812 /* libRNViewShot.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNViewShot.a;
+			remoteRef = 026818901F7423DE00A42812 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		026B0D791E037FED00B24721 /* libRCTImage-tvOS.a */ = {
@@ -1593,6 +1624,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-print/ios/RNPrint",
 					"$(SRCROOT)/../node_modules/react-native-html-to-pdf/ios/RNHTMLtoPDF/**",
+					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 				);
 				INFOPLIST_FILE = peeriomobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1611,6 +1643,7 @@
 					"\"$(SRCROOT)/peeriomobile\"",
 					"$(PROJECT_DIR)/peeriomobile/libsodium-ios/lib",
 					"$(PROJECT_DIR)/lib",
+					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
@@ -1667,6 +1700,7 @@
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-print/ios/RNPrint",
 					"$(SRCROOT)/../node_modules/react-native-html-to-pdf/ios/RNHTMLtoPDF/**",
+					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
 				);
 				INFOPLIST_FILE = peeriomobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1685,6 +1719,7 @@
 					"\"$(SRCROOT)/peeriomobile\"",
 					"$(PROJECT_DIR)/peeriomobile/libsodium-ios/lib",
 					"$(PROJECT_DIR)/lib",
+					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
