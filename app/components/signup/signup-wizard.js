@@ -8,6 +8,8 @@ import LoginAutomatic from '../login/login-automatic';
 import SignupStep1 from './signup-step1';
 import SignupAccountKey from './signup-account-key';
 import signupState from './signup-state';
+import Bottom from '../controls/bottom';
+import SnackBar from '../snackbars/snackbar';
 
 export default class SignupWizard extends Wizard {
     pages = ['signupStep1', 'signupAccountKey', 'loginAutomatic'];
@@ -31,6 +33,7 @@ export default class SignupWizard extends Wizard {
             <View
                 style={[style.containerFlex]}>
                 {this.wizard()}
+                <Bottom><SnackBar /></Bottom>
             </View>
         );
         return <Layout1 body={body} />;

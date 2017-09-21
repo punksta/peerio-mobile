@@ -5,6 +5,9 @@ global.navigator = global.navigator || {};
 global.navigator.userAgent = global.navigator.userAgent || 'react-native';
 
 const icebear = require('./peerio-icebear');
+const { getFirstLetterUpperCase } = require('./peerio-icebear/helpers/string');
+
+icebear.getFirstLetterUpperCase = getFirstLetterUpperCase;
 
 const { socket, config, FileStreamAbstract, TinyDb } = icebear;
 mobileConfig(config, { FileStreamAbstract });

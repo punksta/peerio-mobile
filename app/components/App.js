@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, PanResponder,
     AppState, ActivityIndicator, NativeModules,
-    Dimensions, PixelRatio, Platform } from 'react-native';
+    Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';
@@ -66,7 +66,7 @@ export default class App extends SafeComponent {
             }
         }
 
-        if (!MockComponent) routerApp.routes.signupStep1.transition();
+        if (!MockComponent) routerApp.routes.loginStart.transition();
     }
 
     _handleAppStateChange(appState) {
@@ -110,7 +110,8 @@ export default class App extends SafeComponent {
             <ModalLayout key="modals" />,
             <PopupLayout key="popups" />,
             uiState.picker,
-            <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
+            <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>,
+            <StatusBar barStyle="light-content" hidden={false} key="statusBar" />
         ]);
     }
 }

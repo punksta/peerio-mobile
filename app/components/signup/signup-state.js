@@ -1,4 +1,5 @@
 import randomWords from 'random-words';
+import capitalize from 'capitalize';
 import { observable, action, when } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
@@ -107,10 +108,10 @@ if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
     when(() => !process.env.PEERIO_AUTOLOGIN && signupState.isConnected && signupState.isActive, () => {
         const s = signupState;
         const rnd = new Date().getTime();
-        s.username = randomWords({ min: 2, max: 2, join: 'o' });
+        s.username = randomWords({ min: 2, max: 2, join: 'o' }).substring(0, 16);
         s.email = `seavan+${rnd}@gmail.com`;
-        s.firstName = randomWords();
-        s.lastName = randomWords();
+        s.firstName = capitalize(randomWords());
+        s.lastName = capitalize(randomWords());
     });
 }
 

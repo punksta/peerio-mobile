@@ -1,18 +1,18 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, TouchableOpacity, Image } from 'react-native';
-import { observable } from 'mobx';
+import { Text, View, TouchableOpacity } from 'react-native';
 import TextBox from '../controls/textbox';
 // import LanguagePickerBox from '../controls/language-picker-box';
+import Bold from '../controls/bold';
 import { vars } from '../../styles/styles';
 import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
-import { t } from '../utils/translator';
+import { t, T } from '../utils/translator';
 import LoginWizardPage, {
-    header, inner, circleTopSmall, title3, title2, row, container, topCircleSizeSmall
+    header, inner, circleTopSmall, title3, title2, row, container, smallText
 } from '../login/login-wizard-page';
-import AvatarActionSheet from '../settings/avatar-action-sheet';
 import SignupAvatar from './signup-avatar';
+import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 
 const formStyle = {
     padding: 20,
@@ -38,11 +38,6 @@ const addPhotoPlus = [addPhotoText, {
 
 @observer
 export default class SignupStep1 extends LoginWizardPage {
-    saveAvatar = (buffers, base64File) => {
-        signupState.avatarBuffers = buffers;
-        signupState.avatarData = base64File;
-    }
-
     get avatar() {
         return (
             <View style={circleTopSmall}>
@@ -60,7 +55,21 @@ export default class SignupStep1 extends LoginWizardPage {
         );
     }
 
+    tosLink(text) {
+        return (
+            <Text
+                onPress={popupTOS}
+                style={{ textDecorationLine: 'underline' }}>
+                {text}
+            </Text>
+        );
+    }
+
     get body() {
+        const tosParser = {
+            emphasis: text => <Bold>{text}</Bold>,
+            tosButton: text => this.tosLink(text)
+        };
         return (
             <View>
                 <TouchableOpacity
@@ -98,9 +107,9 @@ export default class SignupStep1 extends LoginWizardPage {
                     name="email"
                     hint={t('title_email')} />
                 {/* <LanguagePickerBox /> */}
-                {/* TODO: decide on this <Text style={smallText}>
+                <Text style={smallText}>
                     <T k="title_TOSRequestText">{tosParser}</T>
-                </Text> */}
+                </Text>
                 <View style={[{ flexGrow: 1 }]} />
             </View>
         );
@@ -124,9 +133,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     {/* TODO: peerio copy */}
                     <Text style={title3}>Already have an account? Sign in instead.</Text>
                 </View>
-                <AvatarActionSheet
-                    onSave={this.saveAvatar}
-                    ref={sheet => { this._actionSheet = sheet; }} />
+                <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
             </View>
         );
     }

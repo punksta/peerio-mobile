@@ -10,7 +10,8 @@ const container = {
     justifyContent: 'space-between',
     flex: 1,
     flexGrow: 1,
-    padding: 20
+    padding: 20,
+    paddingTop: 20 + vars.statusBarHeight
 };
 const header = {
     justifyContent: 'center',
