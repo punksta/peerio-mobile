@@ -9,7 +9,7 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t, T } from '../utils/translator';
 import LoginWizardPage, {
-    header, inner, circleTopSmall, title3, title2, row, container, smallText
+    header, innerSmall, circleTopSmall, title3, title2, row, container, smallText
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
@@ -40,15 +40,13 @@ const addPhotoPlus = [addPhotoText, {
 export default class SignupStep1 extends LoginWizardPage {
     get avatar() {
         return (
-            <View style={circleTopSmall}>
-                <SignupAvatar />
-            </View>
+            <SignupAvatar />
         );
     }
 
     get avatarSelector() {
         return (
-            <View style={circleTopSmall}>
+            <View>
                 <Text style={addPhotoPlus}>+</Text>
                 <Text style={addPhotoText}>Add photo (optional)</Text>
             </View>
@@ -72,11 +70,6 @@ export default class SignupStep1 extends LoginWizardPage {
         };
         return (
             <View>
-                <TouchableOpacity
-                    onPress={() => this._actionSheet.show()}
-                    pressRetentionOffset={vars.pressRetentionOffset}>
-                    {signupState.avatarData ? this.avatar : this.avatarSelector}
-                </TouchableOpacity>
                 <TextBox
                     returnKeyType="next"
                     state={signupState}
@@ -121,10 +114,18 @@ export default class SignupStep1 extends LoginWizardPage {
                 <View style={header}>
                     <Text style={title2}>Sign up</Text>
                 </View>
-                <View style={inner}>
-                    <View style={formStyle}>
-                        {this.body}
+                <View>
+                    <View style={innerSmall}>
+                        <View style={formStyle}>
+                            {this.body}
+                        </View>
                     </View>
+                    <TouchableOpacity
+                        style={circleTopSmall}
+                        onPress={() => this._actionSheet.show()}
+                        pressRetentionOffset={vars.pressRetentionOffset}>
+                        {signupState.avatarData ? this.avatar : this.avatarSelector}
+                    </TouchableOpacity>
                 </View>
                 <View style={[row, { justifyContent: 'flex-end' }]}>
                     {this.button('button_next', () => signupState.next(), false, !signupState.nextAvailable)}

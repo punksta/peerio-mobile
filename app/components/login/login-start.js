@@ -43,15 +43,17 @@ export default class LoginStart extends LoginWizardPage {
                     <Text style={title1}>Welcome to Peerio</Text>
                     <Text style={title2}>Your private and secure collaboration platform</Text>
                 </View>
-                <View style={inner}>
+                <View style={{ flex: 0.7, alignItems: 'center' }}>
+                    <View style={inner}>
+                        <View>
+                            <Text style={title1Black}>Private</Text>
+                            <Text style={title2Black}>Peerio’s end-to-end encryption keeps your data safe from breaches.</Text>
+                        </View>
+                        <View style={{ flex: 1, paddingBottom: 20, justifyContent: 'flex-end' }}>
+                            {this.progress}
+                        </View>
+                    </View>
                     <View style={circleTop} />
-                    <View>
-                        <Text style={title1Black}>Private</Text>
-                        <Text style={title2Black}>Peerio’s end-to-end encryption keeps your data safe from breaches.</Text>
-                    </View>
-                    <View style={{ flex: 1, paddingBottom: 20, justifyContent: 'flex-end' }}>
-                        {this.progress}
-                    </View>
                 </View>
                 <View style={row}>
                     {this.button('button_login', this.props.login, loginState.isInProgress)}

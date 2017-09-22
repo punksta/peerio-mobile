@@ -15,7 +15,8 @@ const container = {
 };
 const header = {
     justifyContent: 'center',
-    flex: 0.2
+    flex: 0.2,
+    marginBottom: 12
 };
 
 const topCircleSize = 76;
@@ -23,16 +24,23 @@ const topCircleSize = 76;
 const topCircleSizeSmall = 60;
 
 const inner = {
-    flex: 0.7,
+    flex: 1,
     borderRadius: 4,
     marginTop: topCircleSize,
+    paddingTop: topCircleSize + 12,
     backgroundColor: vars.lightGrayBg
 };
 
+const innerSmall = [inner, {
+    flex: 1,
+    marginTop: topCircleSizeSmall,
+    paddingTop: topCircleSizeSmall
+}];
+
 const circleTop = [helpers.circle(topCircleSize * 2), {
+    top: 0,
     backgroundColor: vars.lightGrayBg,
-    marginTop: -topCircleSize,
-    marginBottom: 12,
+    position: 'absolute',
     alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
@@ -76,7 +84,7 @@ const title3 = {
 };
 
 export {
-    header, inner, title1, title1Black, title2,
+    header, inner, innerSmall, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
     container, topCircleSizeSmall };
 

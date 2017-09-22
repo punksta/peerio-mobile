@@ -10,7 +10,7 @@ import signupState from './signup-state';
 import { t, tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import LoginWizardPage, {
-    header, inner, circleTopSmall, title2, row, container
+    header, innerSmall, circleTopSmall, title2, row, container
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
@@ -102,12 +102,6 @@ export default class SignupStep1 extends LoginWizardPage {
         const saveTitle = keySaved ? 'Saved to Camera Roll' : 'Save Account Key';
         return (
             <View>
-                <TouchableOpacity
-                    onPress={() => this._actionSheet.show()}
-                    pressRetentionOffset={vars.pressRetentionOffset}
-                    style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]}>
-                    {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}
-                </TouchableOpacity>
                 <Text style={textNormal}>Hello, {signupState.firstName || signupState.username}.</Text>
                 <Text style={textNormal}>Passwords are way stronger when computers make them. This Account Key was generated just for you.</Text>
                 <View style={accountKeyView}>
@@ -135,10 +129,18 @@ export default class SignupStep1 extends LoginWizardPage {
                         {/* TODO: peerio copy */}
                         <Text style={title2}>Account Key</Text>
                     </View>
-                    <View style={inner}>
-                        <View style={formStyle}>
-                            {this.body}
+                    <View>
+                        <View style={innerSmall}>
+                            <View style={formStyle}>
+                                {this.body}
+                            </View>
                         </View>
+                        <TouchableOpacity
+                            onPress={() => this._actionSheet.show()}
+                            pressRetentionOffset={vars.pressRetentionOffset}
+                            style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]}>
+                            {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}
+                        </TouchableOpacity>
                     </View>
                 </ViewShot>
                 <View style={[row, { justifyContent: 'space-between' }]}>
