@@ -133,7 +133,7 @@ export default class TextBox extends SafeComponent {
             <Text
                 style={{
                     height: 14,
-                    color: vars.highlight,
+                    color: vars.txtDark,
                     fontSize: 12,
                     backgroundColor: 'transparent'
                 }}>{t(this.validationMessage)}</Text>
