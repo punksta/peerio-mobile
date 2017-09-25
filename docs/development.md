@@ -10,7 +10,7 @@ Environment settings (for debug packager) are located in `env.sh` file in the ro
 Fastlance configuration is stored in `fastlane` folder.
 CircleCI build and test process is provided in `circle.yml` file.
 
-To figure out how the application works, check out [React Native Getting Started](https://facebook.github.io/react-native/docs/getting-started.html), if you haven't done so yet.
+To figure out how the application works, check out [React Native Getting Started](https://facebook.github.io/react-native/docs/getting-started.html), if you haven't done so yet. Select the "Building Projects with Native Code" tab and make sure you have all of the dependencies installed and the Android development environment set up.
 
 In short, platform specific code (mostly generated from react-native boilerplate) loads the bundled JavaScript code into JavaScriptCore engine see [JavaScript Environment](https://facebook.github.io/react-native/docs/javascript-environment.html), which, during its lifecycle, instructs native part, which views to create, which events to handle, and so forth.
 
@@ -52,11 +52,13 @@ pull the project and run:
 
 Please note, that in the `postinstall` step native platform files get patched to be able to load JS bundle from packager in debug mode. The script `scripts/setup-rn-debugging.sh` which does the patching gets the current IP with ifconfig and puts it in the React Native library sources.
 
-You can configure the backend socket server by editing the file env.sh (it will be generated during postinstall step):
+Will not work for **non Mac & Linux users** as the script does not support that (yet).
 
-`
-export PEERIO_SOCKET_SERVER=...`
-`
+Configure the backend socket server to use the staging server, by editing the files `env.sh` **and** `/scripts/node-env-peerio.sh` (generated during postinstall step).
+
+```
+export PEERIO_SOCKET_SERVER='wss://hocuspocus.peerio.com'
+```
 
 ## iOS
 
@@ -68,21 +70,19 @@ To debug the project or run it on actual device (or a different simulator), use 
 
 ## Android
 
-You would need to have Android SDK installed and following environment variables set:
+You need to have Android SDK installed. You also need Android NDK installed, and it needs to specifically be version `android-ndk-r10e`, which cannot be downloaded within Android Studio but must be [downloaded directly](https://developer.android.com/ndk/downloads/index.html). Set the following environment variables in your bash profile:
 
-`
+```
 export ANDROID_NDK=/Users/.../Library/Android/ndk/android-ndk-r10e
 export ANDROID_NDK_HOME=/Users/.../Library/Android/ndk/android-ndk-r10e
 export ANDROID_SDK=/Users/.../Library/Android/sdk
-`
+```
 
-We use [GenyMotion](https://www.genymotion.com/) as simulators as they are much faster than the ones shipped with Android SDK.
+*(these paths will be different in Linux, of course)*
 
-To build and run, use:
+We use [GenyMotion](https://www.genymotion.com/) as simulators as they are much faster than the ones shipped with Android SDK. The "personal version" is all that is needed for our purposes. Follow the Genymotion instructions for getting set up.
 
-`npm run android` command.
-
-You need to start a simulator or connect a device before running.
+To build and run, start a simulator (or connect a device) and then run `npm run android`.
 
 To debug, use Android Studio, or any other Java and Gradle compatible environment. Gradle project root is `android/settings.gradle`.
 
