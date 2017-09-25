@@ -52,7 +52,7 @@ pull the project and run:
 
 Please note, that in the `postinstall` step native platform files get patched to be able to load JS bundle from packager in debug mode. The script `scripts/setup-rn-debugging.sh` which does the patching gets the current IP with ifconfig and puts it in the React Native library sources.
 
-**Linux users**: this may fail, in which case you must edit `scripts/setup-rn-debugging.sh`, and where it assigns the `ip=` to your local IP via script, enter your local IP (hardcoded).
+Will not work for **non Mac & Linux users** as the script does not support that (yet).
 
 Configure the backend socket server to use the staging server, by editing the files `env.sh` **and** `/scripts/node-env-peerio.sh` (generated during postinstall step).
 
