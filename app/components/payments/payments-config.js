@@ -10,7 +10,7 @@ Portability across devices
 Secure File Storage & Sharing
 1 GB of secure Peerio Vault storage
 500M max upload file size
-2 rooms`;
+3 rooms`;
 
 const premiumIncludesInfo =
 `Includes features of Basic Plan`;
