@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, Clipboard, CameraRoll, TouchableOpacity } from 'react-native';
+import { Text, View, Clipboard, CameraRoll, TouchableOpacity, Platform } from 'react-native';
 import ViewShot from 'react-native-view-shot';
 import { observable } from 'mobx';
 import ActivityOverlay from '../controls/activity-overlay';
@@ -15,6 +15,7 @@ import LoginWizardPage, {
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 import snackbarState from '../snackbars/snackbar-state';
+import icons from '../helpers/icons';
 
 const formStyle = {
     padding: 20,
@@ -83,8 +84,15 @@ export default class SignupStep1 extends LoginWizardPage {
             })
         );
         console.debug(uri);
-        config.FileStream.launchViewer(uri);
+        // on iOS we can only preview our local data
+        (Platform.OS === 'ios') && config.FileStream.launchViewer(uri);
         uri = await CameraRoll.saveToCameraRoll(uri);
+        signupState.keyBackedUp = true;
+        // on Android we can only preview external data
+        // but I am disabling it for now, cause it launches
+        // external viewer and it takes more than 1 tap to get
+        // back to the app
+        // (Platform.OS === 'android') && config.FileStream.launchViewer(uri);
         console.debug(uri);
     }
 
@@ -114,8 +122,9 @@ export default class SignupStep1 extends LoginWizardPage {
                     </View>
                 </View>
                 <Text style={textNormal}>Peerio cannot access any of your data, including this Account Key, saving a backup may help you in the future.</Text>
-                <View style={{ width: 240, alignSelf: 'center', alignItems: 'center', marginTop: 24 }}>
+                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 24 }}>
                     {buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot)}
+                    {signupState.keyBackedUp && icons.plaindark('check-circle')}
                 </View>
             </View>
         );
@@ -145,7 +154,7 @@ export default class SignupStep1 extends LoginWizardPage {
                 </ViewShot>
                 <View style={[row, { justifyContent: 'space-between' }]}>
                     {this.button('button_back', () => signupState.prev())}
-                    {this.button('button_next', () => signupState.next(), false, !signupState.nextAvailable)}
+                    {this.button(signupState.keyBackedUp ? 'button_finish' : 'button_next', () => signupState.next(), false, !signupState.nextAvailable)}
                 </View>
                 <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
                 <ActivityOverlay large visible={signupState.isInProgress} />

@@ -1,16 +1,24 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image, ScrollView, LayoutAnimation } from 'react-native';
+import { observable, reaction } from 'mobx';
+import { observer } from 'mobx-react/native';
 import loginState from './login-state';
 import LoginWizardPage, {
-    header, inner, title1, title1Black, title2, title2Black, row, circleTop, container
+    header, inner, title1, title1Black, title2, title2Black, row, circleTop, container, embeddedImageCircleSize
 } from './login-wizard-page';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
 
+const imageWelcomeFast = require('../../assets/welcome-fast.png');
+const imageWelcomePrivate = require('../../assets/welcome-private.png');
+const imageWelcomeSafe = require('../../assets/welcome-safe.png');
+
+function scrollItem(title, subtitle, icon) { return { title, subtitle, icon }; }
+
+@observer
 export default class LoginStart extends LoginWizardPage {
-    get progress() {
+    progress(current) {
         const count = 3;
-        const current = 0;
         const circles = [];
         const circleSize = 4;
         const circle = {
@@ -36,7 +44,32 @@ export default class LoginStart extends LoginWizardPage {
         return <View style={circleRow}>{circles}</View>;
     }
 
+    @observable _selected = 0;
+    @observable _scrollerWidth = 1;
+
+    handleScroll = event => {
+        const x = event.nativeEvent.contentOffset.x;
+        this._selected = Math.round(x / this._scrollerWidth);
+    }
+
+    _layoutScroller = (params) => {
+        this._scrollerWidth = params.nativeEvent.layout.width || this._scrollerWidth;
+        console.log(this._scrollerWidth);
+    }
+
+    _scrollItems = [
+        scrollItem('Private', 'Peerio’s end-to-end encryption keeps your data safe from breaches.', imageWelcomePrivate),
+        scrollItem('Safe', 'Only you can access your account. Your data is safe and secure 24/7.', imageWelcomeSafe),
+        scrollItem('Fast', 'So fast, you’ll forget that everything is always encrypted.', imageWelcomeFast)
+    ];
+
+    componentDidMount() {
+        reaction(() => this._selected, () => LayoutAnimation.easeInEaseOut());
+    }
+
     render() {
+        const scrollStyle = { width: this._scrollerWidth };
+        console.log(this._scrollerWidth);
         return (
             <View style={container}>
                 <View style={header}>
@@ -44,16 +77,28 @@ export default class LoginStart extends LoginWizardPage {
                     <Text style={title2}>Your private and secure collaboration platform</Text>
                 </View>
                 <View style={{ flex: 0.7, alignItems: 'center' }}>
-                    <View style={inner}>
-                        <View>
-                            <Text style={title1Black}>Private</Text>
-                            <Text style={title2Black}>Peerio’s end-to-end encryption keeps your data safe from breaches.</Text>
-                        </View>
-                        <View style={{ flex: 1, paddingBottom: 20, justifyContent: 'flex-end' }}>
-                            {this.progress}
-                        </View>
+                    <ScrollView
+                        onScroll={this.handleScroll}
+                        showsHorizontalScrollIndicator={false}
+                        horizontal
+                        pagingEnabled
+                        style={inner}
+                        onLayout={this._layoutScroller}>
+                        {this._scrollItems.map(({ title, subtitle }, i) => (
+                            <View style={scrollStyle} key={title}>
+                                <View>
+                                    <Text style={title1Black}>{title}</Text>
+                                    <Text style={title2Black}>{subtitle}</Text>
+                                </View>
+                                <View style={{ flex: 1, paddingBottom: 20, justifyContent: 'flex-end' }}>
+                                    {this.progress(i)}
+                                </View>
+                            </View>
+                        ))}
+                    </ScrollView>
+                    <View style={circleTop}>
+                        <Image key={this._selected} source={this._scrollItems[this._selected].icon} style={{ width: embeddedImageCircleSize, height: embeddedImageCircleSize }} />
                     </View>
-                    <View style={circleTop} />
                 </View>
                 <View style={row}>
                     {this.button('button_login', this.props.login, loginState.isInProgress)}

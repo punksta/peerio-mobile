@@ -15,11 +15,12 @@ const container = {
 };
 const header = {
     justifyContent: 'center',
-    flex: 0.2,
     marginBottom: 12
 };
 
 const topCircleSize = 76;
+
+const embeddedImageCircleSize = topCircleSize * 2 - 20;
 
 const topCircleSizeSmall = 60;
 
@@ -86,7 +87,7 @@ const title3 = {
 export {
     header, inner, innerSmall, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
-    container, topCircleSizeSmall };
+    container, topCircleSizeSmall, embeddedImageCircleSize };
 
 @observer
 export default class LoginWizardPage extends SafeComponent {

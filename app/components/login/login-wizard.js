@@ -126,6 +126,6 @@ export default class LoginWizard extends Wizard {
                 <StatusBar barStyle="light-content" />
             </View>
         );
-        return <Layout1 body={body} />;
+        return <Layout1 noScroll={this.index === 0} body={body} />;
     }
 }
