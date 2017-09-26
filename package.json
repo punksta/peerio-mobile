@@ -73,7 +73,6 @@
     "react-native-file-opener": "git+https://github.com/PeerioTechnologies/react-native-file-opener.git",
     "react-native-file-picker": "0.0.8",
     "react-native-fs": "git+https://github.com/PeerioTechnologies/react-native-fs.git",
-    "react-native-html-to-pdf": "^0.4.0",
     "react-native-image-crop-picker": "git+https://github.com/PeerioTechnologies/react-native-image-crop-picker.git",
     "react-native-image-picker": "git+https://github.com/PeerioTechnologies/react-native-image-picker.git",
     "react-native-in-app-utils": "git+https://github.com/chirag04/react-native-in-app-utils.git",
@@ -89,6 +88,7 @@
     "react-native-sound": "0.9.0",
     "react-native-sqlcipher-storage": "git+ssh://git@github.com/PeerioTechnologies/react-native-sqlcipher-storage.git",
     "react-native-vector-icons": "4.0.0",
+    "react-native-view-shot": "git+ssh://git@github.com/PeerioTechnologies/react-native-view-shot.git",
     "scrypt-async": "1.3.1",
     "socket.io-client": "^2.0.3",
     "tweetnacl": "1.0.0"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { vars } from '../../styles/styles';
 import { tu } from '../utils/translator';
 
@@ -17,29 +17,37 @@ export default {
         );
     },
 
-    uppercaseBlueButton(text, onPress, disabled) {
+    uppercaseBlueButton(text, onPress, disabled, hidden) {
+        const opacity = hidden ? 0.0 : 1.0;
         return (
-            <TouchableOpacity
-                onPress={disabled ? null : onPress}
-                pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ paddingRight: 12, paddingVertical: 10 }}>
-                <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
-                    {tu(text)}
-                </Text>
-            </TouchableOpacity>
+            <View style={{ opacity }}>
+                <TouchableOpacity
+                    disabled={disabled}
+                    onPress={disabled ? null : onPress}
+                    pressRetentionOffset={vars.pressRetentionOffset}
+                    style={{ paddingRight: 12, paddingVertical: 10 }}>
+                    <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
+                        {tu(text)}
+                    </Text>
+                </TouchableOpacity>
+            </View>
         );
     },
 
-    uppercaseBlueBgButton(text, onPress, disabled) {
+    uppercaseBlueBgButton(text, onPress, disabled, hidden) {
+        const opacity = hidden ? 0.0 : 1.0;
         return (
-            <TouchableOpacity
-                onPress={disabled ? null : onPress}
-                pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ borderRadius: 2, paddingHorizontal: 16, paddingVertical: 10, backgroundColor: disabled ? vars.txtMedium : vars.bg }}>
-                <Text style={{ fontWeight: 'bold', color: vars.white }}>
-                    {tu(text)}
-                </Text>
-            </TouchableOpacity>
+            <View style={{ opacity }}>
+                <TouchableOpacity
+                    disabled={disabled}
+                    onPress={disabled ? null : onPress}
+                    pressRetentionOffset={vars.pressRetentionOffset}
+                    style={{ borderRadius: 2, paddingHorizontal: 16, paddingVertical: 10, backgroundColor: disabled ? vars.txtMedium : vars.bg }}>
+                    <Text style={{ fontWeight: 'bold', textAlign: 'center', color: vars.white }}>
+                        {tu(text)}
+                    </Text>
+                </TouchableOpacity>
+            </View>
         );
     },
 

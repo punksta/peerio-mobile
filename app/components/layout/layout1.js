@@ -25,7 +25,8 @@ export default class Layout1 extends SafeComponent {
             flex: 1,
             flexGrow: 1,
             flexDirection: 'column',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            paddingBottom: global.platform === 'android' ? 0 : uiState.keyboardHeight
         };
 
         const contentContainerStyle = {

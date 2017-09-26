@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 import com.filepicker.FilePickerPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.rt2zz.reactnativecontacts.ReactNativeContacts;
@@ -47,6 +48,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+                    new RNViewShotPackage(),
                     new FilePickerPackage(),
                     new PickerPackage(),
                     new ReactNativeContacts(),

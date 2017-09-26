@@ -133,13 +133,21 @@ export default class TextBox extends SafeComponent {
             <Text
                 style={{
                     height: 14,
-                    color: vars.highlight,
+                    color: vars.txtDark,
                     fontSize: 12,
                     backgroundColor: 'transparent'
                 }}>{t(this.validationMessage)}</Text>
         ) : (
             <View style={{ height: 14 }} />
         );
+    }
+
+    get customIcon() {
+        const { customIcon } = this.props;
+        return customIcon ?
+            <View style={textbox.iconContainer}>
+                {icons.dark(customIcon)}
+            </View> : null;
     }
 
     get secretIcon() {
@@ -183,14 +191,14 @@ export default class TextBox extends SafeComponent {
         if (astl && this.value && this.value.length && astl < this.value.length) {
             fontSize = Math.floor(fontSize * astl / this.value.length);
         }
-        const { secretIcon } = this;
-        const { start, end } = this;
+        const { secretIcon, customIcon, start, end } = this;
         return (
             <View style={textbox.outerContainer} onLayout={this.layout} ref={ref => { this._container = ref; }}>
                 <View style={[style.outer]}>
                     <View
                         style={[style.radius]}>
                         <TouchableOpacity
+                            disabled={this.props.disabled}
                             activeOpacity={0.9}
                             pressRetentionOffset={vars.retentionOffset}
                             pointerEvents={!this.focused ? undefined : 'none'}
@@ -223,6 +231,7 @@ export default class TextBox extends SafeComponent {
                             />
                         </View>
                         {secretIcon}
+                        {customIcon}
                     </View>
                 </View>
                 {this.validationControl}

@@ -1,89 +1,163 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, ActivityIndicator } from 'react-native';
-import SafeComponent from '../shared/safe-component';
-import { wizard, vars } from '../../styles/styles';
+import { Text, View, Clipboard, CameraRoll, TouchableOpacity, Platform } from 'react-native';
+import ViewShot from 'react-native-view-shot';
+import { observable } from 'mobx';
+import ActivityOverlay from '../controls/activity-overlay';
+import { vars } from '../../styles/styles';
+import { config, getFirstLetterUpperCase } from '../../lib/icebear';
 import signupState from './signup-state';
-import { popupTOS } from '../shared/popups';
-import { t } from '../utils/translator';
+import { t, tx } from '../utils/translator';
+import buttons from '../helpers/buttons';
+import LoginWizardPage, {
+    header, innerSmall, circleTopSmall, title2, row, container
+} from '../login/login-wizard-page';
+import SignupAvatar from './signup-avatar';
+import SignupAvatarActionSheet from './signup-avatar-action-sheet';
+import snackbarState from '../snackbars/snackbar-state';
+import icons from '../helpers/icons';
+
+const formStyle = {
+    padding: 20,
+    justifyContent: 'space-between'
+};
+
+const addPhotoText = {
+    fontSize: 14,
+    color: vars.txtMedium,
+    textAlign: 'center'
+};
+
+const addPhotoPlus = [addPhotoText, {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: vars.white
+}];
+
+const textNormal = {
+    color: vars.txtDark,
+    fontSize: 16,
+    lineHeight: 24
+};
+
+const accountKeyText = {
+    color: vars.txtDark,
+    fontFamily: 'Verdana',
+    fontWeight: 'bold',
+    fontSize: 18,
+    width: 240
+};
+
+const accountKeyRow = {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+};
+
+const smallText = {
+    fontSize: 12,
+    marginVertical: 8,
+    color: vars.txtDark
+};
+
+const accountKeyView = {
+    marginVertical: 10
+};
 
 @observer
-export default class SignupStep1 extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.url = 'https://www.peerio.com/';
+export default class SignupStep1 extends LoginWizardPage {
+    @observable keySaved = false;
+    @observable savingScreenshot = false;
+
+    copyAccountKey() {
+        Clipboard.setString(signupState.passphrase);
+        snackbarState.pushTemporary('Copied to clipboard');
     }
 
-    tosLink(text) {
+    async saveAccountKey() {
+        this.keySaved = true;
+        this.savingScreenshot = true;
+        let uri = await new Promise(resolve =>
+            requestAnimationFrame(async () => {
+                const result = await this._viewShot.capture();
+                this.savingScreenshot = false;
+                resolve(result);
+            })
+        );
+        console.debug(uri);
+        // on iOS we can only preview our local data
+        (Platform.OS === 'ios') && config.FileStream.launchViewer(uri);
+        uri = await CameraRoll.saveToCameraRoll(uri);
+        signupState.keyBackedUp = true;
+        // on Android we can only preview external data
+        // but I am disabling it for now, cause it launches
+        // external viewer and it takes more than 1 tap to get
+        // back to the app
+        // (Platform.OS === 'android') && config.FileStream.launchViewer(uri);
+        console.debug(uri);
+    }
+
+    get avatarPlaceholder() {
+        const letter = getFirstLetterUpperCase(signupState.firstName || signupState.username);
         return (
-            <Text
-                onPress={popupTOS}
-                style={{ textDecorationLine: 'underline' }}>
-                {text}
-            </Text>
+            <View>
+                <Text style={addPhotoPlus}>{letter}</Text>
+            </View>
         );
     }
 
-    renderThrow() {
-        const style = wizard;
-        const notice = {
-            borderTopWidth: 1,
-            borderBottomWidth: 1,
-            borderColor: vars.white,
-            backgroundColor: '#505050A0',
-            paddingVertical: 14,
-            height: 100,
-            justifyContent: 'center',
-            paddingHorizontal: vars.wizardPadding
-        };
-        const normalText = {
-            color: vars.white,
-            marginBottom: 6
-        };
-        const noticeText = {
-            color: vars.white,
-            fontSize: 24
-        };
-        const noticeText2 = {
-            color: vars.white,
-            fontWeight: 'bold',
-            fontSize: 32
-        };
-        const passphraseText = [noticeText2, {
-            fontSize: 24
-        }];
-        const padded = {
-            paddingHorizontal: vars.wizardPadding
-        };
-        const paddedVertical = [padded, {
-            paddingVertical: 16
-        }];
+    get body() {
+        const { keySaved, savingScreenshot } = this;
+        const saveTitle = keySaved ? 'Saved to Camera Roll' : 'Save Account Key';
         return (
-            <View style={[{ marginTop: 24 }]}>
-                <View style={padded}>
-                    <Text style={style.text.title}>{t('title_signupStep2')}</Text>
-                    <Text testID="signupStep1Title" style={style.text.subTitle}>{t('title_AccountKey')}</Text>
+            <View>
+                <Text style={textNormal}>Hello, {signupState.firstName || signupState.username}.</Text>
+                <Text style={textNormal}>Passwords are way stronger when computers make them. This Account Key was generated just for you.</Text>
+                <View style={accountKeyView}>
+                    <Text style={smallText}>Your Account Key</Text>
+                    <View style={accountKeyRow}>
+                        <Text style={accountKeyText} selectable>
+                            {signupState.passphrase}
+                        </Text>
+                        {buttons.uppercaseBlueButton(tx('Copy'), this.copyAccountKey, false, savingScreenshot)}
+                    </View>
                 </View>
-                <View style={notice}>
-                    {signupState.isInProgress ?
-                        <ActivityIndicator size="large" color={vars.white} /> :
-                        <View>
-                            <Text style={noticeText}>{t('title_AKwarn1')}</Text>
-                        </View>}
+                <Text style={textNormal}>Peerio cannot access any of your data, including this Account Key, saving a backup may help you in the future.</Text>
+                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 24 }}>
+                    {buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot)}
+                    {signupState.keyBackedUp && icons.plaindark('check-circle')}
                 </View>
-                <View style={paddedVertical}>
-                    <Text style={normalText}>{t('title_AKwarn3')}</Text>
+            </View>
+        );
+    }
+
+    render() {
+        return (
+            <View style={container} onLayout={this._layout}>
+                <ViewShot ref={ref => { this._viewShot = ref; }}>
+                    <View style={header}>
+                        {/* TODO: peerio copy */}
+                        <Text style={title2}>Account Key</Text>
+                    </View>
+                    <View>
+                        <View style={innerSmall}>
+                            <View style={formStyle}>
+                                {this.body}
+                            </View>
+                        </View>
+                        <TouchableOpacity
+                            onPress={() => this._actionSheet.show()}
+                            pressRetentionOffset={vars.pressRetentionOffset}
+                            style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]}>
+                            {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}
+                        </TouchableOpacity>
+                    </View>
+                </ViewShot>
+                <View style={[row, { justifyContent: 'space-between' }]}>
+                    {this.button('button_back', () => signupState.prev())}
+                    {this.button(signupState.keyBackedUp ? 'button_finish' : 'button_next', () => signupState.next(), false, !signupState.nextAvailable)}
                 </View>
-                <View style={paddedVertical}>
-                    <Text style={normalText}>{t('title_yourAccountKey')}</Text>
-                    <Text style={passphraseText} selectable>
-                        {signupState.passphrase}
-                    </Text>
-                </View>
-                <View style={paddedVertical}>
-                    <Text style={normalText}>{t('title_AKwarn4')}</Text>
-                </View>
-                <View style={[{ flexGrow: 1 }]} />
+                <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
+                <ActivityOverlay large visible={signupState.isInProgress} />
             </View>
         );
     }

@@ -299,7 +299,7 @@ export default class ProfileEdit extends SafeComponent {
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>
-                <AvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
+                <AvatarActionSheet onSave={buffers => User.current.saveAvatar(buffers)} ref={sheet => { this._actionSheet = sheet; }} />
             </ScrollView>
         );
     }
