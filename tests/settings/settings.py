@@ -13,7 +13,7 @@ ios_bundle = 'com.peerio'
 chromium_executor = 'http://127.0.0.1:9515'
 android_dir = '../../platforms/android/build/outputs/apk'
 android_appname = 'android-x86-debug.apk'
-android_package = 'com.peerio'
+android_package = 'com.peerio.app'
 android_activity = 'MainActivity'
 
 test_logins = {
@@ -95,7 +95,7 @@ def android_basic(deviceName):
         'newCommandTimeout': 12000,
         'noReset': True,
         'androidDeviceSocket': android_package + '_devtools_remote',
-        'autoLaunch': False
+        'autoLaunch': True
     }
 
 def android_600(config):
@@ -107,11 +107,11 @@ def android_600(config):
 
 def chromium_basic():
     return {
-        'androidDeviceSocket': android_package + '_devtools_remote',
-        'chromeOptions': {
-            'androidPackage': android_package,
-            'androidActivity': '.' + android_activity,
-            'androidDeviceSocket': android_package + '_devtools_remote'
-        }
+        'androidDeviceSocket': android_package + '_devtools_remote' # ,
+        # 'chromeOptions': {
+        #    'androidPackage': android_package,
+        #    'androidActivity': '.' + android_activity,
+        #    'androidDeviceSocket': android_package + '_devtools_remote'
+        # }
     }
 
