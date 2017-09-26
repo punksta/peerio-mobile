@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.153.0"></a>
+# [3.153.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.152.0...v3.153.0) (2017-09-26)
+
+
+### Bug Fixes
+
+* additional permissions for accessing camera on ios 11 ([0ab5634](https://github.com/PeerioTechnologies/peerio-mobile/commit/0ab5634))
+* dark color for error messages on textbox ([e0644fd](https://github.com/PeerioTechnologies/peerio-mobile/commit/e0644fd))
+
+
+### Features
+
+* **ui:** new signup on android proper markup ([e1546a4](https://github.com/PeerioTechnologies/peerio-mobile/commit/e1546a4))
+
+
+
 <a name="3.152.0"></a>
 # [3.152.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.151.0...v3.152.0) (2017-09-25)
 
