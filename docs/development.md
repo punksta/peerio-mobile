@@ -60,6 +60,8 @@ Configure the backend socket server to use the staging server, by editing the fi
 export PEERIO_SOCKET_SERVER='wss://hocuspocus.peerio.com'
 ```
 
+For debugging (see below), you will need [watchman](https://facebook.github.io/watchman/docs/install.html). On Mac `brew install watchman`
+
 ## iOS
 
 To build, you would need latest XCode and brew installed.
