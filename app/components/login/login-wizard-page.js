@@ -6,13 +6,16 @@ import { tu } from '../utils/translator';
 import Button from '../controls/button';
 import { vars, wizard, helpers } from '../../styles/styles';
 
+const padding = 20;
+
 const container = {
     justifyContent: 'space-between',
     flex: 1,
     flexGrow: 1,
-    padding: 20,
-    paddingTop: 20 + vars.statusBarHeight
+    padding,
+    paddingTop: padding + vars.statusBarHeight
 };
+
 const header = {
     justifyContent: 'center',
     marginBottom: 12
@@ -81,13 +84,15 @@ const title2Black = [title2, {
 }];
 
 const title3 = {
-    color: vars.white
+    color: vars.white,
+    textAlign: 'center'
 };
 
 export {
     header, inner, innerSmall, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
-    container, topCircleSizeSmall, embeddedImageCircleSize };
+    container, topCircleSizeSmall, embeddedImageCircleSize,
+    padding };
 
 @observer
 export default class LoginWizardPage extends SafeComponent {

@@ -9,7 +9,7 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t, T } from '../utils/translator';
 import LoginWizardPage, {
-    header, innerSmall, circleTopSmall, title3, title2, row, container, smallText
+    header, innerSmall, circleTopSmall, title3, title2, row, container
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
@@ -36,6 +36,17 @@ const addPhotoPlus = [addPhotoText, {
     fontWeight: 'bold'
 }];
 
+const tosParser = {
+    emphasis: text => <Bold>{text}</Bold>,
+    tosButton: text => (
+        <Text
+            onPress={popupTOS}
+            style={{ textDecorationLine: 'underline' }}>
+            {text}
+        </Text>
+    )
+};
+
 @observer
 export default class SignupStep1 extends LoginWizardPage {
     get avatar() {
@@ -53,21 +64,7 @@ export default class SignupStep1 extends LoginWizardPage {
         );
     }
 
-    tosLink(text) {
-        return (
-            <Text
-                onPress={popupTOS}
-                style={{ textDecorationLine: 'underline' }}>
-                {text}
-            </Text>
-        );
-    }
-
     get body() {
-        const tosParser = {
-            emphasis: text => <Bold>{text}</Bold>,
-            tosButton: text => this.tosLink(text)
-        };
         return (
             <View>
                 <TextBox
@@ -100,9 +97,6 @@ export default class SignupStep1 extends LoginWizardPage {
                     name="email"
                     hint={t('title_email')} />
                 {/* <LanguagePickerBox /> */}
-                <Text style={smallText}>
-                    <T k="title_TOSRequestText">{tosParser}</T>
-                </Text>
                 <View style={[{ flexGrow: 1 }]} />
             </View>
         );
@@ -127,12 +121,15 @@ export default class SignupStep1 extends LoginWizardPage {
                         {signupState.avatarData ? this.avatar : this.avatarSelector}
                     </TouchableOpacity>
                 </View>
-                <View style={[row, { justifyContent: 'flex-end' }]}>
+                <View style={[row, { justifyContent: 'space-between' }]}>
+                    {this.button('button_back', () => signupState.routes.app.loginStart())}
                     {this.button('button_next', () => signupState.next(), false, !signupState.nextAvailable)}
                 </View>
                 <View style={footer}>
                     {/* TODO: peerio copy */}
-                    <Text style={title3}>Already have an account? Sign in instead.</Text>
+                    <Text style={title3}>
+                        <T k="title_TOSRequestText">{tosParser}</T>
+                    </Text>
                 </View>
                 <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
             </View>

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { View, Text, Image, ScrollView, LayoutAnimation } from 'react-native';
+import { View, Text, Image, ScrollView, LayoutAnimation, Dimensions } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import loginState from './login-state';
 import LoginWizardPage, {
-    header, inner, title1, title1Black, title2, title2Black, row, circleTop, container, embeddedImageCircleSize
+    header, inner, padding, title1, title1Black, title2, title2Black, row, circleTop, container, embeddedImageCircleSize
 } from './login-wizard-page';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
@@ -45,16 +45,11 @@ export default class LoginStart extends LoginWizardPage {
     }
 
     @observable _selected = 0;
-    @observable _scrollerWidth = 1;
+    _scrollerWidth = Dimensions.get('window').width - padding * 2;
 
     handleScroll = event => {
         const x = event.nativeEvent.contentOffset.x;
         this._selected = Math.round(x / this._scrollerWidth);
-    }
-
-    _layoutScroller = (params) => {
-        this._scrollerWidth = params.nativeEvent.layout.width || this._scrollerWidth;
-        console.log(this._scrollerWidth);
     }
 
     _scrollItems = [
@@ -69,7 +64,6 @@ export default class LoginStart extends LoginWizardPage {
 
     render() {
         const scrollStyle = { width: this._scrollerWidth };
-        console.log(this._scrollerWidth);
         return (
             <View style={container}>
                 <View style={header}>
@@ -82,8 +76,7 @@ export default class LoginStart extends LoginWizardPage {
                         showsHorizontalScrollIndicator={false}
                         horizontal
                         pagingEnabled
-                        style={inner}
-                        onLayout={this._layoutScroller}>
+                        style={inner}>
                         {this._scrollItems.map(({ title, subtitle }, i) => (
                             <View style={scrollStyle} key={title}>
                                 <View>

@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, LayoutAnimation } from 'react-native';
+import { View, Text, LayoutAnimation, Platform } from 'react-native';
 import { reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import popupState from './popup-state';
 import ButtonText from '../controls/button-text';
 import { vars } from '../../styles/styles';
+import uiState from './ui-state';
 
 @observer
 export default class PopupLayout extends SafeComponent {
@@ -62,7 +63,8 @@ export default class PopupLayout extends SafeComponent {
             },
             elevation: 10,
             margin: 20,
-            backgroundColor: 'white'
+            backgroundColor: 'white',
+            paddingBottom: Platform.OS === 'android' ? 0 : uiState.keyboardHeight
         };
 
         const title = {
