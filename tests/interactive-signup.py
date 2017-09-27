@@ -2,18 +2,6 @@ from interactive import d
 from time import sleep, strftime
 print "signup"
 
-def pinEnter():
-    d.tap('pin1')
-    d.tap('pin2')
-    d.tap('pin5')
-    d.tap('pin1')
-    d.tap('pin2')
-    d.tap('pin5')
-    sleep(1)
-
-sleep(5)
-pinEnter()
-sleep(5)
 # username = 't' + strftime("%Y%m%d%H%M%S")
 
 # d.reset()
