@@ -8,6 +8,7 @@ import { t } from '../utils/translator';
 import uiState from '../layout/ui-state';
 import { vars, textbox } from '../../styles/styles';
 import icons from '../helpers/icons';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class TextBox extends SafeComponent {
@@ -203,7 +204,6 @@ export default class TextBox extends SafeComponent {
                             pressRetentionOffset={vars.retentionOffset}
                             pointerEvents={!this.focused ? undefined : 'none'}
                             style={[style.touchable]}
-                            testID={`${this.props.name}_outer`}
                             onPress={this.focus} />
                         {this.hint}
                         <View
@@ -211,7 +211,6 @@ export default class TextBox extends SafeComponent {
                             style={[textbox.inputContainer, icAlert]}>
                             <TextInput
                                 keyboardType={this.props.keyboardType}
-                                testID={`${this.props.testID || this.props.name}`}
                                 style={[style.textbox, { fontSize },
                                 { height: vars.inputPaddedHeight, top: 0, marginRight: this.secretIcon ? 42 : 0 }]}
                                 ref={ref => { this.textinput = ref; }}
@@ -228,6 +227,7 @@ export default class TextBox extends SafeComponent {
                                 autoCorrect={false}
                                 autoComplete={false}
                                 autoCapitalize="none"
+                                {...testLabel(this.props.name)}
                             />
                         </View>
                         {secretIcon}
@@ -250,7 +250,6 @@ TextBox.propTypes = {
     hint: PropTypes.any.isRequired,
     info: PropTypes.any,
     name: PropTypes.string.isRequired,
-    testID: PropTypes.string,
     returnKeyType: PropTypes.any,
     keyboardType: PropTypes.any,
     secureTextEntry: PropTypes.bool,

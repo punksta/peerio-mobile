@@ -24,7 +24,7 @@
     "build-ios-sim-debug": "cd ios && xcodebuild -project peeriomobile.xcodeproj -configuration Debug -scheme peeriomobile -destination platform='iOS Simulator,name=iPhone 6,OS=10.2' -derivedDataPath build",
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
     "testrun": ". scripts/run-tests.sh",
-    "testrun-nobuild": "source env.sh && source .pyenv/bin/activate && mkdir -p $CIRCLE_TEST_REPORTS/py.test && py.test --platform=ios -s -x tests --junitxml=$CIRCLE_TEST_REPORTS/py.test/junit.xml",
+    "testrun-nobuild": "sleep 10 && source env.sh && source .pyenv/bin/activate && mkdir -p $CIRCLE_TEST_REPORTS/py.test && py.test --platform=ios -s -x tests --junitxml=$CIRCLE_TEST_REPORTS/py.test/junit.xml",
     "test": "bash scripts/setup_tests.sh && npm run testrun",
     "gp-peerio": "npm run build-android && bash scripts/release_android.sh && fastlane android alpha",
     "testserver:run": "./scripts/testserver",
