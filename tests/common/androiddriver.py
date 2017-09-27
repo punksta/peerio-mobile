@@ -29,28 +29,10 @@ class AndroidDriver(AbstractDriver):
     def reset(self):
         print "reset stub"
 
-    def screen(self, name):
-        print "screen stub"
-
     def connect(self):
         self.disconnect()
         self.appium = appium.webdriver.Remote(command_executor=self.executor,
                             desired_capabilities=self.capabilities)
-
-    def text(self, selector):
-        print "text stub"
-        return ""
-
-    def find(self, selector):
-        print "find stub"
-        return None
-
-    def tap(self, selector):
-        print "tab stub"
-        return None
-
-    def reload(self):
-        return None
 
     def execute_script(self, script):
         print "execute script stub"
