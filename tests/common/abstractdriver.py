@@ -31,8 +31,8 @@ class AbstractDriver:
             time.sleep(1)
         raise Exception('timeout waiting for: %s, %s' % (func, msg))
 
-    def wait_for_find(self, xpath):
-        return self.wait_for(30, lambda: self.find_except(xpath))
+    def wait_for_find(self, xpath, timeout=30):
+        return self.wait_for(timeout, lambda: self.find_except(xpath))
 
     def wait_for_not_find(self, xpath):
         return self.wait_for(30, lambda: self.find_not_except(xpath))
