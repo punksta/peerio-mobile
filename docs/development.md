@@ -111,6 +111,32 @@ When app is run from debug bundle, the following keyboard shortcuts are availabl
 
 See [React Native debugging](https://facebook.github.io/react-native/docs/debugging.html) for more info.
 
+**Linux Users:**
+1. Make sure the shell you are using is /bin/bash by using `echo $0`. If it isn't bash, you can change that by using `npm config set script-shell /bin/bash`. 
+2. Create a file (anywhere, ex: on your desktop) and name it watchman-build.sh. Insert the following commands into the file:
+```
+apt-get install build-essential
+apt-get install python-dev
+apt-get install automake
+apt-get install autoconf
+cd /tmp
+git clone https://github.com/facebook/watchman.git
+cd watchman
+git checkout v4.7.0  # or whatever is now the latest stable release
+./autogen.sh
+./configure --enable-statedir=/tmp
+make
+make install
+mv watchman /usr/local/bin/watchman
+
+echo 999999 | tee -a /proc/sys/fs/inotify/max_user_watches
+echo 999999 | tee -a /proc/sys/fs/inotify/max_queued_events
+echo 999999 | tee -a /proc/sys/fs/inotify/max_user_instances
+
+watchman shutdown-server && sudo sysctl -p
+```
+Use sudo bash watchman-build.sh to run the commands.
+
 ## Testing
 
 Tests are located in `tests` folder and are written in Python2.
