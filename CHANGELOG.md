@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.158.0"></a>
+# [3.158.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.157.0...v3.158.0) (2017-09-27)
+
+
+### Bug Fixes
+
+* where to find account key takes you to zen ([6cb1924](https://github.com/PeerioTechnologies/peerio-mobile/commit/6cb1924))
+
+
+
 <a name="3.157.0"></a>
 # [3.157.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.156.0...v3.157.0) (2017-09-27)
 
