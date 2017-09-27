@@ -4,6 +4,8 @@ machine:
   environment:
     XCODE_SCHEME: peeriomobile
     PATH: '$PATH:$HOME/node/node-v8.4.0-darwin-x64/bin'
+    PEERIO_IOS_SIM: 'iPhone 6 Plus'
+    PEERIO_IOS_VERSION: '10.3'
   xcode:
     version: 8.3
 
