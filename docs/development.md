@@ -72,15 +72,18 @@ To debug the project or run it on actual device (or a different simulator), use 
 
 ## Android
 
-You need to have Android SDK installed. You also need Android NDK installed, and it needs to specifically be version `android-ndk-r10e`, which cannot be downloaded within Android Studio but must be [downloaded directly](https://developer.android.com/ndk/downloads/index.html). Set the following environment variables in your bash profile:
+You need to have Android SDK installed. You also need Android NDK installed, and it needs to specifically be version `android-ndk-r10e`, which cannot be downloaded within Android Studio but must be [downloaded directly](https://developer.android.com/ndk/downloads/index.html). 
 
+Set the following environment variables to point to your installations of the NDK and SDK: 
+
+On macOS, it might look something like this:
 ```
 export ANDROID_NDK=/Users/.../Library/Android/ndk/android-ndk-r10e
-export ANDROID_NDK_HOME=/Users/.../Library/Android/ndk/android-ndk-r10e
 export ANDROID_SDK=/Users/.../Library/Android/sdk
+export ANDROID_HOME=$ANDROID_SDK
 ```
 
-*(these paths will be different in Linux, of course)*
+*Insert your username, and note that these paths will be different in Linux, of course.*
 
 We use [GenyMotion](https://www.genymotion.com/) as simulators as they are much faster than the ones shipped with Android SDK. The "personal version" is all that is needed for our purposes. Follow the Genymotion instructions for getting set up.
 
