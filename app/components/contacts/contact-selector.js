@@ -195,6 +195,13 @@ export default class ContactSelector extends SafeComponent {
         this.props.onExit && this.props.onExit();
     }
 
+    toggle(contact) {
+        if (this.props.limit && this.recipients.items.length >= this.props.limit) {
+            this.recipients.clear();
+        }
+        this.recipients.toggle(contact);
+    }
+
     item(contact, i) {
         const { username, fullName } = contact;
         return (
@@ -209,7 +216,7 @@ export default class ContactSelector extends SafeComponent {
                 title2={username}
                 height={56}
                 hideOnline
-                onPress={() => this.recipients.toggle(contact)} />
+                onPress={() => this.toggle(contact)} />
         );
     }
 
