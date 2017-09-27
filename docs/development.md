@@ -76,7 +76,7 @@ You need to have Android SDK installed. You also need Android NDK installed, and
 
 ```
 export ANDROID_NDK=/Users/.../Library/Android/ndk/android-ndk-r10e
-export ANDROID_NDK_HOME=/Users/.../Library/Android/ndk/android-ndk-r10e
+export ANDROID_HOME=/Users/.../Library/Android/ndk/android-ndk-r10e
 export ANDROID_SDK=/Users/.../Library/Android/sdk
 ```
 
