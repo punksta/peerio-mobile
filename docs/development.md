@@ -135,7 +135,7 @@ echo 999999 | tee -a /proc/sys/fs/inotify/max_user_instances
 
 watchman shutdown-server && sudo sysctl -p
 ```
-Use sudo bash watchman-build.sh to run the commands.
+Use `sudo bash watchman-build.sh` to run the commands.
 
 ## Testing
 
