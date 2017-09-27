@@ -37,11 +37,13 @@ const shadowIOS = {
 const radius = [{
     height: vars.inputHeight,
     overflow: 'hidden',
-    borderRadius: 2
-}, shadowIOS];
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: vars.bg
+}];
 
 const outerContainer = {
-    marginBottom: 24,
+    marginBottom: 10,
     marginTop: 6
 };
 
@@ -53,27 +55,22 @@ export default {
     alertInvisible,
     alertVisible,
     focused: {
-        outer: [shadowIOS, {
+        outer: [{
             // ios shadow
-            shadowOpacity: 0.4,
-            backgroundColor: vars.subtleBg,
+            // shadowOpacity: 0.4,
             elevation: 10
         }],
         radius: [radius, {
             // android shadow
             // elevation: 10
         }],
-        touchable: [inputContainer, shadowIOS, {
-            backgroundColor: vars.white
-        }],
+        touchable: [inputContainer],
         textbox
     },
     blurred: {
-        outer: [shadowIOS],
+        outer: [],
         radius,
-        touchable: [inputContainer, {
-            backgroundColor: '#ffffffA0'
-        }],
+        touchable: [inputContainer],
         textbox
     },
     hint: {

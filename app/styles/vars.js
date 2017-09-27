@@ -15,6 +15,7 @@ const vars = {
     bgGradient,
     tabsBg,
     tabsFg,
+    bgHighlight: 'rgba(50, 176, 227, 0.38)',
     yellowLine: '#f5e23e',
     disabled: '#00000020',
     highlight: '#FFFFFFCC',

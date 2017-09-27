@@ -22,6 +22,7 @@ export default class ChatItem extends SafeComponent {
             i.systemData && systemMessages.getSystemMessageText(i) || null;
         return (
             <Avatar
+                noTap={!i.sendError}
                 sendError={i.sendError}
                 sending={i.sending}
                 contact={i.sender}

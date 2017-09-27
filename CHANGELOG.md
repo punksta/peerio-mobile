@@ -2,6 +2,58 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.155.0"></a>
+# [3.155.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.154.0...v3.155.0) (2017-09-27)
+
+
+### Bug Fixes
+
+* account for keyboard in modal windows ([4816659](https://github.com/PeerioTechnologies/peerio-mobile/commit/4816659))
+* chat history copy ([51ffc3e](https://github.com/PeerioTechnologies/peerio-mobile/commit/51ffc3e))
+* jumping around with icon format ([fa8e163](https://github.com/PeerioTechnologies/peerio-mobile/commit/fa8e163))
+* only 1 user to share file with ([88a3475](https://github.com/PeerioTechnologies/peerio-mobile/commit/88a3475))
+* popup window account for keyboard height ([a54025e](https://github.com/PeerioTechnologies/peerio-mobile/commit/a54025e))
+* wrong error when username is not found ([cbfc544](https://github.com/PeerioTechnologies/peerio-mobile/commit/cbfc544))
+
+
+### Features
+
+* invited and joined participants ([38d1e40](https://github.com/PeerioTechnologies/peerio-mobile/commit/38d1e40))
+* return bgpattern ([574a1e1](https://github.com/PeerioTechnologies/peerio-mobile/commit/574a1e1))
+
+
+
+<a name="3.154.0"></a>
+# [3.154.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.153.0...v3.154.0) (2017-09-26)
+
+
+
+<a name="3.153.0"></a>
+# [3.153.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.152.0...v3.153.0) (2017-09-26)
+
+
+### Bug Fixes
+
+* additional permissions for accessing camera on ios 11 ([0ab5634](https://github.com/PeerioTechnologies/peerio-mobile/commit/0ab5634))
+* dark color for error messages on textbox ([e0644fd](https://github.com/PeerioTechnologies/peerio-mobile/commit/e0644fd))
+
+
+### Features
+
+* **ui:** new signup on android proper markup ([e1546a4](https://github.com/PeerioTechnologies/peerio-mobile/commit/e1546a4))
+
+
+
+<a name="3.152.0"></a>
+# [3.152.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.151.0...v3.152.0) (2017-09-25)
+
+
+
+<a name="3.151.0"></a>
+# [3.151.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.150.0...v3.151.0) (2017-09-20)
+
+
+
 <a name="3.150.0"></a>
 # [3.150.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.149.0...v3.150.0) (2017-09-19)
 

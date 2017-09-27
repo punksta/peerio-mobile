@@ -1,8 +1,9 @@
 import randomWords from 'random-words';
+import capitalize from 'capitalize';
 import { observable, action, when } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
-import { User, PhraseDictionary, validation, socket } from '../../lib/icebear';
+import { User, PhraseDictionary, validation, socket, crypto } from '../../lib/icebear';
 
 const { validators, addValidation } = validation;
 
@@ -16,8 +17,11 @@ class SignupState extends RoutedState {
     get current() { return this._current; }
     set current(i) { uiState.hideAll().then(() => { this._current = i; }); }
     // two pages of signup wizard
-    @observable count = 2;
+    @observable count = 3;
     _prefix = 'signup';
+    avatarBuffers = null;
+    @observable avatarData = null;
+    @observable keyBackedUp = false;
 
     get nextAvailable() {
         switch (this.current) {
@@ -48,19 +52,17 @@ class SignupState extends RoutedState {
 
     @action reset() { this.current = 0; }
 
-    generatePassphrase = () => PhraseDictionary.current.getPassphrase(8);
+    generatePassphrase = () => crypto.keys.getRandomAccountKeyHex();
 
     @action async next() {
         if (!this.isValid()) return;
         if (!this.passphrase) {
             this.passphrase = await this.generatePassphrase();
         }
-        /* if (process.env.PEERIO_QUICK_SIGNUP) {
-            this.pin = '125125';
-            this.finish();
-            return;
-        } */
-        (this.current < this.count - 1) ? this.current++ : this.finish();
+
+        if (this.keyBackedUp && (this.current === 1) ||
+            (this.current >= this.count - 1)) await this.finish();
+        this.current++;
     }
 
     @action prev() { (this.current > 0) ? this.current-- : this.exit(); }
@@ -72,7 +74,7 @@ class SignupState extends RoutedState {
         // console.log(this.passphrase);
         const user = new User();
         User.current = user;
-        const { username, email, firstName, lastName, passphrase } = this;
+        const { username, email, firstName, lastName, passphrase, avatarBuffers, keyBackedUp } = this;
         const localeCode = uiState.locale;
         user.username = username;
         user.email = email;
@@ -89,25 +91,27 @@ class SignupState extends RoutedState {
                 this.reset();
             })
             .then(() => mainState.saveUser())
+            .then(() => keyBackedUp && User.current.setAccountKeyBackedUp())
+            .then(() => avatarBuffers && User.current.saveAvatar(avatarBuffers))
             .finally(() => { this.isInProgress = false; });
     }
 }
 
 const signupState = new SignupState();
 
-addValidation(signupState, 'username', validators.username, 0);
-addValidation(signupState, 'email', validators.email, 1);
-addValidation(signupState, 'firstName', validators.firstName, 2);
-addValidation(signupState, 'lastName', validators.lastName, 3);
+addValidation(signupState, 'firstName', validators.firstName, 0);
+addValidation(signupState, 'lastName', validators.lastName, 1);
+addValidation(signupState, 'username', validators.username, 2);
+addValidation(signupState, 'email', validators.email, 3);
 
 if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
     when(() => !process.env.PEERIO_AUTOLOGIN && signupState.isConnected && signupState.isActive, () => {
         const s = signupState;
         const rnd = new Date().getTime();
-        s.username = randomWords({ min: 2, max: 2, join: 'o' });
+        s.username = randomWords({ min: 2, max: 2, join: 'o' }).substring(0, 16);
         s.email = `seavan+${rnd}@gmail.com`;
-        s.firstName = randomWords();
-        s.lastName = randomWords();
+        s.firstName = capitalize(randomWords());
+        s.lastName = capitalize(randomWords());
     });
 }
 

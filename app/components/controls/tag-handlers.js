@@ -5,6 +5,7 @@ import Link from './link';
 import routes from '../routes/routes';
 
 function a(text, url) {
+    console.log(`tag-handlers: ${text} ${url}`);
     if (!url) {
         console.error(`tag-handlers.js: bad ${text} link`);
         return text;

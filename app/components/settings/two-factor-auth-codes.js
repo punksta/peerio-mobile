@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import { View, Text, Platform } from 'react-native';
-// import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import RNFS from 'react-native-fs';
 import FileOpener from 'react-native-file-opener';
 import SafeComponent from '../shared/safe-component';
