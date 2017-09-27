@@ -137,12 +137,13 @@ export default class ChannelInfo extends SafeComponent {
 
     renderThrow() {
         const chat = chatState.currentChat;
+        const invited = chatState.chatInviteStore.sent.get(chat.id);
         const body = (
             <View>
                 {this.lineBlock(this.topicTextBox())}
                 {this.lineBlock(this.action(tx('button_leaveChannel'), 'remove-circle-outline', this.leaveChannel), true)}
                 {this.lineBlock(this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel))}
-                {chat.participants && this.lineBlock(
+                {chat.joinedParticipants && this.lineBlock(
                     <View style={{ paddingVertical: 8 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
                             <Text style={[textStyle, { marginBottom: 12 }]}>
@@ -150,7 +151,17 @@ export default class ChannelInfo extends SafeComponent {
                             </Text>
                             {icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
                         </View>
-                        {chat.participants.map(this.participant)}
+                        {chat.joinedParticipants.map(this.participant)}
+                    </View>
+                )}
+                {invited && this.lineBlock(
+                    <View style={{ paddingVertical: 8 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
+                            <Text style={[textStyle, { marginBottom: 12 }]}>
+                                {tx('title_invited')}
+                            </Text>
+                        </View>
+                        {invited.map(this.participant)}
                     </View>
                 )}
             </View>

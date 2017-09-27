@@ -1,5 +1,5 @@
 import { observable, action, when, reaction } from 'mobx';
-import { chatStore, clientApp, warnings } from '../../lib/icebear';
+import { chatStore, chatInviteStore, clientApp, warnings } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
 import contactState from '../contacts/contact-state';
 import sounds from '../../lib/sounds';
@@ -7,6 +7,7 @@ import { tx } from '../utils/translator';
 
 class ChatState extends RoutedState {
     @observable store = chatStore;
+    @observable chatInviteStore = chatInviteStore;
 
     // to be able to easily refactor, keep the name "chatStore"
     get chatStore() { return this.store; }
