@@ -25,6 +25,10 @@ export default class ChannelListItem extends SafeComponent {
             color: vars.txtDark
         };
 
+        const textUnreadStyle = {
+            fontWeight: 'bold'
+        };
+
         const circleRadius = 12;
         const circleStyle = {
             width: circleRadius * 2,
@@ -47,7 +51,7 @@ export default class ChannelListItem extends SafeComponent {
                 <TouchableOpacity
                     onPress={() => chatState.routerMain.chats(chat)}
                     style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
-                    <Text style={textStyle}>
+                    <Text style={[textStyle, (unreadCount > 0 && textUnreadStyle)]}>
                         {`# ${name}`}
                     </Text>
                     {unreadCount > 0 && <View style={circleStyle}><Text style={textCircleStyle}>{unreadCount}</Text></View>}

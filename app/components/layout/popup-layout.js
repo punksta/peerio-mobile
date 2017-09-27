@@ -64,7 +64,7 @@ export default class PopupLayout extends SafeComponent {
             elevation: 10,
             margin: 20,
             backgroundColor: 'white',
-            paddingBottom: Platform.OS === 'android' ? 0 : uiState.keyboardHeight
+            marginBottom: Platform.OS === 'android' ? 0 : uiState.keyboardHeight
         };
 
         const title = {

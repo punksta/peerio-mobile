@@ -5,6 +5,7 @@ import { reaction, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import routerModal from '../routes/router-modal';
+import uiState from './ui-state';
 
 @observer
 export default class ModalLayout extends SafeComponent {
@@ -20,6 +21,7 @@ export default class ModalLayout extends SafeComponent {
         reaction(() => routerModal.modal, modal => {
             const duration = vars.animationDuration;
             if (modal) {
+                uiState.hideKeyboard();
                 this.modal = modal;
                 routerModal.animating = true;
                 Animated.timing(this.modalAnimated, { toValue: 0, duration })
@@ -44,6 +46,7 @@ export default class ModalLayout extends SafeComponent {
 
     renderThrow() {
         const modalStyle = {
+            borderWidth: 2,
             position: 'absolute',
             left: 0,
             top: 0,

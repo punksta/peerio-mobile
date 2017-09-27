@@ -35,7 +35,7 @@ export default class ContactSelector extends SafeComponent {
 
     componentDidMount() {
         this.recipients.items.observe(() => {
-            if (this.recipients.items.length && this.props.autoStart) this.action();
+            // if (this.recipients.items.length && this.props.autoStart) this.action();
         });
     }
 
@@ -124,7 +124,7 @@ export default class ContactSelector extends SafeComponent {
         }
 
         this.searchUser(this.findUserText, true);
-        this.findUserText = '';
+        if (this.props.limit !== 1) this.findUserText = '';
     }
 
     textbox() {
@@ -195,6 +195,13 @@ export default class ContactSelector extends SafeComponent {
         this.props.onExit && this.props.onExit();
     }
 
+    toggle(contact) {
+        if (this.props.limit && this.recipients.items.length >= this.props.limit) {
+            this.recipients.clear();
+        }
+        this.recipients.toggle(contact);
+    }
+
     item(contact, i) {
         const { username, fullName } = contact;
         return (
@@ -209,7 +216,7 @@ export default class ContactSelector extends SafeComponent {
                 title2={username}
                 height={56}
                 hideOnline
-                onPress={() => this.recipients.toggle(contact)} />
+                onPress={() => this.toggle(contact)} />
         );
     }
 
@@ -269,7 +276,7 @@ export default class ContactSelector extends SafeComponent {
         const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
         // const result = findUserText && findUserText.length ? mockItems : chat;
         const result = mockItems;
-        const body = !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
+        const body = !this.toInvite && !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
         const invite = this.inviteContactDuck;
         const inviteControl = invite ? <ContactInviteItem contact={invite} /> : null;
         const legacy = this.legacyContact;
@@ -293,8 +300,10 @@ export default class ContactSelector extends SafeComponent {
         );
     }
 
+    // TODO: for future removal
     get limitReached() {
-        return this.props.limit && (this.recipients.items.length >= this.props.limit);
+        return false;
+        // return this.props.limit && (this.recipients.items.length >= this.props.limit);
     }
 
     get limitInfo() {

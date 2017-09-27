@@ -60,6 +60,8 @@ Configure the backend socket server to use the staging server, by editing the fi
 export PEERIO_SOCKET_SERVER='wss://hocuspocus.peerio.com'
 ```
 
+For debugging (see below), you will need [watchman](https://facebook.github.io/watchman/docs/install.html). On Mac `brew install watchman`
+
 ## iOS
 
 To build, you would need latest XCode and brew installed.
@@ -70,15 +72,18 @@ To debug the project or run it on actual device (or a different simulator), use 
 
 ## Android
 
-You need to have Android SDK installed. You also need Android NDK installed, and it needs to specifically be version `android-ndk-r10e`, which cannot be downloaded within Android Studio but must be [downloaded directly](https://developer.android.com/ndk/downloads/index.html). Set the following environment variables in your bash profile:
+You need to have Android SDK installed. You also need Android NDK installed, and it needs to specifically be version `android-ndk-r10e`, which cannot be downloaded within Android Studio but must be [downloaded directly](https://developer.android.com/ndk/downloads/index.html). 
 
+Set the following environment variables to point to your installations of the NDK and SDK: 
+
+On macOS, it might look something like this:
 ```
 export ANDROID_NDK=/Users/.../Library/Android/ndk/android-ndk-r10e
-export ANDROID_NDK_HOME=/Users/.../Library/Android/ndk/android-ndk-r10e
 export ANDROID_SDK=/Users/.../Library/Android/sdk
+export ANDROID_HOME=$ANDROID_SDK
 ```
 
-*(these paths will be different in Linux, of course)*
+*Insert your username, and note that these paths will be different in Linux, of course.*
 
 We use [GenyMotion](https://www.genymotion.com/) as simulators as they are much faster than the ones shipped with Android SDK. The "personal version" is all that is needed for our purposes. Follow the Genymotion instructions for getting set up.
 
@@ -105,6 +110,32 @@ When app is run from debug bundle, the following keyboard shortcuts are availabl
 * CMD-D to access debugging menu
 
 See [React Native debugging](https://facebook.github.io/react-native/docs/debugging.html) for more info.
+
+**Linux Users:**
+1. Make sure the shell you are using is /bin/bash by using `echo $0`. If it isn't bash, you can change that by using `npm config set script-shell /bin/bash`. 
+2. Create a file (anywhere, ex: on your desktop) and name it watchman-build.sh. Insert the following commands into the file:
+```
+apt-get install build-essential
+apt-get install python-dev
+apt-get install automake
+apt-get install autoconf
+cd /tmp
+git clone https://github.com/facebook/watchman.git
+cd watchman
+git checkout v4.7.0  # or whatever is now the latest stable release
+./autogen.sh
+./configure --enable-statedir=/tmp
+make
+make install
+mv watchman /usr/local/bin/watchman
+
+echo 999999 | tee -a /proc/sys/fs/inotify/max_user_watches
+echo 999999 | tee -a /proc/sys/fs/inotify/max_queued_events
+echo 999999 | tee -a /proc/sys/fs/inotify/max_user_instances
+
+watchman shutdown-server && sudo sysctl -p
+```
+Use `sudo bash watchman-build.sh` to run the commands.
 
 ## Testing
 

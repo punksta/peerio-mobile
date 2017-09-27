@@ -5,6 +5,7 @@ import SafeComponent from '../shared/safe-component';
 import { tu } from '../utils/translator';
 import Button from '../controls/button';
 import { vars, wizard, helpers } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 const padding = 20;
 
@@ -119,7 +120,7 @@ export default class LoginWizardPage extends SafeComponent {
     _button(text, onPress, style, textStyle, disabled) {
         return (
             <Button style={[style, disabled && { opacity: 0.5 }]}
-            testID={text}
+            {...testLabel(text)}
             textStyle={textStyle}
             text={tu(text)}
             onPress={disabled ? null : onPress} />

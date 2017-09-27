@@ -75,7 +75,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     name="firstName"
                     hint={t('title_firstName')} />
                 <TextBox
-                    returnKeyType="go"
+                    returnKeyType="next"
                     onSubmit={() => signupState.next()}
                     state={signupState}
                     maxLength={24}
@@ -90,7 +90,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     name="username"
                     hint={t('title_username')} />
                 <TextBox
-                    returnKeyType="next"
+                    returnKeyType="go"
                     keyboardType="email-address"
                     lowerCase
                     state={signupState}
@@ -106,7 +106,7 @@ export default class SignupStep1 extends LoginWizardPage {
         return (
             <View style={container}>
                 <View style={header}>
-                    <Text style={title2}>Sign up</Text>
+                    <Text style={title2}>Create Account</Text>
                 </View>
                 <View>
                     <View style={innerSmall}>

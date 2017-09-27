@@ -35,7 +35,7 @@ export default class RouteNavigator extends Component {
             testID: `route${route.key}Scene`,
             removeClippedSubviews: false,
             style: [navigator.card, hidden]
-        }, [this.route ? this.renderScene(this.route) : null]) : null;
+        }, [<BgPattern key="bg" />, this.route ? this.renderScene(this.route) : null]) : null;
         return (
             <View
                 testID="navigatorContainer"

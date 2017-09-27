@@ -2,6 +2,57 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.158.0"></a>
+# [3.158.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.157.0...v3.158.0) (2017-09-27)
+
+
+### Bug Fixes
+
+* where to find account key takes you to zen ([6cb1924](https://github.com/PeerioTechnologies/peerio-mobile/commit/6cb1924))
+
+
+
+<a name="3.157.0"></a>
+# [3.157.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.156.0...v3.157.0) (2017-09-27)
+
+
+
+<a name="3.156.0"></a>
+# [3.156.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.155.0...v3.156.0) (2017-09-27)
+
+
+### Bug Fixes
+
+* permissions for menus ([0279173](https://github.com/PeerioTechnologies/peerio-mobile/commit/0279173))
+
+
+### Features
+
+* copy fixes ([20e8eb1](https://github.com/PeerioTechnologies/peerio-mobile/commit/20e8eb1))
+
+
+
+<a name="3.155.0"></a>
+# [3.155.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.154.0...v3.155.0) (2017-09-27)
+
+
+### Bug Fixes
+
+* account for keyboard in modal windows ([4816659](https://github.com/PeerioTechnologies/peerio-mobile/commit/4816659))
+* chat history copy ([51ffc3e](https://github.com/PeerioTechnologies/peerio-mobile/commit/51ffc3e))
+* jumping around with icon format ([fa8e163](https://github.com/PeerioTechnologies/peerio-mobile/commit/fa8e163))
+* only 1 user to share file with ([88a3475](https://github.com/PeerioTechnologies/peerio-mobile/commit/88a3475))
+* popup window account for keyboard height ([a54025e](https://github.com/PeerioTechnologies/peerio-mobile/commit/a54025e))
+* wrong error when username is not found ([cbfc544](https://github.com/PeerioTechnologies/peerio-mobile/commit/cbfc544))
+
+
+### Features
+
+* invited and joined participants ([38d1e40](https://github.com/PeerioTechnologies/peerio-mobile/commit/38d1e40))
+* return bgpattern ([574a1e1](https://github.com/PeerioTechnologies/peerio-mobile/commit/574a1e1))
+
+
+
 <a name="3.154.0"></a>
 # [3.154.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.153.0...v3.154.0) (2017-09-26)
 

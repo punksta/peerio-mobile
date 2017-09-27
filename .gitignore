@@ -81,3 +81,6 @@ add-legacy.json
 
 temp
 signup-step-*.png
+
+# py.test reports
+py.test

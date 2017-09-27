@@ -9,6 +9,7 @@ import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-stora
 import { toggleConnection } from '../main/dev-menu-items';
 import plans from '../payments/payments-config';
 import { tx } from '../utils/translator';
+import { warnings } from '../../lib/icebear';
 
 const bgStyle = {
     flexGrow: 1,
@@ -69,6 +70,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {__DEV__ && <SettingsItem title="test Contacts" onPress={() => contactState.testImport()} />}
                     {__DEV__ && <SettingsItem title="test Share" onPress={() => this.testShare()} />}
                     {__DEV__ && <SettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}
+                    {__DEV__ && <SettingsItem title="test warning" onPress={() => warnings.addSevere('warning')} />}
                     {/* <SettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <SettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </ScrollView>
