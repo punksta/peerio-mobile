@@ -5,6 +5,7 @@ import { reaction, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import routerModal from '../routes/router-modal';
+import uiState from './ui-state';
 
 @observer
 export default class ModalLayout extends SafeComponent {
@@ -47,7 +48,7 @@ export default class ModalLayout extends SafeComponent {
             position: 'absolute',
             left: 0,
             top: 0,
-            bottom: 0,
+            bottom: Platform.OS === 'android' ? 0 : uiState.keyboardHeight,
             right: 0
         };
         const transformModal = [{ translateY: this.modalAnimated }];
