@@ -96,7 +96,7 @@ export default class LoginStart extends LoginWizardPage {
                 <View style={row}>
                     {this.button('button_login', this.props.login, loginState.isInProgress)}
                     {/* TODO: copy */}
-                    {this.button('Create Account', () => loginState.routes.app.signupStep1(), loginState.isInProgress)}
+                    {this.button('button_CreateAccount', () => loginState.routes.app.signupStep1(), loginState.isInProgress)}
                 </View>
                 <ActivityOverlay large visible={loginState.isInProgress} />
             </View>

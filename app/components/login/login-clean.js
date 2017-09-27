@@ -58,7 +58,7 @@ export default class LoginClean extends LoginWizardPage {
                                 state={loginState} name="passphrase" hint={t('title_AccountKey')} secureTextEntry />
                             {/* TODO: peerio copy */}
                             {/* TODO: make link active */}
-                            <Text style={findKeyText}>Where to find your Account Key</Text>
+                            <Text style={findKeyText}>{tx('title_whereToFind')}</Text>
                         </View>
                     </View>
                     <View style={[row, { justifyContent: 'flex-end' }]}>
