@@ -21,6 +21,7 @@ export default class ModalLayout extends SafeComponent {
         reaction(() => routerModal.modal, modal => {
             const duration = vars.animationDuration;
             if (modal) {
+                uiState.hideKeyboard();
                 this.modal = modal;
                 routerModal.animating = true;
                 Animated.timing(this.modalAnimated, { toValue: 0, duration })
@@ -45,10 +46,11 @@ export default class ModalLayout extends SafeComponent {
 
     renderThrow() {
         const modalStyle = {
+            borderWidth: 2,
             position: 'absolute',
             left: 0,
             top: 0,
-            bottom: Platform.OS === 'android' ? 0 : uiState.keyboardHeight,
+            bottom: 0,
             right: 0
         };
         const transformModal = [{ translateY: this.modalAnimated }];

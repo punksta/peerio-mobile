@@ -389,7 +389,7 @@ export default class Avatar extends SafeComponent {
         const activeOpacity = this.props.noTap && !this.props.error && !this.props.sendError ?
             1 : 0.2;
         return (
-            <View style={{ backgroundColor: vars.bg }}>
+            <View style={{ backgroundColor: vars.bgHighlight }}>
                 <TouchableOpacity
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={this.onPressAll}
