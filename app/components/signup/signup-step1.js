@@ -106,7 +106,7 @@ export default class SignupStep1 extends LoginWizardPage {
         return (
             <View style={container}>
                 <View style={header}>
-                    <Text style={title2}>Sign up</Text>
+                    <Text style={title2}>Create Account</Text>
                 </View>
                 <View>
                     <View style={innerSmall}>

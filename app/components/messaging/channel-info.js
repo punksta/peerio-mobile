@@ -91,7 +91,7 @@ export default class ChannelInfo extends SafeComponent {
                             {tu('title_admin')}
                         </Text>
                     </View>}
-                    <Menu>
+                    {chat.canIAdmin && <Menu>
                         <MenuTrigger
                             renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
                             style={{ padding: vars.iconPadding }}>
@@ -111,7 +111,7 @@ export default class ChannelInfo extends SafeComponent {
                                 <Text>{tx('button_remove')}</Text>
                             </MenuOption>
                         </MenuOptions>
-                    </Menu>
+                    </Menu>}
                 </View>
             </View>
         );
@@ -141,8 +141,8 @@ export default class ChannelInfo extends SafeComponent {
         const body = (
             <View>
                 {this.lineBlock(this.topicTextBox())}
-                {this.lineBlock(this.action(tx('button_leaveChannel'), 'remove-circle-outline', this.leaveChannel), true)}
-                {this.lineBlock(this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel))}
+                {chat.canILeave && this.lineBlock(this.action(tx('button_leaveChannel'), 'remove-circle-outline', this.leaveChannel), true)}
+                {chat.canIAdmin && this.lineBlock(this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel))}
                 {chat.joinedParticipants && this.lineBlock(
                     <View style={{ paddingVertical: 8 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
