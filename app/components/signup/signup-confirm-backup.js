@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
 import { observable, when } from 'mobx';
 import TextBox from '../controls/textbox';
 import ActivityOverlay from '../controls/activity-overlay';
@@ -8,8 +8,10 @@ import { vars } from '../../styles/styles';
 import signupState from './signup-state';
 import { tx } from '../utils/translator';
 import LoginWizardPage, {
-    header, innerSmall, circleTopSmall, title2, row, container
+    header, innerSmall, circleTopSmall, title2, row, container, topCircleSizeSmall
 } from '../login/login-wizard-page';
+
+const imageWelcomeSafe = require('../../assets/welcome-safe.png');
 
 const formStyle = {
     padding: 20,
@@ -35,7 +37,15 @@ export default class SignupConfirmBackup extends LoginWizardPage {
     get isOk() { return this.confirmTextSample.toLowerCase() === this.confirmText.toLowerCase(); }
 
     get icon() {
-        return <View style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]} />;
+        const width = topCircleSizeSmall * 2;
+        const height = width;
+        return (
+            <View style={[circleTopSmall, { borderWidth: 0 }]}>
+                <Image
+                    source={imageWelcomeSafe}
+                    style={{ width, height }} />
+            </View>
+        );
     }
 
     componentDidMount() {

@@ -123,8 +123,8 @@ export default class SignupStep1 extends LoginWizardPage {
                 </View>
                 <Text style={textNormal}>Peerio cannot access any of your data, including this Account Key, saving a backup may help you in the future.</Text>
                 <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 24 }}>
-                    {buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot)}
-                    {signupState.keyBackedUp && icons.plaindark('check-circle')}
+                    {/* buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
+                    {/* signupState.keyBackedUp && icons.plaindark('check-circle') */}
                 </View>
             </View>
         );
