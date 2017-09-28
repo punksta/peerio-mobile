@@ -59,6 +59,9 @@ misc
 # env settings
 env.sh
 
+# dependencies
+package-lock.json
+
 # icebear
 app/lib/peerio-icebear
 
