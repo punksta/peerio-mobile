@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.159.0"></a>
+# [3.159.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.158.0...v3.159.0) (2017-09-28)
+
+
+### Bug Fixes
+
+* add test label for cross-platform tests ([a46aa9e](https://github.com/PeerioTechnologies/peerio-mobile/commit/a46aa9e))
+* correct button sequence for signup form ([1b98d2d](https://github.com/PeerioTechnologies/peerio-mobile/commit/1b98d2d))
+* delays ([a451af9](https://github.com/PeerioTechnologies/peerio-mobile/commit/a451af9))
+* **channels:** remove admin controls for non-admins ([d3fefb5](https://github.com/PeerioTechnologies/peerio-mobile/commit/d3fefb5))
+* **tests:** fix tests for new signup process ([40a8bd3](https://github.com/PeerioTechnologies/peerio-mobile/commit/40a8bd3))
+
+
+### Features
+
+* add validation on sign in ([a7ebecf](https://github.com/PeerioTechnologies/peerio-mobile/commit/a7ebecf))
+* timeout for wait-for ([3ac2e14](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ac2e14))
+
+
+
 <a name="3.158.0"></a>
 # [3.158.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.157.0...v3.158.0) (2017-09-27)
 
