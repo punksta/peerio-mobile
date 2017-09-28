@@ -37,8 +37,6 @@ include ':react-native-file-opener'
 project(':react-native-file-opener').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-file-opener/android')
 include ':react-native-device-info'
 project(':react-native-device-info').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-device-info/android')
-include ':peerio-react-native-fetch-blob'
-project(':peerio-react-native-fetch-blob').projectDir = new File(rootProject.projectDir, '../node_modules/peerio-react-native-fetch-blob/android')
 include ':react-native-sqlcipher-storage'
 project(':react-native-sqlcipher-storage').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-sqlcipher-storage/src/android')
 include ':app'
