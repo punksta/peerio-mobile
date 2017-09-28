@@ -6,8 +6,9 @@
 # SIM_LOG="$HOME/Library/Logs/CoreSimulator/$SIM_UDID/system.log"
 # echo "Logs located:"
 # ls $SIM_LOG
-killall appium
-killall node
+
+trap "exit" INT TERM
+trap "kill 0" EXIT
 sleep 1
 ./node_modules/.bin/appium &
 
@@ -19,7 +20,7 @@ done
 
 echo "Appium launched"
 
-adb install android/app/build/outputs/apk/app-x86-debug.apk
+adb install -r android/app/build/outputs/apk/app-x86-debug.apk
 virtualenv .pyenv && source .pyenv/bin/activate
 # npm run build-ios-sim-debug
 py.test --platform=android -s -x tests

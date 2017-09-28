@@ -8,7 +8,7 @@ import SocketServer
 import thread
 
 
-common.platforms.launchPlatform("ios")
+common.platforms.launchPlatform("android")
 h.connect()
 
 d = h.getDriver()

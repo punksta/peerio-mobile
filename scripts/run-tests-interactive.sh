@@ -1,8 +1,8 @@
 #!/bin/bash
 
-killall appium
-killall node
-sleep 1
+trap "exit" INT TERM
+trap "kill 0" EXIT
+
 ./node_modules/.bin/appium &
 
 echo "Waiting appium to launch on 4723..."
