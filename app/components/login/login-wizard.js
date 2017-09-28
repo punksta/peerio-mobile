@@ -1,25 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Dimensions, StatusBar, TextInput, LayoutAnimation } from 'react-native';
 import { when, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { config, overrideServer, socket } from '../../lib/icebear';
-import { tu } from '../utils/translator';
 import Wizard from '../wizard/wizard';
 import loginState from './login-state';
 import { wizard } from '../../styles/styles';
-import Logo from '../controls/logo';
 import Layout1 from '../layout/layout1';
 import Button from '../controls/button';
-import LoginAutomatic from './login-automatic';
 import LoginStart from './login-start';
 import LoginClean from './login-clean';
-import LoginPassword from './login-password';
 import Logs from '../logs/logs';
 import uiState from '../layout/ui-state';
 import consoleOverride from '../../lib/console-override';
 
 const { height } = Dimensions.get('window');
-const logoHeight = height * 0.33;
 
 @observer
 export default class LoginWizard extends Wizard {
@@ -126,6 +121,6 @@ export default class LoginWizard extends Wizard {
                 <StatusBar barStyle="light-content" />
             </View>
         );
-        return <Layout1 noScroll={this.index === 0} body={body} />;
+        return <Layout1 body={body} />;
     }
 }
