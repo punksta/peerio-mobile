@@ -11,13 +11,14 @@ import ProgressOverlay from '../shared/progress-overlay';
 import chatState from './chat-state';
 import ChatSectionHeader from './chat-section-header';
 import ChatChannelInviteSection from './chat-channel-invites-section';
+import PlusBorderIcon from '../layout/plus-border-icon';
 import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
 @observer
-export default class Files extends SafeComponent {
+export default class ChatList extends SafeComponent {
     constructor(props) {
         super(props);
         this.dataSource = new ListView.DataSource({
@@ -26,7 +27,7 @@ export default class Files extends SafeComponent {
         });
     }
 
-    get isFabVisible() { return true; }
+    get rightIcon() { return <PlusBorderIcon action={chatState.fabAction} />; }
 
     @observable dataSource = null;
     @observable refreshing = false
