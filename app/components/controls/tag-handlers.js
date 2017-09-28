@@ -12,7 +12,7 @@ function a(text, url) {
     if (url.startsWith('route:')) {
         const [, type, route] = url.split(':');
         const action = routes[type][route];
-        if (action) return <Link onPress={action}>{text}</Link>;
+        if (action) return <Link key={text} onPress={action}>{text}</Link>;
     }
     return <Link key={url} url={url}>{text}</Link>;
 }
