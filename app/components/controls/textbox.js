@@ -69,13 +69,14 @@ export default class TextBox extends SafeComponent {
     }
 
     blur = () => {
-        // console.log('textbox.js: blur');
+        console.log('textbox.js: blur');
         this._callState(`OnBlur`);
         uiState.focusedTextBox = null;
         this.focused = false;
     }
 
     changeText = (text) => {
+        console.log('textbox.js: changeText');
         let tx = text;
         const { Version, OS } = Platform;
         if (OS !== 'android' || Version > 22) {
@@ -91,11 +92,12 @@ export default class TextBox extends SafeComponent {
     }
 
     focus = () => {
+        console.log('textbox.js: focus');
         this.textinput.offsetY = this.offsetY;
         this.textinput.offsetHeight = this.offsetHeight;
         uiState.focusedTextBox = this.textinput;
-        this.textinput.focus();
         this.focused = true;
+        requestAnimationFrame(() => this.textinput.focus());
     }
 
 
@@ -198,16 +200,8 @@ export default class TextBox extends SafeComponent {
                 <View style={[style.outer]}>
                     <View
                         style={[style.radius]}>
-                        <TouchableOpacity
-                            disabled={this.props.disabled}
-                            activeOpacity={0.9}
-                            pressRetentionOffset={vars.retentionOffset}
-                            pointerEvents={!this.focused ? undefined : 'none'}
-                            style={[style.touchable]}
-                            onPress={this.focus} />
                         {this.hint}
                         <View
-                            pointerEvents={this.focused ? undefined : 'none'}
                             style={[textbox.inputContainer, icAlert]}>
                             <TextInput
                                 keyboardType={this.props.keyboardType}
@@ -232,6 +226,12 @@ export default class TextBox extends SafeComponent {
                         </View>
                         {secretIcon}
                         {customIcon}
+                        {!this.focused && <TouchableOpacity
+                            disabled={this.props.disabled}
+                            activeOpacity={0.9}
+                            pressRetentionOffset={vars.retentionOffset}
+                            style={[style.touchable]}
+                            onPress={this.focus} />}
                     </View>
                 </View>
                 {this.validationControl}
