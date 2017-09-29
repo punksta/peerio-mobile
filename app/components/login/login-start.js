@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ScrollView, LayoutAnimation, Dimensions } from 'react-native';
-import { t, T, tx } from '../utils/translator';
+import { t, tx } from '../utils/translator';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import loginState from './login-state';
