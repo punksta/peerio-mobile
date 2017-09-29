@@ -423,7 +423,7 @@ Avatar.propTypes = {
     rightIcon: PropTypes.any,
     message: PropTypes.string,
     messageComponent: PropTypes.any,
-    title: PropTypes.string,
+    title: PropTypes.any,
     systemMessage: PropTypes.any,
     firstOfTheDay: PropTypes.bool,
     online: PropTypes.bool,
