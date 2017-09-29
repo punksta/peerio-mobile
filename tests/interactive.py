@@ -8,7 +8,7 @@ import SocketServer
 import thread
 
 
-common.platforms.launchPlatform("android")
+common.platforms.launchPlatform(os.environ['PEERIO_TEST_PLATFORM'])
 h.connect()
 
 d = h.getDriver()

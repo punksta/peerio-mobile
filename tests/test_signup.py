@@ -10,9 +10,7 @@ class Signup(common.testcase.TestCase):
         d.screen('signup-step-a.png')
         # push notification enable alert
         try:
-            d.wait_for_find('Allow', 5)
-            d.tap('Allow')
-            d.wait_for_not_find('Allow')
+            d.appium.switch_to.alert.accept()
         except:
             print 'no push allow alert'
 

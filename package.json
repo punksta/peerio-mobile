@@ -13,10 +13,8 @@
     "clean": "rm -rf ios/build",
     "ios": "npm install && npm update && npm run postinstall && react-native run-ios",
     "ios-dev": "react-native run-ios",
-    "ios-expandoo": "react-native run-ios --scheme expandoo --simulator \"iPhone 7\"",
     "android": "react-native run-android",
     "android-signed": "npm run build-android && bash scripts/release_android.sh",
-    "android-reinstall-gm": "adb shell pm uninstall -k com.peerio && adb install android/app/build/outputs/apk/app-x86-release-signed.apk",
     "lint": "eslint --fix --ext .js,.jsx .",
     "localize": "tx pull -af",
     "release": "standard-version -r minor && git push --follow-tags origin dev",
@@ -24,12 +22,8 @@
     "build-ios-sim-debug": "cd ios && xcodebuild -project peeriomobile.xcodeproj -configuration Debug -scheme peeriomobile -destination platform='iOS Simulator,name=iPhone 6,OS=10.2' -derivedDataPath build",
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
     "build-android-debug": "cd android && ./gradlew assembleDebug",
-    "testrun": ". scripts/run-tests.sh",
-    "testrun-nobuild": "sleep 10 && source env.sh && source .pyenv/bin/activate && mkdir -p $CIRCLE_TEST_REPORTS/py.test && py.test --platform=ios -s -x tests --junitxml=$CIRCLE_TEST_REPORTS/py.test/junit.xml",
-    "test": "bash scripts/setup_tests.sh && npm run testrun",
+    "test": "bash scripts/setup_tests.sh && bash scripts/run-tests.sh",
     "gp-peerio": "npm run build-android && bash scripts/release_android.sh && fastlane android alpha",
-    "testserver:run": "./scripts/testserver",
-    "testserver:test": "npm-run-all --parallel testserver:run testrun-nobuild",
     "pre-push": "opt --out pre-push --exec \"npm run lint\"",
     "post-merge": "opt --out post-merge --exec \"npm update\"",
     "commit-msg": "validate-commit-msg"
@@ -95,7 +89,7 @@
     "tweetnacl": "1.0.0"
   },
   "devDependencies": {
-    "appium": "1.6.5",
+    "appium": "1.7.1",
     "authorize-ios": "^1.0.4",
     "babel-eslint": "^6.1.2",
     "babel-plugin-console-kungfu": "git+https://github.com/PeerioTechnologies/babel-plugin-console-kungfu.git",

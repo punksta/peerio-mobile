@@ -57,7 +57,7 @@ def ios_basic():
         'deviceName': os.environ['PEERIO_IOS_SIM'],
         'platformVersion': os.environ['PEERIO_IOS_VERSION'],
         # 'autoAcceptAlerts': False, # so that system dialogs are accepted
-        # 'autoDismissAlerts': True, # so that system dialogs are accepted
+        'autoDismissAlerts': True, # so that system dialogs are accepted
         'autoLaunch': True,
         'noReset': True,
         'newCommandTimeout': 12000,

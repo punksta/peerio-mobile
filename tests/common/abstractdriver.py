@@ -5,6 +5,7 @@ from settings.settings import *
 from websocket import create_connection
 import selenium
 import random
+from selenium.common.exceptions import NoSuchElementException
 
 class AbstractDriver:
     restartPlatform = None
