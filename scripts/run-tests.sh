@@ -1,6 +1,6 @@
 #!/bin/bash
 
-trap "exit" INT TERM
+# trap "exit" INT TERM
 trap "kill 0" EXIT
 sleep 1
 
