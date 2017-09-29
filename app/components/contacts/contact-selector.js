@@ -112,14 +112,9 @@ export default class ContactSelector extends SafeComponent {
         }
     }
 
-    onSubmit() {
+    onSubmit = () => {
         if (this.toInvite) {
             this.findUserText = '';
-            return;
-        }
-
-        if (!this.findUserText && this.recipients.items.length) {
-            this.action();
             return;
         }
 
@@ -147,9 +142,8 @@ export default class ContactSelector extends SafeComponent {
                 <TextInput
                     underlineColorAndroid={'transparent'}
                     value={this.findUserText}
+                    onSubmitEditing={this.onSubmit}
                     returnKeyType="done"
-                    blurOnSubmit
-                    onBlur={() => this.onSubmit()}
                     onChangeText={text => { this.clean = !text.length; this.onChangeFindUserText(text); }}
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -172,9 +166,9 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1
         };
         const textStyle = {
-            fontSize: 16,
+            fontSize: 14,
             fontWeight: vars.font.weight.semiBold,
-            color: vars.txtDark
+            color: 'rgba(0, 0, 0, .54)'
         };
         return (
             <View style={container}>
@@ -199,6 +193,7 @@ export default class ContactSelector extends SafeComponent {
         if (this.props.limit && this.recipients.items.length >= this.props.limit) {
             this.recipients.clear();
         }
+        this.findUserText = '';
         this.recipients.toggle(contact);
     }
 
