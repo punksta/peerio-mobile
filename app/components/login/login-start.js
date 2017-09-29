@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ScrollView, LayoutAnimation, Dimensions } from 'react-native';
+import { t, T, tx } from '../utils/translator';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import loginState from './login-state';
@@ -53,9 +54,9 @@ export default class LoginStart extends LoginWizardPage {
     }
 
     _scrollItems = [
-        scrollItem('Private', 'Peerio’s end-to-end encryption keeps your data safe from breaches.', imageWelcomePrivate),
-        scrollItem('Safe', 'Only you can access your account. Your data is safe and secure 24/7.', imageWelcomeSafe),
-        scrollItem('Fast', 'So fast, you’ll forget that everything is always encrypted.', imageWelcomeFast)
+        scrollItem(tx('title_welcomePrivate'), tx('title_welcomePrivateContent'), imageWelcomePrivate),
+        scrollItem(tx('title_welcomeSafe'), tx('title_welcomeSafeContent'), imageWelcomeSafe),
+        scrollItem(tx('title_welcomeFast'), tx('title_welcomeFastContent'), imageWelcomeFast)
     ];
 
     componentDidMount() {
@@ -67,8 +68,8 @@ export default class LoginStart extends LoginWizardPage {
         return (
             <View style={container}>
                 <View style={header}>
-                    <Text style={title1}>Welcome to Peerio</Text>
-                    <Text style={title2}>Your private and secure collaboration platform</Text>
+                    <Text style={title1}>{t('title_welcome')}</Text>
+                    <Text style={title2}>{t('title_welcomeSubHeading')}</Text>
                 </View>
                 <View style={{ flex: 0.7, alignItems: 'center' }}>
                     <ScrollView
