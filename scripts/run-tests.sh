@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# trap "exit" INT TERM
+trap "exit" INT TERM
 trap "kill 0" EXIT
 sleep 1
 
@@ -40,9 +40,9 @@ virtualenv .pyenv && source .pyenv/bin/activate
 py.test --platform=$PEERIO_TEST_PLATFORM -s -x tests
 deactivate
 
-if [ -z $"$CIRCLE_TEST_REPORTS" ]; then
-  exit 0
-else
-  mkdir -p $CIRCLE_TEST_REPORTS/py.test/
-  cp $SIM_LOG $CIRCLE_TEST_REPORTS/py.test/
-fi
+# if [ -z $"$CIRCLE_TEST_REPORTS" ]; then
+#   exit 0
+# else
+#   mkdir -p $CIRCLE_TEST_REPORTS/py.test/
+#   cp $SIM_LOG $CIRCLE_TEST_REPORTS/py.test/
+# fi
