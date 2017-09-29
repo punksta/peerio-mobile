@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, Image, ScrollView, LayoutAnimation, Dimensions } from 'react-native';
-import { t, tx } from '../utils/translator';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
+import { t, tx } from '../utils/translator';
 import loginState from './login-state';
 import LoginWizardPage, {
     header, inner, padding, title1, title1Black, title2, title2Black, row, circleTop, container, embeddedImageCircleSize

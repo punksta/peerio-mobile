@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { t, T, tx } from '../utils/translator';
+import { t, tx } from '../utils/translator';
 // import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
 import ActivityOverlay from '../controls/activity-overlay';
