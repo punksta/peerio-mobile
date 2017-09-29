@@ -1,7 +1,7 @@
 #!/bin/bash
 
-trap "exit" INT TERM
-trap "kill 0" EXIT
+# trap "exit" INT TERM
+# trap "kill 0" EXIT
 sleep 1
 
 source env.sh
