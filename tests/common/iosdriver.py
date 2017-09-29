@@ -43,12 +43,12 @@ class IosDriver(AbstractDriver):
             return None
 
     def tap(self, selector):
-        el = self.appium.find_element_by_accessibility_id(selector)
+        el = self.wait_for_find(selector)
         el.click()
         return el
 
     def send_keys(self, selector, text):
-        el = self.find(selector)
+        el = self.wait_for_find(selector)
         el.clear()
         el.send_keys(text)
 

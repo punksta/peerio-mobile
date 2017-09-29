@@ -226,12 +226,12 @@ export default class TextBox extends SafeComponent {
                         </View>
                         {secretIcon}
                         {customIcon}
-                        {!this.focused && <TouchableOpacity
+                        {!this.focused && !process.env.CIRCLE_TEST_REPORTS ? <TouchableOpacity
                             disabled={this.props.disabled}
                             activeOpacity={0.9}
                             pressRetentionOffset={vars.retentionOffset}
                             style={[style.touchable]}
-                            onPress={this.focus} />}
+                            onPress={this.focus} /> : null}
                     </View>
                 </View>
                 {this.validationControl}
