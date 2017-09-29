@@ -33,25 +33,6 @@ class IosDriver(AbstractDriver):
         print "iosdriver.py: connected, waiting 3 seconds for app to launch"
         time.sleep(3)
 
-    def text(self, selector):
-        return selector.text
-
-    def find(self, selector):
-        try:
-            return self.appium.find_element_by_accessibility_id(selector)
-        except NoSuchElementException:
-            return None
-
-    def tap(self, selector):
-        el = self.wait_for_find(selector)
-        el.click()
-        return el
-
-    def send_keys(self, selector, text):
-        el = self.wait_for_find(selector)
-        el.clear()
-        el.send_keys(text)
-
     #----- payment system block
     def launch_settings(self):
         self.disconnect()
@@ -70,17 +51,6 @@ class IosDriver(AbstractDriver):
         self.appium.remove_app(self.capabilities["bundleId"])
         self.appium.install_app(self.capabilities["app"])
         self.appium.launch_app()
-
-    def restart(self):
-        self.appium.close_app()
-        self.appium.launch_app()
-
-    def screen(self, name):
-        key = 'CIRCLE_ARTIFACTS'
-        path = '.'
-        if key in os.environ:
-            path = os.environ[key]
-        self.appium.save_screenshot(path + '/' + name)
 
 
 

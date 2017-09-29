@@ -89,7 +89,7 @@ export default class LoginStart extends LoginWizardPage {
                             </View>
                         ))}
                     </ScrollView>
-                    <View style={circleTop}>
+                    <View style={circleTop} accessible accessibilityLabel="testLabel">
                         <Image key={this._selected} source={this._scrollItems[this._selected].icon} style={{ width: embeddedImageCircleSize, height: embeddedImageCircleSize }} />
                     </View>
                 </View>
