@@ -115,7 +115,7 @@ export default class ContactSelectorDM extends SafeComponent {
 
         return (
             <View style={container}>
-                <Text style={label}>To: </Text>
+                <Text style={label}>{t("title_to")}</Text>
                 <TextInput
                     underlineColorAndroid={'transparent'}
                     value={this.findUserText}
@@ -124,7 +124,7 @@ export default class ContactSelectorDM extends SafeComponent {
                     onChangeText={text => { this.clean = !text.length; this.onChangeFindUserText(text); }}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    placeholder={'Search by username or email'}
+                    placeholder={t('title_searchByUsernameOrEmail')}
                     ref={ti => { this.textInput = ti; }}
                     style={style} />
                 {this.findUserText ? icons.coloredSmall('close', () => {
@@ -247,7 +247,7 @@ export default class ContactSelectorDM extends SafeComponent {
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
         const allYourContactsTitle = found.length && !this.findUserText ?
-            <Text style={{ fontWeight: 'bold', margin: 10 }}>All your contacts ({found.length})</Text> : null;
+            <Text style={{ fontWeight: 'bold', margin: 10 }}>{t('title_allYourContacts', { found: found.length })}</Text> : null;
         // const result = findUserText && findUserText.length ? mockItems : chat;
         const result = mockItems;
         const body = !this.toInvite && !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
