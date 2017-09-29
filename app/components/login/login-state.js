@@ -196,7 +196,7 @@ class LoginState extends RoutedState {
         if (!keychain.hasPlugin) return false;
         let data = await keychain.get(await mainState.getKeychainKey(this.username));
         if (!data) {
-            return await popupYesCancel(null, 'Error reading data from keychain. Try again?')
+            return await popupYesCancel(null, tx('error_keychainRead'))
                 && await this.loadFromKeychain();
         }
         try {
