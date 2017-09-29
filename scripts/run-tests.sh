@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# trap "exit" INT TERM
-# trap "kill 0" EXIT
-sleep 1
-
 source env.sh
 
 unameOut="$(uname -s)"
@@ -27,6 +23,11 @@ case "${unameOut}" in
 esac
 
 ./node_modules/.bin/appium &
+APPIUM_PID=$!
+
+trap "exit" INT TERM
+trap "kill $APPIUM_PID" EXIT
+sleep 1
 
 echo "Waiting appium to launch on 4723..."
 
