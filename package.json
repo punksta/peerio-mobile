@@ -66,7 +66,7 @@
     "react-native-contacts": "git+https://github.com/PeerioTechnologies/react-native-contacts.git",
     "react-native-device-info": "git+https://github.com/PeerioTechnologies/react-native-device-info.git",
     "react-native-file-opener": "git+https://github.com/PeerioTechnologies/react-native-file-opener.git",
-    "react-native-file-picker": "git+ssh://git@github.com/PeerioTechnologies/react-native-file-picker.git",
+    "react-native-file-picker": "git+https://git@github.com/PeerioTechnologies/react-native-file-picker.git",
     "react-native-fs": "git+https://github.com/PeerioTechnologies/react-native-fs.git",
     "react-native-image-crop-picker": "git+https://github.com/PeerioTechnologies/react-native-image-crop-picker.git",
     "react-native-image-picker": "git+https://github.com/PeerioTechnologies/react-native-image-picker.git",
