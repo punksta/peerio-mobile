@@ -64,6 +64,7 @@ export default class LayoutMain extends SafeComponent {
         const pages = routerMain.pages;
         const currentPage = pages[routerMain.currentIndex];
         const currentComponent = routerMain.currentComponent;
+        console.log(currentComponent);
         const { actionsBar, showInput, leftIcon, rightIcon, layoutTitle } = currentComponent;
 
         const animatedBlock = (

@@ -21,6 +21,7 @@ export default class ContactInviteItem extends SafeComponent {
         const title = invited ? tx('title_invitedContacts') : tx('button_invite');
         return (
             <Avatar
+                {...this.props}
                 noTap
                 sending={invited}
                 height={56}

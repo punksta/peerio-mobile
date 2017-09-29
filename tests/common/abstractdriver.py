@@ -5,14 +5,31 @@ from settings.settings import *
 from websocket import create_connection
 import selenium
 import random
+from selenium.common.exceptions import NoSuchElementException
 
 class AbstractDriver:
     restartPlatform = None
     def __init__(self):
         return
 
+    def text(self, selector):
+        return selector.text
+
+    def find(self, selector):
+        try:
+            return self.appium.find_element_by_accessibility_id(selector)
+        except NoSuchElementException:
+            return None
+
+    def tap(self, selector):
+        el = self.wait_for_find(selector)
+        el.click()
+        return el
+
     def send_keys(self, selector, text):
-        self.find(selector).send_keys(text)
+        el = self.wait_for_find(selector)
+        el.clear()
+        el.send_keys(text)
         return selector
 
     def clear(self, selector):
@@ -106,4 +123,15 @@ class AbstractDriver:
         assert(el)
         el.click()
         el.send_keys(text)
+
+    def restart(self):
+        self.appium.close_app()
+        self.appium.launch_app()
+
+    def screen(self, name):
+        key = 'CIRCLE_ARTIFACTS'
+        path = '.'
+        if key in os.environ:
+            path = os.environ[key]
+        self.appium.save_screenshot(path + '/' + name)
 

@@ -19,6 +19,7 @@ export default class ContactLegacyItem extends SafeComponent {
         const { fullName, invited } = contact;
         return (
             <Avatar
+                {...this.props}
                 noTap
                 sending={invited}
                 height={56}

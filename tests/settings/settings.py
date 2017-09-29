@@ -11,9 +11,9 @@ ios_appname = 'peeriomobile.app'
 ios_bundle = 'com.peerio'
 
 chromium_executor = 'http://127.0.0.1:9515'
-android_dir = '../../platforms/android/build/outputs/apk'
-android_appname = 'android-x86-debug.apk'
-android_package = 'com.peerio'
+android_dir = '../../android/app/build/outputs/apk'
+android_appname = 'app-x86-debug.apk'
+android_package = 'com.peerio.app'
 android_activity = 'MainActivity'
 
 test_logins = {
@@ -57,7 +57,7 @@ def ios_basic():
         'deviceName': os.environ['PEERIO_IOS_SIM'],
         'platformVersion': os.environ['PEERIO_IOS_VERSION'],
         # 'autoAcceptAlerts': False, # so that system dialogs are accepted
-        # 'autoDismissAlerts': True, # so that system dialogs are accepted
+        'autoDismissAlerts': True, # so that system dialogs are accepted
         'autoLaunch': True,
         'noReset': True,
         'newCommandTimeout': 12000,
@@ -86,6 +86,7 @@ def android_device(deviceName):
 
 def android_basic(deviceName):
     return {
+        # 'app': android_path(),
         'appPackage': android_package,
         'appActivity': '.' + android_activity,
         'platformName': 'Android',
@@ -95,7 +96,7 @@ def android_basic(deviceName):
         'newCommandTimeout': 12000,
         'noReset': True,
         'androidDeviceSocket': android_package + '_devtools_remote',
-        'autoLaunch': False
+        'autoLaunch': True
     }
 
 def android_600(config):
@@ -107,11 +108,11 @@ def android_600(config):
 
 def chromium_basic():
     return {
-        'androidDeviceSocket': android_package + '_devtools_remote',
-        'chromeOptions': {
-            'androidPackage': android_package,
-            'androidActivity': '.' + android_activity,
-            'androidDeviceSocket': android_package + '_devtools_remote'
-        }
+        'androidDeviceSocket': android_package + '_devtools_remote' # ,
+        # 'chromeOptions': {
+        #    'androidPackage': android_package,
+        #    'androidActivity': '.' + android_activity,
+        #    'androidDeviceSocket': android_package + '_devtools_remote'
+        # }
     }
 

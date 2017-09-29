@@ -54,7 +54,7 @@ def platform_iosdevice():
     }
 
 def platform_androiddevice():
-    device = settings.getFirstPhysicalAndroidDeviceID()
+    device = common.processes.getFirstPhysicalAndroidDeviceID()
     return {
         'appium': True,
         'type': 'android',
@@ -68,7 +68,7 @@ def platform_androiddevice():
     }
 
 def platform_android():
-    device = settings.getFirstGenyMotionAndroidDeviceID()
+    device = common.processes.getFirstGenyMotionAndroidDeviceID()
     return {
         'platformName': 'GenyMotion',
         'type': 'android',

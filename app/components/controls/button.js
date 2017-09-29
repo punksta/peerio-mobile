@@ -26,6 +26,8 @@ export default class Button extends Component {
             <TouchableOpacity
                 pressRetentionOffset={offset}
                 onPress={press}
+                accessible={this.props.accessible}
+                accessibilityLabel={this.props.accessibilityLabel}
                 testID={this.props.testID}>
                 <View
                     style={[this.props.style]}>
