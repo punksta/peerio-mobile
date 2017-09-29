@@ -12,7 +12,7 @@ export default class ComposeMessage extends Component {
                 autoStart
                 onExit={() => chatState.routerModal.discard()}
                 action={contacts => chatState.startChat(contacts)}
-                title="New direct message" limit={LIMIT_PEOPLE} />
+                title={tx('title_newDirectMessage')} limit={LIMIT_PEOPLE} />
         );
     }
 }
