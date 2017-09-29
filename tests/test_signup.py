@@ -33,8 +33,10 @@ class Signup(common.testcase.TestCase):
         d.screen('signup-step-2.png')
         sleep(5)
         d.tap('button_next')
+        sleep(3)
         d.send_keys('confirmText', 'i have saved my account key')
-        sleep(1)
+        sleep(10)
         d.tap('button_finish')
+        sleep(5)
         d.screen('signup-step-3.png')
 

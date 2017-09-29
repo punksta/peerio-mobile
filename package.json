@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.158.0",
+  "version": "3.159.0",
   "private": true,
   "scripts": {
     "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
@@ -72,7 +72,7 @@
     "react-native-contacts": "git+https://github.com/PeerioTechnologies/react-native-contacts.git",
     "react-native-device-info": "git+https://github.com/PeerioTechnologies/react-native-device-info.git",
     "react-native-file-opener": "git+https://github.com/PeerioTechnologies/react-native-file-opener.git",
-    "react-native-file-picker": "0.0.8",
+    "react-native-file-picker": "git+ssh://git@github.com/PeerioTechnologies/react-native-file-picker.git",
     "react-native-fs": "git+https://github.com/PeerioTechnologies/react-native-fs.git",
     "react-native-image-crop-picker": "git+https://github.com/PeerioTechnologies/react-native-image-crop-picker.git",
     "react-native-image-picker": "git+https://github.com/PeerioTechnologies/react-native-image-picker.git",
@@ -118,7 +118,7 @@
     "repeating-cli": "^2.0.0",
     "semantic-release": "6.3.2",
     "sinon": "^1.17.7",
-    "sinon-chai": "^2.13.0",
+    "sinon-chai": "^2.14.0",
     "standard-version": "^4.0.0",
     "user-home-cli": "^1.0.1",
     "validate-commit-message": "3.0.1"

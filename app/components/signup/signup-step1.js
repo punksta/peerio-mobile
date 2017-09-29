@@ -59,7 +59,7 @@ export default class SignupStep1 extends LoginWizardPage {
         return (
             <View>
                 <Text style={addPhotoPlus}>+</Text>
-                <Text style={addPhotoText}>Add photo (optional)</Text>
+                <Text style={addPhotoText}>{t('title_signupAvatar')}</Text>
             </View>
         );
     }

@@ -206,7 +206,7 @@ class ContactState extends RoutedState {
         this.currentContact = active ? contact : null;
     }
 
-    fabAction() {
+    fabAction = () => {
         console.log(`contact-state.js: fab action`);
         this.routerMain.contactAdd();
     }

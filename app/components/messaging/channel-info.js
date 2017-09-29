@@ -20,6 +20,12 @@ const textStyle = {
     fontWeight: 'bold'
 };
 
+const topicTextStyle = {
+    color: vars.txtDark,
+    margin: 18,
+    fontSize: 14
+};
+
 @observer
 export default class ChannelInfo extends SafeComponent {
     @observable channelTopic = '';
@@ -117,7 +123,7 @@ export default class ChannelInfo extends SafeComponent {
         );
     }
 
-    topicTextBox() {
+    get topicTextBox() {
         const chat = chatState.currentChat;
         const update = () => {
             chat.changePurpose(this.channelTopic);
@@ -135,21 +141,31 @@ export default class ChannelInfo extends SafeComponent {
         );
     }
 
+    get topicTextView() {
+        return (
+            <View>
+                <Text style={textStyle}>{tx('title_channelPurpose')}</Text>
+                <Text style={topicTextStyle}>{this.channelTopic}</Text>
+            </View>
+        );
+    }
+
     renderThrow() {
         const chat = chatState.currentChat;
+        const { canIAdmin, canILeave } = chat;
         const invited = chatState.chatInviteStore.sent.get(chat.id);
         const body = (
             <View>
-                {this.lineBlock(this.topicTextBox())}
-                {chat.canILeave && this.lineBlock(this.action(tx('button_leaveChannel'), 'remove-circle-outline', this.leaveChannel), true)}
-                {chat.canIAdmin && this.lineBlock(this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel))}
+                {this.lineBlock(canIAdmin ? this.topicTextBox : this.topicTextView)}
+                {canILeave && this.lineBlock(this.action(tx('button_leaveChannel'), 'remove-circle-outline', this.leaveChannel), true)}
+                {canIAdmin && this.lineBlock(this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel))}
                 {chat.joinedParticipants && this.lineBlock(
                     <View style={{ paddingVertical: 8 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
                             <Text style={[textStyle, { marginBottom: 12 }]}>
                                 {tx('title_Members')}
                             </Text>
-                            {icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
+                            {canIAdmin && icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
                         </View>
                         {chat.joinedParticipants.map(this.participant)}
                     </View>

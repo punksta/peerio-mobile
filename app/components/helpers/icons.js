@@ -70,6 +70,11 @@ const icons = {
         return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {});
     },
 
+    coloredSmall(name, onPress, colorFg, backgroundColor) {
+        return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {}, vars.iconSizeSmall);
+    },
+
+
     placeholder() {
         const d = vars.iconSize + vars.iconPadding * 2;
         const s = {

@@ -11,13 +11,17 @@ import ProgressOverlay from '../shared/progress-overlay';
 import chatState from './chat-state';
 import ChatSectionHeader from './chat-section-header';
 import ChatChannelInviteSection from './chat-channel-invites-section';
+import PlusBorderIcon from '../layout/plus-border-icon';
+import CreateActionSheet from './create-action-sheet';
 import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
+let actionSheet = null;
+
 @observer
-export default class Files extends SafeComponent {
+export default class ChatList extends SafeComponent {
     constructor(props) {
         super(props);
         this.dataSource = new ListView.DataSource({
@@ -26,12 +30,11 @@ export default class Files extends SafeComponent {
         });
     }
 
-    get isFabVisible() { return true; }
-
     @observable dataSource = null;
     @observable refreshing = false
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
     actionsHeight = new Animated.Value(0)
+    get rightIcon() { return <PlusBorderIcon action={() => actionSheet.show()} />; }
 
     get data() {
         return chatState.store.chats;
@@ -115,6 +118,7 @@ export default class Files extends SafeComponent {
                 <View style={{ flexGrow: 1, flex: 1 }}>
                     {body}
                 </View>
+                <CreateActionSheet ref={(sheet) => { actionSheet = sheet; }} />
                 <ProgressOverlay enabled={chatState.store.loading} />
             </View>
         );

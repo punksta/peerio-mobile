@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, LayoutAnimation, Dimensions, BackHandler } from 'react-native';
+import { View, LayoutAnimation, BackHandler } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import uiState from '../layout/ui-state';

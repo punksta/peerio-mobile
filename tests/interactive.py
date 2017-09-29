@@ -29,7 +29,7 @@ def start_server():
 print "interactive.py: starting http server http://localhost:%d" % PORT
 thread.start_new_thread(start_server, ())
 sleep(1)
-os.system("open http://localhost:%d" % PORT)
+# os.system("open http://localhost:%d" % PORT)
 
 # starter({})
 # t = AppleAdvertisement()

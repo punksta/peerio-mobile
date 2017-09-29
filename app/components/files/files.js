@@ -8,6 +8,7 @@ import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileActions from './file-actions';
 import fileState from './file-state';
+import PlusBorderIcon from '../layout/plus-border-icon';
 import { upgradeForFiles } from '../payments/payments';
 
 const INITIAL_LIST_SIZE = 10;
@@ -21,7 +22,8 @@ export default class Files extends SafeComponent {
             rowHasChanged: (r1, r2) => r1 !== r2
         });
     }
-    get isFabVisible() { return !fileState.showSelection; }
+
+    get rightIcon() { return <PlusBorderIcon action={fileState.fabAction} />; }
 
     @observable dataSource = null;
     @observable refreshing = false

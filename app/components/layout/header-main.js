@@ -38,6 +38,9 @@ export default class HeaderMain extends SafeComponent {
             minHeight: vars.headerHeight
         };
         const titleAction = routerMain.titleAction;
+        const iconPlaceHolderWidth = (32 + vars.iconSize);
+        const paddingRight = !rightIcon && leftIcon ? iconPlaceHolderWidth : 0;
+        const paddingLeft = rightIcon && !leftIcon ? iconPlaceHolderWidth : 0;
         return gradient({
             paddingTop: vars.statusBarHeight,
             height: vars.headerHeight,
@@ -54,7 +57,7 @@ export default class HeaderMain extends SafeComponent {
                     <Text
                         ellipsizeMode="middle"
                         numberOfLines={1}
-                        style={[textStyle, { paddingRight: !rightIcon && leftIcon ? (32 + vars.iconSize) : 0 }]}>
+                        style={[textStyle, { paddingRight, paddingLeft }]}>
                         {this.props.title || routerMain.title}
                         {titleAction && <Text style={{ fontSize: 14 }}>
                             {'  ▼  '}

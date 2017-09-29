@@ -62,7 +62,10 @@ export default class LoginClean extends LoginWizardPage {
                         </View>
                     </View>
                     <View style={[row, { justifyContent: 'flex-end' }]}>
-                        {this.button('button_login', () => this.props.submit(), loginState.isInProgress)}
+                        {this.button(
+                            'button_login',
+                            () => this.props.submit(),
+                            loginState.isInProgress, !loginState.passphrase || !loginState.isValid())}
                     </View>
                 </View>
                 <View style={footer}>

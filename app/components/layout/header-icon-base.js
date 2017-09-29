@@ -11,15 +11,15 @@ export default class HeaderIconBase extends SafeComponent {
 
     renderThrow() {
         return (
-            <View style={{ flex: 0, borderWidth: 0, borderColor: 'red' }}>
+            <View style={[{ flex: 0 }, this.style]}>
                 <TouchableOpacity onPress={this.action}>
-                    <View style={{
+                    <View style={[{
                         alignItems: 'center',
                         backgroundColor: 'transparent',
                         flexDirection: 'row',
                         justifyContent: 'center',
                         margin: 16
-                    }}>
+                    }, this.innerStyle]}>
                         {icons.plainWhite(this.icon)}
                     </View>
                 </TouchableOpacity>

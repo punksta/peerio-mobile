@@ -11,6 +11,9 @@ import ProgressOverlay from '../shared/progress-overlay';
 import ContactItem from './contact-item';
 import ContactSectionHeader from './contact-section-header';
 import contactState from './contact-state';
+import PlusBorderIcon from '../layout/plus-border-icon';
+import GroupsIcon from './groups-icon';
+import DoneIcon from './done-icon';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 
@@ -23,20 +26,16 @@ export default class ContactList extends SafeComponent {
     @observable mode = 'list';
     @observable refreshing = false
 
-    groupsIcon(disabled) {
-        return buttons.uppercaseWhiteButton(tx('title_contactGroups'), () => { this.mode = 'groups'; }, disabled);
+    get groupsIcon() {
+        return <GroupsIcon action={() => { this.mode = 'groups'; }} />;
     }
 
-    doneIcon(disabled) {
-        return buttons.uppercaseWhiteButton(tx('button_done'), () => { this.mode = 'list'; }, disabled);
+    get doneIcon() {
+        return <DoneIcon action={() => { this.mode = 'list'; }} />;
     }
 
     get leftIcon() {
-        return this.mode === 'list' ? this.groupsIcon() : this.doneIcon();
-    }
-
-    get rightIcon() {
-        return this.mode === 'list' ? this.groupsIcon(true) : this.doneIcon(true);
+        return this.mode === 'list' ? this.groupsIcon : this.doneIcon;
     }
 
     get data() { return contactState.store.contacts; }
@@ -103,7 +102,7 @@ export default class ContactList extends SafeComponent {
         );
     }
 
-    get isFabVisible() { return this.mode === 'list'; }
+    get rightIcon() { return this.mode === 'list' ? <PlusBorderIcon action={contactState.fabAction} /> : null; }
 
     get contactListComponent() {
         return !contactState.empty ?

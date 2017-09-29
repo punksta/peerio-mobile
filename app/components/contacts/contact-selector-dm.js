@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {
-    View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation
-} from 'react-native';
+import { View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { when, observable, reaction } from 'mobx';
+import { when, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
@@ -20,17 +18,15 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import contactState from './contact-state';
 import snackbarState from '../snackbars/snackbar-state';
-import buttons from '../helpers/buttons';
 import ContactCollection from './contact-collection';
 
 @observer
-export default class ContactSelector extends SafeComponent {
+export default class ContactSelectorDM extends SafeComponent {
     @observable recipients = new ContactCollection();
     @observable inProgress = false;
     @observable clean = true;
     @observable toInvite = null;
     @observable legacyContact = null;
-    @observable found = [];
     @observable findUserText;
 
     componentDidMount() {
@@ -79,25 +75,8 @@ export default class ContactSelector extends SafeComponent {
         );
     }
 
-
-    userboxline() {
-        const container = {
-            flexGrow: 1,
-            flexDirection: 'row',
-            alignItems: 'flex-start',
-            paddingLeft: 8,
-            flexWrap: 'wrap'
-        };
-        const boxes = this.recipients.items.map((c, i) => this.userbox(c, i));
-
-        return (
-            <View style={container}>
-                {boxes}
-            </View>
-        );
-    }
-
     onChangeFindUserText(text) {
+        console.log('onChangeFindUserText');
         this.toInvite = null;
         this.legacyContact = null;
         const items = text.split(/[ ,;]/);
@@ -107,48 +86,51 @@ export default class ContactSelector extends SafeComponent {
             return;
         }
         this.findUserText = text;
-        if (text && text.trim().length > 0) {
-            this.searchUserTimeout(text);
-        }
-    }
-
-    onSubmit = () => {
-        if (this.toInvite) {
-            this.findUserText = '';
-            return;
-        }
-
-        this.searchUser(this.findUserText, true);
-        if (this.props.limit !== 1) this.findUserText = '';
+        this.searchUserTimeout(text);
     }
 
     textbox() {
+        const height = 48;
         const container = {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
-            paddingTop: 0,
-            paddingBottom: 0
+            paddingHorizontal: 12,
+            margin: 12,
+            borderColor: vars.bg,
+            borderWidth: 1,
+            height,
+            borderRadius: height
+        };
+        const label = {
+            color: vars.bg,
+            fontSize: 12
         };
         const style = {
             flexGrow: 1,
-            marginLeft: 8
+            height,
+            marginLeft: 8,
+            fontSize: 12
         };
 
         return (
             <View style={container}>
-                {icons.dark('search')}
+                <Text style={label}>To: </Text>
                 <TextInput
                     underlineColorAndroid={'transparent'}
                     value={this.findUserText}
-                    onSubmitEditing={this.onSubmit}
                     returnKeyType="done"
+                    blurOnSubmit
                     onChangeText={text => { this.clean = !text.length; this.onChangeFindUserText(text); }}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    placeholder={tx('title_userSearch')}
-                    ref={ti => { this.textInput = ti; }} style={style} />
+                    placeholder={'Search by username or email'}
+                    ref={ti => { this.textInput = ti; }}
+                    style={style} />
+                {this.findUserText ? icons.coloredSmall('close', () => {
+                    this.inProgress = false;
+                    this.findUserText = '';
+                }, vars.bg) : null}
             </View>
         );
     }
@@ -158,24 +140,24 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
-            paddingTop: 0,
-            paddingBottom: 0
+            padding: 16
         };
-        const style = {
-            flexGrow: 1
+        const underlay = {
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            flexDirection: 'row',
+            justifyContent: 'flex-end'
         };
         const textStyle = {
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: vars.font.weight.semiBold,
-            color: 'rgba(0, 0, 0, .54)'
+            color: vars.txtDark
         };
         return (
             <View style={container}>
-                {icons.dark('close', this.props.onExit)}
-                <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
-                {this.recipients.items.length ?
-                    icons.text(t('button_go'), () => this.action()) : icons.placeholder()}
+                <View style={underlay}>{icons.dark('close', this.props.onExit)}</View>
+                <Center><Text style={textStyle}>{this.props.title}</Text></Center>
             </View>
         );
     }
@@ -189,34 +171,31 @@ export default class ContactSelector extends SafeComponent {
         this.props.onExit && this.props.onExit();
     }
 
-    toggle(contact) {
-        if (this.props.limit && this.recipients.items.length >= this.props.limit) {
-            this.recipients.clear();
-        }
-        this.findUserText = '';
-        this.recipients.toggle(contact);
-    }
-
     item(contact, i) {
-        const { username, fullName } = contact;
+        const { username, fullName, isLegacy } = contact;
         return (
             <Avatar
+                noBorderBottom
                 starred={contact.isAdded}
                 contact={contact}
-                checkbox={this.props.limit > 1}
-                checkedKey={username}
-                checkedState={this.recipients.itemsMap}
                 key={username || i}
-                title={fullName}
-                title2={username}
+                title={<Text style={{ fontWeight: 'normal' }}>{fullName}</Text>}
+                title2={isLegacy ? username : null}
                 height={56}
                 hideOnline
-                onPress={() => this.toggle(contact)} />
+                onPress={() => {
+                    this.props.onExit();
+                    this.props.action([contact]);
+                }} />
         );
     }
 
     searchUserTimeout(username) {
-        if (this._searchTimeout) clearTimeout(this._searchTimeout);
+        if (this._searchTimeout) {
+            clearTimeout(this._searchTimeout);
+            this._searchTimeout = null;
+        }
+        if (!username) return;
         this.inProgress = true;
         this._searchTimeout = setTimeout(() => this.searchUser(username), 500);
     }
@@ -245,13 +224,12 @@ export default class ContactSelector extends SafeComponent {
             });
             return;
         }
+        if (!this.findUserText) return;
         this.inProgress = true;
         when(() => !c.loading, () => {
             this.inProgress = false;
-            if (!c.notFound) {
-                console.log(`compose-message.js: adding contact`);
-                this.found = [c];
-            } else {
+            if (!this.findUserText) return;
+            if (c.notFound) {
                 if (c.isLegacy) {
                     this.legacyContact = c;
                     return;
@@ -259,7 +237,6 @@ export default class ContactSelector extends SafeComponent {
                 if (username.indexOf('@') !== -1) {
                     this.toInvite = username;
                 }
-                this.found = [];
             }
         });
     }
@@ -269,15 +246,18 @@ export default class ContactSelector extends SafeComponent {
         const found = contactState.getFiltered(this.findUserText);
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
+        const allYourContactsTitle = found.length && !this.findUserText ?
+            <Text style={{ fontWeight: 'bold', margin: 10 }}>All your contacts ({found.length})</Text> : null;
         // const result = findUserText && findUserText.length ? mockItems : chat;
         const result = mockItems;
         const body = !this.toInvite && !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
         const invite = this.inviteContactDuck;
-        const inviteControl = invite ? <ContactInviteItem contact={invite} /> : null;
+        const inviteControl = invite ? <ContactInviteItem noBorderBottom contact={invite} /> : null;
         const legacy = this.legacyContact;
-        const legacyControl = legacy ? <ContactLegacyItem contact={legacy} /> : null;
+        const legacyControl = legacy ? <ContactLegacyItem noBorderBottom contact={legacy} /> : null;
         return (
-            <View>
+            <View style={{ marginHorizontal: 12 }}>
+                {allYourContactsTitle}
                 {inviteControl}
                 {legacyControl}
                 {body}
@@ -285,85 +265,18 @@ export default class ContactSelector extends SafeComponent {
         );
     }
 
-    lineBlock(content) {
-        const s = {
-            borderBottomWidth: 1,
-            borderBottomColor: 'rgba(0, 0, 0, .12)'
-        };
-        return (
-            <View style={s}>{content}</View>
-        );
-    }
-
-    // TODO: for future removal
-    get limitReached() {
-        return false;
-        // return this.props.limit && (this.recipients.items.length >= this.props.limit);
-    }
-
-    get limitInfo() {
-        const current = this.recipients.items.length;
-        const max = this.props.limit;
-        if (!max || !current) return null;
-        const s = {
-            backgroundColor: vars.lightGrayBg,
-            flexDirection: 'row',
-            justifyContent: 'flex-end'
-        };
-        const textStyle = {
-            color: this.limitReached ? vars.txtAlert : vars.txtDate,
-            margin: 4,
-            marginRight: 16,
-            fontSize: 12
-        };
-        return (
-            <View style={s}>
-                <Text style={textStyle}>{current}/{max} people in this chat</Text>
-            </View>
-        );
-    }
-
     header() {
-        const tbSearch = this.textbox();
-        const userRow = this.userboxline();
-        const exitRow = this.exitRow();
-        const recipients = this.recipients.items;
         return (
-            <View style={{ paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight * 2 }}>
-                {this.props.hideHeader ? null : this.lineBlock(exitRow)}
-                {/* TODO combine recipients and search */}
-                {recipients.length ? this.lineBlock(userRow) : null}
-                {this.limitInfo}
-                {!this.limitReached && this.lineBlock(tbSearch)}
-            </View>
-        );
-    }
-
-    get upgradeOffer() {
-        const offerStyle = {
-            backgroundColor: '#d9f1ef',
-            padding: 12
-        };
-        return (
-            <View style={{ flex: 1, flexGrow: 1, backgroundColor: vars.lightGrayBg }}>
-                <View style={offerStyle}>
-                    <Text>
-                        {`👋 Hi there, want to add more people to this chat?`}
-                        {`Check out our `}<Text style={{ fontWeight: 'bold' }}>upgrade plans</Text>
-                        {` or `}<Text style={{ fontWeight: 'bold' }}>delete an existing channel</Text>
-                        {` to create a new one `}
-                    </Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        {buttons.uppercaseBlueButton(tx('button_upgrade'))}
-                    </View>
-                </View>
+            <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
+                {this.exitRow()}
+                {this.textbox()}
             </View>
         );
     }
 
     renderThrow() {
         const header = this.header();
-        const body = this.limitReached ? this.upgradeOffer : this.body();
+        const body = this.body();
         const layoutStyle = {
             backgroundColor: 'white'
         };
@@ -384,11 +297,9 @@ export default class ContactSelector extends SafeComponent {
     }
 }
 
-ContactSelector.propTypes = {
+ContactSelectorDM.propTypes = {
     topRow: PropTypes.any,
-    hideHeader: PropTypes.any,
     title: PropTypes.any,
-    limit: PropTypes.any,
     action: PropTypes.func,
     onExit: PropTypes.func
 };

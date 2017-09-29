@@ -184,11 +184,10 @@ export default class CreateChannel extends Component {
 
     render() {
         return (
-            <View style={fillView}>
+            <ScrollView keyboardShouldPersistTaps={this.step > 0 ? 'handled' : 'never'} scrollEnabled={false} style={fillView} contentContainerStyle={fillView}>
                 {this.exitRow}
                 {User.current.channelsLeft <= 0 ? this.paywall : this.scrollView}
-                {this.createChatRow}
-            </View>
+            </ScrollView>
         );
     }
 }
