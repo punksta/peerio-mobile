@@ -13,8 +13,8 @@ export default class CreateActionSheet extends SafeComponent {
     CANCEL_INDEX = 2;
 
     actionSheetItems = [
-        { title: 'New room', action: () => routes.modal.createChannel() },
-        { title: 'New direct message', action: () => routes.modal.compose() },
+        { title: tx('title_newRoom'), action: () => routes.modal.createChannel() },
+        { title: tx('title_newDirectMessage'), action: () => routes.modal.compose() },
         { title: tx('button_cancel') }
     ];
 
