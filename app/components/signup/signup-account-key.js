@@ -107,21 +107,21 @@ export default class SignupStep1 extends LoginWizardPage {
 
     get body() {
         const { keySaved, savingScreenshot } = this;
-        const saveTitle = keySaved ? 'Saved to Camera Roll' : 'Save Account Key';
+        const saveTitle = keySaved ? tx('title_savedToCameraRoll') : tx('button_saveAccountKey');
         return (
             <View>
-                <Text style={textNormal}>Hello, {signupState.firstName || signupState.username}.</Text>
-                <Text style={textNormal}>Passwords are way stronger when computers make them. This Account Key was generated just for you.</Text>
+                <Text style={textNormal}>{t('title_helloName', { name: (signupState.firstName || signupState.username) })}</Text>
+                <Text style={textNormal}>{tx('title_accountKey1')}</Text>
                 <View style={accountKeyView}>
-                    <Text style={smallText}>Your Account Key</Text>
+                    <Text style={smallText}>{tx('title_yourAccountKey')}</Text>
                     <View style={accountKeyRow}>
                         <Text style={accountKeyText} selectable>
                             {signupState.passphrase}
                         </Text>
-                        {buttons.uppercaseBlueButton(tx('Copy'), this.copyAccountKey, false, savingScreenshot)}
+                        {buttons.uppercaseBlueButton(tx('button_copy'), this.copyAccountKey, false, savingScreenshot)}
                     </View>
                 </View>
-                <Text style={textNormal}>Peerio cannot access any of your data, including this Account Key, saving a backup may help you in the future.</Text>
+                <Text style={textNormal}>{tx('title_accountKey2')}</Text>
                 <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 24 }}>
                     {/* buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
                     {/* signupState.keyBackedUp && icons.plaindark('check-circle') */}
@@ -136,7 +136,7 @@ export default class SignupStep1 extends LoginWizardPage {
                 <ViewShot ref={ref => { this._viewShot = ref; }}>
                     <View style={header}>
                         {/* TODO: peerio copy */}
-                        <Text style={title2}>Account Key</Text>
+                        <Text style={title2}>{tx('title_AccountKey')}</Text>
                     </View>
                     <View>
                         <View style={innerSmall}>
