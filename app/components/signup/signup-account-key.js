@@ -70,7 +70,7 @@ export default class SignupStep1 extends LoginWizardPage {
 
     copyAccountKey() {
         Clipboard.setString(signupState.passphrase);
-        snackbarState.pushTemporary('Copied to clipboard');
+        snackbarState.pushTemporary(t('title_copied'));
     }
 
     async saveAccountKey() {
