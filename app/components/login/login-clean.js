@@ -40,8 +40,8 @@ export default class LoginClean extends LoginWizardPage {
         return (
             <View style={container}>
                 <View style={header2}>
-                    <Text style={title1}>Welcome to Peerio</Text>
-                    <Text style={title2}>Sign in</Text>
+                    <Text style={title1}>{t('title_welcome')}</Text>
+                    <Text style={title2}>{t('title_login')}</Text>
                 </View>
                 <View>
                     <View style={inner2}>
