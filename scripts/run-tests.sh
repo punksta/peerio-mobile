@@ -40,8 +40,6 @@ virtualenv .pyenv && source .pyenv/bin/activate
 py.test --platform=$PEERIO_TEST_PLATFORM -s -x tests
 deactivate
 
-killall appium
-
 if [ -z $"$CIRCLE_TEST_REPORTS" ]; then
   exit 0
 else
