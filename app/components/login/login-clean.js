@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
-import { t, T, tx } from '../utils/translator';
+import { t, tx } from '../utils/translator';
 // import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
 import ActivityOverlay from '../controls/activity-overlay';
@@ -40,8 +40,8 @@ export default class LoginClean extends LoginWizardPage {
         return (
             <View style={container}>
                 <View style={header2}>
-                    <Text style={title1}>Welcome to Peerio</Text>
-                    <Text style={title2}>Sign in</Text>
+                    <Text style={title1}>{t('title_welcome')}</Text>
+                    <Text style={title2}>{t('title_login')}</Text>
                 </View>
                 <View>
                     <View style={inner2}>

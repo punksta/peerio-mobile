@@ -146,7 +146,7 @@ authenticator app.`}
                         </View>
                     </View>
                     <View style={rowRight}>
-                        {buttons.uppercaseBlueButton('Download', () => this.downloadCodes())}
+                        {buttons.uppercaseBlueButton(tx('title_download'), () => this.downloadCodes())}
                     </View>
                 </View>
                 <View style={{ left: paddingHorizontal + 12, bottom: paddingVertical, position: 'absolute' }}>

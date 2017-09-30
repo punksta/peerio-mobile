@@ -53,7 +53,7 @@ export default class TwoFactorAuthCodesGenerate extends SafeComponent {
             <View style={bgStyle}>
                 <View>
                     <Text style={headerStyle}>
-                        {tx('Two factor authentication is enabled\n\n')}
+                        {tx('title_2FAEnabled')}
                         {tx('title_2FABackupCode')}
                     </Text>
                     <View style={buttonCenterStyle}>

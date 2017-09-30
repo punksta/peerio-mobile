@@ -60,14 +60,14 @@ export default class SignupConfirmBackup extends LoginWizardPage {
             <View style={container} onLayout={this._layout}>
                 <View style={header}>
                     {/* TODO: peerio copy */}
-                    <Text style={title2}>Account Key</Text>
+                    <Text style={title2}>{tx('title_AccountKey')}</Text>
                 </View>
                 <View style={{ flex: 0.7, flexGrow: 1, alignItems: 'flex-start' }}>
                     <View style={innerSmall}>
                         <View style={formStyle}>
-                            <Text style={titleDark}>Remember, we can’t access your data.</Text>
-                            <Text style={textNormal}>Only you have a copy of your Account Key. </Text>
-                            <Text style={textNormal}>If you lose it, we cannot help you access your account.</Text>
+                            <Text style={titleDark}>{tx('title_confirmTitle')}</Text>
+                            <Text style={textNormal}>{tx('title_confirmContent1')} </Text>
+                            <Text style={textNormal}>{tx('title_confirmContent2')}</Text>
                             <Text style={textNormal}>{tx('title_confirmTextInput', { sample: this.confirmTextSample })}</Text>
                             <View style={{ flex: 1, flexGrow: 1, justifyContent: 'center' }}>
                                 <TextBox
