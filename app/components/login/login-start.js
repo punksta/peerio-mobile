@@ -9,6 +9,7 @@ import LoginWizardPage, {
 } from './login-wizard-page';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
+import DebugMenuTrigger from '../shared/debug-menu-trigger';
 
 const imageWelcomeFast = require('../../assets/welcome-fast.png');
 const imageWelcomePrivate = require('../../assets/welcome-private.png');
@@ -67,10 +68,12 @@ export default class LoginStart extends LoginWizardPage {
         const scrollStyle = { width: this._scrollerWidth };
         return (
             <View style={container}>
-                <View style={header}>
-                    <Text style={title1}>{t('title_welcome')}</Text>
-                    <Text style={title2}>{t('title_welcomeSubHeading')}</Text>
-                </View>
+                <DebugMenuTrigger>
+                    <View style={header}>
+                        <Text style={title1}>{t('title_welcome')}</Text>
+                        <Text style={title2}>{t('title_welcomeSubHeading')}</Text>
+                    </View>
+                </DebugMenuTrigger>
                 <View style={{ flex: 0.7, alignItems: 'center' }}>
                     <ScrollView
                         onScroll={this.handleScroll}

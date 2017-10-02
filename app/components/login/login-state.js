@@ -95,7 +95,7 @@ class LoginState extends RoutedState {
                 if (this._resetTouchId) {
                     console.log('login-state.js: fixing touch id');
                     await keychain.delete(`user::${this.username}`);
-                    await mainState.saveUserTouchId();
+                    await mainState.saveUserTouchID();
                     this._resetTouchId = false;
                 }
             })
