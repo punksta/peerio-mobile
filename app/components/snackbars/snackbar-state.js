@@ -21,7 +21,7 @@ class SnackBarState extends RoutedState {
     }
 
     get isGreen() {
-        return true;
+        return false;
     }
 
     @action pop() {
