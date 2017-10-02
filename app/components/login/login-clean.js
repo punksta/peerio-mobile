@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import React from 'react';
+import { View, Text } from 'react-native';
 import { t, tx } from '../utils/translator';
 // import LanguagePickerBox from '../controls/language-picker-box';
 import TextBox from '../controls/textbox';
@@ -9,7 +9,7 @@ import LoginWizardPage, {
     header, title1, title3, title2, row, container
 } from './login-wizard-page';
 import { vars } from '../../styles/styles';
-import uiState from '../layout/ui-state';
+import DebugMenuTrigger from '../shared/debug-menu-trigger';
 
 const header2 = [header, { marginBottom: 20, justifyContent: 'flex-end' }];
 
@@ -37,25 +37,16 @@ const findKeyText = {
 };
 
 export default class LoginClean extends LoginWizardPage {
-    countDebugPress = 0;
-
-    handleTitlePress() {
-        this.countDebugPress++;
-        if (this.countDebugPress >= 10) {
-            uiState.showDebugMenu = true;
-        }
-    }
-
     render() {
         return (
             <View style={container}>
                 <View style={header2}>
-                    <TouchableWithoutFeedback onPress={() => this.handleTitlePress()}>
+                    <DebugMenuTrigger >
                         <View style={header2}>
                             <Text style={title1}>{t('title_welcome')}</Text>
                             <Text style={title2}>{t('title_login')}</Text>
                         </View>
-                    </TouchableWithoutFeedback>
+                    </DebugMenuTrigger>
                 </View>
                 <View>
                     <View style={inner2}>

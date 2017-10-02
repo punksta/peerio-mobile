@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Dimensions, StatusBar, TextInput, LayoutAnimation } from 'react-native';
-import { when, observable, reaction, action } from 'mobx';
+import { when, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { config, overrideServer, socket } from '../../lib/icebear';
 import Wizard from '../wizard/wizard';
