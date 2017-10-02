@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Dimensions, StatusBar, TextInput, LayoutAnimation } from 'react-native';
-import { when, observable } from 'mobx';
+import { when, observable, reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { config, overrideServer, socket } from '../../lib/icebear';
 import Wizard from '../wizard/wizard';
@@ -46,15 +46,16 @@ export default class LoginWizard extends Wizard {
         when(() => socket.connected, () => { this.switchServerValue = config.socketServerUrl; });
     }
 
-    _counter = 0;
-    @observable showDebugMenu = false;
+    // _counter = 0;
+    // @observable showDebugMenu = false;
+    // @observable countDebugPress = uiState.countDebugPress;
     @observable showDebugLogs = false;
     @observable delayDebugMenu = true;
     @observable switchServerValue = '';
 
     debugTap() {
-        this.showDebugMenu = ++this._counter > 9;
-        if (this.showDebugMenu) LayoutAnimation.easeInEaseOut();
+        uiState.showDebugMenu = uiState.countDebugPress;
+        if (uiState.showDebugMenu) LayoutAnimation.easeInEaseOut();
     }
 
     async debugServer(serverName) {

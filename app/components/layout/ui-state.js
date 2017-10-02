@@ -20,6 +20,8 @@ class UIState extends RoutedState {
     @observable languageSelected = 'en';
     @observable appState = 'active';
     @observable debugText = 'test';
+    @observable countDebugPress = 0;
+    @observable showDebugMenu = false;
     @observable externalViewer = false;
     @observable currentScrollView = null;
     @observable currentScrollViewPosition = 0;
