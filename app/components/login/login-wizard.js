@@ -48,6 +48,7 @@ export default class LoginWizard extends Wizard {
 
     @observable showDebugLogs = false;
     @observable delayDebugMenu = true;
+    @observable debugMenuHeight = 0;
     @observable switchServerValue = '';
 
     async debugServer(serverName) {
@@ -56,16 +57,14 @@ export default class LoginWizard extends Wizard {
     }
 
     get debugMenu() {
-        console.log('get debug menu 0');
         if (this.delayDebugMenu) {
+            LayoutAnimation.easeInEaseOut();
+            this.debugMenuHeight = undefined;
             setTimeout(() => {
-                console.log('get debug menu 1');
                 LayoutAnimation.easeInEaseOut();
                 this.delayDebugMenu = false;
-            }, 2000);
-            return null;
+            }, 1000);
         }
-        console.log('get debug menu 2');
         const s = [wizard.footer.button.base, {
             padding: 4,
             justifyContent: 'center',
@@ -81,7 +80,9 @@ export default class LoginWizard extends Wizard {
             marginTop: 12
         };
         return (
-            <View style={{ marginTop: 40 }}>
+            <View
+                style={{ height: this.debugMenuHeight, opacity: this.delayDebugMenu ? 0.5 : 1, marginTop: 40 }}
+                pointerEvents={this.delayDebugMenu ? 'none' : 'auto'}>
                 <View style={{ flexDirection: 'row', flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: 24 }}>
                     <Button style={s} onPress={() => { this.showDebugLogs = !this.showDebugLogs; }} text="Show logs" />
                     <Button style={s}
