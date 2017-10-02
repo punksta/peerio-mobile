@@ -68,27 +68,30 @@ export default class SnackbarBase extends SafeComponent {
 
     renderThrow() {
         const s = {
-            backgroundColor: this.isGreen ? vars.snackbarBgGreen : vars.snackbarBg,
-            justifyContent: 'center',
-            paddingLeft: 24,
-            paddingRight: 24,
+            backgroundColor: this.isGreen() ? vars.snackbarBgGreen : vars.snackbarBg,
+            justifyContent: 'flex-start',
+            paddingLeft: 16,
             overflow: 'hidden',
             height: this.animatedHeight,
             flexDirection: 'row',
             alignItems: 'center'
         };
         const textStyle = {
-            color: vars.highlight
+            flex: 1,
+            flexGrow: 1,
+            flexShrink: 1,
+            color: vars.highlight,
+            marginRight: 16
         };
         return (
             <TouchableWithoutFeedback onPress={() => this.tap()}>
-            <Animated.View style={s}>
-                { this.isGreen &&  <Icon
-                                    name="check"
-                                    size={16}
-                                    color={vars.white}
-                                    style={{ marginRight: 16 }} />
-                }
+                <Animated.View style={s}>
+                    {this.isGreen() && <Icon
+                        name="check"
+                        size={16}
+                        color={vars.white}
+                        style={{ marginRight: 16 }} />
+                    }
                     <Text numberOfLines={2} ellipsizeMode="tail" style={textStyle}>{this.getText()}</Text>
                 </Animated.View>
             </TouchableWithoutFeedback>
