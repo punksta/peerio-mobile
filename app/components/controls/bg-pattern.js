@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {
-    View, Image, Dimensions, PixelRatio
+    View, Image, Dimensions, PixelRatio, Platform
 } from 'react-native';
 
 const bg = require('../../assets/bg-pattern.png');
 
-const ratio = PixelRatio.get();
+const ratio = Platform.OS === 'android' ? 2 : PixelRatio.get();
 const origRatio = 8;
 const origWidth = 1000;
 const origHeight = 1000;
