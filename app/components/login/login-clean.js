@@ -37,12 +37,11 @@ const findKeyText = {
 };
 
 export default class LoginClean extends LoginWizardPage {
-
     countDebugPress = 0;
 
     handleTitlePress() {
-        uiState.countDebugPress++;
-        if (uiState.countDebugPress >= 10) {
+        this.countDebugPress++;
+        if (this.countDebugPress >= 10) {
             uiState.showDebugMenu = true;
         }
     }

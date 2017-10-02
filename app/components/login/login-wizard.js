@@ -46,17 +46,9 @@ export default class LoginWizard extends Wizard {
         when(() => socket.connected, () => { this.switchServerValue = config.socketServerUrl; });
     }
 
-    // _counter = 0;
-    // @observable showDebugMenu = false;
-    // @observable countDebugPress = uiState.countDebugPress;
     @observable showDebugLogs = false;
     @observable delayDebugMenu = true;
     @observable switchServerValue = '';
-
-    debugTap() {
-        uiState.showDebugMenu = uiState.countDebugPress;
-        if (uiState.showDebugMenu) LayoutAnimation.easeInEaseOut();
-    }
 
     async debugServer(serverName) {
         await overrideServer(serverName);
@@ -64,13 +56,16 @@ export default class LoginWizard extends Wizard {
     }
 
     get debugMenu() {
+        console.log('get debug menu 0');
         if (this.delayDebugMenu) {
             setTimeout(() => {
+                console.log('get debug menu 1');
                 LayoutAnimation.easeInEaseOut();
                 this.delayDebugMenu = false;
             }, 2000);
             return null;
         }
+        console.log('get debug menu 2');
         const s = [wizard.footer.button.base, {
             padding: 4,
             justifyContent: 'center',
@@ -86,7 +81,7 @@ export default class LoginWizard extends Wizard {
             marginTop: 12
         };
         return (
-            <View>
+            <View style={{ marginTop: 40 }}>
                 <View style={{ flexDirection: 'row', flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: 24 }}>
                     <Button style={s} onPress={() => { this.showDebugLogs = !this.showDebugLogs; }} text="Show logs" />
                     <Button style={s}
@@ -109,7 +104,7 @@ export default class LoginWizard extends Wizard {
 
     get debugLogs() {
         return (
-            <View style={{ backgroundColor: 'white', flex: 0, height: height * 0.5 }}><Logs /></View>
+            <View style={{ backgroundColor: 'white', flex: 0, height: height * 0.6 }}><Logs /></View>
         );
     }
 
@@ -118,6 +113,7 @@ export default class LoginWizard extends Wizard {
         const body = (
             <View
                 style={[style.containerFlex]}>
+                {uiState.showDebugMenu ? this.debugMenu : null}
                 {this.showDebugLogs ? this.debugLogs : this.wizard()}
                 <StatusBar barStyle="light-content" />
             </View>
