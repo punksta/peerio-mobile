@@ -6,6 +6,7 @@ export default class Snackbar extends SnackbarBase {
 
     // to override
     getText() { return snackbarState.text; }
+    isGreen() { return snackbarState.isGreen; }
 
     tap() {
         this.hide(() => snackbarState.pop());

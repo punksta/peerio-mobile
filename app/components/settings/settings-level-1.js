@@ -66,7 +66,10 @@ export default class SettingsLevel1 extends SafeComponent {
                     {this.spacer}
                     {__DEV__ && <SettingsItem title="toggle connection" onPress={toggleConnection} />}
                     {__DEV__ && <SettingsItem title="damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
-                    {__DEV__ && <SettingsItem title="snackbar" onPress={() => snackbarState.pushTemporary('test')} />}
+                    {__DEV__ && <SettingsItem title="snackbar" onPress={() =>
+                            snackbarState.pushTemporary('test')} />}
+                    {__DEV__ && <SettingsItem title="snackbar long" onPress={() =>
+                            snackbarState.pushTemporary('test whatever you have been testing for a longer snackbar for the win whatever you have been testing for a longer snackbar for the win')} />}
                     {__DEV__ && <SettingsItem title="test Contacts" onPress={() => contactState.testImport()} />}
                     {__DEV__ && <SettingsItem title="test Share" onPress={() => this.testShare()} />}
                     {__DEV__ && <SettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}
