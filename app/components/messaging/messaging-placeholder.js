@@ -36,7 +36,6 @@ export default class MessagingPlaceholder extends SafeComponent {
         const inpagePopupStyle = {
             justifyContent: 'center',
             borderRadius: 8,
-            borderTopWidth: 6,
             shadowColor: '#000000',
             shadowOpacity: 0.2,
             shadowRadius: 8,
