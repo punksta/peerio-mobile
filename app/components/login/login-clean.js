@@ -41,7 +41,7 @@ export default class LoginClean extends LoginWizardPage {
         return (
             <View style={container}>
                 <View style={header2}>
-                    <DebugMenuTrigger >
+                    <DebugMenuTrigger>
                         <View style={header2}>
                             <Text style={title1}>{t('title_welcome')}</Text>
                             <Text style={title2}>{t('title_login')}</Text>
