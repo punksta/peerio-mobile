@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, Animated, TouchableWithoutFeedback } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { warnings, warningStates } from '../../lib/icebear';
@@ -22,6 +23,7 @@ export default class SnackbarBase extends SafeComponent {
 
     // to override
     getText() { return null; }
+    isGreen() { return false; }
 
     get isVisible() {
         const w = warnings.current;
@@ -66,19 +68,27 @@ export default class SnackbarBase extends SafeComponent {
 
     renderThrow() {
         const s = {
-            backgroundColor: vars.snackbarBg,
+            backgroundColor: this.isGreen ? vars.snackbarBgGreen : vars.snackbarBg,
             justifyContent: 'center',
             paddingLeft: 24,
             paddingRight: 24,
             overflow: 'hidden',
-            height: this.animatedHeight
+            height: this.animatedHeight,
+            flexDirection: 'row',
+            alignItems: 'center'
         };
         const textStyle = {
             color: vars.highlight
         };
         return (
             <TouchableWithoutFeedback onPress={() => this.tap()}>
-                <Animated.View style={s}>
+            <Animated.View style={s}>
+                { this.isGreen &&  <Icon
+                                    name="check"
+                                    size={16}
+                                    color={vars.white}
+                                    style={{ marginRight: 16 }} />
+                }
                     <Text numberOfLines={2} ellipsizeMode="tail" style={textStyle}>{this.getText()}</Text>
                 </Animated.View>
             </TouchableWithoutFeedback>

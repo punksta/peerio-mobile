@@ -43,6 +43,7 @@ const vars = {
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
     checkboxActive: 'rgba(35, 208, 137, 1)',
     snackbarBg: '#4a4a4a',
+    snackbarBgGreen: '#38CE86',
     snackbarHeight: 48,
     settingsBg: 'rgba(0, 0, 0, 0.06)',
     gold: '#ffd700',
