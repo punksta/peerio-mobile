@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.161.0"></a>
+# [3.161.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.160.0...v3.161.0) (2017-10-03)
+
+
+### Bug Fixes
+
+* _mainState2.default.saveUserTouchId is not a function ([7a20ea8](https://github.com/PeerioTechnologies/peerio-mobile/commit/7a20ea8))
+* bg-pattern sizing for android ([5174777](https://github.com/PeerioTechnologies/peerio-mobile/commit/5174777))
+* no yellow border for anything other than system warning ([500e157](https://github.com/PeerioTechnologies/peerio-mobile/commit/500e157))
+* remove top border from zero chat dialog ([a513aaa](https://github.com/PeerioTechnologies/peerio-mobile/commit/a513aaa))
+
+
+### Features
+
+* new zero chat design ([2f45c55](https://github.com/PeerioTechnologies/peerio-mobile/commit/2f45c55))
+
+
+
 <a name="3.160.0"></a>
 # [3.160.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.159.0...v3.160.0) (2017-10-02)
 
