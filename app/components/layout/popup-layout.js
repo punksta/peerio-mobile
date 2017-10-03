@@ -52,14 +52,23 @@ export default class PopupLayout extends SafeComponent {
             backgroundColor: '#00000020',
             transform: [{ translateY: 0 }]
         }];
-
-        const borderTopColor = colors[popup.type];
+        const backgroundColor = colors[popup.type];
         const margin = 30;
-        const container = {
+        const wrapper = {
             flexGrow: popup.fullScreen,
+            backgroundColor,
             borderRadius: 8,
-            borderTopColor,
-            borderTopWidth: borderTopColor ? 6 : 0,
+            overflow: 'hidden',
+            elevation: 10,
+            margin,
+            marginHorizontal: 16,
+            marginBottom: (Platform.OS === 'android' ? 0 : uiState.keyboardHeight) + margin
+        };
+
+        const container = {
+            flex: 1,
+            flexGrow: 1,
+            borderRadius: 8,
             shadowColor: '#000000',
             shadowOpacity: 0.2,
             shadowRadius: 8,
@@ -67,11 +76,9 @@ export default class PopupLayout extends SafeComponent {
                 height: 1,
                 width: 1
             },
-            elevation: 10,
-            margin,
-            marginHorizontal: 16,
-            backgroundColor: 'white',
-            marginBottom: (Platform.OS === 'android' ? 0 : uiState.keyboardHeight) + margin
+            borderBottomLeftRadius: 8,
+            borderBottomRightRadius: 8,
+            backgroundColor: vars.white
         };
 
         const title = {
@@ -90,14 +97,16 @@ export default class PopupLayout extends SafeComponent {
 
         return (
             <View style={popupNonAnimatedStyle}>
-                <View style={container}>
-                    <View style={{ padding: 20, flexGrow: 1, flexShrink: 1 }}>
-                        {popup.title ? <Text style={title} ellipsizeMode="tail" numberOfLines={1}>{popup.title}</Text> : null}
-                        {popup.subTitle}
-                        {popup.contents}
-                    </View>
-                    <View style={buttonBar}>
-                        {popup.buttons.map(this.button)}
+                <View style={wrapper}>
+                    <View style={container}>
+                        <View style={{ padding: 20, flexGrow: 1, flexShrink: 1 }}>
+                            {popup.title ? <Text style={title} ellipsizeMode="tail" numberOfLines={1}>{popup.title}</Text> : null}
+                            {popup.subTitle}
+                            {popup.contents}
+                        </View>
+                        <View style={buttonBar}>
+                            {popup.buttons.map(this.button)}
+                        </View>
                     </View>
                 </View>
             </View>
