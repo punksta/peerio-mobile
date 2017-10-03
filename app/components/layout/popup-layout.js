@@ -66,7 +66,6 @@ export default class PopupLayout extends SafeComponent {
         };
 
         const container = {
-            flex: 1,
             flexGrow: 1,
             borderRadius: 8,
             shadowColor: '#000000',
