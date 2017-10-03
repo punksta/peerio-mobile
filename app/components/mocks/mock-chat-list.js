@@ -15,6 +15,7 @@ export default class MockChatList extends Component {
     componentDidMount() {
         User.current = {};
         chatState.store = mockChatStore;
+        chatState.init();
     }
 
     render() {
