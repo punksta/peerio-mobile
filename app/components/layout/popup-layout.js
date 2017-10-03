@@ -8,6 +8,10 @@ import ButtonText from '../controls/button-text';
 import { vars } from '../../styles/styles';
 import uiState from './ui-state';
 
+const colors = {
+    systemWarning: vars.yellowLine
+};
+
 @observer
 export default class PopupLayout extends SafeComponent {
     componentDidMount() {
@@ -48,14 +52,23 @@ export default class PopupLayout extends SafeComponent {
             backgroundColor: '#00000020',
             transform: [{ translateY: 0 }]
         }];
-
+        const backgroundColor = colors[popup.type];
+        const margin = 30;
         const wrapper = {
-            backgroundColor: vars.yellowLine,
+            flexGrow: popup.fullScreen,
+            backgroundColor,
             borderRadius: 8,
             overflow: 'hidden',
-            marginHorizontal: 20,
-            marginBottom: 20,
             elevation: 10,
+            margin,
+            marginHorizontal: 16,
+            marginBottom: (Platform.OS === 'android' ? 0 : uiState.keyboardHeight) + margin
+        };
+
+        const container = {
+            flex: 1,
+            flexGrow: 1,
+            borderRadius: 8,
             shadowColor: '#000000',
             shadowOpacity: 0.2,
             shadowRadius: 8,
@@ -64,17 +77,8 @@ export default class PopupLayout extends SafeComponent {
                 width: 1
             },
             borderBottomLeftRadius: 8,
-            borderBottomRightRadius: 8
-        };
-
-        const container = {
-            flexGrow: popup.fullScreen,
-            borderBottomLeftRadius: 8,
             borderBottomRightRadius: 8,
-            elevation: 10,
-            marginTop: 6,
-            backgroundColor: 'white',
-            marginBottom: Platform.OS === 'android' ? 0 : uiState.keyboardHeight
+            backgroundColor: vars.white
         };
 
         const title = {

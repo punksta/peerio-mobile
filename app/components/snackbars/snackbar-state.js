@@ -20,6 +20,10 @@ class SnackBarState extends RoutedState {
         return w ? tx(w.content, w.data) : null;
     }
 
+    get isGreen() {
+        return false;
+    }
+
     @action pop() {
         warnings.current && warnings.current.dismiss();
     }
