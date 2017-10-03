@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.162.0"></a>
+# [3.162.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.161.0...v3.162.0) (2017-10-03)
+
+
+### Features
+
+* About button in Settings level 1 ([5ada92d](https://github.com/PeerioTechnologies/peerio-mobile/commit/5ada92d))
+
+
+
 <a name="3.161.0"></a>
 # [3.161.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.160.0...v3.161.0) (2017-10-03)
 
