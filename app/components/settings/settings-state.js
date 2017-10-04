@@ -18,12 +18,13 @@ class SettingsState extends RoutedState {
         profile: 'title_settingsProfile',
         account: 'title_settingsAccount',
         preferences: 'title_settingsPreferences',
-        upgrade: 'button_upgrade'
+        upgrade: 'button_upgrade',
+        twoFactorAuth: 'title_2FA'
     };
 
     get title() {
-        const sr = this.subroute;
-        return sr ? tx(this._titles[sr]) : tx('title_settings');
+        const sr = this.subroute && this._titles[this.subroute];
+        return sr ? tx(sr) : tx('title_settings');
     }
 
     onTransition(/* active */) {
