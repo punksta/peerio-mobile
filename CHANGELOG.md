@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.163.0"></a>
+# [3.163.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.162.0...v3.163.0) (2017-10-04)
+
+
+### Bug Fixes
+
+* flex for dialog boxes ([449b326](https://github.com/PeerioTechnologies/peerio-mobile/commit/449b326))
+
+
+
 <a name="3.162.0"></a>
 # [3.162.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.161.0...v3.162.0) (2017-10-03)
 
