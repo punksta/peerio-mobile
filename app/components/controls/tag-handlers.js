@@ -1,4 +1,5 @@
 import React from 'react';
+import { Text } from 'react-native';
 import Bold from './bold';
 import Italic from './italic';
 import Link from './link';
@@ -25,6 +26,10 @@ function i(text) {
     return <Italic key={text}>{text}</Italic>;
 }
 
+function br() {
+    return <Text>{'\n'}</Text>;
+}
+
 module.exports = {
-    a, b, i
+    a, b, i, br
 };

@@ -1,23 +1,22 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { View, Text, TextInput, ActivityIndicator, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { when, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
 import Layout1 from '../layout/layout1';
-import Center from '../controls/center';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
 import Avatar from '../shared/avatar';
 import ContactsPlaceholder from './contacts-placeholder';
 import ContactInviteItem from './contact-invite-item';
+import ContactInviteItemPrompt from './contact-invite-item-prompt';
 import ContactLegacyItem from './contact-legacy-item';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import contactState from './contact-state';
-import snackbarState from '../snackbars/snackbar-state';
 import ContactCollection from './contact-collection';
 
 @observer
@@ -27,6 +26,7 @@ export default class ContactSelectorDM extends SafeComponent {
     @observable clean = true;
     @observable toInvite = null;
     @observable legacyContact = null;
+    @observable notFound = null;
     @observable findUserText;
 
     componentDidMount() {
@@ -35,13 +35,15 @@ export default class ContactSelectorDM extends SafeComponent {
         });
     }
 
+    fromEmail(email) {
+        return observable({ fullName: email, username: '', invited: null, email });
+    }
+
     get inviteContactDuck() {
         if (!this.toInvite) return null;
-        const email = this.toInvite;
-        const fullName = this.toInvite;
-        const username = '';
-        const invited = false;
-        return observable({ fullName, username, invited, email });
+        const result = this.fromEmail(this.toInvite);
+        result.invited = !!contactState.store.invitedContacts.find(i => i.email === result.email);
+        return result;
     }
 
     userbox(contact, i) {
@@ -79,6 +81,7 @@ export default class ContactSelectorDM extends SafeComponent {
         console.log('onChangeFindUserText');
         this.toInvite = null;
         this.legacyContact = null;
+        this.notFound = null;
         const items = text.split(/[ ,;]/);
         if (items.length > 1) {
             this.findUserText = items[0].trim();
@@ -130,6 +133,8 @@ export default class ContactSelectorDM extends SafeComponent {
                 {this.findUserText ? icons.coloredSmall('close', () => {
                     this.inProgress = false;
                     this.findUserText = '';
+                    this.toInvite = null;
+                    this.notFound = null;
                 }, vars.bg) : null}
             </View>
         );
@@ -139,25 +144,22 @@ export default class ContactSelectorDM extends SafeComponent {
         const container = {
             flexGrow: 1,
             flexDirection: 'row',
-            alignItems: 'center',
-            padding: 16
-        };
-        const underlay = {
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            flexDirection: 'row',
-            justifyContent: 'flex-end'
+            padding: 8,
+            alignItems: 'center'
         };
         const textStyle = {
+            marginLeft: vars.iconSize * 2,
+            textAlign: 'center',
+            flexGrow: 1,
+            flexShrink: 1,
             fontSize: 16,
             fontWeight: vars.font.weight.semiBold,
             color: vars.txtDark
         };
         return (
             <View style={container}>
-                <View style={underlay}>{icons.dark('close', this.props.onExit)}</View>
-                <Center><Text style={textStyle}>{this.props.title}</Text></Center>
+                <Text style={textStyle}>{this.props.title}</Text>
+                {icons.dark('close', this.props.onExit)}
             </View>
         );
     }
@@ -179,7 +181,7 @@ export default class ContactSelectorDM extends SafeComponent {
                 starred={contact.isAdded}
                 contact={contact}
                 key={username || i}
-                title={<Text style={{ fontWeight: 'normal' }}>{fullName}</Text>}
+                title={<Text style={{ fontWeight: 'normal' }}>{fullName || username}</Text>}
                 title2={isLegacy ? username : null}
                 height={56}
                 hideOnline
@@ -200,30 +202,11 @@ export default class ContactSelectorDM extends SafeComponent {
         this._searchTimeout = setTimeout(() => this.searchUser(username), 500);
     }
 
-    searchUser(username, addImmediately) {
+    searchUser(username) {
         this.inProgress = false;
         const u = username.trim();
         if (!u) return;
         const c = contactState.store.getContact(u);
-        if (addImmediately) {
-            this.recipients.add(c);
-            when(() => !c.loading, () => {
-                if (c.notFound) {
-                    LayoutAnimation.easeInEaseOut();
-                    this.recipients.remove(c);
-                    if (c.isLegacy) {
-                        snackbarState.pushTemporary(t('title_inviteLegacy'));
-                        if (this._searchTimeout) {
-                            clearTimeout(this._searchTimeout);
-                            this._searchTimeout = null;
-                        }
-                        return;
-                    }
-                    snackbarState.pushTemporary(t('error_usernameNotFound'));
-                }
-            });
-            return;
-        }
         if (!this.findUserText) return;
         this.inProgress = true;
         when(() => !c.loading, () => {
@@ -236,6 +219,8 @@ export default class ContactSelectorDM extends SafeComponent {
                 }
                 if (username.indexOf('@') !== -1) {
                     this.toInvite = username;
+                } else {
+                    this.notFound = username;
                 }
             }
         });
@@ -244,23 +229,34 @@ export default class ContactSelectorDM extends SafeComponent {
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
         const found = contactState.getFiltered(this.findUserText);
-        const mockItems = found.map((item, i) => this.item(item, i));
+        const result = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
         const allYourContactsTitle = found.length && !this.findUserText ?
             <Text style={{ fontWeight: 'bold', margin: 10 }}>{tx('title_allYourContacts', { found: found.length })}</Text> : null;
-        // const result = findUserText && findUserText.length ? mockItems : chat;
-        const result = mockItems;
+        const allInvitedTitle = !this.findUserText ?
+            <Text style={{ fontWeight: 'bold', margin: 10 }}>{tx('title_allYourInvited', { found: contactState.store.invitedContacts.length })}</Text> : null;
+        const allInvited = !this.findUserText ? contactState.store.invitedContacts.map(
+            ({ email }) => <ContactInviteItem noBorderBottom contact={this.fromEmail(email)} />) : null;
         const body = !this.toInvite && !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
         const invite = this.inviteContactDuck;
-        const inviteControl = invite ? <ContactInviteItem noBorderBottom contact={invite} /> : null;
+        const inviteControl = !!invite && <ContactInviteItemPrompt email={this.toInvite} />;
         const legacy = this.legacyContact;
         const legacyControl = legacy ? <ContactLegacyItem noBorderBottom contact={legacy} /> : null;
+        const notFound = !this.inProgress && !!this.notFound && (
+            <View style={{ flexDirection: 'row', marginHorizontal: 36 }}>
+                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: 8 }} />
+                <Text style={{ color: vars.txtDate }}>{t('error_userNotFoundTryEmail', { user: this.notFound })}</Text>
+            </View>
+        );
         return (
             <View style={{ marginHorizontal: 12 }}>
                 {allYourContactsTitle}
+                {notFound}
                 {inviteControl}
                 {legacyControl}
                 {body}
+                {allInvitedTitle}
+                {allInvited}
             </View>
         );
     }

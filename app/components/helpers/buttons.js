@@ -51,6 +51,29 @@ export default {
         );
     },
 
+    uppercaseGreenBgButton(text, onPress, disabled, hidden) {
+        const opacity = hidden ? 0.0 : 1.0;
+        const s = {
+            borderRadius: 16,
+            paddingHorizontal: 16,
+            paddingVertical: 10,
+            backgroundColor: disabled ? vars.txtMedium : vars.snackbarBgGreen
+        };
+        return (
+            <View style={{ opacity }}>
+                <TouchableOpacity
+                    disabled={disabled}
+                    onPress={disabled ? null : onPress}
+                    pressRetentionOffset={vars.pressRetentionOffset}
+                    style={s}>
+                    <Text style={{ fontWeight: 'bold', textAlign: 'center', color: vars.white }}>
+                        {tu(text)}
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        );
+    },
+
     uppercaseBlueButtonNoPadding(text, onPress, disabled) {
         return (
             <TouchableOpacity
