@@ -74,18 +74,6 @@ export default class SettingsLevel2 extends SafeComponent {
 
     upgrade = () => <AccountUpgrade />;
 
-    settingsItem(title, prop) {
-        const user = User.current;
-        const state = user.settings;
-        const onPress = value => {
-            state[prop] = value;
-            user.saveSettings();
-        };
-        return (
-            <ToggleItem {...{ prop, title, state, onPress }} />
-        );
-    }
-
     autoLoginToggle() {
         const user = User.current;
         const state = user;
@@ -114,19 +102,6 @@ export default class SettingsLevel2 extends SafeComponent {
         );
     }
 
-    unreadChatsToggle() {
-        const state = chatState.store;
-        const prop = 'unreadChatsAlwaysOnTop';
-        const title = 'title_unreadChatsOnTopDetail';
-        const onPress = () => {
-            state.unreadChatsAlwaysOnTop = !state.unreadChatsAlwaysOnTop;
-            User.current.saveSettings();
-        };
-        return (
-            <ToggleItem {...{ prop, title, state, onPress }} />
-        );
-    }
-
     preferences = () => {
         const text = {
             color: vars.txtMedium,
@@ -136,11 +111,14 @@ export default class SettingsLevel2 extends SafeComponent {
 
         return (
             <View style={bgStyle}>
-                <Text style={text}>{t('title_emailsDetail')}</Text>
-                {this.settingsItem('title_notificationsEmailMessage', 'messageNotifications')}
-                <View style={spacer} />
-                {this.unreadChatsToggle()}
-                <View style={spacer} />
+                <SettingsItem
+                    // TODO Peerio-Copy
+                    title="Notifications"
+                    onPress={() => settingsState.transition('notifications')} />
+                <SettingsItem
+                    // TODO Peerio-Copy
+                    title="Display"
+                    onPress={() => settingsState.transition('display')} />
                 {/* <Text style={text}>{t('title_soundsDetail')}</Text> */}
                 {/* <ToggleItem title="title_notificationsEmailMessage" /> */}
                 <View style={spacer} />
