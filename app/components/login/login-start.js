@@ -21,7 +21,7 @@ export default class LoginStart extends LoginWizardPage {
     progress(current) {
         const count = 3;
         const circles = [];
-        const circleSize = 4;
+        const circleSize = vars.circleSize;
         const circle = {
             backgroundColor: vars.txtMedium,
             margin: circleSize,

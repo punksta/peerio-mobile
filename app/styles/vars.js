@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Platform, Dimensions, PixelRatio } from 'react-native';
 import branding from './branding';
 
 const { bg, bgGradient, tabsBg, tabsFg } = branding;
@@ -9,8 +9,17 @@ const layoutPaddingTop = statusBarHeight * 2;
 const r = 40;
 const retentionOffset = { top: r, left: r, bottom: r, right: r };
 
+const { height } = Dimensions.get('window');
+const pixRatio = PixelRatio.get();
+console.log({ height, pixRatio });
+
+const defaultHeight = 667;
+
+const scaleDim = size => height / defaultHeight * size;
+
 const vars = {
     circle: 10,
+    circleSize: 4,
     bg,
     bgGradient,
     tabsBg,
@@ -65,6 +74,7 @@ const vars = {
     modalPaddingVertical: 40,
     modalPaddingHorizontal: 40,
     wizardPadding: 36,
+    wizardButtonPadding: scaleDim(12),
     font: {
         size: {
             normal: 14,
