@@ -116,6 +116,7 @@ class ChatState extends RoutedState {
     }
 
     @action addMessage(msg, files) {
+        sounds.ack();
         this.currentChat && (
             files ? this.currentChat.shareFiles(files) : this.currentChat.sendMessage(msg)
         ).catch(sounds.destroy);

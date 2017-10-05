@@ -7,6 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileInlineProgress from '../files/file-inline-progress';
+import FileInlineImage from '../files/file-inline-image';
 import AvatarCircle from './avatar-circle';
 import ErrorCircle from './error-circle';
 import DeletedCircle from './deleted-circle';
@@ -186,6 +187,10 @@ export default class Avatar extends SafeComponent {
     get files() {
         return this.props.files ?
             this.props.files.map(file => <FileInlineProgress key={file} file={file} />) : null;
+    }
+
+    get inlineImage() {
+        return this.props.inlineImage ? <FileInlineImage key={this.props.inlineImage} image={this.props.inlineImage} /> : null;
     }
 
     get errorCircle() {
@@ -386,6 +391,7 @@ export default class Avatar extends SafeComponent {
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
                             {this.files}
+                            {this.inlineImage}
                             {this.systemMessage}
                             {this.retryCancel}
                         </View>
@@ -410,6 +416,7 @@ export default class Avatar extends SafeComponent {
                             {this.props.isChat ? this.name : this.title}
                             {this.message}
                             {this.files}
+                            {this.inlineImage}
                             {this.systemMessage}
                             {this.retryCancel}
                         </View>

@@ -27,6 +27,11 @@ class MockChannel {
         this.id = randomWords({ min: 7, max: 7, join: ':' });
         this.addAdmin(this.participants[0]);
         this.addAdmin(this.participants[1]);
+
+        for (let i = 0; i < 5; ++i) {
+            this.addRandomMessage();
+        }
+        this.addInlineImageMessage();
     }
 
     toggleFavoriteState() {
@@ -60,6 +65,21 @@ class MockChannel {
                 this.participants.push(i);
             }
         });
+    }
+
+    addRandomMessage() {
+        const id = randomWords({ min: 1, max: 4, join: '-' });
+        const text = randomWords({ min: 1, max: 4, join: ' ' });
+        const sender = this.participants[0];
+        this.messages.push({ id, text, sender });
+    }
+
+    addInlineImageMessage() {
+        const id = randomWords({ min: 1, max: 4, join: '-' });
+        const text = randomWords({ min: 1, max: 4, join: ' ' });
+        const sender = this.participants[0];
+        const inlineImageUrl = 'https://i.ytimg.com/vi/xC5n8f0fTeE/maxresdefault.jpg';
+        this.messages.push({ id, text, sender, inlineImageUrl });
     }
 }
 

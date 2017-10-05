@@ -28,13 +28,14 @@ export default class ChatItem extends SafeComponent {
                 contact={i.sender}
                 isDeleted={i.sender ? i.sender.isDeleted : false}
                 files={i.files}
+                inlineImage={i.inlineImageUrl}
                 receipts={i.receipts}
                 hideOnline
                 firstOfTheDay={i.firstOfTheDay}
                 timestamp={i.timestamp}
                 timestampText={i.messageTimestampText}
                 message={text}
-                isChat={true}
+                isChat
                 systemMessage={systemMessageText}
                 key={key}
                 error={error}
