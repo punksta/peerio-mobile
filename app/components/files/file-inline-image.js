@@ -23,20 +23,22 @@ class InlineImageCacheStore {
 
 const inlineImageCacheStore = new InlineImageCacheStore();
 
-const DISPLAY_BY_DEFAULT = false;
+const DISPLAY_BY_DEFAULT = true;
 
 @observer
 export default class FileInlineImage extends SafeComponent {
     @observable width = 0;
     @observable height = 0;
     @observable optimalContentWidth = 0;
-    @observable optimalContentHeight = Dimensions.get('window').height;
+    @observable optimalContentHeight = 0;
     @observable opened;
+    @observable loaded;
     @observable tooBig;
     @observable loadImage;
     outerPadding = 8;
 
     async componentWillMount() {
+        this.optimalContentHeight = Dimensions.get('window').height;
         this.opened = DISPLAY_BY_DEFAULT;
         this.tooBig = Math.random() > 0.5;
         this.loadImage = DISPLAY_BY_DEFAULT && !this.tooBig;
@@ -44,7 +46,7 @@ export default class FileInlineImage extends SafeComponent {
     }
 
     async fetchSize() {
-        const { width, height } = await inlineImageCacheStore.getSize(this.props.image);
+        const { width, height } = await inlineImageCacheStore.getSize(this.props.image.url);
         when(() => this.optimalContentWidth > 0, () => {
             const { optimalContentWidth, optimalContentHeight } = this;
             let w = width + 0.0, h = height + 0.0;
@@ -112,7 +114,7 @@ export default class FileInlineImage extends SafeComponent {
 
     renderThrow() {
         const { url, title } = this.props.image;
-        const { width, height } = this;
+        const { width, height, loaded } = this;
         const source = { uri: url };
         const outer = {
             padding: this.outerPadding,
@@ -134,7 +136,7 @@ export default class FileInlineImage extends SafeComponent {
         };
 
         const inner = {
-            backgroundColor: vars.lightGrayBg
+            backgroundColor: loaded ? vars.white : vars.lightGrayBg
         };
         return (
             <View style={outer} onLayout={this.layout}>
@@ -146,7 +148,8 @@ export default class FileInlineImage extends SafeComponent {
                     </View>
                 </View>
                 <View style={inner}>
-                    {this.opened && this.loadImage && <Image source={source} style={{ width, height }} />}
+                    {this.opened && this.loadImage &&
+                        <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} />}
                     {this.opened && !this.loadImage && !this.tooBig && this.displayImageOffer }
                     {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer }
                 </View>
