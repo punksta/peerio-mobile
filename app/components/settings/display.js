@@ -40,10 +40,69 @@ export default class Display extends SafeComponent {
         );
     }
 
+    imagePreviewsToggle() {
+        const state = User.current.settings.inlineChatContent;
+        const prop = 'peerioContentEnabled';
+        const title = 'Show previews of image files'; // TODO Peerio Copy
+        const onPress = () => {
+            state.peerioContentEnabled = !state.peerioContentEnabled;
+            User.current.saveSettings();
+        };
+        return (
+            <ToggleItem {...{ prop, title, state, onPress }} />
+        );
+    }
+
+    largeImagesToggle() {
+        const state = User.current.settings.inlineChatContent;
+        const prop = 'limitSize';
+        const title = 'Show images larger than 3 MB'; // TODO Peerio Copy
+        const onPress = () => {
+            state.limitSize = !state.limitSize;
+            User.current.saveSettings();
+        };
+        return (
+            <ToggleItem {...{ prop, title, state, onPress }} />
+        );
+    }
+
+    urlPreviewsToggle() {
+        const state = User.current.settings.inlineChatContent;
+        const prop = 'externalContentEnabled';
+        const title = 'Enable all URL Preview'; // TODO Peerio Copy
+        const onPress = () => {
+            state.externalContentEnabled = !state.externalContentEnabled;
+            User.current.saveSettings();
+        };
+        return (
+            <ToggleItem {...{ prop, title, state, onPress }} />
+        );
+    }
+
+    favoritesToggle() {
+        const state = User.current.settings.inlineChatContent;
+        const prop = 'externalJustForFavContacts';
+        const title = 'Only from Favourites'; // TODO Peerio Copy
+        const onPress = () => {
+            state.externalJustForFavContacts = !state.externalJustForFavContacts;
+            User.current.saveSettings();
+        };
+        return (
+            <ToggleItem {...{ prop, title, state, onPress }} />
+        );
+    }
+
     renderThrow() {
         return (
             <View style={bgStyle}>
-                {/* TODO Continue */}
+                {/* <Text style={text}>Image preview</Text> */}                                                                                                                                                                                                                                                                                     {/* TODO Peerio Copy */}
+                {this.imagePreviewsToggle()}
+                {/* this.largeImagesToggle() */}
+                {/* <Text style={text}>URL preview</Text> */} {/* TODO Peerio Copy */}
+                {/* TODO Warning */}
+                {/* this.urlPreviewsToggle() */}
+                {/* User.current.settings.inlineChatContent.externalContentEnabled && this.favoritesToggle() */}
+                <View style={spacer} />
             </View>
         );
     }
