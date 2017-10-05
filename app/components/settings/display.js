@@ -95,13 +95,12 @@ export default class Display extends SafeComponent {
     renderThrow() {
         return (
             <View style={bgStyle}>
-                {/* <Text style={text}>Image preview</Text> */}                                                                                                                                                                                                                                                                                     {/* TODO Peerio Copy */}
+                <Text style={text}>Image preview</Text>
                 {this.imagePreviewsToggle()}
-                {/* this.largeImagesToggle() */}
-                {/* <Text style={text}>URL preview</Text> */} {/* TODO Peerio Copy */}
-                {/* TODO Warning */}
-                {/* this.urlPreviewsToggle() */}
-                {/* User.current.settings.inlineChatContent.externalContentEnabled && this.favoritesToggle() */}
+                {this.largeImagesToggle()}
+                {<Text style={text}>URL preview</Text>}
+                {this.urlPreviewsToggle()}
+                {User.current.settings.inlineChatContent.externalContentEnabled && this.favoritesToggle()}
                 <View style={spacer} />
             </View>
         );
