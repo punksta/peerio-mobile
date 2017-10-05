@@ -2,6 +2,7 @@ import { observable } from 'mobx';
 import randomWords from 'random-words';
 import capitalize from 'capitalize';
 import mockContactStore from './mock-contact-store';
+import mockFileStore from './mock-file-store';
 import { popupCancelConfirm } from '../shared/popups';
 import { TinyDb } from '../../lib/icebear';
 
@@ -9,6 +10,18 @@ const channelPaywallTitle = `2 Channels`;
 const channelPaywallMessage =
 `Peerio's basic account gets you access to 2 free channels.
 If you would like to join or create another channel, please delete an existing one or check out our upgrade plans`;
+
+const randomImages = [
+    'https://i.ytimg.com/vi/xC5n8f0fTeE/maxresdefault.jpg',
+    'http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1487095116/forest-park-portland-oregon-FORESTBATH0217.jpg?itok=XVmUfPQB',
+    'http://cdn-image.travelandleisure.com/sites/default/files/styles/1600x1000/public/1487095116/yakushima-forest-japan-FORESTBATH0217.jpg?itok=mnXAvDq3',
+    'http://25.media.tumblr.com/865fb0f33ebdde6360be8576ad6b1978/tumblr_n08zcnLOEf1t8zamio1_250.png',
+    'http://globalforestlink.com/wp-content/uploads/2015/07/coniferous.jpg',
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Grand_Anse_Beach_Grenada.jpg/1200px-Grand_Anse_Beach_Grenada.jpg',
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5RzVGnDGecjd0b7YqxzvkkRo-6jiraf9FOMQAgChfa4WKD_6c',
+    'http://www.myjerseyshore.com/wp-content/themes/directorypress/thumbs//Beaches-Page-Picture.jpg',
+    'http://www.shoreexcursionsgroup.com/img/article/region_bermuda2.jpg'
+];
 
 class MockChannel {
     @observable messages = [];
@@ -32,6 +45,7 @@ class MockChannel {
             this.addRandomMessage();
         }
         this.addInlineImageMessage();
+        this.addFileMessage();
     }
 
     toggleFavoriteState() {
@@ -67,19 +81,32 @@ class MockChannel {
         });
     }
 
-    addRandomMessage() {
+    createMock(message) {
         const id = randomWords({ min: 1, max: 4, join: '-' });
-        const text = randomWords({ min: 1, max: 4, join: ' ' });
+        let text = message;
+        if (!message && message !== false) text = randomWords({ min: 1, max: 4, join: ' ' });
         const sender = this.participants[0];
-        this.messages.push({ id, text, sender });
+        const groupWithPrevious = Math.random() > 0.5;
+        return { id, text, sender, groupWithPrevious };
+    }
+
+    addRandomMessage(message) {
+        const m = this.createMock(message);
+        this.messages.push(m);
     }
 
     addInlineImageMessage() {
-        const id = randomWords({ min: 1, max: 4, join: '-' });
-        const text = randomWords({ min: 1, max: 4, join: ' ' });
-        const sender = this.participants[0];
-        const inlineImageUrl = 'https://i.ytimg.com/vi/xC5n8f0fTeE/maxresdefault.jpg';
-        this.messages.push({ id, text, sender, inlineImageUrl });
+        const m = this.createMock(false);
+        const title = `${randomWords({ min: 1, max: 2, join: '_' })}.png`;
+        const url = randomImages.random();
+        m.inlineImage = { url, title };
+        this.messages.push(m);
+    }
+
+    addFileMessage() {
+        const m = this.createMock(false);
+        m.files = [mockFileStore.files[0].id];
+        this.messages.push(m);
     }
 }
 

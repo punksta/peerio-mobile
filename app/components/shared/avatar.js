@@ -190,7 +190,8 @@ export default class Avatar extends SafeComponent {
     }
 
     get inlineImage() {
-        return this.props.inlineImage ? <FileInlineImage key={this.props.inlineImage} image={this.props.inlineImage} /> : null;
+        return this.props.inlineImage ?
+            <FileInlineImage key={this.props.inlineImage} image={this.props.inlineImage} onAction={this.props.onInlineImageAction} /> : null;
     }
 
     get errorCircle() {
@@ -381,12 +382,14 @@ export default class Avatar extends SafeComponent {
     }
 
     renderCollapsed() {
+        let shrinkStrategy = { flexShrink: 1 };
+        if (this.props.inlineImage) shrinkStrategy = { flexGrow: 1 };
         return (
             <View style={{ flexGrow: 1 }}>
                 <View style={[itemStyle, this.errorStyle]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
-                        style={[this.itemContainerStyle, { paddingLeft: 58, flexShrink: 1 }]}>
+                        style={[this.itemContainerStyle, { paddingLeft: 58, marginRight: 10 }, shrinkStrategy]}>
                         {this.message}
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}

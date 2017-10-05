@@ -28,7 +28,7 @@ export default class ChatItem extends SafeComponent {
                 contact={i.sender}
                 isDeleted={i.sender ? i.sender.isDeleted : false}
                 files={i.files}
-                inlineImage={i.inlineImageUrl}
+                inlineImage={i.inlineImage}
                 receipts={i.receipts}
                 hideOnline
                 firstOfTheDay={i.firstOfTheDay}
@@ -43,6 +43,7 @@ export default class ChatItem extends SafeComponent {
                 onPressAvatar={onPressAvatar}
                 onLayout={this.props.onLayout}
                 onRetryCancel={this.props.onRetryCancel}
+                onInlineImageAction={this.props.onInlineImageAction}
                 noBorderBottom
                 collapsed={!!i.groupWithPrevious}
                 extraPaddingTop={8}

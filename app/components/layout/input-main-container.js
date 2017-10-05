@@ -56,7 +56,7 @@ export default class InputMainContainer extends SafeComponent {
 
     uploadQueue() {
         const chat = chatState.currentChat;
-        const q = chat ? chat.uploadQueue : [];
+        const q = chat && chat.uploadQueue || [];
         return q.map(f => (
             <View style={{ margin: 12 }}>
                 <FileInlineProgress key={f.fileId} file={f.fileId} transparentOnFinishUpload />
@@ -80,6 +80,7 @@ export default class InputMainContainer extends SafeComponent {
                 </View>
                 <View style={s}>
                     <InputMain
+                        {...this.props}
                         plus={this.addFiles}
                         sendAck={this.sendAck}
                         send={this.send} />
