@@ -33,6 +33,7 @@ ToggleItem.propTypes = {
     state: PropTypes.any,
     prop: PropTypes.any,
     title: PropTypes.any,
+    description: PropTypes.any,
     onPress: PropTypes.any
 };
 

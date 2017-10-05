@@ -45,12 +45,13 @@ export default class Display extends SafeComponent {
         const state = User.current.settings.inlineChatContent;
         const prop = 'peerioContentEnabled';
         const title = 'Show previews of image files'; // TODO Peerio Copy
+        const description = 'Previews stored unencrypted on this device'; // TODO Peerio Copy
         const onPress = () => {
             state.peerioContentEnabled = !state.peerioContentEnabled;
             User.current.saveSettings();
         };
         return (
-            <ToggleItem {...{ prop, title, state, onPress }} />
+            <ToggleItem {...{ prop, title, description, state, onPress }} />
         );
     }
 
