@@ -7,6 +7,7 @@ import { User } from '../../lib/icebear';
 import { t } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import ToggleItem from './toggle-item';
+import WarningItem from './warning-item';
 
 const bgStyle = {
     flexGrow: 1,
@@ -98,7 +99,12 @@ export default class Display extends SafeComponent {
                 <Text style={text}>Image preview</Text>
                 {this.imagePreviewsToggle()}
                 {this.largeImagesToggle()}
-                {<Text style={text}>URL preview</Text>}
+                {<Text style={text}>URL Preview</Text>}
+                <WarningItem
+                    content="Enabling URL Preview may increase the chance of tracking by third party web services."
+                    linkContent="Learn more."
+                    link=""
+                    />
                 {this.urlPreviewsToggle()}
                 {User.current.settings.inlineChatContent.externalContentEnabled && this.favoritesToggle()}
                 <View style={spacer} />
