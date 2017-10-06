@@ -45,7 +45,7 @@ class MockChannel {
             this.addRandomMessage();
         }
         this.addInlineImageMessage();
-        this.addFileMessage();
+        this.addExternalUrlMessage();
     }
 
     toggleFavoriteState() {
@@ -97,11 +97,22 @@ class MockChannel {
 
     addInlineImageMessage() {
         const m = this.createMock(false);
-        const title = `${randomWords({ min: 1, max: 2, join: '_' })}.png`;
+        const name = `${randomWords({ min: 1, max: 2, join: '_' })}.png`;
         const url = randomImages.random();
-        m.inlineImage = { url, title };
+        m.inlineImage = { url, name, isLocal: true };
         this.messages.push(m);
     }
+
+    addExternalUrlMessage() {
+        const m = this.createMock('https://eslint.org/docs/rules/operator-assignment');
+        const name = `${randomWords({ min: 1, max: 2, join: '_' })}.png`;
+        const title = capitalize(randomWords({ min: 3, max: 5, join: ' ' }));
+        const description = capitalize(randomWords({ min: 5, max: 10, join: ' ' }));
+        const url = randomImages.random();
+        m.inlineImage = { url, name, title, description, isLocal: false };
+        this.messages.push(m);
+    }
+
 
     addFileMessage() {
         const m = this.createMock(false);

@@ -40,7 +40,7 @@ export default class FileInlineImage extends SafeComponent {
     async componentWillMount() {
         this.optimalContentHeight = Dimensions.get('window').height;
         this.opened = DISPLAY_BY_DEFAULT;
-        this.tooBig = Math.random() > 0.5;
+        // this.tooBig = Math.random() > 0.5;
         this.loadImage = DISPLAY_BY_DEFAULT && !this.tooBig;
         when(() => this.loadImage, () => this.fetchSize());
     }
@@ -113,7 +113,7 @@ export default class FileInlineImage extends SafeComponent {
     }
 
     renderThrow() {
-        const { url, title } = this.props.image;
+        const { url, name, title, description, isLocal } = this.props.image;
         const { width, height, loaded } = this;
         const source = { uri: url };
         const outer = {
@@ -135,17 +135,31 @@ export default class FileInlineImage extends SafeComponent {
             color: vars.txtMedium
         };
 
+        const titleText = {
+            color: vars.bg,
+            marginVertical: 2
+        };
+
+        const descText = {
+            color: vars.txtDark,
+            marginBottom: 2
+        };
+
         const inner = {
             backgroundColor: loaded ? vars.white : vars.lightGrayBg
         };
         return (
             <View style={outer} onLayout={this.layout}>
+                <View>
+                    {!!title && <Text style={titleText}>{title}</Text>}
+                    {!!description && <Text style={descText}>{description}</Text>}
+                </View>
                 <View style={header}>
-                    <Text style={text}>{title}</Text>
-                    <View style={{ flexDirection: 'row' }}>
+                    <Text style={text}>{name}</Text>
+                    {isLocal ? <View style={{ flexDirection: 'row' }}>
                         {!DISPLAY_BY_DEFAULT && icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
                         {icons.darkNoPadding('more-vert', () => this.props.onAction(this.props.image))}
-                    </View>
+                    </View> : <View />}
                 </View>
                 <View style={inner}>
                     {this.opened && this.loadImage &&
