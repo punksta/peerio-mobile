@@ -20,7 +20,7 @@ const rowCenter = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10,
+    padding: vars.channels.rowCenterPadding,
     borderTopWidth: 1,
     borderTopColor: vars.lightGrayBg
 };
@@ -29,20 +29,20 @@ const bottomRowText = {
     flexShrink: 1,
     flex: 1,
     color: vars.txtDate,
-    fontSize: 12,
-    marginHorizontal: 16
+    fontSize: vars.font.size.smaller,
+    marginHorizontal: vars.channels.marginH
 };
 
 const textinputContainer = {
     backgroundColor: vars.white,
-    marginBottom: 2,
+    marginBottom: vars.channels.textInput.marginB,
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden'
 };
 
 const textinput = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     height: vars.inputHeight,
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
@@ -99,7 +99,7 @@ export default class CreateChannel extends Component {
             flex: 0,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
+            padding: vars.channels.exitRow.padding,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0
         };
@@ -107,7 +107,7 @@ export default class CreateChannel extends Component {
             flexGrow: 1,
             flexShrink: 1,
             textAlign: 'center',
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.semiBold,
             color: 'rgba(0, 0, 0, .54)'
         };

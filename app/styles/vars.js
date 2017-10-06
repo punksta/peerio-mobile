@@ -1,4 +1,4 @@
-import { Platform, Dimensions, PixelRatio } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import branding from './branding';
 
 const { bg, bgGradient, tabsBg, tabsFg } = branding;
@@ -10,11 +10,9 @@ const r = 40;
 const retentionOffset = { top: r, left: r, bottom: r, right: r };
 
 const { height } = Dimensions.get('window');
-const pixRatio = PixelRatio.get();
-console.log({ height, pixRatio });
-
+// pixel ratio should be factored into scaleDim somehow: const pixRatio = PixelRatio.get();
 const defaultHeight = 667;
-
+// scaleDim takes a size value and returns one that is adjusted to the height of the device as it compares to an iPhone 6
 const scaleDim = size => height / defaultHeight * size;
 
 const vars = {
@@ -78,7 +76,7 @@ const vars = {
     font: {
         size: {
             normal: scaleDim(14),
-            smaller: 12,
+            smaller: scaleDim(12),
             small: 10,
             big: 18,
             bigger: scaleDim(16),
@@ -98,6 +96,22 @@ const vars = {
     fabRight: 16,
     fabBottom: 32,
     retentionOffset,
+    channels: {
+        rowCenterPadding: scaleDim(10),
+        bottomRowText: {
+            marginH: scaleDim(16)
+        },
+        textInput: {
+            marginB: scaleDim(2)
+        },
+        label: {
+            marginV: scaleDim(4),
+            marginL: scaleDim(10)
+        },
+        exitRow: {
+            padding: scaleDim(4)
+        }
+    },
     login: {
         spacing: {
             small: scaleDim(12),
