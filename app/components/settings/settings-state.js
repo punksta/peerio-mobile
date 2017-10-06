@@ -19,7 +19,11 @@ class SettingsState extends RoutedState {
         account: 'title_settingsAccount',
         preferences: 'title_settingsPreferences',
         upgrade: 'button_upgrade',
-        twoFactorAuth: 'title_2FA'
+        twoFactorAuth: 'title_2FA',
+        // TODO Peerio Copy
+        notifications: 'Notifications',
+        // TODO Peerio Copy
+        display: 'Display'
     };
 
     get title() {
