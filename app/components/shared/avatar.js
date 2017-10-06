@@ -261,18 +261,17 @@ export default class Avatar extends SafeComponent {
     }
 
     get title() {
-        const unreadStyle = this.props.unread ? { fontWeight: 'bold' } : null;
         const { contact, title, title2 } = this.props;
         return (
             <View style={nameContainerStyle}>
                 <View style={{ flexShrink: 1 }}>
                     <Text ellipsizeMode="tail" numberOfLines={title2 ? 2 : 1}>
                         {this.star}
-                        <Text style={[nameTextStyle, unreadStyle]}>
+                        <Text style={nameTextStyle}>
                             {title ||
                                 <Text>
                                     {contact ? contact.fullName : ''}
-                                    <Text style={{ color: vars.txtMedium, fontWeight: 'normal' }}>
+                                    <Text style={{ color: vars.txtMedium }}>
                                         {' '}{contact.username}
                                     </Text>
                                 </Text>}
