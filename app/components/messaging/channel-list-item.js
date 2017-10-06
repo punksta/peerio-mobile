@@ -9,15 +9,16 @@ import chatState from './chat-state';
 @observer
 export default class ChannelListItem extends SafeComponent {
     renderThrow() {
+        if (chatState.collapseChannels) return null;
         const { chat } = this.props;
         const { name, unreadCount } = chat;
         if (!chat) return null;
         const containerStyle = {
-            height: 40,
-            paddingHorizontal: 24,
+            height: 34,
+            paddingHorizontal: 18,
             alignItems: 'center',
             justifyContent: 'space-between',
-            backgroundColor: vars.lightGrayBg,
+            backgroundColor: vars.white,
             flexDirection: 'row'
         };
 
@@ -52,7 +53,7 @@ export default class ChannelListItem extends SafeComponent {
                     onPress={() => chatState.routerMain.chats(chat)}
                     style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text style={[textStyle, (unreadCount > 0 && textUnreadStyle)]}>
-                        {`# ${name}`}
+                        {`# ${name}`}{chatState.collapseChannels ? 'true' : 'false'}
                     </Text>
                     {unreadCount > 0 && <View style={circleStyle}><Text style={textCircleStyle}>{unreadCount}</Text></View>}
                 </TouchableOpacity>

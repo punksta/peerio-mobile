@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Animated } from 'react-native';
+import { View, ListView, Animated, LayoutAnimation } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { chatInviteStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
@@ -59,25 +59,37 @@ export default class ChatList extends SafeComponent {
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
                 title_channels: this.data.filter(d => !!d.isChannel),
                 title_channelInvites: [],
-                title_directMessages: this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex)
+                title_directMessages: this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex),
+                dummy: []
             });
             this.forceUpdate();
         }, true);
     }
 
     sectionHeader = (data, key) => {
-        const titles = {
-            title_channels: tx('title_channels'),
-            title_directMessages: tx('title_directMessages')
+        const i = (title, component) => {
+            const r = {};
+            r[title] = component;
+            return r;
         };
         const invitesCount = chatInviteStore.received.length;
-        return key === 'title_channelInvites' ?
-            <ChatChannelInviteSection
-                title="Channel invites"
-                data={invitesCount} onPress={() => chatState.routerMain.channelInviteList()} /> : <ChatSectionHeader title={titles[key]} />;
+        const titles = {
+            ...i('title_channels',
+                <ChatSectionHeader state="collapseChannels" title={tx('title_channels')} />),
+            ...i('title_directMessages',
+                <ChatSectionHeader state="collapseDMs" title={tx('title_directMessages')} />),
+            ...i('title_channelInvites',
+                (
+                    <ChatChannelInviteSection
+                        title={tx('title_channelInvites')}
+                        data={invitesCount} onPress={() => chatState.routerMain.channelInviteList()} />
+                ),
+            ...i('dummy', <View />))
+        };
+        return titles[key];
     }
 
-    item(chat) {
+    item = (chat) => {
         if (!chat.id) return null;
         return chat.isChannel ? <ChannelListItem chat={chat} /> : (
             <ChatListItem key={chat.id} chat={chat} />
@@ -85,7 +97,7 @@ export default class ChatList extends SafeComponent {
     }
 
     onEndReached = () => {
-        console.log('files.js: on end reached');
+        console.log('chat-list.js: on end reached');
         this.maxLoadedIndex += PAGE_SIZE;
     }
 

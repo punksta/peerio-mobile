@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ScrollView, Share } from 'react-native';
+import { View, ScrollView, Share, Text, Platform } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
@@ -9,7 +9,8 @@ import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-stora
 import { toggleConnection } from '../main/dev-menu-items';
 import plans from '../payments/payments-config';
 import { tx } from '../utils/translator';
-import { warnings } from '../../lib/icebear';
+import { warnings, config } from '../../lib/icebear';
+import { popupYes } from '../shared/popups';
 
 const bgStyle = {
     flexGrow: 1,
@@ -21,6 +22,15 @@ const svStyle = {
     paddingVertical: vars.listViewPaddingVertical,
     paddingHorizontal: vars.listViewPaddingHorizontal
 };
+
+const AboutContent = (
+    <Text>
+        Version: {config.appVersion}{'\n'}
+        SDK: {config.sdkVersion} {'\n'}
+        OS: {Platform.OS} {'\n'}
+        OS Version: {Platform.Version}
+    </Text>
+);
 
 @observer
 export default class SettingsLevel1 extends SafeComponent {
@@ -64,9 +74,14 @@ export default class SettingsLevel1 extends SafeComponent {
                     {this.spacer}
                     <SettingsItem title="button_logout" onPress={() => loginState.signOut()} />
                     {this.spacer}
+                    <SettingsItem title="title_About" onPress={() => popupYes('About', AboutContent)} />
+                    {this.spacer}
                     {__DEV__ && <SettingsItem title="toggle connection" onPress={toggleConnection} />}
                     {__DEV__ && <SettingsItem title="damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
-                    {__DEV__ && <SettingsItem title="snackbar" onPress={() => snackbarState.pushTemporary('test')} />}
+                    {__DEV__ && <SettingsItem title="snackbar" onPress={() =>
+                            snackbarState.pushTemporary('test')} />}
+                    {__DEV__ && <SettingsItem title="snackbar long" onPress={() =>
+                            snackbarState.pushTemporary('test whatever you have been testing for a longer snackbar for the win whatever you have been testing for a longer snackbar for the win')} />}
                     {__DEV__ && <SettingsItem title="test Contacts" onPress={() => contactState.testImport()} />}
                     {__DEV__ && <SettingsItem title="test Share" onPress={() => this.testShare()} />}
                     {__DEV__ && <SettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}

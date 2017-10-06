@@ -3,6 +3,7 @@ import randomWords from 'random-words';
 import capitalize from 'capitalize';
 import mockContactStore from './mock-contact-store';
 import { popupCancelConfirm } from '../shared/popups';
+import { TinyDb } from '../../lib/icebear';
 
 const channelPaywallTitle = `2 Channels`;
 const channelPaywallMessage =
@@ -11,8 +12,9 @@ If you would like to join or create another channel, please delete an existing o
 
 class MockChannel {
     @observable messages = [];
+    @observable id;
     @observable isChannel = true;
-    @observable title = randomWords({ min: 1, max: 4, join: '-' });
+    @observable name = randomWords({ min: 1, max: 4, join: '-' });
     @observable topic = `${capitalize(randomWords({ min: 2, max: 4, join: ' ' }))}!`;
     @observable participants = [];
     @observable isFavorite = false;
@@ -20,7 +22,9 @@ class MockChannel {
     @observable adminMap = observable.map();
 
     constructor() {
+        TinyDb.userCollection = TinyDb.open('testuser');
         for (let i = 0; i < 8; ++i) this.participants.push(mockContactStore.createMock());
+        this.id = randomWords({ min: 7, max: 7, join: ':' });
         this.addAdmin(this.participants[0]);
         this.addAdmin(this.participants[1]);
     }
@@ -82,6 +86,7 @@ class MockChatStore {
 
     createMock() {
         return observable({
+            id: randomWords({ min: 7, max: 7, join: ':' }),
             title: randomWords({ min: 3, max: 5, join: ' ' }),
             participants: [mockContactStore.createMock()]
         });
@@ -107,6 +112,9 @@ class MockChatStore {
         };
 
         return invite;
+    }
+
+    loadAllChats() {
     }
 }
 

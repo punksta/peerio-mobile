@@ -2,6 +2,70 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.163.0"></a>
+# [3.163.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.162.0...v3.163.0) (2017-10-04)
+
+
+### Bug Fixes
+
+* flex for dialog boxes ([449b326](https://github.com/PeerioTechnologies/peerio-mobile/commit/449b326))
+
+
+
+<a name="3.162.0"></a>
+# [3.162.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.161.0...v3.162.0) (2017-10-03)
+
+
+### Features
+
+* About button in Settings level 1 ([5ada92d](https://github.com/PeerioTechnologies/peerio-mobile/commit/5ada92d))
+
+
+
+<a name="3.161.0"></a>
+# [3.161.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.160.0...v3.161.0) (2017-10-03)
+
+
+### Bug Fixes
+
+* _mainState2.default.saveUserTouchId is not a function ([7a20ea8](https://github.com/PeerioTechnologies/peerio-mobile/commit/7a20ea8))
+* bg-pattern sizing for android ([5174777](https://github.com/PeerioTechnologies/peerio-mobile/commit/5174777))
+* no yellow border for anything other than system warning ([500e157](https://github.com/PeerioTechnologies/peerio-mobile/commit/500e157))
+* remove top border from zero chat dialog ([a513aaa](https://github.com/PeerioTechnologies/peerio-mobile/commit/a513aaa))
+
+
+### Features
+
+* new zero chat design ([2f45c55](https://github.com/PeerioTechnologies/peerio-mobile/commit/2f45c55))
+
+
+
+<a name="3.160.0"></a>
+# [3.160.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.159.0...v3.160.0) (2017-10-02)
+
+
+### Bug Fixes
+
+* add key to suppress warning in rjs ([2719d36](https://github.com/PeerioTechnologies/peerio-mobile/commit/2719d36))
+* android stubs instead of tests ([003586d](https://github.com/PeerioTechnologies/peerio-mobile/commit/003586d))
+* android test runner ([34afdc1](https://github.com/PeerioTechnologies/peerio-mobile/commit/34afdc1))
+* **android:** requestAnimationFrame to render focused textbox appropriately ([7cf2518](https://github.com/PeerioTechnologies/peerio-mobile/commit/7cf2518))
+* Lint ([ef06439](https://github.com/PeerioTechnologies/peerio-mobile/commit/ef06439))
+* npmrc ([307cdb5](https://github.com/PeerioTechnologies/peerio-mobile/commit/307cdb5))
+* **copy:** basic plan gets 3 rooms, not 2 ([4bc820b](https://github.com/PeerioTechnologies/peerio-mobile/commit/4bc820b))
+
+
+### Features
+
+* add debug menu access from login-start ([9857f50](https://github.com/PeerioTechnologies/peerio-mobile/commit/9857f50))
+* amazing green snackbars ([138e205](https://github.com/PeerioTechnologies/peerio-mobile/commit/138e205))
+* green snackbar checkbox (Samvel to complete on icebear) ([ebe908c](https://github.com/PeerioTechnologies/peerio-mobile/commit/ebe908c))
+* make android tests work on Linux ([5fa2d24](https://github.com/PeerioTechnologies/peerio-mobile/commit/5fa2d24))
+* replace fab button with plus ([2b9b0a8](https://github.com/PeerioTechnologies/peerio-mobile/commit/2b9b0a8))
+* switch react-native-file-picker to fork ([bc62a9b](https://github.com/PeerioTechnologies/peerio-mobile/commit/bc62a9b))
+
+
+
 <a name="3.159.0"></a>
 # [3.159.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.158.0...v3.159.0) (2017-09-28)
 

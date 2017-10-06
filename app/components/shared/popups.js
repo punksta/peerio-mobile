@@ -49,6 +49,7 @@ function popupSystemWarning(title, contents, buttons) {
     return new Promise((resolve) => {
         popupState.showPopup({
             title,
+            type: 'systemWarning',
             contents: textControl(contents),
             buttons: buttons ?
                 buttons.map(i => (i.action ? swButton(i) : button(i, resolve)))

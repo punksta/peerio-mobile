@@ -43,6 +43,7 @@ export default class ChatListItem extends SafeComponent {
     }
 
     renderThrow() {
+        if (chatState.collapseDMs) return null;
         if (!this.props || !this.props.chat) return null;
         const { chat } = this.props;
         const { mostRecentMessage, participants } = chat;

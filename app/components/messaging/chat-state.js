@@ -1,5 +1,5 @@
 import { observable, action, when, reaction } from 'mobx';
-import { chatStore, chatInviteStore, clientApp, warnings } from '../../lib/icebear';
+import { User, TinyDb, chatStore, chatInviteStore, clientApp, warnings } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
 import contactState from '../contacts/contact-state';
 import sounds from '../../lib/sounds';
@@ -8,6 +8,8 @@ import { tx } from '../utils/translator';
 class ChatState extends RoutedState {
     @observable store = chatStore;
     @observable chatInviteStore = chatInviteStore;
+    @observable collapseChannels = false;
+    @observable collapseDMs = false;
 
     // to be able to easily refactor, keep the name "chatStore"
     get chatStore() { return this.store; }
@@ -28,10 +30,15 @@ class ChatState extends RoutedState {
                 this.loading = false;
             } else if (this.routerMain && this.routerMain.route === 'chats') this.routerMain.chats();
         }, true);
+
+        reaction(() => this.collapseChannels, v => TinyDb.user.setValue('collapseChannels', v));
+        reaction(() => this.collapseDMs, v => TinyDb.user.setValue('collapseDMs', v));
     }
 
     @action async init() {
         this.chatStore.loadAllChats();
+        this.collapseChannels = await TinyDb.user.getValue('collapseChannels');
+        this.collapseDMs = await TinyDb.user.getValue('collapseDMs');
         return new Promise(resolve => when(() => this.chatStore.loaded, resolve));
     }
 

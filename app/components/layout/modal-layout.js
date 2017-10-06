@@ -24,8 +24,9 @@ export default class ModalLayout extends SafeComponent {
                 uiState.hideKeyboard();
                 this.modal = modal;
                 routerModal.animating = true;
-                Animated.timing(this.modalAnimated, { toValue: 0, duration })
-                    .start(() => { routerModal.animating = false; });
+                // add timeout to allow for render to happen
+                setTimeout(() => Animated.timing(this.modalAnimated, { toValue: 0, duration })
+                    .start(() => { routerModal.animating = false; }), 200);
             } else {
                 Animated.timing(this.modalAnimated, { toValue: this.height, duration })
                     .start(() => { this.modal = null; });
@@ -46,7 +47,6 @@ export default class ModalLayout extends SafeComponent {
 
     renderThrow() {
         const modalStyle = {
-            borderWidth: 2,
             position: 'absolute',
             left: 0,
             top: 0,
