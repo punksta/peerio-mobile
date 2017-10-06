@@ -16,6 +16,7 @@ export default (c, icebear) => {
         msgSignature: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
         upgrade: 'route:modal:accountUpgradeSwiper',
         signup: 'route:app:signupStep1',
+        settings: 'route:main:settings',
         proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
         proAccount: 'https://account.peerio.com',
         helpCenter: 'https://peerio.zendesk.com/',

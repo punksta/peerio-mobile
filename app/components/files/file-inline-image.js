@@ -5,6 +5,7 @@ import { View, Image, Text, Dimensions, LayoutAnimation, TouchableOpacity } from
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import { tx } from '../utils/translator';
 
 class InlineImageCacheStore {
     data = {};
@@ -112,6 +113,24 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
+    get updateSettingsOffer() {
+        const text = {
+            color: vars.txtDate,
+            fontStyle: 'italic',
+            marginBottom: 4
+        };
+        return (
+            <View style={{ flexDirection: 'row' }}>
+                <View style={{ paddingTop: 2, marginRight: 4 }}>
+                    {icons.coloredAsText('check-circle', vars.snackbarBgGreen, 14)}
+                </View>
+                <Text style={text}>
+                    {tx('title_updateUrlSettingsAnyTime')}
+                </Text>
+            </View>
+        );
+    }
+
     renderThrow() {
         const { url, name, title, description, isLocal } = this.props.image;
         const { width, height, loaded } = this;
@@ -149,24 +168,27 @@ export default class FileInlineImage extends SafeComponent {
             backgroundColor: loaded ? vars.white : vars.lightGrayBg
         };
         return (
-            <View style={outer} onLayout={this.layout}>
-                <View>
-                    {!!title && <Text style={titleText}>{title}</Text>}
-                    {!!description && <Text style={descText}>{description}</Text>}
+            <View>
+                <View style={outer} onLayout={this.layout}>
+                    <View>
+                        {!!title && <Text style={titleText}>{title}</Text>}
+                        {!!description && <Text style={descText}>{description}</Text>}
+                    </View>
+                    <View style={header}>
+                        <Text style={text}>{name}</Text>
+                        {isLocal ? <View style={{ flexDirection: 'row' }}>
+                            {!DISPLAY_BY_DEFAULT && icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
+                            {icons.darkNoPadding('more-vert', () => this.props.onAction(this.props.image))}
+                        </View> : <View />}
+                    </View>
+                    <View style={inner}>
+                        {this.opened && this.loadImage &&
+                            <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} />}
+                        {this.opened && !this.loadImage && !this.tooBig && this.displayImageOffer}
+                        {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer}
+                    </View>
                 </View>
-                <View style={header}>
-                    <Text style={text}>{name}</Text>
-                    {isLocal ? <View style={{ flexDirection: 'row' }}>
-                        {!DISPLAY_BY_DEFAULT && icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
-                        {icons.darkNoPadding('more-vert', () => this.props.onAction(this.props.image))}
-                    </View> : <View />}
-                </View>
-                <View style={inner}>
-                    {this.opened && this.loadImage &&
-                        <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} />}
-                    {this.opened && !this.loadImage && !this.tooBig && this.displayImageOffer }
-                    {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer }
-                </View>
+                {!isLocal && this.updateSettingsOffer}
             </View>
         );
     }
