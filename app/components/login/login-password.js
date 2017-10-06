@@ -10,7 +10,7 @@ import LoginWizardPage from './login-wizard-page';
 import { vars } from '../../styles/styles';
 
 const textStyle = {
-    marginBottom: 12,
+    marginBottom: vars.loginPassword_textStyle_margB,
     color: vars.txtLight
 };
 

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react/native';
 import { config, overrideServer, socket } from '../../lib/icebear';
 import Wizard from '../wizard/wizard';
 import loginState from './login-state';
-import { wizard } from '../../styles/styles';
+import { wizard, vars } from '../../styles/styles';
 import Layout1 from '../layout/layout1';
 import Button from '../controls/button';
 import LoginStart from './login-start';
@@ -71,7 +71,7 @@ export default class LoginWizard extends Wizard {
             return null;
         }
         const s = [wizard.footer.button.base, {
-            padding: 4,
+            padding: vars.loginWizard_s_pad,
             justifyContent: 'center',
             backgroundColor: '#FFFFFF10',
             borderColor: '#FFFFFF50',
@@ -79,14 +79,14 @@ export default class LoginWizard extends Wizard {
             borderRadius: 6
         }];
         const input = {
-            marginHorizontal: 24,
+            marginHorizontal: vars.loginWizard_input_marginH,
             height: 24,
             backgroundColor: '#FFFFFF90',
-            marginTop: 12
+            marginTop: vars.loginWizard_input_marginT
         };
         return (
             <View>
-                <View style={{ flexDirection: 'row', flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: 24 }}>
+                <View style={{ flexDirection: 'row', flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: vars.loginWizard_debugMenu_paddingH }}>
                     <Button style={s} onPress={() => { this.showDebugLogs = !this.showDebugLogs; }} text="Show logs" />
                     <Button style={s}
                         onPress={() => { consoleOverride.verbose = !consoleOverride.verbose; }}

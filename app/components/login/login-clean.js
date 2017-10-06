@@ -10,7 +10,7 @@ import LoginWizardPage, {
 } from './login-wizard-page';
 import { vars } from '../../styles/styles';
 
-const header2 = [header, { marginBottom: 20, justifyContent: 'flex-end' }];
+const header2 = [header, { marginBottom: vars.loginClean_header2_margB, justifyContent: 'flex-end' }];
 
 const inner2 = {
     borderRadius: 4,
@@ -25,14 +25,14 @@ const footer = {
 };
 
 const formStyle = {
-    padding: 20,
+    padding: vars.loginClean_formStyle_pad,
     justifyContent: 'space-between'
 };
 
 const findKeyText = {
     alignSelf: 'center',
     color: vars.bg,
-    fontSize: 14
+    fontSize: vars.font.size.normal
 };
 
 export default class LoginClean extends LoginWizardPage {

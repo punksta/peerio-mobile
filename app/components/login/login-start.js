@@ -84,7 +84,7 @@ export default class LoginStart extends LoginWizardPage {
                                     <Text style={title1Black}>{title}</Text>
                                     <Text style={title2Black}>{subtitle}</Text>
                                 </View>
-                                <View style={{ flex: 1, paddingBottom: 20, justifyContent: 'flex-end' }}>
+                                <View style={{ flex: 1, paddingBottom: vars.loginStart_render_padB, justifyContent: 'flex-end' }}>
                                     {this.progress(i)}
                                 </View>
                             </View>
