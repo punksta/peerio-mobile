@@ -99,27 +99,31 @@ const vars = {
     fabBottom: 32,
     retentionOffset,
     login: {
-    },
-    loginAutomatic_buttonContainer_margV: scaleDim(20),
-    loginAutomatic_button_pad: scaleDim(12),
-    loginAutomatic_normalText_margB: scaleDim(22),
-    loginClean_header2_margB: scaleDim(20),
-    loginClean_formStyle_pad: scaleDim(20),
-    loginPassword_textStyle_margB: scaleDim(12),
-    loginSaved_body_margT: scaleDim(20),
-    loginStart_render_padB: scaleDim(20),
-    loginWizardPage_padding: scaleDim(20),
-    loginWizardPage_header_margB: scaleDim(12),
-    loginWizardPage_inner_padT: scaleDim(12),
-    loginWizardPage_title1_margB: scaleDim(10),
-    loginWizardPage_title1Black_margB: scaleDim(20),
-    loginWizardPage_title2Black_margH: scaleDim(60),
-    loginWizardPage_title2Black_margV: scaleDim(6),
-    loginWizardPage_buttonContainer_margV: scaleDim(20),
-    loginWizard_s_pad: scaleDim(4),
-    loginWizard_input_marginH: scaleDim(24),
-    loginWizard_input_marginT: scaleDim(12),
-    loginWizard_debugMenu_paddingH: scaleDim(24)
+        spacing: {
+            small: scaleDim(12),
+            normal: scaleDim(20)
+        },
+        automatic: {
+            buttonPadding: scaleDim(12),
+            textMargin: scaleDim(22)
+        },
+        wizard: {
+            title: {
+                marginB: scaleDim(10),
+                marginH: scaleDim(60),
+                marginV: scaleDim(6)
+            },
+            input: {
+                marginH: scaleDim(24),
+                marginT: scaleDim(12)
+            },
+            debugMenu: {
+                marginT: scaleDim(40),
+                paddingH: scaleDim(24)
+            },
+            buttonPadding: scaleDim(4)
+        }
+    }
 };
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;

@@ -11,7 +11,7 @@ import LoginWizardPage, {
 import { vars } from '../../styles/styles';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
 
-const header2 = [header, { marginBottom: vars.loginClean_header2_margB, justifyContent: 'flex-end' }];
+const header2 = [header, { marginBottom: vars.login.spacing.normal, justifyContent: 'flex-end' }];
 
 const inner2 = {
     borderRadius: 4,
@@ -26,7 +26,7 @@ const footer = {
 };
 
 const formStyle = {
-    padding: vars.loginClean_formStyle_pad,
+    padding: vars.login.spacing.normal,
     justifyContent: 'space-between'
 };
 

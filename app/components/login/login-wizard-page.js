@@ -7,7 +7,7 @@ import Button from '../controls/button';
 import { vars, wizard, helpers } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 
-const padding = vars.loginWizardPage_padding;
+const padding = vars.login.spacing.normal;
 
 const container = {
     justifyContent: 'space-between',
@@ -19,7 +19,7 @@ const container = {
 
 const header = {
     justifyContent: 'center',
-    marginBottom: vars.loginWizardPage_header_margB
+    marginBottom: vars.login.spacing.small
 };
 
 const topCircleSize = 76;
@@ -32,7 +32,7 @@ const inner = {
     flex: 1,
     borderRadius: 4,
     marginTop: topCircleSize,
-    paddingTop: topCircleSize + vars.loginWizardPage_inner_padT,
+    paddingTop: topCircleSize + vars.login.spacing.small,
     backgroundColor: vars.lightGrayBg
 };
 
@@ -67,10 +67,10 @@ const title1 = {
     textAlign: 'center',
     fontSize: vars.font.size.massive,
     fontWeight: 'bold',
-    marginBottom: vars.loginWizardPage_title1_margB
+    marginBottom: vars.login.wizard.title.marginB
 };
 
-const title1Black = [title1, { color: vars.txtDark, fontSize: vars.font.size.huge, marginBottom: vars.loginWizardPage_title1Black_margB }];
+const title1Black = [title1, { color: vars.txtDark, fontSize: vars.font.size.huge, marginBottom: vars.login.spacing.normal }];
 
 const title2 = {
     color: vars.white,
@@ -79,8 +79,8 @@ const title2 = {
 };
 
 const title2Black = [title2, {
-    marginHorizontal: vars.loginWizardPage_title2Black_margH,
-    marginVertical: vars.loginWizardPage_title2Black_margV,
+    marginHorizontal: vars.login.wizard.title.marginH,
+    marginVertical: vars.login.wizard.title.marginV,
     color: vars.txtDark
 }];
 
@@ -99,7 +99,7 @@ export {
 export default class LoginWizardPage extends SafeComponent {
     button(text, onPress, hidden, disabled) {
         const buttonContainer = {
-            marginVertical: vars.loginWizardPage_buttonContainer_margV,
+            marginVertical: vars.login.spacing.normal,
             alignItems: 'stretch',
             opacity: hidden ? 0 : 1
         };
