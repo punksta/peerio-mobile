@@ -71,8 +71,7 @@ const nameMessageContainerStyle = {
 
 const nameTextStyle = {
     color: vars.txtMedium,
-    fontWeight: vars.font.weight.bold,
-    fontSize: 14
+    fontSize: 16
 };
 
 const dateTextStyle = {
@@ -200,7 +199,9 @@ export default class Avatar extends SafeComponent {
     }
 
     get date() {
-        const unreadStyle = this.props.unread ? { color: vars.bg, fontWeight: 'bold' } : null;
+        const unreadStyle = this.props.unread
+        ? { color: vars.bg, fontWeight: '600' }
+        : null;
         const { timestampText } = this.props;
         return timestampText ?
             <Text style={[dateTextStyle, unreadStyle]}>
@@ -261,13 +262,16 @@ export default class Avatar extends SafeComponent {
     }
 
     get title() {
+        const unreadStyle = this.props.unread
+        ? { fontWeight: '600' }
+        : null;
         const { contact, title, title2 } = this.props;
         return (
             <View style={nameContainerStyle}>
                 <View style={{ flexShrink: 1 }}>
                     <Text ellipsizeMode="tail" numberOfLines={title2 ? 2 : 1}>
                         {this.star}
-                        <Text style={nameTextStyle}>
+                        <Text style={[nameTextStyle, unreadStyle]}>
                             {title ||
                                 <Text>
                                     {contact ? contact.fullName : ''}
