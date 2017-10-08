@@ -2,12 +2,13 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { chatState } from '../states';
 import { vars } from '../../styles/styles';
 import { User } from '../../lib/icebear';
 import { t } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import Link from '../controls/link';
+import RadioButton from '../controls/radio-button';
+import Option from '../controls/radio-button-option';
 
 const container = {
     backgroundColor: '#f0f0f0',
@@ -31,30 +32,51 @@ const titleText = {
     paddingLeft: 8
 };
 
+const radioText = {
+    flex: 1,
+    justifyContent: 'center',
+    paddingBottom: 4
+};
+
 @observer
 export default class InlineUrlPreviewConsent extends SafeComponent {
-    get spacer() {
-        return <View style={{ height: 16 }} />;
+    constructor(props) {
+        super(props);
+        this.state = {
+            optionSelected: 0
+        };
+        this.onSelectRadioButton = this.onSelectRadioButton.bind(this);
+    }
+
+    onSelectRadioButton(index) {
+        this.setState({
+            optionSelected: index
+        });
     }
 
     userActionSave() {
-        // Get selected index
-        // Modify appropriate setting
-        // Ex:
-        // state.externalJustForFavContacts = true;
-        // User.current.saveSettings();
+        const index = this.state.optionSelected;
+        const state = User.current.settings.inlineChatContent;
+        if (index === 0) { // For all Contacts
+            state.consentExternal = true;
+            state.externalContentEnabled = true;
+            state.externalJustForFavContacts = false;
+        } else if (index === 1) { // For favorite contacts only
+            state.consentExternal = true;
+            state.externalContentEnabled = true;
+            state.externalJustForFavContacts = true;
+        } else if (index === 2) { // Disable
+            state.consentExternal = false;
+            state.externalContentEnabled = false;
+            state.externalJustForFavContacts = false;
+        }
+        User.current.saveSettings();
     }
 
     userActionDismiss() {}
 
-    favoritesToggle() {
-        const state = User.current.settings.inlineChatContent;
-        const prop = 'externalJustForFavContacts';
-        const title = 'Only from Favourites'; // TODO Peerio Copy
-        const onPress = () => {
-            state.externalJustForFavContacts = !state.externalJustForFavContacts;
-            User.current.saveSettings();
-        };
+    get spacer() {
+        return <View style={{ height: 16 }} />;
     }
 
     renderThrow() {
@@ -83,7 +105,27 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
                     Learn more
                 </Link>
                 {this.spacer}
-                {/* TODO Radio Buttons */}
+                {/* TODO Extract Option into RadioButton */}
+                <RadioButton
+                    onSelect={this.onSelectRadioButton}
+                    defaultSelect={this.state.optionSelected}>
+                    <Option>
+                        <View style={radioText}>
+                            <Text>{'For all contacts'}</Text>
+                        </View>
+                    </Option>
+                    <Option>
+                        <View style={radioText}>
+                            <Text>{'For favorite contacts only'}</Text>
+                        </View>
+                    </Option>
+                    <Option>
+                        <View style={radioText}>
+                            <Text>{'Disable'}</Text>
+                        </View>
+                    </Option>
+                </RadioButton>
+                {/* TODO Add Buttons */}
             </View>
         );
     }
