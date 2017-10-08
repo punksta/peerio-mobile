@@ -25,9 +25,6 @@ const titleContainer = {
     flexDirection: 'row'
 };
 
-const iconStyle = {
-};
-
 const titleText = {
     fontSize: 18,
     color: 'black',
@@ -65,7 +62,6 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
             <View style={container}>
                 <View style={titleContainer}>
                     <Icon
-                        // style={}
                         name="warning"
                         size={vars.iconSize}
                         color="gray"
