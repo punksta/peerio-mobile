@@ -9,6 +9,7 @@ import { vars } from '../../styles/styles';
 export default class ContactSectionHeader extends SafeComponent {
     renderThrow() {
         const { title } = this.props;
+        if (!title) return null;
         const style = {
             height: 48,
             justifyContent: 'center',
