@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
 import { User } from '../../lib/icebear';
@@ -52,23 +52,39 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
         this.setState({
             optionSelected: index
         });
+        console.log(index);
+        console.log(this.state.optionSelected);
     }
 
-    userActionSave() {
+    renderButton(text, onPress, colorIsPrimary) {
+        return (
+            <TouchableOpacity
+                onPress={onPress}
+                pressRetentionOffset={vars.pressRetentionOffset}
+                style={{ paddingLeft: 40, paddingVertical: 16 }}>
+                {/* TODO Peerio Copy */}
+                <Text style={{ fontWeight: 'bold', color: colorIsPrimary ? vars.bg : null }}>
+                    {text}
+                </Text>
+            </TouchableOpacity>
+        );
+    }
+
+    userActionSave = () => {
         const index = this.state.optionSelected;
-        const state = User.current.settings.inlineChatContent;
+        const settings = User.current.settings.inlineChatContent;
         if (index === 0) { // For all Contacts
-            state.consentExternal = true;
-            state.externalContentEnabled = true;
-            state.externalJustForFavContacts = false;
+            settings.consentExternal = true;
+            settings.externalContentEnabled = true;
+            settings.externalJustForFavContacts = false;
         } else if (index === 1) { // For favorite contacts only
-            state.consentExternal = true;
-            state.externalContentEnabled = true;
-            state.externalJustForFavContacts = true;
+            settings.consentExternal = true;
+            settings.externalContentEnabled = true;
+            settings.externalJustForFavContacts = true;
         } else if (index === 2) { // Disable
-            state.consentExternal = false;
-            state.externalContentEnabled = false;
-            state.externalJustForFavContacts = false;
+            settings.consentExternal = false;
+            settings.externalContentEnabled = false;
+            settings.externalJustForFavContacts = false;
         }
         User.current.saveSettings();
     }
@@ -125,7 +141,12 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
                         </View>
                     </Option>
                 </RadioButton>
-                {/* TODO Add Buttons */}
+                <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                    {/* TODO Peerio Copy tu() */}
+                    {this.renderButton('NOT NOW', this.userActionDismiss, false)}
+                    {/* TODO Peerio Copy tu() */}
+                    {this.renderButton('SAVE', this.userActionSave, true)}
+                </View>
             </View>
         );
     }
