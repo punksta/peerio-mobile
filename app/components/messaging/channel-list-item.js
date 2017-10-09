@@ -53,7 +53,7 @@ export default class ChannelListItem extends SafeComponent {
                     onPress={() => chatState.routerMain.chats(chat)}
                     style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text style={[textStyle, (unreadCount > 0 && textUnreadStyle)]}>
-                        {`# ${name}`}{chatState.collapseChannels ? 'true' : 'false'}
+                        {`# ${name}`}
                     </Text>
                     {unreadCount > 0 && <View style={circleStyle}><Text style={textCircleStyle}>{unreadCount}</Text></View>}
                 </TouchableOpacity>
