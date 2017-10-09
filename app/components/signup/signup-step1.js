@@ -71,7 +71,6 @@ export default class SignupStep1 extends LoginWizardPage {
                     returnKeyType="next"
                     state={signupState}
                     maxLength={24}
-                    autoShrinkTextLimit={14}
                     name="firstName"
                     hint={t('title_firstName')} />
                 <TextBox
@@ -79,7 +78,6 @@ export default class SignupStep1 extends LoginWizardPage {
                     onSubmit={() => signupState.next()}
                     state={signupState}
                     maxLength={24}
-                    autoShrinkTextLimit={14}
                     name="lastName"
                     hint={t('title_lastName')} />
                 <TextBox

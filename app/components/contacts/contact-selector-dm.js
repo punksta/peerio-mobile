@@ -156,7 +156,8 @@ export default class ContactSelectorDM extends SafeComponent {
         );
     }
 
-    item({ item }) {
+    item = (params) => {
+        const { item } = params;
         const { username, fullName, isLegacy, isAdded, email } = item;
         if (!username) return <ContactInviteItem noBorderBottom contact={fromEmail(email)} />;
         return (

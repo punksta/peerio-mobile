@@ -59,7 +59,9 @@ export default class TextBox extends SafeComponent {
     }
 
     componentWillUnmount() {
-        uiState.focusedTextBox = null;
+        if (uiState.focusedTextBox === this.textinput) {
+            uiState.focusedTextBox = null;
+        }
     }
 
     _callState(name, value) {
@@ -214,6 +216,7 @@ export default class TextBox extends SafeComponent {
                                 value={this._value}
                                 maxLength={this.props.maxLength}
                                 selection={{ start, end }}
+                                onFocus={() => uiState.focusTextBox(this.textinput)}
                                 onBlur={this.blur}
                                 onChangeText={this.changeText}
                                 onSubmitEditing={this.submit}
