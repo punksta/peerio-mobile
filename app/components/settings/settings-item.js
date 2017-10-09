@@ -14,8 +14,7 @@ const itemContainerStyle = {
     backgroundColor: 'white',
     paddingLeft: 10,
     marginBottom: 2,
-    borderWidth: 0,
-    borderColor: 'green'
+    minHeight: vars.iconLayoutSize
 };
 
 @observer
@@ -41,17 +40,19 @@ export default class SettingsItem extends SafeComponent {
                 onPress={() => !this.props.untappable && !this.props.disabled && this.press()}>
                 <View style={[itemContainerStyle]} pointerEvents={this.props.untappable ? undefined : 'none'}>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
-                        <Text style={{ color: this.props.disabled ? vars.txtLight : vars.txtDark }}>
+                        <Text style={{
+                            borderWidth: 1,
+                            color: this.props.disabled ? vars.txtLight : vars.txtDark }}>
                             {t(this.props.title)}
                         </Text>
-                        <Text style={{ fontSize: 12 }}>
+                        {!!this.props.description && <Text style={{ fontSize: 12 }}>
                             {this.props.description}
-                        </Text>
+                        </Text>}
                     </View>
                     <View style={{ flex: 0 }}>
                         {this.props.children}
                     </View>
-                    <View style={{ flex: 0, minHeight: vars.iconLayoutSize }}>
+                    <View style={{ flex: 0 }}>
                         {this.rightIcon}
                     </View>
                 </View>
