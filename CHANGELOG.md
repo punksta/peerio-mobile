@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.165.0"></a>
+# [3.165.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.164.0...v3.165.0) (2017-10-09)
+
+
+### Bug Fixes
+
+* layout of settings item ([e124d1d](https://github.com/PeerioTechnologies/peerio-mobile/commit/e124d1d))
+* scrolling on signup and login ([dfcf8e4](https://github.com/PeerioTechnologies/peerio-mobile/commit/dfcf8e4))
+
+
+### Features
+
+* reduce timeout for modal popup ([cc35cd0](https://github.com/PeerioTechnologies/peerio-mobile/commit/cc35cd0))
+
+
+
 <a name="3.164.0"></a>
 # [3.164.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.163.0...v3.164.0) (2017-10-09)
 
