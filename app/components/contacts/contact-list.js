@@ -97,7 +97,6 @@ export default class ContactList extends SafeComponent {
                 keyExtractor={item => item.username || item.email}
                 renderItem={this.item}
                 renderSectionHeader={this.header}
-                ref={sv => { this.scrollView = sv; }}
             />
         );
     }

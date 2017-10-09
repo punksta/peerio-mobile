@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Animated, LayoutAnimation } from 'react-native';
+import { View, ListView } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { chatInviteStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
@@ -18,6 +18,7 @@ import { tx } from '../utils/translator';
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
+// action sheet is outside of component scope for a reason.
 let actionSheet = null;
 
 @observer
@@ -33,7 +34,7 @@ export default class ChatList extends SafeComponent {
     @observable dataSource = null;
     @observable refreshing = false
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
-    actionsHeight = new Animated.Value(0)
+
     get rightIcon() { return <PlusBorderIcon action={() => actionSheet.show()} />; }
 
     get data() {
@@ -55,7 +56,6 @@ export default class ChatList extends SafeComponent {
             this.data.length,
             this.maxLoadedIndex
         ], () => {
-            console.log(`chat-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
                 title_channels: this.data.filter(d => !!d.isChannel),
                 title_channelInvites: [],

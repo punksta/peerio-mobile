@@ -20,15 +20,16 @@ export default class ModalLayout extends SafeComponent {
     componentDidMount() {
         reaction(() => routerModal.modal, modal => {
             const duration = vars.animationDuration;
+            const useNativeDriver = true;
             if (modal) {
                 uiState.hideKeyboard();
                 this.modal = modal;
                 routerModal.animating = true;
                 // add timeout to allow for render to happen
-                setTimeout(() => Animated.timing(this.modalAnimated, { toValue: 0, duration })
+                setTimeout(() => Animated.timing(this.modalAnimated, { toValue: 0, duration, useNativeDriver })
                     .start(() => { routerModal.animating = false; }), 200);
             } else {
-                Animated.timing(this.modalAnimated, { toValue: this.height, duration })
+                Animated.timing(this.modalAnimated, { toValue: this.height, duration, useNativeDriver })
                     .start(() => { this.modal = null; });
             }
         });
