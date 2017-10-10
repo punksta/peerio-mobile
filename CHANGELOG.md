@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.167.0"></a>
+# [3.167.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.166.0...v3.167.0) (2017-10-10)
+
+
+### Features
+
+* chat headers arrows and stuff ([9197690](https://github.com/PeerioTechnologies/peerio-mobile/commit/9197690))
+
+
+
 <a name="3.166.0"></a>
 # [3.166.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.165.0...v3.166.0) (2017-10-10)
 
