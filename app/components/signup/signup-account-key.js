@@ -135,7 +135,6 @@ export default class SignupStep1 extends LoginWizardPage {
             <View style={container} onLayout={this._layout}>
                 <ViewShot ref={ref => { this._viewShot = ref; }}>
                     <View style={header}>
-                        {/* TODO: peerio copy */}
                         <Text style={title2}>{tx('title_AccountKey')}</Text>
                     </View>
                     <View>
