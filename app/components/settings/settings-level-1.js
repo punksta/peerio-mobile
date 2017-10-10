@@ -8,9 +8,12 @@ import { settingsState, snackbarState, mainState, loginState, contactState, chat
 import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-storage-usage';
 import { toggleConnection } from '../main/dev-menu-items';
 import plans from '../payments/payments-config';
-import { tx } from '../utils/translator';
+import { tx, tu } from '../utils/translator';
 import { warnings, config } from '../../lib/icebear';
 import { popupYes } from '../shared/popups';
+import buttons from '../helpers/buttons';
+import Button from '../controls/button';
+import Center from '../controls/center';
 
 const bgStyle = {
     flexGrow: 1,
@@ -35,7 +38,7 @@ const AboutContent = (
 @observer
 export default class SettingsLevel1 extends SafeComponent {
     get spacer() {
-        return <View style={{ height: 32 }} />;
+        return <View style={{ height: 16 }} />;
     }
 
     testShare() {
@@ -72,9 +75,18 @@ export default class SettingsLevel1 extends SafeComponent {
                     {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
                     <SettingsItem title="title_settingsAccount" onPress={() => settingsState.transition('account')} />
                     {this.spacer}
-                    <SettingsItem title="button_logout" onPress={() => loginState.signOut()} />
-                    {this.spacer}
                     <SettingsItem title="title_About" onPress={() => popupYes('About', AboutContent)} />
+                    {this.spacer}
+                    <Button text={tu('button_logout')}
+                        style={{
+                            backgroundColor: vars.bg,
+                            width: '100%',
+                            paddingVertical: 18,
+                            borderRadius: 5 }}
+                        bold={true}
+                        textStyle={{ textAlign: 'center', color: vars.white }}
+                        onPress={this.terms}
+                    />
                     {this.spacer}
                     {__DEV__ && <SettingsItem title="toggle connection" onPress={toggleConnection} />}
                     {__DEV__ && <SettingsItem title="damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
