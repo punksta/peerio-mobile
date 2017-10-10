@@ -62,11 +62,6 @@ export default class FilesPlaceholder extends SafeComponent {
                         <Text style={headerStyle}>{tx('title_uploadSomething')}</Text>
                         <View style={titleBlockStyle}>
                             <View style={{ flex: 1, flexGrow: 0.5, borderWidth: 0, borderColor: 'red' }} />
-                            <View style={{ flex: 1, borderWidth: 0, borderColor: 'green', justifyContent: 'flex-end' }}>
-                                <Image source={arrowDownZeroState}
-                                       resizeMode="contain"
-                                       style={imageStyle} />
-                            </View>
                         </View>
                     </View>
                 </View>
