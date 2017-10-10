@@ -41,7 +41,6 @@ export default class SettingsItem extends SafeComponent {
                 <View style={[itemContainerStyle]} pointerEvents={this.props.untappable ? undefined : 'none'}>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text style={{
-                            borderWidth: 1,
                             color: this.props.disabled ? vars.txtLight : vars.txtDark }}>
                             {t(this.props.title)}
                         </Text>
