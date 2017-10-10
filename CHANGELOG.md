@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.166.0"></a>
+# [3.166.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.165.0...v3.166.0) (2017-10-10)
+
+
+### Bug Fixes
+
+* leftover border ([9926380](https://github.com/PeerioTechnologies/peerio-mobile/commit/9926380))
+
+
+### Features
+
+* progressoverlay when updating after reconnect ([ca4742e](https://github.com/PeerioTechnologies/peerio-mobile/commit/ca4742e))
+
+
+
 <a name="3.165.0"></a>
 # [3.165.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.164.0...v3.165.0) (2017-10-09)
 
