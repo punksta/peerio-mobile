@@ -52,8 +52,8 @@ const textinput = {
 
 const label = {
     color: vars.txtDate,
-    marginVertical: 4,
-    marginLeft: 10
+    marginVertical: vars.channels.label.marginV,
+    marginLeft: vars.channels.label.marginL
 };
 
 const { width } = Dimensions.get('window');
@@ -138,7 +138,7 @@ export default class CreateChannel extends Component {
 
     renderTextBox(labelText, placeholderText, property) {
         return (
-            <View style={{ margin: 8 }}>
+            <View style={{ margin: vars.channels.renderTextBoxMargin }}>
                 <Text style={label}>{tx(labelText)}</Text>
                 <View style={textinputContainer}>
                     <SimpleTextBox

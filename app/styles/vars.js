@@ -110,7 +110,9 @@ const vars = {
         },
         exitRow: {
             padding: scaleDim(4)
-        }
+        },
+        offerStylePadding: scaleDim(12),
+        renderTextBoxMargin: scaleDim(8)
     },
     login: {
         spacing: {
