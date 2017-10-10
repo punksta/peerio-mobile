@@ -16,6 +16,7 @@ import Fab from '../shared/fab';
 import { common } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
+import { clientApp } from '../../lib/icebear';
 
 const { height } = Dimensions.get('window');
 
@@ -88,7 +89,7 @@ export default class LayoutMain extends SafeComponent {
                 testID="mainLayout"
                 style={[common.container.root]}>
                 {animatedBlock}
-                <ProgressOverlay enabled={routerMain.loading} />
+                <ProgressOverlay enabled={routerMain.loading || clientApp.updatingAfterReconnect} />
                 <StatusBar
                     barStyle={uiState.externalViewer || routerModal.isBlackStatusBar ? 'default' : 'light-content'}
                     hidden={false} />
