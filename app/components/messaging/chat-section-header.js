@@ -27,7 +27,7 @@ export default class ChatSectionHeader extends SafeComponent {
         return (
             <TouchableOpacity {...this.props} style={style} onPress={() => { chatState[this.props.state] = !chatState[this.props.state]; }}>
                 <Text style={textStyle}>{title}</Text>
-                <Icon name={chatState[this.props.state] ? 'arrow-drop-up' : 'arrow-drop-down'} size={24} style={{ color: vars.txtDark }} />
+                <Icon name={chatState[this.props.state] ? 'arrow-drop-down' : 'arrow-drop-up'} size={24} style={{ color: vars.txtDark }} />
             </TouchableOpacity>
         );
     }

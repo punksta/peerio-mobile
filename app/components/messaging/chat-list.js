@@ -58,7 +58,7 @@ export default class ChatList extends SafeComponent {
         ], () => {
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
                 title_channels: this.data.filter(d => !!d.isChannel),
-                title_channelInvites: [],
+                title_channelInvites: chatInviteStore.received,
                 title_directMessages: this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex),
                 dummy: []
             });
@@ -86,7 +86,7 @@ export default class ChatList extends SafeComponent {
                 ),
             ...i('dummy', <View />))
         };
-        return titles[key];
+        return data && data.length ? titles[key] : null;
     }
 
     item = (chat) => {
