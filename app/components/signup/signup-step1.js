@@ -124,7 +124,6 @@ export default class SignupStep1 extends LoginWizardPage {
                     {this.button('button_next', () => signupState.next(), false, !signupState.nextAvailable)}
                 </View>
                 <View style={footer}>
-                    {/* TODO: peerio copy */}
                     <Text style={title3}>
                         <T k="title_TOSRequestText">{tosParser}</T>
                     </Text>
