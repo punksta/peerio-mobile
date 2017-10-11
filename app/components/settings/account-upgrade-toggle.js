@@ -24,7 +24,7 @@ export default class AccountUpgradeToggle extends Component {
 
         const text1Style = [textStyle, {
             fontWeight: 'bold',
-            fontSize: 12
+            fontSize: vars.font.size.smaller
         }];
 
         const text2Style = [textStyle, {

@@ -61,12 +61,12 @@ export default class SelectFiles extends SafeComponent {
             flexGrow: 1
         };
         const textStyle = {
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.semiBold,
             color: 'rgba(0, 0, 0, .54)'
         };
         const goStyle = {
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.semiBold,
             color: vars.bg
         };

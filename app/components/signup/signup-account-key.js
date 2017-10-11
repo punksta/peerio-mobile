@@ -23,7 +23,7 @@ const formStyle = {
 };
 
 const addPhotoText = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     color: vars.txtMedium,
     textAlign: 'center'
 };
@@ -36,7 +36,7 @@ const addPhotoPlus = [addPhotoText, {
 
 const textNormal = {
     color: vars.txtDark,
-    fontSize: 16,
+    fontSize: vars.font.size.bigger,
     lineHeight: 24
 };
 
@@ -44,7 +44,7 @@ const accountKeyText = {
     color: vars.txtDark,
     fontFamily: 'Verdana',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: vars.font.size.big,
     width: 240
 };
 
@@ -54,7 +54,7 @@ const accountKeyRow = {
 };
 
 const smallText = {
-    fontSize: 12,
+    fontSize: vars.font.size.smaller,
     marginVertical: 8,
     color: vars.txtDark
 };

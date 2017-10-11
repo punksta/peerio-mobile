@@ -7,7 +7,7 @@ import { vars } from '../../styles/styles';
 const iconAddChat = require('../../assets/icon-add-chat.png');
 
 const goStyle = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     fontWeight: vars.font.weight.semiBold,
     color: vars.bg
 };

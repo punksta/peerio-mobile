@@ -19,7 +19,7 @@ export default class FileInlineProgress extends SafeComponent {
             flexDirection: 'row',
             borderColor: 'yellow',
             borderWidth: 0,
-            marginBottom: 8
+            marginBottom: vars.spacing.normal
         };
         const file = fileState.store.getById(this.props.file);
         if (!file) return null;
@@ -55,4 +55,3 @@ FileInlineProgress.propTypes = {
     file: PropTypes.string,
     transparentOnFinishUpload: PropTypes.bool
 };
-

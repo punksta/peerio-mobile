@@ -20,7 +20,7 @@ const formStyle = {
 
 const textNormal = {
     color: vars.txtDark,
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     lineHeight: 24,
     marginBottom: 10
 };

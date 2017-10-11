@@ -39,7 +39,7 @@ export default class ChannelInviteListItem extends SafeComponent {
 
         const smallTextStyle = {
             color: vars.txtDate,
-            fontSize: 12
+            fontSize: vars.font.size.smaller
         };
         console.log(`kegDbID: `, invitation);
         return (

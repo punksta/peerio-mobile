@@ -82,7 +82,7 @@ export default class PopupLayout extends SafeComponent {
 
         const title = {
             fontWeight: 'bold',
-            fontSize: 16,
+            fontSize: vars.font.size.bigger,
             marginBottom: 8
         };
 

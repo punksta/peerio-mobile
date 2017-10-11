@@ -19,12 +19,12 @@ export default class MessagingPlaceholder extends SafeComponent {
         const headerStyle = {
             flexGrow: 1,
             textAlign: 'center',
-            fontSize: 24
+            fontSize: vars.font.size.massive
         };
         const infoStyle = {
             flexShrink: 1,
             textAlign: 'left',
-            fontSize: 16,
+            fontSize: vars.font.size.bigger,
             height: 48
         };
         const outerContainerStyle = {
@@ -50,7 +50,7 @@ export default class MessagingPlaceholder extends SafeComponent {
         };
         const title = {
             fontWeight: 'bold',
-            fontSize: 16,
+            fontSize: vars.font.size.bigger,
             marginBottom: 8
         };
 

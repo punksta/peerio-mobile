@@ -100,8 +100,8 @@ export default class Pin extends SafeComponent {
                     delayPressOut={0}
                     testID={`pin${text}`} onPressOut={() => this.enter(text)}>
                     <View style={circle}>
-                        <Text style={{ color: vars.highlight, fontSize: 18 }}>{text}</Text>
-                        <Text style={{ color: vars.midlight, fontSize: 10 }}>{subText}</Text>
+                        <Text style={{ color: vars.highlight, fontSize: vars.font.size.big }}>{text}</Text>
+                        <Text style={{ color: vars.midlight, fontSize: vars.font.size.small }}>{subText}</Text>
                     </View>
                 </TouchableOpacity>
             </View>

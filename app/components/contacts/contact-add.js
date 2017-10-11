@@ -59,8 +59,8 @@ const textStatic = {
 
 const label = {
     color: vars.txtDate,
-    marginVertical: 4,
-    marginLeft: 10
+    marginVertical: vars.spacing.small,
+    marginLeft: vars.spacing.big
 };
 
 const labelDark = [label, { color: vars.txtDark }];
@@ -167,7 +167,7 @@ export default class ContactAdd extends SafeComponent {
             <TouchableOpacity
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ paddingRight: 12, paddingVertical: 10 }}>
+                style={{ paddingRight: vars.spacing.bigger, paddingVertical: vars.spacing.big }}>
                 <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
                     {tu(text)}
                 </Text>
@@ -209,11 +209,11 @@ export default class ContactAdd extends SafeComponent {
                     keyboardShouldPersistTaps="handled"
                     style={{ backgroundColor: vars.settingsBg }}
                     ref={ref => { this._scrollView = ref; }}>
-                    <View style={{ marginTop: 20 }}>
-                        {contactState.empty && <View style={{ margin: 8 }}>
+                    <View style={{ marginTop: vars.spacing.huge }}>
+                        {contactState.empty && <View style={{ margin: vars.spacing.normal }}>
                             <Text style={labelDark}>{tx('title_contactZeroState')}</Text>
                         </View>}
-                        <View style={{ margin: 8 }}>
+                        <View style={{ margin: vars.spacing.normal }}>
                             <Text style={label}>{tx('button_addAContact')}</Text>
                             <View style={textinputContainer}>
                                 <SimpleTextBox
@@ -227,13 +227,13 @@ export default class ContactAdd extends SafeComponent {
                             {this.inviteBlock}
                             {this.validationError}
                         </View>
-                        <View style={{ margin: 8 }}>
+                        <View style={{ margin: vars.spacing.normal }}>
                             <View style={buttonRow}>
                                 <Text style={labelDark}>{tx('title_findContacts')}</Text>
                                 {this.renderButton1('title_importContacts', () => contactState.testImport())}
                             </View>
                         </View>
-                        <View style={{ margin: 8 }}>
+                        <View style={{ margin: vars.spacing.normal }}>
                             <View style={buttonRow}>
                                 <Text style={labelDark}>{tx('title_shareSocial')}</Text>
                                 {this.renderButton1('button_share', () => this.share())}

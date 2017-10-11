@@ -18,7 +18,7 @@ const boldText = {
 };
 
 const smallText = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     opacity: 0.7,
     color: 'white',
     marginLeft: 8
@@ -37,7 +37,7 @@ const planFooterInfo = [featureListTextMedium, {
 
 const featureSmallText = {
     color: 'white',
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     fontWeight: 'bold'
 };
 
@@ -136,12 +136,12 @@ export default class AccountUpgradePlan extends Component {
         console.log(text);
         const textStyle = {
             color: vars.white,
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: 'bold',
             textAlign: 'center',
             marginTop: 18
         };
-        const popupTextStyle = { color: vars.txtDark, fontSize: 12 };
+        const popupTextStyle = { color: vars.txtDark, fontSize: vars.font.size.smaller };
         const popup = () => {
             popupControl(
                 <ScrollView style={{ flex: 1, flexGrow: 1 }}>

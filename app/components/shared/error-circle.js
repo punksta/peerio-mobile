@@ -37,7 +37,7 @@ export default class ErrorCircle extends SafeComponent {
         return (
             <TouchableOpacity onPress={this.props.onPress} style={containerStyle}>
                 <View style={tofuStyle}>
-                    <Text style={{ color: borderColor, fontSize: 12 * ratio, fontWeight: 'bold' }}>!</Text>
+                    <Text style={{ color: borderColor, fontSize: vars.font.size.smaller * ratio, fontWeight: 'bold' }}>!</Text>
                 </View>
             </TouchableOpacity>
         );

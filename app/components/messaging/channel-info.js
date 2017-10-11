@@ -15,7 +15,7 @@ import { tx, tu } from '../utils/translator';
 const textStyle = {
     color: vars.txtDate,
     marginTop: 10,
-    fontSize: 12,
+    fontSize: vars.font.size.smaller,
     marginLeft: 18,
     fontWeight: 'bold'
 };
@@ -23,7 +23,7 @@ const textStyle = {
 const topicTextStyle = {
     color: vars.txtDark,
     margin: 18,
-    fontSize: 14
+    fontSize: vars.font.size.normal
 };
 
 @observer
@@ -93,7 +93,7 @@ export default class ChannelInfo extends SafeComponent {
                 </View>
                 <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
                     {isAdmin && <View style={{ backgroundColor: vars.bg, borderRadius: 4, padding: 4, overflow: 'hidden' }}>
-                        <Text style={{ color: vars.white, fontSize: 10 }}>
+                        <Text style={{ color: vars.white, fontSize: vars.font.size.small }}>
                             {tu('title_admin')}
                         </Text>
                     </View>}

@@ -26,13 +26,13 @@ const textboxInput = {
     flex: 1,
     flexGrow: 1,
     flexShrink: 1,
-    fontSize: 16,
+    fontSize: vars.font.size.bigger,
     color: vars.txtDark,
     marginLeft: 8
 };
 
 const textArea = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     marginHorizontal: 10,
     color: vars.txtDark,
     height: vars.inputHeight

@@ -54,9 +54,9 @@ export default class ContactSelector extends SafeComponent {
             borderRadius: 16,
             flexDirection: 'row',
             alignItems: 'center',
-            margin: 4,
+            margin: vars.spacing.small,
             padding: 0,
-            paddingLeft: 12,
+            paddingLeft: vars.spacing.bigger,
             height: 32,
             overflow: 'hidden'
         };
@@ -69,7 +69,7 @@ export default class ContactSelector extends SafeComponent {
                 <View style={style}>
                     <Text style={textStyle}>{contact.username}</Text>
                     <Icon
-                        style={{ paddingRight: 4, marginLeft: 8 }}
+                        style={{ paddingRight: vars.spacing.small, marginLeft: vars.spacing.normal }}
                         name="cancel"
                         size={vars.iconSize}
                         color="white"
@@ -85,7 +85,7 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'flex-start',
-            paddingLeft: 8,
+            paddingLeft: vars.spacing.normal,
             flexWrap: 'wrap'
         };
         const boxes = this.recipients.items.map((c, i) => this.userbox(c, i));
@@ -127,13 +127,13 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
+            padding: vars.spacing.small,
             paddingTop: 0,
             paddingBottom: 0
         };
         const style = {
             flexGrow: 1,
-            marginLeft: 8
+            marginLeft: vars.spacing.normal
         };
 
         return (
@@ -158,7 +158,7 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
+            padding: vars.spacing.small,
             paddingTop: 0,
             paddingBottom: 0
         };
@@ -166,7 +166,7 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1
         };
         const textStyle = {
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.semiBold,
             color: 'rgba(0, 0, 0, .54)'
         };
@@ -268,7 +268,7 @@ export default class ContactSelector extends SafeComponent {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
         const found = contactState.getFiltered(this.findUserText);
         const mockItems = found.map((item, i) => this.item(item, i));
-        const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
+        const activityIndicator = <ActivityIndicator style={{ marginTop: vars.spacing.big }} />;
         // const result = findUserText && findUserText.length ? mockItems : chat;
         const result = mockItems;
         const body = !this.toInvite && !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
@@ -312,9 +312,9 @@ export default class ContactSelector extends SafeComponent {
         };
         const textStyle = {
             color: this.limitReached ? vars.txtAlert : vars.txtDate,
-            margin: 4,
+            margin: vars.spacing.small,
             marginRight: 16,
-            fontSize: 12
+            fontSize: vars.font.size.smaller
         };
         return (
             <View style={s}>
@@ -342,7 +342,7 @@ export default class ContactSelector extends SafeComponent {
     get upgradeOffer() {
         const offerStyle = {
             backgroundColor: '#d9f1ef',
-            padding: 12
+            padding: vars.spacing.smaller
         };
         return (
             <View style={{ flex: 1, flexGrow: 1, backgroundColor: vars.lightGrayBg }}>

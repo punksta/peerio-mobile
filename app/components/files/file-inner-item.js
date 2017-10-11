@@ -25,7 +25,7 @@ const itemContainerStyle = {
     width,
     borderWidth: 0,
     borderColor: 'red',
-    paddingLeft: 8
+    paddingLeft: vars.spacing.normal
 };
 
 const fileInfoContainerStyle = {
@@ -52,7 +52,7 @@ export default class FileInnerItem extends SafeComponent {
         const icon = checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
             backgroundColor: color,
-            padding: 4,
+            padding: vars.spacing.small,
             flex: 0,
             width: checkBoxWidth,
             justifyContent: 'center',
@@ -73,12 +73,12 @@ export default class FileInnerItem extends SafeComponent {
             icons.dark('keyboard-arrow-right', action);
         const nameStyle = {
             color: vars.txtDark,
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.bold
         };
         const infoStyle = {
             color: vars.subtleText,
-            fontSize: 12,
+            fontSize: vars.font.size.smaller,
             fontWeight: vars.font.weight.regular
         };
         let icon = 'image';

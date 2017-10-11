@@ -72,7 +72,7 @@ const nameMessageContainerStyle = {
 const nameTextStyle = {
     color: vars.txtMedium,
     fontWeight: vars.font.weight.bold,
-    fontSize: 14
+    fontSize: vars.font.size.normal
 };
 
 const dateTextStyle = {
@@ -86,7 +86,7 @@ const lastMessageTextStyle = {
     flexShrink: 1,
     fontWeight: vars.font.weight.regular,
     color: vars.txtMedium,
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     lineHeight: 22,
     borderWidth: 0,
     borderColor: 'green'

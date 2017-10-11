@@ -35,7 +35,7 @@ export default class ContactView extends SafeComponent {
         const { contact } = this;
         const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted, isAdded, isDeleted } = contact;
         const tofuErrorControl = tofuError && (
-            <View style={{ backgroundColor: '#D0021B', flexGrow: 1, padding: 10 }}>
+            <View style={{ backgroundColor: '#D0021B', flexGrow: 1, padding: vars.spacing.big }}>
                 <Text style={{ color: vars.white }}>
                     This contact{'\''}s public key has changed, which means it may be compromised.
                 </Text>
@@ -43,7 +43,7 @@ export default class ContactView extends SafeComponent {
         );
         const body = (
             <View style={{ flex: 1, flexGrow: 1 }}>
-                <View style={[flexRow, { backgroundColor: vars.lightGrayBg, paddingRight: 10 }]}>
+                <View style={[flexRow, { backgroundColor: vars.lightGrayBg, paddingRight: vars.spacing.big }]}>
                     <AvatarCircle large contact={contact} />
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text
@@ -52,8 +52,8 @@ export default class ContactView extends SafeComponent {
                             style={{
                                 fontWeight: 'bold',
                                 color: vars.txtDark,
-                                fontSize: 16,
-                                marginVertical: 4
+                                fontSize: vars.font.size.bigger,
+                                marginVertical: vars.spacing.small
                             }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.txtDark }}>@{username}</Text>
                     </View>
@@ -63,8 +63,8 @@ export default class ContactView extends SafeComponent {
                 <View style={{ margin: 24 }}>
                     {tofuErrorControl}
                     {isDeleted && <Text style={{ color: vars.txtAlert }}>{t('title_accountDeleted')}</Text>}
-                    <Text style={{ color: vars.txtDate, marginVertical: 10 }}>{t('title_publicKey')}</Text>
-                    <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: 16 }} numberOfLines={2}>
+                    <Text style={{ color: vars.txtDate, marginVertical: vars.spacing.big }}>{t('title_publicKey')}</Text>
+                    <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: vars.font.size.bigger }} numberOfLines={2}>
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>

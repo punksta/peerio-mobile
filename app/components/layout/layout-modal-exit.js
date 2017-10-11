@@ -22,7 +22,7 @@ export default class LayoutModalExit extends SafeComponent {
             flexGrow: 1,
             flexShrink: 1,
             flex: 1,
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.semiBold,
             textAlign: 'center',
             color: 'rgba(0, 0, 0, .54)'

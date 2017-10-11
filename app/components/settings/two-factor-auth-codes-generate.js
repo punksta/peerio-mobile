@@ -24,7 +24,7 @@ const bgStyle = {
 const headerStyle = {
     color: vars.txtDark,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: vars.font.size.bigger,
     marginLeft: 8
 };
 

@@ -52,9 +52,9 @@ export default class ContactSelectorDM extends SafeComponent {
             borderRadius: 16,
             flexDirection: 'row',
             alignItems: 'center',
-            margin: 4,
+            margin: vars.spacing.small,
             padding: 0,
-            paddingLeft: 12,
+            paddingLeft: vars.spacing.bigger,
             height: 32,
             overflow: 'hidden'
         };
@@ -67,7 +67,7 @@ export default class ContactSelectorDM extends SafeComponent {
                 <View style={style}>
                     <Text style={textStyle}>{contact.username}</Text>
                     <Icon
-                        style={{ paddingRight: 4, marginLeft: 8 }}
+                        style={{ paddingRight: vars.spacing.small, marginLeft: vars.spacing.normal }}
                         name="cancel"
                         size={vars.iconSize}
                         color="white"
@@ -98,8 +98,8 @@ export default class ContactSelectorDM extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            paddingHorizontal: 12,
-            margin: 12,
+            paddingHorizontal: vars.spacing.bigger,
+            margin: vars.spacing.bigger,
             borderColor: vars.bg,
             borderWidth: 1,
             height,
@@ -107,13 +107,13 @@ export default class ContactSelectorDM extends SafeComponent {
         };
         const label = {
             color: vars.bg,
-            fontSize: 12
+            fontSize: vars.font.size.smaller
         };
         const style = {
             flexGrow: 1,
             height,
-            marginLeft: 8,
-            fontSize: 12
+            marginLeft: vars.spacing.normal,
+            fontSize: vars.font.size.smaller
         };
 
         return (
@@ -144,7 +144,7 @@ export default class ContactSelectorDM extends SafeComponent {
         const container = {
             flexGrow: 1,
             flexDirection: 'row',
-            padding: 8,
+            padding: vars.spacing.normal,
             alignItems: 'center'
         };
         const textStyle = {
@@ -152,7 +152,7 @@ export default class ContactSelectorDM extends SafeComponent {
             textAlign: 'center',
             flexGrow: 1,
             flexShrink: 1,
-            fontSize: 16,
+            fontSize: vars.font.size.bigger,
             fontWeight: vars.font.weight.semiBold,
             color: vars.txtDark
         };
@@ -230,11 +230,11 @@ export default class ContactSelectorDM extends SafeComponent {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
         const found = contactState.getFiltered(this.findUserText);
         const result = found.map((item, i) => this.item(item, i));
-        const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
+        const activityIndicator = <ActivityIndicator style={{ marginTop: vars.spacing.big }} />;
         const allYourContactsTitle = found.length && !this.findUserText ?
-            <Text style={{ fontWeight: 'bold', margin: 10 }}>{tx('title_allYourContacts', { found: found.length })}</Text> : null;
+            <Text style={{ fontWeight: 'bold', margin: vars.spacing.big }}>{tx('title_allYourContacts', { found: found.length })}</Text> : null;
         const allInvitedTitle = !this.findUserText ?
-            <Text style={{ fontWeight: 'bold', margin: 10 }}>{tx('title_allYourInvited', { found: contactState.store.invitedContacts.length })}</Text> : null;
+            <Text style={{ fontWeight: 'bold', margin: vars.spacing.big }}>{tx('title_allYourInvited', { found: contactState.store.invitedContacts.length })}</Text> : null;
         const allInvited = !this.findUserText ? contactState.store.invitedContacts.map(
             ({ email }) => <ContactInviteItem noBorderBottom contact={this.fromEmail(email)} />) : null;
         const body = !this.toInvite && !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
@@ -244,12 +244,12 @@ export default class ContactSelectorDM extends SafeComponent {
         const legacyControl = legacy ? <ContactLegacyItem noBorderBottom contact={legacy} /> : null;
         const notFound = !this.inProgress && !!this.notFound && (
             <View style={{ flexDirection: 'row', marginHorizontal: 36 }}>
-                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: 8 }} />
+                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: vars.spacing.normal }} />
                 <Text style={{ color: vars.txtDate }}>{t('error_userNotFoundTryEmail', { user: this.notFound })}</Text>
             </View>
         );
         return (
-            <View style={{ marginHorizontal: 12 }}>
+            <View style={{ marginHorizontal: vars.spacing.bigger }}>
                 {allYourContactsTitle}
                 {notFound}
                 {inviteControl}

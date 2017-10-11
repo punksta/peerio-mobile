@@ -13,7 +13,7 @@ export default class ButtonText extends SafeComponent {
             color: secondary ? vars.txtDate : vars.bg,
             fontWeight: 'bold'
         };
-        const padding = 12;
+        const padding = vars.spacing.bigger;
         const touchable = {
             padding
         };

@@ -25,7 +25,7 @@ const bgStyle = {
 const headerStyle = {
     color: vars.txtDark,
     fontWeight: 'bold',
-    fontSize: 16,
+    fontSize: vars.font.size.bigger,
     marginLeft: 8
 };
 
@@ -38,7 +38,7 @@ const infoStyle = {
 const labelStyle = {
     color: vars.txtDate,
     marginBottom: 4,
-    fontSize: 12,
+    fontSize: vars.font.size.smaller,
     marginLeft: 8
 };
 

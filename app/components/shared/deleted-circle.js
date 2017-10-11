@@ -36,7 +36,7 @@ export default class DeletedCircle extends SafeComponent {
         return (
             <View style={containerStyle}>
                 <View style={tofuStyle}>
-                    <Text style={{ color: borderColor, fontSize: 10 * ratio, fontWeight: 'bold' }}>-</Text>
+                    <Text style={{ color: borderColor, fontSize: vars.font.size.small * ratio, fontWeight: 'bold' }}>-</Text>
                 </View>
             </View>
         );

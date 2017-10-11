@@ -26,10 +26,10 @@ export default class ContactInviteItemPrompt extends SafeComponent {
         return (
             <View style={{ alignItems: 'center', flexGrow: 1 }}>
                 <View style={{ flexDirection: 'row', marginHorizontal: 36, flexGrow: 1 }}>
-                    <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: 8 }} />
+                    <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: vars.spacing.normal }} />
                     <Text style={{ color: vars.txtDate }}>{t('title_inviteContactByEmail2', { email })}</Text>
                 </View>
-                <View style={{ alignSelf: 'flex-end', marginTop: 12 }}>
+                <View style={{ alignSelf: 'flex-end', marginTop: vars.spacing.bigger }}>
                     {buttons.uppercaseGreenBgButton(title, () => this.invite(), invited)}
                 </View>
             </View>

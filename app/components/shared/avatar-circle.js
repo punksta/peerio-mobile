@@ -42,7 +42,7 @@ export default class AvatarCircle extends SafeComponent {
             } else {
                 inner = (
                     <View style={coloredAvatarStyle}>
-                        <Text style={{ color: 'white', textAlign: 'center', width: 14 * ratio, fontSize: 12 * ratio }}>
+                        <Text style={{ color: 'white', textAlign: 'center', width: 14 * ratio, fontSize: vars.font.size.smaller * ratio }}>
                             {letter}
                         </Text>
                     </View>

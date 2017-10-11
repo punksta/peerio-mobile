@@ -22,7 +22,7 @@ const textinputContainer = {
 };
 
 const textinput = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     height: vars.inputHeight,
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
@@ -31,7 +31,7 @@ const textinput = {
 };
 
 const textStatic = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
     flex: 1,
@@ -244,7 +244,7 @@ export default class ProfileEdit extends SafeComponent {
                             style={{
                                 fontWeight: 'bold',
                                 color: vars.white,
-                                fontSize: 16,
+                                fontSize: vars.font.size.bigger,
                                 marginVertical: 4
                             }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.white }}>@{username}</Text>
@@ -295,7 +295,7 @@ export default class ProfileEdit extends SafeComponent {
                 </View>
                 <View style={{ margin: 18, marginTop: 8 }}>
                     <Text style={{ color: vars.txtDate, marginBottom: 6 }}>{t('title_publicKey')}</Text>
-                    <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: 16 }} numberOfLines={2}>
+                    <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: vars.font.size.bigger }} numberOfLines={2}>
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>

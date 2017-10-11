@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text, Dimensions, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
+import { vars } from '../../styles/styles';
 
 const ghostZeroState = require('../../assets/ghost-zero-state.png');
 const arrowDownZeroState = require('../../assets/arrow-down-zero-state.png');
@@ -17,11 +18,11 @@ export default class GhostsZeroState extends SafeComponent {
     messaging() {
         const headerStyle = {
             textAlign: 'center',
-            fontSize: 20
+            fontSize: vars.font.size.huge
         };
         const infoStyle = {
             textAlign: 'center',
-            fontSize: 16
+            fontSize: vars.font.size.bigger
         };
         const outerContainerStyle = {
             flex: 1,

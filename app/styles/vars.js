@@ -120,10 +120,7 @@ const vars = {
                 marginH: scaleDim(60),
                 marginV: scaleDim(6)
             },
-            input: {
-                marginH: scaleDim(24),
-                marginT: scaleDim(12)
-            },
+            inputMargin: scaleDim(24),
             debugMenu: {
                 marginT: scaleDim(40),
                 paddingH: scaleDim(24)
