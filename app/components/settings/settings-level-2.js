@@ -7,7 +7,7 @@ import SettingsItem from './settings-item';
 import ToggleItem from './toggle-item';
 import { User, clientApp } from '../../lib/icebear';
 import { mainState, chatState, settingsState } from '../states';
-import { t } from '../utils/translator';
+import { t, tx } from '../utils/translator';
 import payments from '../payments/payments';
 import PaymentsQuotas from '../payments/payments-quotas';
 import ProfileEdit from './profile-edit';
@@ -112,12 +112,10 @@ export default class SettingsLevel2 extends SafeComponent {
         return (
             <View style={bgStyle}>
                 <SettingsItem
-                    // TODO Peerio-Copy
-                    title="Notifications"
+                    title={tx('title_notifications')}
                     onPress={() => settingsState.transition('notifications')} />
                 <SettingsItem
-                    // TODO Peerio-Copy
-                    title="Display"
+                    title={tx('title_displayPreferences')}
                     onPress={() => settingsState.transition('display')} />
                 {/* <Text style={text}>{t('title_soundsDetail')}</Text> */}
                 {/* <ToggleItem title="title_notificationsEmailMessage" /> */}
