@@ -110,22 +110,12 @@ const vars = {
             marginH: scaleDim(16)
         }
     },
-    login: {
-        spacing: {
-            small: scaleDim(12),
-            normal: scaleDim(20)
+    wizard: {
+        title: {
+            marginH: scaleDim(60),
+            marginV: scaleDim(6)
         },
-        wizard: {
-            title: {
-                marginH: scaleDim(60),
-                marginV: scaleDim(6)
-            },
-            inputMargin: scaleDim(24),
-            debugMenu: {
-                marginT: scaleDim(40),
-                paddingH: scaleDim(24)
-            }
-        }
+        inputMargin: scaleDim(24)
     }
 };
 
