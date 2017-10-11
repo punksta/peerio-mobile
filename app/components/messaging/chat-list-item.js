@@ -59,7 +59,6 @@ export default class ChatListItem extends SafeComponent {
         }
         const key = chat.id;
         const timestamp = mostRecentMessage ? mostRecentMessage.messageTimestampText : null;
-        const message = this.renderMostRecentMessage(chat);
         const onPress = () => chatState.routerMain.chats(chat);
         const unread = chat.unreadCount > 0;
         return (
@@ -76,7 +75,6 @@ export default class ChatListItem extends SafeComponent {
                 title={chat.name}
                 hideOnline
                 isDeleted={isDeleted}
-                messageComponent={message}
                 key={key}
                 onPress={onPress}
                 onPressAvatar={onPress}
