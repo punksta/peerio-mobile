@@ -39,7 +39,7 @@ export default class LoginSaved extends SafeComponent {
     renderThrow() {
         const style = wizard;
         const body = (
-            <View style={[style.containerFlexGrow, { marginTop: vars.login.spacing.normal }]}>
+            <View style={[style.containerFlexGrow, { marginTop: vars.spacing.huge }]}>
                 <Center style={{
                     flexGrow: 0,
                     height: 30 // limit height

@@ -77,8 +77,8 @@ const vars = {
         size: {
             normal: scaleDim(14),
             smaller: scaleDim(12),
-            small: 10,
-            big: 18,
+            small: scaleDim(10),
+            big: scaleDim(18),
             bigger: scaleDim(16),
             huge: scaleDim(20),
             massive: scaleDim(24)
@@ -96,36 +96,27 @@ const vars = {
     fabRight: 16,
     fabBottom: 32,
     retentionOffset,
+    spacing: {
+        smaller: scaleDim(2),
+        small: scaleDim(4),
+        normal: scaleDim(8),
+        big: scaleDim(10),
+        bigger: scaleDim(12),
+        huge: scaleDim(20),
+        massive: scaleDim(22)
+    },
     channels: {
-        rowCenterPadding: scaleDim(10),
         bottomRowText: {
             marginH: scaleDim(16)
-        },
-        textInput: {
-            marginB: scaleDim(2)
-        },
-        label: {
-            marginV: scaleDim(4),
-            marginL: scaleDim(10)
-        },
-        exitRow: {
-            padding: scaleDim(4)
-        },
-        offerStylePadding: scaleDim(12),
-        renderTextBoxMargin: scaleDim(8)
+        }
     },
     login: {
         spacing: {
             small: scaleDim(12),
             normal: scaleDim(20)
         },
-        automatic: {
-            buttonPadding: scaleDim(12),
-            textMargin: scaleDim(22)
-        },
         wizard: {
             title: {
-                marginB: scaleDim(10),
                 marginH: scaleDim(60),
                 marginV: scaleDim(6)
             },
@@ -136,8 +127,7 @@ const vars = {
             debugMenu: {
                 marginT: scaleDim(40),
                 paddingH: scaleDim(24)
-            },
-            buttonPadding: scaleDim(4)
+            }
         }
     }
 };

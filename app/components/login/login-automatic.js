@@ -14,14 +14,14 @@ export default class LoginAutomatic extends LoginWizardPage {
     button(text, testID, onPress, highlight) {
         const buttonContainer = {
             marginHorizontal: vars.wizardPadding * 0.5,
-            marginVertical: vars.login.spacing.normal,
+            marginVertical: vars.spacing.huge,
             alignItems: 'stretch',
             borderColor: '#FFFFFFBA',
             borderWidth: highlight ? 2 : 0,
             borderRadius: 4
         };
         const button = {
-            padding: vars.login.automatic.buttonPadding,
+            padding: vars.spacing.bigger,
             alignItems: 'center',
             backgroundColor: 'rgba(255,255,255,0.12)'
         };
@@ -51,7 +51,7 @@ export default class LoginAutomatic extends LoginWizardPage {
         };
         const normalText = {
             color: vars.white,
-            marginBottom: vars.login.automatic.textMargin
+            marginBottom: vars.spacing.massive
         };
         return (
             <View style={padded}>

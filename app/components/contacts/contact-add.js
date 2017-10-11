@@ -15,14 +15,14 @@ import buttons from '../helpers/buttons';
 
 const textinputContainer = {
     backgroundColor: vars.white,
-    marginBottom: 2,
+    marginBottom: vars.spacing.normal,
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden'
 };
 
 const inviteContainer = {
-    marginBottom: 2,
+    marginBottom: vars.spacing.normal,
     height: vars.inputHeight,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -32,7 +32,7 @@ const inviteContainer = {
 };
 
 const buttonRow = {
-    marginBottom: 2,
+    marginBottom: vars.spacing.normal,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -40,7 +40,7 @@ const buttonRow = {
 };
 
 const textinput = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     height: vars.inputHeight,
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
@@ -49,7 +49,7 @@ const textinput = {
 };
 
 const textStatic = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
     flex: 1,

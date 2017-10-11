@@ -20,7 +20,7 @@ const rowCenter = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: vars.channels.rowCenterPadding,
+    padding: vars.spacing.big,
     borderTopWidth: 1,
     borderTopColor: vars.lightGrayBg
 };
@@ -35,7 +35,7 @@ const bottomRowText = {
 
 const textinputContainer = {
     backgroundColor: vars.white,
-    marginBottom: vars.channels.textInput.marginB,
+    marginBottom: vars.spacing.smaller,
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden'
@@ -52,8 +52,8 @@ const textinput = {
 
 const label = {
     color: vars.txtDate,
-    marginVertical: vars.channels.label.marginV,
-    marginLeft: vars.channels.label.marginL
+    marginVertical: vars.spacing.small,
+    marginLeft: vars.spacing.big
 };
 
 const { width } = Dimensions.get('window');
@@ -99,7 +99,7 @@ export default class CreateChannel extends Component {
             flex: 0,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: vars.channels.exitRow.padding,
+            padding: vars.spacing.small,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0
         };
@@ -138,7 +138,7 @@ export default class CreateChannel extends Component {
 
     renderTextBox(labelText, placeholderText, property) {
         return (
-            <View style={{ margin: vars.channels.renderTextBoxMargin }}>
+            <View style={{ margin: vars.spacing.normal }}>
                 <Text style={label}>{tx(labelText)}</Text>
                 <View style={textinputContainer}>
                     <SimpleTextBox
