@@ -43,10 +43,10 @@ class MockChannel {
         this.addAdmin(this.participants[1]);
 
         for (let i = 0; i < 5; ++i) {
-            this.addRandomMessage();
+            // this.addRandomMessage();
         }
         this.addInlineImageMessage();
-        this.addExternalUrlMessage();
+        // this.addExternalUrlMessage();
     }
 
     toggleFavoriteState() {
@@ -122,7 +122,9 @@ class MockChannel {
 
     async addInlineImageMessageFromFile(path) {
         const m = this.createMock(false);
-        m.inlineImage = await RNFS.readFile(path, 'base64');
+        const name = `${randomWords({ min: 1, max: 2, join: '_' })}.png`;
+        const url = path;
+        m.inlineImage = { url, name, isLocal: true };
         this.messages.push(m);
     }
 }

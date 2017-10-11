@@ -37,7 +37,7 @@ export default class MockChannelCreate extends Component {
         };
         fileState.uploadInline = async path => {
             console.log(path);
-            mockChatStore.addInlineImageMessageFromFile(path);
+            chatState.store.activeChat.addInlineImageMessageFromFile(path);
         };
         routerMain.current = observable({
             routeState: observable({

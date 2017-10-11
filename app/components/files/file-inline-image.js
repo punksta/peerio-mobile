@@ -2,23 +2,63 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable, when, reaction } from 'mobx';
 import { View, Image, Text, Dimensions, LayoutAnimation, TouchableOpacity } from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 
+class CachedImage {
+    @observable source = null;
+    @observable width = 0;
+    @observable height = 0;
+}
+
 class InlineImageCacheStore {
     data = {};
 
-    async getSize(id) {
-        if (this.data[id]) return this.data[id];
-        // TODO
+    getImage(imagePath) {
+        const { data } = this;
+        let result = data[imagePath];
+        if (!result) {
+            result = new CachedImage();
+            data[imagePath] = result;
+            imagePath.startsWith('http') ?
+                this.getImageByUrl(result, imagePath) :
+                this.getImageByFileName(result, imagePath);
+        }
+        return result;
+    }
+
+    getImageByUrl(image, url) {
+        // calculate size
+        this.getSizeByUrl(url).then(({ width, height }) => {
+            image.width = width;
+            image.height = height;
+            image.source = { uri: url };
+        });
+    }
+
+    getImageByFileName(image, path) {
+        // calculate size
+        this.getSizeByFilename(path).then(({ width, height }) => {
+            console.log(`local filesize: ${width}, ${height}`);
+            image.width = width;
+            image.height = height;
+            image.source = { uri: path };
+        });
+    }
+
+    async getSizeByUrl(url) {
         return new Promise(resolve =>
-        Image.getSize(id, (width, height) => {
-            const result = { width, height };
-            this.data[id] = result;
-            resolve(result);
-        }));
+            Image.getSize(url, (width, height) => {
+                // console.log(width, height);
+                resolve({ width, height });
+            }));
+    }
+
+    async getSizeByFilename(path) {
+        return await ImagePicker.getImageDimensions(path);
     }
 }
 
@@ -47,10 +87,12 @@ export default class FileInlineImage extends SafeComponent {
     }
 
     async fetchSize() {
-        const { width, height } = await inlineImageCacheStore.getSize(this.props.image.url);
-        when(() => this.optimalContentWidth > 0, () => {
+        const image = await inlineImageCacheStore.getImage(this.props.image.url);
+        when(() => image.width && image.height && this.optimalContentWidth, () => {
+            const { width, height } = image;
             const { optimalContentWidth, optimalContentHeight } = this;
             let w = width + 0.0, h = height + 0.0;
+            // console.log(w, h, optimalContentHeight, optimalContentWidth);
             if (w > optimalContentWidth) {
                 h *= optimalContentWidth / w;
                 w = optimalContentWidth;
@@ -61,7 +103,7 @@ export default class FileInlineImage extends SafeComponent {
             }
             this.width = Math.floor(w);
             this.height = Math.floor(h);
-            console.log(this.width, this.height);
+            // console.log(`calculated width: ${this.width}, ${this.height}`);
         });
     }
 
@@ -98,7 +140,6 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
-
     get displayImageOffer() {
         const text = {
             color: vars.bg,
@@ -134,7 +175,8 @@ export default class FileInlineImage extends SafeComponent {
     renderThrow() {
         const { url, name, title, description, isLocal } = this.props.image;
         const { width, height, loaded } = this;
-        const source = { uri: url };
+        const { source } = inlineImageCacheStore.getImage(url);
+        console.log(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
         const outer = {
             padding: this.outerPadding,
             borderColor: vars.lightGrayBg,
@@ -182,7 +224,7 @@ export default class FileInlineImage extends SafeComponent {
                         </View> : <View />}
                     </View>
                     <View style={inner}>
-                        {this.opened && this.loadImage &&
+                        {this.opened && this.loadImage && source &&
                             <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} />}
                         {this.opened && !this.loadImage && !this.tooBig && this.displayImageOffer}
                         {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer}
