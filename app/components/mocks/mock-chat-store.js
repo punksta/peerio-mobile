@@ -1,6 +1,7 @@
 import { observable } from 'mobx';
 import randomWords from 'random-words';
 import capitalize from 'capitalize';
+import RNFS from 'react-native-fs';
 import mockContactStore from './mock-contact-store';
 import mockFileStore from './mock-file-store';
 import { popupCancelConfirm } from '../shared/popups';
@@ -113,10 +114,15 @@ class MockChannel {
         this.messages.push(m);
     }
 
-
     addFileMessage() {
         const m = this.createMock(false);
         m.files = [mockFileStore.files[0].id];
+        this.messages.push(m);
+    }
+
+    async addInlineImageMessageFromFile(path) {
+        const m = this.createMock(false);
+        m.inlineImage = await RNFS.readFile(path, 'base64');
         this.messages.push(m);
     }
 }

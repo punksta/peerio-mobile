@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StatusBar } from 'react-native';
+import { View, StatusBar, Image } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import HeaderMain from '../layout/header-main';
@@ -9,6 +9,7 @@ import PopupLayout from '../layout/popup-layout';
 import ChannelAddPeople from '../messaging/channel-add-people';
 import InputMainContainer from '../layout/input-main-container';
 import { User } from '../../lib/icebear';
+import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 import contactState from '../contacts/contact-state';
 import mockContactStore from './mock-contact-store';
@@ -21,6 +22,8 @@ import routerModal from '../routes/router-modal';
 export default class MockChannelCreate extends Component {
     @observable showChannelInfo = false;
     @observable showAddPeople = false;
+    @observable originalData = null;
+
     componentWillMount() {
         User.current = { activePlans: [] };
         mockFileStore.install();
@@ -31,6 +34,10 @@ export default class MockChannelCreate extends Component {
         };
         chatState.addMessage = message => {
             chatState.store.activeChat.addRandomMessage(message);
+        };
+        fileState.uploadInline = async path => {
+            console.log(path);
+            mockChatStore.addInlineImageMessageFromFile(path);
         };
         routerMain.current = observable({
             routeState: observable({
@@ -90,10 +97,21 @@ export default class MockChannelCreate extends Component {
         return this.channelList;
     }
 
+    get image() {
+        const { originalData } = this;
+        if (!originalData) return null;
+        const s = {
+            width: 100,
+            height: 100
+        };
+        return <Image style={s} source={{ uri: `data:image/png;base64,${originalData}` }} />;
+    }
+
     render() {
         return (
             <View style={{ flex: 1, flexGrow: 1 }}>
                 {this.body}
+                {this.image}
                 <InputMainContainer canSend />
                 <PopupLayout key="popups" />
             </View>

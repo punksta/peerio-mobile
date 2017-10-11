@@ -11,18 +11,7 @@ import FileInlineProgress from '../files/file-inline-progress';
 
 @observer
 export default class InputMainContainer extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.send = this.send.bind(this);
-        this.sendAck = this.sendAck.bind(this);
-        this.addFiles = this.addFiles.bind(this);
-    }
-
-    // setFocus() {
-    //     this.input && this.input.setFocus();
-    // }
-
-    send(v) {
+    send = (v) => {
         const message = v;
         if (!message || !message.length) {
             this.sendAck();
@@ -31,11 +20,9 @@ export default class InputMainContainer extends SafeComponent {
         chatState.addMessage(message);
     }
 
-    sendAck() {
-        chatState.addAck();
-    }
+    sendAck = () => chatState.addAck();
 
-    addFiles() {
+    addFiles = () => {
         const buttons = [
             { name: 'share', title: tx('title_shareFromFiles') }
         ];

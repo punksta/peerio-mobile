@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
 import { Image } from 'react-native';
 import signupState from './signup-state';
-import { topCircleSizeSmall, circleTopSmall } from '../login/login-wizard-page';
+import { topCircleSizeSmall } from '../login/login-wizard-page';
 import { helpers } from '../../styles/styles';
 
 @observer
