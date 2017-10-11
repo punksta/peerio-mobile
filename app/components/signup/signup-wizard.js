@@ -29,6 +29,6 @@ export default class SignupWizard extends Wizard {
                 <Bottom><SnackBar /></Bottom>
             </View>
         );
-        return <Layout1 body={body} />;
+        return <Layout1 body={body} autoScroll />;
     }
 }

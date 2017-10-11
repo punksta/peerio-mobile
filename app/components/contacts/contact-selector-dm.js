@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text, TextInput, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, ActivityIndicator, SectionList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { when, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
@@ -19,6 +19,12 @@ import { vars } from '../../styles/styles';
 import contactState from './contact-state';
 import ContactCollection from './contact-collection';
 
+const INITIAL_LIST_SIZE = 10;
+
+function fromEmail(email) {
+    return observable({ fullName: email, username: '', invited: null, email });
+}
+
 @observer
 export default class ContactSelectorDM extends SafeComponent {
     @observable recipients = new ContactCollection();
@@ -28,60 +34,20 @@ export default class ContactSelectorDM extends SafeComponent {
     @observable legacyContact = null;
     @observable notFound = null;
     @observable findUserText;
+    dataSource = [];
 
-    componentDidMount() {
-        this.recipients.items.observe(() => {
-            // if (this.recipients.items.length && this.props.autoStart) this.action();
-        });
-    }
-
-    fromEmail(email) {
-        return observable({ fullName: email, username: '', invited: null, email });
-    }
-
-    get inviteContactDuck() {
+    get inviteContact() {
         if (!this.toInvite) return null;
-        const result = this.fromEmail(this.toInvite);
+        const result = fromEmail(this.toInvite);
         result.invited = !!contactState.store.invitedContacts.find(i => i.email === result.email);
-        return result;
-    }
-
-    userbox(contact, i) {
-        const style = {
-            backgroundColor: vars.bg,
-            borderRadius: 16,
-            flexDirection: 'row',
-            alignItems: 'center',
-            margin: vars.spacing.small,
-            padding: 0,
-            paddingLeft: vars.spacing.bigger,
-            height: 32,
-            overflow: 'hidden'
-        };
-        const textStyle = {
-            color: 'white'
-        };
-
-        return (
-            <TouchableOpacity key={i} onPress={() => this.recipients.remove(contact)} >
-                <View style={style}>
-                    <Text style={textStyle}>{contact.username}</Text>
-                    <Icon
-                        style={{ paddingRight: vars.spacing.small, marginLeft: vars.spacing.normal }}
-                        name="cancel"
-                        size={vars.iconSize}
-                        color="white"
-                    />
-                </View>
-            </TouchableOpacity>
-        );
+        return result && <ContactInviteItemPrompt email={this.toInvite} />;
     }
 
     onChangeFindUserText(text) {
-        console.log('onChangeFindUserText');
         this.toInvite = null;
         this.legacyContact = null;
         this.notFound = null;
+        this.inProgress = false;
         const items = text.split(/[ ,;]/);
         if (items.length > 1) {
             this.findUserText = items[0].trim();
@@ -116,6 +82,18 @@ export default class ContactSelectorDM extends SafeComponent {
             fontSize: vars.font.size.smaller
         };
 
+        let rightIcon = null;
+        if (this.findUserText) {
+            rightIcon = icons.coloredSmall('close', () => {
+                this.findUserText = '';
+                this.onChangeFindUserText('');
+            }, vars.bg);
+        }
+
+        if (this.inProgress || contactState.inProgress) {
+            rightIcon = <ActivityIndicator style={{ marginRight: 8 }} />;
+        }
+
         return (
             <View style={container}>
                 <Text style={label}>{tx('title_to')}</Text>
@@ -130,12 +108,7 @@ export default class ContactSelectorDM extends SafeComponent {
                     placeholder={tx('title_searchByUsernameOrEmail')}
                     ref={ti => { this.textInput = ti; }}
                     style={style} />
-                {this.findUserText ? icons.coloredSmall('close', () => {
-                    this.inProgress = false;
-                    this.findUserText = '';
-                    this.toInvite = null;
-                    this.notFound = null;
-                }, vars.bg) : null}
+                {rightIcon}
             </View>
         );
     }
@@ -173,21 +146,32 @@ export default class ContactSelectorDM extends SafeComponent {
         this.props.onExit && this.props.onExit();
     }
 
-    item(contact, i) {
-        const { username, fullName, isLegacy } = contact;
+    sectionHeader({ section: { data, key } }) {
+        if (!data || !data.length) return null;
+        const s = { fontWeight: 'bold', margin: 10 };
+        return (
+            <Text style={s}>
+                {tx(key, { found: data && data.length })}
+            </Text>
+        );
+    }
+
+    item = (params) => {
+        const { item } = params;
+        const { username, fullName, isLegacy, isAdded, email } = item;
+        if (!username) return <ContactInviteItem noBorderBottom contact={fromEmail(email)} />;
         return (
             <Avatar
                 noBorderBottom
-                starred={contact.isAdded}
-                contact={contact}
-                key={username || i}
+                starred={isAdded}
+                contact={item}
                 title={<Text style={{ fontWeight: 'normal' }}>{fullName || username}</Text>}
                 title2={isLegacy ? username : null}
                 height={56}
                 hideOnline
                 onPress={() => {
                     this.props.onExit();
-                    this.props.action([contact]);
+                    this.props.action([item]);
                 }} />
         );
     }
@@ -226,37 +210,43 @@ export default class ContactSelectorDM extends SafeComponent {
         });
     }
 
+    get listView() {
+        return (
+            <SectionList
+                initialNumToRender={INITIAL_LIST_SIZE}
+                sections={this.dataSource}
+                keyExtractor={item => item.username || item.email}
+                renderItem={this.item}
+                renderSectionHeader={this.sectionHeader}
+            />
+        );
+    }
+
+    get dataSource() {
+        const result = [
+            { data: contactState.getFiltered(this.findUserText).slice(), key: 'title_allYourContacts' }
+        ];
+        if (!this.findUserText) {
+            result.push({ data: contactState.store.invitedContacts.slice(), key: 'title_allYourInvited' });
+        }
+        return result;
+    }
+
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
-        const found = contactState.getFiltered(this.findUserText);
-        const result = found.map((item, i) => this.item(item, i));
-        const activityIndicator = <ActivityIndicator style={{ marginTop: vars.spacing.big }} />;
-        const allYourContactsTitle = found.length && !this.findUserText ?
-            <Text style={{ fontWeight: 'bold', margin: vars.spacing.big }}>{tx('title_allYourContacts', { found: found.length })}</Text> : null;
-        const allInvitedTitle = !this.findUserText ?
-            <Text style={{ fontWeight: 'bold', margin: vars.spacing.big }}>{tx('title_allYourInvited', { found: contactState.store.invitedContacts.length })}</Text> : null;
-        const allInvited = !this.findUserText ? contactState.store.invitedContacts.map(
-            ({ email }) => <ContactInviteItem noBorderBottom contact={this.fromEmail(email)} />) : null;
-        const body = !this.toInvite && !found.length && contactState.loading || this.inProgress ? activityIndicator : result;
-        const invite = this.inviteContactDuck;
-        const inviteControl = !!invite && <ContactInviteItemPrompt email={this.toInvite} />;
-        const legacy = this.legacyContact;
-        const legacyControl = legacy ? <ContactLegacyItem noBorderBottom contact={legacy} /> : null;
         const notFound = !this.inProgress && !!this.notFound && (
-            <View style={{ flexDirection: 'row', marginHorizontal: 36 }}>
-                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: vars.spacing.normal }} />
+            <View style={{ flexDirection: 'row', marginHorizontal: 36, marginVertical: 10 }}>
+                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: 8 }} />
                 <Text style={{ color: vars.txtDate }}>{t('error_userNotFoundTryEmail', { user: this.notFound })}</Text>
             </View>
         );
         return (
-            <View style={{ marginHorizontal: vars.spacing.bigger }}>
-                {allYourContactsTitle}
+            <View style={{ marginHorizontal: 12 }}>
                 {notFound}
-                {inviteControl}
-                {legacyControl}
-                {body}
-                {allInvitedTitle}
-                {allInvited}
+                {this.inviteContact}
+                {!!this.legacyContact &&
+                    <ContactLegacyItem noBorderBottom contact={this.legacyContact} />}
+                {this.listView}
             </View>
         );
     }

@@ -2,6 +2,84 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.169.0"></a>
+# [3.169.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.168.0...v3.169.0) (2017-10-11)
+
+
+### Features
+
+* only show toggles if there are items in the other list ([e1d347e](https://github.com/PeerioTechnologies/peerio-mobile/commit/e1d347e))
+* remove preview message from DM ([15aa460](https://github.com/PeerioTechnologies/peerio-mobile/commit/15aa460))
+
+
+
+<a name="3.168.0"></a>
+# [3.168.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.167.0...v3.168.0) (2017-10-10)
+
+
+
+<a name="3.167.0"></a>
+# [3.167.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.166.0...v3.167.0) (2017-10-10)
+
+
+### Features
+
+* chat headers arrows and stuff ([9197690](https://github.com/PeerioTechnologies/peerio-mobile/commit/9197690))
+
+
+
+<a name="3.166.0"></a>
+# [3.166.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.165.0...v3.166.0) (2017-10-10)
+
+
+### Bug Fixes
+
+* leftover border ([9926380](https://github.com/PeerioTechnologies/peerio-mobile/commit/9926380))
+
+
+### Features
+
+* progressoverlay when updating after reconnect ([ca4742e](https://github.com/PeerioTechnologies/peerio-mobile/commit/ca4742e))
+
+
+
+<a name="3.165.0"></a>
+# [3.165.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.164.0...v3.165.0) (2017-10-09)
+
+
+### Bug Fixes
+
+* layout of settings item ([e124d1d](https://github.com/PeerioTechnologies/peerio-mobile/commit/e124d1d))
+* scrolling on signup and login ([dfcf8e4](https://github.com/PeerioTechnologies/peerio-mobile/commit/dfcf8e4))
+
+
+### Features
+
+* reduce timeout for modal popup ([cc35cd0](https://github.com/PeerioTechnologies/peerio-mobile/commit/cc35cd0))
+
+
+
+<a name="3.164.0"></a>
+# [3.164.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.163.0...v3.164.0) (2017-10-09)
+
+
+### Bug Fixes
+
+* legacy users section shouldn't take space ([bff2500](https://github.com/PeerioTechnologies/peerio-mobile/commit/bff2500))
+* remove true/false from channel names ([1233a4a](https://github.com/PeerioTechnologies/peerio-mobile/commit/1233a4a))
+* semi-bold unread message sender name and timestamp ([0a8ab24](https://github.com/PeerioTechnologies/peerio-mobile/commit/0a8ab24))
+* unread message date/timestamps are now bold ([ab55edd](https://github.com/PeerioTechnologies/peerio-mobile/commit/ab55edd))
+
+
+### Features
+
+* Add warning in Display Preferences ([7d30f3f](https://github.com/PeerioTechnologies/peerio-mobile/commit/7d30f3f))
+* bump react-native-sound so it supports ambient for android ([05771f7](https://github.com/PeerioTechnologies/peerio-mobile/commit/05771f7))
+* Display Preferences ([189de9c](https://github.com/PeerioTechnologies/peerio-mobile/commit/189de9c))
+* refactor contact selector dm to use virtualizedlistview ([8385fcb](https://github.com/PeerioTechnologies/peerio-mobile/commit/8385fcb))
+
+
+
 <a name="3.163.0"></a>
 # [3.163.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.162.0...v3.163.0) (2017-10-04)
 

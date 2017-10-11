@@ -19,7 +19,9 @@ class SettingsState extends RoutedState {
         account: 'title_settingsAccount',
         preferences: 'title_settingsPreferences',
         upgrade: 'button_upgrade',
-        twoFactorAuth: 'title_2FA'
+        twoFactorAuth: 'title_2FA',
+        notifications: 'title_notifications',
+        display: 'title_displayPreferences'
     };
 
     get title() {

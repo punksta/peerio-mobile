@@ -132,4 +132,6 @@ Keyboard.addListener('keyboardDidHide', () => {
     uiState.keyboardHeight = 0;
 });
 
+uiState.height = height;
+
 export default uiState;

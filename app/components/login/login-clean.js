@@ -61,7 +61,6 @@ export default class LoginClean extends LoginWizardPage {
                                 returnKeyType="go"
                                 onSubmit={() => this.props.submit()}
                                 state={loginState} name="passphrase" hint={t('title_AccountKey')} secureTextEntry />
-                            {/* TODO: peerio copy */}
                             {/* TODO: make link active */}
                             <Text style={findKeyText}>{tx('title_whereToFind')}</Text>
                         </View>
@@ -74,7 +73,6 @@ export default class LoginClean extends LoginWizardPage {
                     </View>
                 </View>
                 <View style={footer}>
-                    {/* TODO: peerio copy */}
                     <Text style={title3}>
                         {tx('title_signupHere')}
                     </Text>

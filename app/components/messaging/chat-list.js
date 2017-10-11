@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Animated, LayoutAnimation } from 'react-native';
+import { View, ListView } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { chatInviteStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
@@ -18,6 +18,7 @@ import { tx } from '../utils/translator';
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
+// action sheet is outside of component scope for a reason.
 let actionSheet = null;
 
 @observer
@@ -33,7 +34,8 @@ export default class ChatList extends SafeComponent {
     @observable dataSource = null;
     @observable refreshing = false
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
-    actionsHeight = new Animated.Value(0)
+    @observable collapsible = true;
+
     get rightIcon() { return <PlusBorderIcon action={() => actionSheet.show()} />; }
 
     get data() {
@@ -55,13 +57,15 @@ export default class ChatList extends SafeComponent {
             this.data.length,
             this.maxLoadedIndex
         ], () => {
-            console.log(`chat-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
+            const channels = this.data.filter(d => !!d.isChannel);
+            const dms = this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex);
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
-                title_channels: this.data.filter(d => !!d.isChannel),
-                title_channelInvites: [],
-                title_directMessages: this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex),
+                title_channels: channels,
+                title_channelInvites: chatInviteStore.received,
+                title_directMessages: dms,
                 dummy: []
             });
+            this.collapsible = !(channels.length === 0 ^ dms.length === 0);
             this.forceUpdate();
         }, true);
     }
@@ -73,20 +77,22 @@ export default class ChatList extends SafeComponent {
             return r;
         };
         const invitesCount = chatInviteStore.received.length;
+        const { collapsible } = this;
         const titles = {
             ...i('title_channels',
-                <ChatSectionHeader state="collapseChannels" title={tx('title_channels')} />),
+                <ChatSectionHeader collapsible={collapsible} state="collapseChannels" title={tx('title_channels')} />),
             ...i('title_directMessages',
-                <ChatSectionHeader state="collapseDMs" title={tx('title_directMessages')} />),
+                <ChatSectionHeader collapsible={collapsible} state="collapseDMs" title={tx('title_directMessages')} />),
             ...i('title_channelInvites',
                 (
                     <ChatChannelInviteSection
                         title={tx('title_channelInvites')}
                         data={invitesCount} onPress={() => chatState.routerMain.channelInviteList()} />
                 ),
-            ...i('dummy', <View />))
+            ),
+            ...i('dummy', <View />)
         };
-        return titles[key];
+        return data && data.length ? titles[key] : null;
     }
 
     item = (chat) => {

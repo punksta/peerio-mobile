@@ -59,7 +59,6 @@ export default class SignupConfirmBackup extends LoginWizardPage {
         return (
             <View style={container} onLayout={this._layout}>
                 <View style={header}>
-                    {/* TODO: peerio copy */}
                     <Text style={title2}>{tx('title_AccountKey')}</Text>
                 </View>
                 <View style={{ flex: 0.7, flexGrow: 1, alignItems: 'flex-start' }}>

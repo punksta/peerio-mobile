@@ -10,7 +10,7 @@ import chatState from './chat-state';
 @observer
 export default class ChatSectionHeader extends SafeComponent {
     renderThrow() {
-        const { title } = this.props;
+        const { title, collapsible } = this.props;
         const style = {
             paddingLeft: 18,
             paddingRight: 16,
@@ -24,10 +24,15 @@ export default class ChatSectionHeader extends SafeComponent {
         const textStyle = {
             color: vars.txtMedium
         };
+
+        const action = collapsible ? () => { chatState[this.props.state] = !chatState[this.props.state]; } : null;
         return (
-            <TouchableOpacity {...this.props} style={style} onPress={() => { chatState[this.props.state] = !chatState[this.props.state]; }}>
+            <TouchableOpacity
+                pressRetentionOffset={vars.retentionOffset}
+                {...this.props} style={style} onPress={action} disabled={!collapsible}>
                 <Text style={textStyle}>{title}</Text>
-                <Icon name={chatState[this.props.state] ? 'arrow-drop-up' : 'arrow-drop-down'} size={24} style={{ color: vars.txtDark }} />
+                {collapsible &&
+                <Icon name={chatState[this.props.state] ? 'arrow-drop-down' : 'arrow-drop-up'} size={24} style={{ color: vars.txtDark }} />}
             </TouchableOpacity>
         );
     }
