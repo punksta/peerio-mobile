@@ -1,54 +1,26 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
-import Option from './radio-button-option';
+import Circle from './radio-button-circle';
 
 export default class RadioButton extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selectedIndex: -1
-        };
-    }
-
-    _onSelect(index) {
-        const { onSelect } = this.props;
-        this.setState({
-            selectedIndex: index
-        });
-        onSelect(index);
-    }
-
     render() {
-        const { selectedIndex } = this.state;
-        const targetIndex = selectedIndex !== -1 ? selectedIndex : this.props.defaultSelect;
-
-        const children = React.Children.map(this.props.children, (child, index) => {
-            if (child.type === Option) {
-                return React.cloneElement(child, {
-                    onPress: () => this._onSelect(index),
-                    isSelected: index === targetIndex
-                });
-            }
-
-            return child;
-        });
+        const { onPress, isSelected, children } = this.props;
 
         return (
-            <View>
-                {children}
-            </View>
+            <TouchableOpacity onPress={onPress}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Circle isSelected={isSelected} />
+                    <View style={{ flex: 1 }}>
+                        {children}
+                    </View>
+                </View>
+            </TouchableOpacity>
         );
     }
 }
 
 RadioButton.propTypes = {
-    onSelect: React.PropTypes.func.isRequired,
-    defaultSelect: React.PropTypes.number,
-    optionTitles: React.PropTypes.any
+    onPress: React.PropTypes.func,
+    isSelected: React.PropTypes.bool
 };
-
-RadioButton.defaultProps = {
-    defaultSelect: -1
-};
-

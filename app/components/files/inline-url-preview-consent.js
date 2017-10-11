@@ -7,8 +7,7 @@ import { User } from '../../lib/icebear';
 import { t, tx, tu } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import Link from '../controls/link';
-import RadioButton from '../controls/radio-button';
-import Option from '../controls/radio-button-option';
+import RadioGroup from '../controls/radio-group';
 
 const container = {
     backgroundColor: '#f0f0f0',
@@ -30,14 +29,15 @@ const titleText = {
     paddingLeft: 8
 };
 
-const radioText = {
-    flex: 1,
-    justifyContent: 'center',
-    paddingBottom: 4
-};
+const options = [
+    'title_forAllContacts',
+    'title_forFavouriteContactsOnly',
+    'title_disable'
+];
 
 @observer
 export default class InlineUrlPreviewConsent extends SafeComponent {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -50,8 +50,6 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
         this.setState({
             optionSelected: index
         });
-        console.log(index);
-        console.log(this.state.optionSelected);
     }
 
     renderButton(text, onPress, colorIsPrimary) {
@@ -113,26 +111,11 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
                     {tx('title_learnMore')}
                 </Link>
                 {this.spacer}
-                {/* TODO Extract Option into RadioButton */}
-                <RadioButton
+                <RadioGroup
                     onSelect={this.onSelectRadioButton}
-                    defaultSelect={this.state.optionSelected}>
-                    <Option>
-                        <View style={radioText}>
-                            <Text>{tx('title_forAllContacts')}</Text>
-                        </View>
-                    </Option>
-                    <Option>
-                        <View style={radioText}>
-                            <Text>{tx('title_forFavouriteContactsOnly')}</Text>
-                        </View>
-                    </Option>
-                    <Option>
-                        <View style={radioText}>
-                            <Text>{tx('title_disable')}</Text>
-                        </View>
-                    </Option>
-                </RadioButton>
+                    defaultSelect={this.state.optionSelected}
+                    options={options}
+                />
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                     {this.renderButton(tu('button_notNow'), this.userActionDismiss, false)}
                     {this.renderButton(tu('button_save'), this.userActionSave, true)}
