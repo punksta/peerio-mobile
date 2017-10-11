@@ -11,9 +11,7 @@ import plans from '../payments/payments-config';
 import { tx, tu } from '../utils/translator';
 import { warnings, config } from '../../lib/icebear';
 import { popupYes } from '../shared/popups';
-import buttons from '../helpers/buttons';
-import Button from '../controls/button';
-import Center from '../controls/center';
+import ButtonWithIcon from '../controls/button-with-icon';
 
 const bgStyle = {
     flexGrow: 1,
@@ -77,15 +75,16 @@ export default class SettingsLevel1 extends SafeComponent {
                     {this.spacer}
                     <SettingsItem title="title_About" onPress={() => popupYes('About', AboutContent)} />
                     {this.spacer}
-                    <Button text={tu('button_logout')}
+                    <ButtonWithIcon text={tu('button_logout')}
                         style={{
-                            backgroundColor: vars.bg,
+                            backgroundColor: vars.white,
                             width: '100%',
-                            paddingVertical: 18,
-                            borderRadius: 5 }}
+                            paddingVertical: 16,
+                            borderRadius: 4 }}
                         bold={true}
-                        textStyle={{ textAlign: 'center', color: vars.white }}
+                        textStyle={{ color: vars.bg }}
                         onPress={this.terms}
+                        iconName="power-settings-new"
                     />
                     {this.spacer}
                     {__DEV__ && <SettingsItem title="toggle connection" onPress={toggleConnection} />}
