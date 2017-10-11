@@ -18,7 +18,7 @@ import snackbarState from '../snackbars/snackbar-state';
 import icons from '../helpers/icons';
 
 const formStyle = {
-    padding: 20,
+    padding: vars.spacing.huge,
     justifyContent: 'space-between'
 };
 
@@ -29,7 +29,7 @@ const addPhotoText = {
 };
 
 const addPhotoPlus = [addPhotoText, {
-    fontSize: 30,
+    fontSize: vars.signupFontSize,
     fontWeight: 'bold',
     color: vars.white
 }];

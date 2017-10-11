@@ -115,7 +115,7 @@ const icons = {
         };
         const textStyle = {
             color: fgColor,
-            fontSize: 8,
+            fontSize: vars.font.size.xsmall,
             fontWeight: vars.font.weight.semiBold,
             textAlign: 'center'
         };

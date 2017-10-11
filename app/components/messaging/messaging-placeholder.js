@@ -44,8 +44,8 @@ export default class MessagingPlaceholder extends SafeComponent {
                 width: 1
             },
             elevation: 10,
-            margin: 20,
-            padding: 20,
+            margin: vars.spacing.huge,
+            padding: vars.spacing.huge,
             backgroundColor: 'white'
         };
         const title = {

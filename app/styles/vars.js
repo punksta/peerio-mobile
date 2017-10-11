@@ -75,6 +75,7 @@ const vars = {
     wizardPadding: 36,
     font: {
         size: {
+            xsmall: scaleDim(8),
             normal: scaleDim(14),
             smaller: scaleDim(12),
             small: scaleDim(10),
@@ -89,6 +90,11 @@ const vars = {
             regular: '400'
         }
     },
+    accountTitleFontSize: scaleDim(37),
+    accountListFontSize: scaleDim(21),
+    signupFontSize: scaleDim(30),
+    profileEditFontSize: scaleDim(60),
+    readReceiptFontSize: scaleDim(9),
     inputHeight: 48,
     inputPaddingLeft: 10,
     inputPaddedHeight: 56,

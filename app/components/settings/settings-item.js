@@ -44,7 +44,7 @@ export default class SettingsItem extends SafeComponent {
                             color: this.props.disabled ? vars.txtLight : vars.txtDark }}>
                             {t(this.props.title)}
                         </Text>
-                        {!!this.props.description && <Text style={{ fontSize: 12 }}>
+                        {!!this.props.description && <Text style={{ fontSize: vars.font.size.smaller }}>
                             {this.props.description}
                         </Text>}
                     </View>
@@ -69,4 +69,3 @@ SettingsItem.propTypes = {
     icon: PropTypes.string,
     onPress: PropTypes.any
 };
-

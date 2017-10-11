@@ -14,7 +14,7 @@ import LoginWizardPage, {
 const imageWelcomeSafe = require('../../assets/welcome-safe.png');
 
 const formStyle = {
-    padding: 20,
+    padding: vars.spacing.huge,
     justifyContent: 'space-between'
 };
 

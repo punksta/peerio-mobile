@@ -205,7 +205,7 @@ export default class ProfileEdit extends SafeComponent {
         const style = {
             color: vars.white,
             fontWeight: 'bold',
-            fontSize: 60,
+            fontSize: vars.profileEditFontSize,
             marginHorizontal: 24,
             marginVertical: 16
         };

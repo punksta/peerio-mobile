@@ -9,7 +9,7 @@ import { popupControl } from '../shared/popups';
 import { tx } from '../utils/translator';
 
 const topTitleText = {
-    fontSize: 37,
+    fontSize: vars.accountTitleFontSize,
     color: 'white'
 };
 
@@ -28,7 +28,7 @@ const featureListText = [topTitleText, {
 }];
 
 const featureListTextMedium = [featureListText, {
-    fontSize: 21
+    fontSize: vars.accountListFontSize
 }];
 
 const planFooterInfo = [featureListTextMedium, {
