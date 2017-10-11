@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
 import { User } from '../../lib/icebear';
-import { t } from '../utils/translator';
+import { t, tx, tu } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import Link from '../controls/link';
 import RadioButton from '../controls/radio-button';
@@ -17,9 +17,7 @@ const container = {
     borderRadius: 6,
     paddingHorizontal: 24,
     paddingTop: 21,
-    paddingBottom: 6,
-    marginLeft: 64, // TODO Remove
-    marginRight: 16 // TODO Remove
+    paddingBottom: 6
 };
 
 const titleContainer = {
@@ -62,7 +60,6 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
                 onPress={onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={{ paddingLeft: 40, paddingVertical: 16 }}>
-                {/* TODO Peerio Copy */}
                 <Text style={{ fontWeight: 'bold', color: colorIsPrimary ? vars.bg : null }}>
                     {text}
                 </Text>
@@ -105,20 +102,15 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
                         color="gray"
                     />
                     <Text style={titleText}>
-                        {/* TODO Peerio Copy */}
-                        Enable URL previews
+                        {tx('title_EnableUrlPreviews')}
                     </Text>
                 </View>
                 {this.spacer}
                 <Text>
-                    {/* TODO Peerio Copy */}
-                    URL previews may increase the chance
-                     of being tracked from outside sources.
-                     Would you like to enable previews?
+                    {tx('title_UrlPreviewsWarning')}
                 </Text>
                 <Link>
-                    {/* TODO Peerio Copy */}
-                    Learn more
+                    {tx('title_learnMore')}
                 </Link>
                 {this.spacer}
                 {/* TODO Extract Option into RadioButton */}
@@ -127,25 +119,23 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
                     defaultSelect={this.state.optionSelected}>
                     <Option>
                         <View style={radioText}>
-                            <Text>{'For all contacts'}</Text>
+                            <Text>{tx('title_forAllContacts')}</Text>
                         </View>
                     </Option>
                     <Option>
                         <View style={radioText}>
-                            <Text>{'For favorite contacts only'}</Text>
+                            <Text>{tx('title_forFavouriteContactsOnly')}</Text>
                         </View>
                     </Option>
                     <Option>
                         <View style={radioText}>
-                            <Text>{'Disable'}</Text>
+                            <Text>{tx('title_disable')}</Text>
                         </View>
                     </Option>
                 </RadioButton>
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                    {/* TODO Peerio Copy tu() */}
-                    {this.renderButton('NOT NOW', this.userActionDismiss, false)}
-                    {/* TODO Peerio Copy tu() */}
-                    {this.renderButton('SAVE', this.userActionSave, true)}
+                    {this.renderButton(tu('button_notNow'), this.userActionDismiss, false)}
+                    {this.renderButton(tu('button_save'), this.userActionSave, true)}
                 </View>
             </View>
         );
