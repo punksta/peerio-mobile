@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import { chatState } from '../states';
 import { vars } from '../../styles/styles';
 import { User } from '../../lib/icebear';
-import { t } from '../utils/translator';
+import { t, tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import ToggleItem from './toggle-item';
 import WarningItem from './warning-item';
@@ -44,8 +44,8 @@ export default class Display extends SafeComponent {
     imagePreviewsToggle() {
         const state = User.current.settings.inlineChatContent;
         const prop = 'peerioContentEnabled';
-        const title = 'Show previews of image files'; // TODO Peerio Copy
-        const description = 'Previews stored unencrypted on this device'; // TODO Peerio Copy
+        const title = tx('title_showImagePreviews');
+        const description = tx('title_showImagePreviewsDescription');
         const onPress = () => {
             state.peerioContentEnabled = !state.peerioContentEnabled;
             User.current.saveSettings();
@@ -58,7 +58,7 @@ export default class Display extends SafeComponent {
     largeImagesToggle() {
         const state = User.current.settings.inlineChatContent;
         const prop = 'limitSize';
-        const title = 'Show images larger than 3 MB'; // TODO Peerio Copy
+        const title = tx('title_showLargeImages');
         const onPress = () => {
             state.limitSize = !state.limitSize;
             User.current.saveSettings();
@@ -71,7 +71,7 @@ export default class Display extends SafeComponent {
     urlPreviewsToggle() {
         const state = User.current.settings.inlineChatContent;
         const prop = 'externalContentEnabled';
-        const title = 'Enable all URL Preview'; // TODO Peerio Copy
+        const title = tx('title_enableAllUrlPreview');
         const onPress = () => {
             state.externalContentEnabled = !state.externalContentEnabled;
             User.current.saveSettings();
@@ -84,7 +84,7 @@ export default class Display extends SafeComponent {
     favoritesToggle() {
         const state = User.current.settings.inlineChatContent;
         const prop = 'externalJustForFavContacts';
-        const title = 'Only from Favourites'; // TODO Peerio Copy
+        const title = tx('title_onlyFromFavourites');
         const onPress = () => {
             state.externalJustForFavContacts = !state.externalJustForFavContacts;
             User.current.saveSettings();
@@ -102,8 +102,8 @@ export default class Display extends SafeComponent {
                 {this.largeImagesToggle()}
                 {<Text style={text}>URL Preview</Text>}
                 <WarningItem
-                    content="Enabling URL Preview may increase the chance of tracking by third party web services."
-                    linkContent="Learn more."
+                    content={tx('title_EnableUrlPreviewWarning')}
+                    linkContent={tx('title_learnMore')}
                     link=""
                     />
                 {this.urlPreviewsToggle()}
