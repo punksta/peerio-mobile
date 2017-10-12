@@ -60,6 +60,7 @@ const vars = {
     statusBarHeight,
     layoutPaddingTop,
     headerHeight: 80,
+    tabsHeight: 56,
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconSizeSmall: 16,
