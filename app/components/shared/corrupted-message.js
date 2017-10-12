@@ -10,7 +10,7 @@ export default class CorruptedMessage extends SafeComponent {
     renderThrow() {
         if (!this.props.visible) return null;
         return (
-            <Text style={{ margin: vars.spacing.normal }}>
+            <Text style={{ margin: vars.spacing.small.midi2x }}>
                 The cryptographic signature of this
                 message is invalid. This might mean
                 someone forged this message.

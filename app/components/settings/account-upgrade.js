@@ -11,7 +11,7 @@ import plans from '../payments/payments-config';
 
 const margin = 18;
 const marginLeft = margin;
-const marginBottom = vars.spacing.bigger;
+const marginBottom = vars.spacing.small.maxi2x;
 const paddingWhite = 10;
 const marginWhite = margin - paddingWhite;
 
@@ -65,7 +65,7 @@ export default class AccountUpgrade extends SafeComponent {
             <TouchableOpacity
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ paddingTop: vars.spacing.smaller }}>
+                style={{ paddingTop: vars.spacing.small.mini }}>
                 <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
                     {tu(text)}
                 </Text>

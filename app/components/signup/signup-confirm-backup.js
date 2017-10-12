@@ -14,7 +14,7 @@ import LoginWizardPage, {
 const imageWelcomeSafe = require('../../assets/welcome-safe.png');
 
 const formStyle = {
-    padding: vars.spacing.huge,
+    padding: vars.spacing.medium.midi2x,
     justifyContent: 'space-between'
 };
 
@@ -22,7 +22,7 @@ const textNormal = {
     color: vars.txtDark,
     fontSize: vars.font.size.normal,
     lineHeight: 24,
-    marginBottom: vars.spacing.big
+    marginBottom: vars.spacing.small.maxi
 };
 
 const titleDark = [textNormal, {

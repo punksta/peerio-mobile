@@ -9,8 +9,8 @@ import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import { mailStore } from '../../lib/icebear';
 
-const padding = vars.spacing.normal;
-const marginVertical = vars.spacing.small;
+const padding = vars.spacing.small.midi2x;
+const marginVertical = vars.spacing.small.mini2x;
 
 const row = {
     flexDirection: 'row',

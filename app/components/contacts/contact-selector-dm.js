@@ -64,8 +64,8 @@ export default class ContactSelectorDM extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            paddingHorizontal: vars.spacing.bigger,
-            margin: vars.spacing.bigger,
+            paddingHorizontal: vars.spacing.small.maxi2x,
+            margin: vars.spacing.small.maxi2x,
             borderColor: vars.bg,
             borderWidth: 1,
             height,
@@ -78,7 +78,7 @@ export default class ContactSelectorDM extends SafeComponent {
         const style = {
             flexGrow: 1,
             height,
-            marginLeft: vars.spacing.normal,
+            marginLeft: vars.spacing.small.midi2x,
             fontSize: vars.font.size.smaller
         };
 
@@ -91,7 +91,7 @@ export default class ContactSelectorDM extends SafeComponent {
         }
 
         if (this.inProgress || contactState.inProgress) {
-            rightIcon = <ActivityIndicator style={{ marginRight: vars.spacing.normal }} />;
+            rightIcon = <ActivityIndicator style={{ marginRight: vars.spacing.small.midi2x }} />;
         }
 
         return (
@@ -117,7 +117,7 @@ export default class ContactSelectorDM extends SafeComponent {
         const container = {
             flexGrow: 1,
             flexDirection: 'row',
-            padding: vars.spacing.normal,
+            padding: vars.spacing.small.midi2x,
             alignItems: 'center'
         };
         const textStyle = {
@@ -148,7 +148,7 @@ export default class ContactSelectorDM extends SafeComponent {
 
     sectionHeader({ section: { data, key } }) {
         if (!data || !data.length) return null;
-        const s = { fontWeight: 'bold', margin: vars.spacing.big };
+        const s = { fontWeight: 'bold', margin: vars.spacing.small.maxi };
         return (
             <Text style={s}>
                 {tx(key, { found: data && data.length })}
@@ -235,13 +235,13 @@ export default class ContactSelectorDM extends SafeComponent {
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
         const notFound = !this.inProgress && !!this.notFound && (
-            <View style={{ flexDirection: 'row', marginHorizontal: vars.spacing.xxLarge, marginVertical: vars.spacing.big }}>
-                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: vars.spacing.normal }} />
+            <View style={{ flexDirection: 'row', marginHorizontal: vars.spacing.large.midi2x, marginVertical: vars.spacing.small.maxi }}>
+                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: vars.spacing.small.midi2x }} />
                 <Text style={{ color: vars.txtDate }}>{t('error_userNotFoundTryEmail', { user: this.notFound })}</Text>
             </View>
         );
         return (
-            <View style={{ marginHorizontal: vars.spacing.bigger }}>
+            <View style={{ marginHorizontal: vars.spacing.small.maxi2x}}>
                 {notFound}
                 {this.inviteContact}
                 {!!this.legacyContact &&

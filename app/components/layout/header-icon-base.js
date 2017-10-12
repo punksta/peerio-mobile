@@ -19,7 +19,7 @@ export default class HeaderIconBase extends SafeComponent {
                         backgroundColor: 'transparent',
                         flexDirection: 'row',
                         justifyContent: 'center',
-                        margin: vars.spacing.large
+                        margin: vars.spacing.medium.mini2x
                     }, this.innerStyle]}>
                         {icons.plainWhite(this.icon)}
                     </View>

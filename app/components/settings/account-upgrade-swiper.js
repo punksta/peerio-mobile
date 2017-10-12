@@ -18,7 +18,7 @@ const { width } = Dimensions.get('window');
 const card = {
     width,
     backgroundColor: 'transparent',
-    paddingTop: vars.spacing.xxLarge
+    paddingTop: vars.spacing.large.midi2x
 };
 
 const basicColor = '#82A9BE';

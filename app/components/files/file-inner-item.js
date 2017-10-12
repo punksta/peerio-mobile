@@ -25,7 +25,7 @@ const itemContainerStyle = {
     width,
     borderWidth: 0,
     borderColor: 'red',
-    paddingLeft: vars.spacing.normal
+    paddingLeft: vars.spacing.small.midi2x
 };
 
 const fileInfoContainerStyle = {
@@ -52,7 +52,7 @@ export default class FileInnerItem extends SafeComponent {
         const icon = checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
             backgroundColor: color,
-            padding: vars.spacing.small,
+            padding: vars.spacing.small.mini2x,
             flex: 0,
             width: checkBoxWidth,
             justifyContent: 'center',
@@ -67,7 +67,7 @@ export default class FileInnerItem extends SafeComponent {
 
     renderThrow() {
         const file = this.props.file;
-        if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.smallish }}><FileSignatureError /></View>;
+        if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
         const action = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
             icons.dark('keyboard-arrow-right', action);
@@ -105,7 +105,7 @@ export default class FileInnerItem extends SafeComponent {
                             <View style={[loadingStyle, { flex: 0 }]}>
                                 {icon}
                             </View>
-                            <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.large }}>
+                            <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
                                 <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                 <Text style={infoStyle}>
                                     {moment(file.uploadedAt).format(`MMM Do YYYY, hh:mm a`)}

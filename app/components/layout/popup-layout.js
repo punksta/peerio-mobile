@@ -61,7 +61,7 @@ export default class PopupLayout extends SafeComponent {
             overflow: 'hidden',
             elevation: 10,
             margin,
-            marginHorizontal: vars.spacing.large,
+            marginHorizontal: vars.spacing.medium.mini2x,
             marginBottom: (Platform.OS === 'android' ? 0 : uiState.keyboardHeight) + margin
         };
 
@@ -83,13 +83,13 @@ export default class PopupLayout extends SafeComponent {
         const title = {
             fontWeight: 'bold',
             fontSize: vars.font.size.bigger,
-            marginBottom: vars.spacing.normal
+            marginBottom: vars.spacing.small.midi2x
         };
 
         const buttonBar = {
             flex: 0,
-            marginHorizontal: vars.spacing.large,
-            marginVertical: vars.spacing.normal,
+            marginHorizontal: vars.spacing.medium.mini2x,
+            marginVertical: vars.spacing.small.midi2x,
             flexDirection: 'row',
             justifyContent: 'flex-end'
         };
@@ -98,7 +98,7 @@ export default class PopupLayout extends SafeComponent {
             <View style={popupNonAnimatedStyle}>
                 <View style={wrapper}>
                     <View style={container}>
-                        <View style={{ padding: vars.spacing.huge, flexGrow: 1, flexShrink: 1 }}>
+                        <View style={{ padding: vars.spacing.medium.midi2x, flexGrow: 1, flexShrink: 1 }}>
                             {popup.title ? <Text style={title} ellipsizeMode="tail" numberOfLines={1}>{popup.title}</Text> : null}
                             {popup.subTitle}
                             {popup.contents}

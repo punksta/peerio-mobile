@@ -11,7 +11,7 @@ const circleStyle = {
     width: circleDiameter,
     height: circleDiameter,
     borderRadius: circleDiameter / 2,
-    margin: vars.spacing.small
+    margin: vars.spacing.small.mini2x
 };
 
 const circleOnline = {

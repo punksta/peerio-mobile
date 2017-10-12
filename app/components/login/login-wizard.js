@@ -66,7 +66,7 @@ export default class LoginWizard extends Wizard {
             }, 1000);
         }
         const s = [wizard.footer.button.base, {
-            padding: vars.spacing.small,
+            padding: vars.spacing.small.mini2x,
             justifyContent: 'center',
             backgroundColor: '#FFFFFF10',
             borderColor: '#FFFFFF50',
@@ -74,14 +74,14 @@ export default class LoginWizard extends Wizard {
             borderRadius: 6
         }];
         const input = {
-            marginHorizontal: vars.spacing.xLarge,
+            marginHorizontal: vars.spacing.medium.maxi2x,
             height: 24,
             backgroundColor: '#FFFFFF90',
-            marginTop: vars.spacing.bigger
+            marginTop: vars.spacing.small.maxi2x
         };
         return (
             <View
-                style={{ height: this.debugMenuHeight, opacity: this.delayDebugMenu ? 0.5 : 1, marginTop: vars.spacing.bigger }}
+                style={{ height: this.debugMenuHeight, opacity: this.delayDebugMenu ? 0.5 : 1, marginTop: vars.spacing.small.maxi2x}}
                 pointerEvents={this.delayDebugMenu ? 'none' : 'auto'}>
                 <View style={{ flexDirection: 'row', flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: vars.loginWizard_debugMenu_paddingH }}>
                     <Button style={s} onPress={() => { this.showDebugLogs = !this.showDebugLogs; }} text="Show logs" />

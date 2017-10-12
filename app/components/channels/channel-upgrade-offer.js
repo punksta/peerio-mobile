@@ -15,7 +15,7 @@ export default class ChannelUpgradeOffer extends Component {
 
         const offerStyle = {
             backgroundColor: '#d9f1ef',
-            padding: vars.spacing.bigger
+            padding: vars.spacing.small.maxi2x
         };
 
         return (

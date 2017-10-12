@@ -13,15 +13,15 @@ import { loginState } from '../states';
 
 const label = {
     color: vars.txtDate,
-    marginVertical: vars.spacing.small,
-    marginLeft: vars.spacing.big
+    marginVertical: vars.spacing.small.mini2x,
+    marginLeft: vars.spacing.small.maxi
 };
 
 const label2 = {
     color: vars.txtDark,
-    marginVertical: vars.spacing.normal,
-    marginLeft: vars.spacing.big,
-    marginTop: vars.spacing.large
+    marginVertical: vars.spacing.small.midi2x,
+    marginLeft: vars.spacing.small.maxi,
+    marginTop: vars.spacing.medium.mini2x
 };
 
 
@@ -65,17 +65,17 @@ export default class AccountEdit extends SafeComponent {
                 onScroll={this.onScroll}
                 keyboardShouldPersistTaps="handled"
                 style={{ backgroundColor: vars.settingsBg }} ref={ref => { this._scrollView = ref; }}>
-                <View style={{ margin: vars.spacing.normal }}>
+                <View style={{ margin: vars.spacing.small.midi2x }}>
                     {this.label('title_promoConsentRequestTitle')}
                     {this.toggle('title_promoConsent', 'subscribeToPromoEmails')}
                 </View>
-                <View style={{ margin: vars.spacing.normal }}>
+                <View style={{ margin: vars.spacing.small.midi2x }}>
                     {this.label2('title_dataDetail')}
                     {this.label('title_dataPreferences')}
                     {this.toggle('title_errorTrackingMessage', 'errorTracking')}
                     {this.toggle('title_dataCollectionMessage', 'dataCollection')}
                 </View>
-                <View style={{ marginTop: vars.spacing.large, marginLeft: vars.spacing.xLarge, marginBottom: 32, flex: 1, flexGrow: 1, justifyContent: 'flex-end' }}>
+                <View style={{ marginTop: vars.spacing.medium.mini2x, marginLeft: vars.spacing.medium.maxi2x, marginBottom: 32, flex: 1, flexGrow: 1, justifyContent: 'flex-end' }}>
                     {buttons.uppercaseRedButton('button_accountDelete', () => this.deleteAccount())}
                 </View>
             </ScrollView>

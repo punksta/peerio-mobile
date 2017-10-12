@@ -15,7 +15,7 @@ const emailFormatValidator = validation.validators.emailFormat.action;
 
 const textinputContainer = {
     backgroundColor: vars.white,
-    marginBottom: vars.spacing.smaller,
+    marginBottom: vars.spacing.small.mini,
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden'
@@ -48,12 +48,12 @@ const flexRow = {
 
 const label = {
     color: vars.txtDate,
-    marginVertical: vars.spacing.small,
-    marginLeft: vars.spacing.big
+    marginVertical: vars.spacing.small.mini2x,
+    marginLeft: vars.spacing.small.maxi
 };
 
 const emailIcon = (
-    <View style={{ marginHorizontal: vars.spacing.normal }}>
+    <View style={{ marginHorizontal: vars.spacing.small.midi2x }}>
         {icons.plaindark('email')}
     </View>
 );
@@ -155,7 +155,7 @@ export default class ProfileEdit extends SafeComponent {
             <TouchableOpacity
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ paddingRight: vars.spacing.bigger, paddingVertical: vars.spacing.big }}>
+                style={{ paddingRight: vars.spacing.small.maxi2x, paddingVertical: vars.spacing.small.maxi }}>
                 <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
                     {tu(text)}
                 </Text>
@@ -188,7 +188,7 @@ export default class ProfileEdit extends SafeComponent {
         return (
             <View style={textinputContainer} key={address}>
                 {emailIcon}
-                <View style={{ height: vars.inputHeight, flex: 1, flexGrow: 1, paddingTop: vars.spacing.small }}>
+                <View style={{ height: vars.inputHeight, flex: 1, flexGrow: 1, paddingTop: vars.spacing.small.mini2x }}>
                     {this.renderText(address)}
                     {confirmed && primary ? this.renderText(tx('title_primaryEmail'), { color: vars.bg, marginTop: -8 }) : null}
                     {!confirmed ? this.renderText(tx('error_unconfirmedEmail'), { color: vars.txtAlert, marginTop: -8 }) : null}
@@ -206,8 +206,8 @@ export default class ProfileEdit extends SafeComponent {
             color: vars.white,
             fontWeight: 'bold',
             fontSize: vars.profileEditFontSize,
-            marginHorizontal: vars.spacing.xLarge,
-            marginVertical: vars.spacing.large
+            marginHorizontal: vars.spacing.medium.maxi2x,
+            marginVertical: vars.spacing.medium.mini2x
         };
         return (
             <Text style={style}>
@@ -222,7 +222,7 @@ export default class ProfileEdit extends SafeComponent {
         const size = SIZE2;
         return (
             <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={() => this._actionSheet.show()}>
-                <Image source={{ uri, cache: 'force-cache' }} key={uri} style={{ borderRadius: size / 2, width: size, height: size, margin: vars.spacing.large }} />
+                <Image source={{ uri, cache: 'force-cache' }} key={uri} style={{ borderRadius: size / 2, width: size, height: size, margin: vars.spacing.medium.mini2x }} />
             </TouchableOpacity>
         );
     }
@@ -245,7 +245,7 @@ export default class ProfileEdit extends SafeComponent {
                                 fontWeight: 'bold',
                                 color: vars.white,
                                 fontSize: vars.font.size.bigger,
-                                marginVertical: vars.spacing.small
+                                marginVertical: vars.spacing.small.mini2x
                             }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.white }}>@{username}</Text>
                         <View style={{ position: 'absolute', right: 0, bottom: 0, flexDirection: 'row' }}>
@@ -254,7 +254,7 @@ export default class ProfileEdit extends SafeComponent {
                         </View>
                     </View>
                 </View>
-                <View style={{ margin: vars.spacing.normal }}>
+                <View style={{ margin: vars.spacing.small.midi2x }}>
                     <Text style={label}>{tx('title_name')}</Text>
                     <View style={textinputContainer}>
                         <SimpleTextBox
@@ -269,7 +269,7 @@ export default class ProfileEdit extends SafeComponent {
                             placeholder={tx('title_lastName')} style={textinput} value={this.lastName} />
                     </View>
                 </View>
-                <View style={{ margin: vars.spacing.normal }}>
+                <View style={{ margin: vars.spacing.small.midi2x }}>
                     <Text style={label}>{tx('title_email')}</Text>
                     {user.addresses.map(this.renderUserEmail)}
                     <View style={[textinputContainer, this.showAddEmail ? null : { height: 0 }]}>
@@ -288,12 +288,12 @@ export default class ProfileEdit extends SafeComponent {
                             onSubmitEditing={() => this.emailAction()}
                             style={textinput} />
                     </View>
-                    <View style={{ marginLeft: vars.spacing.normal, flexDirection: 'row' }}>
+                    <View style={{ marginLeft: vars.spacing.small.midi2x, flexDirection: 'row' }}>
                         {this.emailButton}
                         {this.validationError}
                     </View>
                 </View>
-                <View style={{ margin: 18, marginTop: vars.spacing.normal }}>
+                <View style={{ margin: 18, marginTop: vars.spacing.small.midi2x }}>
                     <Text style={{ color: vars.txtDate, marginBottom: 6 }}>{t('title_publicKey')}</Text>
                     <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: vars.font.size.bigger }} numberOfLines={2}>
                         {fingerprintSkylarFormatted}

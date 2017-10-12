@@ -8,10 +8,10 @@ import { vars } from '../../styles/styles';
 import Link from '../controls/link';
 
 const container = {
-    marginHorizontal: vars.spacing.huge,
+    marginHorizontal: vars.spacing.medium.midi2x,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: vars.spacing.bigger
+    marginBottom: vars.spacing.small.maxi2x
 };
 
 const textStyle = {
@@ -24,7 +24,7 @@ export default class WarningItem extends SafeComponent {
         return (
             <View style={container}>
                 <Icon
-                    style={{ paddingHorizontal: vars.spacing.large }}
+                    style={{ paddingHorizontal: vars.spacing.medium.mini2x }}
                     name="warning"
                     size={vars.iconSize}
                     color="gray"

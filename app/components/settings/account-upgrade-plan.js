@@ -21,7 +21,7 @@ const smallText = {
     fontSize: vars.font.size.normal,
     opacity: 0.7,
     color: 'white',
-    marginLeft: vars.spacing.normal
+    marginLeft: vars.spacing.small.midi2x
 };
 
 const featureListText = [topTitleText, {
@@ -42,11 +42,11 @@ const featureSmallText = {
 };
 
 const block0 = {
-    paddingHorizontal: vars.spacing.xLarge
+    paddingHorizontal: vars.spacing.medium.maxi2x
 };
 
 const block1 = [block0, {
-    marginBottom: vars.spacing.xLarge
+    marginBottom: vars.spacing.medium.maxi2x
 }];
 
 const textRow = {
@@ -57,10 +57,10 @@ const textRow = {
 const borderView = {
     borderColor: '#FFFFFFAA',
     borderBottomWidth: 1,
-    paddingBottom: vars.spacing.xLarge,
-    paddingHorizontal: vars.spacing.bigger,
-    marginHorizontal: vars.spacing.bigger,
-    marginBottom: vars.spacing.xLarge
+    paddingBottom: vars.spacing.medium.maxi2x,
+    paddingHorizontal: vars.spacing.small.maxi2x,
+    marginHorizontal: vars.spacing.small.maxi2x,
+    marginBottom: vars.spacing.medium.maxi2x
 };
 
 @observer
@@ -94,7 +94,7 @@ export default class AccountUpgradePlan extends Component {
 
     featureText(text) {
         return (
-            <View style={{ marginBottom: vars.spacing.big }} key={text}>
+            <View style={{ marginBottom: vars.spacing.small.maxi }} key={text}>
                 <Text style={featureSmallText}>{text}</Text>
             </View>
         );
@@ -139,7 +139,7 @@ export default class AccountUpgradePlan extends Component {
             fontSize: vars.font.size.normal,
             fontWeight: 'bold',
             textAlign: 'center',
-            marginTop: vars.spacing.larger
+            marginTop: vars.spacing.medium.midi
         };
         const popupTextStyle = { color: vars.txtDark, fontSize: vars.font.size.smaller };
         const popup = () => {

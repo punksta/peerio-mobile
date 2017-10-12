@@ -26,33 +26,33 @@ const headerStyle = {
     color: vars.txtDark,
     fontWeight: 'bold',
     fontSize: vars.font.size.bigger,
-    marginLeft: vars.spacing.normal
+    marginLeft: vars.spacing.small.midi2x
 };
 
 const infoStyle = {
     color: vars.txtDark,
-    marginLeft: vars.spacing.normal,
-    marginVertical: vars.spacing.xLarge
+    marginLeft: vars.spacing.small.midi2x,
+    marginVertical: vars.spacing.medium.maxi2x
 };
 
 const labelStyle = {
     color: vars.txtDate,
-    marginBottom: vars.spacing.small,
+    marginBottom: vars.spacing.small.mini2x,
     fontSize: vars.font.size.smaller,
-    marginLeft: vars.spacing.normal
+    marginLeft: vars.spacing.small.midi2x
 };
 
 const whiteStyle = {
-    backgroundColor: vars.white, paddingVertical: vars.spacing.big, paddingHorizontal
+    backgroundColor: vars.white, paddingVertical: vars.spacing.small.maxi, paddingHorizontal
 };
 
 const row = { flexDirection: 'row' };
 
-const rowRight = [row, { justifyContent: 'flex-end', marginTop: vars.spacing.bigger }];
+const rowRight = [row, { justifyContent: 'flex-end', marginTop: vars.spacing.small.maxi2x}];
 
 const column = { flex: 0.5, alignItems: 'center' };
 
-const textStyle = { color: vars.txtDark, fontWeight: 'bold', marginVertical: vars.spacing.big };
+const textStyle = { color: vars.txtDark, fontWeight: 'bold', marginVertical: vars.spacing.small.maxi };
 
 /*
 function uuidv4() {

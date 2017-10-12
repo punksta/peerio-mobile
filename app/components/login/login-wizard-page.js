@@ -7,7 +7,7 @@ import Button from '../controls/button';
 import { vars, wizard, helpers } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 
-const padding = vars.spacing.huge;
+const padding = vars.spacing.medium.midi2x;
 
 const container = {
     justifyContent: 'space-between',
@@ -19,7 +19,7 @@ const container = {
 
 const header = {
     justifyContent: 'center',
-    marginBottom: vars.spacing.bigger
+    marginBottom: vars.spacing.small.maxi2x
 };
 
 const topCircleSize = 76;
@@ -32,7 +32,7 @@ const inner = {
     flex: 1,
     borderRadius: 4,
     marginTop: topCircleSize,
-    paddingTop: topCircleSize + vars.spacing.bigger,
+    paddingTop: topCircleSize + vars.spacing.small.maxi2x,
     backgroundColor: vars.lightGrayBg
 };
 
@@ -67,10 +67,10 @@ const title1 = {
     textAlign: 'center',
     fontSize: vars.font.size.massive,
     fontWeight: 'bold',
-    marginBottom: vars.spacing.big
+    marginBottom: vars.spacing.small.maxi
 };
 
-const title1Black = [title1, { color: vars.txtDark, fontSize: vars.font.size.huge, marginBottom: vars.spacing.huge }];
+const title1Black = [title1, { color: vars.txtDark, fontSize: vars.font.size.huge, marginBottom: vars.spacing.medium.midi2x }];
 
 const title2 = {
     color: vars.white,
@@ -79,8 +79,8 @@ const title2 = {
 };
 
 const title2Black = [title2, {
-    marginHorizontal: vars.wizardMarginH,
-    marginVertical: vars.spacing.smallish,
+    marginHorizontal: vars.spacing.huge.midi,
+    marginVertical: vars.spacing.small.midi,
     color: vars.txtDark
 }];
 
@@ -99,7 +99,7 @@ export {
 export default class LoginWizardPage extends SafeComponent {
     button(text, onPress, hidden, disabled) {
         const buttonContainer = {
-            marginVertical: vars.spacing.huge,
+            marginVertical: vars.spacing.medium.midi2x,
             alignItems: 'stretch',
             opacity: hidden ? 0 : 1
         };

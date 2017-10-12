@@ -14,7 +14,7 @@ export default class Logo extends Component {
         const { logo } = branding;
         return (
             <TouchableOpacity activeOpacity={1} onPress={this.props.onPress}>
-                <Center style={{ marginBottom: vars.controlsMargin, marginTop: vars.logoMarginTop, flexGrow: 0 }}>
+                <Center style={{ marginBottom: vars.spacing.large.midi, marginTop: vars.spacing.large.maxi2x, flexGrow: 0 }}>
                     <Image testID="logo" style={{ height, width }} source={logo} />
                 </Center>
             </TouchableOpacity>

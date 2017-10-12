@@ -12,8 +12,8 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingLeft: vars.spacing.big,
-    marginBottom: vars.spacing.smaller,
+    paddingLeft: vars.spacing.small.maxi,
+    marginBottom: vars.spacing.small.mini,
     minHeight: vars.iconLayoutSize
 };
 

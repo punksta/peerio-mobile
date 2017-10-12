@@ -20,7 +20,7 @@ const rowCenter = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: vars.spacing.big,
+    padding: vars.spacing.small.maxi,
     borderTopWidth: 1,
     borderTopColor: vars.lightGrayBg
 };
@@ -30,12 +30,12 @@ const bottomRowText = {
     flex: 1,
     color: vars.txtDate,
     fontSize: vars.font.size.smaller,
-    marginHorizontal: vars.spacing.large
+    marginHorizontal: vars.spacing.medium.mini2x
 };
 
 const textinputContainer = {
     backgroundColor: vars.white,
-    marginBottom: vars.spacing.smaller,
+    marginBottom: vars.spacing.small.mini,
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden'
@@ -52,8 +52,8 @@ const textinput = {
 
 const label = {
     color: vars.txtDate,
-    marginVertical: vars.spacing.small,
-    marginLeft: vars.spacing.big
+    marginVertical: vars.spacing.small.mini2x,
+    marginLeft: vars.spacing.small.maxi
 };
 
 const { width } = Dimensions.get('window');
@@ -99,7 +99,7 @@ export default class CreateChannel extends Component {
             flex: 0,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: vars.spacing.small,
+            padding: vars.spacing.small.mini2x,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0
         };
@@ -138,7 +138,7 @@ export default class CreateChannel extends Component {
 
     renderTextBox(labelText, placeholderText, property) {
         return (
-            <View style={{ margin: vars.spacing.normal }}>
+            <View style={{ margin: vars.spacing.small.midi2x }}>
                 <Text style={label}>{tx(labelText)}</Text>
                 <View style={textinputContainer}>
                     <SimpleTextBox

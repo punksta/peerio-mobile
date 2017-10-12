@@ -40,8 +40,8 @@ export default class MessageIcon extends SafeComponent {
                     backgroundColor: 'transparent',
                     flexDirection: 'row',
                     justifyContent: 'center',
-                    marginRight: vars.spacing.large,
-                    paddingLeft: vars.spacing.large,
+                    marginRight: vars.spacing.medium.mini2x,
+                    paddingLeft: vars.spacing.medium.mini2x,
                     width: 56,
                     height: 56
                 }}>

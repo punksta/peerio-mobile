@@ -18,7 +18,7 @@ import snackbarState from '../snackbars/snackbar-state';
 import icons from '../helpers/icons';
 
 const formStyle = {
-    padding: vars.spacing.huge,
+    padding: vars.spacing.medium.midi2x,
     justifyContent: 'space-between'
 };
 
@@ -55,12 +55,12 @@ const accountKeyRow = {
 
 const smallText = {
     fontSize: vars.font.size.smaller,
-    marginVertical: vars.spacing.normal,
+    marginVertical: vars.spacing.small.midi2x,
     color: vars.txtDark
 };
 
 const accountKeyView = {
-    marginVertical: vars.spacing.big
+    marginVertical: vars.spacing.small.maxi
 };
 
 @observer
@@ -122,7 +122,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     </View>
                 </View>
                 <Text style={textNormal}>{tx('title_accountKey2')}</Text>
-                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: vars.spacing.xxLarge }}>
+                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: vars.spacing.large.midi2x }}>
                     {/* buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
                     {/* signupState.keyBackedUp && icons.plaindark('check-circle') */}
                 </View>

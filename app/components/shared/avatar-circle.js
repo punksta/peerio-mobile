@@ -22,10 +22,10 @@ export default class AvatarCircle extends SafeComponent {
             width,
             height,
             borderRadius: width / 2,
-            margin: vars.spacing.small * ratio
+            margin: vars.spacing.small.mini2x * ratio
         };
         if (loading) {
-            return <ActivityIndicator style={{ height, margin: vars.spacing.small }} />;
+            return <ActivityIndicator style={{ height, margin: vars.spacing.small.mini2x }} />;
         }
 
         const { color, tofuError, letter } = contact || {};

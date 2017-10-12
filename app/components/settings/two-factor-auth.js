@@ -16,7 +16,7 @@ import TwoFactorAuthCodesGenerate from './two-factor-auth-codes-generate';
 const paddingVertical = vars.listViewPaddingVertical;
 const paddingHorizontal = vars.listViewPaddingHorizontal;
 const marginVertical = 18;
-const marginBottom = vars.spacing.normal;
+const marginBottom = vars.spacing.small.midi2x;
 
 const bgStyle = {
     flexGrow: 1,
@@ -31,7 +31,7 @@ const labelStyle = {
 };
 
 const whiteStyle = {
-    backgroundColor: vars.white, paddingTop: vars.spacing.big, paddingHorizontal
+    backgroundColor: vars.white, paddingTop: vars.spacing.small.maxi, paddingHorizontal
 };
 
 async function twoFactorAuthPopup(active2FARequest) {
@@ -145,7 +145,7 @@ export default class TwoFactorAuth extends SafeComponent {
                     }}>
                         <TextInput style={{
                             color: vars.txtDark,
-                            marginVertical: vars.spacing.normal,
+                            marginVertical: vars.spacing.small.midi2x,
                             height: vars.inputHeight,
                             flexGrow: 1
                         }}

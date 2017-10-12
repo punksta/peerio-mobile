@@ -41,15 +41,15 @@ export default class GhostsZeroState extends SafeComponent {
             alignItems: 'flex-end',
             borderWidth: 0,
             borderColor: 'yellow',
-            paddingRight: vars.titleBlockStyle.paddingR,
-            paddingBottom: vars.titleBlockStyle.paddingB
+            paddingRight: vars.spacing.large.mini,
+            paddingBottom: vars.spacing.huge.maxi2x
         };
         return (
             <View style={outerContainerStyle}>
                 <View style={{ flex: 1,
                     width: this.width,
                     justifyContent: 'center' }}>
-                    <View style={{ flex: 0, alignItems: 'center', marginTop: vars.spacing.xxxLarge }}>
+                    <View style={{ flex: 0, alignItems: 'center', marginTop: vars.spacing.large.maxi }}>
                         <Text style={infoStyle}>
                             Encrypted, self destructing messages and
                             file sharing for your non-Peerio contacts

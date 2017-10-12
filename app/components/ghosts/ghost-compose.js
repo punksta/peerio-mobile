@@ -28,12 +28,12 @@ const textboxInput = {
     flexShrink: 1,
     fontSize: vars.font.size.bigger,
     color: vars.txtDark,
-    marginLeft: vars.spacing.normal
+    marginLeft: vars.spacing.small.midi2x
 };
 
 const textArea = {
     fontSize: vars.font.size.normal,
-    marginHorizontal: vars.spacing.big,
+    marginHorizontal: vars.spacing.small.maxi,
     color: vars.txtDark,
     height: vars.inputHeight
 };
@@ -135,7 +135,7 @@ export default class ComposeMessage extends SafeComponent {
 
     textWithColon(text) {
         return (
-            <Text style={{ color: vars.subtleText, padding: vars.spacing.normal }}>
+            <Text style={{ color: vars.subtleText, padding: vars.spacing.small.midi2x }}>
                 {text}:
             </Text>
         );
@@ -157,8 +157,8 @@ export default class ComposeMessage extends SafeComponent {
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 8,
-            margin: vars.spacing.small,
-            paddingHorizontal: vars.spacing.normal,
+            margin: vars.spacing.small.mini2x,
+            paddingHorizontal: vars.spacing.small.midi2x,
             flexGrow: 1,
             flexShrink: 1,
             flexDirection: 'row'
@@ -265,8 +265,8 @@ export default class ComposeMessage extends SafeComponent {
             flex: 0,
             backgroundColor: vars.bg,
             borderRadius: 4,
-            padding: vars.spacing.small,
-            margin: vars.spacing.small
+            padding: vars.spacing.small.mini2x,
+            margin: vars.spacing.small.mini2x
         };
         const text = {
             color: 'white'

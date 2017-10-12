@@ -15,14 +15,14 @@ import buttons from '../helpers/buttons';
 
 const textinputContainer = {
     backgroundColor: vars.white,
-    marginBottom: vars.spacing.normal,
+    marginBottom: vars.spacing.small.midi2x,
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden'
 };
 
 const inviteContainer = {
-    marginBottom: vars.spacing.normal,
+    marginBottom: vars.spacing.small.midi2x,
     height: vars.inputHeight,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -32,7 +32,7 @@ const inviteContainer = {
 };
 
 const buttonRow = {
-    marginBottom: vars.spacing.normal,
+    marginBottom: vars.spacing.small.midi2x,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -59,8 +59,8 @@ const textStatic = {
 
 const label = {
     color: vars.txtDate,
-    marginVertical: vars.spacing.small,
-    marginLeft: vars.spacing.big
+    marginVertical: vars.spacing.small.mini2x,
+    marginLeft: vars.spacing.small.maxi
 };
 
 const labelDark = [label, { color: vars.txtDark }];
@@ -167,7 +167,7 @@ export default class ContactAdd extends SafeComponent {
             <TouchableOpacity
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ paddingRight: vars.spacing.bigger, paddingVertical: vars.spacing.big }}>
+                style={{ paddingRight: vars.spacing.small.maxi2x, paddingVertical: vars.spacing.small.maxi }}>
                 <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
                     {tu(text)}
                 </Text>
@@ -209,11 +209,11 @@ export default class ContactAdd extends SafeComponent {
                     keyboardShouldPersistTaps="handled"
                     style={{ backgroundColor: vars.settingsBg }}
                     ref={ref => { this._scrollView = ref; }}>
-                    <View style={{ marginTop: vars.spacing.huge }}>
-                        {contactState.empty && <View style={{ margin: vars.spacing.normal }}>
+                    <View style={{ marginTop: vars.spacing.medium.midi2x }}>
+                        {contactState.empty && <View style={{ margin: vars.spacing.small.midi2x }}>
                             <Text style={labelDark}>{tx('title_contactZeroState')}</Text>
                         </View>}
-                        <View style={{ margin: vars.spacing.normal }}>
+                        <View style={{ margin: vars.spacing.small.midi2x }}>
                             <Text style={label}>{tx('button_addAContact')}</Text>
                             <View style={textinputContainer}>
                                 <SimpleTextBox
@@ -227,13 +227,13 @@ export default class ContactAdd extends SafeComponent {
                             {this.inviteBlock}
                             {this.validationError}
                         </View>
-                        <View style={{ margin: vars.spacing.normal }}>
+                        <View style={{ margin: vars.spacing.small.midi2x }}>
                             <View style={buttonRow}>
                                 <Text style={labelDark}>{tx('title_findContacts')}</Text>
                                 {this.renderButton1('title_importContacts', () => contactState.testImport())}
                             </View>
                         </View>
-                        <View style={{ margin: vars.spacing.normal }}>
+                        <View style={{ margin: vars.spacing.small.midi2x }}>
                             <View style={buttonRow}>
                                 <Text style={labelDark}>{tx('title_shareSocial')}</Text>
                                 {this.renderButton1('button_share', () => this.share())}

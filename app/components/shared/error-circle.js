@@ -33,7 +33,7 @@ export default class ErrorCircle extends SafeComponent {
             position: 'absolute',
             right: 0,
             top: 0,
-            padding: vars.spacing.normal
+            padding: vars.spacing.small.midi2x
         };
         return (
             <TouchableOpacity onPress={this.props.onPress} style={containerStyle}>

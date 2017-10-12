@@ -10,7 +10,7 @@ const s = {
     flexDirection: 'row',
     justifyContent: 'center',
     height: 10,
-    marginBottom: vars.controlsMargin
+    marginBottom: vars.spacing.large.midi
 };
 
 const style = circles.small;

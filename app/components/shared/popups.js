@@ -11,7 +11,7 @@ import { vars } from '../../styles/styles';
 function textControl(str) {
     const text = {
         color: '#000000AA',
-        marginVertical: vars.spacing.big,
+        marginVertical: vars.spacing.small.maxi,
         lineHeight: 22
     };
 

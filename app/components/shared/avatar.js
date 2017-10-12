@@ -39,8 +39,8 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: vars.spacing.normal,
-    paddingRight: vars.spacing.small,
+    paddingLeft: vars.spacing.small.midi2x,
+    paddingRight: vars.spacing.small.mini2x,
     paddingBottom: 0
 
 };
@@ -63,9 +63,9 @@ const nameMessageContainerStyle = {
     borderColor: 'red',
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingLeft: vars.spacing.large,
-    marginLeft: vars.spacing.smallish,
-    marginRight: vars.spacing.smallish,
+    paddingLeft: vars.spacing.medium.mini2x,
+    marginLeft: vars.spacing.small.midi,
+    marginRight: vars.spacing.small.midi,
     paddingTop: 0
 };
 
@@ -76,7 +76,7 @@ const nameTextStyle = {
 
 const dateTextStyle = {
     color: vars.txtDate,
-    marginLeft: vars.spacing.normal
+    marginLeft: vars.spacing.small.midi2x
 };
 
 const lastMessageTextStyle = {
@@ -190,7 +190,7 @@ export default class Avatar extends SafeComponent {
         const notSentMessageStyle = {
             flexDirection: 'row',
             justifyContent: 'flex-start',
-            marginBottom: vars.spacing.normal
+            marginBottom: vars.spacing.small.midi2x
         };
         return this.props.sendError ?
             <View style={notSentMessageStyle}>
@@ -213,8 +213,8 @@ export default class Avatar extends SafeComponent {
         return this.props.error ? {
             backgroundColor: '#ff000020',
             borderRadius: 14,
-            marginVertical: vars.spacing.smaller,
-            marginHorizontal: vars.spacing.small
+            marginVertical: vars.spacing.small.mini,
+            marginHorizontal: vars.spacing.small.mini2x
         } : null;
     }
 
@@ -299,7 +299,7 @@ export default class Avatar extends SafeComponent {
             flexDirection: 'row',
             justifyContent: 'flex-end',
             borderWidth: 0,
-            marginRight: vars.spacing.small,
+            marginRight: vars.spacing.small.mini2x,
             width: width / 1.5
         };
         let marginLeft = (width / 1.5 - 26 * receipts.length) / receipts.length;
@@ -329,9 +329,9 @@ export default class Avatar extends SafeComponent {
             height: 11
         };
         return (
-            <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', justifyContent: 'flex-start', marginVertical: vars.spacing.normal }}>
+            <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', justifyContent: 'flex-start', marginVertical: vars.spacing.small.midi2x }}>
                 <View style={separator} />
-                <Text style={{ flex: 0, color: vars.txtDark, marginHorizontal: vars.spacing.small }}>
+                <Text style={{ flex: 0, color: vars.txtDark, marginHorizontal: vars.spacing.small.mini2x }}>
                     {ts === new Date().toLocaleDateString() ? tx('title_today') : ts}
                 </Text>
                 <View style={separator} />
@@ -345,7 +345,7 @@ export default class Avatar extends SafeComponent {
                 <View style={[itemStyle, this.errorStyle]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
-                        style={[this.itemContainerStyle, { paddingLeft: 74, flexShrink: 1 }]}>
+                        style={[this.itemContainerStyle, { paddingLeft: vars.spacing.huge.maxi, flexShrink: 1 }]}>
                         {this.message}
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}

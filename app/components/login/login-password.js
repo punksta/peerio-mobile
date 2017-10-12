@@ -10,7 +10,7 @@ import LoginWizardPage from './login-wizard-page';
 import { vars } from '../../styles/styles';
 
 const textStyle = {
-    marginBottom: vars.spacing.bigger,
+    marginBottom: vars.spacing.small.maxi2x,
     color: vars.txtLight
 };
 

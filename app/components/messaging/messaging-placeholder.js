@@ -44,14 +44,14 @@ export default class MessagingPlaceholder extends SafeComponent {
                 width: 1
             },
             elevation: 10,
-            margin: vars.spacing.huge,
-            padding: vars.spacing.huge,
+            margin: vars.spacing.medium.midi2x,
+            padding: vars.spacing.medium.midi2x,
             backgroundColor: 'white'
         };
         const title = {
             fontWeight: 'bold',
             fontSize: vars.font.size.bigger,
-            marginBottom: vars.spacing.normal
+            marginBottom: vars.spacing.small.midi2x
         };
 
         const textParser = {
