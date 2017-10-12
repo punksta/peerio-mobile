@@ -16,13 +16,13 @@ const textStyle = {
     color: vars.txtDate,
     marginTop: vars.spacing.big,
     fontSize: vars.font.size.smaller,
-    marginLeft: 18,
+    marginLeft: vars.spacing.larger,
     fontWeight: 'bold'
 };
 
 const topicTextStyle = {
     color: vars.txtDark,
-    margin: 18,
+    margin: vars.spacing.larger,
     fontSize: vars.font.size.normal
 };
 
@@ -136,7 +136,7 @@ export default class ChannelInfo extends SafeComponent {
                     onBlur={update}
                     onEndEditing={update}
                     value={this.channelTopic}
-                    style={{ paddingLeft: 18, height: vars.inputHeight, color: vars.txtDark }} />
+                    style={{ paddingLeft: vars.spacing.larger, height: vars.inputHeight, color: vars.txtDark }} />
             </View>
         );
     }
@@ -162,7 +162,7 @@ export default class ChannelInfo extends SafeComponent {
                 {chat.joinedParticipants && this.lineBlock(
                     <View style={{ paddingVertical: vars.spacing.normal }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: 12 }]}>
+                            <Text style={[textStyle, { marginBottom: vars.spacing.bigger }]}>
                                 {tx('title_Members')}
                             </Text>
                             {canIAdmin && icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
@@ -173,7 +173,7 @@ export default class ChannelInfo extends SafeComponent {
                 {invited && this.lineBlock(
                     <View style={{ paddingVertical: vars.spacing.normal }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: 12 }]}>
+                            <Text style={[textStyle, { marginBottom: vars.spacing.bigger }]}>
                                 {tx('title_invited')}
                             </Text>
                         </View>

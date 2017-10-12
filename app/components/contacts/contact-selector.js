@@ -313,7 +313,7 @@ export default class ContactSelector extends SafeComponent {
         const textStyle = {
             color: this.limitReached ? vars.txtAlert : vars.txtDate,
             margin: vars.spacing.small,
-            marginRight: 16,
+            marginRight: vars.spacing.large,
             fontSize: vars.font.size.smaller
         };
         return (

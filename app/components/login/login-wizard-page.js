@@ -79,8 +79,8 @@ const title2 = {
 };
 
 const title2Black = [title2, {
-    marginHorizontal: vars.wizard.title.marginH,
-    marginVertical: vars.wizard.title.marginV,
+    marginHorizontal: vars.wizardMarginH,
+    marginVertical: vars.spacing.smallish,
     color: vars.txtDark
 }];
 

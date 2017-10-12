@@ -42,11 +42,11 @@ const featureSmallText = {
 };
 
 const block0 = {
-    paddingHorizontal: 24
+    paddingHorizontal: vars.spacing.xLarge
 };
 
 const block1 = [block0, {
-    marginBottom: 24
+    marginBottom: vars.spacing.xLarge
 }];
 
 const textRow = {
@@ -57,10 +57,10 @@ const textRow = {
 const borderView = {
     borderColor: '#FFFFFFAA',
     borderBottomWidth: 1,
-    paddingBottom: 24,
+    paddingBottom: vars.spacing.xLarge,
     paddingHorizontal: vars.spacing.bigger,
-    marginHorizontal: 12,
-    marginBottom: 24
+    marginHorizontal: vars.spacing.bigger,
+    marginBottom: vars.spacing.xLarge
 };
 
 @observer
@@ -139,7 +139,7 @@ export default class AccountUpgradePlan extends Component {
             fontSize: vars.font.size.normal,
             fontWeight: 'bold',
             textAlign: 'center',
-            marginTop: 18
+            marginTop: vars.spacing.larger
         };
         const popupTextStyle = { color: vars.txtDark, fontSize: vars.font.size.smaller };
         const popup = () => {

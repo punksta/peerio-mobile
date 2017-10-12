@@ -42,16 +42,15 @@ export default class FilesPlaceholder extends SafeComponent {
             alignItems: 'flex-end',
             borderWidth: 0,
             borderColor: 'yellow',
-            paddingRight: 25,
-            paddingBottom: 75
-
+            paddingRight: vars.titleBlockStyle.paddingR,
+            paddingBottom: vars.titleBlockStyle.paddingB
         };
         return (
             <View style={outerContainerStyle}>
                 <View style={{ flex: 1,
                     width: this.width,
                     justifyContent: 'center' }}>
-                    <View style={{ flex: 0, alignItems: 'center', marginTop: 40 }}>
+                    <View style={{ flex: 0, alignItems: 'center', marginTop: vars.spacing.xxxLarge }}>
                         <Text style={infoStyle}>{tx('title_uploadShareAndManage')}</Text>
                     </View>
                     <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: vars.spacing.huge, paddingRight: vars.spacing.huge }}>

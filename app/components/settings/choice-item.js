@@ -14,7 +14,7 @@ const itemContainerStyle = {
     alignItems: 'center',
     backgroundColor: 'white',
     paddingLeft: vars.spacing.big,
-    marginBottom: 2,
+    marginBottom: vars.spacing.smaller,
     borderWidth: 0,
     borderColor: 'green',
     overflow: 'hidden',
@@ -82,4 +82,3 @@ ChoiceItem.propTypes = {
     state: PropTypes.any,
     onPress: PropTypes.any
 };
-

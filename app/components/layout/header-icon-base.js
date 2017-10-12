@@ -3,6 +3,7 @@ import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class HeaderIconBase extends SafeComponent {
@@ -18,7 +19,7 @@ export default class HeaderIconBase extends SafeComponent {
                         backgroundColor: 'transparent',
                         flexDirection: 'row',
                         justifyContent: 'center',
-                        margin: 16
+                        margin: vars.spacing.large
                     }, this.innerStyle]}>
                         {icons.plainWhite(this.icon)}
                     </View>

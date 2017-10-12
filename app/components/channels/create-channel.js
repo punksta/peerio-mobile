@@ -30,7 +30,7 @@ const bottomRowText = {
     flex: 1,
     color: vars.txtDate,
     fontSize: vars.font.size.smaller,
-    marginHorizontal: vars.channels.marginH
+    marginHorizontal: vars.spacing.large
 };
 
 const textinputContainer = {

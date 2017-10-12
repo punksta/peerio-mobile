@@ -122,7 +122,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     </View>
                 </View>
                 <Text style={textNormal}>{tx('title_accountKey2')}</Text>
-                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 24 }}>
+                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: vars.spacing.xxLarge }}>
                     {/* buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
                     {/* signupState.keyBackedUp && icons.plaindark('check-circle') */}
                 </View>

@@ -44,7 +44,7 @@ export default class Logs extends Component {
             bottom: 40
         };
         const s = {
-            padding: 30,
+            padding: vars.logsPadding,
             opacity: 0.9,
             backgroundColor: vars.fabEnabled,
             borderRadius: 14

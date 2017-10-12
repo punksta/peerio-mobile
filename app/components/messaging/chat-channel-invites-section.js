@@ -14,7 +14,7 @@ export default class ChatChannelInvitesSection extends SafeComponent {
         const style = {
             height: 48,
             paddingLeft: 18,
-            paddingRight: 16,
+            paddingRight: vars.spacing.large,
             justifyContent: 'space-between',
             alignItems: 'center',
             backgroundColor: vars.lightGrayBg,

@@ -188,7 +188,7 @@ export default class Chat extends SafeComponent {
         // TODO: archive notice
         /* eslint-disable */
         return true || this.props.archiveNotice ? (
-            <Text style={{ textAlign: 'left', margin: 12, marginTop: 0, marginBottom: 16, color: vars.txtMedium }}>
+            <Text style={{ textAlign: 'left', margin: vars.spacing.bigger, marginTop: 0, marginBottom: vars.spacing.large, color: vars.txtMedium }}>
                 {tx('title_chatArchive')}
             </Text>
         ) : null;
@@ -221,7 +221,7 @@ export default class Chat extends SafeComponent {
         return (
             <View style={zsContainer}>
                 <View style={{ flexDirection: 'row', marginRight: 48, paddingLeft: -marginLeft }}>{avatars}</View>
-                <Text style={{ textAlign: 'left', margin: 12, color: vars.txtDark }}>
+                <Text style={{ textAlign: 'left', margin: vars.spacing.bigger, color: vars.txtDark }}>
                     {tx('title_chatBeginning', { chatName: chat.name })}
                 </Text>
                 {this.archiveNotice}
@@ -248,4 +248,3 @@ Chat.propTypes = {
     hideInput: PropTypes.bool,
     archiveNotice: PropTypes.bool
 };
-

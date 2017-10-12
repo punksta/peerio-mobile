@@ -10,7 +10,7 @@ const s = {
     flexDirection: 'row',
     justifyContent: 'center',
     height: 10,
-    marginBottom: 32
+    marginBottom: vars.controlsMargin
 };
 
 const style = circles.small;

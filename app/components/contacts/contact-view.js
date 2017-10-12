@@ -60,7 +60,7 @@ export default class ContactView extends SafeComponent {
                     {icons.dark('forum', () => this.startChat())}
                     {icons.dark(isAdded ? 'star' : 'star-border', () => this.toggleFav())}
                 </View>
-                <View style={{ margin: 24 }}>
+                <View style={{ margin: vars.spacing.xLarge }}>
                     {tofuErrorControl}
                     {isDeleted && <Text style={{ color: vars.txtAlert }}>{t('title_accountDeleted')}</Text>}
                     <Text style={{ color: vars.txtDate, marginVertical: vars.spacing.big }}>{t('title_publicKey')}</Text>

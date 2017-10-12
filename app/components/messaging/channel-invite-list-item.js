@@ -22,7 +22,7 @@ export default class ChannelInviteListItem extends SafeComponent {
         if (!invitation) return null;
         const { kegDbId, channelName, username, timestamp } = invitation;
         const containerStyle = {
-            paddingLeft: 24,
+            paddingLeft: vars.spacing.xLarge,
             paddingRight: vars.spacing.big,
             paddingVertical: vars.spacing.bigger,
             justifyContent: 'space-between',

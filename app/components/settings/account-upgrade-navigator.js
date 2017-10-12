@@ -55,7 +55,7 @@ export default class AccountUpgradeNavigator extends Component {
             position: 'absolute',
             bottom: 140,
             width,
-            paddingHorizontal: 24
+            paddingHorizontal: vars.spacing.xLarge
         };
         const row = {
             flex: 1,
@@ -66,7 +66,7 @@ export default class AccountUpgradeNavigator extends Component {
         const t = {
             color: 'white',
             backgroundColor: 'transparent',
-            marginTop: 6,
+            marginTop: vars.spacing.smallish,
             width: 40,
             textAlign: 'center'
         };

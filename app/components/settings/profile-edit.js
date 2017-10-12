@@ -15,7 +15,7 @@ const emailFormatValidator = validation.validators.emailFormat.action;
 
 const textinputContainer = {
     backgroundColor: vars.white,
-    marginBottom: 2,
+    marginBottom: vars.spacing.smaller,
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden'
@@ -206,8 +206,8 @@ export default class ProfileEdit extends SafeComponent {
             color: vars.white,
             fontWeight: 'bold',
             fontSize: vars.profileEditFontSize,
-            marginHorizontal: 24,
-            marginVertical: 16
+            marginHorizontal: vars.spacing.xLarge,
+            marginVertical: vars.spacing.large
         };
         return (
             <Text style={style}>
@@ -222,7 +222,7 @@ export default class ProfileEdit extends SafeComponent {
         const size = SIZE2;
         return (
             <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={() => this._actionSheet.show()}>
-                <Image source={{ uri, cache: 'force-cache' }} key={uri} style={{ borderRadius: size / 2, width: size, height: size, margin: 16 }} />
+                <Image source={{ uri, cache: 'force-cache' }} key={uri} style={{ borderRadius: size / 2, width: size, height: size, margin: vars.spacing.large }} />
             </TouchableOpacity>
         );
     }

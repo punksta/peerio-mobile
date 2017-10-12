@@ -16,7 +16,7 @@ export default class AccountUpgradeToggle extends Component {
             flexGrow: 1,
             padding: vars.spacing.small,
             alignItems: 'center',
-            marginRight: left ? 18 : 0
+            marginRight: left ? vars.spacing.larger : 0
         };
         const textStyle = {
             color: highlight ? 'black' : 'white'

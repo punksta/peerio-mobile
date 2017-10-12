@@ -42,7 +42,7 @@ export default {
                     disabled={disabled}
                     onPress={disabled ? null : onPress}
                     pressRetentionOffset={vars.pressRetentionOffset}
-                    style={{ borderRadius: 2, paddingHorizontal: 16, paddingVertical: vars.spacing.big, backgroundColor: disabled ? vars.txtMedium : vars.bg }}>
+                    style={{ borderRadius: 2, paddingHorizontal: vars.spacing.large, paddingVertical: vars.spacing.big, backgroundColor: disabled ? vars.txtMedium : vars.bg }}>
                     <Text style={{ fontWeight: 'bold', textAlign: 'center', color: vars.white }}>
                         {tu(text)}
                     </Text>
@@ -55,7 +55,7 @@ export default {
         const opacity = hidden ? 0.0 : 1.0;
         const s = {
             borderRadius: 16,
-            paddingHorizontal: 16,
+            paddingHorizontal: vars.spacing.large,
             paddingVertical: vars.spacing.big,
             backgroundColor: disabled ? vars.txtMedium : vars.snackbarBgGreen
         };

@@ -74,7 +74,7 @@ export default class LoginWizard extends Wizard {
             borderRadius: 6
         }];
         const input = {
-            marginHorizontal: vars.wizard.inputMargin,
+            marginHorizontal: vars.spacing.xLarge,
             height: 24,
             backgroundColor: '#FFFFFF90',
             marginTop: vars.spacing.bigger

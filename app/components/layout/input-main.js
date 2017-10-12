@@ -62,7 +62,7 @@ export default class InputMain extends SafeComponent {
             <View style={outerStyle}>
                 {icons.dark('add-circle-outline', this.plus, {
                     paddingLeft: vars.spacing.small,
-                    paddingRight: 24
+                    paddingRight: vars.spacing.xLarge
                 })}
                 <View style={autoExpandingInputContainerStyle}>
                     <AutoExpandingTextInput

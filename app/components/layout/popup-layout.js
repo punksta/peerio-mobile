@@ -61,7 +61,7 @@ export default class PopupLayout extends SafeComponent {
             overflow: 'hidden',
             elevation: 10,
             margin,
-            marginHorizontal: 16,
+            marginHorizontal: vars.spacing.large,
             marginBottom: (Platform.OS === 'android' ? 0 : uiState.keyboardHeight) + margin
         };
 
@@ -88,7 +88,7 @@ export default class PopupLayout extends SafeComponent {
 
         const buttonBar = {
             flex: 0,
-            marginHorizontal: 16,
+            marginHorizontal: vars.spacing.large,
             marginVertical: vars.spacing.normal,
             flexDirection: 'row',
             justifyContent: 'flex-end'

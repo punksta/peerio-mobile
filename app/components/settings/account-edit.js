@@ -21,7 +21,7 @@ const label2 = {
     color: vars.txtDark,
     marginVertical: vars.spacing.normal,
     marginLeft: vars.spacing.big,
-    marginTop: 16
+    marginTop: vars.spacing.large
 };
 
 
@@ -75,7 +75,7 @@ export default class AccountEdit extends SafeComponent {
                     {this.toggle('title_errorTrackingMessage', 'errorTracking')}
                     {this.toggle('title_dataCollectionMessage', 'dataCollection')}
                 </View>
-                <View style={{ marginTop: 16, marginLeft: 24, marginBottom: 32, flex: 1, flexGrow: 1, justifyContent: 'flex-end' }}>
+                <View style={{ marginTop: vars.spacing.large, marginLeft: vars.spacing.xLarge, marginBottom: 32, flex: 1, flexGrow: 1, justifyContent: 'flex-end' }}>
                     {buttons.uppercaseRedButton('button_accountDelete', () => this.deleteAccount())}
                 </View>
             </ScrollView>

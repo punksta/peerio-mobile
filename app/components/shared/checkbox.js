@@ -22,7 +22,7 @@ export default class CheckBox extends Component {
             flexGrow: 1,
             flex: 1,
             justifyContent: 'flex-end',
-            paddingVertical: 16
+            paddingVertical: vars.spacing.large
         };
         const checkbox = {
             borderRadius: 2,

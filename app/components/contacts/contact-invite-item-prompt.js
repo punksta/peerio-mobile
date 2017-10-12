@@ -25,7 +25,7 @@ export default class ContactInviteItemPrompt extends SafeComponent {
         const title = invited ? tx('title_invitedContacts') : tx('button_invite');
         return (
             <View style={{ alignItems: 'center', flexGrow: 1 }}>
-                <View style={{ flexDirection: 'row', marginHorizontal: 36, flexGrow: 1 }}>
+                <View style={{ flexDirection: 'row', marginHorizontal: vars.spacing.xxLarge, flexGrow: 1 }}>
                     <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: vars.spacing.normal }} />
                     <Text style={{ color: vars.txtDate }}>{t('title_inviteContactByEmail2', { email })}</Text>
                 </View>

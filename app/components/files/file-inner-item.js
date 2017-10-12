@@ -67,7 +67,7 @@ export default class FileInnerItem extends SafeComponent {
 
     renderThrow() {
         const file = this.props.file;
-        if (file.signatureError) return <View style={{ marginHorizontal: 6 }}><FileSignatureError /></View>;
+        if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.smallish }}><FileSignatureError /></View>;
         const action = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
             icons.dark('keyboard-arrow-right', action);
@@ -105,7 +105,7 @@ export default class FileInnerItem extends SafeComponent {
                             <View style={[loadingStyle, { flex: 0 }]}>
                                 {icon}
                             </View>
-                            <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: 16 }}>
+                            <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.large }}>
                                 <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                 <Text style={infoStyle}>
                                     {moment(file.uploadedAt).format(`MMM Do YYYY, hh:mm a`)}

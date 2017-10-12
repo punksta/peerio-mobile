@@ -13,13 +13,13 @@ import { tx } from '../utils/translator';
 const firstRowStyle = {
     flex: 0,
     flexDirection: 'row',
-    marginTop: 12,
-    paddingRight: 16
+    marginTop: vars.spacing.bigger,
+    paddingRight: vars.spacing.large
 };
 
 const secondRowStyle = {
     flexDirection: 'row',
-    marginTop: 16,
+    marginTop: vars.spacing.large,
     flex: 0
 };
 
@@ -59,7 +59,7 @@ export default class FileView extends SafeComponent {
                     <View style={firstRowStyle}>
                         <View style={{
                             marginLeft: vars.spacing.small,
-                            marginRight: 12
+                            marginRight: vars.spacing.bigger
                         }}>
                             {icon}
                         </View>

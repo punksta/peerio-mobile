@@ -235,13 +235,13 @@ export default class ContactSelectorDM extends SafeComponent {
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
         const notFound = !this.inProgress && !!this.notFound && (
-            <View style={{ flexDirection: 'row', marginHorizontal: 36, marginVertical: vars.spacing.big }}>
+            <View style={{ flexDirection: 'row', marginHorizontal: vars.spacing.xxLarge, marginVertical: vars.spacing.big }}>
                 <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: vars.spacing.normal }} />
                 <Text style={{ color: vars.txtDate }}>{t('error_userNotFoundTryEmail', { user: this.notFound })}</Text>
             </View>
         );
         return (
-            <View style={{ marginHorizontal: 12 }}>
+            <View style={{ marginHorizontal: vars.spacing.bigger }}>
                 {notFound}
                 {this.inviteContact}
                 {!!this.legacyContact &&

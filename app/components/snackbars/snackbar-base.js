@@ -70,7 +70,7 @@ export default class SnackbarBase extends SafeComponent {
         const s = {
             backgroundColor: this.isGreen() ? vars.snackbarBgGreen : vars.snackbarBg,
             justifyContent: 'flex-start',
-            paddingLeft: 16,
+            paddingLeft: vars.spacing.large,
             overflow: 'hidden',
             height: this.animatedHeight,
             flexDirection: 'row',
@@ -81,7 +81,7 @@ export default class SnackbarBase extends SafeComponent {
             flexGrow: 1,
             flexShrink: 1,
             color: vars.highlight,
-            marginRight: 16
+            marginRight: vars.spacing.large
         };
         return (
             <TouchableWithoutFeedback onPress={() => this.tap()}>
@@ -90,7 +90,7 @@ export default class SnackbarBase extends SafeComponent {
                         name="check"
                         size={16}
                         color={vars.white}
-                        style={{ marginRight: 16 }} />
+                        style={{ marginRight: vars.spacing.large }} />
                     }
                     <Text numberOfLines={2} ellipsizeMode="tail" style={textStyle}>{this.getText()}</Text>
                 </Animated.View>

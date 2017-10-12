@@ -32,7 +32,7 @@ const headerStyle = {
 const infoStyle = {
     color: vars.txtDark,
     marginLeft: vars.spacing.normal,
-    marginVertical: 24
+    marginVertical: vars.spacing.xLarge
 };
 
 const labelStyle = {
@@ -48,7 +48,7 @@ const whiteStyle = {
 
 const row = { flexDirection: 'row' };
 
-const rowRight = [row, { justifyContent: 'flex-end', marginTop: 12 }];
+const rowRight = [row, { justifyContent: 'flex-end', marginTop: vars.spacing.bigger }];
 
 const column = { flex: 0.5, alignItems: 'center' };
 

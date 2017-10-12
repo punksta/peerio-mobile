@@ -209,9 +209,9 @@ export default class Pin extends SafeComponent {
                     opacity: inProgress ? 0.5 : 1,
                     borderWidth: 0,
                     borderColor: 'yellow',
-                    marginTop: 24,
-                    marginLeft: 16,
-                    marginRight: 16 }}>
+                    marginTop: vars.spacing.xLarge,
+                    marginLeft: vars.spacing.large,
+                    marginRight: vars.spacing.large }}>
                     {this.row(0, [p(1), p(2, `ABC`), p(3, `DEF`)])}
                     {this.row(1, [p(4, `GHI`), p(5, `JKL`), p(6, `MNO`)])}
                     {this.row(2, [p(7, `PQRS`), p(8, `TUV`), p(9, `WXYZ`)])}

@@ -16,7 +16,7 @@ import TwoFactorAuthCodesGenerate from './two-factor-auth-codes-generate';
 const paddingVertical = vars.listViewPaddingVertical;
 const paddingHorizontal = vars.listViewPaddingHorizontal;
 const marginVertical = 18;
-const marginBottom = 8;
+const marginBottom = vars.spacing.normal;
 
 const bgStyle = {
     flexGrow: 1,

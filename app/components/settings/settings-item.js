@@ -13,7 +13,7 @@ const itemContainerStyle = {
     alignItems: 'center',
     backgroundColor: 'white',
     paddingLeft: vars.spacing.big,
-    marginBottom: 2,
+    marginBottom: vars.spacing.smaller,
     minHeight: vars.iconLayoutSize
 };
 

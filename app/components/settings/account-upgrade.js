@@ -11,7 +11,7 @@ import plans from '../payments/payments-config';
 
 const margin = 18;
 const marginLeft = margin;
-const marginBottom = 12;
+const marginBottom = vars.spacing.bigger;
 const paddingWhite = 10;
 const marginWhite = margin - paddingWhite;
 

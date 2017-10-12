@@ -63,9 +63,9 @@ const nameMessageContainerStyle = {
     borderColor: 'red',
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingLeft: 16,
-    marginLeft: 6,
-    marginRight: 6,
+    paddingLeft: vars.spacing.large,
+    marginLeft: vars.spacing.smallish,
+    marginRight: vars.spacing.smallish,
     paddingTop: 0
 };
 
@@ -213,7 +213,7 @@ export default class Avatar extends SafeComponent {
         return this.props.error ? {
             backgroundColor: '#ff000020',
             borderRadius: 14,
-            marginVertical: 2,
+            marginVertical: vars.spacing.smaller,
             marginHorizontal: vars.spacing.small
         } : null;
     }

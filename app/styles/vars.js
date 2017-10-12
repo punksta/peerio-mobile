@@ -105,24 +105,28 @@ const vars = {
     spacing: {
         smaller: scaleDim(2),
         small: scaleDim(4),
+        smallish: scaleDim(6),
         normal: scaleDim(8),
         big: scaleDim(10),
         bigger: scaleDim(12),
+        biggerer: scaleDim(14),
+        large: scaleDim(16),
+        larger: scaleDim(18),
         huge: scaleDim(20),
-        massive: scaleDim(22)
+        massive: scaleDim(22),
+        xLarge: scaleDim(24),
+        xxLarge: scaleDim(36),
+        xxxLarge: scaleDim(40)
     },
-    channels: {
-        bottomRowText: {
-            marginH: scaleDim(16)
-        }
+    wizardMarginH: scaleDim(60),
+    titleBlockStyle: {
+        paddingR: scaleDim(25),
+        paddingB: scaleDim(75)
     },
-    wizard: {
-        title: {
-            marginH: scaleDim(60),
-            marginV: scaleDim(6)
-        },
-        inputMargin: scaleDim(24)
-    }
+    pinModalPadding: scaleDim(50),
+    controlsMargin: scaleDim(32),
+    logoMarginTop: scaleDim(48),
+    logsPadding: scaleDim(30)
 };
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;
