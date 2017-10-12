@@ -8,6 +8,7 @@ import settingsState from '../settings/settings-state';
 import buttons from '../helpers/buttons';
 import plans from '../payments/payments-config';
 import { addSystemWarningAction } from '../shared/popups';
+import { vars } from '../../styles/styles';
 
 @observer
 class PaymentStorageUsage extends SafeComponent {

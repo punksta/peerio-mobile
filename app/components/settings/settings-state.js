@@ -8,6 +8,7 @@ import snackbarState from '../snackbars/snackbar-state';
 import uiState from '../layout/ui-state';
 import { tx } from '../utils/translator';
 import keychain from '../../lib/keychain-bridge';
+import { vars } from '../../styles/styles';
 
 class SettingsState extends RoutedState {
     @observable subroute = null;

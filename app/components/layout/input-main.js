@@ -6,7 +6,7 @@ import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
-import { inputMain } from '../../styles/styles';
+import { inputMain, vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { uiState, chatState } from '../states';
 

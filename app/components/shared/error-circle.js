@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
+import { vars } from '../../styles/styles';
 
 const diameter = 18;
 
@@ -50,4 +51,3 @@ ErrorCircle.propTypes = {
     large: PropTypes.bool,
     invert: PropTypes.bool
 };
-

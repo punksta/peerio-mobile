@@ -6,6 +6,7 @@ import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
+import { vars } from '../../styles/styles';
 
 function textControl(str) {
     const text = {
