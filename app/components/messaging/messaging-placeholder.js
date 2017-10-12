@@ -55,7 +55,7 @@ export default class MessagingPlaceholder extends SafeComponent {
         };
 
         const textParser = {
-            emphasis: text => <Bold>{"hi"}</Bold>,
+            emphasis: text => <Bold>{'hi'}</Bold>,
             plusIcon: text => (
                 <Icon name="add" />
             )
@@ -65,7 +65,7 @@ export default class MessagingPlaceholder extends SafeComponent {
             <View style={outerContainerStyle}>
                 <BgPattern />
                 <View style={inpagePopupStyle}>
-                    <Text style={title}><T k="title_welcomeHeading"></T></Text>
+                    <Text style={title}><T k="title_welcomeHeading" /></Text>
                     <T k="dialog_chatZeroState">{textParser}</T>
                 </View>
             </View>
