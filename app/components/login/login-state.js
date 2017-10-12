@@ -23,6 +23,7 @@ class LoginState extends RoutedState {
     @observable changeUser = false;
     @observable current = 0;
     @observable selectedAutomatic = null;
+    @observable loaded = false;
     _prefix = 'login';
     _resetTouchId = null;
 
@@ -177,7 +178,7 @@ class LoginState extends RoutedState {
             if (this.username && this.username !== username) return;
             this.username = username;
             if (username) {
-                await this.loadFromKeychain();
+                this.loaded = await this.loadFromKeychain();
             }
         };
         // TODO: fix this android hack for LayoutAnimation easeInEaseOut on transitions

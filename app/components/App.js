@@ -10,7 +10,7 @@ import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
 import { gradient } from './controls/effects';
-import { clientApp, crypto, startSocket, config } from '../lib/icebear';
+import { clientApp, crypto, startSocket, config, User } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import { enableIdfa } from '../lib/idfa';
@@ -50,6 +50,15 @@ export default class App extends SafeComponent {
         });
     }
 
+    async componentWillMount() {
+        if (!MockComponent) {
+            let route = routerApp.routes.loading;
+            if (!await User.getLastAuthenticated()) {
+                route = routerApp.routes.loginStart;
+            }
+            route.transition();
+        }
+    }
     componentDidMount() {
         AppState.addEventListener('change', this._handleAppStateChange);
         AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
@@ -65,8 +74,6 @@ export default class App extends SafeComponent {
                 crypto.sign.setImplementation(signDetachedNative, verifyDetachedNative);
             }
         }
-
-        if (!MockComponent) routerApp.routes.loginStart.transition();
     }
 
     _handleAppStateChange(appState) {
