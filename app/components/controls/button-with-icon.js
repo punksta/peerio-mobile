@@ -5,9 +5,20 @@ import {
     Text,
     TouchableOpacity
 } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars, button } from '../../styles/styles';
 
-export default class Button extends Component {
+const defaultTextStyle = {
+    backgroundColor: 'transparent',
+    paddingTop: 2
+};
+
+const containerStyle = {
+    flexDirection: 'row',
+    justifyContent: 'center'
+};
+
+export default class ButtonWithIcon extends Component {
     render() {
         const style = button;
         let textStyle = this.props.bold ?
@@ -16,6 +27,7 @@ export default class Button extends Component {
         if (this.props.textStyle) {
             textStyle = [textStyle, this.props.textStyle];
         }
+
         const text = this.props.text || '';
         const press = () => {
             !this.props.disabled && this.props.onPress && this.props.onPress();
@@ -29,8 +41,14 @@ export default class Button extends Component {
                 accessible={this.props.accessible}
                 accessibilityLabel={this.props.accessibilityLabel}
                 testID={this.props.testID}>
-                <View style={this.props.style}>
-                    <Text style={[{ backgroundColor: 'transparent' }, textStyle, opacity]}>
+                <View style={[this.props.style, containerStyle]}>
+                    <Icon
+                        style={{ paddingHorizontal: 7 }}
+                        name={this.props.iconName}
+                        size={vars.iconSize}
+                        color="gray"
+                        />
+                    <Text style={[defaultTextStyle, textStyle, opacity]}>
                         {text}
                     </Text>
                 </View>
@@ -39,7 +57,7 @@ export default class Button extends Component {
     }
 }
 
-Button.propTypes = {
+ButtonWithIcon.propTypes = {
     style: PropTypes.any,
     textStyle: PropTypes.any,
     onPress: PropTypes.any,
@@ -47,5 +65,6 @@ Button.propTypes = {
     caps: PropTypes.bool,
     disabled: PropTypes.bool,
     testID: PropTypes.string,
-    bold: PropTypes.bool
+    bold: PropTypes.bool,
+    iconName: PropTypes.string
 };
