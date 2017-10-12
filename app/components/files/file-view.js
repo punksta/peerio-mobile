@@ -58,7 +58,7 @@ export default class FileView extends SafeComponent {
                 <View>
                     <View style={firstRowStyle}>
                         <View style={{
-                            marginLeft: 4,
+                            marginLeft: vars.spacing.small,
                             marginRight: 12
                         }}>
                             {icon}

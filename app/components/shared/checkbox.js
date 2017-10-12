@@ -31,7 +31,7 @@ export default class CheckBox extends Component {
             backgroundColor,
             height: 16,
             width: 16,
-            marginHorizontal: 8
+            marginHorizontal: vars.spacing.normal
         };
         const text = {
             color: '#000000AA',

@@ -83,13 +83,13 @@ export default class PopupLayout extends SafeComponent {
         const title = {
             fontWeight: 'bold',
             fontSize: vars.font.size.bigger,
-            marginBottom: 8
+            marginBottom: vars.spacing.normal
         };
 
         const buttonBar = {
             flex: 0,
             marginHorizontal: 16,
-            marginVertical: 8,
+            marginVertical: vars.spacing.normal,
             flexDirection: 'row',
             justifyContent: 'flex-end'
         };

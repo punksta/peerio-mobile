@@ -10,7 +10,7 @@ import CheckBox from './checkbox';
 function textControl(str) {
     const text = {
         color: '#000000AA',
-        marginVertical: 10,
+        marginVertical: vars.spacing.big,
         lineHeight: 22
     };
 

@@ -21,7 +21,7 @@ const smallText = {
     fontSize: vars.font.size.normal,
     opacity: 0.7,
     color: 'white',
-    marginLeft: 8
+    marginLeft: vars.spacing.normal
 };
 
 const featureListText = [topTitleText, {
@@ -58,7 +58,7 @@ const borderView = {
     borderColor: '#FFFFFFAA',
     borderBottomWidth: 1,
     paddingBottom: 24,
-    paddingHorizontal: 12,
+    paddingHorizontal: vars.spacing.bigger,
     marginHorizontal: 12,
     marginBottom: 24
 };
@@ -94,7 +94,7 @@ export default class AccountUpgradePlan extends Component {
 
     featureText(text) {
         return (
-            <View style={{ marginBottom: 10 }} key={text}>
+            <View style={{ marginBottom: vars.spacing.big }} key={text}>
                 <Text style={featureSmallText}>{text}</Text>
             </View>
         );

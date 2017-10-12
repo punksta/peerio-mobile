@@ -22,8 +22,8 @@ const spacer = {
 
 const text = {
     color: vars.txtMedium,
-    marginBottom: 8,
-    marginLeft: 8
+    marginBottom: vars.spacing.normal,
+    marginLeft: vars.spacing.normal
 };
 
 @observer

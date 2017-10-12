@@ -48,12 +48,12 @@ const flexRow = {
 
 const label = {
     color: vars.txtDate,
-    marginVertical: 4,
-    marginLeft: 10
+    marginVertical: vars.spacing.small,
+    marginLeft: vars.spacing.big
 };
 
 const emailIcon = (
-    <View style={{ marginHorizontal: 8 }}>
+    <View style={{ marginHorizontal: vars.spacing.normal }}>
         {icons.plaindark('email')}
     </View>
 );
@@ -155,7 +155,7 @@ export default class ProfileEdit extends SafeComponent {
             <TouchableOpacity
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ paddingRight: 12, paddingVertical: 10 }}>
+                style={{ paddingRight: vars.spacing.bigger, paddingVertical: vars.spacing.big }}>
                 <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
                     {tu(text)}
                 </Text>
@@ -188,7 +188,7 @@ export default class ProfileEdit extends SafeComponent {
         return (
             <View style={textinputContainer} key={address}>
                 {emailIcon}
-                <View style={{ height: vars.inputHeight, flex: 1, flexGrow: 1, paddingTop: 4 }}>
+                <View style={{ height: vars.inputHeight, flex: 1, flexGrow: 1, paddingTop: vars.spacing.small }}>
                     {this.renderText(address)}
                     {confirmed && primary ? this.renderText(tx('title_primaryEmail'), { color: vars.bg, marginTop: -8 }) : null}
                     {!confirmed ? this.renderText(tx('error_unconfirmedEmail'), { color: vars.txtAlert, marginTop: -8 }) : null}
@@ -245,7 +245,7 @@ export default class ProfileEdit extends SafeComponent {
                                 fontWeight: 'bold',
                                 color: vars.white,
                                 fontSize: vars.font.size.bigger,
-                                marginVertical: 4
+                                marginVertical: vars.spacing.small
                             }}>{firstName} {lastName}</Text>
                         <Text style={{ color: vars.white }}>@{username}</Text>
                         <View style={{ position: 'absolute', right: 0, bottom: 0, flexDirection: 'row' }}>
@@ -254,7 +254,7 @@ export default class ProfileEdit extends SafeComponent {
                         </View>
                     </View>
                 </View>
-                <View style={{ margin: 8 }}>
+                <View style={{ margin: vars.spacing.normal }}>
                     <Text style={label}>{tx('title_name')}</Text>
                     <View style={textinputContainer}>
                         <SimpleTextBox
@@ -269,7 +269,7 @@ export default class ProfileEdit extends SafeComponent {
                             placeholder={tx('title_lastName')} style={textinput} value={this.lastName} />
                     </View>
                 </View>
-                <View style={{ margin: 8 }}>
+                <View style={{ margin: vars.spacing.normal }}>
                     <Text style={label}>{tx('title_email')}</Text>
                     {user.addresses.map(this.renderUserEmail)}
                     <View style={[textinputContainer, this.showAddEmail ? null : { height: 0 }]}>
@@ -288,12 +288,12 @@ export default class ProfileEdit extends SafeComponent {
                             onSubmitEditing={() => this.emailAction()}
                             style={textinput} />
                     </View>
-                    <View style={{ marginLeft: 8, flexDirection: 'row' }}>
+                    <View style={{ marginLeft: vars.spacing.normal, flexDirection: 'row' }}>
                         {this.emailButton}
                         {this.validationError}
                     </View>
                 </View>
-                <View style={{ margin: 18, marginTop: 8 }}>
+                <View style={{ margin: 18, marginTop: vars.spacing.normal }}>
                     <Text style={{ color: vars.txtDate, marginBottom: 6 }}>{t('title_publicKey')}</Text>
                     <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: vars.font.size.bigger }} numberOfLines={2}>
                         {fingerprintSkylarFormatted}

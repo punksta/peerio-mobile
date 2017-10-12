@@ -39,8 +39,8 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 8,
-    paddingRight: 4,
+    paddingLeft: vars.spacing.normal,
+    paddingRight: vars.spacing.small,
     paddingBottom: 0
 
 };
@@ -76,7 +76,7 @@ const nameTextStyle = {
 
 const dateTextStyle = {
     color: vars.txtDate,
-    marginLeft: 8
+    marginLeft: vars.spacing.normal
 };
 
 const lastMessageTextStyle = {
@@ -190,7 +190,7 @@ export default class Avatar extends SafeComponent {
         const notSentMessageStyle = {
             flexDirection: 'row',
             justifyContent: 'flex-start',
-            marginBottom: 8
+            marginBottom: vars.spacing.normal
         };
         return this.props.sendError ?
             <View style={notSentMessageStyle}>
@@ -214,7 +214,7 @@ export default class Avatar extends SafeComponent {
             backgroundColor: '#ff000020',
             borderRadius: 14,
             marginVertical: 2,
-            marginHorizontal: 4
+            marginHorizontal: vars.spacing.small
         } : null;
     }
 
@@ -299,7 +299,7 @@ export default class Avatar extends SafeComponent {
             flexDirection: 'row',
             justifyContent: 'flex-end',
             borderWidth: 0,
-            marginRight: 4,
+            marginRight: vars.spacing.small,
             width: width / 1.5
         };
         let marginLeft = (width / 1.5 - 26 * receipts.length) / receipts.length;
@@ -329,9 +329,9 @@ export default class Avatar extends SafeComponent {
             height: 11
         };
         return (
-            <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', justifyContent: 'flex-start', marginVertical: 8 }}>
+            <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', justifyContent: 'flex-start', marginVertical: vars.spacing.normal }}>
                 <View style={separator} />
-                <Text style={{ flex: 0, color: vars.txtDark, marginHorizontal: 4 }}>
+                <Text style={{ flex: 0, color: vars.txtDark, marginHorizontal: vars.spacing.small }}>
                     {ts === new Date().toLocaleDateString() ? tx('title_today') : ts}
                 </Text>
                 <View style={separator} />

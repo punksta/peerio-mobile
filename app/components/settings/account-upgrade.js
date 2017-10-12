@@ -65,7 +65,7 @@ export default class AccountUpgrade extends SafeComponent {
             <TouchableOpacity
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ paddingTop: 2 }}>
+                style={{ paddingTop: vars.spacing.smaller }}>
                 <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
                     {tu(text)}
                 </Text>

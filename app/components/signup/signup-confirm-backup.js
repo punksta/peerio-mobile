@@ -22,7 +22,7 @@ const textNormal = {
     color: vars.txtDark,
     fontSize: vars.font.size.normal,
     lineHeight: 24,
-    marginBottom: 10
+    marginBottom: vars.spacing.big
 };
 
 const titleDark = [textNormal, {

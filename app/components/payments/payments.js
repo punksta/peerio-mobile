@@ -15,7 +15,7 @@ function upgradeMessage(title) {
         backgroundColor: vars.lightGrayBg,
         height: vars.inputHeight,
         paddingLeft: 18,
-        paddingRight: 10
+        paddingRight: vars.spacing.big
     };
 
     const text = {

@@ -25,13 +25,13 @@ export default class SelectFiles extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
+            padding: vars.spacing.small,
             paddingTop: 0,
             paddingBottom: 0
         };
         const style = {
             flexGrow: 1,
-            marginLeft: 8
+            marginLeft: vars.spacing.normal
         };
 
         return (
@@ -53,7 +53,7 @@ export default class SelectFiles extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
+            padding: vars.spacing.small,
             paddingTop: vars.statusBarHeight,
             paddingBottom: 0
         };

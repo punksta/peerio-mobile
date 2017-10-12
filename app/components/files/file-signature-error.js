@@ -20,7 +20,7 @@ export default class FileSignatureError extends SafeComponent {
             alignItems: 'center',
             marginVertical: 6,
             paddingVertical: 14,
-            paddingHorizontal: 8
+            paddingHorizontal: vars.spacing.normal
         };
 
         const text = {

@@ -64,7 +64,7 @@ export default class ChatInfo extends SafeComponent {
             <View>
                 {this.lineBlock(this.action(tx('button_hideChat'), 'remove-circle-outline', this.hideChat))}
                 {chat.participants && this.lineBlock(
-                    <View style={{ paddingVertical: 8 }}>
+                    <View style={{ paddingVertical: vars.spacing.normal }}>
                         {chat.participants.map(this.participant)}
                     </View>
                 )}

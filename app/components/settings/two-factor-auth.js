@@ -31,7 +31,7 @@ const labelStyle = {
 };
 
 const whiteStyle = {
-    backgroundColor: vars.white, paddingTop: 10, paddingHorizontal
+    backgroundColor: vars.white, paddingTop: vars.spacing.big, paddingHorizontal
 };
 
 async function twoFactorAuthPopup(active2FARequest) {
@@ -145,7 +145,7 @@ export default class TwoFactorAuth extends SafeComponent {
                     }}>
                         <TextInput style={{
                             color: vars.txtDark,
-                            marginVertical: 8,
+                            marginVertical: vars.spacing.normal,
                             height: vars.inputHeight,
                             flexGrow: 1
                         }}

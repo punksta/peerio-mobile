@@ -55,12 +55,12 @@ const accountKeyRow = {
 
 const smallText = {
     fontSize: vars.font.size.smaller,
-    marginVertical: 8,
+    marginVertical: vars.spacing.normal,
     color: vars.txtDark
 };
 
 const accountKeyView = {
-    marginVertical: 10
+    marginVertical: vars.spacing.big
 };
 
 @observer

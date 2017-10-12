@@ -10,7 +10,7 @@ const circleStyle = {
     width: circleDiameter,
     height: circleDiameter,
     borderRadius: circleDiameter / 2,
-    margin: 4
+    margin: vars.spacing.small
 };
 
 const circleOnline = {

@@ -51,7 +51,7 @@ export default class MessagingPlaceholder extends SafeComponent {
         const title = {
             fontWeight: 'bold',
             fontSize: vars.font.size.bigger,
-            marginBottom: 8
+            marginBottom: vars.spacing.normal
         };
 
         const textParser = {

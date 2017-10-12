@@ -16,7 +16,7 @@ class PaymentStorageUsage extends SafeComponent {
         if (!u) return null;
         const hideUpgrade = plans.userHasPaidPlan() || process.env.PEERIO_DISABLE_PAYMENTS;
         return (
-            <View style={{ marginHorizontal: 10 }}>
+            <View style={{ marginHorizontal: vars.spacing.big }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Bold>{u.fileQuotaUsedPercent}% of {u.fileQuotaTotalFmt}</Bold>
                     <View style={{ width: 20 }} />

@@ -91,7 +91,7 @@ export default class ContactSelectorDM extends SafeComponent {
         }
 
         if (this.inProgress || contactState.inProgress) {
-            rightIcon = <ActivityIndicator style={{ marginRight: 8 }} />;
+            rightIcon = <ActivityIndicator style={{ marginRight: vars.spacing.normal }} />;
         }
 
         return (
@@ -148,7 +148,7 @@ export default class ContactSelectorDM extends SafeComponent {
 
     sectionHeader({ section: { data, key } }) {
         if (!data || !data.length) return null;
-        const s = { fontWeight: 'bold', margin: 10 };
+        const s = { fontWeight: 'bold', margin: vars.spacing.big };
         return (
             <Text style={s}>
                 {tx(key, { found: data && data.length })}
@@ -235,8 +235,8 @@ export default class ContactSelectorDM extends SafeComponent {
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
         const notFound = !this.inProgress && !!this.notFound && (
-            <View style={{ flexDirection: 'row', marginHorizontal: 36, marginVertical: 10 }}>
-                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: 8 }} />
+            <View style={{ flexDirection: 'row', marginHorizontal: 36, marginVertical: vars.spacing.big }}>
+                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: vars.spacing.normal }} />
                 <Text style={{ color: vars.txtDate }}>{t('error_userNotFoundTryEmail', { user: this.notFound })}</Text>
             </View>
         );

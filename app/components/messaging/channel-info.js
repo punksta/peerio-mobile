@@ -14,7 +14,7 @@ import { tx, tu } from '../utils/translator';
 
 const textStyle = {
     color: vars.txtDate,
-    marginTop: 10,
+    marginTop: vars.spacing.big,
     fontSize: vars.font.size.smaller,
     marginLeft: 18,
     fontWeight: 'bold'
@@ -83,7 +83,7 @@ export default class ChannelInfo extends SafeComponent {
         const isAdmin = chatState.currentChat.isAdmin(contact);
         return (
             <View key={contact.username} style={row}>
-                <View style={{ flex: 1, flexGrow: 1, paddingLeft: 4 }}>
+                <View style={{ flex: 1, flexGrow: 1, paddingLeft: vars.spacing.small }}>
                     <Avatar
                         noBorderBottom
                         contact={contact}
@@ -92,7 +92,7 @@ export default class ChannelInfo extends SafeComponent {
                         hideOnline />
                 </View>
                 <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
-                    {isAdmin && <View style={{ backgroundColor: vars.bg, borderRadius: 4, padding: 4, overflow: 'hidden' }}>
+                    {isAdmin && <View style={{ backgroundColor: vars.bg, borderRadius: 4, padding: vars.spacing.small, overflow: 'hidden' }}>
                         <Text style={{ color: vars.white, fontSize: vars.font.size.small }}>
                             {tu('title_admin')}
                         </Text>
@@ -160,7 +160,7 @@ export default class ChannelInfo extends SafeComponent {
                 {canILeave && this.lineBlock(this.action(tx('button_leaveChannel'), 'remove-circle-outline', this.leaveChannel), true)}
                 {canIAdmin && this.lineBlock(this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel))}
                 {chat.joinedParticipants && this.lineBlock(
-                    <View style={{ paddingVertical: 8 }}>
+                    <View style={{ paddingVertical: vars.spacing.normal }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
                             <Text style={[textStyle, { marginBottom: 12 }]}>
                                 {tx('title_Members')}
@@ -171,7 +171,7 @@ export default class ChannelInfo extends SafeComponent {
                     </View>
                 )}
                 {invited && this.lineBlock(
-                    <View style={{ paddingVertical: 8 }}>
+                    <View style={{ paddingVertical: vars.spacing.normal }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
                             <Text style={[textStyle, { marginBottom: 12 }]}>
                                 {tx('title_invited')}

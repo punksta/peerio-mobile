@@ -25,7 +25,7 @@ const headerStyle = {
     color: vars.txtDark,
     fontWeight: 'bold',
     fontSize: vars.font.size.bigger,
-    marginLeft: 8
+    marginLeft: vars.spacing.normal
 };
 
 const buttonCenterStyle = {

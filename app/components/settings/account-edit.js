@@ -13,14 +13,14 @@ import { loginState } from '../states';
 
 const label = {
     color: vars.txtDate,
-    marginVertical: 4,
-    marginLeft: 10
+    marginVertical: vars.spacing.small,
+    marginLeft: vars.spacing.big
 };
 
 const label2 = {
     color: vars.txtDark,
-    marginVertical: 8,
-    marginLeft: 10,
+    marginVertical: vars.spacing.normal,
+    marginLeft: vars.spacing.big,
     marginTop: 16
 };
 
@@ -65,11 +65,11 @@ export default class AccountEdit extends SafeComponent {
                 onScroll={this.onScroll}
                 keyboardShouldPersistTaps="handled"
                 style={{ backgroundColor: vars.settingsBg }} ref={ref => { this._scrollView = ref; }}>
-                <View style={{ margin: 8 }}>
+                <View style={{ margin: vars.spacing.normal }}>
                     {this.label('title_promoConsentRequestTitle')}
                     {this.toggle('title_promoConsent', 'subscribeToPromoEmails')}
                 </View>
-                <View style={{ margin: 8 }}>
+                <View style={{ margin: vars.spacing.normal }}>
                     {this.label2('title_dataDetail')}
                     {this.label('title_dataPreferences')}
                     {this.toggle('title_errorTrackingMessage', 'errorTracking')}

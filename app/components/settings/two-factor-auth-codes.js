@@ -26,24 +26,24 @@ const headerStyle = {
     color: vars.txtDark,
     fontWeight: 'bold',
     fontSize: vars.font.size.bigger,
-    marginLeft: 8
+    marginLeft: vars.spacing.normal
 };
 
 const infoStyle = {
     color: vars.txtDark,
-    marginLeft: 8,
+    marginLeft: vars.spacing.normal,
     marginVertical: 24
 };
 
 const labelStyle = {
     color: vars.txtDate,
-    marginBottom: 4,
+    marginBottom: vars.spacing.small,
     fontSize: vars.font.size.smaller,
-    marginLeft: 8
+    marginLeft: vars.spacing.normal
 };
 
 const whiteStyle = {
-    backgroundColor: vars.white, paddingVertical: 10, paddingHorizontal
+    backgroundColor: vars.white, paddingVertical: vars.spacing.big, paddingHorizontal
 };
 
 const row = { flexDirection: 'row' };
@@ -52,7 +52,7 @@ const rowRight = [row, { justifyContent: 'flex-end', marginTop: 12 }];
 
 const column = { flex: 0.5, alignItems: 'center' };
 
-const textStyle = { color: vars.txtDark, fontWeight: 'bold', marginVertical: 10 };
+const textStyle = { color: vars.txtDark, fontWeight: 'bold', marginVertical: vars.spacing.big };
 
 /*
 function uuidv4() {

@@ -14,7 +14,7 @@ export default class LayoutModalExit extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
+            padding: vars.spacing.small,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0
         };

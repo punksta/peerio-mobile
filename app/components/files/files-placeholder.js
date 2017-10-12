@@ -54,7 +54,7 @@ export default class FilesPlaceholder extends SafeComponent {
                     <View style={{ flex: 0, alignItems: 'center', marginTop: 40 }}>
                         <Text style={infoStyle}>{tx('title_uploadShareAndManage')}</Text>
                     </View>
-                    <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: 20, paddingRight: 20 }}>
+                    <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: vars.spacing.huge, paddingRight: vars.spacing.huge }}>
                         <Image source={fileUploadZeroState}
                                resizeMode="contain"
                                style={{ flex: 1, width: null, height: null }} />

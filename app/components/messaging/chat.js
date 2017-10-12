@@ -158,11 +158,11 @@ export default class Chat extends SafeComponent {
     listView() {
         if (chatState.loading) return null;
         const refreshControlTop = this.chat.canGoUp ? (
-            <ActivityIndicator size="large" style={{ padding: 10 }}
+            <ActivityIndicator size="large" style={{ padding: vars.spacing.big }}
                 onLayout={e => { this.indicatorHeight = e.nativeEvent.layout.height; }} />
         ) : null;
         const refreshControlBottom = this.chat.canGoDown ? (
-            <ActivityIndicator size="large" style={{ padding: 10 }} />
+            <ActivityIndicator size="large" style={{ padding: vars.spacing.big }} />
         ) : null;
         return (
             <ScrollView
@@ -198,7 +198,7 @@ export default class Chat extends SafeComponent {
         const zsContainer = {
             borderBottomWidth: 0,
             borderBottomColor: '#CFCFCF',
-            marginBottom: 8
+            marginBottom: vars.spacing.normal
         };
         const { chat } = this;
         const participants = chat.participants || [];
@@ -232,7 +232,7 @@ export default class Chat extends SafeComponent {
     renderThrow() {
         return (
             <View
-                style={{ flexGrow: 1, paddingBottom: 4 }}>
+                style={{ flexGrow: 1, paddingBottom: vars.spacing.small }}>
                 {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
                 <View style={{ flex: 1, flexGrow: 1 }}>
                     {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
