@@ -83,7 +83,7 @@ export default class SettingsLevel1 extends SafeComponent {
                             borderRadius: 4 }}
                         bold={true}
                         textStyle={{ color: vars.bg }}
-                        onPress={this.terms}
+                        onPress={loginState.signOut}
                         iconName="power-settings-new"
                     />
                     {this.spacer}
