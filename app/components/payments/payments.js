@@ -14,7 +14,7 @@ function upgradeMessage(title) {
         alignItems: 'center',
         backgroundColor: vars.lightGrayBg,
         height: vars.inputHeight,
-        paddingLeft: 18,
+        paddingLeft: vars.spacing.medium.midi,
         paddingRight: vars.spacing.small.maxi
     };
 

@@ -81,7 +81,7 @@ export default class LoginWizard extends Wizard {
         };
         return (
             <View
-                style={{ height: this.debugMenuHeight, opacity: this.delayDebugMenu ? 0.5 : 1, marginTop: vars.spacing.small.maxi2x}}
+                style={{ height: this.debugMenuHeight, opacity: this.delayDebugMenu ? 0.5 : 1, marginTop: vars.spacing.small.maxi2x }}
                 pointerEvents={this.delayDebugMenu ? 'none' : 'auto'}>
                 <View style={{ flexDirection: 'row', flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: vars.loginWizard_debugMenu_paddingH }}>
                     <Button style={s} onPress={() => { this.showDebugLogs = !this.showDebugLogs; }} text="Show logs" />

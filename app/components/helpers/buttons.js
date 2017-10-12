@@ -9,7 +9,7 @@ export default {
             <TouchableOpacity
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ padding: 14, marginTop: vars.spacing.small.mini2x, opacity: disabled ? 0 : 1 }}>
+                style={{ padding: vars.spacing.medium.mini, marginTop: vars.spacing.small.mini2x, opacity: disabled ? 0 : 1 }}>
                 <Text style={{ backgroundColor: 'transparent', color: disabled ? vars.txtMedium : vars.white }}>
                     {tu(text)}
                 </Text>
@@ -79,7 +79,7 @@ export default {
             <TouchableOpacity
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ paddingRight: vars.spacing.small.maxi2x}}>
+                style={{ paddingRight: vars.spacing.small.maxi2x }}>
                 <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
                     {tu(text)}
                 </Text>
@@ -92,7 +92,7 @@ export default {
             <TouchableOpacity
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ paddingRight: vars.spacing.small.maxi2x}}>
+                style={{ paddingRight: vars.spacing.small.maxi2x }}>
                 <Text style={{ fontWeight: 'bold', color: disabled ? vars.lightGrayBg : vars.txtDate }}>
                     {tu(text)}
                 </Text>

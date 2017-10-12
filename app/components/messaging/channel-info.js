@@ -162,7 +162,7 @@ export default class ChannelInfo extends SafeComponent {
                 {chat.joinedParticipants && this.lineBlock(
                     <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x}]}>
+                            <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x }]}>
                                 {tx('title_Members')}
                             </Text>
                             {canIAdmin && icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
@@ -173,7 +173,7 @@ export default class ChannelInfo extends SafeComponent {
                 {invited && this.lineBlock(
                     <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x}]}>
+                            <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x }]}>
                                 {tx('title_invited')}
                             </Text>
                         </View>

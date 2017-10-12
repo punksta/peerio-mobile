@@ -220,7 +220,7 @@ export default class Chat extends SafeComponent {
         ));
         return (
             <View style={zsContainer}>
-                <View style={{ flexDirection: 'row', marginRight: 48, paddingLeft: -marginLeft }}>{avatars}</View>
+                <View style={{ flexDirection: 'row', marginRight: vars.spacing.large.maxi2x, paddingLeft: -marginLeft }}>{avatars}</View>
                 <Text style={{ textAlign: 'left', margin: vars.spacing.small.maxi2x, color: vars.txtDark }}>
                     {tx('title_chatBeginning', { chatName: chat.name })}
                 </Text>

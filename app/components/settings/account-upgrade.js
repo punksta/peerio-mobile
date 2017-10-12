@@ -9,7 +9,7 @@ import ChoiceItem from './choice-item';
 import { User } from '../../lib/icebear';
 import plans from '../payments/payments-config';
 
-const margin = 18;
+const margin = vars.spacing.medium.midi;
 const marginLeft = margin;
 const marginBottom = vars.spacing.small.maxi2x;
 const paddingWhite = 10;

@@ -128,7 +128,7 @@ export default class AccountUpgradePlan extends Component {
     }
 
     get footer() {
-        return payments.inProgress ? <ActivityIndicator color="white" style={{ marginBottom: 30 }} /> : this.priceOptions;
+        return payments.inProgress ? <ActivityIndicator color="white" style={{ marginBottom: vars.spacing.large.mini2x }} /> : this.priceOptions;
     }
 
     subscriptionInfo(text) {

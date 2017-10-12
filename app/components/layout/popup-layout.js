@@ -53,7 +53,7 @@ export default class PopupLayout extends SafeComponent {
             transform: [{ translateY: 0 }]
         }];
         const backgroundColor = colors[popup.type];
-        const margin = 30;
+        const margin = vars.spacing.large.mini2;
         const wrapper = {
             flexGrow: popup.fullScreen,
             backgroundColor,

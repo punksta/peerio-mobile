@@ -79,7 +79,7 @@ export default class SettingsLevel1 extends SafeComponent {
                         style={{
                             backgroundColor: vars.white,
                             width: '100%',
-                            paddingVertical: 16,
+                            paddingVertical: vars.spacing.medium.mini2x,
                             borderRadius: 4 }}
                         bold={true}
                         textStyle={{ color: vars.bg }}

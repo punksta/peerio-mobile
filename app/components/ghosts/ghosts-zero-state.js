@@ -55,7 +55,7 @@ export default class GhostsZeroState extends SafeComponent {
                             file sharing for your non-Peerio contacts
                         </Text>
                     </View>
-                    <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: 60, paddingRight: 60 }}>
+                    <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: vars.spacing.huge.midi, paddingRight: vars.spacing.huge.midi }}>
                         <Image source={ghostZeroState}
                                resizeMode="contain"
                                style={{ flex: 1, width: null, height: null }} />

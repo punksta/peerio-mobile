@@ -48,7 +48,7 @@ const whiteStyle = {
 
 const row = { flexDirection: 'row' };
 
-const rowRight = [row, { justifyContent: 'flex-end', marginTop: vars.spacing.small.maxi2x}];
+const rowRight = [row, { justifyContent: 'flex-end', marginTop: vars.spacing.small.maxi2x }];
 
 const column = { flex: 0.5, alignItems: 'center' };
 

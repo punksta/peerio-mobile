@@ -241,7 +241,7 @@ export default class ContactSelectorDM extends SafeComponent {
             </View>
         );
         return (
-            <View style={{ marginHorizontal: vars.spacing.small.maxi2x}}>
+            <View style={{ marginHorizontal: vars.spacing.small.maxi2x }}>
                 {notFound}
                 {this.inviteContact}
                 {!!this.legacyContact &&

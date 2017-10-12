@@ -293,8 +293,8 @@ export default class ProfileEdit extends SafeComponent {
                         {this.validationError}
                     </View>
                 </View>
-                <View style={{ margin: 18, marginTop: vars.spacing.small.midi2x }}>
-                    <Text style={{ color: vars.txtDate, marginBottom: 6 }}>{t('title_publicKey')}</Text>
+                <View style={{ margin: vars.spacing.medium.midi, marginTop: vars.spacing.small.midi2x }}>
+                    <Text style={{ color: vars.txtDate, marginBottom: vars.spacing.small.midi }}>{t('title_publicKey')}</Text>
                     <Text style={{ color: vars.txtMedium, fontFamily: `Verdana`, fontSize: vars.font.size.bigger }} numberOfLines={2}>
                         {fingerprintSkylarFormatted}
                     </Text>

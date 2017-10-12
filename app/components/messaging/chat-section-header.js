@@ -12,7 +12,7 @@ export default class ChatSectionHeader extends SafeComponent {
     renderThrow() {
         const { title, collapsible } = this.props;
         const style = {
-            paddingLeft: 18,
+            paddingLeft: vars.spacing.medium.midi,
             paddingRight: vars.spacing.medium.mini2x,
             height: 48,
             justifyContent: 'space-between',
