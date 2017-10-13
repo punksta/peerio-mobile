@@ -13,8 +13,14 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
+// not sure I need this yet
+import CreateActionSheet from './create-action-sheet';
+import VideoIcon from '../layout/video-icon';
 
 const { width } = Dimensions.get('window');
+
+// action sheet is outside of component scope for a reason.
+let actionSheet = null;
 
 @observer
 export default class Chat extends SafeComponent {
@@ -36,6 +42,8 @@ export default class Chat extends SafeComponent {
         this.onScroll = this.onScroll.bind(this);
         this.item = this.item.bind(this);
     }
+
+    get rightIcon() { return <VideoIcon action={() => actionSheet.show()} />; }
 
     get data() {
         return this.chat ? this.chat.messages : null;
@@ -248,4 +256,3 @@ Chat.propTypes = {
     hideInput: PropTypes.bool,
     archiveNotice: PropTypes.bool
 };
-
