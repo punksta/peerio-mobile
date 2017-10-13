@@ -71,13 +71,13 @@ const nameMessageContainerStyle = {
 
 const fullnameTextStyle = {
     color: vars.txtDark,
-    fontSize: 16
+    fontSize: 14
 };
 
 const usernameTextStyle = {
     color: vars.txtMedium,
     fontStyle: 'italic',
-    fontSize: 14
+    fontSize: 12
 };
 
 const dateTextStyle = {
@@ -277,11 +277,11 @@ export default class Avatar extends SafeComponent {
                 <View style={{ flexShrink: 1 }}>
                     <Text ellipsizeMode="tail" numberOfLines={title2 ? 2 : 1}>
                         {this.star}
-                        <Text style={{ unreadStyle }}>
+                        <Text>
                             {title &&
-                                <Text style={fullnameTextStyle}>
+                                <Text style={[fullnameTextStyle, unreadStyle]}>
                                     {contact ? contact.fullName : ''}
-                                    <Text style={usernameTextStyle}>
+                                    <Text style={[usernameTextStyle, unreadStyle]}>
                                         {' '}{contact.username}
                                     </Text>
                                 </Text>}
