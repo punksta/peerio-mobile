@@ -46,6 +46,9 @@ export default class ChatListItem extends SafeComponent {
             contact = participants[0];
             isDeleted = contact.isDeleted;
         }
+        console.log('Contact');
+        console.log(contact);
+
         const key = chat.id;
         const onPress = () => chatState.routerMain.chats(chat);
         const unread = chat.unreadCount > 0;
