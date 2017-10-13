@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.171.0"></a>
+# [3.171.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.170.0...v3.171.0) (2017-10-13)
+
+
+### Bug Fixes
+
+* get key should point to security ([be3d08d](https://github.com/PeerioTechnologies/peerio-mobile/commit/be3d08d))
+
+
+
 <a name="3.170.0"></a>
 # [3.170.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.169.0...v3.170.0) (2017-10-12)
 
