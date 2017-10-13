@@ -8,6 +8,7 @@ import { rnAlertYesNo } from '../../lib/alerts';
 import { popupSignOutAutologin, popupYesCancel } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
+import routes from '../routes/routes';
 
 const { validators, addValidation } = validation;
 
@@ -147,7 +148,7 @@ class LoginState extends RoutedState {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         await !force && inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
         if (!force && User.current.autologinEnabled && !await popupSignOutAutologin()) {
-            this.routerMain.settings();
+            routes.main.settings();
             settingsState.transition('security');
             return;
         }
