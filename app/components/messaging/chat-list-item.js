@@ -6,22 +6,11 @@ import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import chatState from './chat-state';
 import { User, contactStore, systemMessages } from '../../lib/icebear';
-import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 
 @observer
 export default class ChatListItem extends SafeComponent {
-    get rightIcon() {
-        const { chat } = this.props;
-        return (
-            <View style={{ flex: 0, width: 46, height: 46, justifyContent: 'center' }}>
-                {chat.unreadCount > 0 ?
-                    icons.unreadBubble(chat.unreadCount) : icons.dark('keyboard-arrow-right')}
-            </View>
-        );
-    }
-
     renderMostRecentMessage(c) {
         const m = c.mostRecentMessage;
         if (!m) return null;
@@ -64,7 +53,6 @@ export default class ChatListItem extends SafeComponent {
             <Avatar
                 disableMessageTapping
                 starred={chat.isFavorite}
-                rightIcon={this.rightIcon}
                 extraPaddingTop={8}
                 extraPaddingVertical={8}
                 unread={unread}
