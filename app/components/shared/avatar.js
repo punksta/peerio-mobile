@@ -69,6 +69,10 @@ const nameMessageContainerStyle = {
     paddingTop: 0
 };
 
+const nameTextStyle = {
+    color: vars.txtMedium
+};
+
 const fullnameTextStyle = {
     color: vars.txtDark,
     fontSize: 14
@@ -277,17 +281,42 @@ export default class Avatar extends SafeComponent {
                 <View style={{ flexShrink: 1 }}>
                     <Text ellipsizeMode="tail" numberOfLines={title2 ? 2 : 1}>
                         {this.star}
-                        <Text>
-                            {title &&
-                                <Text style={[fullnameTextStyle, unreadStyle]}>
+                        <Text style={[nameTextStyle, unreadStyle]}>
+                            {title ||
+                                <Text>
                                     {contact ? contact.fullName : ''}
-                                    <Text style={[usernameTextStyle, unreadStyle]}>
+                                    <Text style={{ color: vars.txtMedium }}>
                                         {' '}{contact.username}
                                     </Text>
                                 </Text>}
                         </Text>
                         {title2 ?
                             <Text style={lastMessageTextStyle}>{'\n'}{title2}</Text> : null}
+                    </Text>
+                </View>
+                <View style={{ flex: 0 }}>
+                    {this.date}
+                </View>
+            </View>
+        );
+    }
+
+    get name() {
+        const unreadStyle = this.props.unread
+        ? { fontWeight: '600' }
+        : null;
+        const { contact } = this.props;
+        return (
+            <View style={nameContainerStyle}>
+                <View style={{ flexShrink: 1 }}>
+                    <Text ellipsizeMode="tail" numberOfLines={1}>
+                        {this.star}
+                        <Text style={[fullnameTextStyle, unreadStyle]}>
+                            {contact ? contact.fullName : ''}
+                            <Text style={[usernameTextStyle, unreadStyle]}>
+                                {' '}{contact.username}
+                            </Text>
+                        </Text>
                     </Text>
                 </View>
                 <View style={{ flex: 0 }}>
@@ -377,7 +406,7 @@ export default class Avatar extends SafeComponent {
                         style={itemContainerStyle}>
                         {this.avatar}
                         <View style={[nameMessageContainerStyle]}>
-                            {this.title}
+                            {this.props.isChat ? this.name : this.title}
                             {this.message}
                             {this.files}
                             {this.systemMessage}
@@ -434,6 +463,7 @@ Avatar.propTypes = {
     message: PropTypes.string,
     messageComponent: PropTypes.any,
     title: PropTypes.any,
+    isChat: PropTypes.any,
     systemMessage: PropTypes.any,
     firstOfTheDay: PropTypes.bool,
     online: PropTypes.bool,
