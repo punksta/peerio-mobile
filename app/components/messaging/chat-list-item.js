@@ -72,7 +72,7 @@ export default class ChatListItem extends SafeComponent {
                 ellipsize
                 contact={contact}
                 title={chat.name}
-                isChat={true}
+                isChat
                 hideOnline
                 isDeleted={isDeleted}
                 key={key}

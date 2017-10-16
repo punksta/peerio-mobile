@@ -77,12 +77,11 @@ export default class ChatList extends SafeComponent {
             return r;
         };
         const invitesCount = chatInviteStore.received.length;
-        const { collapsible } = this;
         const titles = {
             ...i('title_channels',
-                <ChatSectionHeader collapsible={collapsible} state="collapseChannels" title={tx('title_channels')} />),
+                <ChatSectionHeader state="collapseChannels" title={tx('title_channels')} />),
             ...i('title_directMessages',
-                <ChatSectionHeader collapsible={collapsible} state="collapseDMs" title={tx('title_directMessages')} />),
+                <ChatSectionHeader state="collapseDMs" title={tx('title_directMessages')} />),
             ...i('title_channelInvites',
                 (
                     <ChatChannelInviteSection
