@@ -70,8 +70,18 @@ const nameMessageContainerStyle = {
 };
 
 const nameTextStyle = {
+    color: vars.txtMedium
+};
+
+const fullnameTextStyle = {
+    color: vars.txtDark,
+    fontSize: 14
+};
+
+const usernameTextStyle = {
     color: vars.txtMedium,
-    fontSize: 16
+    fontStyle: 'italic',
+    fontSize: 12
 };
 
 const dateTextStyle = {
@@ -291,6 +301,31 @@ export default class Avatar extends SafeComponent {
         );
     }
 
+    get name() {
+        const unreadStyle = this.props.unread
+        ? { fontWeight: '600' }
+        : null;
+        const { contact } = this.props;
+        return (
+            <View style={nameContainerStyle}>
+                <View style={{ flexShrink: 1 }}>
+                    <Text ellipsizeMode="tail" numberOfLines={1}>
+                        {this.star}
+                        <Text style={[fullnameTextStyle, unreadStyle]}>
+                            {contact ? contact.fullName : ''}
+                            <Text style={[usernameTextStyle, unreadStyle]}>
+                                {' '}{contact.username}
+                            </Text>
+                        </Text>
+                    </Text>
+                </View>
+                <View style={{ flex: 0 }}>
+                    {this.date}
+                </View>
+            </View>
+        );
+    }
+
     get receipts() {
         const { receipts } = this.props;
         if (!receipts || !receipts.length) return null;
@@ -371,7 +406,7 @@ export default class Avatar extends SafeComponent {
                         style={itemContainerStyle}>
                         {this.avatar}
                         <View style={[nameMessageContainerStyle]}>
-                            {this.title}
+                            {this.props.isChat ? this.name : this.title}
                             {this.message}
                             {this.files}
                             {this.systemMessage}
@@ -428,6 +463,7 @@ Avatar.propTypes = {
     message: PropTypes.string,
     messageComponent: PropTypes.any,
     title: PropTypes.any,
+    isChat: PropTypes.any,
     systemMessage: PropTypes.any,
     firstOfTheDay: PropTypes.bool,
     online: PropTypes.bool,

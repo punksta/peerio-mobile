@@ -17,7 +17,7 @@ export default class ChatListItem extends SafeComponent {
         return (
             <View style={{ flex: 0, width: 46, height: 46, justifyContent: 'center' }}>
                 {chat.unreadCount > 0 ?
-                    icons.unreadBubble(chat.unreadCount) : icons.dark('keyboard-arrow-right')}
+                    icons.unreadBubble(chat.unreadCount) : null}
             </View>
         );
     }
@@ -46,7 +46,7 @@ export default class ChatListItem extends SafeComponent {
         if (chatState.collapseDMs) return null;
         if (!this.props || !this.props.chat) return null;
         const { chat } = this.props;
-        const { mostRecentMessage, participants } = chat;
+        const { participants } = chat;
         // group chats have null for contact
         let contact = null;
         let isDeleted = false;
@@ -57,8 +57,8 @@ export default class ChatListItem extends SafeComponent {
             contact = participants[0];
             isDeleted = contact.isDeleted;
         }
+
         const key = chat.id;
-        const timestamp = mostRecentMessage ? mostRecentMessage.messageTimestampText : null;
         const onPress = () => chatState.routerMain.chats(chat);
         const unread = chat.unreadCount > 0;
         return (
@@ -70,9 +70,9 @@ export default class ChatListItem extends SafeComponent {
                 extraPaddingVertical={8}
                 unread={unread}
                 ellipsize
-                timestampText={timestamp}
                 contact={contact}
                 title={chat.name}
+                isChat={true}
                 hideOnline
                 isDeleted={isDeleted}
                 key={key}

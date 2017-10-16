@@ -34,6 +34,7 @@ export default class ChatItem extends SafeComponent {
                 timestamp={i.timestamp}
                 timestampText={i.messageTimestampText}
                 message={text}
+                isChat={true}
                 systemMessage={systemMessageText}
                 key={key}
                 error={error}
