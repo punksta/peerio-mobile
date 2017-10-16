@@ -63,7 +63,7 @@ const nameMessageContainerStyle = {
     borderColor: 'red',
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingLeft: 16,
+    paddingLeft: 0,
     marginLeft: 6,
     marginRight: 6,
     paddingTop: 0
@@ -345,7 +345,7 @@ export default class Avatar extends SafeComponent {
                 <View style={[itemStyle, this.errorStyle]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
-                        style={[this.itemContainerStyle, { paddingLeft: 74, flexShrink: 1 }]}>
+                        style={[this.itemContainerStyle, { paddingLeft: 58, flexShrink: 1 }]}>
                         {this.message}
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
