@@ -3,6 +3,7 @@ import { observer } from 'mobx-react/native';
 import { View, ScrollView, Text } from 'react-native';
 import { vars } from '../../styles/styles';
 import { User } from '../../lib/icebear';
+import NotificationStore from './notification-store';
 import { t, tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import ToggleItem from './toggle-item';
@@ -32,13 +33,12 @@ export default class Notifications extends SafeComponent {
     // Change inlineChatContent
     // Change peerioContentEnabled
     dndModeToggle() {
-        const state = User.current.settings.inlineChatContent;
-        const prop = 'peerioContentEnabled';
+        const state = NotificationStore.prefs;
+        const prop = 'doNotDisturbModeEnabled';
         const title = tx('Do not disturb mode');
         const description = tx('Switch off all notifications on this device');
         const onPress = () => {
-            state.peerioContentEnabled = !state.peerioContentEnabled;
-            User.current.saveSettings();
+            state.doNotDisturbModeEnabled = !state.doNotDisturbModeEnabled;
         };
         return (
             <ToggleItem {...{ prop, title, description, state, onPress }} />
@@ -46,12 +46,11 @@ export default class Notifications extends SafeComponent {
     }
 
     allActivityToggle() {
-        const state = User.current.settings.inlineChatContent;
-        const prop = 'peerioContentEnabled';
+        const state = NotificationStore.prefs;
+        const prop = 'allActivityNotifsEnabled';
         const title = tx('All activity');
         const onPress = () => {
-            state.peerioContentEnabled = !state.peerioContentEnabled;
-            User.current.saveSettings();
+            state.allActivityNotifsEnabled = !state.allActivityNotifsEnabled;
         };
         return (
             <ToggleItem {...{ prop, title, state, onPress }} />
@@ -59,12 +58,11 @@ export default class Notifications extends SafeComponent {
     }
 
     directNotificationsToggle() {
-        const state = User.current.settings.inlineChatContent;
-        const prop = 'peerioContentEnabled';
+        const state = NotificationStore.prefs;
+        const prop = 'directNotifsEnabled';
         const title = tx('Direct messages and mentions');
         const onPress = () => {
-            state.peerioContentEnabled = !state.peerioContentEnabled;
-            User.current.saveSettings();
+            state.directNotifsEnabled = !state.directNotifsEnabled;
         };
         return (
             <ToggleItem {...{ prop, title, state, onPress }} />
@@ -72,12 +70,11 @@ export default class Notifications extends SafeComponent {
     }
 
     messageContentToggle() {
-        const state = User.current.settings.inlineChatContent;
-        const prop = 'peerioContentEnabled';
+        const state = NotificationStore.prefs;
+        const prop = 'displayMessageContentEnabled';
         const title = tx('Display message content');
         const onPress = () => {
-            state.peerioContentEnabled = !state.peerioContentEnabled;
-            User.current.saveSettings();
+            state.displayMessageContentEnabled = !state.displayMessageContentEnabled;
         };
         return (
             <ToggleItem {...{ prop, title, state, onPress }} />
@@ -85,25 +82,11 @@ export default class Notifications extends SafeComponent {
     }
 
     allSoundToggle() {
-        const state = User.current.settings.inlineChatContent;
-        const prop = 'peerioContentEnabled';
+        const state = NotificationStore.prefs;
+        const prop = 'allActivitySoundsEnabled';
         const title = tx('All activity');
         const onPress = () => {
-            state.peerioContentEnabled = !state.peerioContentEnabled;
-            User.current.saveSettings();
-        };
-        return (
-            <ToggleItem {...{ prop, title, state, onPress }} />
-        );
-    }
-
-    directNotificationsSoundToggle() {
-        const state = User.current.settings.inlineChatContent;
-        const prop = 'peerioContentEnabled';
-        const title = tx('Direct messages and mentions');
-        const onPress = () => {
-            state.peerioContentEnabled = !state.peerioContentEnabled;
-            User.current.saveSettings();
+            state.allActivitySoundsEnabled = !state.allActivitySoundsEnabled;
         };
         return (
             <ToggleItem {...{ prop, title, state, onPress }} />
@@ -111,12 +94,11 @@ export default class Notifications extends SafeComponent {
     }
 
     allEmailNotificationToggle() {
-        const state = User.current.settings.inlineChatContent;
-        const prop = 'peerioContentEnabled';
+        const state = NotificationStore.prefs;
+        const prop = 'allEmailNotifsEnabled';
         const title = tx('All activity');
         const onPress = () => {
-            state.peerioContentEnabled = !state.peerioContentEnabled;
-            User.current.saveSettings();
+            state.allEmailNotifsEnabled = !state.allEmailNotifsEnabled;
         };
         return (
             <ToggleItem {...{ prop, title, state, onPress }} />
@@ -124,12 +106,11 @@ export default class Notifications extends SafeComponent {
     }
 
     newMessageEmailNotificationToggle() {
-        const state = User.current.settings.inlineChatContent;
-        const prop = 'peerioContentEnabled';
-        const title = tx('All activity');
+        const state = NotificationStore.prefs;
+        const prop = 'newMessageEmailNotifsEnabled';
+        const title = tx('For a new message');
         const onPress = () => {
-            state.peerioContentEnabled = !state.peerioContentEnabled;
-            User.current.saveSettings();
+            state.newMessageEmailNotifsEnabled = !state.newMessageEmailNotifsEnabled;
         };
         return (
             <ToggleItem {...{ prop, title, state, onPress }} />
@@ -156,7 +137,6 @@ export default class Notifications extends SafeComponent {
                         <View style={spacer} />
                         <Text style={text}>{tx('Play sound')}</Text>
                         {this.allSoundToggle()}
-                        {this.directNotificationsSoundToggle()}
                     </View>}
                     {/* User.current.settings.dndMode */ false &&
                     <View>
