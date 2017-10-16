@@ -14,7 +14,7 @@ export default class ChannelListItem extends SafeComponent {
         const { name, unreadCount } = chat;
         if (!chat) return null;
         const containerStyle = {
-            height: 34,
+            height: 48,
             paddingHorizontal: 18,
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -23,6 +23,7 @@ export default class ChannelListItem extends SafeComponent {
         };
 
         const textStyle = {
+            fontSize: 16,
             color: vars.txtDark
         };
 
