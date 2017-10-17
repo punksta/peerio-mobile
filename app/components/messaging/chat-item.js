@@ -4,6 +4,7 @@ import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import contactState from '../contacts/contact-state';
+import fileState from '../files/file-state';
 import { systemMessages } from '../../lib/icebear';
 
 @observer
@@ -20,6 +21,12 @@ export default class ChatItem extends SafeComponent {
         const error = !!i.signatureError;
         const systemMessageText =
             i.systemData && systemMessages.getSystemMessageText(i) || null;
+        const files = i.files && i.files.map(id => fileState.store.getById(id)).filter(f => f) || [];
+        const images = files.filter(f => f.isImage) || [];
+        const normalFiles = files.filter(f => !f.isImage) || [];
+
+        const firstImage = images.length ? images[0] : null;
+
         return (
             <Avatar
                 noTap={!i.sendError}
@@ -27,8 +34,8 @@ export default class ChatItem extends SafeComponent {
                 sending={i.sending}
                 contact={i.sender}
                 isDeleted={i.sender ? i.sender.isDeleted : false}
-                files={i.files}
-                inlineImage={i.inlineImage}
+                files={normalFiles.map(f => f.fileId)}
+                inlineImage={firstImage}
                 receipts={i.receipts}
                 hideOnline
                 firstOfTheDay={i.firstOfTheDay}

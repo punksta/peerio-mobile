@@ -48,6 +48,10 @@ export default class App extends SafeComponent {
             push.clearBadge();
             enableIdfa();
         });
+
+        clientApp.uiUserPrefs = {
+            peerioContentEnabled: true
+        };
     }
 
     async componentWillMount() {

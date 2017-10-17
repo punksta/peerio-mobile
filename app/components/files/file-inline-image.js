@@ -18,6 +18,8 @@ class InlineImageCacheStore {
     data = {};
 
     getImage(imagePath) {
+        if (!imagePath) return { source: null };
+        console.log(`temporary image path: ${imagePath}`);
         const { data } = this;
         let result = data[imagePath];
         if (!result) {
@@ -76,6 +78,7 @@ export default class FileInlineImage extends SafeComponent {
     @observable loaded;
     @observable tooBig;
     @observable loadImage;
+    @observable url;
     outerPadding = 8;
 
     async componentWillMount() {
@@ -83,11 +86,12 @@ export default class FileInlineImage extends SafeComponent {
         this.opened = DISPLAY_BY_DEFAULT;
         // this.tooBig = Math.random() > 0.5;
         this.loadImage = DISPLAY_BY_DEFAULT && !this.tooBig;
-        when(() => this.loadImage, () => this.fetchSize());
+        when(() => this.loadImage && this.url, () => this.fetchSize());
     }
 
     async fetchSize() {
-        const image = await inlineImageCacheStore.getImage(this.props.image.url);
+        console.log('fetch size');
+        const image = await inlineImageCacheStore.getImage(this.url);
         when(() => image.width && image.height && this.optimalContentWidth, () => {
             const { width, height } = image;
             const { optimalContentWidth, optimalContentHeight } = this;
@@ -173,9 +177,18 @@ export default class FileInlineImage extends SafeComponent {
     }
 
     renderThrow() {
-        const { url, name, title, description, isLocal } = this.props.image;
+        const { image } = this.props;
+        const { name, title, description, isLocal, cached, tmpCached } = image;
+        if (!tmpCached && !cached) {
+            setTimeout(() => {
+                image.tryToCacheTemporarily();
+            });
+        }
+        when(() => image.cached || image.tmpCached, () => {
+            this.url = image.tmpCachePath;
+        });
         const { width, height, loaded } = this;
-        const { source } = inlineImageCacheStore.getImage(url);
+        const { source } = inlineImageCacheStore.getImage(this.url);
         console.log(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
         const outer = {
             padding: this.outerPadding,
@@ -224,8 +237,8 @@ export default class FileInlineImage extends SafeComponent {
                         </View> : <View />}
                     </View>
                     <View style={inner}>
-                        {this.opened && this.loadImage && source &&
-                            <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} />}
+                        {this.opened && this.loadImage && width && height ?
+                            <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} /> : null}
                         {this.opened && !this.loadImage && !this.tooBig && this.displayImageOffer}
                         {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer}
                     </View>
