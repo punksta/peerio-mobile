@@ -35,6 +35,7 @@ class RouterApp extends Router {
             if (this.route === 'main') {
                 if (routes.main.currentIndex > 0) {
                     routes.main.back();
+                    return true;
                 } else if (routes.main.isInitialRoute) {
                     return false;
                 }
