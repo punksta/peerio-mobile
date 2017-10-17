@@ -30,15 +30,10 @@ class ChatState extends RoutedState {
                 this.loading = false;
             } else if (this.routerMain && this.routerMain.route === 'chats') this.routerMain.chats();
         }, true);
-
-        reaction(() => this.collapseChannels, v => TinyDb.user.setValue('collapseChannels', v));
-        reaction(() => this.collapseDMs, v => TinyDb.user.setValue('collapseDMs', v));
     }
 
     @action async init() {
         this.chatStore.loadAllChats();
-        this.collapseChannels = await TinyDb.user.getValue('collapseChannels');
-        this.collapseDMs = await TinyDb.user.getValue('collapseDMs');
         return new Promise(resolve => when(() => this.chatStore.loaded, resolve));
     }
 

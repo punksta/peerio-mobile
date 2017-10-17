@@ -305,7 +305,8 @@ export default class Avatar extends SafeComponent {
         const unreadStyle = this.props.unread
         ? { fontWeight: '600' }
         : null;
-        const { contact } = this.props;
+        const { contact, title } = this.props;
+        const text = contact ? contact.username : title;
         return (
             <View style={nameContainerStyle}>
                 <View style={{ flexShrink: 1 }}>
@@ -314,7 +315,7 @@ export default class Avatar extends SafeComponent {
                         <Text style={[fullnameTextStyle, unreadStyle]}>
                             {contact ? contact.fullName : ''}
                             <Text style={[usernameTextStyle, unreadStyle]}>
-                                {' '}{contact.username}
+                                {` `}{text}
                             </Text>
                         </Text>
                     </Text>
