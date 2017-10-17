@@ -3,8 +3,7 @@ import loginState from '../login/login-state';
 const { observable, reaction } = require('mobx');
 const { TinyDb, User, warnings } = require('../../lib/icebear');
 
-// May need to be refactored to PreferenceStore
-class NotificationStore {
+class PreferenceStore {
     // stored with 'pref_' prefix in tinydb
     @observable prefs = {
         doNotDisturbModeEnabled: true,
@@ -46,6 +45,6 @@ class NotificationStore {
     }
 }
 
-const notificationStore = new NotificationStore();
+const preferenceStore = new PreferenceStore();
 
-export default notificationStore;
+export default preferenceStore;
