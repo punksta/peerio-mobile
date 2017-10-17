@@ -13,7 +13,7 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
-import { popupYes } from '../shared/popups';
+import { popupSetupVideo } from '../shared/popups';
 import VideoIcon from '../layout/video-icon';
 
 const { width } = Dimensions.get('window');
@@ -40,7 +40,7 @@ export default class Chat extends SafeComponent {
     }
 
     get rightIcon() {
-        return <VideoIcon action={() => popupYes('Setup Jitsi Meet', 'test')} />;
+        return <VideoIcon action={() => popupSetupVideo(tx('Setup Jitsi Meet'), tx('Jitsi Meet is a web-based encrypted video chat and screen sharing service'), tx('Jitsi app required on mobile devices.'))} />;
     }
 
     get data() {

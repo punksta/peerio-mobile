@@ -231,6 +231,22 @@ function popupControl(contents) {
     });
 }
 
+function popupSetupVideo(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title,
+            subTitle: subTitle ? textControl(subTitle) : null,
+            contents: text ? textControl(text) : null,
+            style: { borderTop: '#F6E423' },
+            buttons: [
+                { id: 'cancel', text: tu('Got it!'), secondary: true, action: () => resolve(false) },
+                { id: 'ok', text: tu('Get app'), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
+
 locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
@@ -250,5 +266,6 @@ export {
     popupDeleteAccount,
     popupControl,
     popupSignOutAutologin,
-    popupCancelConfirm
+    popupCancelConfirm,
+    popupSetupVideo
 };
