@@ -13,8 +13,6 @@ export default class ToggleItem extends SafeComponent {
 
     toggle = () => {
         const { onPress } = this.props;
-        console.log(this.props.state[this.props.prop]);
-        console.log(!this.active);
         onPress && onPress(!this.active);
     }
 

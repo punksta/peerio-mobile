@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { User, chatStore, TinyDb } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
 import RoutedState from '../routes/routed-state';
+import PreferenceStore from '../settings/preference-store';
 
 class MainState extends RoutedState {
     @observable _loading = false;
@@ -38,6 +39,7 @@ class MainState extends RoutedState {
     @action async init() {
         // disabling pin for now
         // await this.checkPin();
+        PreferenceStore.init();
     }
 
     @action async checkPin() {

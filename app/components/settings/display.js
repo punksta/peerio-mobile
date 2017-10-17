@@ -97,10 +97,10 @@ export default class Display extends SafeComponent {
     renderThrow() {
         return (
             <View style={bgStyle}>
-                <Text style={text}>Image preview</Text>
+                <Text style={text}>{tx('title_imagePreview')}</Text>
                 {this.imagePreviewsToggle()}
                 {this.largeImagesToggle()}
-                {<Text style={text}>URL Preview</Text>}
+                {<Text style={text}>{tx('title_urlPreview')}</Text>}
                 <WarningItem
                     content={tx('title_EnableUrlPreviewWarning')}
                     linkContent={tx('title_learnMore')}
