@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
 import { View, ScrollView, Text } from 'react-native';
 import { vars } from '../../styles/styles';
@@ -30,86 +31,62 @@ const state = PreferenceStore.prefs;
 
 @observer
 export default class Notifications extends SafeComponent {
-    // TODO for ALL functions
-    // Peerio Copy
-    // Change inlineChatContent
-    // Change peerioContentEnabled
-    dndModeToggle() {
-        const prop = 'doNotDisturbModeEnabled';
-        const title = tx('Do not disturb mode');
-        const description = tx('Switch off all notifications on this device');
-        const onPress = () => {
-            state.doNotDisturbModeEnabled = !state.doNotDisturbModeEnabled;
-        };
+    preferenceToggleItem(prop, title, description) {
+        const onPress = () => { state[prop] = !state[prop]; };
         return (
             <ToggleItem {...{ prop, title, description, state, onPress }} />
         );
     }
 
+    // Pref names can be found in preference-store.js
+    dndModeToggle() {
+        return (this.preferenceToggleItem(
+            'doNotDisturbModeEnabled',
+            tx('Do not disturb mode'),
+            tx('Switch off all notifications on this device')
+        ));
+    }
+
     allActivityToggle() {
-        const prop = 'allActivityNotifsEnabled';
-        const title = tx('All activity');
-        const onPress = () => {
-            state.allActivityNotifsEnabled = !state.allActivityNotifsEnabled;
-        };
-        return (
-            <ToggleItem {...{ prop, title, state, onPress }} />
-        );
+        return (this.preferenceToggleItem(
+            'allActivityNotifsEnabled',
+            tx('All activity'),
+        ));
     }
 
     directNotificationsToggle() {
-        const prop = 'directNotifsEnabled';
-        const title = tx('Direct messages and mentions');
-        const onPress = () => {
-            state.directNotifsEnabled = !state.directNotifsEnabled;
-        };
-        return (
-            <ToggleItem {...{ prop, title, state, onPress }} />
-        );
+        return (this.preferenceToggleItem(
+            'directNotifsEnabled',
+            tx('Direct messages and mentions'),
+        ));
     }
 
     messageContentToggle() {
-        const prop = 'displayMessageContentEnabled';
-        const title = tx('Display message content');
-        const onPress = () => {
-            state.displayMessageContentEnabled = !state.displayMessageContentEnabled;
-        };
-        return (
-            <ToggleItem {...{ prop, title, state, onPress }} />
-        );
+        return (this.preferenceToggleItem(
+            'displayMessageContentEnabled',
+            tx('Display message content'),
+        ));
     }
 
     allSoundToggle() {
-        const prop = 'allActivitySoundsEnabled';
-        const title = tx('All activity');
-        const onPress = () => {
-            state.allActivitySoundsEnabled = !state.allActivitySoundsEnabled;
-        };
-        return (
-            <ToggleItem {...{ prop, title, state, onPress }} />
-        );
+        return (this.preferenceToggleItem(
+            'allActivitySoundsEnabled',
+            tx('All activity'),
+        ));
     }
 
     allEmailNotificationToggle() {
-        const prop = 'allEmailNotifsEnabled';
-        const title = tx('All activity');
-        const onPress = () => {
-            state.allEmailNotifsEnabled = !state.allEmailNotifsEnabled;
-        };
-        return (
-            <ToggleItem {...{ prop, title, state, onPress }} />
-        );
+        return (this.preferenceToggleItem(
+            'allEmailNotifsEnabled',
+            tx('All activity'),
+        ));
     }
 
     newMessageEmailNotificationToggle() {
-        const prop = 'newMessageEmailNotifsEnabled';
-        const title = tx('For a new message');
-        const onPress = () => {
-            state.newMessageEmailNotifsEnabled = !state.newMessageEmailNotifsEnabled;
-        };
-        return (
-            <ToggleItem {...{ prop, title, state, onPress }} />
-        );
+        return (this.preferenceToggleItem(
+            'newMessageEmailNotifsEnabled',
+            tx('For a new message'),
+        ));
     }
 
     renderThrow() {
@@ -117,7 +94,7 @@ export default class Notifications extends SafeComponent {
             <View style={bgStyle}>
                 <ScrollView>
                     {this.dndModeToggle()}
-                    {/* !User.current.settings.dndMode */ true &&
+                    { !state.doNotDisturbModeEnabled &&
                     <View>
                         <View style={spacer} />
                         <Text style={text}>{tx('Notify of:')}</Text>
@@ -132,11 +109,6 @@ export default class Notifications extends SafeComponent {
                         <View style={spacer} />
                         <Text style={text}>{tx('Play sound')}</Text>
                         {this.allSoundToggle()}
-                    </View>}
-                    {/* User.current.settings.dndMode */ false &&
-                    <View>
-                        {/* Set Schedule */}
-                        {/* Small warning */}
                     </View>}
                     <View style={spacer} />
                     <Text style={text}>{tx('Email notifications')}</Text>
