@@ -1,11 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, Dimensions, Image } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import SafeComponent from '../shared/safe-component';
+import Bold from '../controls/bold';
 import { T } from '../utils/translator';
 import BgPattern from '../controls/bg-pattern';
-import { vars } from '../../styles/styles';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 @observer
 export default class MessagingPlaceholder extends SafeComponent {
@@ -16,17 +16,6 @@ export default class MessagingPlaceholder extends SafeComponent {
     }
 
     messaging() {
-        const headerStyle = {
-            flexGrow: 1,
-            textAlign: 'center',
-            fontSize: 24
-        };
-        const infoStyle = {
-            flexShrink: 1,
-            textAlign: 'left',
-            fontSize: 16,
-            height: 48
-        };
         const outerContainerStyle = {
             flex: 1,
             flexGrow: 1,
@@ -55,8 +44,8 @@ export default class MessagingPlaceholder extends SafeComponent {
         };
 
         const textParser = {
-            emphasis: text => <Bold>{"hi"}</Bold>,
-            plusIcon: text => (
+            emphasis: () => <Bold>{'hi'}</Bold>,
+            plusIcon: () => (
                 <Icon name="add" />
             )
         };
@@ -65,7 +54,7 @@ export default class MessagingPlaceholder extends SafeComponent {
             <View style={outerContainerStyle}>
                 <BgPattern />
                 <View style={inpagePopupStyle}>
-                    <Text style={title}><T k="title_welcomeHeading"></T></Text>
+                    <Text style={title}><T k="title_welcomeHeading" /></Text>
                     <T k="dialog_chatZeroState">{textParser}</T>
                 </View>
             </View>

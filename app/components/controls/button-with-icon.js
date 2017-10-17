@@ -66,5 +66,7 @@ ButtonWithIcon.propTypes = {
     disabled: PropTypes.bool,
     testID: PropTypes.string,
     bold: PropTypes.bool,
-    iconName: PropTypes.string
+    iconName: PropTypes.string,
+    accessible: PropTypes.bool,
+    accessibilityLabel: PropTypes.string
 };
