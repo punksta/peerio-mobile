@@ -1,13 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
 import { View, ScrollView, Text } from 'react-native';
 import { vars } from '../../styles/styles';
-import { User } from '../../lib/icebear';
-import PreferenceStore from './preference-store';
 import { t, tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
-import ToggleItem from './toggle-item';
+import PreferenceToggleItem from './preference-toggle-item';
+import PreferenceStore from './preference-store';
 
 const bgStyle = {
     flexGrow: 1,
@@ -31,89 +29,54 @@ const state = PreferenceStore.prefs;
 
 @observer
 export default class Notifications extends SafeComponent {
-    preferenceToggleItem(prop, title, description) {
-        const onPress = () => { state[prop] = !state[prop]; };
-        return (
-            <ToggleItem {...{ prop, title, description, state, onPress }} />
-        );
-    }
-
-    // Pref names can be found in preference-store.js
-    dndModeToggle() {
-        return (this.preferenceToggleItem(
-            'doNotDisturbModeEnabled',
-            tx('Do not disturb mode'),
-            tx('Switch off all notifications on this device')
-        ));
-    }
-
-    allActivityToggle() {
-        return (this.preferenceToggleItem(
-            'allActivityNotifsEnabled',
-            tx('All activity'),
-        ));
-    }
-
-    directNotificationsToggle() {
-        return (this.preferenceToggleItem(
-            'directNotifsEnabled',
-            tx('Direct messages and mentions'),
-        ));
-    }
-
-    messageContentToggle() {
-        return (this.preferenceToggleItem(
-            'displayMessageContentEnabled',
-            tx('Display message content'),
-        ));
-    }
-
-    allSoundToggle() {
-        return (this.preferenceToggleItem(
-            'allActivitySoundsEnabled',
-            tx('All activity'),
-        ));
-    }
-
-    allEmailNotificationToggle() {
-        return (this.preferenceToggleItem(
-            'allEmailNotifsEnabled',
-            tx('All activity'),
-        ));
-    }
-
-    newMessageEmailNotificationToggle() {
-        return (this.preferenceToggleItem(
-            'newMessageEmailNotifsEnabled',
-            tx('For a new message'),
-        ));
-    }
-
+    // Property names can be found in ./preference-store.js
     renderThrow() {
         return (
             <View style={bgStyle}>
                 <ScrollView>
-                    {this.dndModeToggle()}
+                    <PreferenceToggleItem
+                        property={'doNotDisturbModeEnabled'}
+                        title={tx('title_dndMode')}
+                        description={tx('title_dndModeDescription')}
+                    />
                     { !state.doNotDisturbModeEnabled &&
                     <View>
                         <View style={spacer} />
-                        <Text style={text}>{tx('Notify of:')}</Text>
-                        {this.allActivityToggle()}
-                        {this.directNotificationsToggle()}
+                        <Text style={text}>{tx('title_notifyOf')}</Text>
+                        <PreferenceToggleItem
+                            property={'allActivityNotifsEnabled'}
+                            title={tx('title_allActivity')}
+                        />
+                        <PreferenceToggleItem
+                            property={'directNotifsEnabled'}
+                            title={tx('title_directMessagesAndMentions')}
+                        />
                         {/* TODO Specific Keywords implementation */}
 
                         <View style={spacer} />
-                        <Text style={text}>{tx('Message preview on lock screen')}</Text>
-                        {this.messageContentToggle()}
+                        <Text style={text}>{tx('title_messagePreviewOnLock')}</Text>
+                        <PreferenceToggleItem
+                            property={'displayMessageContentEnabled'}
+                            title={tx('title_displayMessageContent')}
+                        />
 
                         <View style={spacer} />
-                        <Text style={text}>{tx('Play sound')}</Text>
-                        {this.allSoundToggle()}
+                        <Text style={text}>{tx('title_playSound')}</Text>
+                        <PreferenceToggleItem
+                            property={'allActivitySoundsEnabled'}
+                            title={tx('title_allActivity')}
+                        />
                     </View>}
                     <View style={spacer} />
-                    <Text style={text}>{tx('Email notifications')}</Text>
-                    {this.allEmailNotificationToggle()}
-                    {this.newMessageEmailNotificationToggle()}
+                    <Text style={text}>{tx('title_emailNotifs')}</Text>
+                    <PreferenceToggleItem
+                            property={'allEmailNotifsEnabled'}
+                            title={tx('title_allActivity')}
+                    />
+                    <PreferenceToggleItem
+                        property={'newMessageEmailNotifsEnabled'}
+                        title={tx('title_forNewMessage')}
+                    />
                 </ScrollView>
             </View>
         );
