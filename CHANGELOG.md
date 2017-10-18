@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.174.0"></a>
+# [3.174.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.173.0...v3.174.0) (2017-10-18)
+
+
+### Bug Fixes
+
+* remove unnecessary code ([e0c24d4](https://github.com/PeerioTechnologies/peerio-mobile/commit/e0c24d4))
+
+
+### Features
+
+* disable sounds setting ([37b4108](https://github.com/PeerioTechnologies/peerio-mobile/commit/37b4108))
+
+
+
 <a name="3.173.0"></a>
 # [3.173.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.172.0...v3.173.0) (2017-10-17)
 
