@@ -4,6 +4,7 @@ import { observable, when, reaction } from 'mobx';
 import { View, Image, Text, Dimensions, LayoutAnimation, TouchableOpacity } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import SafeComponent from '../shared/safe-component';
+import InlineUrlPreviewConsent from './inline-url-preview-consent';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import settingsState from '../settings/settings-state';
@@ -20,8 +21,6 @@ class InlineImageCacheStore {
     data = {};
 
     getImage(imagePath) {
-        if (!imagePath) return { source: null };
-        console.log(`temporary image path: ${imagePath}`);
         const { data } = this;
         let result = data[imagePath];
         if (!result) {
@@ -46,7 +45,7 @@ class InlineImageCacheStore {
     getImageByFileName(image, path) {
         // calculate size
         this.getSizeByFilename(path).then(({ width, height }) => {
-            console.log(`local filesize: ${width}, ${height}`);
+            console.debug(`local filesize: ${width}, ${height}`);
             image.width = width;
             image.height = height;
             image.isLocal = true;
@@ -92,23 +91,32 @@ export default class FileInlineImage extends SafeComponent {
     @observable loaded;
     @observable tooBig;
     @observable loadImage;
-    @observable url;
     @observable showUpdateSettingsLink;
+    @observable cachedImage;
     outerPadding = 8;
 
-    async componentWillMount() {
+    componentWillMount() {
         this.optimalContentHeight = Dimensions.get('window').height;
         this.opened = clientApp.uiUserPrefs.peerioContentEnabled;
         // this.tooBig = Math.random() > 0.5;
         this.loadImage = clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
-        when(() => this.loadImage && this.url, () => this.fetchSize());
+        when(() => this.loadImage && this.cachedImage, () => this.fetchSize());
+        const { image } = this.props;
+        const { cached, tmpCached } = image;
+        if (!tmpCached && !cached) {
+            setTimeout(() => {
+                image.tryToCacheTemporarily();
+            });
+        }
+        when(() => image.cached || image.tmpCached, () => {
+            this.cachedImage = inlineImageCacheStore.getImage(image.tmpCachePath);
+        });
     }
 
-    async fetchSize() {
-        console.log('fetch size');
-        const image = await inlineImageCacheStore.getImage(this.url);
-        when(() => image.width && image.height && this.optimalContentWidth, () => {
-            const { width, height } = image;
+    fetchSize() {
+        const { cachedImage } = this;
+        when(() => cachedImage.width && cachedImage.height && this.optimalContentWidth, () => {
+            const { width, height } = cachedImage;
             const { optimalContentWidth, optimalContentHeight } = this;
             let w = width + 0.0, h = height + 0.0;
             // console.log(w, h, optimalContentHeight, optimalContentWidth);
@@ -122,7 +130,7 @@ export default class FileInlineImage extends SafeComponent {
             }
             this.width = Math.floor(w);
             this.height = Math.floor(h);
-            // console.log(`calculated width: ${this.width}, ${this.height}`);
+            console.debug(`calculated width: ${this.width}, ${this.height}`);
         });
     }
 
@@ -192,19 +200,12 @@ export default class FileInlineImage extends SafeComponent {
     }
 
     renderThrow() {
+        // return <InlineUrlPreviewConsent />;
         const { image } = this.props;
-        const { name, cached, tmpCached, title, description } = image;
-        if (!tmpCached && !cached) {
-            setTimeout(() => {
-                image.tryToCacheTemporarily();
-            });
-        }
-        when(() => image.cached || image.tmpCached, () => {
-            this.url = image.tmpCachePath;
-        });
+        const { name, title, description } = image;
         const { width, height, loaded, showUpdateSettingsLink } = this;
-        const { source, isLocal } = inlineImageCacheStore.getImage(this.url);
-        console.log(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
+        const { source, isLocal } = this.cachedImage || {};
+        // console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
         const outer = {
             padding: this.outerPadding,
             borderColor: vars.lightGrayBg,

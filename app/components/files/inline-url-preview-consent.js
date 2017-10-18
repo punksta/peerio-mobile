@@ -3,7 +3,7 @@ import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
-import { User } from '../../lib/icebear';
+import { clientApp } from '../../lib/icebear';
 import { t, tx, tu } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import Link from '../controls/link';
@@ -67,21 +67,18 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
 
     userActionSave = () => {
         const index = this.state.optionSelected;
-        const settings = User.current.settings.inlineChatContent;
+        const prefs = clientApp.uiUserPrefs;
+        prefs.externalContentConsented = true;
         if (index === 0) { // For all Contacts
-            settings.consentExternal = true;
-            settings.externalContentEnabled = true;
-            settings.externalJustForFavContacts = false;
+            prefs.externalContentEnabled = true;
+            prefs.externalContentJustForFavs = false;
         } else if (index === 1) { // For favorite contacts only
-            settings.consentExternal = true;
-            settings.externalContentEnabled = true;
-            settings.externalJustForFavContacts = true;
+            prefs.externalContentEnabled = true;
+            prefs.externalContentJustForFavs = true;
         } else if (index === 2) { // Disable
-            settings.consentExternal = false;
-            settings.externalContentEnabled = false;
-            settings.externalJustForFavContacts = false;
+            prefs.externalContentEnabled = false;
+            prefs.externalContentJustForFavs = false;
         }
-        User.current.saveSettings();
     }
 
     userActionDismiss() {}
