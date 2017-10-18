@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ScrollView, Text } from 'react-native';
 import { vars } from '../../styles/styles';
-import { t, tx } from '../utils/translator';
+import { tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import PreferenceToggleItem from './preference-toggle-item';
 import PreferenceStore from './preference-store';

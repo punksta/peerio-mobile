@@ -7,6 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import settingsState from '../settings/settings-state';
+import { clientApp } from '../../lib/icebear';
 import { T } from '../utils/translator';
 
 class CachedImage {
@@ -48,6 +49,7 @@ class InlineImageCacheStore {
             console.log(`local filesize: ${width}, ${height}`);
             image.width = width;
             image.height = height;
+            image.isLocal = true;
             image.source = { uri: path };
         });
     }
@@ -66,8 +68,6 @@ class InlineImageCacheStore {
 }
 
 const inlineImageCacheStore = new InlineImageCacheStore();
-
-const DISPLAY_BY_DEFAULT = true;
 
 const toSettings = text => (
     <Text
@@ -93,13 +93,14 @@ export default class FileInlineImage extends SafeComponent {
     @observable tooBig;
     @observable loadImage;
     @observable url;
+    @observable showUpdateSettingsLink;
     outerPadding = 8;
 
     async componentWillMount() {
         this.optimalContentHeight = Dimensions.get('window').height;
-        this.opened = DISPLAY_BY_DEFAULT;
+        this.opened = clientApp.uiUserPrefs.peerioContentEnabled;
         // this.tooBig = Math.random() > 0.5;
-        this.loadImage = DISPLAY_BY_DEFAULT && !this.tooBig;
+        this.loadImage = clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
         when(() => this.loadImage && this.url, () => this.fetchSize());
     }
 
@@ -192,7 +193,7 @@ export default class FileInlineImage extends SafeComponent {
 
     renderThrow() {
         const { image } = this.props;
-        const { name, title, description, isLocal, cached, tmpCached } = image;
+        const { name, cached, tmpCached, title, description } = image;
         if (!tmpCached && !cached) {
             setTimeout(() => {
                 image.tryToCacheTemporarily();
@@ -201,8 +202,8 @@ export default class FileInlineImage extends SafeComponent {
         when(() => image.cached || image.tmpCached, () => {
             this.url = image.tmpCachePath;
         });
-        const { width, height, loaded } = this;
-        const { source } = inlineImageCacheStore.getImage(this.url);
+        const { width, height, loaded, showUpdateSettingsLink } = this;
+        const { source, isLocal } = inlineImageCacheStore.getImage(this.url);
         console.log(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
         const outer = {
             padding: this.outerPadding,
@@ -246,7 +247,7 @@ export default class FileInlineImage extends SafeComponent {
                     <View style={header}>
                         <Text style={text}>{name}</Text>
                         {isLocal ? <View style={{ flexDirection: 'row' }}>
-                            {!DISPLAY_BY_DEFAULT && icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
+                            {icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
                             {icons.darkNoPadding('more-vert', () => this.props.onAction(this.props.image))}
                         </View> : <View />}
                     </View>
@@ -257,7 +258,7 @@ export default class FileInlineImage extends SafeComponent {
                         {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer}
                     </View>
                 </View>
-                {!isLocal && this.updateSettingsOffer}
+                {showUpdateSettingsLink && this.updateSettingsOffer}
             </View>
         );
     }

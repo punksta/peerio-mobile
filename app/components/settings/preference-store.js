@@ -1,7 +1,7 @@
 import loginState from '../login/login-state';
 
 const { observable, reaction } = require('mobx');
-const { TinyDb, User, warnings } = require('../../lib/icebear');
+const { TinyDb, User, warnings, clientApp } = require('../../lib/icebear');
 
 class PreferenceStore {
     // stored with 'pref_' prefix in tinydb
@@ -12,7 +12,12 @@ class PreferenceStore {
         displayMessageContentEnabled: true,
         allActivitySoundsEnabled: false,
         allEmailNotifsEnabled: false,
-        newMessageEmailNotifsEnabled: true
+        newMessageEmailNotifsEnabled: true,
+        limitInlineImageSize: false, // will use config.chat.inlineImageSizeLimit
+        externalContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
+        externalContentEnabled: false,
+        externalContentJustForFavs: false,
+        peerioContentEnabled: true
     };
 
     observePreference(key, dbName, localStore) {
@@ -46,5 +51,6 @@ class PreferenceStore {
 }
 
 const preferenceStore = new PreferenceStore();
+clientApp.uiUserPrefs = preferenceStore.prefs;
 
 export default preferenceStore;
