@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
 import { clientApp } from '../../lib/icebear';
-import { t, tx, tu } from '../utils/translator';
+import { tx, tu } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import Link from '../controls/link';
 import RadioGroup from '../controls/radio-group';
