@@ -52,11 +52,11 @@ export default (c, icebear) => {
 
     cfg.appVersion = require('../../package.json').version;
     cfg.platform = 'ios';
-    cfg.chat = {
+    Object.assign(cfg.chat, {
         maxInitialChats: 15,
         initialPageSize: 20, // amount of messages to load to a newly opened chat
         pageSize: 20, // when next/prev pages is requested, chat will load this amount of messages
         maxLoadedMessages: 60, // chat will remove excess of messages if paging resulted in larger count
         decryptQueueThrottle: 10 // ms, delay between processing messages in a batch
-    };
+    });
 };

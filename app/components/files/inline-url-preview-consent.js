@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
+import { observable } from 'mobx';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
@@ -37,19 +38,10 @@ const options = [
 
 @observer
 export default class InlineUrlPreviewConsent extends SafeComponent {
+    @observable optionSelected = 0;
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            optionSelected: 0
-        };
-        this.onSelectRadioButton = this.onSelectRadioButton.bind(this);
-    }
-
-    onSelectRadioButton(index) {
-        this.setState({
-            optionSelected: index
-        });
+    onSelectRadioButton = index => {
+        this.optionSelected = index;
     }
 
     renderButton(text, onPress, colorIsPrimary) {
@@ -66,7 +58,7 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
     }
 
     userActionSave = () => {
-        const index = this.state.optionSelected;
+        const index = this.optionSelected;
         const prefs = clientApp.uiUserPrefs;
         prefs.externalContentConsented = true;
         if (index === 0) { // For all Contacts
@@ -81,7 +73,10 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
         }
     }
 
-    userActionDismiss() {}
+    userActionDismiss = () => {
+        this.optionSelected = 2;
+        this.userActionSave();
+    }
 
     get spacer() {
         return <View style={{ height: 16 }} />;
@@ -110,7 +105,7 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
                 {this.spacer}
                 <RadioGroup
                     onSelect={this.onSelectRadioButton}
-                    defaultSelect={this.state.optionSelected}
+                    defaultSelect={this.optionSelected}
                     options={options}
                 />
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>

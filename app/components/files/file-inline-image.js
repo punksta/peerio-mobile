@@ -1,8 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable, when, reaction } from 'mobx';
-import { View, Image, Text, Dimensions, LayoutAnimation, TouchableOpacity } from 'react-native';
-import ImagePicker from 'react-native-image-crop-picker';
+import { View, Image, Text, Dimensions, LayoutAnimation, TouchableOpacity, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import InlineUrlPreviewConsent from './inline-url-preview-consent';
 import inlineImageCacheStore from './inline-image-cache-store';
@@ -40,25 +39,35 @@ export default class FileInlineImage extends SafeComponent {
     outerPadding = 8;
 
     componentWillMount() {
+        reaction(() => clientApp.uiUserPrefs.externalContentConsented, () => {
+            this.showUpdateSettingsLink = true;
+        });
         this.optimalContentHeight = Dimensions.get('window').height;
         this.opened = clientApp.uiUserPrefs.peerioContentEnabled;
-        // this.tooBig = Math.random() > 0.5;
-        this.loadImage = clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
-        when(() => this.loadImage && this.cachedImage, () => this.fetchSize());
+        when(() => this.cachedImage, () => this.fetchSize());
         const { image } = this.props;
-        const { cached, tmpCached } = image;
-        if (!tmpCached && !cached) {
-            setTimeout(() => {
-                image.tryToCacheTemporarily();
+        const { fileId, url, oversized } = image;
+        this.tooBig = oversized;
+        if (fileId) {
+            when(() => image.cached || image.tmpCached, () => {
+                this.cachedImage = inlineImageCacheStore.getImage(image.tmpCachePath);
+            });
+            if (!image.cached && !image.tmpCached) {
+                when(() => this.loadImage, () => image.tryToCacheTemporarily());
+            }
+            this.loadImage = clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
+        } else {
+            this.loadImage = clientApp.uiUserPrefs.externalContentEnabled;
+            when(() => this.loadImage, () => {
+                this.opened = true;
+                this.cachedImage = inlineImageCacheStore.getImage(url);
             });
         }
-        when(() => image.cached || image.tmpCached, () => {
-            this.cachedImage = inlineImageCacheStore.getImage(image.tmpCachePath);
-        });
     }
 
     fetchSize() {
         const { cachedImage } = this;
+        // console.log('fetch size');
         when(() => cachedImage.width && cachedImage.height && this.optimalContentWidth, () => {
             const { width, height } = cachedImage;
             const { optimalContentWidth, optimalContentHeight } = this;
@@ -144,11 +153,15 @@ export default class FileInlineImage extends SafeComponent {
     }
 
     renderThrow() {
-        // return <InlineUrlPreviewConsent />;
         const { image } = this.props;
-        const { name, title, description } = image;
+        const { name, title, description, fileId, downloading /* , length, oversized */ } = image;
         const { width, height, loaded, showUpdateSettingsLink } = this;
-        const { source, isLocal } = this.cachedImage || {};
+        const { source } = this.cachedImage || {};
+        const isLocal = !!fileId;
+        if (!clientApp.uiUserPrefs.externalContentConsented && !isLocal) {
+            return <InlineUrlPreviewConsent />;
+        }
+
         // console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
         const outer = {
             padding: this.outerPadding,
@@ -161,7 +174,7 @@ export default class FileInlineImage extends SafeComponent {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            marginBottom: this.opened ? 10 : 0
+            marginBottom: !downloading && this.opened ? 10 : 0
         };
 
         const text = {
@@ -190,14 +203,15 @@ export default class FileInlineImage extends SafeComponent {
                         {!!description && <Text style={descText}>{description}</Text>}
                     </View>
                     <View style={header}>
-                        <Text style={text}>{name}</Text>
-                        {isLocal ? <View style={{ flexDirection: 'row' }}>
-                            {icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
-                            {icons.darkNoPadding('more-vert', () => this.props.onAction(this.props.image))}
-                        </View> : <View />}
+                        {!!name && <Text style={text}>{name}</Text>}
+                        {isLocal && <View style={{ flexDirection: 'row' }}>
+                            {!downloading && icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
+                            {!downloading && icons.darkNoPadding('more-vert', () => this.props.onAction(this.props.image))}
+                            {downloading && <ActivityIndicator />}
+                        </View>}
                     </View>
                     <View style={inner}>
-                        {this.opened && this.loadImage && width && height ?
+                        {!downloading && this.opened && this.loadImage && width && height ?
                             <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} /> : null}
                         {this.opened && !this.loadImage && !this.tooBig && this.displayImageOffer}
                         {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer}

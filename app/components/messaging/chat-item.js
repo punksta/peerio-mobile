@@ -24,9 +24,10 @@ export default class ChatItem extends SafeComponent {
         const files = i.files && i.files.map(id => fileState.store.getById(id)).filter(f => f) || [];
         const images = files.filter(f => f.isImage) || [];
         const normalFiles = files.filter(f => !f.isImage) || [];
-
-        const firstImage = images.length ? images[0] : null;
-
+        let firstImage = images.length ? images[0] : null;
+        if (i.hasUrls && i.externalImages.length) {
+            firstImage = i.externalImages[0];
+        }
         return (
             <Avatar
                 noTap={!i.sendError}

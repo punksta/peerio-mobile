@@ -47,7 +47,8 @@ class InlineImageCacheStore {
     async getSizeByUrl(url) {
         return new Promise(resolve =>
             Image.getSize(url, (width, height) => {
-                // console.log(width, height);
+                console.log('got size');
+                console.log(width, height);
                 resolve({ width, height });
             }));
     }

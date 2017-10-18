@@ -15,7 +15,7 @@ class PreferenceStore {
         newMessageEmailNotifsEnabled: true,
         limitInlineImageSize: false, // will use config.chat.inlineImageSizeLimit
         externalContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
-        externalContentEnabled: false,
+        externalContentEnabled: true,
         externalContentJustForFavs: false,
         peerioContentEnabled: true
     };
