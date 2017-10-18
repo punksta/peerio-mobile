@@ -6,7 +6,8 @@ import ImagePicker from 'react-native-image-crop-picker';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
-import { tx } from '../utils/translator';
+import settingsState from '../settings/settings-state';
+import { T } from '../utils/translator';
 
 class CachedImage {
     @observable source = null;
@@ -67,6 +68,19 @@ class InlineImageCacheStore {
 const inlineImageCacheStore = new InlineImageCacheStore();
 
 const DISPLAY_BY_DEFAULT = true;
+
+const toSettings = text => (
+    <Text
+        onPress={() => {
+            settingsState.transition('preferences');
+            settingsState.transition('display');
+        }}
+        style={{ textDecorationLine: 'underline' }}>
+        {text}
+    </Text>
+);
+
+const toSettingsParser = { toSettings };
 
 @observer
 export default class FileInlineImage extends SafeComponent {
@@ -170,7 +184,7 @@ export default class FileInlineImage extends SafeComponent {
                     {icons.coloredAsText('check-circle', vars.snackbarBgGreen, 14)}
                 </View>
                 <Text style={text}>
-                    {tx('title_updateUrlSettingsAnyTime')}
+                    <T k="title_updateSettingsAnyTime">{toSettingsParser}</T>
                 </Text>
             </View>
         );
