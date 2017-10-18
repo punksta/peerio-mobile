@@ -45,8 +45,8 @@ export default class InputMainContainer extends SafeComponent {
         const chat = chatState.currentChat;
         const q = chat && chat.uploadQueue || [];
         return q.map(f => (
-            <View style={{ margin: 12 }}>
-                <FileInlineProgress key={f.fileId} file={f.fileId} transparentOnFinishUpload />
+            <View style={{ margin: 12 }} key={f.fileId}>
+                <FileInlineProgress file={f.fileId} transparentOnFinishUpload />
             </View>
         ));
     }

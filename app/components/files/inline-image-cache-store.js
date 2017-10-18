@@ -1,5 +1,5 @@
 import { observable } from 'mobx';
-import { Image } from 'react-native';
+import { Image, Platform } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
 class CachedImage {
@@ -34,13 +34,15 @@ class InlineImageCacheStore {
     }
 
     getImageByFileName(image, path) {
+        let normalizedPath = path;
+        if (Platform.OS === 'android') normalizedPath = `file://${path}`;
         // calculate size
-        this.getSizeByFilename(path).then(({ width, height }) => {
+        this.getSizeByFilename(normalizedPath).then(({ width, height }) => {
             console.debug(`local filesize: ${width}, ${height}`);
             image.width = width;
             image.height = height;
             image.isLocal = true;
-            image.source = { uri: path };
+            image.source = { uri: normalizedPath };
         });
     }
 
