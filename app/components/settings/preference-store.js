@@ -6,12 +6,12 @@ const { TinyDb, User, warnings, clientApp } = require('../../lib/icebear');
 class PreferenceStore {
     // stored with 'pref_' prefix in tinydb
     @observable prefs = {
-        doNotDisturbModeEnabled: true,
-        allActivityNotifsEnabled: false,
+        doNotDisturbModeEnabled: false,
+        allActivityNotifsEnabled: true,
         directNotifsEnabled: true,
         displayMessageContentEnabled: true,
-        allActivitySoundsEnabled: false,
-        allEmailNotifsEnabled: false,
+        allActivitySoundsEnabled: true,
+        allEmailNotifsEnabled: true,
         newMessageEmailNotifsEnabled: true,
         limitInlineImageSize: false, // will use config.chat.inlineImageSizeLimit
         externalContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
