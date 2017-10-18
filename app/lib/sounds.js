@@ -2,7 +2,7 @@ import Sound from 'react-native-sound';
 import { Platform } from 'react-native';
 import { clientApp } from './icebear';
 
-Sound.setCategory('Ambient', true);
+Platform.OS !== 'android' && Sound.setCategory('Ambient', true);
 
 const soundStorage = {};
 
