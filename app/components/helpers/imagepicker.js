@@ -28,14 +28,11 @@ function normalizeUri(response) {
 }
 
 function processResponse(response, imageCallback) {
-    let source = null;
-    if (response.isAndroidCamera) response.fileName = null;
-    if (Platform.OS === 'ios') {
-        source = { uri: response.uri.replace('file://', ''), isStatic: true };
-    } else {
-        source = { uri: response.uri, isStatic: true };
+    if (response.isAndroidCamera) {
+        const ext = fileHelpers.getFileExtension(response.path);
+        response.fileName = `${moment(Date.now()).format('llll')}.${ext}`;
     }
-    imageCallback(source.uri, response.fileName, response);
+    imageCallback(normalizeUri(response), response.fileName, response);
 }
 
 export default {
@@ -86,12 +83,10 @@ export default {
             };
             lastCall();
         // user selected camera or gallery and permissions are intact
+        } else if (response.path) {
+            processResponse(response, imageCallback);
         } else {
-            if (response.isAndroidCamera) {
-                const ext = fileHelpers.getFileExtension(response.path);
-                response.fileName = `${moment(Date.now()).format('llll')}.${ext}`;
-            }
-            imageCallback(normalizeUri(response), response.fileName, response);
+            console.log(`imagepicker.js: path is empty`);
         }
     }
 };
