@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.176.0"></a>
+# [3.176.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.175.0...v3.176.0) (2017-10-20)
+
+
+### Bug Fixes
+
+* bug with gallery in iOS ([9d6fbe5](https://github.com/PeerioTechnologies/peerio-mobile/commit/9d6fbe5))
+
+
+### Performance Improvements
+
+* sdk calls loadAllFiles now as late as possible to speed up startup ([948cf14](https://github.com/PeerioTechnologies/peerio-mobile/commit/948cf14))
+
+
+
 <a name="3.175.0"></a>
 # [3.175.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.174.0...v3.175.0) (2017-10-20)
 
