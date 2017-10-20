@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.175.0"></a>
+# [3.175.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.174.0...v3.175.0) (2017-10-20)
+
+
+### Bug Fixes
+
+* 1-1 dms small fixes ([fdeb347](https://github.com/PeerioTechnologies/peerio-mobile/commit/fdeb347))
+* decrease tos link size on signup ([ac1301e](https://github.com/PeerioTechnologies/peerio-mobile/commit/ac1301e))
+
+
+### Features
+
+* launch screen userboard ([c2d0090](https://github.com/PeerioTechnologies/peerio-mobile/commit/c2d0090))
+
+
+
 <a name="3.174.0"></a>
 # [3.174.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.173.0...v3.174.0) (2017-10-18)
 
