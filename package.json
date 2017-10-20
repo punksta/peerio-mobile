@@ -108,7 +108,7 @@
     "madge": "^1.6.0",
     "mocha": "3.2.0",
     "npm-run-all": "^4.1.1",
-    "opt-cli": "^1.5.2",
+    "opt-cli": "1.6.0",
     "repeating-cli": "^2.0.0",
     "semantic-release": "6.3.2",
     "sinon": "^1.17.7",
