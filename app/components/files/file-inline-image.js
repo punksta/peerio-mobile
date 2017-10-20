@@ -171,8 +171,6 @@ export default class FileInlineImage extends SafeComponent {
         };
 
         const header = {
-            flexGrow: 1,
-            flexShrink: 1,
             flexDirection: 'row',
             justifyContent: 'space-between',
             marginBottom: !downloading && this.opened ? 10 : 0
