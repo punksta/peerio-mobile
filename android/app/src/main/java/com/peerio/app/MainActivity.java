@@ -40,8 +40,7 @@ public class MainActivity extends ReactActivity {
             context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                     .emit(jsCallback, grantResults[0] == PackageManager.PERMISSION_GRANTED);
         }
-
-
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

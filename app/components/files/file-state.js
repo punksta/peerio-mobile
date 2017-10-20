@@ -120,11 +120,8 @@ class FileState extends RoutedState {
     }
 
     upload(uri, fn, fileData, inline) {
-        let fileName = fileHelpers.getFileName(fn || fileData.path || uri);
-        const ext = fileHelpers.getFileExtension(fileData.path || fn);
-        if (!fileName) {
-            fileName = `${moment(Date.now()).format('llll')}.${ext}`;
-        }
+        const fileName = fileHelpers.getFileName(fn || fileData.path || uri);
+        const ext = fileHelpers.getFileExtension(fileName);
         const chat = chatState.currentChat;
         const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName) :
             () => fileStore.upload(uri, fileName);
