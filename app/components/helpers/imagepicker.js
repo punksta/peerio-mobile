@@ -28,6 +28,9 @@ function normalizeUri(response) {
 }
 
 function processResponse(response, imageCallback) {
+    if (!response.path && response.uri) {
+        response.path = response.uri;
+    }
     if (response.isAndroidCamera) {
         const ext = fileHelpers.getFileExtension(response.path);
         response.fileName = `${moment(Date.now()).format('llll')}.${ext}`;
@@ -83,10 +86,8 @@ export default {
             };
             lastCall();
         // user selected camera or gallery and permissions are intact
-        } else if (response.path) {
-            processResponse(response, imageCallback);
         } else {
-            console.log(`imagepicker.js: path is empty`);
+            processResponse(response, imageCallback);
         }
     }
 };
