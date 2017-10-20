@@ -15,6 +15,7 @@ class FileState extends RoutedState {
     _prefix = 'files';
 
     @action async init() {
+        this.store.loadAllFiles();
         return new Promise(resolve => when(() => !this.store.loading, resolve));
     }
 
@@ -143,6 +144,7 @@ class FileState extends RoutedState {
 
     onTransition(active, file) {
         console.log('files on transition');
+        active && fileStore.loadAllFiles();
         clientApp.isInFilesView = active && !!file;
         this.currentFile = active ? file : null;
     }
