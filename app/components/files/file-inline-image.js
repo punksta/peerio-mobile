@@ -172,12 +172,13 @@ export default class FileInlineImage extends SafeComponent {
 
         const header = {
             flexDirection: 'row',
-            alignItems: 'center',
             justifyContent: 'space-between',
             marginBottom: !downloading && this.opened ? 10 : 0
         };
 
         const text = {
+            flexGrow: 1,
+            flexShrink: 1,
             fontWeight: 'bold',
             color: vars.txtMedium
         };
