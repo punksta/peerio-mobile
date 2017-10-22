@@ -112,6 +112,7 @@ if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
         s.email = `seavan+${rnd}@gmail.com`;
         s.firstName = capitalize(randomWords());
         s.lastName = capitalize(randomWords());
+        s.keyBackedUp = true;
     });
 }
 
