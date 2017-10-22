@@ -3,7 +3,7 @@ import capitalize from 'capitalize';
 import { observable, action, when } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
-import { User, PhraseDictionary, validation, socket, crypto } from '../../lib/icebear';
+import { User, validation, socket, crypto } from '../../lib/icebear';
 
 const { validators, addValidation } = validation;
 
