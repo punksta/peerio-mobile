@@ -16,6 +16,7 @@ import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
 import { popupSetupVideo } from '../shared/popups';
 import VideoIcon from '../layout/video-icon';
+import { PreferenceStore } from '../settings/preference-store';
 
 const { width } = Dimensions.get('window');
 
@@ -41,6 +42,8 @@ export default class Chat extends SafeComponent {
     }
 
     get rightIcon() {
+        // check whether PreferenceStore.hasSeenJitsiSuggestionPopup = true
+        // should the popup be shown, or should a Jitsi link be provided?
         return <VideoIcon action={() => popupSetupVideo(tx('Setup Jitsi Meet'), tx('Jitsi Meet is a web-based encrypted video chat and screen sharing service'), tx('Jitsi app required on mobile devices.'))} />;
     }
 
