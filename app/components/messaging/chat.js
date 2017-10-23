@@ -9,6 +9,7 @@ import MessagingPlaceholder from '../messaging/messaging-placeholder';
 import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
 import ChatActionSheet from './chat-action-sheet';
+import InlineImageActionSheet from '../files/inline-image-action-sheet';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
@@ -78,6 +79,7 @@ export default class Chat extends SafeComponent {
             <ChatItem
                 key={item.id || index}
                 message={item}
+                onInlineImageAction={image => this._inlineImageActionSheet.show(image, item, this.chat)}
                 onRetryCancel={() => this._actionSheet.show(item, this.chat)}
                 onLayout={layout} />
         );
@@ -245,6 +247,7 @@ export default class Chat extends SafeComponent {
                 </View>
                 <ProgressOverlay enabled={chatState.loading} />
                 <ChatActionSheet ref={sheet => (this._actionSheet = sheet)} />
+                <InlineImageActionSheet ref={sheet => (this._inlineImageActionSheet = sheet)} />
             </View>
         );
     }

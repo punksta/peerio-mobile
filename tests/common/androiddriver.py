@@ -29,9 +29,6 @@ class AndroidDriver(AbstractDriver):
     def reset(self):
         print "reset stub"
 
-    def screen(self, name):
-        print "screenshot stub"
-
     def connect(self):
         self.disconnect()
         self.appium = appium.webdriver.Remote(command_executor=self.executor,

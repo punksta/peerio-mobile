@@ -46,6 +46,8 @@ Button.propTypes = {
     text: PropTypes.any.isRequired,
     caps: PropTypes.bool,
     disabled: PropTypes.bool,
+    accessible: PropTypes.bool,
+    accessibilityLabel: PropTypes.string,
     testID: PropTypes.string,
     bold: PropTypes.bool
 };

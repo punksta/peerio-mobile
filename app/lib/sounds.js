@@ -1,7 +1,8 @@
 import Sound from 'react-native-sound';
 import { Platform } from 'react-native';
+import { clientApp } from './icebear';
 
-Sound.setCategory('Ambient', true);
+Platform.OS !== 'android' && Sound.setCategory('Ambient', true);
 
 const soundStorage = {};
 
@@ -16,6 +17,10 @@ const load = (name) => {
         } else {
             console.log(`sounds.js: duration in seconds: ${sound.getDuration()}`);
             soundStorage[name] = () => {
+                if (!clientApp.uiUserPrefs.allActivitySoundsEnabled) {
+                    console.debug(`sounds.js: all sounds disabled by user setting`);
+                    return;
+                }
                 sound.play(result => {
                     console.log(`sounds.js: file ${path} played: ${result}`);
                 });

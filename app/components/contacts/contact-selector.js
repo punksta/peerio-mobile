@@ -4,7 +4,7 @@ import {
     View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { when, observable, reaction } from 'mobx';
+import { when, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
@@ -20,7 +20,6 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import contactState from './contact-state';
 import snackbarState from '../snackbars/snackbar-state';
-import buttons from '../helpers/buttons';
 import ContactCollection from './contact-collection';
 
 @observer
@@ -32,12 +31,6 @@ export default class ContactSelector extends SafeComponent {
     @observable legacyContact = null;
     @observable found = [];
     @observable findUserText;
-
-    componentDidMount() {
-        this.recipients.items.observe(() => {
-            // if (this.recipients.items.length && this.props.autoStart) this.action();
-        });
-    }
 
     get inviteContactDuck() {
         if (!this.toInvite) return null;
@@ -266,7 +259,8 @@ export default class ContactSelector extends SafeComponent {
 
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
-        const found = contactState.getFiltered(this.findUserText);
+        console.log(this.props.exclude);
+        const found = contactState.getFiltered(this.findUserText, this.props.exclude);
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
         // const result = findUserText && findUserText.length ? mockItems : chat;
@@ -295,34 +289,6 @@ export default class ContactSelector extends SafeComponent {
         );
     }
 
-    // TODO: for future removal
-    get limitReached() {
-        return false;
-        // return this.props.limit && (this.recipients.items.length >= this.props.limit);
-    }
-
-    get limitInfo() {
-        const current = this.recipients.items.length;
-        const max = this.props.limit;
-        if (!max || !current) return null;
-        const s = {
-            backgroundColor: vars.lightGrayBg,
-            flexDirection: 'row',
-            justifyContent: 'flex-end'
-        };
-        const textStyle = {
-            color: this.limitReached ? vars.txtAlert : vars.txtDate,
-            margin: 4,
-            marginRight: 16,
-            fontSize: 12
-        };
-        return (
-            <View style={s}>
-                <Text style={textStyle}>{current}/{max} people in this chat</Text>
-            </View>
-        );
-    }
-
     header() {
         const tbSearch = this.textbox();
         const userRow = this.userboxline();
@@ -333,37 +299,13 @@ export default class ContactSelector extends SafeComponent {
                 {this.props.hideHeader ? null : this.lineBlock(exitRow)}
                 {/* TODO combine recipients and search */}
                 {recipients.length ? this.lineBlock(userRow) : null}
-                {this.limitInfo}
-                {!this.limitReached && this.lineBlock(tbSearch)}
-            </View>
-        );
-    }
-
-    get upgradeOffer() {
-        const offerStyle = {
-            backgroundColor: '#d9f1ef',
-            padding: 12
-        };
-        return (
-            <View style={{ flex: 1, flexGrow: 1, backgroundColor: vars.lightGrayBg }}>
-                <View style={offerStyle}>
-                    <Text>
-                        {`👋 Hi there, want to add more people to this chat?`}
-                        {`Check out our `}<Text style={{ fontWeight: 'bold' }}>upgrade plans</Text>
-                        {` or `}<Text style={{ fontWeight: 'bold' }}>delete an existing channel</Text>
-                        {` to create a new one `}
-                    </Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        {buttons.uppercaseBlueButton(tx('button_upgrade'))}
-                    </View>
-                </View>
+                {this.lineBlock(tbSearch)}
             </View>
         );
     }
 
     renderThrow() {
         const header = this.header();
-        const body = this.limitReached ? this.upgradeOffer : this.body();
         const layoutStyle = {
             backgroundColor: 'white'
         };
@@ -375,7 +317,7 @@ export default class ContactSelector extends SafeComponent {
         return (
             <Layout1
                 defaultBar
-                body={body}
+                body={this.body()}
                 header={header}
                 noFitHeight
                 footerAbsolute={snackbar}
@@ -387,8 +329,8 @@ export default class ContactSelector extends SafeComponent {
 ContactSelector.propTypes = {
     topRow: PropTypes.any,
     hideHeader: PropTypes.any,
+    exclude: PropTypes.any,
     title: PropTypes.any,
-    limit: PropTypes.any,
     action: PropTypes.func,
     onExit: PropTypes.func
 };

@@ -7,6 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileInlineProgress from '../files/file-inline-progress';
+import FileInlineImage from '../files/file-inline-image';
 import AvatarCircle from './avatar-circle';
 import ErrorCircle from './error-circle';
 import DeletedCircle from './deleted-circle';
@@ -186,6 +187,12 @@ export default class Avatar extends SafeComponent {
     get files() {
         return this.props.files ?
             this.props.files.map(file => <FileInlineProgress key={file} file={file} />) : null;
+    }
+
+    get inlineImage() {
+        const { inlineImage, onInlineImageAction } = this.props;
+        return inlineImage ?
+            <FileInlineImage key={inlineImage} image={inlineImage} onAction={onInlineImageAction} /> : null;
     }
 
     get errorCircle() {
@@ -376,16 +383,19 @@ export default class Avatar extends SafeComponent {
     }
 
     renderCollapsed() {
+        let shrinkStrategy = { flexShrink: 1 };
+        if (this.props.inlineImage) shrinkStrategy = { flexGrow: 1 };
         return (
             <View style={{ flexGrow: 1 }}>
                 <View style={[itemStyle, this.errorStyle]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
-                        style={[this.itemContainerStyle, { paddingLeft: 58, flexShrink: 1 }]}>
+                        style={[this.itemContainerStyle, { paddingLeft: 58, marginRight: 10 }, shrinkStrategy]}>
                         {this.message}
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
                             {this.files}
+                            {this.inlineImage}
                             {this.systemMessage}
                             {this.retryCancel}
                         </View>
@@ -410,6 +420,7 @@ export default class Avatar extends SafeComponent {
                             {this.props.isChat ? this.name : this.title}
                             {this.message}
                             {this.files}
+                            {this.inlineImage}
                             {this.systemMessage}
                             {this.retryCancel}
                         </View>

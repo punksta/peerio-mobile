@@ -3,7 +3,7 @@ import capitalize from 'capitalize';
 import { observable, action, when } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
-import { User, PhraseDictionary, validation, socket, crypto } from '../../lib/icebear';
+import { User, validation, socket, crypto } from '../../lib/icebear';
 
 const { validators, addValidation } = validation;
 
@@ -112,6 +112,7 @@ if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
         s.email = `seavan+${rnd}@gmail.com`;
         s.firstName = capitalize(randomWords());
         s.lastName = capitalize(randomWords());
+        s.keyBackedUp = true;
     });
 }
 

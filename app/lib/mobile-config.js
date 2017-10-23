@@ -16,6 +16,7 @@ export default (c, icebear) => {
         msgSignature: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
         upgrade: 'route:modal:accountUpgradeSwiper',
         signup: 'route:app:signupStep1',
+        settings: 'route:main:settings',
         proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
         proAccount: 'https://account.peerio.com',
         helpCenter: 'https://peerio.zendesk.com/',
@@ -51,11 +52,11 @@ export default (c, icebear) => {
 
     cfg.appVersion = require('../../package.json').version;
     cfg.platform = 'ios';
-    cfg.chat = {
+    Object.assign(cfg.chat, {
         maxInitialChats: 15,
         initialPageSize: 20, // amount of messages to load to a newly opened chat
         pageSize: 20, // when next/prev pages is requested, chat will load this amount of messages
-        maxLoadedMessages: 40, // chat will remove excess of messages if paging resulted in larger count
-        decryptQueueThrottle: 10 // ms, delay between proccessing messages in a batch
-    };
+        maxLoadedMessages: 60, // chat will remove excess of messages if paging resulted in larger count
+        decryptQueueThrottle: 10 // ms, delay between processing messages in a batch
+    });
 };

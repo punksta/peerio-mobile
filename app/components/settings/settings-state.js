@@ -29,7 +29,14 @@ class SettingsState extends RoutedState {
         return sr ? tx(sr) : tx('title_settings');
     }
 
-    onTransition(/* active */) {
+    onTransition(active) {
+        if (!active) {
+            if (this.reaction) {
+                this.reaction();
+                this.reaction = null;
+                return;
+            }
+        }
         this.routerMain.isRightMenuVisible = false;
         this.routerMain.isLeftHamburgerVisible = false;
         if (this.reaction) return;
@@ -37,8 +44,8 @@ class SettingsState extends RoutedState {
             if (this.routerMain.route === 'settings') {
                 while (i < this.stack.length) {
                     this.stack.pop();
+                    this.subroute = i ? this.stack[i - 1] : null;
                 }
-                this.subroute = i ? this.stack[i - 1] : null;
             }
         });
     }
@@ -46,15 +53,13 @@ class SettingsState extends RoutedState {
     @action transition(subroute) {
         console.log(`settings-state.js: transition ${subroute}`);
         LayoutAnimation.easeInEaseOut();
-        this.routerMain.settings();
         if (subroute) {
             this.subroute = subroute;
             this.stack.push(subroute);
-            this.routerMain.currentIndex = this.stack.length;
         } else {
-            this.routerMain.currentIndex = 0;
             this.stack.clear();
         }
+        this.routerMain.settings(subroute, false, this.stack.length);
     }
 
     upgrade() {
