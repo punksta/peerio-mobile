@@ -91,7 +91,8 @@ export default class FileMultiInlineImage extends SafeComponent {
         // Assume downloaded
         const downloading = false;
 
-        const { images, name } = this.props;
+        const images = this.props.images;
+        const name = this.props.name;
         console.log(images);
 
         // Load individually async
@@ -136,8 +137,8 @@ export default class FileMultiInlineImage extends SafeComponent {
                             {downloading && <ActivityIndicator />}
                         </View>}
                     </View>
-                    {!downloading && this.opened && this.loaded ?
-                    this.multiImageContainer(this.images)
+                    {!downloading && this.opened && loaded ?
+                    this.multiImageContainer(images)
                     : null }
                     {showUpdateSettingsLink && this.updateSettingsOffer}
                 </View>
@@ -147,23 +148,49 @@ export default class FileMultiInlineImage extends SafeComponent {
 
     // 4 cases: imageCount = 2, 3, 4, 4+
     multiImageContainer(images) {
-        console.log(this.images);
-        // Assume downloaded
+        console.log(images);
+    
+        // Assume downloaded, opened, loaded
         const downloading = false;
+        const opened = true;
+        const loaded = true;
+
+        const square = {
+            height: 128,
+            width: 128
+        };
 
         const inner = {
-            backgroundColor: vars.lightGrayBg
+            backgroundColor: vars.lightGrayBg,
+            borderRadius: 4
         };
 
         const innerDark = {
-            backgroundColor: 'darkgray'
+            backgroundColor: '#9d9d9d',
+            borderRadius: 4
         };
 
         const innerLeft = {
-            marginRight: 16
+            marginRight: 15
+        };
+
+        const imageNumContainer = {
+            justifyContent: 'center',
+            alignItems: 'center'
+        };
+
+        const imageNumText = {
+            fontSize: 24,
+            fontWeight: '600',
+            color: 'white'
         };
 
         function dualImageRow(isTopRow, moreThanFour = false) {
+            const bottomRow = {
+                flexDirection: 'row',
+                marginTop: isTopRow ? 0 : 8
+            };
+
             let firstIndex, secondIndex;
             if (isTopRow) {
                 firstIndex = 0;
@@ -173,37 +200,28 @@ export default class FileMultiInlineImage extends SafeComponent {
                 secondIndex = 3;
             }
 
-            console.log('dualImageRow: called');
-            console.log(`isTopRow: ${isTopRow}`);
-            console.log(`moreThanFour: ${moreThanFour}`);
-            console.log(`downloading: ${downloading}`);
-            console.log(`opened: ${this.opened}`);
-            console.log(`loaded: ${this.loaded}`);
-            console.log(`images[firstIndex].source: ${images[firstIndex].source}`);
-            console.log(`images[secondIndex].source: ${images[secondIndex].source}`);
-
             return (
-                <View>
+                <View style={bottomRow}>
                     <View style={[inner, innerLeft]}>
-                        {!downloading && this.opened && this.loaded ?
+                        {!downloading && opened && loaded ?
                             <Image
                             source={images[firstIndex].source}
-                            style={{ height: 128, width: 128 }}
+                            style={square}
                             /> : null
                         }
                     </View>
                     {moreThanFour ?
-                        <View style={innerDark}>
-                            <Text style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                {this.imageCount}
+                        <View style={[innerDark, square, imageNumContainer]}>
+                            <Text style={imageNumText}>
+                                +{images.length - 4}
                             </Text>
                         </View>
                     :
                         <View style={inner}>
-                            {!downloading && this.opened && this.loaded ?
+                            {!downloading && opened && loaded ?
                                 <Image
-                                source={images[secondIndex].source}
-                                style={{ height: 128, width: 128 }}
+                                    source={images[secondIndex].source}
+                                    style={square}
                                 /> : null
                             }
                         </View>}
@@ -213,13 +231,15 @@ export default class FileMultiInlineImage extends SafeComponent {
 
         function singleImageRow() {
             return (
-                <View style={[inner, innerLeft]}>
-                    {!downloading && this.opened && this.loaded ?
-                        <Image
-                        source={images[3].source}
-                        style={{ height: 128, width: 128 }}
-                        /> : null
-                    }
+                <View style={{ flexDirection: 'row', marginTop: 8 }}>
+                    <View style={[inner, innerLeft]}>
+                        {!downloading && opened && loaded ?
+                            <Image
+                                source={images[2].source}
+                                style={square}
+                            /> : null
+                        }
+                    </View>
                 </View>
             );
         }
