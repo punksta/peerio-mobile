@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.178.0"></a>
+# [3.178.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.177.0...v3.178.0) (2017-10-23)
+
+
+### Bug Fixes
+
+* android screenshots ([c83fee0](https://github.com/PeerioTechnologies/peerio-mobile/commit/c83fee0))
+* do not show excluded contacts in contact selector ([f62203b](https://github.com/PeerioTechnologies/peerio-mobile/commit/f62203b))
+* don't add people even when they are entered manually ([8495c69](https://github.com/PeerioTechnologies/peerio-mobile/commit/8495c69))
+* remove delete option ([5f46a47](https://github.com/PeerioTechnologies/peerio-mobile/commit/5f46a47))
+* remove sounds on send ([850be90](https://github.com/PeerioTechnologies/peerio-mobile/commit/850be90))
+
+
+
 <a name="3.177.0"></a>
 # [3.177.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.176.0...v3.177.0) (2017-10-20)
 
