@@ -32,12 +32,6 @@ export default class ContactSelector extends SafeComponent {
     @observable found = [];
     @observable findUserText;
 
-    componentDidMount() {
-        this.recipients.items.observe(() => {
-            // if (this.recipients.items.length && this.props.autoStart) this.action();
-        });
-    }
-
     get inviteContactDuck() {
         if (!this.toInvite) return null;
         const email = this.toInvite;
@@ -265,7 +259,8 @@ export default class ContactSelector extends SafeComponent {
 
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
-        const found = contactState.getFiltered(this.findUserText);
+        console.log(this.props.exclude);
+        const found = contactState.getFiltered(this.findUserText, this.props.exclude);
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
         // const result = findUserText && findUserText.length ? mockItems : chat;
@@ -334,6 +329,7 @@ export default class ContactSelector extends SafeComponent {
 ContactSelector.propTypes = {
     topRow: PropTypes.any,
     hideHeader: PropTypes.any,
+    exclude: PropTypes.any,
     title: PropTypes.any,
     action: PropTypes.func,
     onExit: PropTypes.func
