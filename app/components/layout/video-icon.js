@@ -7,7 +7,7 @@ const androidJitsi = 'https://play.google.com/store/apps/details?id=org.jitsi.me
 const iosJitsi = 'https://itunes.apple.com/in/app/jitsi-meet/id1165103905?mt=8';
 const storeURL = Platform.OS === 'android' ? androidJitsi : iosJitsi;
 let randomString = getRandomUserSpecificIdB64(getRandomNumber(5, 100));
-randomString = randomString.replace(/\//, '+');
+randomString = randomString.replace(/(\/)/, '+');
 const jitsiLink = `https://meet.jit.si/${randomString}`;
 
 export default class VideoIcon extends HeaderIconBase {
