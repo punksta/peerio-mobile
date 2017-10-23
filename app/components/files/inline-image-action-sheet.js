@@ -37,7 +37,7 @@ export default class InlineImageActionSheet extends SafeComponent {
         return [
             this.openItem,
             { title: tx('button_share'), action: this.shareImage },
-            { title: tx('button_delete'), action: () => chat.removeMessage(message) },
+            // { title: tx('button_delete'), action: () => chat.removeMessage(message) },
             { title: tx('button_cancel') }
         ];
     }
@@ -60,7 +60,6 @@ export default class InlineImageActionSheet extends SafeComponent {
                 ref={sheet => { this._actionSheet = sheet; }}
                 options={this.items.map(i => i.title)}
                 cancelButtonIndex={this.CANCEL_INDEX}
-                destructiveButtonIndex={this.DELETE_INDEX}
                 onPress={this.onPress}
             />
         );
