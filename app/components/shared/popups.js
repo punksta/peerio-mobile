@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, WebView, View } from 'react-native';
+import { Text, WebView, View, Linking } from 'react-native';
 import { observable } from 'mobx';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
@@ -231,16 +231,16 @@ function popupControl(contents) {
     });
 }
 
-function popupSetupVideo(title, subTitle, text) {
+function popupSetupVideo(title, subTitle, text, link) {
     return new Promise((resolve) => {
         popupState.showPopup({
             title,
+            type: 'systemWarning',
             subTitle: subTitle ? textControl(subTitle) : null,
             contents: text ? textControl(text) : null,
-            style: { borderTop: '#F6E423' },
             buttons: [
                 { id: 'cancel', text: tu('Got it!'), secondary: true, action: () => resolve(false) },
-                { id: 'ok', text: tu('Get app'), action: () => resolve(true) }
+                { id: 'ok', text: tu('Get app'), action: () => Linking.openURL(link), resolve }
             ]
         });
     });

@@ -94,6 +94,11 @@ export default class PopupLayout extends SafeComponent {
             justifyContent: 'flex-end'
         };
 
+        // const sideNote = {
+        //     textAlign: 'right',
+        //     fontStyle: 'italic'
+        // };
+
         return (
             <View style={popupNonAnimatedStyle}>
                 <View style={wrapper}>
