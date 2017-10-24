@@ -122,7 +122,6 @@ export default class ProfileEdit extends SafeComponent {
         await uiState.hideAll();
         LayoutAnimation.easeInEaseOut();
         this.showAddEmail = !this.showAddEmail;
-        console.log(this.showAddEmail);
         if (this.showAddEmail) {
             this._addEmailBox.focus();
         }
@@ -137,7 +136,7 @@ export default class ProfileEdit extends SafeComponent {
         if (this.showAddEmail) {
             text = this.newEmailText ? 'button_save' : 'button_cancel';
         }
-        return this.renderButton1(text, () => this.emailAction(), this.newEmailText && this.showAddEmail && !this.newEmailTextValid);
+        return this.renderButton1(text, () => this.emailAction());
     }
 
     get validationError() {
