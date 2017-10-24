@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, PanResponder,
+import { View, Text, PanResponder, Image,
     AppState, ActivityIndicator, NativeModules,
     Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
+import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';
@@ -19,6 +20,8 @@ import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
 import MockComponent from './mocks';
+import FileMultiInlineImage from './files/file-multi-inline-image';
+
 
 const { height, width } = Dimensions.get('window');
 
@@ -106,6 +109,44 @@ export default class App extends SafeComponent {
     }
 
     renderThrow() {
+        const imageTest = true;
+        const arrImages = [
+            observable({
+                source: { uri: 'file:///storage/emulated/0/DCIM/Camera/IMG_20170928_195300.jpg' },
+                tmpCached: false,
+                cached: false
+            }),
+            observable({
+                source: { uri: 'file:///storage/emulated/0/DCIM/Camera/IMG_20170928_195300.jpg' },
+                tmpCached: false,
+                cached: false
+            }),
+            observable({
+                source: { uri: 'file:///storage/emulated/0/DCIM/Camera/IMG_20170928_195300.jpg' },
+                tmpCached: false,
+                cached: false
+            }),
+            observable({
+                source: { uri: 'file:///storage/emulated/0/DCIM/Camera/IMG_20170928_195300.jpg' },
+                tmpCached: false,
+                cached: false
+            }),
+            observable({
+                source: { uri: 'file:///storage/emulated/0/DCIM/Camera/IMG_20170928_195300.jpg' },
+                tmpCached: false,
+                cached: false
+            })
+        ];
+        if (imageTest) {
+            return (
+                <View>
+                    <FileMultiInlineImage
+                        images={arrImages}
+                        name="Karim"
+                    />
+                </View>
+            );
+        }
         if (!uiState.locale) return this._placeHolder();
         if (MockComponent) return <MockComponent />;
         const tabletHack = { top: 0, height, left: 0, right: 0 };
