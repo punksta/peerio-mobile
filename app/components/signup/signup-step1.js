@@ -28,6 +28,7 @@ const footer = {
 const addPhotoText = {
     fontSize: vars.font.size.normal,
     color: vars.txtMedium,
+    paddingHorizontal: vars.spacing.small.mini,
     textAlign: 'center'
 };
 
