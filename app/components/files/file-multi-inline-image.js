@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable, when, reaction } from 'mobx';
-import { View, Image, Text, Dimensions, LayoutAnimation, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Image, Text, LayoutAnimation, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import InlineUrlPreviewConsent from './inline-url-preview-consent';
 import inlineImageCacheStore from './inline-image-cache-store';
@@ -11,14 +11,69 @@ import settingsState from '../settings/settings-state';
 import { clientApp } from '../../lib/icebear';
 import { T } from '../utils/translator';
 
-const toSettings = text => (
+const outer = {
+    padding: 8,
+    borderColor: vars.lightGrayBg,
+    borderWidth: 1,
+    marginVertical: 4
+};
+
+const header = {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: this.opened ? 10 : 0
+};
+
+const text = {
+    fontWeight: 'bold',
+    color: vars.txtMedium
+};
+
+const square = {
+    height: 128,
+    width: 128
+};
+
+const inner = {
+    backgroundColor: vars.lightGrayBg,
+    borderRadius: 4
+};
+
+const innerDark = {
+    backgroundColor: '#9d9d9d',
+    borderRadius: 4
+};
+
+const innerLeft = {
+    marginRight: 15
+};
+
+const imageNumContainer = {
+    justifyContent: 'center',
+    alignItems: 'center'
+};
+
+const imageNumText = {
+    fontSize: 24,
+    fontWeight: '600',
+    color: 'white'
+};
+
+const settingsText = {
+    color: vars.txtDate,
+    fontStyle: 'italic',
+    marginBottom: 4
+};
+
+const toSettings = content => (
     <Text
         onPress={() => {
             settingsState.transition('preferences');
             settingsState.transition('display');
         }}
         style={{ textDecorationLine: 'underline' }}>
-        {text}
+        {content}
     </Text>
 );
 
@@ -27,37 +82,41 @@ const toSettingsParser = { toSettings };
 @observer
 export default class FileMultiInlineImage extends SafeComponent {
     @observable opened;
-    @observable loaded;
-    @observable loadImage;
+    @observable loadImages;
     @observable showUpdateSettingsLink;
-    @observable cachedImage;
+    @observable cachedImages;
     imageCount;
 
     componentWillMount() {
         reaction(() => clientApp.uiUserPrefs.externalContentConsented, () => {
             this.showUpdateSettingsLink = true;
         });
-        this.opened = clientApp.uiUserPrefs.peerioContentEnabled;
+        // TODO Uncomment
+        // this.opened = clientApp.uiUserPrefs.peerioContentEnabled;
 
-        // TODO when Paul replies
-        // Need this for loading large images
-        // All images need to be cached
-        // when(() => this.cachedImage, () => this.fetchSize());
-
-        // Array of images
         const { images } = this.props;
         this.imageCount = images.length;
-        const extraImages = this.imageCount < 4 ? 0 : this.imageCount - 4;
-        console.log(`Image count: ${this.imageCount}`);
 
-        // Apply on all images
-        // when(() => image.cached || image.tmpCached, () => {
-        //     this.cachedImage = inlineImageCacheStore.getImage(image.tmpCachePath);
+        images.forEach((image) => when(() => image.cached || image.tmpCached,
+            () => {
+                this.cachedImages.push(inlineImageCacheStore.getImage(image.tmpCachePath));
+                console.log('pushing image');
+            }
+        ));
+
+        // TODO doesn't work without SDK
+        // images.forEach((image) => {
+        //     if (!image.cached && !image.tmpCached) {
+        //         when(() => this.loadImages, () => image.tryToCacheTemporarily());
+        //     }
         // });
-        // if (!image.cached && !image.tmpCached) {
-        //     when(() => this.loadImage, () => image.tryToCacheTemporarily());
-        // }
-        // this.loadImage = clientApp.uiUserPrefs.peerioContentEnabled;
+
+        // TODO Uncomment
+        // this.loadImages = clientApp.uiUserPrefs.peerioContentEnabled;
+
+        // TODO remove below assignments: Assume opened, loadImages
+        this.opened = true;
+        this.loadImages = true;
     }
 
     componentDidMount() {
@@ -68,11 +127,6 @@ export default class FileMultiInlineImage extends SafeComponent {
     }
 
     get updateSettingsOffer() {
-        const settingsText = {
-            color: vars.txtDate,
-            fontStyle: 'italic',
-            marginBottom: 4
-        };
         return (
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ paddingTop: 2, marginRight: 4 }}>
@@ -86,40 +140,13 @@ export default class FileMultiInlineImage extends SafeComponent {
     }
 
     renderThrow() {
-        // Assume loaded
-        const loaded = true;
         // Assume downloaded
         const downloading = false;
 
         const images = this.props.images;
         const name = this.props.name;
-        console.log(images);
 
-        // Load individually async
-        // const { loaded, showUpdateSettingsLink } = this;
         const { showUpdateSettingsLink } = this;
-
-        // All images must have a cache and a source
-        // const { source } = this.cachedImage || {};
-
-        const outer = {
-            padding: 8,
-            borderColor: vars.lightGrayBg,
-            borderWidth: 1,
-            marginVertical: 4
-        };
-
-        const header = {
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: this.opened ? 10 : 0
-        };
-
-        const text = {
-            fontWeight: 'bold',
-            color: vars.txtMedium
-        };
 
         return (
             <View>
@@ -137,7 +164,7 @@ export default class FileMultiInlineImage extends SafeComponent {
                             {downloading && <ActivityIndicator />}
                         </View>}
                     </View>
-                    {!downloading && this.opened && loaded ?
+                    {!downloading && this.opened && this.loadImages ?
                     this.multiImageContainer(images)
                     : null }
                     {showUpdateSettingsLink && this.updateSettingsOffer}
@@ -148,43 +175,6 @@ export default class FileMultiInlineImage extends SafeComponent {
 
     // 4 cases: imageCount = 2, 3, 4, 4+
     multiImageContainer(images) {
-        console.log(images);
-    
-        // Assume downloaded, opened, loaded
-        const downloading = false;
-        const opened = true;
-        const loaded = true;
-
-        const square = {
-            height: 128,
-            width: 128
-        };
-
-        const inner = {
-            backgroundColor: vars.lightGrayBg,
-            borderRadius: 4
-        };
-
-        const innerDark = {
-            backgroundColor: '#9d9d9d',
-            borderRadius: 4
-        };
-
-        const innerLeft = {
-            marginRight: 15
-        };
-
-        const imageNumContainer = {
-            justifyContent: 'center',
-            alignItems: 'center'
-        };
-
-        const imageNumText = {
-            fontSize: 24,
-            fontWeight: '600',
-            color: 'white'
-        };
-
         function dualImageRow(isTopRow, moreThanFour = false) {
             const bottomRow = {
                 flexDirection: 'row',
@@ -203,12 +193,10 @@ export default class FileMultiInlineImage extends SafeComponent {
             return (
                 <View style={bottomRow}>
                     <View style={[inner, innerLeft]}>
-                        {!downloading && opened && loaded ?
-                            <Image
+                        <Image
                             source={images[firstIndex].source}
                             style={square}
-                            /> : null
-                        }
+                        />
                     </View>
                     {moreThanFour ?
                         <View style={[innerDark, square, imageNumContainer]}>
@@ -218,12 +206,10 @@ export default class FileMultiInlineImage extends SafeComponent {
                         </View>
                     :
                         <View style={inner}>
-                            {!downloading && opened && loaded ?
-                                <Image
-                                    source={images[secondIndex].source}
-                                    style={square}
-                                /> : null
-                            }
+                            <Image
+                                source={images[secondIndex].source}
+                                style={square}
+                            />
                         </View>}
                 </View>
             );
@@ -233,12 +219,10 @@ export default class FileMultiInlineImage extends SafeComponent {
             return (
                 <View style={{ flexDirection: 'row', marginTop: 8 }}>
                     <View style={[inner, innerLeft]}>
-                        {!downloading && opened && loaded ?
-                            <Image
-                                source={images[2].source}
-                                style={square}
-                            /> : null
-                        }
+                        <Image
+                            source={images[2].source}
+                            style={square}
+                        />
                     </View>
                 </View>
             );
@@ -246,10 +230,8 @@ export default class FileMultiInlineImage extends SafeComponent {
 
         const imageCount = images.length;
         if (imageCount === 2) {
-            console.log('2 images');
             return dualImageRow(true);
         } else if (imageCount === 3) {
-            console.log('3 images');
             return (
                 <View>
                     {dualImageRow(true)}
@@ -257,7 +239,6 @@ export default class FileMultiInlineImage extends SafeComponent {
                 </View>
             );
         } else if (imageCount === 4) {
-            console.log('4 images');
             return (
                 <View>
                     {dualImageRow(true)}
@@ -265,8 +246,6 @@ export default class FileMultiInlineImage extends SafeComponent {
                 </View>
             );
         }
-        // More than 4 images
-        console.log('4+ images');
         return (
             <View>
                 {dualImageRow(true)}
