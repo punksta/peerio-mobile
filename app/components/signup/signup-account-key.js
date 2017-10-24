@@ -45,7 +45,7 @@ const accountKeyText = {
     fontFamily: 'Verdana',
     fontWeight: 'bold',
     fontSize: vars.font.size.big,
-    width: 240
+    width: 220
 };
 
 const accountKeyRow = {
