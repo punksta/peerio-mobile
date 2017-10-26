@@ -14,7 +14,7 @@ class ChatVideo extends SafeComponent {
         let randomString = getRandomUserSpecificIdB64(getRandomNumber(42, 1337));
         randomString = randomString.replace(/(\/)/, '+');
         const jitsiLink = `https://meet.jit.si/${randomString}`;
-        return systemMessages.getSystemMessageText(jitsiLink);
+        return jitsiLink;
     }
 }
 

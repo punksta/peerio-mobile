@@ -234,14 +234,19 @@ function popupControl(contents) {
 
 function popupSetupVideo(title, subTitle, text, link) {
     return new Promise((resolve) => {
+        const openLink = () => {
+            resolve(false);
+            console.log(link);
+            Linking.openURL(link);
+        };
         popupState.showPopup({
-            title,
+            title: tx('title_videoCall'),
             type: 'systemWarning',
-            subTitle: subTitle ? textControl(subTitle) : null,
-            contents: text ? textControl(text) : null,
+            subTitle: textControl(tx('dialog_videoCall')),
+            contents: textControl(tx('disclaimer_videoCall')),
             buttons: [
-                { id: 'cancel', text: tu('Got it!'), action: () => resolve(false), secondary: true },
-                { id: 'ok', text: tu('Get app'), action: () => Linking.openURL(link), resolve }
+                { id: 'cancel', text: tu('Got it!'), action: () => resolve(true), secondary: true },
+                { id: 'ok', text: tu('Get app'), action: openLink }
             ]
         });
     });

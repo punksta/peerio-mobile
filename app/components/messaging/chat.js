@@ -14,9 +14,8 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
-import { popupSetupVideo } from '../shared/popups';
 import VideoIcon from '../layout/video-icon';
-import ChatVideo from '../messaging/chat-video';
+
 
 const { width } = Dimensions.get('window');
 
@@ -44,12 +43,7 @@ export default class Chat extends SafeComponent {
     }
 
     get rightIcon() {
-        const title = tx('title_videoCall');
-        const content = tx('dialog_videoCall');
-        const disc = tx('disclaimer_videoCall');
-        // check whether PreferenceStore.hasSeenJitsiSuggestionPopup = true
-        // should the popup be shown, or should a Jitsi link be provided?
-        return <VideoIcon action={() => popupSetupVideo(title, content, disc, ChatVideo.storeLink)} />;
+        return <VideoIcon onAddVideoLink={link => chatState.addMessage(link)} />;
     }
 
     get data() {
