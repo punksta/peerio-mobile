@@ -1,6 +1,7 @@
 import { Platform } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { getRandomNumber, getRandomUserSpecificIdB64 } from '../../lib/peerio-icebear/crypto/util.random';
+import { systemMessages } from '../../lib/icebear';
 
 class ChatVideo extends SafeComponent {
     get storeLink() {
@@ -12,7 +13,8 @@ class ChatVideo extends SafeComponent {
     get jitsiLink() {
         let randomString = getRandomUserSpecificIdB64(getRandomNumber(42, 1337));
         randomString = randomString.replace(/(\/)/, '+');
-        return `https://meet.jit.si/${randomString}`;
+        const jitsiLink = `https://meet.jit.si/${randomString}`;
+        return systemMessages.getSystemMessageText(jitsiLink);
     }
 }
 
