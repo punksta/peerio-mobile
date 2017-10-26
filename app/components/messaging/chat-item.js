@@ -55,6 +55,7 @@ export default class ChatItem extends SafeComponent {
                 noBorderBottom
                 collapsed={!!i.groupWithPrevious}
                 extraPaddingTop={8}
+                ref={ref => { this._ref = ref; }}
             />
         );
     }

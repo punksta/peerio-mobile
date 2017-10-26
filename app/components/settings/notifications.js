@@ -25,7 +25,7 @@ const text = {
     marginLeft: 8
 };
 
-const state = PreferenceStore.prefs;
+// const state = PreferenceStore.prefs;
 
 @observer
 export default class Notifications extends SafeComponent {
