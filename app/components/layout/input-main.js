@@ -49,7 +49,7 @@ export default class InputMain extends SafeComponent {
     }
 
     get canSend() {
-        return uiState.isAuthenticated && (this.hasText ? chatState.canSend : chatState.canSendAck);
+        return this.props.canSend || uiState.isAuthenticated && (this.hasText ? chatState.canSend : chatState.canSendAck);
     }
 
     renderThrow() {

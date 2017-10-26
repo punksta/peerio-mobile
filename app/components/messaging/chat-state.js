@@ -10,6 +10,7 @@ class ChatState extends RoutedState {
     @observable chatInviteStore = chatInviteStore;
     @observable collapseChannels = false;
     @observable collapseDMs = false;
+    @observable selfNewMessageCounter = 0;
 
     // to be able to easily refactor, keep the name "chatStore"
     get chatStore() { return this.store; }
@@ -30,15 +31,10 @@ class ChatState extends RoutedState {
                 this.loading = false;
             } else if (this.routerMain && this.routerMain.route === 'chats') this.routerMain.chats();
         }, true);
-
-        reaction(() => this.collapseChannels, v => TinyDb.user.setValue('collapseChannels', v));
-        reaction(() => this.collapseDMs, v => TinyDb.user.setValue('collapseDMs', v));
     }
 
     @action async init() {
         this.chatStore.loadAllChats();
-        this.collapseChannels = await TinyDb.user.getValue('collapseChannels');
-        this.collapseDMs = await TinyDb.user.getValue('collapseDMs');
         return new Promise(resolve => when(() => this.chatStore.loaded, resolve));
     }
 
@@ -121,12 +117,14 @@ class ChatState extends RoutedState {
     }
 
     @action addMessage(msg, files) {
+        this.selfNewMessageCounter++;
         this.currentChat && (
             files ? this.currentChat.shareFiles(files) : this.currentChat.sendMessage(msg)
         ).catch(sounds.destroy);
     }
 
     @action addAck() {
+        this.selfNewMessageCounter++;
         this.currentChat && this.currentChat
             .sendAck().catch(sounds.destroy);
     }

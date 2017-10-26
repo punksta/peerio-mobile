@@ -121,18 +121,18 @@ export default class ContactSelectorDM extends SafeComponent {
             alignItems: 'center'
         };
         const textStyle = {
-            marginLeft: vars.iconSize * 2,
+            marginRight: vars.iconSize * 2,
             textAlign: 'center',
             flexGrow: 1,
             flexShrink: 1,
-            fontSize: vars.font.size.bigger,
+            fontSize: vars.font.size.big,
             fontWeight: vars.font.weight.semiBold,
             color: vars.txtDark
         };
         return (
             <View style={container}>
-                <Text style={textStyle}>{this.props.title}</Text>
                 {icons.dark('close', this.props.onExit)}
+                <Text style={textStyle}>{this.props.title}</Text>
             </View>
         );
     }

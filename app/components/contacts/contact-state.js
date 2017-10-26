@@ -52,9 +52,12 @@ class ContactState extends RoutedState {
         return !!this.findByUsername(c.username).length;
     }
 
-    getFiltered(findUserText) {
-        const result = this.store.filter(findUserText || '').filter(c => c.username !== User.current.username);
-        return result.length ? result : this.found.filter(c => !c.loading && !c.notFound);
+    getFiltered(findUserText, exclude = {}) {
+        const result = this.store.filter(findUserText || '')
+            .filter(c => c.username !== User.current.username && !exclude[c.username]);
+        return result.length ? result : this.found.filter(
+            c => !c.loading && !c.notFound
+        );
     }
 
     @action sendTo(contact) {

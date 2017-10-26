@@ -7,6 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileInlineProgress from '../files/file-inline-progress';
+import FileInlineImage from '../files/file-inline-image';
 import AvatarCircle from './avatar-circle';
 import ErrorCircle from './error-circle';
 import DeletedCircle from './deleted-circle';
@@ -70,7 +71,17 @@ const nameMessageContainerStyle = {
 };
 
 const nameTextStyle = {
+    color: vars.txtMedium
+};
+
+const fullnameTextStyle = {
+    color: vars.txtDark,
+    fontSize: vars.font.size.normal
+};
+
+const usernameTextStyle = {
     color: vars.txtMedium,
+    fontStyle: 'italic',
     fontSize: vars.font.size.normal
 };
 
@@ -176,6 +187,12 @@ export default class Avatar extends SafeComponent {
     get files() {
         return this.props.files ?
             this.props.files.map(file => <FileInlineProgress key={file} file={file} />) : null;
+    }
+
+    get inlineImage() {
+        const { inlineImage, onInlineImageAction } = this.props;
+        return inlineImage ?
+            <FileInlineImage key={inlineImage} image={inlineImage} onAction={onInlineImageAction} /> : null;
     }
 
     get errorCircle() {
@@ -291,6 +308,32 @@ export default class Avatar extends SafeComponent {
         );
     }
 
+    get name() {
+        const unreadStyle = this.props.unread
+        ? { fontWeight: '600' }
+        : null;
+        const { contact, title } = this.props;
+        const text = contact ? contact.username : title;
+        return (
+            <View style={nameContainerStyle}>
+                <View style={{ flexShrink: 1 }}>
+                    <Text ellipsizeMode="tail" numberOfLines={1}>
+                        {this.star}
+                        <Text style={[fullnameTextStyle, unreadStyle]}>
+                            {contact ? contact.fullName : ''}
+                            <Text style={[usernameTextStyle, unreadStyle]}>
+                                {` `}{text}
+                            </Text>
+                        </Text>
+                    </Text>
+                </View>
+                <View style={{ flex: 0 }}>
+                    {this.date}
+                </View>
+            </View>
+        );
+    }
+
     get receipts() {
         const { receipts } = this.props;
         if (!receipts || !receipts.length) return null;
@@ -340,16 +383,19 @@ export default class Avatar extends SafeComponent {
     }
 
     renderCollapsed() {
+        let shrinkStrategy = { flexShrink: 1 };
+        if (this.props.inlineImage) shrinkStrategy = { flexGrow: 1 };
         return (
             <View style={{ flexGrow: 1 }}>
                 <View style={[itemStyle, this.errorStyle]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
-                        style={[this.itemContainerStyle, { paddingLeft: vars.spacing.huge.maxi, flexShrink: 1 }]}>
+                        style={[this.itemContainerStyle, { paddingLeft: vars.spacing.huge.maxi, marginRight: vars.spacing.small.maxi }, shrinkStrategy]}>
                         {this.message}
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
                             {this.files}
+                            {this.inlineImage}
                             {this.systemMessage}
                             {this.retryCancel}
                         </View>
@@ -371,9 +417,10 @@ export default class Avatar extends SafeComponent {
                         style={itemContainerStyle}>
                         {this.avatar}
                         <View style={[nameMessageContainerStyle]}>
-                            {this.title}
+                            {this.props.isChat ? this.name : this.title}
                             {this.message}
                             {this.files}
+                            {this.inlineImage}
                             {this.systemMessage}
                             {this.retryCancel}
                         </View>
@@ -393,7 +440,7 @@ export default class Avatar extends SafeComponent {
         const activeOpacity = this.props.noTap && !this.props.error && !this.props.sendError ?
             1 : 0.2;
         return (
-            <View style={{ backgroundColor: vars.bgHighlight }}>
+            <View style={{ backgroundColor: vars.bgHighlight }} ref={ref => { this._ref = ref; }}>
                 <TouchableOpacity
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={this.onPressAll}
@@ -428,6 +475,7 @@ Avatar.propTypes = {
     message: PropTypes.string,
     messageComponent: PropTypes.any,
     title: PropTypes.any,
+    isChat: PropTypes.any,
     systemMessage: PropTypes.any,
     firstOfTheDay: PropTypes.bool,
     online: PropTypes.bool,

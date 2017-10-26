@@ -2,6 +2,112 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.183.0"></a>
+# [3.183.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.182.0...v3.183.0) (2017-10-26)
+
+
+
+<a name="3.182.0"></a>
+# [3.182.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.179.0...v3.182.0) (2017-10-26)
+
+
+
+<a name="3.181.0"></a>
+# [3.181.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.179.0...v3.181.0) (2017-10-26)
+
+
+
+<a name="3.180.0"></a>
+# [3.180.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.179.0...v3.180.0) (2017-10-26)
+
+
+
+<a name="3.179.0"></a>
+# [3.179.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.178.0...v3.179.0) (2017-10-25)
+
+
+### Bug Fixes
+
+* comment out settings from the future ([c5b1aa0](https://github.com/PeerioTechnologies/peerio-mobile/commit/c5b1aa0))
+* connection snackbar is there ([776801b](https://github.com/PeerioTechnologies/peerio-mobile/commit/776801b))
+
+
+
+<a name="3.178.0"></a>
+# [3.178.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.177.0...v3.178.0) (2017-10-23)
+
+
+### Bug Fixes
+
+* android screenshots ([c83fee0](https://github.com/PeerioTechnologies/peerio-mobile/commit/c83fee0))
+* do not show excluded contacts in contact selector ([f62203b](https://github.com/PeerioTechnologies/peerio-mobile/commit/f62203b))
+* don't add people even when they are entered manually ([8495c69](https://github.com/PeerioTechnologies/peerio-mobile/commit/8495c69))
+* remove delete option ([5f46a47](https://github.com/PeerioTechnologies/peerio-mobile/commit/5f46a47))
+* remove sounds on send ([850be90](https://github.com/PeerioTechnologies/peerio-mobile/commit/850be90))
+
+
+
+<a name="3.177.0"></a>
+# [3.177.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.176.0...v3.177.0) (2017-10-20)
+
+
+
+<a name="3.176.0"></a>
+# [3.176.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.175.0...v3.176.0) (2017-10-20)
+
+
+### Bug Fixes
+
+* bug with gallery in iOS ([9d6fbe5](https://github.com/PeerioTechnologies/peerio-mobile/commit/9d6fbe5))
+
+
+### Performance Improvements
+
+* sdk calls loadAllFiles now as late as possible to speed up startup ([948cf14](https://github.com/PeerioTechnologies/peerio-mobile/commit/948cf14))
+
+
+
+<a name="3.175.0"></a>
+# [3.175.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.174.0...v3.175.0) (2017-10-20)
+
+
+### Bug Fixes
+
+* 1-1 dms small fixes ([fdeb347](https://github.com/PeerioTechnologies/peerio-mobile/commit/fdeb347))
+* decrease tos link size on signup ([ac1301e](https://github.com/PeerioTechnologies/peerio-mobile/commit/ac1301e))
+
+
+### Features
+
+* launch screen userboard ([c2d0090](https://github.com/PeerioTechnologies/peerio-mobile/commit/c2d0090))
+
+
+
+<a name="3.174.0"></a>
+# [3.174.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.173.0...v3.174.0) (2017-10-18)
+
+
+### Bug Fixes
+
+* remove unnecessary code ([e0c24d4](https://github.com/PeerioTechnologies/peerio-mobile/commit/e0c24d4))
+
+
+### Features
+
+* disable sounds setting ([37b4108](https://github.com/PeerioTechnologies/peerio-mobile/commit/37b4108))
+
+
+
+<a name="3.173.0"></a>
+# [3.173.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.172.0...v3.173.0) (2017-10-17)
+
+
+
+<a name="3.172.0"></a>
+# [3.172.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.171.0...v3.172.0) (2017-10-16)
+
+
+
 <a name="3.171.0"></a>
 # [3.171.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.170.0...v3.171.0) (2017-10-13)
 

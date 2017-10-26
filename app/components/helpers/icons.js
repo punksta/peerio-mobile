@@ -74,6 +74,9 @@ const icons = {
         return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {}, vars.iconSizeSmall);
     },
 
+    coloredAsText(name, color, size) {
+        return <Icon name={name} size={size || vars.iconSize} color={color} />;
+    },
 
     placeholder() {
         const d = vars.iconSize + vars.iconPadding * 2;
@@ -115,8 +118,8 @@ const icons = {
         };
         const textStyle = {
             color: fgColor,
-            fontSize: vars.font.size.xsmall,
-            fontWeight: vars.font.weight.semiBold,
+            fontSize: vars.font.size.normal,
+            fontWeight: vars.font.weight.bold,
             textAlign: 'center'
         };
         return (

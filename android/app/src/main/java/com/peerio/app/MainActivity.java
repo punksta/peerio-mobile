@@ -4,7 +4,8 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.WindowManager;
 
-import com.facebook.react.ReactActivity;
+import com.facebook.react.*;
+import com.facebook.react.BuildConfig;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
@@ -17,6 +18,8 @@ public class MainActivity extends ReactActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // only enable FLAG_SECURE for release builds
+        if (BuildConfig.DEBUG) return;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
     }
@@ -40,8 +43,7 @@ public class MainActivity extends ReactActivity {
             context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                     .emit(jsCallback, grantResults[0] == PackageManager.PERMISSION_GRANTED);
         }
-
-
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override

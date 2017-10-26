@@ -31,8 +31,9 @@ export default class ChannelInfo extends SafeComponent {
     @observable channelTopic = '';
     @observable chat = null;
 
-    componentDidMount() {
+    componentWillMount() {
         this.chat = chatState.currentChat;
+        if (!this.chat) return;
         this.channelTopic = this.chat.purpose;
     }
 
@@ -80,7 +81,7 @@ export default class ChannelInfo extends SafeComponent {
             alignItems: 'center',
             flexGrow: 1
         };
-        const isAdmin = chatState.currentChat.isAdmin(contact);
+        const isAdmin = chat.isAdmin(contact);
         return (
             <View key={contact.username} style={row}>
                 <View style={{ flex: 1, flexGrow: 1, paddingLeft: vars.spacing.small.mini2x }}>
@@ -151,7 +152,8 @@ export default class ChannelInfo extends SafeComponent {
     }
 
     renderThrow() {
-        const chat = chatState.currentChat;
+        const { chat } = this;
+        if (!chat) return null;
         const { canIAdmin, canILeave } = chat;
         const invited = chatState.chatInviteStore.sent.get(chat.id);
         const body = (

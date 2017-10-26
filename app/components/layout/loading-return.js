@@ -5,6 +5,7 @@ import { gradient } from '../controls/effects';
 import { vars } from '../../styles/styles';
 import routerApp from '../routes/router-app';
 import loginState from '../login/login-state';
+import SnackBarConnection from '../snackbars/snackbar-connection';
 
 const tabs = {
     backgroundColor: vars.tabsBg,
@@ -27,12 +28,15 @@ export default class MockLoadingReturn extends Component {
         };
         return (
             <View style={s}>
-                {gradient({
-                    paddingTop: vars.statusBarHeight,
-                    height: vars.headerHeight,
-                    justifyContent: 'flex-end',
-                    backgroundColor: vars.bg
-                })}
+                <View>
+                    {gradient({
+                        paddingTop: vars.statusBarHeight,
+                        height: vars.headerHeight,
+                        justifyContent: 'flex-end',
+                        backgroundColor: vars.bg
+                    })}
+                    <SnackBarConnection />
+                </View>
                 <View style={tabs} />
             </View>
         );
