@@ -6,6 +6,7 @@ import SignupWizard from '../signup/signup-wizard';
 import LayoutMain from '../layout/layout-main';
 import LoadingReturn from '../layout/loading-return';
 import LoginAutomatic from '../login/login-automatic';
+import PopupState from '../layout/popup-state';
 import routerMain from './router-main';
 import routes from './routes';
 
@@ -22,6 +23,10 @@ class RouterApp extends Router {
 
         when(() => this.route === 'main', () => setTimeout(() => routerMain.initial(), 0));
         BackHandler.addEventListener('hardwareBackPress', () => {
+            if (PopupState.activePopup) {
+                PopupState.discardPopup();
+                return true;
+            }
             if (routes.modal.route) {
                 routes.modal.discard();
                 return true;
@@ -35,6 +40,7 @@ class RouterApp extends Router {
             if (this.route === 'main') {
                 if (routes.main.currentIndex > 0) {
                     routes.main.back();
+                    return true;
                 } else if (routes.main.isInitialRoute) {
                     return false;
                 }
