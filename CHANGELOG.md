@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.183.0"></a>
+# [3.183.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.182.0...v3.183.0) (2017-10-26)
+
+
+
+<a name="3.182.0"></a>
+# [3.182.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.179.0...v3.182.0) (2017-10-26)
+
+
+
+<a name="3.181.0"></a>
+# [3.181.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.179.0...v3.181.0) (2017-10-26)
+
+
+
+<a name="3.180.0"></a>
+# [3.180.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.179.0...v3.180.0) (2017-10-26)
+
+
+
+<a name="3.179.0"></a>
+# [3.179.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.178.0...v3.179.0) (2017-10-25)
+
+
+### Bug Fixes
+
+* comment out settings from the future ([c5b1aa0](https://github.com/PeerioTechnologies/peerio-mobile/commit/c5b1aa0))
+* connection snackbar is there ([776801b](https://github.com/PeerioTechnologies/peerio-mobile/commit/776801b))
+
+
+
 <a name="3.178.0"></a>
 # [3.178.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.177.0...v3.178.0) (2017-10-23)
 

@@ -6,6 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import Bold from '../controls/bold';
 import { T } from '../utils/translator';
 import BgPattern from '../controls/bg-pattern';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class MessagingPlaceholder extends SafeComponent {
@@ -33,14 +34,14 @@ export default class MessagingPlaceholder extends SafeComponent {
                 width: 1
             },
             elevation: 10,
-            margin: 20,
-            padding: 20,
+            margin: vars.spacing.medium.midi2x,
+            padding: vars.spacing.medium.midi2x,
             backgroundColor: 'white'
         };
         const title = {
             fontWeight: 'bold',
-            fontSize: 16,
-            marginBottom: 8
+            fontSize: vars.font.size.bigger,
+            marginBottom: vars.spacing.small.midi2x
         };
 
         const textParser = {

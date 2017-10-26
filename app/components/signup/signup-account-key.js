@@ -18,25 +18,25 @@ import snackbarState from '../snackbars/snackbar-state';
 import icons from '../helpers/icons';
 
 const formStyle = {
-    padding: 20,
+    padding: vars.spacing.medium.midi2x,
     justifyContent: 'space-between'
 };
 
 const addPhotoText = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     color: vars.txtMedium,
     textAlign: 'center'
 };
 
 const addPhotoPlus = [addPhotoText, {
-    fontSize: 30,
+    fontSize: vars.signupFontSize,
     fontWeight: 'bold',
     color: vars.white
 }];
 
 const textNormal = {
     color: vars.txtDark,
-    fontSize: 16,
+    fontSize: vars.font.size.bigger,
     lineHeight: 24
 };
 
@@ -44,8 +44,8 @@ const accountKeyText = {
     color: vars.txtDark,
     fontFamily: 'Verdana',
     fontWeight: 'bold',
-    fontSize: 18,
-    width: 240
+    fontSize: vars.font.size.big,
+    width: 224
 };
 
 const accountKeyRow = {
@@ -54,13 +54,13 @@ const accountKeyRow = {
 };
 
 const smallText = {
-    fontSize: 12,
-    marginVertical: 8,
+    fontSize: vars.font.size.smaller,
+    marginVertical: vars.spacing.small.midi2x,
     color: vars.txtDark
 };
 
 const accountKeyView = {
-    marginVertical: 10
+    marginVertical: vars.spacing.small.maxi
 };
 
 @observer
@@ -122,7 +122,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     </View>
                 </View>
                 <Text style={textNormal}>{tx('title_accountKey2')}</Text>
-                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 24 }}>
+                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: vars.spacing.large.midi2x }}>
                     {/* buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
                     {/* signupState.keyBackedUp && icons.plaindark('check-circle') */}
                 </View>

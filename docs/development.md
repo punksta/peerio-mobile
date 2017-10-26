@@ -38,9 +38,21 @@ Deploy is managed via fastlane (check out [fastlane docs](https://docs.fastlane.
 
 ## Icebear library connection
 
-Icebear library, which provides all the server API communication, and encryption (apart from native-implemented scrypt and signature/verification due to performance issues on JavaScriptCore without JIT) is provided via @peerio/peerio-icebear module.
+Icebear library, which provides all the server API communication, and encryption (apart from native-implemented scrypt and signature/verification due to performance issues on JavaScriptCore without JIT) is provided via the `@peerio/peerio-icebear` module.
 
 During postinstall step (which is called on build and during debug) icebear library is transpiled onto app/lib/peerio-icebear. The application uses it from there and injects some mocks/polyfills when doing so (primarily because peerio-icebear library is build for full V8 environment, which has some capabilities which JavaScriptCore misses).
+
+If you are working with a local version of `@peerio/peerio-icebear`, you can use `npm link` to link your local version. 
+
+For example: 
+```
+cd peerio-icebear
+npm link
+cd ../peerio-mobile
+npm link @peerio/peerio-icebear 
+npm install
+```
+**N.B.** Linking any other module with `npm link` will *not* work with the ReactMobile packager.
 
 ## Prepare environment
 
@@ -136,6 +148,10 @@ echo 999999 | tee -a /proc/sys/fs/inotify/max_user_instances
 watchman shutdown-server && sudo sysctl -p
 ```
 Use `sudo bash watchman-build.sh` to run the commands.
+
+## Localization
+
+Localization is done via the `peerio-copy` package. Since `npm link` will not work for this package, push any local changes to `peerio-copy` first, then run `npm update peerio-copy` and run your build. 
 
 ## Testing
 

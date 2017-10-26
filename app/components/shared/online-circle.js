@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
+import { vars } from '../../styles/styles';
 
 const circleDiameter = 6;
 
@@ -10,7 +11,7 @@ const circleStyle = {
     width: circleDiameter,
     height: circleDiameter,
     borderRadius: circleDiameter / 2,
-    margin: 4
+    margin: vars.spacing.small.mini2x
 };
 
 const circleOnline = {

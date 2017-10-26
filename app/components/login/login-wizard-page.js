@@ -7,7 +7,7 @@ import Button from '../controls/button';
 import { vars, wizard, helpers } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 
-const padding = 20;
+const padding = vars.spacing.medium.midi2x;
 
 const container = {
     justifyContent: 'space-between',
@@ -19,7 +19,7 @@ const container = {
 
 const header = {
     justifyContent: 'center',
-    marginBottom: 12
+    marginBottom: vars.spacing.small.maxi2x
 };
 
 const topCircleSize = 76;
@@ -32,7 +32,7 @@ const inner = {
     flex: 1,
     borderRadius: 4,
     marginTop: topCircleSize,
-    paddingTop: topCircleSize + 12,
+    paddingTop: topCircleSize + vars.spacing.small.maxi2x,
     backgroundColor: vars.lightGrayBg
 };
 
@@ -65,22 +65,22 @@ const row = {
 const title1 = {
     color: vars.white,
     textAlign: 'center',
-    fontSize: 24,
+    fontSize: vars.font.size.massive,
     fontWeight: 'bold',
-    marginBottom: 10
+    marginBottom: vars.spacing.small.maxi
 };
 
-const title1Black = [title1, { color: vars.txtDark, fontSize: 20, marginBottom: 20 }];
+const title1Black = [title1, { color: vars.txtDark, fontSize: vars.font.size.huge, marginBottom: vars.spacing.medium.midi2x }];
 
 const title2 = {
     color: vars.white,
     textAlign: 'center',
-    fontSize: 18
+    fontSize: vars.font.size.big
 };
 
 const title2Black = [title2, {
-    marginHorizontal: 60,
-    marginVertical: 6,
+    marginHorizontal: vars.spacing.huge.midi,
+    marginVertical: vars.spacing.small.midi,
     color: vars.txtDark
 }];
 
@@ -99,7 +99,7 @@ export {
 export default class LoginWizardPage extends SafeComponent {
     button(text, onPress, hidden, disabled) {
         const buttonContainer = {
-            marginVertical: 20,
+            marginVertical: vars.spacing.medium.midi2x,
             alignItems: 'stretch',
             opacity: hidden ? 0 : 1
         };
@@ -108,7 +108,7 @@ export default class LoginWizardPage extends SafeComponent {
         };
         const buttonText = {
             fontWeight: 'bold',
-            fontSize: 16
+            fontSize: vars.font.size.bigger
         };
         return (
             <View style={buttonContainer} key={text}>

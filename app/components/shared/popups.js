@@ -6,11 +6,12 @@ import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
+import { vars } from '../../styles/styles';
 
 function textControl(str) {
     const text = {
         color: '#000000AA',
-        marginVertical: 10,
+        marginVertical: vars.spacing.small.maxi,
         lineHeight: 22
     };
 

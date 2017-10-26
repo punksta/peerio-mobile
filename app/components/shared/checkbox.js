@@ -22,7 +22,7 @@ export default class CheckBox extends Component {
             flexGrow: 1,
             flex: 1,
             justifyContent: 'flex-end',
-            paddingVertical: 16
+            paddingVertical: vars.spacing.medium.mini2x
         };
         const checkbox = {
             borderRadius: 2,
@@ -31,7 +31,7 @@ export default class CheckBox extends Component {
             backgroundColor,
             height: 16,
             width: 16,
-            marginHorizontal: 8
+            marginHorizontal: vars.spacing.small.midi2x
         };
         const text = {
             color: '#000000AA',

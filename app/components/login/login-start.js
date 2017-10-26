@@ -22,7 +22,7 @@ export default class LoginStart extends LoginWizardPage {
     progress(current) {
         const count = 3;
         const circles = [];
-        const circleSize = 4;
+        const circleSize = vars.circleSize;
         const circle = {
             backgroundColor: vars.txtMedium,
             margin: circleSize,
@@ -87,7 +87,7 @@ export default class LoginStart extends LoginWizardPage {
                                     <Text style={title1Black}>{title}</Text>
                                     <Text style={title2Black}>{subtitle}</Text>
                                 </View>
-                                <View style={{ flex: 1, paddingBottom: 20, justifyContent: 'flex-end' }}>
+                                <View style={{ flex: 1, paddingBottom: vars.spacing.medium.midi2x, justifyContent: 'flex-end' }}>
                                     {this.progress(i)}
                                 </View>
                             </View>

@@ -77,13 +77,13 @@ export default class SettingsLevel1 extends SafeComponent {
                     {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
                     <SettingsItem title="title_settingsAccount" onPress={() => settingsState.transition('account')} />
                     {this.spacer}
-                    <SettingsItem title="title_About" onPress={() => popupYes('About', AboutContent)} />
+                    <SettingsItem title="title_About" icon={null} onPress={() => popupYes('About', AboutContent)} />
                     {this.spacer}
                     <ButtonWithIcon text={tu('button_logout')}
                         style={{
                             backgroundColor: vars.white,
                             width: '100%',
-                            paddingVertical: 16,
+                            paddingVertical: vars.spacing.medium.mini2x,
                             borderRadius: 4 }}
                         bold
                         textStyle={{ color: vars.bg }}
