@@ -21,8 +21,8 @@ const spacer = {
 
 const text = {
     color: vars.txtMedium,
-    marginBottom: 8,
-    marginLeft: 8
+    marginBottom: vars.spacing.small.midi2x,
+    marginLeft: vars.spacing.small.midi2x
 };
 
 // const state = PreferenceStore.prefs;

@@ -13,8 +13,8 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingLeft: 10,
-    marginBottom: 2,
+    paddingLeft: vars.spacing.small.maxi,
+    marginBottom: vars.spacing.small.mini,
     borderWidth: 0,
     borderColor: 'green',
     overflow: 'hidden',
@@ -82,4 +82,3 @@ ChoiceItem.propTypes = {
     state: PropTypes.any,
     onPress: PropTypes.any
 };
-

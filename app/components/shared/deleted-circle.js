@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
+import { vars } from '../../styles/styles';
 
 const diameter = 18;
 
@@ -36,7 +37,7 @@ export default class DeletedCircle extends SafeComponent {
         return (
             <View style={containerStyle}>
                 <View style={tofuStyle}>
-                    <Text style={{ color: borderColor, fontSize: 10 * ratio, fontWeight: 'bold' }}>-</Text>
+                    <Text style={{ color: borderColor, fontSize: vars.font.size.small * ratio, fontWeight: 'bold' }}>-</Text>
                 </View>
             </View>
         );
@@ -49,4 +50,3 @@ DeletedCircle.propTypes = {
     large: PropTypes.bool,
     invert: PropTypes.bool
 };
-

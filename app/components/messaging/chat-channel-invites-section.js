@@ -13,8 +13,8 @@ export default class ChatChannelInvitesSection extends SafeComponent {
 
         const style = {
             height: 48,
-            paddingLeft: 18,
-            paddingRight: 16,
+            paddingLeft: vars.spacing.medium.midi,
+            paddingRight: vars.spacing.medium.mini2x,
             justifyContent: 'space-between',
             alignItems: 'center',
             backgroundColor: vars.lightGrayBg,
@@ -37,7 +37,7 @@ export default class ChatChannelInvitesSection extends SafeComponent {
         };
 
         const textCircleStyle = {
-            fontSize: 10,
+            fontSize: vars.font.size.small,
             fontWeight: 'bold',
             color: vars.white
         };

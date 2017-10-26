@@ -53,8 +53,8 @@ export default class AutoExpandingTextInput extends Component {
         const style = {
             textAlign: 'left',
             padding: 0,
-            paddingBottom: 6,
-            marginTop: 6
+            paddingBottom: vars.spacing.small.midi,
+            marginTop: vars.spacing.small.midi
         };
 
         return (

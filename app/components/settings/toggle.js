@@ -19,7 +19,7 @@ export default class Toggle extends SafeComponent {
         const { active } = this.props;
 
         const outer = {
-            marginHorizontal: 16,
+            marginHorizontal: vars.spacing.medium.mini2x,
             flexGrow: 1,
             alignItems: 'center',
             justifyContent: 'center'
@@ -60,4 +60,3 @@ Toggle.propTypes = {
     active: PropTypes.bool,
     onPress: PropTypes.any
 };
-

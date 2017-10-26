@@ -18,14 +18,14 @@ export default class FileSignatureError extends SafeComponent {
             borderLeftWidth: 10,
             backgroundColor: vars.lightGrayBg,
             alignItems: 'center',
-            marginVertical: 6,
-            paddingVertical: 14,
-            paddingHorizontal: 8
+            marginVertical: vars.spacing.small.midi,
+            paddingVertical: vars.spacing.medium.mini,
+            paddingHorizontal: vars.spacing.small.midi2x
         };
 
         const text = {
             color: vars.txtAlert,
-            marginLeft: 6
+            marginLeft: vars.spacing.small.midi
         };
 
         const showAlert = () => popupYes(tx('title_invalidFileSignature'), null, tx('error_invalidFileSignature'));
