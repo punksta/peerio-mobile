@@ -25,7 +25,7 @@ const text = {
     marginLeft: 8
 };
 
-const state = PreferenceStore.prefs;
+// const state = PreferenceStore.prefs;
 
 @observer
 export default class Notifications extends SafeComponent {
@@ -34,39 +34,39 @@ export default class Notifications extends SafeComponent {
         return (
             <View style={bgStyle}>
                 <ScrollView>
-                    <PreferenceToggleItem
+                    {/* <PreferenceToggleItem
                         property={'doNotDisturbModeEnabled'}
                         title={tx('title_dndMode')}
                         description={tx('title_dndModeDescription')}
-                    />
-                    { !state.doNotDisturbModeEnabled &&
-                    <View>
-                        <View style={spacer} />
-                        <Text style={text}>{tx('title_notifyOf')}</Text>
-                        <PreferenceToggleItem
-                            property={'allActivityNotifsEnabled'}
-                            title={tx('title_allActivity')}
-                        />
-                        <PreferenceToggleItem
-                            property={'directNotifsEnabled'}
-                            title={tx('title_directMessagesAndMentions')}
-                        />
-                        {/* TODO Specific Keywords implementation */}
+                    /> */}
+                    {/* !state.doNotDisturbModeEnabled && */
+                        <View>
+                            {/* <View style={spacer} />
+                            <Text style={text}>{tx('title_notifyOf')}</Text>
+                            <PreferenceToggleItem
+                                property={'allActivityNotifsEnabled'}
+                                title={tx('title_allActivity')}
+                            /> */}
+                            {/* <PreferenceToggleItem
+                                property={'directNotifsEnabled'}
+                                title={tx('title_directMessagesAndMentions')}
+                            /> */}
+                            {/* TODO Specific Keywords implementation */}
 
-                        <View style={spacer} />
-                        <Text style={text}>{tx('title_messagePreviewOnLock')}</Text>
-                        <PreferenceToggleItem
-                            property={'displayMessageContentEnabled'}
-                            title={tx('title_displayMessageContent')}
-                        />
-
-                        <View style={spacer} />
-                        <Text style={text}>{tx('title_playSound')}</Text>
-                        <PreferenceToggleItem
-                            property={'allActivitySoundsEnabled'}
-                            title={tx('title_allActivity')}
-                        />
-                    </View>}
+                            {/* <View style={spacer} />
+                            <Text style={text}>{tx('title_messagePreviewOnLock')}</Text>
+                            <PreferenceToggleItem
+                                property={'displayMessageContentEnabled'}
+                                title={tx('title_displayMessageContent')}
+                            /> */}
+                            {/* <View style={spacer} /> */}
+                            <Text style={text}>{tx('title_playSound')}</Text>
+                            <PreferenceToggleItem
+                                property={'allActivitySoundsEnabled'}
+                                title={tx('title_allActivity')}
+                            />
+                        </View>
+                    }
                     <View style={spacer} />
                     <Text style={text}>{tx('title_emailNotifs')}</Text>
                     <PreferenceToggleItem
