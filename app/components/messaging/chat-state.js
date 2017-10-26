@@ -10,6 +10,7 @@ class ChatState extends RoutedState {
     @observable chatInviteStore = chatInviteStore;
     @observable collapseChannels = false;
     @observable collapseDMs = false;
+    @observable selfNewMessageCounter = 0;
 
     // to be able to easily refactor, keep the name "chatStore"
     get chatStore() { return this.store; }
@@ -116,12 +117,14 @@ class ChatState extends RoutedState {
     }
 
     @action addMessage(msg, files) {
+        this.selfNewMessageCounter++;
         this.currentChat && (
             files ? this.currentChat.shareFiles(files) : this.currentChat.sendMessage(msg)
         ).catch(sounds.destroy);
     }
 
     @action addAck() {
+        this.selfNewMessageCounter++;
         this.currentChat && this.currentChat
             .sendAck().catch(sounds.destroy);
     }

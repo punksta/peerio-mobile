@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
-import { observable, when } from 'mobx';
+import { observable, when, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
@@ -26,12 +26,18 @@ export default class Chat extends SafeComponent {
     @observable scrollEnabled = false;
     indicatorHeight = 16;
 
-    constructor(props) {
-        super(props);
-        this.layoutScrollView = this.layoutScrollView.bind(this);
-        this.contentSizeChanged = this.contentSizeChanged.bind(this);
-        this.onScroll = this.onScroll.bind(this);
-        this.item = this.item.bind(this);
+    componentDidMount() {
+        this.selfMessageReaction = reaction(() => chatState.selfNewMessageCounter, () => {
+            // scroll to end
+            const y = this.contentHeight - this.scrollViewHeight;
+            if (y) {
+                this.scrollView.scrollTo({ y, animated: true });
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        this.selfMessageReaction();
     }
 
     get data() {
