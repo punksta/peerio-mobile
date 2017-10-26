@@ -41,12 +41,12 @@ export default class Notifications extends SafeComponent {
                     /> */}
                     {/* !state.doNotDisturbModeEnabled && */
                         <View>
-                            {/* <View style={spacer} /> */}
+                            {/* <View style={spacer} />
                             <Text style={text}>{tx('title_notifyOf')}</Text>
                             <PreferenceToggleItem
                                 property={'allActivityNotifsEnabled'}
                                 title={tx('title_allActivity')}
-                            />
+                            /> */}
                             {/* <PreferenceToggleItem
                                 property={'directNotifsEnabled'}
                                 title={tx('title_directMessagesAndMentions')}
@@ -59,8 +59,7 @@ export default class Notifications extends SafeComponent {
                                 property={'displayMessageContentEnabled'}
                                 title={tx('title_displayMessageContent')}
                             /> */}
-
-                            <View style={spacer} />
+                            {/* <View style={spacer} /> */}
                             <Text style={text}>{tx('title_playSound')}</Text>
                             <PreferenceToggleItem
                                 property={'allActivitySoundsEnabled'}

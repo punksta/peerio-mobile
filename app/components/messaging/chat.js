@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
 import { observable, when, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -141,9 +141,9 @@ export default class Chat extends SafeComponent {
             y = newMeasures.pageY - oldMeasures.pageY;
             if (bottom) {
                 console.log(newMeasures);
-                y = newMeasures.frameY + newMeasures.pageY; // + this.scrollViewHeight / 2;
+                y = newMeasures.frameY - this.indicatorHeight; // + this.scrollViewHeight / 2;
                 const maxScroll = this.contentHeight - this.scrollViewHeight;
-                if (y > maxScroll) {
+                if (y > maxScroll || Platform.OS === 'android') {
                     y = maxScroll;
                 }
             }
