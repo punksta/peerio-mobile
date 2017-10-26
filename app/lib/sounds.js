@@ -1,8 +1,6 @@
 import Sound from 'react-native-sound';
 import { Platform } from 'react-native';
 
-Sound.setCategory('Ambient', true);
-
 const soundStorage = {};
 
 const load = (name) => {
