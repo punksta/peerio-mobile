@@ -10,7 +10,7 @@ import { vars, button } from '../../styles/styles';
 
 const defaultTextStyle = {
     backgroundColor: 'transparent',
-    paddingTop: 2
+    paddingTop: vars.spacing.small.mini
 };
 
 const containerStyle = {
@@ -66,5 +66,7 @@ ButtonWithIcon.propTypes = {
     disabled: PropTypes.bool,
     testID: PropTypes.string,
     bold: PropTypes.bool,
-    iconName: PropTypes.string
+    iconName: PropTypes.string,
+    accessible: PropTypes.bool,
+    accessibilityLabel: PropTypes.string
 };

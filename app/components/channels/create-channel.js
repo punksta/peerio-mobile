@@ -20,7 +20,7 @@ const rowCenter = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 10,
+    padding: vars.spacing.small.maxi,
     borderTopWidth: 1,
     borderTopColor: vars.lightGrayBg
 };
@@ -29,20 +29,20 @@ const bottomRowText = {
     flexShrink: 1,
     flex: 1,
     color: vars.txtDate,
-    fontSize: 12,
-    marginHorizontal: 16
+    fontSize: vars.font.size.smaller,
+    marginHorizontal: vars.spacing.medium.mini2x
 };
 
 const textinputContainer = {
     backgroundColor: vars.white,
-    marginBottom: 2,
+    marginBottom: vars.spacing.small.mini,
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden'
 };
 
 const textinput = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     height: vars.inputHeight,
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
@@ -52,8 +52,8 @@ const textinput = {
 
 const label = {
     color: vars.txtDate,
-    marginVertical: 4,
-    marginLeft: 10
+    marginVertical: vars.spacing.small.mini2x,
+    marginLeft: vars.spacing.small.maxi
 };
 
 const { width } = Dimensions.get('window');
@@ -99,7 +99,7 @@ export default class CreateChannel extends Component {
             flex: 0,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
+            padding: vars.spacing.small.mini2x,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0
         };
@@ -107,7 +107,7 @@ export default class CreateChannel extends Component {
             flexGrow: 1,
             flexShrink: 1,
             textAlign: 'center',
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.semiBold,
             color: 'rgba(0, 0, 0, .54)'
         };
@@ -138,7 +138,7 @@ export default class CreateChannel extends Component {
 
     renderTextBox(labelText, placeholderText, property) {
         return (
-            <View style={{ margin: 8 }}>
+            <View style={{ margin: vars.spacing.small.midi2x }}>
                 <Text style={label}>{tx(labelText)}</Text>
                 <View style={textinputContainer}>
                     <SimpleTextBox

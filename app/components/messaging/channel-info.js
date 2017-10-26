@@ -14,16 +14,16 @@ import { tx, tu } from '../utils/translator';
 
 const textStyle = {
     color: vars.txtDate,
-    marginTop: 10,
-    fontSize: 12,
-    marginLeft: 18,
+    marginTop: vars.spacing.small.maxi,
+    fontSize: vars.font.size.smaller,
+    marginLeft: vars.spacing.medium.midi,
     fontWeight: 'bold'
 };
 
 const topicTextStyle = {
     color: vars.txtDark,
-    margin: 18,
-    fontSize: 14
+    margin: vars.spacing.medium.midi,
+    fontSize: vars.font.size.normal
 };
 
 @observer
@@ -31,8 +31,9 @@ export default class ChannelInfo extends SafeComponent {
     @observable channelTopic = '';
     @observable chat = null;
 
-    componentDidMount() {
+    componentWillMount() {
         this.chat = chatState.currentChat;
+        if (!this.chat) return;
         this.channelTopic = this.chat.purpose;
     }
 
@@ -80,10 +81,10 @@ export default class ChannelInfo extends SafeComponent {
             alignItems: 'center',
             flexGrow: 1
         };
-        const isAdmin = chatState.currentChat.isAdmin(contact);
+        const isAdmin = chat.isAdmin(contact);
         return (
             <View key={contact.username} style={row}>
-                <View style={{ flex: 1, flexGrow: 1, paddingLeft: 4 }}>
+                <View style={{ flex: 1, flexGrow: 1, paddingLeft: vars.spacing.small.mini2x }}>
                     <Avatar
                         noBorderBottom
                         contact={contact}
@@ -92,8 +93,8 @@ export default class ChannelInfo extends SafeComponent {
                         hideOnline />
                 </View>
                 <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
-                    {isAdmin && <View style={{ backgroundColor: vars.bg, borderRadius: 4, padding: 4, overflow: 'hidden' }}>
-                        <Text style={{ color: vars.white, fontSize: 10 }}>
+                    {isAdmin && <View style={{ backgroundColor: vars.bg, borderRadius: 4, padding: vars.spacing.small.mini2x, overflow: 'hidden' }}>
+                        <Text style={{ color: vars.white, fontSize: vars.font.size.small }}>
                             {tu('title_admin')}
                         </Text>
                     </View>}
@@ -136,7 +137,7 @@ export default class ChannelInfo extends SafeComponent {
                     onBlur={update}
                     onEndEditing={update}
                     value={this.channelTopic}
-                    style={{ paddingLeft: 18, height: vars.inputHeight, color: vars.txtDark }} />
+                    style={{ paddingLeft: vars.spacing.medium.midi, height: vars.inputHeight, color: vars.txtDark }} />
             </View>
         );
     }
@@ -151,7 +152,8 @@ export default class ChannelInfo extends SafeComponent {
     }
 
     renderThrow() {
-        const chat = chatState.currentChat;
+        const { chat } = this;
+        if (!chat) return null;
         const { canIAdmin, canILeave } = chat;
         const invited = chatState.chatInviteStore.sent.get(chat.id);
         const body = (
@@ -160,9 +162,9 @@ export default class ChannelInfo extends SafeComponent {
                 {canILeave && this.lineBlock(this.action(tx('button_leaveChannel'), 'remove-circle-outline', this.leaveChannel), true)}
                 {canIAdmin && this.lineBlock(this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel))}
                 {chat.joinedParticipants && this.lineBlock(
-                    <View style={{ paddingVertical: 8 }}>
+                    <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: 12 }]}>
+                            <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x }]}>
                                 {tx('title_Members')}
                             </Text>
                             {canIAdmin && icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
@@ -171,9 +173,9 @@ export default class ChannelInfo extends SafeComponent {
                     </View>
                 )}
                 {invited && this.lineBlock(
-                    <View style={{ paddingVertical: 8 }}>
+                    <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: 12 }]}>
+                            <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x }]}>
                                 {tx('title_invited')}
                             </Text>
                         </View>

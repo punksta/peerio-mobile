@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
+import { vars } from '../../styles/styles';
 
 const diameter = 18;
 
@@ -32,12 +33,12 @@ export default class ErrorCircle extends SafeComponent {
             position: 'absolute',
             right: 0,
             top: 0,
-            padding: 8
+            padding: vars.spacing.small.midi2x
         };
         return (
             <TouchableOpacity onPress={this.props.onPress} style={containerStyle}>
                 <View style={tofuStyle}>
-                    <Text style={{ color: borderColor, fontSize: 12 * ratio, fontWeight: 'bold' }}>!</Text>
+                    <Text style={{ color: borderColor, fontSize: vars.font.size.smaller * ratio, fontWeight: 'bold' }}>!</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -50,4 +51,3 @@ ErrorCircle.propTypes = {
     large: PropTypes.bool,
     invert: PropTypes.bool
 };
-

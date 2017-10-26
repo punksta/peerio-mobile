@@ -139,7 +139,7 @@ export default class TextBox extends SafeComponent {
                 style={{
                     height: 14,
                     color: vars.txtDark,
-                    fontSize: 12,
+                    fontSize: vars.font.size.smaller,
                     backgroundColor: 'transparent'
                 }}>{t(this.validationMessage)}</Text>
         ) : (
@@ -166,7 +166,7 @@ export default class TextBox extends SafeComponent {
     }
 
     get hint() {
-        const style = (this.focused || this.value && this.value.length) ?
+        const style = (this.focused || (this.value && this.value.length)) ?
             textbox.hint.small : textbox.hint.normal;
         return (
             <View key={`hint`}
@@ -216,7 +216,10 @@ export default class TextBox extends SafeComponent {
                                 value={this._value}
                                 maxLength={this.props.maxLength}
                                 selection={{ start, end }}
-                                onFocus={() => uiState.focusTextBox(this.textinput)}
+                                onFocus={() => {
+                                    uiState.focusTextBox(this.textinput);
+                                    this.focused = true;
+                                }}
                                 onBlur={this.blur}
                                 onChangeText={this.changeText}
                                 onSubmitEditing={this.submit}

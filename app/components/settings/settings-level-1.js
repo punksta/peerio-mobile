@@ -9,7 +9,7 @@ import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-stora
 import { toggleConnection } from '../main/dev-menu-items';
 import plans from '../payments/payments-config';
 import { tx, tu } from '../utils/translator';
-import { warnings, config } from '../../lib/icebear';
+import { warnings, config, clientApp } from '../../lib/icebear';
 import { popupYes } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
 
@@ -53,6 +53,10 @@ export default class SettingsLevel1 extends SafeComponent {
         }, 5000);
     }
 
+    resetExternalSetting = () => {
+        clientApp.uiUserPrefs.externalContentConsented = false;
+    }
+
     renderThrow() {
         const plan = plans.topPlan();
         const upgradeItem = plan ?
@@ -79,7 +83,7 @@ export default class SettingsLevel1 extends SafeComponent {
                         style={{
                             backgroundColor: vars.white,
                             width: '100%',
-                            paddingVertical: 16,
+                            paddingVertical: vars.spacing.medium.mini2x,
                             borderRadius: 4 }}
                         bold
                         textStyle={{ color: vars.bg }}
@@ -97,6 +101,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {__DEV__ && <SettingsItem title="test Share" onPress={() => this.testShare()} />}
                     {__DEV__ && <SettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}
                     {__DEV__ && <SettingsItem title="test warning" onPress={() => warnings.addSevere('warning')} />}
+                    {__DEV__ && <SettingsItem title="reset external setting" onPress={this.resetExternalSetting} />}
                     {/* <SettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <SettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </ScrollView>

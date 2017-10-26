@@ -3,14 +3,14 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
-import { circles } from '../../styles/styles';
+import { circles, vars } from '../../styles/styles';
 
 const s = {
     flexGrow: 1,
     flexDirection: 'row',
     justifyContent: 'center',
     height: 10,
-    marginBottom: 32
+    marginBottom: vars.spacing.large.midi
 };
 
 const style = circles.small;
@@ -24,7 +24,7 @@ const dash = {
 
 const dashText = {
     color: 'white',
-    fontSize: 18
+    fontSize: vars.font.size.big
 };
 
 @observer

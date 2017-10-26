@@ -11,7 +11,7 @@ import LoginWizardPage, {
 import { vars } from '../../styles/styles';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
 
-const header2 = [header, { marginBottom: 20, justifyContent: 'flex-end' }];
+const header2 = [header, { marginBottom: vars.spacing.medium.midi2x, justifyContent: 'flex-end' }];
 
 const inner2 = {
     borderRadius: 4,
@@ -26,14 +26,14 @@ const footer = {
 };
 
 const formStyle = {
-    padding: 20,
+    padding: vars.spacing.medium.midi2x,
     justifyContent: 'space-between'
 };
 
 const findKeyText = {
     alignSelf: 'center',
     color: vars.bg,
-    fontSize: 14
+    fontSize: vars.font.size.normal
 };
 
 export default class LoginClean extends LoginWizardPage {

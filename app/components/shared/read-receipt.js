@@ -4,6 +4,7 @@ import { observer } from 'mobx-react/native';
 import { View, Text, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { contactStore } from '../../lib/icebear';
+import { vars } from '../../styles/styles';
 
 const circleDiameter = 18;
 
@@ -11,7 +12,7 @@ const circleStyle = {
     width: circleDiameter,
     height: circleDiameter,
     borderRadius: circleDiameter / 2,
-    margin: 4,
+    margin: vars.spacing.small.mini2x,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center'
@@ -31,7 +32,7 @@ export default class ReadReceipt extends SafeComponent {
         };
         const letterView = (
             <View style={[circleStyle, circleOnline]}>
-                <Text style={{ fontSize: 9, color: 'white' }}>{letter}</Text>
+                <Text style={{ fontSize: vars.readReceiptFontSize, color: 'white' }}>{letter}</Text>
             </View>
         );
         const uri = mediumAvatarUrl;

@@ -1,0 +1,35 @@
+import randomWords from 'random-words';
+import capitalize from 'capitalize';
+import { observable } from 'mobx';
+import fileState from '../files/file-state';
+
+class MockFileStore {
+    files = [];
+
+    constructor() {
+        for (let i = 0; i < 15; ++i) {
+            this.files.push(this.createMock());
+        }
+    }
+
+    install() {
+        fileState.store = this;
+    }
+
+    createMock() {
+        const id = `file:${randomWords({ min: 1, max: 4, join: '-' })}`;
+        const name = capitalize(`${randomWords({ min: 1, max: 2, join: '_' })}.png`);
+        const sizeFormatted = '118 Kb';
+        return observable({
+            id,
+            name,
+            sizeFormatted
+        });
+    }
+
+    getById(id) {
+        return this.files.find(f => f.id === id);
+    }
+}
+
+export default new MockFileStore();

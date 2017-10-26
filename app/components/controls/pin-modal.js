@@ -25,7 +25,7 @@ export default class PinModal extends SafeComponent {
         const container = {
             flexGrow: 1,
             flex: 1,
-            padding: 50,
+            padding: vars.spacing.huge.mini,
             backgroundColor: vars.bg
         };
         return (

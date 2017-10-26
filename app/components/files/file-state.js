@@ -119,12 +119,9 @@ class FileState extends RoutedState {
         return this.upload(uri, fileName, fileData, true);
     }
 
-    upload(uri, fileName, fileData, inline) {
-        let fn = fileHelpers.getFileName(fileName || uri);
-        const ext = fileHelpers.getFileExtension(fn);
-        if (!fileName) {
-            fn = `${moment(Date.now()).format('llll')}.${ext}`;
-        }
+    upload(uri, fn, fileData, inline) {
+        const fileName = fileHelpers.getFileName(fn || fileData.path || uri);
+        const ext = fileHelpers.getFileExtension(fileName);
         const chat = chatState.currentChat;
         const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName) :
             () => fileStore.upload(uri, fileName);
@@ -133,7 +130,7 @@ class FileState extends RoutedState {
                 () => resolve(uploader(uri, fn)));
         }).then(file => when(() => file.size, () => {
             if (file.deleted) return;
-            popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fn))
+            popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fileName))
                 .then(newFileName => {
                     if (!newFileName) return Promise.resolve();
                     return file.rename(`${newFileName}.${ext}`);
@@ -156,7 +153,7 @@ class FileState extends RoutedState {
         return this.currentFile ? this.currentFile.name : tx('title_fileFilterAll');
     }
 
-    fabAction() {
+    fabAction = () => {
         console.log(`file-state.js: fab action`);
         imagePicker.show([], this.upload);
     }

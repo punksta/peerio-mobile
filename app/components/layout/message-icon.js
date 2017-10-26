@@ -6,7 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import chatState from '../messaging/chat-state';
 import routerMain from '../routes/router-main';
-import { helpers } from '../../styles/styles';
+import { helpers, vars } from '../../styles/styles';
 
 @observer
 export default class MessageIcon extends SafeComponent {
@@ -40,8 +40,8 @@ export default class MessageIcon extends SafeComponent {
                     backgroundColor: 'transparent',
                     flexDirection: 'row',
                     justifyContent: 'center',
-                    marginRight: 16,
-                    paddingLeft: 16,
+                    marginRight: vars.spacing.medium.mini2x,
+                    paddingLeft: vars.spacing.medium.mini2x,
                     width: 56,
                     height: 56
                 }}>
