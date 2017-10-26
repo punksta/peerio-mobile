@@ -239,7 +239,7 @@ function popupSetupVideo(title, subTitle, text, link) {
             subTitle: subTitle ? textControl(subTitle) : null,
             contents: text ? textControl(text) : null,
             buttons: [
-                { id: 'cancel', text: tu('Got it!'), secondary: true, action: () => resolve(false) },
+                { id: 'cancel', text: tu('Got it!'), action: () => resolve(false), secondary: true },
                 { id: 'ok', text: tu('Get app'), action: () => Linking.openURL(link), resolve }
             ]
         });

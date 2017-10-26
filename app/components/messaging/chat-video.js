@@ -2,8 +2,6 @@ import { Platform } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { getRandomNumber, getRandomUserSpecificIdB64 } from '../../lib/peerio-icebear/crypto/util.random';
 
-// set the app store link
-// set the jitsi link
 class ChatVideo extends SafeComponent {
     get storeLink() {
         const androidJitsi = 'https://play.google.com/store/apps/details?id=org.jitsi.meet';
