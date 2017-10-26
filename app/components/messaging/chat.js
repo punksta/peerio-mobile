@@ -44,9 +44,9 @@ export default class Chat extends SafeComponent {
     }
 
     get rightIcon() {
-        const title = tx('Setup Jitsi Meet');
-        const content = tx('Jitsi Meet is a web-based encrypted video chat and screen sharing service');
-        const disc = tx('Jitsi app required on mobile devices.');
+        const title = tx('title_videoCall');
+        const content = tx('dialog_videoCall');
+        const disc = tx('disclaimer_videoCall');
         // check whether PreferenceStore.hasSeenJitsiSuggestionPopup = true
         // should the popup be shown, or should a Jitsi link be provided?
         return <VideoIcon action={() => popupSetupVideo(title, content, disc, ChatVideo.storeLink)} />;
