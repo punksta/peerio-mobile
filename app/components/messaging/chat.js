@@ -194,11 +194,11 @@ export default class Chat extends SafeComponent {
     listView() {
         if (chatState.loading) return null;
         const refreshControlTop = this.chat.canGoUp ? (
-            <ActivityIndicator size="large" style={{ padding: 10 }}
+            <ActivityIndicator size="large" style={{ padding: vars.spacing.small.maxi }}
                 onLayout={e => { this.indicatorHeight = e.nativeEvent.layout.height; }} />
         ) : null;
         const refreshControlBottom = this.chat.canGoDown ? (
-            <ActivityIndicator size="large" style={{ padding: 10 }} />
+            <ActivityIndicator size="large" style={{ padding: vars.spacing.small.maxi }} />
         ) : null;
         return (
             <ScrollView
@@ -224,7 +224,7 @@ export default class Chat extends SafeComponent {
         // TODO: archive notice
         /* eslint-disable */
         return true || this.props.archiveNotice ? (
-            <Text style={{ textAlign: 'left', margin: 12, marginTop: 0, marginBottom: 16, color: vars.txtMedium }}>
+            <Text style={{ textAlign: 'left', margin: vars.spacing.small.maxi2x, marginTop: 0, marginBottom: vars.spacing.medium.mini2x, color: vars.txtMedium }}>
                 {tx('title_chatArchive')}
             </Text>
         ) : null;
@@ -234,7 +234,7 @@ export default class Chat extends SafeComponent {
         const zsContainer = {
             borderBottomWidth: 0,
             borderBottomColor: '#CFCFCF',
-            marginBottom: 8
+            marginBottom: vars.spacing.small.midi2x
         };
         const { chat } = this;
         const participants = chat.participants || [];
@@ -256,8 +256,8 @@ export default class Chat extends SafeComponent {
         ));
         return (
             <View style={zsContainer}>
-                <View style={{ flexDirection: 'row', marginRight: 48, paddingLeft: -marginLeft }}>{avatars}</View>
-                <Text style={{ textAlign: 'left', margin: 12, color: vars.txtDark }}>
+                <View style={{ flexDirection: 'row', marginRight: vars.spacing.large.maxi2x, paddingLeft: -marginLeft }}>{avatars}</View>
+                <Text style={{ textAlign: 'left', margin: vars.spacing.small.maxi2x, color: vars.txtDark }}>
                     {tx('title_chatBeginning', { chatName: chat.name })}
                 </Text>
                 {this.archiveNotice}
@@ -268,7 +268,7 @@ export default class Chat extends SafeComponent {
     renderThrow() {
         return (
             <View
-                style={{ flexGrow: 1, paddingBottom: 4 }}>
+                style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
                 {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
                 <View style={{ flex: 1, flexGrow: 1 }}>
                     {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
@@ -285,4 +285,3 @@ Chat.propTypes = {
     hideInput: PropTypes.bool,
     archiveNotice: PropTypes.bool
 };
-

@@ -15,7 +15,7 @@ import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 
 const formStyle = {
-    padding: 20,
+    padding: vars.spacing.medium.midi2x,
     justifyContent: 'space-between'
 };
 
@@ -26,13 +26,14 @@ const footer = {
 };
 
 const addPhotoText = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     color: vars.txtMedium,
+    paddingHorizontal: vars.spacing.small.mini,
     textAlign: 'center'
 };
 
 const addPhotoPlus = [addPhotoText, {
-    fontSize: 30,
+    fontSize: vars.signupFontSize,
     fontWeight: 'bold'
 }];
 

@@ -9,8 +9,8 @@ import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import { mailStore } from '../../lib/icebear';
 
-const padding = 8;
-const marginVertical = 4;
+const padding = vars.spacing.small.midi2x;
+const marginVertical = vars.spacing.small.mini2x;
 
 const row = {
     flexDirection: 'row',
@@ -19,17 +19,17 @@ const row = {
 
 const normalText = {
     color: vars.txtDark,
-    fontSize: 12
+    fontSize: vars.font.size.smaller
 };
 
 const lightText = {
     color: vars.subtleText,
-    fontSize: 12
+    fontSize: vars.font.size.smaller
 };
 
 const boldText = {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: vars.font.size.big,
     height: 36
 };
 
@@ -44,7 +44,7 @@ const textBlock = {
     flex: 1,
     flexGrow: 1,
     padding,
-    fontSize: 12,
+    fontSize: vars.font.size.smaller,
     marginVertical
 };
 

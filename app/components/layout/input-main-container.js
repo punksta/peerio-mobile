@@ -8,6 +8,7 @@ import chatState from '../messaging/chat-state';
 import fileState from '../files/file-state';
 import imagePicker from '../helpers/imagepicker';
 import FileInlineProgress from '../files/file-inline-progress';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class InputMainContainer extends SafeComponent {
@@ -45,7 +46,7 @@ export default class InputMainContainer extends SafeComponent {
         const chat = chatState.currentChat;
         const q = chat && chat.uploadQueue || [];
         return q.map(f => (
-            <View style={{ margin: 12 }} key={f.fileId}>
+            <View style={{ margin: vars.spacing.small.maxi2x }} key={f.fileId}>
                 <FileInlineProgress file={f.fileId} transparentOnFinishUpload />
             </View>
         ));

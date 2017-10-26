@@ -14,7 +14,7 @@ export default class LayoutModalExit extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
+            padding: vars.spacing.small.mini2x,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0
         };
@@ -22,7 +22,7 @@ export default class LayoutModalExit extends SafeComponent {
             flexGrow: 1,
             flexShrink: 1,
             flex: 1,
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.semiBold,
             textAlign: 'center',
             color: 'rgba(0, 0, 0, .54)'

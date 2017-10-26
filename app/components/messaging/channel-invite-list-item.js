@@ -22,9 +22,9 @@ export default class ChannelInviteListItem extends SafeComponent {
         if (!invitation) return null;
         const { kegDbId, channelName, username, timestamp } = invitation;
         const containerStyle = {
-            paddingLeft: 24,
-            paddingRight: 10,
-            paddingVertical: 12,
+            paddingLeft: vars.spacing.medium.maxi2x,
+            paddingRight: vars.spacing.small.maxi,
+            paddingVertical: vars.spacing.small.maxi2x,
             justifyContent: 'space-between',
             alignItems: 'center',
             borderBottomWidth: 1,
@@ -39,7 +39,7 @@ export default class ChannelInviteListItem extends SafeComponent {
 
         const smallTextStyle = {
             color: vars.txtDate,
-            fontSize: 12
+            fontSize: vars.font.size.smaller
         };
         console.log(`kegDbID: `, invitation);
         return (

@@ -15,7 +15,7 @@ export default class ChannelListItem extends SafeComponent {
         if (!chat) return null;
         const containerStyle = {
             height: 48,
-            paddingHorizontal: 18,
+            paddingHorizontal: vars.spacing.medium.midi,
             alignItems: 'center',
             justifyContent: 'space-between',
             backgroundColor: vars.white,
@@ -43,7 +43,7 @@ export default class ChannelListItem extends SafeComponent {
         };
 
         const textCircleStyle = {
-            fontSize: 10,
+            fontSize: vars.font.size.small,
             fontWeight: 'bold',
             color: vars.white
         };

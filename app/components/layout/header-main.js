@@ -20,7 +20,7 @@ export default class HeaderMain extends SafeComponent {
             flexGrow: 1,
             flexShrink: 1,
             color: vars.white,
-            fontSize: 18,
+            fontSize: vars.font.size.big,
             fontWeight: 'bold',
             textAlign: 'center',
             alignItems: 'center',
@@ -59,7 +59,7 @@ export default class HeaderMain extends SafeComponent {
                         numberOfLines={1}
                         style={[textStyle, { paddingRight, paddingLeft }]}>
                         {this.props.title || routerMain.title}
-                        {titleAction && <Text style={{ fontSize: 14 }}>
+                        {titleAction && <Text style={{ fontSize: vars.font.size.normal }}>
                             {'  ▼  '}
                         </Text>}
                     </Text>

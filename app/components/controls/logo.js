@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Image, Dimensions, TouchableOpacity } from 'react-native';
 import Center from './center';
-import { branding } from '../../styles/styles';
+import { branding, vars } from '../../styles/styles';
 
 const origWidth = 1189;
 const origHeight = 472;
@@ -14,7 +14,7 @@ export default class Logo extends Component {
         const { logo } = branding;
         return (
             <TouchableOpacity activeOpacity={1} onPress={this.props.onPress}>
-                <Center style={{ marginBottom: 32, marginTop: 48, flexGrow: 0 }}>
+                <Center style={{ marginBottom: vars.spacing.large.midi, marginTop: vars.spacing.large.maxi2x, flexGrow: 0 }}>
                     <Image testID="logo" style={{ height, width }} source={logo} />
                 </Center>
             </TouchableOpacity>

@@ -40,8 +40,8 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 8,
-    paddingRight: 4,
+    paddingLeft: vars.spacing.small.midi2x,
+    paddingRight: vars.spacing.small.mini2x,
     paddingBottom: 0
 
 };
@@ -64,9 +64,9 @@ const nameMessageContainerStyle = {
     borderColor: 'red',
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingLeft: 0,
-    marginLeft: 6,
-    marginRight: 6,
+    paddingLeft: vars.spacing.medium.mini2x,
+    marginLeft: vars.spacing.small.midi,
+    marginRight: vars.spacing.small.midi,
     paddingTop: 0
 };
 
@@ -76,18 +76,18 @@ const nameTextStyle = {
 
 const fullnameTextStyle = {
     color: vars.txtDark,
-    fontSize: 14
+    fontSize: vars.font.size.normal
 };
 
 const usernameTextStyle = {
     color: vars.txtMedium,
     fontStyle: 'italic',
-    fontSize: 12
+    fontSize: vars.font.size.normal
 };
 
 const dateTextStyle = {
     color: vars.txtDate,
-    marginLeft: 8
+    marginLeft: vars.spacing.small.midi2x
 };
 
 const lastMessageTextStyle = {
@@ -96,7 +96,7 @@ const lastMessageTextStyle = {
     flexShrink: 1,
     fontWeight: vars.font.weight.regular,
     color: vars.txtMedium,
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     lineHeight: 22,
     borderWidth: 0,
     borderColor: 'green'
@@ -207,7 +207,7 @@ export default class Avatar extends SafeComponent {
         const notSentMessageStyle = {
             flexDirection: 'row',
             justifyContent: 'flex-start',
-            marginBottom: 8
+            marginBottom: vars.spacing.small.midi2x
         };
         return this.props.sendError ?
             <View style={notSentMessageStyle}>
@@ -230,8 +230,8 @@ export default class Avatar extends SafeComponent {
         return this.props.error ? {
             backgroundColor: '#ff000020',
             borderRadius: 14,
-            marginVertical: 2,
-            marginHorizontal: 4
+            marginVertical: vars.spacing.small.mini,
+            marginHorizontal: vars.spacing.small.mini2x
         } : null;
     }
 
@@ -342,7 +342,7 @@ export default class Avatar extends SafeComponent {
             flexDirection: 'row',
             justifyContent: 'flex-end',
             borderWidth: 0,
-            marginRight: 4,
+            marginRight: vars.spacing.small.mini2x,
             width: width / 1.5
         };
         let marginLeft = (width / 1.5 - 26 * receipts.length) / receipts.length;
@@ -372,9 +372,9 @@ export default class Avatar extends SafeComponent {
             height: 11
         };
         return (
-            <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', justifyContent: 'flex-start', marginVertical: 8 }}>
+            <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', justifyContent: 'flex-start', marginVertical: vars.spacing.small.midi2x }}>
                 <View style={separator} />
-                <Text style={{ flex: 0, color: vars.txtDark, marginHorizontal: 4 }}>
+                <Text style={{ flex: 0, color: vars.txtDark, marginHorizontal: vars.spacing.small.mini2x }}>
                     {ts === new Date().toLocaleDateString() ? tx('title_today') : ts}
                 </Text>
                 <View style={separator} />
@@ -390,7 +390,7 @@ export default class Avatar extends SafeComponent {
                 <View style={[itemStyle, this.errorStyle]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
-                        style={[this.itemContainerStyle, { paddingLeft: 58, marginRight: 10 }, shrinkStrategy]}>
+                        style={[this.itemContainerStyle, { paddingLeft: vars.spacing.huge.maxi, marginRight: vars.spacing.small.maxi }, shrinkStrategy]}>
                         {this.message}
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
