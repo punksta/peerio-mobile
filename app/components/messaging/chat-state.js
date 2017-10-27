@@ -123,6 +123,11 @@ class ChatState extends RoutedState {
         ).catch(sounds.destroy);
     }
 
+    @action addVideoMessage(link) {
+        this.selfNewMessageCounter++;
+        this.currentChat && this.currentChat.createVideoCall(link);
+    }
+
     @action addAck() {
         this.selfNewMessageCounter++;
         this.currentChat && this.currentChat
