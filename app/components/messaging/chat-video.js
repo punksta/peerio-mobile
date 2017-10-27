@@ -10,6 +10,7 @@ class ChatVideo extends SafeComponent {
         return Platform.OS === 'android' ? androidJitsi : iosJitsi;
     }
 
+    // use icebear crypto to grab a random number, which can then make a random string for the jitsi link
     get jitsiLink() {
         let randomString = getRandomUserSpecificIdB64(getRandomNumber(42, 1337));
         randomString = randomString.replace(/(\/)/, '+');

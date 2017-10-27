@@ -43,6 +43,7 @@ export default class Chat extends SafeComponent {
     }
 
     get rightIcon() {
+        // show video icon then call function: returned link is then passed on to the message-printing function
         return <VideoIcon onAddVideoLink={link => chatState.addMessage(link)} />;
     }
 
