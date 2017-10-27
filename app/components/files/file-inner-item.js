@@ -107,7 +107,7 @@ export default class FileInnerItem extends SafeComponent {
                                 {icon ||
                                 <FileTypeIcon
                                     size='small'
-                                    type='txt'
+                                    type={file.iconType}
                                 />}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>

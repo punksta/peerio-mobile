@@ -65,7 +65,7 @@ export default class FileView extends SafeComponent {
                             {icon ||
                                 <FileTypeIcon
                                     size='large'
-                                    type='txt'
+                                    type={file.iconType}
                             />}
                         </View>
                         <View style={firstColumnStyle}>
