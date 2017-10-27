@@ -245,8 +245,8 @@ function popupSetupVideo(title, subTitle, text, link) {
             subTitle: textControl(tx('dialog_videoCall')),
             contents: textControl(tx('disclaimer_videoCall')),
             buttons: [
-                { id: 'cancel', text: tu('Got it!'), action: () => resolve(true), secondary: true },
-                { id: 'ok', text: tu('Get app'), action: openLink }
+                { id: 'cancel', text: tu('button_gotJitsi'), action: () => resolve(true), secondary: true },
+                { id: 'ok', text: tu('button_notGotJitsi'), action: openLink }
             ]
         });
     });
