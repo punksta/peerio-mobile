@@ -9,6 +9,10 @@ const { bytesToB64, b64ToBytes } = icebear.crypto.cryptoUtil;
 
 const ROOT = Platform.OS === 'ios' ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
 
+function getTemporaryDirectory() {
+    return pathUtils.join(ROOT, 'cache');
+}
+
 export default (fileStream) => {
     class RNFileStream extends fileStream {
 
@@ -98,6 +102,9 @@ export default (fileStream) => {
             return RNFS.unlink(path);
         }
 
+        static getTempCachePath(name) {
+            return pathUtils.join(getTemporaryDirectory(), name);
+        }
     }
 
     return RNFileStream;

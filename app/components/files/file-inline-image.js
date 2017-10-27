@@ -8,7 +8,7 @@ import inlineImageCacheStore from './inline-image-cache-store';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import settingsState from '../settings/settings-state';
-import { clientApp } from '../../lib/icebear';
+import { clientApp, config } from '../../lib/icebear';
 import { T } from '../utils/translator';
 
 const toSettings = text => (
@@ -49,11 +49,17 @@ export default class FileInlineImage extends SafeComponent {
         const { fileId, url, oversized } = image;
         this.tooBig = oversized;
         if (fileId) {
-            when(() => image.cached || image.tmpCached, () => {
+            when(() => image.tmpCached, () => {
                 this.cachedImage = inlineImageCacheStore.getImage(image.tmpCachePath);
             });
-            if (!image.cached && !image.tmpCached) {
-                when(() => this.loadImage, () => image.tryToCacheTemporarily());
+            if (!image.tmpCached) {
+                when(() => this.loadImage, async () => {
+                    if (await config.FileStream.exists(image.tmpCachePath)) {
+                        image.tmpCached = true;
+                        return;
+                    }
+                    image.tryToCacheTemporarily();
+                });
             }
             this.loadImage = clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
         } else {
