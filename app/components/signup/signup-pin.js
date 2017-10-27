@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { t } from '../utils/translator';
 import Pin from '../controls/pin';
-import { wizard } from '../../styles/styles';
+import { wizard, vars } from '../../styles/styles';
 import signupState from './signup-state';
 
 export default class SignupPin extends Component {
@@ -16,7 +16,7 @@ export default class SignupPin extends Component {
     render() {
         const style = wizard;
         return (
-            <View style={{ flexGrow: 1, marginTop: 32 }}>
+            <View style={{ flexGrow: 1, marginTop: vars.spacing.large.midi }}>
                 <Text style={style.text.title}>{t('title_signupStep2')}</Text>
                 <Pin
                     preventSimplePin

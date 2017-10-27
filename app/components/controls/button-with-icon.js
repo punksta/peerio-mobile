@@ -10,7 +10,7 @@ import { vars, button } from '../../styles/styles';
 
 const defaultTextStyle = {
     backgroundColor: 'transparent',
-    paddingTop: 2
+    paddingTop: vars.spacing.small.mini
 };
 
 const containerStyle = {

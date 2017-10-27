@@ -6,7 +6,7 @@ import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
-import { inputMain } from '../../styles/styles';
+import { inputMain, vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { uiState, chatState } from '../states';
 
@@ -61,8 +61,8 @@ export default class InputMain extends SafeComponent {
         return (
             <View style={outerStyle}>
                 {icons.dark('add-circle-outline', this.plus, {
-                    paddingLeft: 4,
-                    paddingRight: 24
+                    paddingLeft: vars.spacing.small.mini2x,
+                    paddingRight: vars.spacing.medium.maxi2x
                 })}
                 <View style={autoExpandingInputContainerStyle}>
                     <AutoExpandingTextInput

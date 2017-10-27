@@ -5,6 +5,7 @@ import { Text, ActivityIndicator, View, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import ErrorCircle from './error-circle';
+import { vars } from '../../styles/styles';
 
 const avatarDiameter = 36;
 
@@ -21,10 +22,10 @@ export default class AvatarCircle extends SafeComponent {
             width,
             height,
             borderRadius: width / 2,
-            margin: 4 * ratio
+            margin: vars.spacing.small.mini2x * ratio
         };
         if (loading) {
-            return <ActivityIndicator style={{ height, margin: 4 }} />;
+            return <ActivityIndicator style={{ height, margin: vars.spacing.small.mini2x }} />;
         }
 
         const { color, tofuError, letter } = contact || {};
@@ -42,7 +43,7 @@ export default class AvatarCircle extends SafeComponent {
             } else {
                 inner = (
                     <View style={coloredAvatarStyle}>
-                        <Text style={{ color: 'white', textAlign: 'center', width: 14 * ratio, fontSize: 12 * ratio }}>
+                        <Text style={{ color: 'white', textAlign: 'center', width: 14 * ratio, fontSize: vars.font.size.smaller * ratio }}>
                             {letter}
                         </Text>
                     </View>

@@ -6,11 +6,12 @@ import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
+import { vars } from '../../styles/styles';
 
 function textControl(str) {
     const text = {
         color: '#000000AA',
-        marginVertical: 10,
+        marginVertical: vars.spacing.small.maxi,
         lineHeight: 22
     };
 
@@ -233,19 +234,19 @@ function popupControl(contents) {
 
 function popupSetupVideo(title, subTitle, text, link) {
     return new Promise((resolve) => {
-        const button = {};
-        button.id = 'ok';
-        button.text = tu('Get app');
-        button.action = () => Linking.openURL(link);
-        button.resolve = resolve;
+        const openLink = () => {
+            resolve(false);
+            console.log(link);
+            Linking.openURL(link);
+        };
         popupState.showPopup({
-            title,
+            title: tx('title_videoCall'),
             type: 'systemWarning',
-            subTitle: subTitle ? textControl(subTitle) : null,
-            contents: text ? textControl(text) : null,
+            subTitle: textControl(tx('dialog_videoCall')),
+            contents: textControl(tx('disclaimer_videoCall')),
             buttons: [
-                { id: 'cancel', text: tu('Got it!'), action: () => resolve(false), secondary: true },
-                button
+                { id: 'cancel', text: tu('Got it!'), action: () => resolve(true), secondary: true },
+                { id: 'ok', text: tu('Get app'), action: openLink }
             ]
         });
     });

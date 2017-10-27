@@ -3,6 +3,7 @@ import { observer } from 'mobx-react/native';
 import { View, Text, Dimensions, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
+import { vars } from '../../styles/styles';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
 const arrowDownZeroState = require('../../assets/arrow-down-zero-state.png');
@@ -18,11 +19,11 @@ export default class FilesPlaceholder extends SafeComponent {
     messaging() {
         const headerStyle = {
             textAlign: 'center',
-            fontSize: 20
+            fontSize: vars.font.size.huge
         };
         const infoStyle = {
             textAlign: 'center',
-            fontSize: 16
+            fontSize: vars.font.size.bigger
         };
         const outerContainerStyle = {
             flex: 1,
@@ -41,19 +42,18 @@ export default class FilesPlaceholder extends SafeComponent {
             alignItems: 'flex-end',
             borderWidth: 0,
             borderColor: 'yellow',
-            paddingRight: 25,
-            paddingBottom: 75
-
+            paddingRight: vars.spacing.large.mini,
+            paddingBottom: vars.spacing.huge.maxi2x
         };
         return (
             <View style={outerContainerStyle}>
                 <View style={{ flex: 1,
                     width: this.width,
                     justifyContent: 'center' }}>
-                    <View style={{ flex: 0, alignItems: 'center', marginTop: 40 }}>
+                    <View style={{ flex: 0, alignItems: 'center', marginTop: vars.spacing.large.maxi }}>
                         <Text style={infoStyle}>{tx('title_uploadShareAndManage')}</Text>
                     </View>
-                    <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: 20, paddingRight: 20 }}>
+                    <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: vars.spacing.medium.midi2x, paddingRight: vars.spacing.medium.midi2x }}>
                         <Image source={fileUploadZeroState}
                                resizeMode="contain"
                                style={{ flex: 1, width: null, height: null }} />

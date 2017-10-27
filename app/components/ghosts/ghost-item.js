@@ -21,7 +21,7 @@ const rowFill = {
 };
 
 const block = {
-    padding: 8,
+    padding: vars.spacing.small.midi2x,
     borderBottomWidth: 1,
     backgroundColor: 'white',
     borderBottomColor: '#00000020'

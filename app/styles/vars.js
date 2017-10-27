@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Platform, Dimensions } from 'react-native';
 import branding from './branding';
 
 const { bg, bgGradient, tabsBg, tabsFg } = branding;
@@ -9,8 +9,15 @@ const layoutPaddingTop = statusBarHeight * 2;
 const r = 40;
 const retentionOffset = { top: r, left: r, bottom: r, right: r };
 
+const { height } = Dimensions.get('window');
+// pixel ratio should be factored into scaleDim somehow: const pixRatio = PixelRatio.get();
+const defaultHeight = 667;
+// scaleDim takes a size value and returns one that is adjusted to the height of the device as it compares to an iPhone 6
+const scaleDim = size => height / defaultHeight * size;
+
 const vars = {
     circle: 10,
+    circleSize: 4,
     bg,
     bgGradient,
     tabsBg,
@@ -69,11 +76,14 @@ const vars = {
     wizardPadding: 36,
     font: {
         size: {
-            normal: 14,
-            smaller: 12,
-            small: 10,
-            big: 18,
-            bigger: 16
+            xsmall: scaleDim(8),
+            normal: scaleDim(14),
+            smaller: scaleDim(12),
+            small: scaleDim(10),
+            big: scaleDim(18),
+            bigger: scaleDim(16),
+            huge: scaleDim(20),
+            massive: scaleDim(24)
         },
         weight: {
             bold: '700',
@@ -81,13 +91,50 @@ const vars = {
             regular: '400'
         }
     },
+    accountTitleFontSize: scaleDim(37),
+    accountListFontSize: scaleDim(21),
+    signupFontSize: scaleDim(30),
+    profileEditFontSize: scaleDim(60),
+    readReceiptFontSize: scaleDim(9),
     inputHeight: 48,
     inputPaddingLeft: 10,
     inputPaddedHeight: 56,
     fabSize: 60,
     fabRight: 16,
     fabBottom: 32,
-    retentionOffset
+    retentionOffset,
+    spacing: {
+        small: {
+            mini: scaleDim(2),
+            mini2x: scaleDim(4),
+            midi: scaleDim(6),
+            midi2x: scaleDim(8),
+            maxi: scaleDim(10),
+            maxi2x: scaleDim(12)
+        },
+        medium: {
+            mini: scaleDim(14),
+            mini2x: scaleDim(16),
+            midi: scaleDim(18),
+            midi2x: scaleDim(20),
+            maxi: scaleDim(22),
+            maxi2x: scaleDim(24)
+        },
+        large: {
+            mini: scaleDim(25),
+            mini2x: scaleDim(30),
+            midi: scaleDim(32),
+            midi2x: scaleDim(36),
+            maxi: scaleDim(40),
+            maxi2x: scaleDim(48)
+        },
+        huge: {
+            mini: scaleDim(50),
+            midi: scaleDim(60),
+            maxi: scaleDim(74),
+            maxi2x: scaleDim(75)
+        }
+    }
 };
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;

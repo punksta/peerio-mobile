@@ -5,6 +5,7 @@ import { User } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
 import { tx, T } from '../utils/translator';
 import settingsState from '../settings/settings-state';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class ChannelUpgradeOffer extends Component {
@@ -14,7 +15,7 @@ export default class ChannelUpgradeOffer extends Component {
 
         const offerStyle = {
             backgroundColor: '#d9f1ef',
-            padding: 12
+            padding: vars.spacing.small.maxi2x
         };
 
         return (
