@@ -233,6 +233,11 @@ function popupControl(contents) {
 
 function popupSetupVideo(title, subTitle, text, link) {
     return new Promise((resolve) => {
+        const button = {};
+        button.id = 'ok';
+        button.text = tu('Get app');
+        button.action = () => Linking.openURL(link);
+        button.resolve = resolve;
         popupState.showPopup({
             title,
             type: 'systemWarning',
@@ -240,7 +245,7 @@ function popupSetupVideo(title, subTitle, text, link) {
             contents: text ? textControl(text) : null,
             buttons: [
                 { id: 'cancel', text: tu('Got it!'), action: () => resolve(false), secondary: true },
-                { id: 'ok', text: tu('Get app'), action: () => Linking.openURL(link), resolve }
+                button
             ]
         });
     });
