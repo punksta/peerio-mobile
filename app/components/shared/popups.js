@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, WebView, View } from 'react-native';
+import { Text, WebView, View, Linking } from 'react-native';
 import { observable } from 'mobx';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
@@ -232,6 +232,27 @@ function popupControl(contents) {
     });
 }
 
+function popupSetupVideo(title, subTitle, text, link) {
+    return new Promise((resolve) => {
+        const openLink = () => {
+            resolve(false);
+            console.log(link);
+            Linking.openURL(link);
+        };
+        popupState.showPopup({
+            title: tx('title_videoCall'),
+            type: 'systemWarning',
+            subTitle: textControl(tx('dialog_videoCall')),
+            contents: textControl(tx('disclaimer_videoCall')),
+            buttons: [
+                { id: 'cancel', text: tu('button_gotJitsi'), action: () => resolve(true), secondary: true },
+                { id: 'ok', text: tu('button_notGotJitsi'), action: openLink }
+            ]
+        });
+    });
+}
+
+
 locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
@@ -251,5 +272,6 @@ export {
     popupDeleteAccount,
     popupControl,
     popupSignOutAutologin,
-    popupCancelConfirm
+    popupCancelConfirm,
+    popupSetupVideo
 };
