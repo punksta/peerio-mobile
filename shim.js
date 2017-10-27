@@ -183,3 +183,22 @@ if (!Array.prototype.random) {
 		return this[Math.floor((Math.random() * this.length))];
 	}
 }
+
+// Implement console.time and console.timeEnd if one of them is missing
+if (!console["time"] || !console["timeEnd"])
+{
+    var timers = {};
+    console["time"] = function(id)
+    {
+        timers[id] = new Date().getTime();
+    };
+    console["timeEnd"] = function(id)
+    {
+        var start = timers[id];
+        if (start)
+        {
+            console.log(id + ": " + (new Date().getTime() - start) + "ms");
+            delete timers[id];
+        }
+    };
+}
