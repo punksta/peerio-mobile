@@ -8,6 +8,7 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import fileState from './file-state';
 import FileSignatureError from './file-signature-error';
+import FileTypeIcon from './file-type-icon';
 
 const width = Dimensions.get('window').width;
 const height = 64;
@@ -81,14 +82,14 @@ export default class FileInnerItem extends SafeComponent {
             fontSize: vars.font.size.smaller,
             fontWeight: vars.font.weight.regular
         };
-        let icon = 'image';
+        let icon = null;
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
         let opacity = 1;
         if (file.uploading /* || !file.readyForDownload */) {
             opacity = 0.5;
         }
-        icon = icons.dark(icon);
+        if (icon) icon = icons.dark(icon);
         const loadingStyle = null;
         const marginLeft = this.props.checkbox === 'always' ? 0 : -checkBoxWidth;
         const arrow = this.props.hideArrow ? null : (
@@ -103,7 +104,11 @@ export default class FileInnerItem extends SafeComponent {
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]}>
                             <View style={[loadingStyle, { flex: 0 }]}>
-                                {icon}
+                                {icon ||
+                                <FileTypeIcon
+                                    size='small'
+                                    type={file.iconType}
+                                />}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
                                 <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
