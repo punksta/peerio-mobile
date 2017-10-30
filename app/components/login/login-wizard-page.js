@@ -90,7 +90,7 @@ const title3 = {
     textAlign: 'center'
 };
 
-const tosStyle = {
+const buttonRowStyle = {
     flexDirection: 'row',
     justifyContent: 'space-between'
 };
@@ -99,7 +99,7 @@ export {
     header, inner, innerSmall, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
     container, topCircleSizeSmall, embeddedImageCircleSize,
-    padding, tosStyle };
+    padding, buttonRowStyle };
 
 @observer
 export default class LoginWizardPage extends SafeComponent {
