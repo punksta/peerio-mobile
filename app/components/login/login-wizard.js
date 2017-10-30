@@ -75,7 +75,7 @@ export default class LoginWizard extends Wizard {
         }];
         const input = {
             marginHorizontal: vars.spacing.medium.maxi2x,
-            height: 24,
+            height: 40,
             backgroundColor: '#FFFFFF90',
             marginTop: vars.spacing.small.maxi2x
         };
