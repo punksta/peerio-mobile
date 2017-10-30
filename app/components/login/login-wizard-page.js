@@ -14,19 +14,19 @@ const container = {
     flex: 1,
     flexGrow: 1,
     padding,
-    paddingTop: padding + vars.statusBarHeight
+    paddingTop: padding + vars.statusBarHeight + 32
 };
 
 const header = {
     justifyContent: 'center',
-    marginBottom: vars.spacing.small.maxi2x
+    marginBottom: vars.spacing.medium.maxi2x
 };
 
-const topCircleSize = 76;
+const topCircleSize = 80;
 
-const embeddedImageCircleSize = topCircleSize * 2 - 20;
+const embeddedImageCircleSize = topCircleSize * 2;
 
-const topCircleSizeSmall = 60;
+const topCircleSizeSmall = 64;
 
 const inner = {
     flex: 1,
@@ -59,7 +59,8 @@ const circleTopSmall = [circleTop, helpers.circle(topCircleSizeSmall * 2), {
 
 const row = {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height: 90
 };
 
 const title1 = {
