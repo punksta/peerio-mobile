@@ -10,7 +10,7 @@ import signupState from './signup-state';
 import { t, tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import LoginWizardPage, {
-    header, innerSmall, circleTopSmall, title2, row, container
+    header, innerSmall, circleTopSmall, title2, buttonRowStyle, container
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
@@ -151,7 +151,7 @@ export default class SignupStep1 extends LoginWizardPage {
                         </TouchableOpacity>
                     </View>
                 </ViewShot>
-                <View style={[row, { justifyContent: 'space-between' }]}>
+                <View style={buttonRowStyle}>
                     {this.button('button_back', () => signupState.prev())}
                     {this.button(signupState.keyBackedUp ? 'button_finish' : 'button_next', () => signupState.next(), false, !signupState.nextAvailable)}
                 </View>
