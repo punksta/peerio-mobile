@@ -13,7 +13,7 @@ export default class VideoIcon extends HeaderIconBase {
         if (prefs.hasSeenJitsiSuggestionPopup || await popupSetupVideo(ChatVideo.storeLink)) {
             prefs.hasSeenJitsiSuggestionPopup = true;
             // add function as a prop which then grabs the link when called
-            this.props.onAddVideoLink('www.google.com');
+            this.props.onAddVideoLink(ChatVideo.jitsiLink);
         }
     }
 }
