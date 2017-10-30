@@ -15,7 +15,8 @@ import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 
 const formStyle = {
-    padding: vars.spacing.medium.midi2x,
+    paddingVertical: vars.spacing.small.midi2x,
+    paddingHorizontal: vars.spacing.medium.midi2x,
     justifyContent: 'space-between'
 };
 

@@ -14,7 +14,7 @@ const container = {
     flex: 1,
     flexGrow: 1,
     padding,
-    paddingTop: padding + vars.statusBarHeight + 16
+    paddingTop: padding + vars.statusBarHeight
 };
 
 const header = {
@@ -22,11 +22,11 @@ const header = {
     marginBottom: vars.spacing.small.maxi2x
 };
 
-const topCircleSize = 72;
+const topCircleSize = 68;
 
 const embeddedImageCircleSize = topCircleSize * 2;
 
-const topCircleSizeSmall = 56;
+const topCircleSizeSmall = 52;
 
 const inner = {
     flex: 1,
