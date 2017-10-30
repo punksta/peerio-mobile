@@ -14,19 +14,19 @@ const container = {
     flex: 1,
     flexGrow: 1,
     padding,
-    paddingTop: padding + vars.statusBarHeight + 32
+    paddingTop: padding + vars.statusBarHeight + 16
 };
 
 const header = {
     justifyContent: 'center',
-    marginBottom: vars.spacing.medium.maxi2x
+    marginBottom: vars.spacing.small.maxi2x
 };
 
-const topCircleSize = 80;
+const topCircleSize = 72;
 
 const embeddedImageCircleSize = topCircleSize * 2;
 
-const topCircleSizeSmall = 64;
+const topCircleSizeSmall = 56;
 
 const inner = {
     flex: 1,
@@ -90,11 +90,16 @@ const title3 = {
     textAlign: 'center'
 };
 
+const tosStyle = {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+};
+
 export {
     header, inner, innerSmall, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
     container, topCircleSizeSmall, embeddedImageCircleSize,
-    padding };
+    padding, tosStyle };
 
 @observer
 export default class LoginWizardPage extends SafeComponent {

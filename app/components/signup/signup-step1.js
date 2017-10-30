@@ -9,7 +9,7 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t, tx, T } from '../utils/translator';
 import LoginWizardPage, {
-    header, innerSmall, circleTopSmall, title2, title3, row, container
+    header, innerSmall, circleTopSmall, title2, title3, container, tosStyle
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
@@ -125,7 +125,7 @@ export default class SignupStep1 extends LoginWizardPage {
                         {signupState.avatarData ? this.avatar : this.avatarSelector}
                     </TouchableOpacity>
                 </View>
-                <View style={[row, { justifyContent: 'space-between' }]}>
+                <View style={[tosStyle, { justifyContent: 'space-between' }]}>
                     {this.button('button_back', () => signupState.routes.app.loginStart())}
                     {this.button('button_next', () => signupState.next(), false, !signupState.nextAvailable)}
                 </View>
