@@ -10,7 +10,6 @@ import testLabel from '../helpers/test-label';
 const padding = vars.spacing.medium.midi2x;
 
 const container = {
-    justifyContent: 'space-between',
     flex: 1,
     flexGrow: 1,
     padding,
