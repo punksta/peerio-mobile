@@ -1,13 +1,11 @@
 import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
-import moment from 'moment';
 import chatState from '../messaging/chat-state';
 import RoutedState from '../routes/routed-state';
 import { fileStore, TinyDb, socket, fileHelpers, clientApp } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { popupInput, popupYesCancel } from '../shared/popups';
-import imagePicker from '../helpers/imagepicker';
 
 class FileState extends RoutedState {
     @observable currentFile = null;
@@ -149,11 +147,6 @@ class FileState extends RoutedState {
 
     get title() {
         return this.currentFile ? this.currentFile.name : tx('title_fileFilterAll');
-    }
-
-    fabAction = () => {
-        console.log(`file-state.js: fab action`);
-        imagePicker.show([], this.upload);
     }
 }
 
