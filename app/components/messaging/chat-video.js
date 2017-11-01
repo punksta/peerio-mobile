@@ -1,8 +1,7 @@
+import React from 'react';
 import { Platform } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { getRandomNumber, getRandomUserSpecificIdB64 } from '../../lib/peerio-icebear/crypto/util.random';
-import { systemMessages } from '../../lib/icebear';
-import { tx } from '../utils/translator';
 
 class ChatVideo extends SafeComponent {
     get storeLink() {

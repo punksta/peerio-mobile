@@ -177,9 +177,21 @@ export default class Avatar extends SafeComponent {
 
     get systemMessage() {
         const { systemMessage } = this.props;
+        console.log('hitting systemMessage');
         return systemMessage && (
             <Text style={[lastMessageTextStyle, systemMessageStyle]}>
                 {systemMessage}
+            </Text>
+        );
+    }
+
+    get videoCallMessage() {
+        const { videoCallMessage } = this.props;
+        console.log('the const is:');
+        console.log(videoCallMessage);
+        return videoCallMessage && (
+            <Text>
+                {videoCallMessage}
             </Text>
         );
     }
@@ -397,6 +409,7 @@ export default class Avatar extends SafeComponent {
                             {this.files}
                             {this.inlineImage}
                             {this.systemMessage}
+                            {this.videoCallMessage}
                             {this.retryCancel}
                         </View>
                     </View>
@@ -422,6 +435,7 @@ export default class Avatar extends SafeComponent {
                             {this.files}
                             {this.inlineImage}
                             {this.systemMessage}
+                            {this.videoCallMessage}
                             {this.retryCancel}
                         </View>
                         {this.props.rightIcon}
@@ -477,6 +491,7 @@ Avatar.propTypes = {
     title: PropTypes.any,
     isChat: PropTypes.any,
     systemMessage: PropTypes.any,
+    videoCallMessage: PropTypes.any,
     firstOfTheDay: PropTypes.bool,
     online: PropTypes.bool,
     error: PropTypes.bool,
