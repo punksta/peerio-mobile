@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
 
@@ -11,11 +10,11 @@ export default class FileTypeIcon extends React.Component {
     render() {
         const iconSource = this.getIconSource();
         let sizeStyle;
-        switch (this.props.size) {
+        switch(this.props.size) {
             case 'small':
                 sizeStyle = { height: 24, width: 24 };
                 break;
-            case 'large': default:
+            case 'large':
                 sizeStyle = { height: 72, width: 72 };
                 break;
         }
@@ -23,7 +22,7 @@ export default class FileTypeIcon extends React.Component {
             <View style={sizeStyle}>
                 <Image
                     style={sizeStyle}
-                    source={iconSource}
+                    source={iconSource} 
                 />
             </View>
         );
@@ -76,8 +75,3 @@ export default class FileTypeIcon extends React.Component {
         return iconSource;
     }
 }
-
-FileTypeIcon.propTypes = {
-    type: PropTypes.string,
-    size: PropTypes.string
-};
