@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, TouchableOpacity, Dimensions, LayoutAnimation } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, LayoutAnimation, Linking } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
@@ -68,6 +68,14 @@ const nameMessageContainerStyle = {
     marginLeft: vars.spacing.small.midi,
     marginRight: vars.spacing.small.midi,
     paddingTop: 0
+};
+
+const videoCallMsgStyle = {
+    color: 'rgba(0,0,0,.38)'
+};
+
+const linkStyle = {
+    color: '#2F80ED'
 };
 
 const nameTextStyle = {
@@ -176,22 +184,25 @@ export default class Avatar extends SafeComponent {
     }
 
     get systemMessage() {
-        const { systemMessage } = this.props;
-        console.log('hitting systemMessage');
+        const { systemMessage, videoCallMessage } = this.props;
+        if (videoCallMessage) {
+            return (
+                <View>
+                    <Text style={[lastMessageTextStyle, videoCallMsgStyle]}>
+                        {systemMessage}
+                    </Text>
+                    <TouchableOpacity onPress={() => Linking.openURL(videoCallMessage)}
+                      pressRetentionOffset={vars.pressRetentionOffset}>
+                        <Text style={[linkStyle]}>
+                            {videoCallMessage}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            );
+        }
         return systemMessage && (
             <Text style={[lastMessageTextStyle, systemMessageStyle]}>
                 {systemMessage}
-            </Text>
-        );
-    }
-
-    get videoCallMessage() {
-        const { videoCallMessage } = this.props;
-        console.log('the const is:');
-        console.log(videoCallMessage);
-        return videoCallMessage && (
-            <Text>
-                {videoCallMessage}
             </Text>
         );
     }
@@ -409,7 +420,6 @@ export default class Avatar extends SafeComponent {
                             {this.files}
                             {this.inlineImage}
                             {this.systemMessage}
-                            {this.videoCallMessage}
                             {this.retryCancel}
                         </View>
                     </View>
@@ -435,7 +445,6 @@ export default class Avatar extends SafeComponent {
                             {this.files}
                             {this.inlineImage}
                             {this.systemMessage}
-                            {this.videoCallMessage}
                             {this.retryCancel}
                         </View>
                         {this.props.rightIcon}
@@ -491,7 +500,6 @@ Avatar.propTypes = {
     title: PropTypes.any,
     isChat: PropTypes.any,
     systemMessage: PropTypes.any,
-    videoCallMessage: PropTypes.any,
     firstOfTheDay: PropTypes.bool,
     online: PropTypes.bool,
     error: PropTypes.bool,
