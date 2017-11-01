@@ -54,6 +54,11 @@ export default class Files extends SafeComponent {
         return <PlusBorderIcon action={action} />;
     }
 
+    get layoutTitle() {
+        if (this.currentFolder.isRoot) return null;
+        return this.currentFolder.name;
+    }
+
     @observable dataSource = null;
     @observable refreshing = false
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
@@ -61,7 +66,7 @@ export default class Files extends SafeComponent {
 
     get data() {
         const { currentFolder } = this;
-        const folders = currentFolder.folders;
+        const folders = currentFolder.folders.sort((f1, f2) => f1.name > f2.name);
         const files = currentFolder.files.sort((f1, f2) => {
             return f2.uploadedAt - f1.uploadedAt;
         });
