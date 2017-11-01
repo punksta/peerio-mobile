@@ -5,8 +5,8 @@ import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import { uiState, fileState } from '../states';
+import contactState from '../contacts/contact-state';
 import icons from '../helpers/icons';
-import routes from '../routes/routes';
 
 const actionCellStyle = {
     flex: 1,
@@ -64,11 +64,11 @@ export default class FileActions extends SafeComponent {
             this.action(t('button_open'), 'open-in-new', this.onViewFile, enabled) :
             this.action(t('title_download'), 'file-download', () => fileState.download(), enabled);
 
+
         return (
             <Animated.View style={[bottomRowStyle, animation]}>
                 {leftAction}
-                {this.action(t('button_share'), 'reply', () => routes.modal.shareFileTo(), file && file.canShare && enabled)}
-                {this.action(t('Move'), 'repeat', () => routes.modal.moveFileTo(), file)}
+                {this.action(t('button_share'), 'reply', () => contactState.shareFile(), file && file.canShare && enabled)}
                 {this.action(t('button_delete'), 'delete', () => fileState.delete(), enabled)}
                 {/* {this.action(t('button_more'), 'more-horiz')} */}
             </Animated.View>
