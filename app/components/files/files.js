@@ -42,9 +42,9 @@ export default class Files extends SafeComponent {
         const createFolder = async () => {
             const result = await popupInputCancelCheckbox(
                 'Create a folder', 'Enter a folder name', null, null, true);
-            if (result === false) return;
+            if (!result) return;
             requestAnimationFrame(() => {
-                this.currentFolder.createFolder(result.value);
+                fileState.store.fileFolders.createFolder(result.value, this.currentFolder);
                 fileState.store.fileFolders.save();
             });
         };

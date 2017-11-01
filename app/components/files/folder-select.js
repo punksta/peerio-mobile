@@ -7,7 +7,6 @@ import FolderInnerItem from './folder-inner-item';
 import fileState from './file-state';
 import { vars } from '../../styles/styles';
 import Center from '../controls/center';
-import { t } from '../utils/translator';
 import icons from '../helpers/icons';
 import routes from '../routes/routes';
 
@@ -59,19 +58,24 @@ export default class FolderSelect extends SafeComponent {
     }
 
     item = folder => {
+        const selectFolder = () => {
+            const file = fileState.currentFile;
+            if (!file) return;
+            folder.moveInto(file);
+            fileState.store.fileFolders.save();
+            routes.modal.discard();
+        };
+        const changeFolder = () => {
+            this.currentFolder = folder;
+        };
         return (
             <FolderInnerItem
                 radio
                 key={folder.folderId}
                 folder={folder}
-                onSelect={() => {
-                    const file = fileState.currentFile;
-                    if (!file) return;
-                    folder.moveInto(file);
-                    fileState.store.fileFolders.save();
-                    routes.modal.discard();
-                }}
-                onPress={() => { this.currentFolder = folder; }} />
+                hideArrow={!folder.hasNested}
+                onSelect={selectFolder}
+                onPress={folder.hasNested ? changeFolder : selectFolder} />
         );
     }
 
