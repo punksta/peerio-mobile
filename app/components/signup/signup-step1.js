@@ -9,7 +9,7 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t, tx, T } from '../utils/translator';
 import LoginWizardPage, {
-    headerSignup, innerSmall, circleTopSmall, title2, title3, container, buttonRowStyle
+    header2, innerSmall, circleTopSmall, title2, title3, container, buttonRowStyle
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
@@ -122,7 +122,7 @@ export default class SignupStep1 extends LoginWizardPage {
     render() {
         return (
             <View style={container}>
-                <View style={headerSignup}>
+                <View style={header2}>
                     <Text style={title2}>{tx('title_createAccount')}</Text>
                 </View>
                 <View>

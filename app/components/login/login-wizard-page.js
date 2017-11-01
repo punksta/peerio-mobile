@@ -21,7 +21,7 @@ const headerWelcome = {
     marginBottom: vars.spacing.large.maxi
 };
 
-const headerSignup = {
+const header2 = {
     justifyContent: 'center',
     marginBottom: vars.spacing.small.midi2x
 };
@@ -104,7 +104,7 @@ const buttonRowStyle = {
 };
 
 export {
-    headerWelcome, headerSignup, inner, innerSmall, title1, title1Black, title2,
+    headerWelcome, header2, inner, innerSmall, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
     container, topCircleSizeSmall, embeddedImageCircleSize,
     padding, buttonRowStyle };
