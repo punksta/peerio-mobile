@@ -48,7 +48,9 @@ export default class Files extends SafeComponent {
                 fileState.store.fileFolders.save();
             });
         };
-        const action = () => imagePicker.show(buttons, fileState.upload, createFolder);
+        const upload = (uri, fn, fileData) =>
+            fileState.upload(uri, fn, fileData, false, this.currentFolder);
+        const action = () => imagePicker.show(buttons, upload, createFolder);
         return <PlusBorderIcon action={action} />;
     }
 
