@@ -113,7 +113,7 @@ export default class FolderSelect extends SafeComponent {
             paddingBottom: 0,
             height: vars.headerHeight,
             borderBottomWidth: 1,
-            borderBottomColor: vars.txtLight
+            borderBottomColor: '#EFEFEF'
         };
         const style = {
             flexGrow: 1

@@ -7,6 +7,7 @@ import FilesPlaceholder from './files-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileActions from './file-actions';
+import FolderActionSheet from './folder-action-sheet';
 import fileState from './file-state';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import { upgradeForFiles } from '../payments/payments';
@@ -107,7 +108,7 @@ export default class Files extends SafeComponent {
                 key={file.fileId || file.folderId}
                 file={file}
                 onChangeFolder={this.onChangeFolder}
-                onLongPress={() => fileState.store.fileFolders.deleteFolder(file)} />
+                onLongPress={() => this._folderActionSheet.show(file)} />
         );
     }
 
@@ -156,6 +157,7 @@ export default class Files extends SafeComponent {
                 </View>
                 <FileActions height={this.actionsHeight} />
                 <ProgressOverlay enabled={fileState.store.loading} />
+                <FolderActionSheet ref={ref => { this._folderActionSheet = ref; }} />
             </View>
         );
     }
