@@ -13,12 +13,17 @@ const container = {
     flex: 1,
     flexGrow: 1,
     padding,
-    paddingTop: padding + vars.statusBarHeight
+    paddingTop: vars.spacing.huge.minixx + vars.statusBarHeight
 };
 
-const header = {
+const headerWelcome = {
     justifyContent: 'center',
-    marginBottom: vars.spacing.small.maxi2x
+    marginBottom: vars.spacing.large.maxi
+};
+
+const headerSignup = {
+    justifyContent: 'center',
+    marginBottom: vars.spacing.small.midi2x
 };
 
 const topCircleSize = 68;
@@ -66,20 +71,24 @@ const title1 = {
     color: vars.white,
     textAlign: 'center',
     fontSize: vars.font.size.massive,
-    fontWeight: 'bold',
+    fontWeight: '500',
     marginBottom: vars.spacing.small.maxi
 };
 
-const title1Black = [title1, { color: vars.txtDark, fontSize: vars.font.size.huge, marginBottom: vars.spacing.medium.midi2x }];
+const title1Black = [title1, {
+    color: vars.txtDark,
+    fontSize: vars.font.size.huge,
+    marginBottom: vars.spacing.medium.midi2x
+}];
 
 const title2 = {
     color: vars.white,
     textAlign: 'center',
-    fontSize: vars.font.size.big
+    fontSize: vars.font.size.bigger
 };
 
 const title2Black = [title2, {
-    marginHorizontal: vars.spacing.huge.midi,
+    marginHorizontal: vars.spacing.huge.midi2x,
     marginVertical: vars.spacing.small.midi,
     color: vars.txtDark
 }];
@@ -95,7 +104,7 @@ const buttonRowStyle = {
 };
 
 export {
-    header, inner, innerSmall, title1, title1Black, title2,
+    headerWelcome, headerSignup, inner, innerSmall, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
     container, topCircleSizeSmall, embeddedImageCircleSize,
     padding, buttonRowStyle };

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, Image, ScrollView, LayoutAnimation, Dimensions } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { t, tx } from '../utils/translator';
 import loginState from './login-state';
 import LoginWizardPage, {
-    header, inner, padding, title1, title1Black, title2, title2Black, row, circleTop, container, embeddedImageCircleSize
+    headerWelcome, inner, padding, title1, title1Black, title2, title2Black, row, circleTop, container, embeddedImageCircleSize
 } from './login-wizard-page';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
@@ -69,7 +69,7 @@ export default class LoginStart extends LoginWizardPage {
         return (
             <View style={container}>
                 <DebugMenuTrigger>
-                    <View style={header}>
+                    <View style={headerWelcome}>
                         <Text style={title1}>{t('title_welcome')}</Text>
                         <Text style={title2}>{t('title_welcomeSubHeading')}</Text>
                     </View>
