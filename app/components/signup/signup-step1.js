@@ -9,7 +9,7 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t, tx, T } from '../utils/translator';
 import LoginWizardPage, {
-    header, innerSmall, circleTopSmall, title2, title3, container, buttonRowStyle
+    headerSignup, innerSmall, circleTopSmall, title2, title3, container, buttonRowStyle
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
@@ -28,15 +28,26 @@ const footer = {
 
 const addPhotoText = {
     fontSize: vars.font.size.normal,
-    color: vars.txtMedium,
+    color: vars.txtLightGrey,
     paddingHorizontal: vars.spacing.small.mini,
     textAlign: 'center'
 };
 
-const addPhotoPlus = [addPhotoText, {
+const addPhotoOptionalText = {
+    fontSize: vars.font.size.small,
+    color: vars.txtLightGrey,
+    paddingHorizontal: vars.spacing.small.mini,
+    textAlign: 'center'
+};
+
+const addPhotoPlus = {
     fontSize: vars.signupFontSize,
-    fontWeight: 'bold'
-}];
+    color: vars.txtLightGrey,
+    paddingHorizontal: vars.spacing.small.mini,
+    textAlign: 'center',
+    marginTop: -10,
+    marginBottom: -10
+};
 
 const tosParser = {
     emphasis: text => <Bold>{text}</Bold>,
@@ -51,7 +62,7 @@ const tosParser = {
 
 const signupTextStyle = [title3, {
     color: vars.white,
-    fontSize: 10
+    fontSize: 12
 }];
 
 @observer
@@ -66,7 +77,8 @@ export default class SignupStep1 extends LoginWizardPage {
         return (
             <View>
                 <Text style={addPhotoPlus}>+</Text>
-                <Text style={addPhotoText}>{t('title_signupAvatar')}</Text>
+                <Text style={addPhotoText}>{t('title_avatarInstructions')}</Text>
+                <Text style={addPhotoOptionalText}>{t('title_optional')}</Text>
             </View>
         );
     }
@@ -110,7 +122,7 @@ export default class SignupStep1 extends LoginWizardPage {
     render() {
         return (
             <View style={container}>
-                <View style={header}>
+                <View style={headerSignup}>
                     <Text style={title2}>{tx('title_createAccount')}</Text>
                 </View>
                 <View>
