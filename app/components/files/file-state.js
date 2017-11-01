@@ -1,13 +1,11 @@
 import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
-import moment from 'moment';
 import chatState from '../messaging/chat-state';
 import RoutedState from '../routes/routed-state';
 import { fileStore, TinyDb, socket, fileHelpers, clientApp } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { popupInput, popupYesCancel } from '../shared/popups';
-import imagePicker from '../helpers/imagepicker';
 
 class FileState extends RoutedState {
     @observable currentFile = null;
@@ -118,23 +116,28 @@ class FileState extends RoutedState {
         return this.upload(uri, fileName, fileData, true);
     }
 
-    upload(uri, fn, fileData, inline) {
+    async upload(uri, fn, fileData, inline, folder) {
         const fileName = fileHelpers.getFileName(fn || fileData.path || uri);
         const ext = fileHelpers.getFileExtension(fileName);
         const chat = chatState.currentChat;
         const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName) :
             () => fileStore.upload(uri, fileName);
-        return new Promise(resolve => {
+        const file = await new Promise(resolve =>
             when(() => socket.authenticated,
-                () => resolve(uploader(uri, fn)));
-        }).then(file => when(() => file.size, () => {
+                () => resolve(uploader(uri, fn))
+        ));
+        folder && when(() => file.fileId, () => {
+            folder.moveInto(file);
+            this.store.fileFolders.save();
+        });
+        when(() => file.size, () => {
             if (file.deleted) return;
             popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fileName))
                 .then(newFileName => {
                     if (!newFileName) return Promise.resolve();
                     return file.rename(`${newFileName}.${ext}`);
                 });
-        }));
+        });
     }
 
     cancelUpload(file) {
@@ -149,11 +152,6 @@ class FileState extends RoutedState {
 
     get title() {
         return this.currentFile ? this.currentFile.name : tx('title_fileFilterAll');
-    }
-
-    fabAction = () => {
-        console.log(`file-state.js: fab action`);
-        imagePicker.show([], this.upload);
     }
 }
 

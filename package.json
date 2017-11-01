@@ -6,9 +6,9 @@
     "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
     "commit": "git-cz",
     "code:packager": "./node_modules/react-native/packager/packager.sh --reset-cache",
-    "icebear:compile": "babel node_modules/@peerio/peerio-icebear/src -d app/lib/peerio-icebear && bash ./scripts/remove-require-crypto.sh",
+    "icebear:compile": "babel node_modules/peerio-icebear/src -d app/lib/peerio-icebear && bash ./scripts/remove-require-crypto.sh",
     "icebear:watch": "npm run icebear:compile -- -w",
-    "start": "source env.sh && npm-run-all -l -p icebear:watch code:packager",
+    "start": "npm link peerio-icebear && source env.sh && npm run icebear:compile && npm run code:packager",
     "expandoo": "source env-expandoo.sh && ./node_modules/react-native/packager/packager.sh --reset-cache",
     "clean": "rm -rf ios/build",
     "ios": "npm install && npm update && npm run postinstall && react-native run-ios",
@@ -29,7 +29,6 @@
     "commit-msg": "validate-commit-msg"
   },
   "dependencies": {
-    "@peerio/peerio-icebear": "git+ssh://git@github.com/PeerioTechnologies/peerio-icebear.git#mobile-stable",
     "babel-cli": "6.22.2",
     "base64-js": "1.2.0",
     "blake2s-js": "1.2.2",
@@ -50,6 +49,7 @@
     "path": "^0.12.7",
     "pbkdf2": "git+https://github.com/PeerioTechnologies/pbkdf2.git",
     "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#icebear",
+    "peerio-icebear": "git+ssh://git@github.com/PeerioTechnologies/peerio-icebear.git#feat-file-folders",
     "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
     "process": "0.11.9",
     "prop-types": "15.5.10",
