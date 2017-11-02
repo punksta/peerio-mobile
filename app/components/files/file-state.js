@@ -115,15 +115,32 @@ class FileState extends RoutedState {
     }
 
     uploadInline = (uri, fileName, fileData) => {
-        return this.upload(uri, fileName, fileData, true);
+        return this.uploadToCurrentChat(uri, fileName, fileData, true);
     }
 
-    upload(uri, fn, fileData, inline) {
+    uploadToCurrentChat(uri, fn, fileData) {
         const fileName = fileHelpers.getFileName(fn || fileData.path || uri);
         const ext = fileHelpers.getFileExtension(fileName);
         const chat = chatState.currentChat;
-        const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName) :
-            () => fileStore.upload(uri, fileName);
+        const file = chat.uploadAndShareFile(uri, fileName, false, () => {
+            return popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fileName))
+                .then(
+                    newFileName => {
+                        if (!newFileName) return Promise.resolve();
+                        return file.rename(`${newFileName}.${ext}`);
+                    }
+                );
+        });
+        return new Promise(resolve => {
+            when(() => socket.authenticated,
+                () => resolve(file));
+        });
+    }
+
+    uploadToFiles(uri, fn, fileData) {
+        const fileName = fileHelpers.getFileName(fn || fileData.path || uri);
+        const ext = fileHelpers.getFileExtension(fileName);
+        const uploader = () => fileStore.upload(uri, fileName);
         return new Promise(resolve => {
             when(() => socket.authenticated,
                 () => resolve(uploader(uri, fn)));
@@ -153,7 +170,7 @@ class FileState extends RoutedState {
 
     fabAction = () => {
         console.log(`file-state.js: fab action`);
-        imagePicker.show([], this.upload);
+        imagePicker.show([], this.uploadToFiles);
     }
 }
 
