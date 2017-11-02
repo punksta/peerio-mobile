@@ -29,7 +29,6 @@
     "commit-msg": "validate-commit-msg"
   },
   "dependencies": {
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v2.13.4",
     "babel-cli": "6.22.2",
     "base64-js": "1.2.0",
     "blake2s-js": "1.2.2",
@@ -50,6 +49,7 @@
     "path": "^0.12.7",
     "pbkdf2": "github:PeerioTechnologies/pbkdf2",
     "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v2.13.4",
     "peerio-translator": "github:PeerioTechnologies/peerio-translator#v1.0.0",
     "process": "0.11.9",
     "prop-types": "15.5.10",
@@ -74,7 +74,7 @@
     "react-native-linear-gradient": "2.0.0",
     "react-native-mail": "3.0.1",
     "react-native-menu": "^0.21.0",
-    "react-native-popup-menu": "^0.8.3",
+    "react-native-popup-menu": "0.8.4",
     "react-native-privacy-snapshot": "github:PeerioTechnologies/react-native-privacy-snapshot",
     "react-native-push-notification": "3.0.0",
     "react-native-randombytes": "2.1.0",
@@ -86,7 +86,8 @@
     "react-native-view-shot": "github:PeerioTechnologies/react-native-view-shot",
     "scrypt-async": "1.3.1",
     "socket.io-client": "2.0.4",
-    "tweetnacl": "1.0.0"
+    "tweetnacl": "1.0.0",
+    "url-regex": "4.1.1"
   },
   "devDependencies": {
     "appium": "1.7.1",
