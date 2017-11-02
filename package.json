@@ -114,6 +114,7 @@
     "sinon": "^1.17.7",
     "sinon-chai": "^2.14.0",
     "standard-version": "^4.0.0",
+    "url-regex": "4.1.1",
     "user-home-cli": "^1.0.1",
     "validate-commit-message": "3.0.1"
   },
