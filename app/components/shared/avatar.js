@@ -17,6 +17,8 @@ import CorruptedMessage from './corrupted-message';
 import tagify from './tagify';
 import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
+import VideoIcon from '../layout/video-icon';
+import HeaderIconBase from '../layout/header-icon-base';
 
 const itemStyle = {
     flex: 1,
@@ -185,12 +187,14 @@ export default class Avatar extends SafeComponent {
 
     get systemMessage() {
         const { systemMessage, videoCallMessage } = this.props;
+        console.log(this.props);
         if (videoCallMessage) {
             return (
                 <View>
                     <Text style={[lastMessageTextStyle, videoCallMsgStyle]}>
                         {systemMessage}
                     </Text>
+                    <HeaderIconBase icon={'videocam'} />
                     <TouchableOpacity onPress={() => Linking.openURL(videoCallMessage)}
                       pressRetentionOffset={vars.pressRetentionOffset}>
                         <Text style={[linkStyle]}>
