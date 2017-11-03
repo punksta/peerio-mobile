@@ -49,7 +49,7 @@ For example:
 cd peerio-icebear
 npm link
 cd ../peerio-mobile
-npm link @peerio/peerio-icebear 
+npm link peerio-icebear 
 npm install
 ```
 **N.B.** Linking any other module with `npm link` will *not* work with the ReactMobile packager.
