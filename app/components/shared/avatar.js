@@ -192,12 +192,14 @@ export default class Avatar extends SafeComponent {
                     <Text style={[lastMessageTextStyle, videoCallMsgStyle]}>
                         {systemMessage}
                     </Text>
-                    {icons.plaindark('videocam', 18)}
                     <TouchableOpacity onPress={() => Linking.openURL(videoCallMessage)}
                       pressRetentionOffset={vars.pressRetentionOffset}>
-                        <Text style={[linkStyle]}>
-                            {videoCallMessage}
-                        </Text>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            {icons.plaindark('videocam', 16)}
+                            <Text style={[linkStyle]}>
+                                {videoCallMessage}
+                            </Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
             );
