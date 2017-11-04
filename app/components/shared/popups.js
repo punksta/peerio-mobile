@@ -232,18 +232,17 @@ function popupControl(contents) {
     });
 }
 
-function popupSetupVideo(title, subTitle, text, link) {
+function popupSetupVideo(titleText, subText, disc, link) {
     return new Promise((resolve) => {
         const openLink = () => {
             resolve(false);
-            console.log(link);
             Linking.openURL(link);
         };
         popupState.showPopup({
-            title: tx('title_videoCall'),
+            title: titleText,
             type: 'systemWarning',
-            subTitle: textControl(tx('dialog_videoCall')),
-            contents: textControl(tx('disclaimer_videoCall')),
+            subTitle: textControl(subText),
+            contents: textControl(disc),
             buttons: [
                 { id: 'cancel', text: tu('button_gotJitsi'), action: () => resolve(true), secondary: true },
                 { id: 'ok', text: tu('button_notGotJitsi'), action: openLink }
