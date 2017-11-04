@@ -13,7 +13,7 @@ class ChatVideo extends SafeComponent {
     // use icebear crypto to grab a random number, which can then make a random string for the jitsi link
     get jitsiLink() {
         let randomString = getRandomUserSpecificIdB64(getRandomNumber(42, 1337));
-        randomString = randomString.replace(/(\/)/, '+');
+        randomString = randomString.replace(/(.{36}$)/, '').replace(/(\/)/, '+');
         const jitsiLink = `https://meet.jit.si/${randomString}`;
         const message = jitsiLink;
         return message;

@@ -185,8 +185,8 @@ export default class Avatar extends SafeComponent {
 
     get systemMessage() {
         const { systemMessage, videoCallMessage } = this.props;
-        const videoCallShort = videoCallMessage.replace(/(https:\/\/)/, '');
         if (videoCallMessage) {
+            const videoCallShort = videoCallMessage.replace(/(https:\/\/)/, '');
             return (
                 <View>
                     <Text style={[lastMessageTextStyle, videoCallMsgStyle]}>
