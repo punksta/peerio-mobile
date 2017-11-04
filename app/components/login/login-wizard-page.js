@@ -10,23 +10,27 @@ import testLabel from '../helpers/test-label';
 const padding = vars.spacing.medium.midi2x;
 
 const container = {
-    justifyContent: 'space-between',
     flex: 1,
     flexGrow: 1,
     padding,
-    paddingTop: padding + vars.statusBarHeight
+    paddingTop: vars.spacing.huge.minixx + vars.statusBarHeight
 };
 
-const header = {
+const headerWelcome = {
     justifyContent: 'center',
-    marginBottom: vars.spacing.small.maxi2x
+    marginBottom: vars.spacing.large.maxi
 };
 
-const topCircleSize = 76;
+const header2 = {
+    justifyContent: 'center',
+    marginBottom: vars.spacing.small.midi2x
+};
 
-const embeddedImageCircleSize = topCircleSize * 2 - 20;
+const topCircleSize = 68;
 
-const topCircleSizeSmall = 60;
+const embeddedImageCircleSize = topCircleSize * 2;
+
+const topCircleSizeSmall = 52;
 
 const inner = {
     flex: 1,
@@ -59,27 +63,32 @@ const circleTopSmall = [circleTop, helpers.circle(topCircleSizeSmall * 2), {
 
 const row = {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height: 90
 };
 
 const title1 = {
     color: vars.white,
     textAlign: 'center',
     fontSize: vars.font.size.massive,
-    fontWeight: 'bold',
+    fontWeight: '500',
     marginBottom: vars.spacing.small.maxi
 };
 
-const title1Black = [title1, { color: vars.txtDark, fontSize: vars.font.size.huge, marginBottom: vars.spacing.medium.midi2x }];
+const title1Black = [title1, {
+    color: vars.txtDark,
+    fontSize: vars.font.size.huge,
+    marginBottom: vars.spacing.medium.midi2x
+}];
 
 const title2 = {
     color: vars.white,
     textAlign: 'center',
-    fontSize: vars.font.size.big
+    fontSize: vars.font.size.bigger
 };
 
 const title2Black = [title2, {
-    marginHorizontal: vars.spacing.huge.midi,
+    marginHorizontal: vars.spacing.huge.midi2x,
     marginVertical: vars.spacing.small.midi,
     color: vars.txtDark
 }];
@@ -89,11 +98,16 @@ const title3 = {
     textAlign: 'center'
 };
 
+const buttonRowStyle = {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+};
+
 export {
-    header, inner, innerSmall, title1, title1Black, title2,
+    headerWelcome, header2, inner, innerSmall, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
     container, topCircleSizeSmall, embeddedImageCircleSize,
-    padding };
+    padding, buttonRowStyle };
 
 @observer
 export default class LoginWizardPage extends SafeComponent {
