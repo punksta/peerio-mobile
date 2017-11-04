@@ -185,7 +185,7 @@ export default class Avatar extends SafeComponent {
 
     get systemMessage() {
         const { systemMessage, videoCallMessage } = this.props;
-        console.log(this.props);
+        const videoCallShort = videoCallMessage.replace(/(https:\/\/)/, '');
         if (videoCallMessage) {
             return (
                 <View>
@@ -197,7 +197,7 @@ export default class Avatar extends SafeComponent {
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             {icons.plaindark('videocam', 16)}
                             <Text style={[linkStyle]}>
-                                {videoCallMessage}
+                                {videoCallShort}
                             </Text>
                         </View>
                     </TouchableOpacity>
