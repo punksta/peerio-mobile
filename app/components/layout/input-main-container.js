@@ -2,12 +2,10 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
-import { tx } from '../utils/translator';
 import InputMain from './input-main';
 import chatState from '../messaging/chat-state';
-import fileState from '../files/file-state';
-import imagePicker from '../helpers/imagepicker';
 import FileInlineProgress from '../files/file-inline-progress';
+import FilesActionSheet from '../files/files-action-sheet';
 import { vars } from '../../styles/styles';
 
 @observer
@@ -23,24 +21,7 @@ export default class InputMainContainer extends SafeComponent {
 
     sendAck = () => chatState.addAck();
 
-    addFiles = () => {
-        const buttons = [
-            { name: 'share', title: tx('title_shareFromFiles') }
-        ];
-        imagePicker.show(
-            buttons,
-            fileState.uploadInline,
-            () => {
-                fileState.selectFiles()
-                    .then(files => {
-                        if (files.length) {
-                            chatState.addMessage('', files);
-                        }
-                    })
-                    .catch(() => {});
-            }
-        );
-    }
+    plus = () => this.filesActionSheet.show();
 
     uploadQueue() {
         const chat = chatState.currentChat;
@@ -69,10 +50,11 @@ export default class InputMainContainer extends SafeComponent {
                 <View style={s}>
                     <InputMain
                         {...this.props}
-                        plus={this.addFiles}
+                        plus={this.plus}
                         sendAck={this.sendAck}
                         send={this.send} />
                 </View>
+                <FilesActionSheet shareFromPeerio ref={ref => { this.filesActionSheet = ref; }} />
             </View>
         );
     }

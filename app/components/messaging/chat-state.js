@@ -116,11 +116,16 @@ class ChatState extends RoutedState {
         this.routerMain.chats(this.store.activeChat, true);
     }
 
-    @action addMessage(msg, files) {
+    @action addMessage(msg) {
         this.selfNewMessageCounter++;
-        this.currentChat && (
-            files ? this.currentChat.shareFiles(files) : this.currentChat.sendMessage(msg)
-        ).catch(sounds.destroy);
+        this.currentChat && msg &&
+            this.currentChat.sendMessage(msg).catch(sounds.destroy);
+    }
+
+    @action shareFiles(files) {
+        this.selfNewMessageCounter++;
+        this.currentChat && files && files.length &&
+            this.currentChat.shareFiles(files).catch(sounds.destroy);
     }
 
     @action addAck() {

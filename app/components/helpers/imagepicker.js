@@ -10,8 +10,8 @@ let lastCall = null;
 
 const ANDROID_PICK_ACTION = 'android-pick';
 
-const showImagePicker = async options => new Promise(resolve =>
-    ImagePicker.showImagePicker(options, resolve));
+const launchGallery = async options => new Promise(resolve =>
+    ImagePicker.launchImageLibrary(options, resolve));
 
 const launchCamera = async options => new Promise(resolve =>
     ImagePicker.launchCamera(options, resolve));
@@ -27,7 +27,7 @@ function normalizeUri(response) {
     return uri;
 }
 
-function processResponse(response, imageCallback) {
+function processResponse(response) {
     if (!response.path && response.uri) {
         response.path = response.uri;
     }
@@ -35,12 +35,19 @@ function processResponse(response, imageCallback) {
         const ext = fileHelpers.getFileExtension(response.path);
         response.fileName = `${moment(Date.now()).format('llll')}.${ext}`;
     }
-    imageCallback(normalizeUri(response), response.fileName, response);
+    const { fileName, path, uri } = response;
+    const normalizedFileName = fileHelpers.getFileName(fileName || path || uri);
+    const ext = fileHelpers.getFileExtension(normalizedFileName);
+    return { url: normalizeUri(response), fileName: normalizedFileName, ext, response };
 }
 
 export default {
-    showImagePicker,
+    launchGallery,
     showFilePicker,
+
+    async getImageFromGallery() {
+        return processResponse(await launchGallery({ noData: true }));
+    },
 
     async show(_customButtons, imageCallback, customCallback) {
         const customButtons = _customButtons || [];
@@ -58,7 +65,7 @@ export default {
             options.chooseFromLibraryButtonTitle = null;
         }
 
-        let response = await showImagePicker(options);
+        let response = await launchGallery(options);
         console.log(`imagepicker.js: got response`);
         console.debug(response);
         // user selected camera and needs to confirm permissions

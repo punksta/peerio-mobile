@@ -8,21 +8,24 @@ import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileActions from './file-actions';
 import FolderActionSheet from './folder-action-sheet';
+import FilesActionSheet from './files-action-sheet';
 import fileState from './file-state';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import { upgradeForFiles } from '../payments/payments';
 import BackIcon from '../layout/back-icon';
 import { vars } from '../../styles/styles';
-import imagePicker from '../helpers/imagepicker';
-import { popupInputCancelCheckbox } from '../shared/popups';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
+let filesActionSheet = null;
+
+function backFolderAction() {
+    fileState.currentFolder = fileState.currentFolder.parent;
+}
+
 @observer
 export default class Files extends SafeComponent {
-    @observable currentFolder = fileState.store.fileFolders.root;
-
     constructor(props) {
         super(props);
         this.dataSource = new ListView.DataSource({
@@ -31,33 +34,17 @@ export default class Files extends SafeComponent {
     }
 
     get leftIcon() {
-        if (this.currentFolder.isRoot) return null;
-        const action = () => { this.currentFolder = this.currentFolder.parent; };
-        return <BackIcon action={action} />;
+        if (fileState.currentFolder.isRoot) return null;
+        return <BackIcon action={backFolderAction} />;
     }
 
     get rightIcon() {
-        const buttons = [
-            { name: 'createFolder', title: 'Create a folder' }
-        ];
-        const createFolder = async () => {
-            const result = await popupInputCancelCheckbox(
-                'Create a folder', 'Enter a folder name', null, null, true);
-            if (!result) return;
-            requestAnimationFrame(() => {
-                fileState.store.fileFolders.createFolder(result.value, this.currentFolder);
-                fileState.store.fileFolders.save();
-            });
-        };
-        const upload = (uri, fn, fileData) =>
-            fileState.upload(uri, fn, fileData, false, this.currentFolder);
-        const action = () => imagePicker.show(buttons, upload, createFolder);
-        return <PlusBorderIcon action={action} />;
+        return <PlusBorderIcon action={() => filesActionSheet.show()} />;
     }
 
     get layoutTitle() {
-        if (this.currentFolder.isRoot) return null;
-        return this.currentFolder.name;
+        if (fileState.currentFolder.isRoot) return null;
+        return fileState.currentFolder.name;
     }
 
     @observable dataSource = null;
@@ -66,7 +53,7 @@ export default class Files extends SafeComponent {
     actionsHeight = new Animated.Value(0)
 
     get data() {
-        const { currentFolder } = this;
+        const { currentFolder } = fileState;
         const folders = currentFolder.folders.sort((f1, f2) => f1.name > f2.name);
         const files = currentFolder.files.sort((f1, f2) => {
             return f2.uploadedAt - f1.uploadedAt;
@@ -100,7 +87,7 @@ export default class Files extends SafeComponent {
         }, true);
     }
 
-    onChangeFolder = folder => { this.currentFolder = folder; }
+    onChangeFolder = folder => { fileState.currentFolder = folder; }
 
     item = file => {
         return (
@@ -133,7 +120,7 @@ export default class Files extends SafeComponent {
     }
 
     get noFilesInFolder() {
-        if (this.data.length || this.currentFolder.isRoot) return null;
+        if (this.data.length || fileState.currentFolder.isRoot) return null;
         const s = {
             color: vars.txtMedium,
             textAlign: 'center',
@@ -143,7 +130,7 @@ export default class Files extends SafeComponent {
     }
 
     renderThrow() {
-        const body = (this.data.length || !this.currentFolder.isRoot) ?
+        const body = (this.data.length || !fileState.currentFolder.isRoot) ?
             this.listView() : !fileState.store.loading && <FilesPlaceholder />;
 
         return (
@@ -151,13 +138,14 @@ export default class Files extends SafeComponent {
                 style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
                     {upgradeForFiles()}
-                    {!this.data.length && !this.currentFolder.isRoot ?
+                    {!this.data.length && !fileState.currentFolder.isRoot ?
                         this.noFilesInFolder : null}
                     {body}
                 </View>
                 <FileActions height={this.actionsHeight} />
                 <ProgressOverlay enabled={fileState.store.loading} />
                 <FolderActionSheet ref={ref => { this._folderActionSheet = ref; }} />
+                <FilesActionSheet ref={ref => { filesActionSheet = ref; }} />
             </View>
         );
     }
