@@ -47,17 +47,10 @@
     "mobx-react": "4.3.3",
     "moment": "2.18.1",
     "path": "^0.12.7",
-<<<<<<< HEAD
     "pbkdf2": "github:PeerioTechnologies/pbkdf2",
     "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear",
     "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v2.13.4",
     "peerio-translator": "github:PeerioTechnologies/peerio-translator#v1.0.0",
-=======
-    "pbkdf2": "git+https://github.com/PeerioTechnologies/pbkdf2.git",
-    "peerio-copy": "git+https://github.com/PeerioTechnologies/peerio-copy.git#icebear",
-    "peerio-icebear": "git+ssh://git@github.com/PeerioTechnologies/peerio-icebear.git#feat-file-folders",
-    "peerio-translator": "git+https://github.com/PeerioTechnologies/peerio-translator.git#icebear",
->>>>>>> parent of fe116ad... Revert "Feat file folders"
     "process": "0.11.9",
     "prop-types": "15.5.10",
     "random-words": "0.0.1",

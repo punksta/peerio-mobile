@@ -8,9 +8,9 @@ import { vars } from '../../styles/styles';
 @observer
 export default class ButtonText extends SafeComponent {
     renderThrow() {
-        const { text, secondary, onPress } = this.props;
+        const { text, secondary, disabled, onPress } = this.props;
         const textStyle = {
-            color: secondary ? vars.txtDate : vars.bg,
+            color: (disabled || secondary) ? vars.txtDate : vars.bg,
             fontWeight: 'bold'
         };
         const padding = vars.spacing.small.maxi2x;
@@ -23,7 +23,8 @@ export default class ButtonText extends SafeComponent {
                 testID={this.props.testID}
                 pressRetentionOffset={vars.retentionOffset}
                 style={touchable}
-                onPress={onPress}>
+                disabled={disabled}
+                onPress={disabled ? null : onPress}>
                 <Text style={textStyle}>
                     {text.toUpperCase ? text.toUpperCase() : text}
                 </Text>

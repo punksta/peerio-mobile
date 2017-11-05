@@ -5,6 +5,7 @@ import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import { uiState, fileState } from '../states';
+import contactState from '../contacts/contact-state';
 import icons from '../helpers/icons';
 import routes from '../routes/routes';
 
@@ -63,6 +64,7 @@ export default class FileActions extends SafeComponent {
         const leftAction = file && !file.isPartialDownload && file.cached ?
             this.action(t('button_open'), 'open-in-new', this.onViewFile, enabled) :
             this.action(t('title_download'), 'file-download', () => fileState.download(), enabled);
+
 
         return (
             <Animated.View style={[bottomRowStyle, animation]}>

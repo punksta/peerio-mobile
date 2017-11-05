@@ -101,9 +101,6 @@ export default class FileInlineImage extends SafeComponent {
         this.optimalContentWidth = evt.nativeEvent.layout.width - this.outerPadding * 2 - 2;
     }
 
-    renderInner() {
-    }
-
     get displayTooBigImageOffer() {
         const outer = {
             padding: this.outerPadding

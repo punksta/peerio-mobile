@@ -9,13 +9,7 @@ import { tx } from '../utils/translator';
 
 @observer
 export default class InlineImageActionSheet extends SafeComponent {
-    RETRY_INDEX = 0;
-    DELETE_INDEX = 2;
-    CANCEL_INDEX = 3;
-
     @observable image;
-    @observable message;
-    @observable chat;
 
     shareImage = () => {
         fileState.currentFile = this.image;
@@ -33,11 +27,9 @@ export default class InlineImageActionSheet extends SafeComponent {
     }
 
     get items() {
-        const { chat, message } = this;
         return [
             this.openItem,
             { title: tx('button_share'), action: this.shareImage },
-            // { title: tx('button_delete'), action: () => chat.removeMessage(message) },
             { title: tx('button_cancel') }
         ];
     }
@@ -47,10 +39,8 @@ export default class InlineImageActionSheet extends SafeComponent {
         action && action();
     };
 
-    show = (image, message, chat) => {
+    show = (image) => {
         this.image = image;
-        this.message = message;
-        this.chat = chat;
         this._actionSheet.show();
     }
 
@@ -59,7 +49,7 @@ export default class InlineImageActionSheet extends SafeComponent {
             <ActionSheet
                 ref={sheet => { this._actionSheet = sheet; }}
                 options={this.items.map(i => i.title)}
-                cancelButtonIndex={this.CANCEL_INDEX}
+                cancelButtonIndex={this.items.length - 1}
                 onPress={this.onPress}
             />
         );

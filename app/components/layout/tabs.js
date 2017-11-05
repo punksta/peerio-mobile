@@ -10,10 +10,13 @@ import contactState from '../contacts/contact-state';
 import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
 
+const height = 56;
+const tabHeight = height + vars.iPhoneXBottom;
+
 const actionCellStyle = {
     flex: 1,
     alignItems: 'center',
-    height: 56,
+    height,
     justifyContent: 'center'
 };
 
@@ -25,8 +28,8 @@ const bottomRowStyle = {
     flex: 0,
     flexDirection: 'row',
     backgroundColor: vars.tabsBg,
-    height: 56,
-    padding: 0
+    padding: 0,
+    paddingBottom: vars.iPhoneXBottom
 };
 
 @observer
@@ -56,7 +59,7 @@ export default class Tabs extends SafeComponent {
     renderThrow() {
         const animation = {
             overflow: 'hidden',
-            height: (routerMain.currentIndex === 0) ? 56 : 0
+            height: (routerMain.currentIndex === 0) ? tabHeight : 0
         };
         return (
             <Animated.View style={[bottomRowStyle, animation]}>

@@ -27,9 +27,9 @@ function checkBoxControl(str, checked, press) {
     return <CheckBox text={str} isChecked={checked} onChange={press} />;
 }
 
-function inputControl(state) {
+function inputControl(state, placeholder) {
     return (
-        <TextInputStateful state={state} />
+        <TextInputStateful placeholder={placeholder} state={state} />
     );
 }
 
@@ -156,7 +156,7 @@ function popupInput(title, subTitle, value) {
     });
 }
 
-function popupInputCancelCheckbox(title, subTitle, checkBoxText, checked, cancelable) {
+function popupInputCancelCheckbox(title, placeholder, checkBoxText, checked, cancelable) {
     return new Promise((resolve) => {
         const o = observable({ value: '', checked });
         const buttons = [];
@@ -164,17 +164,16 @@ function popupInputCancelCheckbox(title, subTitle, checkBoxText, checked, cancel
             id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
         });
         buttons.push({
-            id: 'ok', text: tu('button_ok'), action: () => resolve(o)
+            id: 'ok', text: tu('button_ok'), action: () => resolve(o), get disabled() { return !o.value; }
         });
         const contents = (
             <View>
                 {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; })}
-                {inputControl(o)}
+                {inputControl(o, placeholder)}
             </View>
         );
         popupState.showPopup({
             title,
-            subTitle: textControl(subTitle),
             contents,
             buttons
         });

@@ -18,8 +18,9 @@ class ContactState extends RoutedState {
         return new Promise(resolve => when(() => !this.store.loading, resolve));
     }
 
-    composeMessage() {
-        this.routerModal.compose();
+    @action exit() {
+        this.routerModal.discard();
+        this.clear();
     }
 
     @observable currentContact = null;

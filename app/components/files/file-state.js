@@ -6,13 +6,16 @@ import { fileStore, TinyDb, socket, fileHelpers, clientApp } from '../../lib/ice
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { popupInput, popupYesCancel } from '../shared/popups';
+import { promiseWhen } from '../helpers/sugar';
 
 class FileState extends RoutedState {
     @observable currentFile = null;
+    @observable currentFolder = null;
     store = fileStore;
     _prefix = 'files';
 
     @action async init() {
+        this.currentFolder = fileStore.fileFolders.root;
         return new Promise(resolve => when(() => !this.store.loading, resolve));
     }
 
@@ -112,32 +115,35 @@ class FileState extends RoutedState {
         this.routerModal.discard();
     }
 
-    uploadInline = (uri, fileName, fileData) => {
-        return this.upload(uri, fileName, fileData, true);
+    renamePostProcessing = async ({ file, fileName, ext }) => {
+        await promiseWhen(() => file.size);
+        if (file.deleted) return null;
+        const newFileName = await popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fileName));
+        if (newFileName) await file.rename(`${newFileName}.${ext}`);
+        return file;
     }
 
-    async upload(uri, fn, fileData, inline, folder) {
-        const fileName = fileHelpers.getFileName(fn || fileData.path || uri);
-        const ext = fileHelpers.getFileExtension(fileName);
+    uploadInline = async (data) => {
+        await promiseWhen(() => socket.authenticated);
         const chat = chatState.currentChat;
-        const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName) :
-            () => fileStore.upload(uri, fileName);
-        const file = await new Promise(resolve =>
-            when(() => socket.authenticated,
-                () => resolve(uploader(uri, fn))
-        ));
-        folder && when(() => file.fileId, () => {
+        if (!chat) throw new Error('file-state.js, uploadInline: no chat selected');
+        data.file = chat.uploadAndShareFile(data.url, data.fileName);
+        await this.renamePostProcessing(data);
+        return data.file;
+    }
+
+    uploadInFiles = async (data) => {
+        await promiseWhen(() => socket.authenticated);
+        const folder = this.currentFolder;
+        const file = fileStore.upload(data.url, data.fileName);
+        if (folder && !folder.isRoot) {
+            await promiseWhen(() => file.fileId);
             folder.moveInto(file);
             this.store.fileFolders.save();
-        });
-        when(() => file.size, () => {
-            if (file.deleted) return;
-            popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fileName))
-                .then(newFileName => {
-                    if (!newFileName) return Promise.resolve();
-                    return file.rename(`${newFileName}.${ext}`);
-                });
-        });
+        }
+        data.file = file;
+        await this.renamePostProcessing(data);
+        return file;
     }
 
     cancelUpload(file) {
