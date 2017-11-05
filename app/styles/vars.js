@@ -1,15 +1,27 @@
 import { Platform, Dimensions } from 'react-native';
 import branding from './branding';
 
+const { width, height } = Dimensions.get('window');
+
+function isIphoneX() {
+    const { OS, isPad, isTVOS } = Platform;
+    const dim = 812;
+    return (
+        OS === 'ios' && !isPad && !isTVOS && (width === dim || height === dim)
+    );
+}
+
+const iPhoneXTop = isIphoneX() ? 16 : 0;
+const iPhoneXBottom = iPhoneXTop;
+
 const { bg, bgGradient, tabsBg, tabsFg } = branding;
 
-const statusBarHeight = Platform.OS === 'android' ? 0 : 10;
+const statusBarHeight = (Platform.OS === 'android' ? 0 : 10) + iPhoneXTop;
 const layoutPaddingTop = statusBarHeight * 2;
 
 const r = 40;
 const retentionOffset = { top: r, left: r, bottom: r, right: r };
 
-const { height } = Dimensions.get('window');
 // pixel ratio should be factored into scaleDim somehow: const pixRatio = PixelRatio.get();
 const defaultHeight = 667;
 // scaleDim takes a size value and returns one that is adjusted to the height of the device as it compares to an iPhone 6
@@ -59,7 +71,7 @@ const vars = {
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
-    headerHeight: 80,
+    headerHeight: 80 + iPhoneXTop,
     tabsHeight: 56,
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
@@ -103,6 +115,8 @@ const vars = {
     fabRight: 16,
     fabBottom: 32,
     retentionOffset,
+    iPhoneXBottom,
+    iPhoneXTop,
     spacing: {
         small: {
             mini: scaleDim(2),
