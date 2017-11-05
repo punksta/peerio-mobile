@@ -24,7 +24,7 @@ export default class ButtonText extends SafeComponent {
                 pressRetentionOffset={vars.retentionOffset}
                 style={touchable}
                 disabled={disabled}
-                onPress={!disabled && onPress}>
+                onPress={disabled ? null : onPress}>
                 <Text style={textStyle}>
                     {text.toUpperCase ? text.toUpperCase() : text}
                 </Text>

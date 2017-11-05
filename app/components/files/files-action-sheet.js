@@ -28,21 +28,21 @@ export default class FilesActionSheet extends SafeComponent {
 
     get takePhoto() {
         return {
-            title: tx('Take photo...'),
+            title: tx('title_takePhoto'),
             action: () => this.doUpload(imagepicker.getImageFromCamera)
         };
     }
 
     get chooseFromGallery() {
         return {
-            title: tx('Choose from gallery...'),
+            title: tx('title_chooseFromGallery'),
             action: () => this.doUpload(imagepicker.getImageFromGallery)
         };
     }
 
     get androidFilePicker() {
         return {
-            title: tx('Choose from files...'),
+            title: tx('title_chooseFromFiles'),
             async action() {
                 fileState.uploadInFiles(await imagepicker.getImageFromAndroidFilePicker());
             }
@@ -52,20 +52,20 @@ export default class FilesActionSheet extends SafeComponent {
     get createFolder() {
         const action = async () => {
             const result = await popupInputCancelCheckbox(
-                'Create a folder', 'Enter a folder name', null, null, true);
+                tx('title_createFolder'), tx('title_createFolderPlaceholder'), null, null, true);
             if (!result) return;
             requestAnimationFrame(() => {
                 fileState.store.fileFolders.createFolder(result.value, this.currentFolder);
                 fileState.store.fileFolders.save();
             });
         };
-        return { title: tx('Create a folder...'), action };
+        return { title: tx('title_createFolder'), action };
     }
 
     get items() {
         const result = [this.takePhoto, this.chooseFromGallery];
-        this.props.inline && result.push(this.shareFromPeerio);
         (Platform.OS === 'android') && result.push(this.androidFilePicker);
+        this.props.inline && result.push(this.shareFromPeerio);
         this.props.createFolder && result.push(this.createFolder);
         result.push({ title: tx('button_cancel') });
         return result;

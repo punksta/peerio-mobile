@@ -53,12 +53,7 @@ export default class Files extends SafeComponent {
     actionsHeight = new Animated.Value(0)
 
     get data() {
-        const { currentFolder } = fileState;
-        const folders = currentFolder.folders.sort((f1, f2) => f1.name > f2.name);
-        const files = currentFolder.files.sort((f1, f2) => {
-            return f2.uploadedAt - f1.uploadedAt;
-        });
-        return folders.concat(files);
+        return fileState.currentFolder.foldersAndFilesDefaultSorting;
     }
 
     componentWillUnmount() {

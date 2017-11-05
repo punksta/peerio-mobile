@@ -1,7 +1,6 @@
 import { Platform, DeviceEventEmitter, NativeModules } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import moment from 'moment';
-import { tx } from '../utils/translator';
 import { fileHelpers } from '../../lib/icebear';
 
 const { FilePickerManager } = NativeModules;
