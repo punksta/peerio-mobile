@@ -46,6 +46,7 @@ const vars = {
     darkIcon: '#00000070',
     txtLight: '#bfdfef',
     txtAlert: '#ff0000aa',
+    txtLightGrey: '#7B7B7B',
     txtDark: 'rgba(28, 28, 28, 1)',
     txtMedium: 'rgba(98, 98, 98, 1)',
     txtDate: 'rgba(0, 0, 0, .38)',
@@ -105,7 +106,7 @@ const vars = {
     },
     accountTitleFontSize: scaleDim(37),
     accountListFontSize: scaleDim(21),
-    signupFontSize: scaleDim(30),
+    signupFontSize: scaleDim(36),
     profileEditFontSize: scaleDim(60),
     readReceiptFontSize: scaleDim(9),
     inputHeight: 48,
@@ -144,7 +145,10 @@ const vars = {
         },
         huge: {
             mini: scaleDim(50),
+            minixx: scaleDim(54),
+            mini2x: scaleDim(56),
             midi: scaleDim(60),
+            midi2x: scaleDim(64),
             maxi: scaleDim(74),
             maxi2x: scaleDim(75)
         }

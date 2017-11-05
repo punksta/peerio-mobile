@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.184.0"></a>
+# [3.184.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.183.0...v3.184.0) (2017-11-01)
+
+
+### Bug Fixes
+
+* server override field ([3ee7061](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ee7061))
+
+
+### Features
+
+* add sorting for folders and folder title in the top ([0cc9c7a](https://github.com/PeerioTechnologies/peerio-mobile/commit/0cc9c7a))
+* folder action sheet ([58659e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/58659e8))
+* rework inline images to have separate temporary and main cache ([4be8eb9](https://github.com/PeerioTechnologies/peerio-mobile/commit/4be8eb9))
+
+
+
 <a name="3.183.0"></a>
 # [3.183.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.182.0...v3.183.0) (2017-10-26)
 
