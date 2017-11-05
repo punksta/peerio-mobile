@@ -29,7 +29,7 @@ export default class FolderSelect extends SafeComponent {
 
     get data() {
         const { currentFolder } = this;
-        const folders = currentFolder.folders;
+        const folders = currentFolder.foldersSortedByName;
         return folders;
     }
 
