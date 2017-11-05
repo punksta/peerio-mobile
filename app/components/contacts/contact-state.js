@@ -22,15 +22,6 @@ class ContactState extends RoutedState {
         this.routerModal.compose();
     }
 
-    shareFile() {
-        this.routerModal.shareFileTo();
-    }
-
-    @action exit() {
-        this.routerModal.discard();
-        this.clear();
-    }
-
     @observable currentContact = null;
     @observable findUserText = process.env.PEERIO_SEARCH_USERNAME || '';
     @observable loading = false;

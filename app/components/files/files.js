@@ -1,21 +1,28 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Animated } from 'react-native';
+import { View, ListView, Animated, Text } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FilesPlaceholder from './files-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileActions from './file-actions';
+import FolderActionSheet from './folder-action-sheet';
 import fileState from './file-state';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import { upgradeForFiles } from '../payments/payments';
+import BackIcon from '../layout/back-icon';
+import { vars } from '../../styles/styles';
+import imagePicker from '../helpers/imagepicker';
+import { popupInputCancelCheckbox } from '../shared/popups';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
 @observer
 export default class Files extends SafeComponent {
+    @observable currentFolder = fileState.store.fileFolders.root;
+
     constructor(props) {
         super(props);
         this.dataSource = new ListView.DataSource({
@@ -23,7 +30,35 @@ export default class Files extends SafeComponent {
         });
     }
 
-    get rightIcon() { return <PlusBorderIcon action={fileState.fabAction} />; }
+    get leftIcon() {
+        if (this.currentFolder.isRoot) return null;
+        const action = () => { this.currentFolder = this.currentFolder.parent; };
+        return <BackIcon action={action} />;
+    }
+
+    get rightIcon() {
+        const buttons = [
+            { name: 'createFolder', title: 'Create a folder' }
+        ];
+        const createFolder = async () => {
+            const result = await popupInputCancelCheckbox(
+                'Create a folder', 'Enter a folder name', null, null, true);
+            if (!result) return;
+            requestAnimationFrame(() => {
+                fileState.store.fileFolders.createFolder(result.value, this.currentFolder);
+                fileState.store.fileFolders.save();
+            });
+        };
+        const upload = (uri, fn, fileData) =>
+            fileState.upload(uri, fn, fileData, false, this.currentFolder);
+        const action = () => imagePicker.show(buttons, upload, createFolder);
+        return <PlusBorderIcon action={action} />;
+    }
+
+    get layoutTitle() {
+        if (this.currentFolder.isRoot) return null;
+        return this.currentFolder.name;
+    }
 
     @observable dataSource = null;
     @observable refreshing = false
@@ -31,9 +66,12 @@ export default class Files extends SafeComponent {
     actionsHeight = new Animated.Value(0)
 
     get data() {
-        return fileState.store.files.sort((f1, f2) => {
+        const { currentFolder } = this;
+        const folders = currentFolder.folders.sort((f1, f2) => f1.name > f2.name);
+        const files = currentFolder.files.sort((f1, f2) => {
             return f2.uploadedAt - f1.uploadedAt;
         });
+        return folders.concat(files);
     }
 
     componentWillUnmount() {
@@ -51,6 +89,7 @@ export default class Files extends SafeComponent {
         this.reaction = reaction(() => [
             fileState.routerMain.route === 'files',
             fileState.routerMain.currentIndex === 0,
+            this.currentFolder,
             this.data,
             this.data.length,
             this.maxLoadedIndex
@@ -61,9 +100,15 @@ export default class Files extends SafeComponent {
         }, true);
     }
 
-    item(file) {
+    onChangeFolder = folder => { this.currentFolder = folder; }
+
+    item = file => {
         return (
-            <FileItem key={file.fileId} file={file} />
+            <FileItem
+                key={file.fileId || file.folderId}
+                file={file}
+                onChangeFolder={this.onChangeFolder}
+                onLongPress={() => this._folderActionSheet.show(file)} />
         );
     }
 
@@ -87,8 +132,18 @@ export default class Files extends SafeComponent {
         );
     }
 
+    get noFilesInFolder() {
+        if (this.data.length || this.currentFolder.isRoot) return null;
+        const s = {
+            color: vars.txtMedium,
+            textAlign: 'center',
+            marginTop: vars.headerSpacing
+        };
+        return <Text style={s}>No files in this folder</Text>;
+    }
+
     renderThrow() {
-        const body = this.data.length ?
+        const body = (this.data.length || !this.currentFolder.isRoot) ?
             this.listView() : !fileState.store.loading && <FilesPlaceholder />;
 
         return (
@@ -96,10 +151,13 @@ export default class Files extends SafeComponent {
                 style={{ flex: 1 }}>
                 <View style={{ flex: 1 }}>
                     {upgradeForFiles()}
+                    {!this.data.length && !this.currentFolder.isRoot ?
+                        this.noFilesInFolder : null}
                     {body}
                 </View>
                 <FileActions height={this.actionsHeight} />
                 <ProgressOverlay enabled={fileState.store.loading} />
+                <FolderActionSheet ref={ref => { this._folderActionSheet = ref; }} />
             </View>
         );
     }
