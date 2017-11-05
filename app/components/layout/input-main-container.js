@@ -54,7 +54,7 @@ export default class InputMainContainer extends SafeComponent {
                         sendAck={this.sendAck}
                         send={this.send} />
                 </View>
-                <FilesActionSheet shareFromPeerio ref={ref => { this.filesActionSheet = ref; }} />
+                <FilesActionSheet inline ref={ref => { this.filesActionSheet = ref; }} />
             </View>
         );
     }

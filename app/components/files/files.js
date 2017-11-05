@@ -145,7 +145,7 @@ export default class Files extends SafeComponent {
                 <FileActions height={this.actionsHeight} />
                 <ProgressOverlay enabled={fileState.store.loading} />
                 <FolderActionSheet ref={ref => { this._folderActionSheet = ref; }} />
-                <FilesActionSheet ref={ref => { filesActionSheet = ref; }} />
+                <FilesActionSheet createFolder ref={ref => { filesActionSheet = ref; }} />
             </View>
         );
     }

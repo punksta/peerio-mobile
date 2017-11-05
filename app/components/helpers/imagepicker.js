@@ -19,6 +19,10 @@ const launchCamera = async options => new Promise(resolve =>
 const showFilePicker = async () => new Promise(resolve =>
     FilePickerManager.showFilePicker(null, resolve));
 
+function waitForPermissions() {
+    return new Promise(resolve => { lastCall = resolve; });
+}
+
 function normalizeUri(response) {
     const { uri } = response;
     if (Platform.OS === 'ios') {
@@ -27,7 +31,13 @@ function normalizeUri(response) {
     return uri;
 }
 
-function processResponse(response) {
+async function processResponse(functor) {
+    let response = await functor();
+    if (response.didRequestPermission) {
+        console.log('permissions requested');
+        await waitForPermissions();
+        response = await functor();
+    }
     if (!response.path && response.uri) {
         response.path = response.uri;
     }
@@ -45,8 +55,22 @@ export default {
     launchGallery,
     showFilePicker,
 
-    async getImageFromGallery() {
-        return processResponse(await launchGallery({ noData: true }));
+    getImageFromCamera() {
+        return processResponse(() => launchCamera({
+            noData: true,
+            storageOptions: {
+                skipBackup: true,
+                waitUntilSaved: true
+            }
+        }));
+    },
+
+    getImageFromGallery() {
+        return processResponse(() => launchGallery({ noData: true }));
+    },
+
+    getImageFromAndroidFilePicker() {
+        return processResponse(showFilePicker);
     },
 
     async show(_customButtons, imageCallback, customCallback) {

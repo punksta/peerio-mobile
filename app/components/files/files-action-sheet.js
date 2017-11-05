@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import ActionSheet from 'react-native-actionsheet';
@@ -22,15 +23,27 @@ export default class FilesActionSheet extends SafeComponent {
 
     get takePhoto() {
         return {
-            title: tx('Take photo...')
+            title: tx('Take photo...'),
+            async action() {
+                fileState.uploadInFiles(await imagepicker.getImageFromCamera());
+            }
         };
     }
 
-    get chooseFromLibrary() {
+    get chooseFromGallery() {
         return {
-            title: tx('Choose from library...'),
+            title: tx('Choose from gallery...'),
             async action() {
                 fileState.uploadInFiles(await imagepicker.getImageFromGallery());
+            }
+        };
+    }
+
+    get androidFilePicker() {
+        return {
+            title: tx('Choose from files...'),
+            async action() {
+                fileState.uploadInFiles(await imagepicker.getImageFromAndroidFilePicker());
             }
         };
     }
@@ -49,8 +62,10 @@ export default class FilesActionSheet extends SafeComponent {
     }
 
     get items() {
-        const result = [this.takePhoto, this.chooseFromLibrary];
-        this.props.shareFromPeerio && result.push(this.shareFromPeerio);
+        const result = [this.takePhoto, this.chooseFromGallery];
+        this.props.inline && result.push(this.shareFromPeerio);
+        (Platform.OS === 'android') && result.push(this.androidFilePicker);
+        this.props.createFolder && result.push(this.createFolder);
         result.push({ title: tx('button_cancel') });
         return result;
     }
