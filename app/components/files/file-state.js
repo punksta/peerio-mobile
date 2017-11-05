@@ -125,7 +125,9 @@ class FileState extends RoutedState {
 
     uploadInline = async (data) => {
         await promiseWhen(() => socket.authenticated);
-        data.file = fileStore.upload(data.url, data.fileName);
+        const chat = chatState.currentChat;
+        if (!chat) throw new Error('file-state.js, uploadInline: no chat selected');
+        data.file = chat.uploadAndShareFile(data.url, data.fileName);
         await this.renamePostProcessing(data);
         return data.file;
     }
@@ -142,30 +144,6 @@ class FileState extends RoutedState {
         data.file = file;
         await this.renamePostProcessing(data);
         return file;
-    }
-
-    async upload(uri, fn, fileData, inline, folder) {
-        const fileName = fileHelpers.getFileName(fn || fileData.path || uri);
-        const ext = fileHelpers.getFileExtension(fileName);
-        const chat = chatState.currentChat;
-        const uploader = inline ? () => chat.uploadAndShareFile(uri, fileName) :
-            () => fileStore.upload(uri, fileName);
-        const file = await new Promise(resolve =>
-            when(() => socket.authenticated,
-                () => resolve(uploader(uri, fn))
-        ));
-        folder && when(() => file.fileId, () => {
-            folder.moveInto(file);
-            this.store.fileFolders.save();
-        });
-        when(() => file.size, () => {
-            if (file.deleted) return;
-            popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fileName))
-                .then(newFileName => {
-                    if (!newFileName) return Promise.resolve();
-                    return file.rename(`${newFileName}.${ext}`);
-                });
-        });
     }
 
     cancelUpload(file) {

@@ -14,6 +14,11 @@ import imagepicker from '../helpers/imagepicker';
 export default class FilesActionSheet extends SafeComponent {
     @observable image;
 
+    async doUpload(sourceFunction) {
+        (this.props.inline ?
+            fileState.uploadInline : fileState.uploadInFiles)(await sourceFunction());
+    }
+
     get shareFromPeerio() {
         return {
             title: tx('title_shareFromFiles'),
@@ -24,18 +29,14 @@ export default class FilesActionSheet extends SafeComponent {
     get takePhoto() {
         return {
             title: tx('Take photo...'),
-            async action() {
-                fileState.uploadInFiles(await imagepicker.getImageFromCamera());
-            }
+            action: () => this.doUpload(imagepicker.getImageFromCamera)
         };
     }
 
     get chooseFromGallery() {
         return {
             title: tx('Choose from gallery...'),
-            async action() {
-                fileState.uploadInFiles(await imagepicker.getImageFromGallery());
-            }
+            action: () => this.doUpload(imagepicker.getImageFromGallery)
         };
     }
 
@@ -75,9 +76,7 @@ export default class FilesActionSheet extends SafeComponent {
         action && action();
     };
 
-    show = () => {
-        this._actionSheet.show();
-    }
+    show = () => this._actionSheet.show();
 
     renderThrow() {
         return (
