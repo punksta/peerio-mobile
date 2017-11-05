@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.185.0"></a>
+# [3.185.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.184.0...v3.185.0) (2017-11-05)
+
+
+### Bug Fixes
+
+* folder sorting ([7568904](https://github.com/PeerioTechnologies/peerio-mobile/commit/7568904))
+* shrink strategy for inline image ([55f54b7](https://github.com/PeerioTechnologies/peerio-mobile/commit/55f54b7))
+* typo ([7da711b](https://github.com/PeerioTechnologies/peerio-mobile/commit/7da711b))
+
+
+### Features
+
+* disable primary for input popup if there's no value entered ([693d597](https://github.com/PeerioTechnologies/peerio-mobile/commit/693d597))
+* iPhoneX layout fix (partial) ([f5f05fc](https://github.com/PeerioTechnologies/peerio-mobile/commit/f5f05fc))
+* style input dialog according to Paul ([65daa96](https://github.com/PeerioTechnologies/peerio-mobile/commit/65daa96))
+
+
+
 <a name="3.184.0"></a>
 # [3.184.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.183.0...v3.184.0) (2017-11-01)
 
