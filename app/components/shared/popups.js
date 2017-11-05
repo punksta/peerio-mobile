@@ -164,7 +164,7 @@ function popupInputCancelCheckbox(title, placeholder, checkBoxText, checked, can
             id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
         });
         buttons.push({
-            id: 'ok', text: tu('button_ok'), action: () => resolve(o)
+            id: 'ok', text: tu('button_ok'), action: () => resolve(o), get disabled() { return !o.value; }
         });
         const contents = (
             <View>

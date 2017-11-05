@@ -24,12 +24,13 @@ export default class PopupLayout extends SafeComponent {
     }
 
     button = (item) => {
-        const { text, id, secondary } = item;
+        const { text, id, secondary, disabled } = item;
         return (
             <ButtonText
                 testID={`popupButton_${id}`}
                 onPress={() => this.onPress(item)}
                 secondary={secondary}
+                disabled={disabled}
                 key={id}
                 text={text} />
         );
