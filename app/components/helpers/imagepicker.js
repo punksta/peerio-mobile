@@ -29,8 +29,8 @@ function normalizeUri(response) {
     return uri;
 }
 
-async function processResponse(functor) {
-    let response = await functor();
+async function processResponse(functor, params) {
+    let response = await functor(params);
     if (response.error) {
         console.log('imagepicker.js: ', response.error);
         throw new Error(response.error);
@@ -43,7 +43,7 @@ async function processResponse(functor) {
     if (!response.path && response.uri) {
         response.path = response.uri;
     }
-    if (response.isAndroidCamera) {
+    if (params.isCamera) {
         const ext = fileHelpers.getFileExtension(response.path);
         response.fileName = `${moment(Date.now()).format('llll')}.${ext}`;
     }
@@ -53,22 +53,27 @@ async function processResponse(functor) {
     return { url: normalizeUri(response), fileName: normalizedFileName, ext, response };
 }
 
+const cameraSettings = {
+    isCamera: true,
+    noData: true,
+    storageOptions: {
+        skipBackup: true,
+        waitUntilSaved: true
+    }
+};
+
+const gallerySettings = { noData: true };
+
 export default {
     launchGallery,
     showFilePicker,
 
     getImageFromCamera() {
-        return processResponse(() => launchCamera({
-            noData: true,
-            storageOptions: {
-                skipBackup: true,
-                waitUntilSaved: true
-            }
-        }));
+        return processResponse(launchCamera, cameraSettings);
     },
 
     getImageFromGallery() {
-        return processResponse(() => launchGallery({ noData: true }));
+        return processResponse(launchGallery, gallerySettings);
     },
 
     getImageFromAndroidFilePicker() {
