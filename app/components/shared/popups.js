@@ -247,9 +247,9 @@ function popupSetupVideo(titleText, subText, discText, link) {
             Linking.openURL(link);
         };
         popupState.showPopup({
-            title: titleText,
+            title: textControl(titleText),
             type: 'systemWarning',
-            subTitle: subText,
+            subTitle: textControl(subText),
             contents: disclaimerStyle(discText),
             buttons: [
                 { id: 'cancel', text: tu('button_gotJitsi'), action: () => resolve(true), secondary: true },
