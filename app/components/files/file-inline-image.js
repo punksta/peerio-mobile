@@ -46,9 +46,10 @@ export default class FileInlineImage extends SafeComponent {
         this.opened = clientApp.uiUserPrefs.peerioContentEnabled;
         when(() => this.cachedImage, () => this.fetchSize());
         const { image } = this.props;
-        const { fileId, url, oversized } = image;
-        this.tooBig = oversized;
+        const { fileId, url, oversized, isOverInlineSizeLimit } = image;
         if (fileId) {
+            // we have local inline file
+            this.tooBig = isOverInlineSizeLimit;
             when(() => image.tmpCached, () => {
                 this.cachedImage = inlineImageCacheStore.getImage(image.tmpCachePath);
             });
@@ -58,11 +59,13 @@ export default class FileInlineImage extends SafeComponent {
                         image.tmpCached = true;
                         return;
                     }
-                    image.tryToCacheTemporarily();
+                    image.downloadToTmpCache();
                 });
             }
             this.loadImage = clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
         } else {
+            // we have external url
+            this.tooBig = oversized;
             this.loadImage = clientApp.uiUserPrefs.externalContentEnabled && !this.tooBig;
             when(() => this.loadImage, () => {
                 this.opened = true;
@@ -116,7 +119,7 @@ export default class FileInlineImage extends SafeComponent {
         return (
             <View style={outer}>
                 <Text style={text0}>
-                    {tx('title_imageSizeWarning', { size: util.formatBytes(config.chat.inlineImageSizeLimit)})}
+                    {tx('title_imageSizeWarning', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })}
                 </Text>
                 <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={() => { this.loadImage = true; }}>
                     <Text style={text}>{tx('button_displayThisImageAfterWarning')}</Text>
