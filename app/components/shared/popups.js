@@ -23,6 +23,15 @@ function textControl(str) {
     return <Text style={text}>{formatted}</Text>;
 }
 
+function disclaimerStyle(str) {
+    let formatted = str;
+    if (typeof str === 'string') {
+        formatted = str.replace('\n', '\n\n');
+    }
+
+    return <Text style={{ textAlign: 'right', fontStyle: 'italic' }}>{formatted}</Text>;
+}
+
 function checkBoxControl(str, checked, press) {
     return <CheckBox text={str} isChecked={checked} onChange={press} />;
 }
@@ -232,7 +241,7 @@ function popupControl(contents) {
     });
 }
 
-function popupSetupVideo(titleText, subText, disc, link) {
+function popupSetupVideo(titleText, subText, discText, link) {
     return new Promise((resolve) => {
         const openLink = () => {
             resolve(false);
@@ -241,8 +250,8 @@ function popupSetupVideo(titleText, subText, disc, link) {
         popupState.showPopup({
             title: titleText,
             type: 'systemWarning',
-            subTitle: textControl(subText),
-            contents: textControl(disc),
+            subTitle: subText,
+            contents: disclaimerStyle(discText),
             buttons: [
                 { id: 'cancel', text: tu('button_gotJitsi'), action: () => resolve(true), secondary: true },
                 { id: 'ok', text: tu('button_notGotJitsi'), action: openLink }
