@@ -127,8 +127,9 @@ class FileState extends RoutedState {
         await promiseWhen(() => socket.authenticated);
         const chat = chatState.currentChat;
         if (!chat) throw new Error('file-state.js, uploadInline: no chat selected');
-        data.file = chat.uploadAndShareFile(data.url, data.fileName, false, () => data.renamePromise);
-        data.renamePromise = this.renamePostProcessing(data);
+        let renamePromise = null;
+        data.file = chat.uploadAndShareFile(data.url, data.fileName, false, () => renamePromise);
+        renamePromise = this.renamePostProcessing(data);
         return data.file;
     }
 
@@ -159,14 +160,6 @@ class FileState extends RoutedState {
     get title() {
         return this.currentFile ? this.currentFile.name : tx('title_fileFilterAll');
     }
-<<<<<<< HEAD
-
-    fabAction = () => {
-        console.log(`file-state.js: fab action`);
-        imagePicker.show([], this.uploadToFiles);
-    }
-=======
->>>>>>> dev
 }
 
 export default new FileState();
