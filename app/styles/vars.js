@@ -1,15 +1,29 @@
 import { Platform, Dimensions } from 'react-native';
 import branding from './branding';
 
+const { width, height } = Dimensions.get('window');
+
+function isIphoneX() {
+    const { OS, isPad, isTVOS } = Platform;
+    const dim = 812;
+    return (
+        OS === 'ios' && !isPad && !isTVOS && (width === dim || height === dim)
+    );
+}
+
+const iPhoneXTop = isIphoneX() ? 16 : 0;
+const iPhoneXBottom = iPhoneXTop;
+
 const { bg, bgGradient, tabsBg, tabsFg } = branding;
 
-const statusBarHeight = Platform.OS === 'android' ? 0 : 10;
+const statusBarHeight = (Platform.OS === 'android' ? 0 : 10) + iPhoneXTop;
 const layoutPaddingTop = statusBarHeight * 2;
 
 const r = 40;
 const retentionOffset = { top: r, left: r, bottom: r, right: r };
 
-const { height } = Dimensions.get('window');
+const tabCellHeight = 56;
+
 // pixel ratio should be factored into scaleDim somehow: const pixRatio = PixelRatio.get();
 const defaultHeight = 667;
 // scaleDim takes a size value and returns one that is adjusted to the height of the device as it compares to an iPhone 6
@@ -34,6 +48,7 @@ const vars = {
     darkIcon: '#00000070',
     txtLight: '#bfdfef',
     txtAlert: '#ff0000aa',
+    txtLightGrey: '#7B7B7B',
     txtDark: 'rgba(28, 28, 28, 1)',
     txtMedium: 'rgba(98, 98, 98, 1)',
     txtDate: 'rgba(0, 0, 0, .38)',
@@ -59,8 +74,7 @@ const vars = {
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
-    headerHeight: 80,
-    tabsHeight: 56,
+    headerHeight: 80 + iPhoneXTop,
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconSizeSmall: 16,
@@ -93,7 +107,7 @@ const vars = {
     },
     accountTitleFontSize: scaleDim(37),
     accountListFontSize: scaleDim(21),
-    signupFontSize: scaleDim(30),
+    signupFontSize: scaleDim(36),
     profileEditFontSize: scaleDim(60),
     readReceiptFontSize: scaleDim(9),
     inputHeight: 48,
@@ -103,6 +117,10 @@ const vars = {
     fabRight: 16,
     fabBottom: 32,
     retentionOffset,
+    iPhoneXBottom,
+    iPhoneXTop,
+    tabCellHeight,
+    tabsHeight: tabCellHeight + iPhoneXBottom,
     spacing: {
         small: {
             mini: scaleDim(2),
@@ -130,7 +148,10 @@ const vars = {
         },
         huge: {
             mini: scaleDim(50),
+            minixx: scaleDim(54),
+            mini2x: scaleDim(56),
             midi: scaleDim(60),
+            midi2x: scaleDim(64),
             maxi: scaleDim(74),
             maxi2x: scaleDim(75)
         }

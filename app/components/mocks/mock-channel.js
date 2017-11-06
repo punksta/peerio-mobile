@@ -8,7 +8,7 @@ import ChannelInfo from '../messaging/channel-info';
 import PopupLayout from '../layout/popup-layout';
 import ChannelAddPeople from '../messaging/channel-add-people';
 import InputMainContainer from '../layout/input-main-container';
-import { User } from '../../lib/icebear';
+import { User, clientApp, config } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 import contactState from '../contacts/contact-state';
@@ -19,12 +19,15 @@ import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
 
 @observer
-export default class MockChannelCreate extends Component {
+export default class MockChannel extends Component {
     @observable showChannelInfo = false;
     @observable showAddPeople = false;
     @observable originalData = null;
 
     componentWillMount() {
+        clientApp.uiUserPrefs.externalContentConsented = true;
+        clientApp.uiUserPrefs.externalContentEnabled = true;
+
         User.current = { activePlans: [] };
         mockFileStore.install();
         contactState.store = mockContactStore;

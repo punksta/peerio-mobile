@@ -8,8 +8,8 @@ import inlineImageCacheStore from './inline-image-cache-store';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import settingsState from '../settings/settings-state';
-import { clientApp, config } from '../../lib/icebear';
-import { T } from '../utils/translator';
+import { clientApp, config, util } from '../../lib/icebear';
+import { T, tx } from '../utils/translator';
 
 const toSettings = text => (
     <Text
@@ -46,9 +46,10 @@ export default class FileInlineImage extends SafeComponent {
         this.opened = clientApp.uiUserPrefs.peerioContentEnabled;
         when(() => this.cachedImage, () => this.fetchSize());
         const { image } = this.props;
-        const { fileId, url, oversized } = image;
-        this.tooBig = oversized;
+        const { fileId, url, oversized, isOverInlineSizeLimit } = image;
         if (fileId) {
+            // we have local inline file
+            this.tooBig = isOverInlineSizeLimit;
             when(() => image.tmpCached, () => {
                 this.cachedImage = inlineImageCacheStore.getImage(image.tmpCachePath);
             });
@@ -58,12 +59,14 @@ export default class FileInlineImage extends SafeComponent {
                         image.tmpCached = true;
                         return;
                     }
-                    image.tryToCacheTemporarily();
+                    image.downloadToTmpCache();
                 });
             }
             this.loadImage = clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
         } else {
-            this.loadImage = clientApp.uiUserPrefs.externalContentEnabled;
+            // we have external url
+            this.tooBig = oversized;
+            this.loadImage = clientApp.uiUserPrefs.externalContentEnabled && !this.tooBig;
             when(() => this.loadImage, () => {
                 this.opened = true;
                 this.cachedImage = inlineImageCacheStore.getImage(url);
@@ -101,9 +104,6 @@ export default class FileInlineImage extends SafeComponent {
         this.optimalContentWidth = evt.nativeEvent.layout.width - this.outerPadding * 2 - 2;
     }
 
-    renderInner() {
-    }
-
     get displayTooBigImageOffer() {
         const outer = {
             padding: this.outerPadding
@@ -118,9 +118,11 @@ export default class FileInlineImage extends SafeComponent {
         };
         return (
             <View style={outer}>
-                <Text style={text0}>Images larger than 1 MB are not displayed.</Text>
+                <Text style={text0}>
+                    {tx('title_imageSizeWarning', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })}
+                </Text>
                 <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={() => { this.loadImage = true; }}>
-                    <Text style={text}>Display this image anyway</Text>
+                    <Text style={text}>{tx('button_displayThisImageAfterWarning')}</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -135,7 +137,7 @@ export default class FileInlineImage extends SafeComponent {
         };
         return (
             <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={() => { this.loadImage = true; }}>
-                <Text style={text}>Display this image</Text>
+                <Text style={text}>{tx('button_displayThisImage')}</Text>
             </TouchableOpacity>
         );
     }

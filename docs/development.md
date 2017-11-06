@@ -38,20 +38,23 @@ Deploy is managed via fastlane (check out [fastlane docs](https://docs.fastlane.
 
 ## Icebear library connection
 
-Icebear library, which provides all the server API communication, and encryption (apart from native-implemented scrypt and signature/verification due to performance issues on JavaScriptCore without JIT) is provided via the `@peerio/peerio-icebear` module.
+Icebear library, which provides all the server API communication, and encryption (apart from native-implemented scrypt and signature/verification due to performance issues on JavaScriptCore without JIT) is provided via the `peerio-icebear` module.
 
 During postinstall step (which is called on build and during debug) icebear library is transpiled onto app/lib/peerio-icebear. The application uses it from there and injects some mocks/polyfills when doing so (primarily because peerio-icebear library is build for full V8 environment, which has some capabilities which JavaScriptCore misses).
 
-If you are working with a local version of `@peerio/peerio-icebear`, you can use `npm link` to link your local version. 
+If you are working with a local version of `peerio-icebear`, you can use `npm link` to link your local version. 
 
 For example: 
 ```
 cd peerio-icebear
 npm link
 cd ../peerio-mobile
-npm link @peerio/peerio-icebear 
+npm link peerio-icebear 
 npm install
 ```
+
+When working with SDK closely, it's recommended to add `npm link peerio-icebear` to `npm start` script. That way, peerio-icebear will be automatically linked when you run the packager.
+
 **N.B.** Linking any other module with `npm link` will *not* work with the ReactMobile packager.
 
 ## Prepare environment
