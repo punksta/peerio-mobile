@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ListView, Animated, Text } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FolderInnerItem from './folder-inner-item';
 import fileState from './file-state';
@@ -27,9 +27,10 @@ export default class FolderSelect extends SafeComponent {
     @observable dataSource = null;
     @observable refreshing = false
 
-    get data() {
+    @computed get data() {
         const { currentFolder } = this;
-        const folders = currentFolder.foldersSortedByName;
+        const folders = currentFolder.foldersSortedByName.slice();
+        currentFolder.isRoot && folders.unshift(fileState.store.fileFolders.root);
         return folders;
     }
 
@@ -73,7 +74,7 @@ export default class FolderSelect extends SafeComponent {
                 radio
                 key={folder.folderId}
                 folder={folder}
-                hideArrow={!folder.hasNested}
+                hideArrow={!folder.hasNested || folder.isRoot}
                 onSelect={selectFolder}
                 onPress={folder.hasNested ? changeFolder : selectFolder} />
         );

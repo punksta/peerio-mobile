@@ -59,7 +59,7 @@ export default class FolderInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const folder = this.props.folder;
+        const { folder, onPress, onLongPress, onSelect, hideArrow } = this.props;
         const nameStyle = {
             color: vars.txtDark,
             fontSize: vars.font.size.normal,
@@ -71,15 +71,15 @@ export default class FolderInnerItem extends SafeComponent {
             fontWeight: vars.font.weight.regular
         };
         const loadingStyle = null;
-        const arrow = this.props.hideArrow ? null : (
+        const arrow = hideArrow ? null : (
             <View style={{ flex: 0 }}>
                 {icons.dark('keyboard-arrow-right', this.onPress)}
             </View>
         );
         return (
             <TouchableOpacity
-                onLongPress={this.props.onLongPress}
-                onPress={this.props.onPress} style={{ backgroundColor: 'white' }}>
+                onLongPress={onLongPress}
+                onPress={hideArrow ? onSelect : onPress} style={{ backgroundColor: 'white' }}>
                 <View style={folderInfoContainerStyle}>
                     {this.radio}
                     <View style={itemContainerStyle}>
@@ -87,7 +87,7 @@ export default class FolderInnerItem extends SafeComponent {
                             {icons.darkNoPadding('folder')}
                         </View>
                         <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
-                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.name}</Text>
+                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? '/' : folder.name}</Text>
                             {folder.createdAt && <Text style={infoStyle}>
                                 {moment(folder.createdAt).format(`MMM Do YYYY, hh:mm a`)}
                             </Text>}
