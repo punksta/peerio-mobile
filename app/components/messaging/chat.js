@@ -88,7 +88,10 @@ export default class Chat extends SafeComponent {
         if (contentHeight) this.contentHeight = contentHeight;
 
         // waiting for page loads or other updates
-        if (this.refreshing || this.disableNextScroll) { return; }
+        if (this.refreshing || this.disableNextScroll) {
+            console.debug(`refreshing: ${this.refreshing}, disableNextScroll: ${this.disableNextScroll}`);
+            return;
+        }
 
         // throttle calls
         if (this._contentSizeChanged) clearTimeout(this._contentSizeChanged);
@@ -99,7 +102,7 @@ export default class Chat extends SafeComponent {
                 if (this.chat.canGoDown) indicatorSpacing += this.indicatorHeight;
                 const y = this.contentHeight - this.scrollViewHeight;
                 this.scrollEnabled = y - indicatorSpacing > 0;
-                // console.log('chat.js: auto scroll');
+                console.debug(`in timeout refreshing: ${this.refreshing}, disableNextScroll: ${this.disableNextScroll}`);
                 if (!this.refreshing && !this.disableNextScroll) {
                     console.log('chat.js: auto scrolling');
                     this.scrollView.scrollTo({ y, animated: !this.waitForScrollToEnd });

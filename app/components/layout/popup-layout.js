@@ -24,12 +24,13 @@ export default class PopupLayout extends SafeComponent {
     }
 
     button = (item) => {
-        const { text, id, secondary } = item;
+        const { text, id, secondary, disabled } = item;
         return (
             <ButtonText
                 testID={`popupButton_${id}`}
                 onPress={() => this.onPress(item)}
                 secondary={secondary}
+                disabled={disabled}
                 key={id}
                 text={text} />
         );
@@ -82,8 +83,9 @@ export default class PopupLayout extends SafeComponent {
 
         const title = {
             fontWeight: 'bold',
-            fontSize: vars.font.size.bigger,
-            marginBottom: vars.spacing.small.midi2x
+            fontSize: vars.font.size.big,
+            marginBottom: vars.spacing.small.midi2x,
+            color: vars.txtDark
         };
 
         const buttonBar = {

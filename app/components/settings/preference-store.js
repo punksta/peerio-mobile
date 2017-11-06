@@ -13,7 +13,7 @@ class PreferenceStore {
         allActivitySoundsEnabled: true,
         allEmailNotifsEnabled: true,
         newMessageEmailNotifsEnabled: true,
-        limitInlineImageSize: false, // will use config.chat.inlineImageSizeLimit
+        limitInlineImageSize: true, // will use config.chat.inlineImageSizeLimit
         externalContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
         externalContentEnabled: true,
         externalContentJustForFavs: false,

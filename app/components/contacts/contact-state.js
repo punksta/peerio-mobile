@@ -18,14 +18,6 @@ class ContactState extends RoutedState {
         return new Promise(resolve => when(() => !this.store.loading, resolve));
     }
 
-    composeMessage() {
-        this.routerModal.compose();
-    }
-
-    shareFile() {
-        this.routerModal.shareFileTo();
-    }
-
     @action exit() {
         this.routerModal.discard();
         this.clear();

@@ -418,8 +418,8 @@ export default class Avatar extends SafeComponent {
     }
 
     renderCollapsed() {
-        let shrinkStrategy = { flexShrink: 1 };
-        if (this.props.inlineImage) shrinkStrategy = { flexGrow: 1 };
+        const shrinkStrategy = { flexShrink: 1 };
+        if (this.props.inlineImage) shrinkStrategy.flexGrow = 1;
         return (
             <View style={{ flexGrow: 1 }}>
                 <View style={[itemStyle, this.errorStyle]}>

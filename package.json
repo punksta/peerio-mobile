@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.184.0",
+  "version": "3.187.0",
   "private": true,
   "scripts": {
     "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
@@ -8,7 +8,7 @@
     "code:packager": "./node_modules/react-native/packager/packager.sh --reset-cache",
     "icebear:compile": "babel node_modules/peerio-icebear/src -d app/lib/peerio-icebear && bash ./scripts/remove-require-crypto.sh",
     "icebear:watch": "npm run icebear:compile -- -w",
-    "start": "source env.sh && npm-run-all -l -p icebear:watch code:packager",
+    "start": "npm link peerio-icebear && source env.sh && npm run icebear:compile && npm run code:packager",
     "expandoo": "source env-expandoo.sh && ./node_modules/react-native/packager/packager.sh --reset-cache",
     "clean": "rm -rf ios/build",
     "ios": "npm install && npm update && npm run postinstall && react-native run-ios",
@@ -49,7 +49,7 @@
     "path": "^0.12.7",
     "pbkdf2": "github:PeerioTechnologies/pbkdf2",
     "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v2.13.4",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#feat-file-folders",
     "peerio-translator": "github:PeerioTechnologies/peerio-translator#v1.0.0",
     "process": "0.11.9",
     "prop-types": "15.5.10",
