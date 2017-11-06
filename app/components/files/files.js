@@ -6,7 +6,6 @@ import SafeComponent from '../shared/safe-component';
 import FilesPlaceholder from './files-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
-import FileActions from './file-actions';
 import FolderActionSheet from './folder-action-sheet';
 import FilesActionSheet from './files-action-sheet';
 import fileState from './file-state';
@@ -137,7 +136,6 @@ export default class Files extends SafeComponent {
                         this.noFilesInFolder : null}
                     {body}
                 </View>
-                <FileActions height={this.actionsHeight} />
                 <ProgressOverlay enabled={fileState.store.loading} />
                 <FolderActionSheet ref={ref => { this._folderActionSheet = ref; }} />
                 <FilesActionSheet createFolder ref={ref => { filesActionSheet = ref; }} />

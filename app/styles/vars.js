@@ -22,6 +22,8 @@ const layoutPaddingTop = statusBarHeight * 2;
 const r = 40;
 const retentionOffset = { top: r, left: r, bottom: r, right: r };
 
+const tabCellHeight = 56;
+
 // pixel ratio should be factored into scaleDim somehow: const pixRatio = PixelRatio.get();
 const defaultHeight = 667;
 // scaleDim takes a size value and returns one that is adjusted to the height of the device as it compares to an iPhone 6
@@ -73,7 +75,6 @@ const vars = {
     statusBarHeight,
     layoutPaddingTop,
     headerHeight: 80 + iPhoneXTop,
-    tabsHeight: 56,
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconSizeSmall: 16,
@@ -118,6 +119,8 @@ const vars = {
     retentionOffset,
     iPhoneXBottom,
     iPhoneXTop,
+    tabCellHeight,
+    tabsHeight: tabCellHeight + iPhoneXBottom,
     spacing: {
         small: {
             mini: scaleDim(2),

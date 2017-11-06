@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import { vars } from '../../styles/styles';
@@ -10,13 +10,10 @@ import contactState from '../contacts/contact-state';
 import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
 
-const height = 56;
-const tabHeight = height + vars.iPhoneXBottom;
-
 const actionCellStyle = {
     flex: 1,
     alignItems: 'center',
-    height,
+    height: vars.tabCellHeight,
     justifyContent: 'center'
 };
 
@@ -28,6 +25,7 @@ const bottomRowStyle = {
     flex: 0,
     flexDirection: 'row',
     backgroundColor: vars.tabsBg,
+    height: vars.tabsHeight,
     padding: 0,
     paddingBottom: vars.iPhoneXBottom
 };
@@ -57,24 +55,19 @@ export default class Tabs extends SafeComponent {
     }
 
     renderThrow() {
-        const animation = {
-            overflow: 'hidden',
-            height: (routerMain.currentIndex === 0) ? tabHeight : 0
-        };
+        if (routerMain.currentIndex !== 0) return null;
         return (
-            <Animated.View style={[bottomRowStyle, animation]}>
+            <View style={bottomRowStyle}>
                 {this.action(t('title_chats'), 'chats', 'forum', chatStore.unreadMessages)}
                 {this.action(t('title_files'), 'files', 'folder', fileStore.unreadFiles)}
                 {this.action(t('title_contacts'),
                     contactState.empty ? 'contactAdd' : 'contacts', 'people')}
                 {this.action(t('title_settings'), 'settings', 'settings')}
-            </Animated.View>
+            </View>
         );
     }
 }
 
 Tabs.propTypes = {
-    file: PropTypes.any,
-    // {Animated.Value} height
     height: PropTypes.any
 };
