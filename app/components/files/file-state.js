@@ -127,8 +127,9 @@ class FileState extends RoutedState {
         await promiseWhen(() => socket.authenticated);
         const chat = chatState.currentChat;
         if (!chat) throw new Error('file-state.js, uploadInline: no chat selected');
-        data.file = chat.uploadAndShareFile(data.url, data.fileName);
-        await this.renamePostProcessing(data);
+        let renamePromise = null;
+        data.file = chat.uploadAndShareFile(data.url, data.fileName, false, () => renamePromise);
+        renamePromise = this.renamePostProcessing(data);
         return data.file;
     }
 
