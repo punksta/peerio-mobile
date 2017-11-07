@@ -6,6 +6,7 @@ import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
+import { tx } from '../utils/translator';
 
 const height = vars.listItemHeight;
 const itemContainerStyle = {
@@ -87,7 +88,7 @@ export default class FolderInnerItem extends SafeComponent {
                             {icons.darkNoPadding('folder')}
                         </View>
                         <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
-                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? '/' : folder.name}</Text>
+                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
                             {folder.createdAt && <Text style={infoStyle}>
                                 {moment(folder.createdAt).format(`MMM Do YYYY, hh:mm a`)}
                             </Text>}
