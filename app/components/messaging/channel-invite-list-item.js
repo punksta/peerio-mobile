@@ -14,7 +14,6 @@ import { tx } from '../utils/translator';
 export default class ChannelInviteListItem extends SafeComponent {
     async acceptInvite(id) {
         await chatInviteStore.acceptInvite(id);
-        routerMain.chats(chatStore.activeChat);
     }
 
     renderThrow() {
