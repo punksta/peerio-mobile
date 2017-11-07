@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.189.0"></a>
+# [3.189.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.188.0...v3.189.0) (2017-11-07)
+
+
+### Bug Fixes
+
+* root folder should be displayed as Files ([3a4ec3c](https://github.com/PeerioTechnologies/peerio-mobile/commit/3a4ec3c))
+
+
+### Features
+
+* display image cutoff limits ([f4801e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/f4801e8))
+
+
+
 <a name="3.188.0"></a>
 # [3.188.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.187.0...v3.188.0) (2017-11-07)
 
