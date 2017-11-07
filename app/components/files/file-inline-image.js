@@ -22,6 +22,8 @@ const toSettings = text => (
     </Text>
 );
 
+const forceShowMap = observable.map();
+
 const toSettingsParser = { toSettings };
 
 @observer
@@ -33,6 +35,7 @@ export default class FileInlineImage extends SafeComponent {
     @observable opened;
     @observable loaded;
     @observable tooBig;
+    @observable oversizeCutoff;
     @observable loadImage;
     @observable showUpdateSettingsLink;
     @observable cachedImage;
@@ -46,32 +49,38 @@ export default class FileInlineImage extends SafeComponent {
         this.opened = clientApp.uiUserPrefs.peerioContentEnabled;
         when(() => this.cachedImage, () => this.fetchSize());
         const { image } = this.props;
-        const { fileId, url, oversized, isOverInlineSizeLimit } = image;
+        const { fileId, url, isOverInlineSizeLimit, isOversizeCutoff, tmpCachePath } = image;
+        this.tooBig = isOverInlineSizeLimit;
+        this.oversizeCutoff = isOversizeCutoff;
+        this.loadImage = forceShowMap.get(url || fileId)
+            || clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
         if (fileId) {
             // we have local inline file
-            this.tooBig = isOverInlineSizeLimit;
             when(() => image.tmpCached, () => {
-                this.cachedImage = inlineImageCacheStore.getImage(image.tmpCachePath);
+                this.cachedImage = inlineImageCacheStore.getImage(tmpCachePath);
             });
             if (!image.tmpCached) {
                 when(() => this.loadImage, async () => {
-                    if (await config.FileStream.exists(image.tmpCachePath)) {
+                    if (await config.FileStream.exists(tmpCachePath)) {
                         image.tmpCached = true;
                         return;
                     }
-                    image.downloadToTmpCache();
+                    image.tryToCacheTemporarily(true);
                 });
             }
-            this.loadImage = clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
         } else {
             // we have external url
-            this.tooBig = oversized;
-            this.loadImage = clientApp.uiUserPrefs.externalContentEnabled && !this.tooBig;
             when(() => this.loadImage, () => {
                 this.opened = true;
                 this.cachedImage = inlineImageCacheStore.getImage(url);
             });
         }
+    }
+
+    forceShow = () => {
+        this.loadImage = true;
+        const { url, fileId } = this.props.image;
+        forceShowMap.set(url || fileId, true);
     }
 
     fetchSize() {
@@ -121,9 +130,25 @@ export default class FileInlineImage extends SafeComponent {
                 <Text style={text0}>
                     {tx('title_imageSizeWarning', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })}
                 </Text>
-                <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={() => { this.loadImage = true; }}>
+                <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={this.forceShow}>
                     <Text style={text}>{tx('button_displayThisImageAfterWarning')}</Text>
                 </TouchableOpacity>
+            </View>
+        );
+    }
+
+    get displayCutOffImageOffer() {
+        const outer = {
+            padding: this.outerPadding
+        };
+        const text0 = {
+            color: vars.txtDark
+        };
+        return (
+            <View style={outer}>
+                <Text style={text0}>
+                    {tx('title_imageTooBigCutoff', { size: util.formatBytes(config.chat.inlineImageSizeLimitCutoff) })}
+                </Text>
             </View>
         );
     }
@@ -162,7 +187,7 @@ export default class FileInlineImage extends SafeComponent {
 
     renderThrow() {
         const { image } = this.props;
-        const { name, title, description, fileId, downloading /* , length, oversized */ } = image;
+        const { name, title, description, fileId, downloading } = image;
         const { width, height, loaded, showUpdateSettingsLink } = this;
         const { source } = this.cachedImage || {};
         const isLocal = !!fileId;
@@ -224,6 +249,7 @@ export default class FileInlineImage extends SafeComponent {
                             <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} /> : null}
                         {this.opened && !this.loadImage && !this.tooBig && this.displayImageOffer}
                         {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer}
+                        {this.oversizeCutoff && this.displayCutOffImageOffer}
                     </View>
                 </View>
                 {showUpdateSettingsLink && this.updateSettingsOffer}
