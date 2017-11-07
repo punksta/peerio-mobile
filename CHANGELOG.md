@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.188.0"></a>
+# [3.188.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.187.0...v3.188.0) (2017-11-07)
+
+
+### Bug Fixes
+
+* add root to move folder to ([65c9b7e](https://github.com/PeerioTechnologies/peerio-mobile/commit/65c9b7e))
+* nested folder created underneath ([1ebd93e](https://github.com/PeerioTechnologies/peerio-mobile/commit/1ebd93e))
+
+
+
 <a name="3.187.0"></a>
 # [3.187.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.186.0...v3.187.0) (2017-11-06)
 
