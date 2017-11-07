@@ -55,7 +55,7 @@ export default class FilesActionSheet extends SafeComponent {
                 tx('title_createFolder'), tx('title_createFolderPlaceholder'), null, null, true);
             if (!result) return;
             requestAnimationFrame(() => {
-                fileState.store.fileFolders.createFolder(result.value, this.currentFolder);
+                fileState.store.fileFolders.createFolder(result.value, fileState.currentFolder);
                 fileState.store.fileFolders.save();
             });
         };
