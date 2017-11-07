@@ -240,19 +240,27 @@ function popupControl(contents) {
     });
 }
 
-function popupSetupVideo(titleText, subText, discText, link) {
+function popupSetupVideo(link, video) {
+    const dialog = {
+        titleText: tx('title_videoCall'),
+        subText: tx('dialog_videoCall'),
+        disc: tx('disclaimer_videoCall')
+    };
     return new Promise((resolve) => {
         const openLink = () => {
             resolve(false);
             Linking.openURL(link);
         };
+        const openVideo = () => {
+            resolve(false);
+            Linking.openURL(video);
+        };
         popupState.showPopup({
-            title: textControl(titleText),
-            type: 'systemWarning',
-            subTitle: textControl(subText),
-            contents: disclaimerStyle(discText),
+            title: textControl(dialog.titleText),
+            subTitle: textControl(dialog.subText),
+            contents: disclaimerStyle(dialog.disc),
             buttons: [
-                { id: 'cancel', text: tu('button_gotJitsi'), action: () => resolve(true), secondary: true },
+                { id: 'cancel', text: tu('button_gotJitsi'), action: video ? openVideo : resolve(true), secondary: true },
                 { id: 'ok', text: tu('button_notGotJitsi'), action: openLink }
             ]
         });

@@ -18,7 +18,9 @@ import tagify from './tagify';
 import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import preferenceStore from '../settings/preference-store';
-import VideoIcon from '../layout/video-icon';
+import { popupSetupVideo } from '../shared/popups';
+import ChatVideo from '../messaging/chat-video';
+
 
 const itemStyle = {
     flex: 1,
@@ -185,22 +187,21 @@ export default class Avatar extends SafeComponent {
         ) : this.props.messageComponent;
     }
 
+    popupCall(video) {
+        return popupSetupVideo(ChatVideo.storeLink, video);
+    }
+
     get systemMessage() {
         const { systemMessage, videoCallMessage } = this.props;
         if (videoCallMessage) {
             const { prefs } = preferenceStore;
-            const dialog = {
-                titleText: tx('title_videoCall'),
-                subText: tx('dialog_videoCall'),
-                disc: tx('disclaimer_videoCall')
-            };
             const videoCallShort = videoCallMessage.replace(/(https:\/\/)/, '');
             return (
                 <View>
                     <Text style={[lastMessageTextStyle, videoCallMsgStyle]}>
                         {systemMessage}
                     </Text>
-                    <TouchableOpacity onPress={() => prefs.hasSeenJitsiSuggestionPopup ? VideoIcon.action : Linking.openURL(videoCallMessage)}
+                    <TouchableOpacity onPress={() => prefs.hasSeenJitsiSuggestionPopup ? this.popupCall(videoCallMessage) : Linking.openURL(videoCallMessage)}
                       pressRetentionOffset={vars.pressRetentionOffset}>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             {icons.plaindark('videocam', 16)}
