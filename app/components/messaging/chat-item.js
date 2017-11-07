@@ -22,7 +22,6 @@ export default class ChatItem extends SafeComponent {
         const systemMessageText =
             i.systemData && systemMessages.getSystemMessageText(i) || null;
         const videoCallLink = i.systemData && i.systemData.link || null;
-        console.log('log from ChatItem', videoCallLink);
         const files = i.files && i.files.map(id => fileState.store.getById(id)).filter(f => f) || [];
         const images = files.filter(f => f.isImage) || [];
         const normalFiles = files.filter(f => !f.isImage) || [];
