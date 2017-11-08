@@ -14,7 +14,6 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
-import { systemMessages } from '../../lib/icebear';
 import VideoIcon from '../layout/video-icon';
 
 

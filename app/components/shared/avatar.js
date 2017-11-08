@@ -190,7 +190,6 @@ export default class Avatar extends SafeComponent {
     popupCall(video) {
         return popupSetupVideo(ChatVideo.storeLink, video);
     }
-
     get systemMessage() {
         const { systemMessage, videoCallMessage } = this.props;
         if (videoCallMessage) {
@@ -201,7 +200,7 @@ export default class Avatar extends SafeComponent {
                     <Text style={[lastMessageTextStyle, videoCallMsgStyle]}>
                         {systemMessage}
                     </Text>
-                    <TouchableOpacity onPress={() => prefs.hasSeenJitsiSuggestionPopup ? this.popupCall(videoCallMessage) : Linking.openURL(videoCallMessage)}
+                    <TouchableOpacity onPress={() => prefs.hasSeenJitsiSuggestionPopup ? Linking.openURL(videoCallMessage) : this.popupCall(videoCallMessage)}
                       pressRetentionOffset={vars.pressRetentionOffset}>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             {icons.plaindark('videocam', 16)}
