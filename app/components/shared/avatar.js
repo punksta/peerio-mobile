@@ -19,7 +19,7 @@ import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import preferenceStore from '../settings/preference-store';
 import { popupSetupVideo } from '../shared/popups';
-import VideoIcon from '../layout/video-icon';
+import ChatVideo from '../messaging/chat-video';
 
 
 const itemStyle = {
@@ -188,7 +188,7 @@ export default class Avatar extends SafeComponent {
     }
 
     popupCall(video) {
-        return popupSetupVideo(VideoIcon.storeLink, video);
+        return popupSetupVideo(ChatVideo.storeLink, video);
     }
 
     get systemMessage() {
