@@ -20,6 +20,7 @@ import { tx } from '../utils/translator';
 import preferenceStore from '../settings/preference-store';
 import { popupSetupVideo } from '../shared/popups';
 import ChatVideo from '../messaging/chat-video';
+import VideoIcon from '../layout/video-icon';
 
 
 const itemStyle = {
@@ -187,10 +188,6 @@ export default class Avatar extends SafeComponent {
         ) : this.props.messageComponent;
     }
 
-    popupCall(video) {
-        return popupSetupVideo(ChatVideo.storeLink, video);
-    }
-
     get systemMessage() {
         const { systemMessage, videoCallMessage } = this.props;
         if (videoCallMessage) {
@@ -201,7 +198,7 @@ export default class Avatar extends SafeComponent {
                     <Text style={[lastMessageTextStyle, videoCallMsgStyle]}>
                         {systemMessage}
                     </Text>
-                    <TouchableOpacity onPress={() => prefs.hasSeenJitsiSuggestionPopup ? Linking.openURL(videoCallMessage) : this.popupCall(videoCallMessage)}
+                    <TouchableOpacity onPress={() => prefs.hasSeenJitsiSuggestionPopup ? Linking.openURL(videoCallMessage) : popupSetupVideo(videoCallMessage)}
                       pressRetentionOffset={vars.pressRetentionOffset}>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             {icons.plaindark('videocam', 16)}

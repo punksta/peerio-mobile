@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, WebView, View, Linking } from 'react-native';
+import { Text, WebView, View, Linking, Platform } from 'react-native';
 import { observable } from 'mobx';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
@@ -240,7 +240,7 @@ function popupControl(contents) {
     });
 }
 
-function popupSetupVideo(link, video) {
+function popupSetupVideo(video) {
     const dialog = {
         titleText: tx('title_videoCall'),
         subText: tx('dialog_videoCall'),
@@ -248,8 +248,10 @@ function popupSetupVideo(link, video) {
     };
     return new Promise((resolve) => {
         const openLink = () => {
+            const androidJitsi = 'https://play.google.com/store/apps/details?id=org.jitsi.meet';
+            const iosJitsi = 'https://itunes.apple.com/in/app/jitsi-meet/id1165103905?mt=8';
             resolve(false);
-            Linking.openURL(link);
+            Linking.openURL(Platform.OS === 'android' ? androidJitsi : iosJitsi);
         };
         const openVideo = () => {
             resolve(false);
