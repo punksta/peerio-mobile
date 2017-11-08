@@ -102,7 +102,7 @@ class MockChannel {
         const name = `${randomWords({ min: 8, max: 12, join: '_' })}.png`;
         const url = randomImages.random();
         m.hasUrls = true;
-        m.externalImages = [{ url, name, fileId: 1 }];
+        m.externalImages = [{ url, name, oversized: true /* , fileId: 1 */ }];
         this.messages.push(m);
     }
 
