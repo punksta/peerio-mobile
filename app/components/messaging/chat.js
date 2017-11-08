@@ -14,6 +14,8 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
+import VideoIcon from '../layout/video-icon';
+
 
 const { width } = Dimensions.get('window');
 
@@ -46,6 +48,11 @@ export default class Chat extends SafeComponent {
 
     componentWillUnmount() {
         this.selfMessageReaction();
+    }
+
+    get rightIcon() {
+        // show video icon then call function: returned link is then passed on to the message-printing function
+        return <VideoIcon onAddVideoLink={link => chatState.addVideoMessage(link)} />;
     }
 
     get data() {

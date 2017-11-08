@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, TouchableOpacity, Dimensions, LayoutAnimation } from 'react-native';
+import { View, Text, TouchableOpacity, Dimensions, LayoutAnimation, Linking } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
@@ -17,6 +17,10 @@ import CorruptedMessage from './corrupted-message';
 import tagify from './tagify';
 import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
+import preferenceStore from '../settings/preference-store';
+import { popupSetupVideo } from '../shared/popups';
+import VideoIcon from '../layout/video-icon';
+
 
 const itemStyle = {
     flex: 1,
@@ -68,6 +72,14 @@ const nameMessageContainerStyle = {
     marginLeft: vars.spacing.small.midi,
     marginRight: vars.spacing.small.midi,
     paddingTop: 0
+};
+
+const videoCallMsgStyle = {
+    color: 'rgba(0,0,0,.38)'
+};
+
+const linkStyle = {
+    color: '#2F80ED'
 };
 
 const nameTextStyle = {
@@ -176,7 +188,27 @@ export default class Avatar extends SafeComponent {
     }
 
     get systemMessage() {
-        const { systemMessage } = this.props;
+        const { systemMessage, videoCallMessage } = this.props;
+        if (videoCallMessage) {
+            const { prefs } = preferenceStore;
+            const videoCallShort = videoCallMessage.replace(/(https:\/\/)/, '');
+            return (
+                <View>
+                    <Text style={[lastMessageTextStyle, videoCallMsgStyle]}>
+                        {systemMessage}
+                    </Text>
+                    <TouchableOpacity onPress={() => prefs.hasSeenJitsiSuggestionPopup ? Linking.openURL(videoCallMessage) : popupSetupVideo(videoCallMessage)}
+                      pressRetentionOffset={vars.pressRetentionOffset}>
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                            {icons.plaindark('videocam', 16)}
+                            <Text style={[linkStyle]}>
+                                {videoCallShort}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            );
+        }
         return systemMessage && (
             <Text style={[lastMessageTextStyle, systemMessageStyle]}>
                 {systemMessage}
