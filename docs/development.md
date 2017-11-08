@@ -53,9 +53,15 @@ npm link peerio-icebear
 npm install
 ```
 
-When working with SDK closely, it's recommended to add `npm link peerio-icebear` to `npm start` script. That way, peerio-icebear will be automatically linked when you run the packager.
+When working with SDK closely, it's recommended to add `npm link peerio-icebear` to `npm start` script. That way, peerio-icebear will be automatically linked when you run the packager. 
 
 **N.B.** Linking any other module with `npm link` will *not* work with the ReactMobile packager.
+
+### Developing on peerio-mobile and peerio-icebear concurrently
+
+In order to develop a feature on both peerio-mobile and peerio-icebear in parallel, link the packages as described above, then run `npm start` and in another terminal run `npm run ios`
+
+When updating your local copy of peerio-icebear, run `npm run icebear:compile` to babel the changes and reload the app (with Cmd+R). See the section on [debugging](#debugging) below for more about the packager. 
 
 ## Prepare environment
 
@@ -75,7 +81,7 @@ Configure the backend socket server to use the staging server, by editing the fi
 export PEERIO_SOCKET_SERVER='wss://hocuspocus.peerio.com'
 ```
 
-For debugging (see below), you will need [watchman](https://facebook.github.io/watchman/docs/install.html). On Mac `brew install watchman`
+For [debugging](#debugging) (see below), you will need [watchman](https://facebook.github.io/watchman/docs/install.html). On Mac `brew install watchman`
 
 ## iOS
 
@@ -108,7 +114,7 @@ To debug, use Android Studio, or any other Java and Gradle compatible environmen
 
 Please note that because React Native is forked for our project, all the react-native modules (from node_modules) are updated to use the React Native project from the gradle file (and not the pre-built version from maven). See `scripts/android-switch-to-rn-fork.sh` for more information.
 
-## Debugging
+## <a name="debugging"></a> Debugging
 
 The native application when run in Debug scheme will try to load JS bundle from packager, accessible from localhost:8081 for iOS simulators and either YOUR-IP:8081 (setup with setup-rn-debugging script) or localhost:8081 from simulator network (using adb reverse).
 
