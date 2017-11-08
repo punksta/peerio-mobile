@@ -19,7 +19,6 @@ import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import preferenceStore from '../settings/preference-store';
 import { popupSetupVideo } from '../shared/popups';
-import ChatVideo from '../messaging/chat-video';
 import VideoIcon from '../layout/video-icon';
 
 

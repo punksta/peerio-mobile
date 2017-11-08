@@ -1,6 +1,5 @@
 import HeaderIconBase from './header-icon-base';
 import { popupSetupVideo } from '../shared/popups';
-import ChatVideo from '../messaging/chat-video';
 import preferenceStore from '../settings/preference-store';
 import { tx } from '../utils/translator';
 import { getRandomNumber, getRandomUserSpecificIdB64 } from '../../lib/peerio-icebear/crypto/util.random';
