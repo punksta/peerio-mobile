@@ -9,6 +9,8 @@ import { systemMessages } from '../../lib/icebear';
 
 @observer
 export default class ChatItem extends SafeComponent {
+    setRef = ref => { this._ref = ref; };
+
     renderThrow() {
         if (!this.props || !this.props.message) return null;
         const i = this.props.message;
@@ -18,6 +20,8 @@ export default class ChatItem extends SafeComponent {
         const text = msg.replace(/\n[ ]+/g, '\n');
         const onPressAvatar = () => contactState.contactView(i.sender);
         const onPress = i.sendError ? this.props.onRetryCancel : null;
+
+        // this causes double update on add message
         const error = !!i.signatureError;
         const systemMessageText =
             i.systemData && systemMessages.getSystemMessageText(i) || null;
@@ -57,7 +61,7 @@ export default class ChatItem extends SafeComponent {
                 noBorderBottom
                 collapsed={!!i.groupWithPrevious}
                 extraPaddingTop={8}
-                ref={ref => { this._ref = ref; }}
+                ref={this.setRef}
             />
         );
     }
