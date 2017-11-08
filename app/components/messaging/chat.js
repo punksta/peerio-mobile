@@ -42,25 +42,10 @@ export default class Chat extends SafeComponent {
                 this.scrollView.scrollTo({ y, animated: true });
             }
         });
-
-        // limbo messages only appear if they take more than 0.5 secs to process
-        // TODO: use proper ListView
-        this.limboReaction = reaction(() => this.chat && this.chat.limboMessages.length,
-            () => {
-                if (this._limboTimeout) clearTimeout(this._limboTimeout);
-                if (this.chat.limboMessages.length) {
-                    this._limboTimeout = setTimeout(
-                        () => { this.limboMessages = this.chat.limboMessages },
-                        500);
-                } else {
-                    this.limboMessages = null;
-                }
-            }, true);
     }
 
     componentWillUnmount() {
         this.selfMessageReaction();
-        this.limboReaction();
     }
 
     get data() {
@@ -245,7 +230,8 @@ export default class Chat extends SafeComponent {
                 ref={sv => { this.scrollView = sv; }}>
                 {this.chat.canGoUp ? refreshControlTop : this.zeroStateItem()}
                 {this.data.map(this.item)}
-                {this.limboMessages && this.limboMessages.map(this.item)}
+                {this.chat.limboMessages &&
+                    this.chat.limboMessages.filter(m => !(m.files && !m.files.length)).map(this.item)}
                 {refreshControlBottom}
             </ScrollView>
         );
