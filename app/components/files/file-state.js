@@ -1,5 +1,6 @@
 import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
+import RNFS from 'react-native-fs';
 import chatState from '../messaging/chat-state';
 import RoutedState from '../routes/routed-state';
 import { fileStore, TinyDb, socket, fileHelpers, clientApp } from '../../lib/icebear';
@@ -11,6 +12,7 @@ import { promiseWhen } from '../helpers/sugar';
 class FileState extends RoutedState {
     @observable currentFile = null;
     @observable currentFolder = null;
+    localFileMap = observable.map();
     store = fileStore;
     _prefix = 'files';
 
@@ -130,6 +132,11 @@ class FileState extends RoutedState {
         let renamePromise = null;
         data.file = chat.uploadAndShareFile(data.url, data.fileName, false, () => renamePromise);
         renamePromise = this.renamePostProcessing(data);
+        await promiseWhen(() => data.file.fileId);
+        // TODO: this may be a cause for race-condition
+        // e.g.: the message with file id appears before copying is finished
+        console.log(`copy from ${data.url} to ${data.file.tmpCachePath}`);
+        await RNFS.copyFile(data.url, data.file.tmpCachePath);
         return data.file;
     }
 
