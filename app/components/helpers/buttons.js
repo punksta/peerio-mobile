@@ -17,6 +17,19 @@ export default {
         );
     },
 
+    uppercaseWhiteButtonNoPadding(text, onPress, disabled, textStyle = {}) {
+        return (
+            <TouchableOpacity
+                onPress={disabled ? null : onPress}
+                pressRetentionOffset={vars.pressRetentionOffset}
+                style={{ opacity: disabled ? 0 : 1 }}>
+                <Text style={[textStyle, { backgroundColor: 'transparent', color: disabled ? vars.txtMedium : vars.white }]}>
+                    {tu(text)}
+                </Text>
+            </TouchableOpacity>
+        );
+    },
+
     uppercaseBlueButton(text, onPress, disabled, hidden) {
         const opacity = hidden ? 0.0 : 1.0;
         return (

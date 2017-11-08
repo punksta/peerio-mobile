@@ -14,6 +14,7 @@ import ChatChannelInvitesSection from './chat-channel-invites-section';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import CreateActionSheet from './create-action-sheet';
 import { tx } from '../utils/translator';
+import routes from '../routes/routes';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -97,7 +98,7 @@ export default class ChatList extends SafeComponent {
                 <ChatChannelInvitesSection
                     title={tx('title_viewChannelInvites')}
                     data={chatInviteStore.received.length}
-                    onPress={() => chatState.routerMain.channelInviteList()}
+                    onPress={() => routes.modal.channelInviteList()}
                 />);
         } else if (chat.isChannel) {
             return <ChannelListItem chat={chat} />;
