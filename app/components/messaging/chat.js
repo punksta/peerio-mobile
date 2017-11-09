@@ -278,6 +278,9 @@ export default class Chat extends SafeComponent {
                     {tx('title_chatBeginning', { chatName: chat.name })}
                 </Text>
                 {this.archiveNotice}
+                <Text>
+                    You can verify any user’s identity with their Peerio ID#. Show me how
+                </Text>
             </View>
         );
     }
