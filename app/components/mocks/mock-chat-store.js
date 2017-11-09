@@ -1,7 +1,6 @@
 import { observable } from 'mobx';
 import randomWords from 'random-words';
 import capitalize from 'capitalize';
-import RNFS from 'react-native-fs';
 import mockContactStore from './mock-contact-store';
 import mockFileStore from './mock-file-store';
 import { popupCancelConfirm } from '../shared/popups';

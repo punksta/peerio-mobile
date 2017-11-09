@@ -1,13 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
 import ToggleItem from './toggle-item';
 import { User, clientApp } from '../../lib/icebear';
-import { mainState, chatState, settingsState } from '../states';
-import { t, tx } from '../utils/translator';
+import { mainState, settingsState } from '../states';
+import { tx } from '../utils/translator';
 import payments from '../payments/payments';
 import PaymentsQuotas from '../payments/payments-quotas';
 import ProfileEdit from './profile-edit';
@@ -103,11 +103,11 @@ export default class SettingsLevel2 extends SafeComponent {
     }
 
     preferences = () => {
-        const text = {
+        /* const text = {
             color: vars.txtMedium,
             marginBottom: vars.spacing.small.midi2x,
             marginLeft: vars.spacing.small.midi2x
-        };
+        }; */
 
         return (
             <View style={bgStyle}>

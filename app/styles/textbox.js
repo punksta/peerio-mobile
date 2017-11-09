@@ -24,16 +24,6 @@ const textbox = {
     fontSize: vars.font.size.normal
 };
 
-const shadowIOS = {
-    shadowColor: '#000000',
-    shadowOpacity: 0.0,
-    shadowRadius: 5,
-    shadowOffset: {
-        height: 1,
-        width: 1
-    }
-};
-
 const radius = [{
     height: vars.inputHeight,
     overflow: 'hidden',

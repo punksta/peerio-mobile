@@ -90,7 +90,7 @@
   "devDependencies": {
     "appium": "1.7.1",
     "authorize-ios": "1.0.4",
-    "babel-eslint": "6.1.2",
+    "babel-eslint": "8.0.1",
     "babel-plugin-console-kungfu": "github:PeerioTechnologies/babel-plugin-console-kungfu#v1.0.0",
     "babel-plugin-transform-decorators-legacy": "1.3.4",
     "babel-plugin-transform-inline-environment-variables": "6.8.0",

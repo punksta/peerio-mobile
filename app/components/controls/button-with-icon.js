@@ -47,7 +47,7 @@ export default class ButtonWithIcon extends Component {
                         name={this.props.iconName}
                         size={vars.iconSize}
                         color="gray"
-                        />
+                    />
                     <Text style={[defaultTextStyle, textStyle, opacity]}>
                         {text}
                     </Text>

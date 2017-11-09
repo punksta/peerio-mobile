@@ -46,9 +46,11 @@ export default class GhostsZeroState extends SafeComponent {
         };
         return (
             <View style={outerContainerStyle}>
-                <View style={{ flex: 1,
+                <View style={{
+                    flex: 1,
                     width: this.width,
-                    justifyContent: 'center' }}>
+                    justifyContent: 'center'
+                }}>
                     <View style={{ flex: 0, alignItems: 'center', marginTop: vars.spacing.large.maxi }}>
                         <Text style={infoStyle}>
                             Encrypted, self destructing messages and
@@ -57,8 +59,8 @@ export default class GhostsZeroState extends SafeComponent {
                     </View>
                     <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: vars.spacing.huge.midi, paddingRight: vars.spacing.huge.midi }}>
                         <Image source={ghostZeroState}
-                               resizeMode="contain"
-                               style={{ flex: 1, width: null, height: null }} />
+                            resizeMode="contain"
+                            style={{ flex: 1, width: null, height: null }} />
                     </View>
                     <View style={{ flex: 0.5 }}>
                         <Text style={headerStyle}>Send something.</Text>
@@ -66,8 +68,8 @@ export default class GhostsZeroState extends SafeComponent {
                             <View style={{ flex: 1, flexGrow: 0.5, borderWidth: 0, borderColor: 'red' }} />
                             <View style={{ flex: 1, borderWidth: 0, borderColor: 'green', justifyContent: 'flex-end' }}>
                                 <Image source={arrowDownZeroState}
-                                       resizeMode="contain"
-                                       style={imageStyle} />
+                                    resizeMode="contain"
+                                    style={imageStyle} />
                             </View>
                         </View>
                     </View>

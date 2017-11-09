@@ -32,14 +32,13 @@ const bottomRowStyle = {
 
 @observer
 export default class Tabs extends SafeComponent {
-
     action(text, route, icon, bubble) {
         const color = routerMain.route === route ? vars.bg : vars.tabsFg;
         const indicator = bubble ? (
             <View style={{ position: 'absolute', right: -5, top: 0 }}>
                 {icons.bubble('')}
             </View>
-         ) : null;
+        ) : null;
         return (
             <TouchableOpacity
                 onPress={() => routerMain[route]()}

@@ -41,13 +41,7 @@ export default class HeaderMain extends SafeComponent {
         const iconPlaceHolderWidth = (32 + vars.iconSize);
         const paddingRight = !rightIcon && leftIcon ? iconPlaceHolderWidth : 0;
         const paddingLeft = rightIcon && !leftIcon ? iconPlaceHolderWidth : 0;
-        return gradient({
-            paddingTop: vars.statusBarHeight,
-            height: vars.headerHeight,
-            flex: -1,
-            justifyContent: 'flex-end',
-            backgroundColor: vars.bg
-        },
+        const header = (
             <TouchableOpacity activeOpacity={titleAction ? 0.2 : 1} onPress={titleAction}
                 pressRetentionOffset={vars.retentionOffset}>
                 <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
@@ -69,6 +63,13 @@ export default class HeaderMain extends SafeComponent {
                 </View>
             </TouchableOpacity>
         );
+        return gradient({
+            paddingTop: vars.statusBarHeight,
+            height: vars.headerHeight,
+            flex: -1,
+            justifyContent: 'flex-end',
+            backgroundColor: vars.bg
+        }, header);
     }
 }
 

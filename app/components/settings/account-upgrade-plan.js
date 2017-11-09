@@ -65,7 +65,6 @@ const borderView = {
 
 @observer
 export default class AccountUpgradePlan extends Component {
-
     largeSmallTextRow(largeTextString, smallTextString) {
         return (
             <View style={textRow}>

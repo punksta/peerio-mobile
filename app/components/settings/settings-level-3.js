@@ -8,7 +8,6 @@ import settingsState from './settings-state';
 
 @observer
 export default class SettingsLevel3 extends SafeComponent {
-
     twoFactorAuth = () => <TwoFactorAuth />;
 
     display = () => <Display />;

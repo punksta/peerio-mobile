@@ -71,8 +71,8 @@ export default class ContactView extends SafeComponent {
                 <View style={{ flex: 1, flexGrow: 1 }} />
             </View>
         );
-        return this.props.nonModal ? body :
-        <LayoutModalExit body={body} title={username} onClose={() => contactState.routerModal.discard()} />;
+        return this.props.nonModal ? body
+            : <LayoutModalExit body={body} title={username} onClose={() => contactState.routerModal.discard()} />;
     }
 }
 

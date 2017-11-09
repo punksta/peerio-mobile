@@ -217,8 +217,8 @@ export default class Avatar extends SafeComponent {
 
     get date() {
         const unreadStyle = this.props.unread
-        ? { color: vars.bg, fontWeight: '600' }
-        : null;
+            ? { color: vars.bg, fontWeight: '600' }
+            : null;
         const { timestampText } = this.props;
         return timestampText ?
             <Text style={[dateTextStyle, unreadStyle]}>
@@ -259,9 +259,7 @@ export default class Avatar extends SafeComponent {
             borderColor: 'red',
             borderWidth: 0,
             height
-        } : {
-            alignSelf: 'flex-start'
-        };
+        } : { alignSelf: 'flex-start' };
         return (
             <TouchableOpacity
                 style={style}
@@ -280,8 +278,8 @@ export default class Avatar extends SafeComponent {
 
     get title() {
         const unreadStyle = this.props.unread
-        ? { fontWeight: '600' }
-        : null;
+            ? { fontWeight: '600' }
+            : null;
         const { contact, title, title2 } = this.props;
         return (
             <View style={nameContainerStyle}>
@@ -310,8 +308,8 @@ export default class Avatar extends SafeComponent {
 
     get name() {
         const unreadStyle = this.props.unread
-        ? { fontWeight: '600' }
-        : null;
+            ? { fontWeight: '600' }
+            : null;
         const { contact, title } = this.props;
         const text = contact ? contact.username : title;
         return (

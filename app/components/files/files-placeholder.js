@@ -6,7 +6,6 @@ import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
-const arrowDownZeroState = require('../../assets/arrow-down-zero-state.png');
 
 @observer
 export default class FilesPlaceholder extends SafeComponent {
@@ -29,13 +28,6 @@ export default class FilesPlaceholder extends SafeComponent {
             flex: 1,
             alignItems: 'center'
         };
-        const imageStyle = {
-            flex: 1,
-            width: null,
-            borderWidth: 0,
-            borderColor: 'blue',
-            height: null
-        };
         const titleBlockStyle = {
             flex: 1,
             flexDirection: 'row',
@@ -47,16 +39,18 @@ export default class FilesPlaceholder extends SafeComponent {
         };
         return (
             <View style={outerContainerStyle}>
-                <View style={{ flex: 1,
+                <View style={{
+                    flex: 1,
                     width: this.width,
-                    justifyContent: 'center' }}>
+                    justifyContent: 'center'
+                }}>
                     <View style={{ flex: 0, alignItems: 'center', marginTop: vars.spacing.large.maxi }}>
                         <Text style={infoStyle}>{tx('title_uploadShareAndManage')}</Text>
                     </View>
                     <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: vars.spacing.medium.midi2x, paddingRight: vars.spacing.medium.midi2x }}>
                         <Image source={fileUploadZeroState}
-                               resizeMode="contain"
-                               style={{ flex: 1, width: null, height: null }} />
+                            resizeMode="contain"
+                            style={{ flex: 1, width: null, height: null }} />
                     </View>
                     <View style={{ flex: 0.5 }}>
                         <Text style={headerStyle}>{tx('title_uploadSomething')}</Text>

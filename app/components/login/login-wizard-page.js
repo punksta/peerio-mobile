@@ -107,7 +107,8 @@ export {
     headerWelcome, header2, inner, innerSmall, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
     container, topCircleSizeSmall, embeddedImageCircleSize,
-    padding, buttonRowStyle };
+    padding, buttonRowStyle
+};
 
 @observer
 export default class LoginWizardPage extends SafeComponent {
@@ -134,10 +135,10 @@ export default class LoginWizardPage extends SafeComponent {
     _button(text, onPress, style, textStyle, disabled) {
         return (
             <Button style={[style, disabled && { opacity: 0.5 }]}
-            {...testLabel(text)}
-            textStyle={textStyle}
-            text={tu(text)}
-            onPress={disabled ? null : onPress} />
+                {...testLabel(text)}
+                textStyle={textStyle}
+                text={tu(text)}
+                onPress={disabled ? null : onPress} />
         );
     }
 
@@ -153,6 +154,4 @@ export default class LoginWizardPage extends SafeComponent {
     items() {
         return null;
     }
-
-
 }

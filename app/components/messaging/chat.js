@@ -67,16 +67,16 @@ export default class Chat extends SafeComponent {
         const key = item.id || index;
         const actions = getOrMake(
             key, this._itemActionMap, () => ({
-            ref: ref => { this._refs[key] = ref; },
-            onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
-            onRetryCancel: () => this._actionSheet.show(item, this.chat)
-        }));
+                ref: ref => { this._refs[key] = ref; },
+                onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
+                onRetryCancel: () => this._actionSheet.show(item, this.chat)
+            }));
         return (
             <ChatItem
                 key={key}
                 message={item}
                 {...actions}
-                />
+            />
         );
     }
 

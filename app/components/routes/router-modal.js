@@ -4,7 +4,6 @@ import Router from './router';
 import ComposeMessage from '../messaging/compose-message';
 import CreateChannel from '../channels/create-channel';
 import ChannelAddPeople from '../messaging/channel-add-people';
-import SelectFiles from '../files/select-files';
 import FileShare from '../files/file-share';
 import FileMove from '../files/file-move';
 import FileSelect from '../files/file-select';

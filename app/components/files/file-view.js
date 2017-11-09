@@ -49,7 +49,7 @@ export default class FileView extends SafeComponent {
         let icon = null;
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
-        if(icon) icon = icons.plaindark(icon, vars.iconFileViewSize);
+        if (icon) icon = icons.plaindark(icon, vars.iconFileViewSize);
         return (
             <View
                 style={{
@@ -64,9 +64,9 @@ export default class FileView extends SafeComponent {
                         }}>
                             {icon ||
                                 <FileTypeIcon
-                                    size='large'
+                                    size="large"
                                     type={file.iconType}
-                            />}
+                                />}
                         </View>
                         <View style={firstColumnStyle}>
                             <View style={{ flexGrow: 1, flexShrink: 1 }}>

@@ -6,7 +6,6 @@ import { wizard, vars } from '../../styles/styles';
 import signupState from './signup-state';
 
 export default class SignupPin extends Component {
-
     usePin(pin) {
         signupState.pin = pin;
         this.pin.spinner(true);

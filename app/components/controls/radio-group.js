@@ -35,7 +35,7 @@ export default class RadioGroup extends SafeComponent {
                 key={text}
                 onPress={() => this._onSelect(index)}
                 isSelected={index === targetIndex}
-                >
+            >
                 <View style={radioText} >
                     <Text>{tx(text)}</Text>
                 </View>
