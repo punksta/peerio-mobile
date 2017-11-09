@@ -10,22 +10,20 @@ import { gradient } from '../controls/effects';
 
 @observer
 export default class ChannelUpgradeOffer extends Component {
-    // TODO
     render() {
-        if (User.current.channelLimit === Number.MAX_SAFE_INTEGER) return null;
-        if (process.env.PEERIO_DISABLE_PAYMENTS) return null;
+        if (User.current.channelsLeft > 0) return null;
 
         const container = {
             flexGrow: 1,
             flex: 1,
             flexDirection: 'row',
-            paddingVertical: vars.spacing.small.maxi,
-            paddingHorizontal: vars.spacing.medium.maxi2x
+            paddingVertical: vars.spacing.small.midi,
+            paddingHorizontal: vars.spacing.medium.mini2x
         };
 
         const offerStyle = {
-            maxWidth: '77.5%',
-            marginRight: vars.spacing.medium.maxi2x
+            maxWidth: '75%',
+            marginRight: vars.spacing.medium.midi2x
         };
 
         const offerTextStyle = {
@@ -38,12 +36,12 @@ export default class ChannelUpgradeOffer extends Component {
         };
 
         const buttonStyle = {
-            maxWidth: '22.5%',
+            maxWidth: '25%',
             justifyContent: 'center',
-            marginTop: vars.spacing.medium.midi2x
+            marginTop: vars.spacing.medium.midi
         };
 
-        return (gradient({},
+        return (gradient({ flex: 1, flexGrow: 1, maxHeight: 75 },
             <View style={container}>
                 <View style={offerStyle}>
                     <Text style={offerTextStyle}>

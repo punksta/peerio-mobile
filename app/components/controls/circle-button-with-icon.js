@@ -8,7 +8,7 @@ export default class CircleButtonWithIcon extends Component {
     render() {
         const iconStyle = {
             backgroundColor: this.props.bgColor,
-            borderRadius: 15,
+            borderRadius: this.props.radius,
             overflow: 'hidden',
             width: this.props.radius,
             height: this.props.radius,
@@ -23,7 +23,7 @@ export default class CircleButtonWithIcon extends Component {
                         this.props.name,
                         this.props.iconColor,
                         this.props.onPress,
-                        {},
+                        { fontSize: this.props.iconSize },
                         vars.iconSize,
                         true
                         )}
@@ -37,6 +37,7 @@ CircleButtonWithIcon.propTypes = {
     name: PropTypes.any,
     iconColor: PropTypes.any,
     onPress: PropTypes.any,
+    iconSize: PropTypes.any,
     radius: PropTypes.any,
     margin: PropTypes.any,
     bgColor: PropTypes.any

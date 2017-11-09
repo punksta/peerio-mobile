@@ -48,8 +48,6 @@ export default class ChannelInviteListItem extends SafeComponent {
             alignItems: 'center',
             justifyContent: 'flex-end'
         };
-        console.log('Paywall:');
-        console.log(!(User.current.channelLimit === Number.MAX_SAFE_INTEGER) || !(process.env.PEERIO_DISABLE_PAYMENTS));
         console.log(`kegDbID: `, invitation);
         return (
             <View style={{ backgroundColor: vars.bg }}>
@@ -63,9 +61,7 @@ export default class ChannelInviteListItem extends SafeComponent {
                                 {tx('title_invitedBy', { username })}
                             </Text>
                         </View>
-                        {/* TODO */}
-                        {!process.env.PEERIO_DISABLE_PAYMENTS
-                        ?
+                        {(User.current.channelsLeft > 0) ?
                             <View style={actionButtonStyle}>
                                 <CircleButtonWithIcon
                                     name="clear"
@@ -88,11 +84,11 @@ export default class ChannelInviteListItem extends SafeComponent {
                             <View style={actionButtonStyle}>
                                 <CircleButtonWithIcon
                                     name="info"
-                                    iconColor="white"
-                                    onPress={() => this.acceptInvite(kegDbId)}
-                                    radius={25}
+                                    iconColor="gray"
+                                    iconSize={30}
+                                    radius={30}
                                     margin={0}
-                                    bgColor="gray"
+                                    bgColor="white"
                                 />
                             </View>
                         }
