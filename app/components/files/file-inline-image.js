@@ -55,7 +55,7 @@ export default class FileInlineImage extends SafeComponent {
         this.loadImage = forceShowMap.get(url || fileId)
             || clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
         if (fileId) {
-            console.log(`file-inline-image.js: will mount ${fileId}`);
+            // console.log(`file-inline-image.js: will mount ${fileId}`);
             // we have local inline file
             when(() => image.tmpCached, () => {
                 this.cachedImage = inlineImageCacheStore.getImage(tmpCachePath);
@@ -195,7 +195,7 @@ export default class FileInlineImage extends SafeComponent {
         if (!clientApp.uiUserPrefs.externalContentConsented && !isLocal) {
             return <InlineUrlPreviewConsent />;
         }
-        console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
+        // console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
         const outer = {
             padding: this.outerPadding,
             borderColor: vars.lightGrayBg,
@@ -230,7 +230,7 @@ export default class FileInlineImage extends SafeComponent {
             backgroundColor: loaded ? vars.white : vars.lightGrayBg
         };
         return (
-            <View style={{ height: 200, overflow: 'hidden' }}>
+            <View>
                 <View style={outer} onLayout={this.layout}>
                     <View>
                         {!!title && <Text style={titleText}>{title}</Text>}

@@ -434,7 +434,7 @@ export default class Avatar extends SafeComponent {
     }
 
     renderOuter(inner) {
-        const opacity = this.props.sending ? 0.5 : 1;
+        const opacity = this.props.sending ? 0.9 : 1;
         const activeOpacity = this.props.noTap && !this.props.error && !this.props.sendError ?
             1 : 0.2;
         return (
