@@ -25,7 +25,6 @@ export default class ChatItem extends SafeComponent {
         const error = !!i.signatureError;
         const systemMessageText =
             i.systemData && systemMessages.getSystemMessageText(i) || null;
-        const videoCallLink = i.systemData && i.systemData.link || null;
         const files = i.files && i.files.map(id => fileState.store.getById(id)).filter(f => f) || [];
         const images = files.filter(f => f.isImage) || [];
         const normalFiles = files.filter(f => !f.isImage) || [];
@@ -50,7 +49,6 @@ export default class ChatItem extends SafeComponent {
                 message={text}
                 isChat
                 systemMessage={systemMessageText}
-                videoCallMessage={videoCallLink}
                 key={key}
                 error={error}
                 onPress={onPress}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, WebView, View, Linking, Platform } from 'react-native';
+import { Text, WebView, View } from 'react-native';
 import { observable } from 'mobx';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
@@ -21,15 +21,6 @@ function textControl(str) {
     }
 
     return <Text style={text}>{formatted}</Text>;
-}
-
-function disclaimerStyle(str) {
-    let formatted = str;
-    if (typeof str === 'string') {
-        formatted = str.replace('\n', '\n\n');
-    }
-
-    return <Text style={{ textAlign: 'right', fontStyle: 'italic' }}>{formatted}</Text>;
 }
 
 function checkBoxControl(str, checked, press) {
@@ -240,36 +231,6 @@ function popupControl(contents) {
     });
 }
 
-function popupSetupVideo(video) {
-    const dialog = {
-        titleText: tx('title_videoCall'),
-        subText: tx('dialog_videoCall'),
-        disc: tx('disclaimer_videoCall')
-    };
-    return new Promise((resolve) => {
-        const openLink = () => {
-            const androidJitsi = 'https://play.google.com/store/apps/details?id=org.jitsi.meet';
-            const iosJitsi = 'https://itunes.apple.com/in/app/jitsi-meet/id1165103905?mt=8';
-            resolve(false);
-            Linking.openURL(Platform.OS === 'android' ? androidJitsi : iosJitsi);
-        };
-        const openVideo = () => {
-            resolve(false);
-            Linking.openURL(video);
-        };
-        popupState.showPopup({
-            title: textControl(dialog.titleText),
-            subTitle: textControl(dialog.subText),
-            contents: disclaimerStyle(dialog.disc),
-            buttons: [
-                { id: 'cancel', text: tu('button_gotJitsi'), action: video ? openVideo : resolve(true), secondary: true },
-                { id: 'ok', text: tu('button_notGotJitsi'), action: openLink }
-            ]
-        });
-    });
-}
-
-
 locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
@@ -289,6 +250,5 @@ export {
     popupDeleteAccount,
     popupControl,
     popupSignOutAutologin,
-    popupCancelConfirm,
-    popupSetupVideo
+    popupCancelConfirm
 };
