@@ -121,6 +121,7 @@ const vars = {
     iPhoneXTop,
     tabCellHeight,
     tabsHeight: tabCellHeight + iPhoneXBottom,
+    collapsedAvatarHackPadding: scaleDim(6),
     spacing: {
         small: {
             mini: scaleDim(2),
