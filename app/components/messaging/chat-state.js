@@ -1,7 +1,6 @@
 import { observable, action, when, reaction } from 'mobx';
 import { chatStore, chatInviteStore, clientApp, warnings } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
-import contactState from '../contacts/contact-state';
 import sounds from '../../lib/sounds';
 import { tx } from '../utils/translator';
 import routes from '../routes/routes';

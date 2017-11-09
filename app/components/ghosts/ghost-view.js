@@ -65,9 +65,9 @@ export default class Ghost extends SafeComponent {
             message: this.ghost.passphrase,
             subject: tx('button_share')
         })
-        .catch(() => {
-            console.log(`ghost-view.js: share cancelled by user`);
-        });
+            .catch(() => {
+                console.log(`ghost-view.js: share cancelled by user`);
+            });
     }
 
     renderThrow() {

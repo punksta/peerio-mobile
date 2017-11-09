@@ -11,6 +11,7 @@ import { promiseWhen } from '../helpers/sugar';
 class FileState extends RoutedState {
     @observable currentFile = null;
     @observable currentFolder = null;
+    localFileMap = observable.map();
     store = fileStore;
     _prefix = 'files';
 
@@ -108,8 +109,8 @@ class FileState extends RoutedState {
         this.rejectFileSelection = null;
     }
 
-    @action submitSelectFiles() {
-        this.resolveFileSelection(this.selected.slice());
+    @action submitSelectFiles(files) {
+        this.resolveFileSelection(files || this.selected.slice());
         this.resolveFileSelection = null;
         this.resetSelection();
         this.routerModal.discard();
@@ -130,6 +131,7 @@ class FileState extends RoutedState {
         let renamePromise = null;
         data.file = chat.uploadAndShareFile(data.url, data.fileName, false, () => renamePromise);
         renamePromise = this.renamePostProcessing(data);
+        await promiseWhen(() => data.file.fileId);
         return data.file;
     }
 

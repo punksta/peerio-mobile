@@ -7,7 +7,7 @@ class ConsoleOverride {
     @observable verbose = false;
 
     async areVerboseLogsEnabled() {
-        return process.env.VERBOSE_LOGS || await TinyDb.system.getValue(VERBOSE_LOGS_KEY);
+        return process.env.VERBOSE_LOGS || TinyDb.system.getValue(VERBOSE_LOGS_KEY);
     }
 
     async configureConsole() {

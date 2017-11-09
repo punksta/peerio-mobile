@@ -44,7 +44,7 @@ export default class Display extends SafeComponent {
                     content={tx('title_EnableUrlPreviewWarning')}
                     linkContent={tx('title_learnMore')}
                     link=""
-                    />
+                />
                 <PreferenceToggleItem
                     property={'externalContentEnabled'}
                     title={tx('title_enableAllUrlPreview')} />

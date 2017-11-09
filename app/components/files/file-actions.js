@@ -31,7 +31,6 @@ const bottomRowStyle = {
 
 @observer
 export default class FileActions extends SafeComponent {
-
     action(text, icon, onPress, enabled) {
         return (
             <TouchableOpacity

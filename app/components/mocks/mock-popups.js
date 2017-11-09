@@ -7,7 +7,6 @@ import { popupInputCancelCheckbox } from '../shared/popups';
 
 @observer
 export default class MockChatList extends Component {
-
     componentDidMount() {
         popupInputCancelCheckbox(
             'Create a folder', 'Enter a folder name', null, null, true);

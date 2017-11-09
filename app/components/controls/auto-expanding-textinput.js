@@ -5,7 +5,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { vars } from '../../styles/styles';
 
 export default class AutoExpandingTextInput extends Component {
-
     constructor(props) {
         super(props);
         // initial state

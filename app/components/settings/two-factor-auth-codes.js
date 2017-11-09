@@ -124,7 +124,7 @@ export default class TwoFactorAuthCodes extends SafeComponent {
                     </Text>
                     <Text style={infoStyle}>
                         {
-`Save these backup codes in a safe place so that you
+                            `Save these backup codes in a safe place so that you
 still login if you're unable to access your
 authenticator app.`}
                     </Text>

@@ -15,7 +15,6 @@ import LoginWizardPage, {
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 import snackbarState from '../snackbars/snackbar-state';
-import icons from '../helpers/icons';
 
 const formStyle = {
     padding: vars.spacing.medium.midi2x,
@@ -106,8 +105,8 @@ export default class SignupStep1 extends LoginWizardPage {
     }
 
     get body() {
-        const { keySaved, savingScreenshot } = this;
-        const saveTitle = keySaved ? tx('title_savedToCameraRoll') : tx('button_saveAccountKey');
+        const { /* keySaved, */ savingScreenshot } = this;
+        // const saveTitle = keySaved ? tx('title_savedToCameraRoll') : tx('button_saveAccountKey');
         return (
             <View>
                 <Text style={textNormal}>{t('title_helloName', { name: (signupState.firstName || signupState.username) })}</Text>

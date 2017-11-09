@@ -199,7 +199,7 @@ class LoginState extends RoutedState {
         let data = await keychain.get(await mainState.getKeychainKey(this.username));
         if (!data) {
             return await popupYesCancel(null, tx('error_keychainRead'))
-                && await this.loadFromKeychain();
+                && this.loadFromKeychain();
         }
         try {
             const touchIdKey = `user::${this.username}::touchid`;

@@ -16,8 +16,8 @@ const OVERRIDE_SERVER_KEY = 'socketServerOverride';
 
 icebear.overrideServer = async function(value) {
     return value ?
-        await TinyDb.system.setValue(OVERRIDE_SERVER_KEY, value) :
-        await TinyDb.system.removeValue(OVERRIDE_SERVER_KEY);
+        TinyDb.system.setValue(OVERRIDE_SERVER_KEY, value) :
+        TinyDb.system.removeValue(OVERRIDE_SERVER_KEY);
 };
 
 icebear.startSocket = async function() {

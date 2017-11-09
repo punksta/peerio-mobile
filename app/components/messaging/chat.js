@@ -17,6 +17,13 @@ import chatState from '../messaging/chat-state';
 
 const { width } = Dimensions.get('window');
 
+function getOrMake(id, map, make) {
+    if (!map[id]) {
+        map[id] = make();
+    }
+    return map[id];
+}
+
 @observer
 export default class Chat extends SafeComponent {
     @observable contentHeight = 0;
@@ -24,6 +31,7 @@ export default class Chat extends SafeComponent {
     @observable refreshing = false;
     @observable waitForScrollToEnd = true;
     @observable scrollEnabled = false;
+    @observable limboMessages = null;
     indicatorHeight = 16;
 
     componentDidMount() {
@@ -53,17 +61,22 @@ export default class Chat extends SafeComponent {
     }
 
     _refs = { };
+    _itemActionMap = {};
 
     item = (item, index) => {
         const key = item.id || index;
+        const actions = getOrMake(
+            key, this._itemActionMap, () => ({
+                ref: ref => { this._refs[key] = ref; },
+                onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
+                onRetryCancel: () => this._actionSheet.show(item, this.chat)
+            }));
         return (
             <ChatItem
                 key={key}
-                ref={ref => { this._refs[key] = ref; }}
                 message={item}
-                onInlineImageAction={image => this._inlineImageActionSheet.show(image, item, this.chat)}
-                onRetryCancel={() => this._actionSheet.show(item, this.chat)}
-                />
+                {...actions}
+            />
         );
     }
 
@@ -73,7 +86,7 @@ export default class Chat extends SafeComponent {
     }
 
     contentSizeChanged = async (contentWidth, contentHeight) => {
-        console.log(`chat.js: content size changed ${contentWidth}, ${contentHeight}`);
+        // console.log(`chat.js: content size changed ${contentWidth}, ${contentHeight}`);
         if (!this.scrollView || !this.chat) return;
 
         // set current content heigth
@@ -107,7 +120,7 @@ export default class Chat extends SafeComponent {
             } else {
                 setTimeout(() => this.contentSizeChanged(), 1000);
             }
-        }, 100);
+        }, 300);
     }
 
     async measureItemById(id) {
@@ -217,7 +230,8 @@ export default class Chat extends SafeComponent {
                 ref={sv => { this.scrollView = sv; }}>
                 {this.chat.canGoUp ? refreshControlTop : this.zeroStateItem()}
                 {this.data.map(this.item)}
-                {this.chat.limboMessages && this.chat.limboMessages.map(this.item)}
+                {this.chat.limboMessages &&
+                    this.chat.limboMessages.filter(m => !(m.files && !m.files.length)).map(this.item)}
                 {refreshControlBottom}
             </ScrollView>
         );

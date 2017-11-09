@@ -8,7 +8,7 @@ import ChannelInfo from '../messaging/channel-info';
 import PopupLayout from '../layout/popup-layout';
 import ChannelAddPeople from '../messaging/channel-add-people';
 import InputMainContainer from '../layout/input-main-container';
-import { User, clientApp, config } from '../../lib/icebear';
+import { User, clientApp } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 import contactState from '../contacts/contact-state';

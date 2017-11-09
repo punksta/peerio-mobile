@@ -28,7 +28,7 @@ export default class WarningItem extends SafeComponent {
                     name="warning"
                     size={vars.iconSize}
                     color="gray"
-                    />
+                />
                 <View style={textStyle}>
                     <Text>
                         {this.props.content}

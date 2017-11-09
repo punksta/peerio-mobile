@@ -5,7 +5,7 @@ import ActionSheet from 'react-native-actionsheet';
 import ImagePicker from 'react-native-image-crop-picker';
 // import FileOpener from 'react-native-file-opener';
 import SafeComponent from '../shared/safe-component';
-import { User, crypto } from '../../lib/icebear';
+import { crypto } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 
 const { b64ToBytes } = crypto.cryptoUtil;

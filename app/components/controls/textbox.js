@@ -208,7 +208,7 @@ export default class TextBox extends SafeComponent {
                             <TextInput
                                 keyboardType={this.props.keyboardType}
                                 style={[style.textbox, { fontSize },
-                                { height: vars.inputPaddedHeight, top: 0, marginRight: this.secretIcon ? 42 : 0 }]}
+                                    { height: vars.inputPaddedHeight, top: 0, marginRight: this.secretIcon ? 42 : 0 }]}
                                 ref={ref => { this.textinput = ref; }}
                                 underlineColorAndroid={'transparent'}
                                 returnKeyType={returnKeyType}

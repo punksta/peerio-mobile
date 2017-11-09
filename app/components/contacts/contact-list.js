@@ -4,7 +4,6 @@ import { observer } from 'mobx-react/native';
 import { View, SectionList, Text } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
-import buttons from '../helpers/buttons';
 import ContactsPlaceholder from './contacts-placeholder';
 import ContactsGroups, { groupSettings } from './contacts-groups';
 import ProgressOverlay from '../shared/progress-overlay';

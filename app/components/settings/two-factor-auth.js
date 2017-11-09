@@ -143,12 +143,13 @@ export default class TwoFactorAuth extends SafeComponent {
                         backgroundColor: vars.white,
                         paddingHorizontal
                     }}>
-                        <TextInput style={{
-                            color: vars.txtDark,
-                            marginVertical: vars.spacing.small.midi2x,
-                            height: vars.inputHeight,
-                            flexGrow: 1
-                        }}
+                        <TextInput
+                            style={{
+                                color: vars.txtDark,
+                                marginVertical: vars.spacing.small.midi2x,
+                                height: vars.inputHeight,
+                                flexGrow: 1
+                            }}
                             placeholderTextColor={vars.txtDate}
                             placeholder="123456"
                             onChangeText={text => { this.confirmCode = text; }}

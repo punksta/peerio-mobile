@@ -54,7 +54,7 @@ function popupSystemWarning(title, contents, buttons) {
             contents: textControl(contents),
             buttons: buttons ?
                 buttons.map(i => (i.action ? swButton(i) : button(i, resolve)))
-                    : [button(tu('button_ok'), resolve)]
+                : [button(tu('button_ok'), resolve)]
         });
     });
 }
@@ -188,7 +188,7 @@ function popupTOS() {
         popupState.showPopup({
             fullScreen: 1,
             contents: <WebView
-            source={{ html: tos }} />,
+                source={{ html: tos }} />,
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: resolve
             }]
