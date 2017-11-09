@@ -11,11 +11,15 @@ import { systemMessages } from '../../lib/icebear';
 export default class ChatItem extends SafeComponent {
     setRef = ref => { this._ref = ref; };
 
+    componentWillMount() {
+        console.log(`chat-item.js: will mount ${this.props.id}`);
+    }
+
     renderThrow() {
         if (!this.props || !this.props.message) return null;
         const i = this.props.message;
         if (!i.sender) return null;
-        const key = i.id;
+        const key = i.tempId || i.id;
         const msg = i.text || '';
         const text = msg.replace(/\n[ ]+/g, '\n');
         const onPressAvatar = () => contactState.contactView(i.sender);
@@ -32,6 +36,7 @@ export default class ChatItem extends SafeComponent {
         if (i.hasUrls && i.externalImages.length) {
             firstImage = i.externalImages[0];
         }
+        console.log(`chat-item.js: render ${this.props.id}, image ${!!firstImage}`);
         return (
             <Avatar
                 noTap={!i.sendError}

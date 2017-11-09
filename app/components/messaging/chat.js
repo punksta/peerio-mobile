@@ -49,7 +49,7 @@ export default class Chat extends SafeComponent {
     }
 
     get data() {
-        return this.chat ? this.chat.messages : null;
+        return this.chat ? this.chat.messages.concat(this.chat.limboMessages) : null;
     }
 
     get chat() {
@@ -64,7 +64,7 @@ export default class Chat extends SafeComponent {
     _itemActionMap = {};
 
     item = (item, index) => {
-        const key = item.id || index;
+        const key = item.tempId || item.id || index;
         const actions = getOrMake(
             key, this._itemActionMap, () => ({
                 ref: ref => { this._refs[key] = ref; },
@@ -74,6 +74,7 @@ export default class Chat extends SafeComponent {
         return (
             <ChatItem
                 key={key}
+                id={key}
                 message={item}
                 {...actions}
             />
@@ -230,8 +231,8 @@ export default class Chat extends SafeComponent {
                 ref={sv => { this.scrollView = sv; }}>
                 {this.chat.canGoUp ? refreshControlTop : this.zeroStateItem()}
                 {this.data.map(this.item)}
-                {this.chat.limboMessages &&
-                    this.chat.limboMessages.filter(m => !(m.files && !m.files.length)).map(this.item)}
+                {/* this.chat.limboMessages &&
+                    this.chat.limboMessages.filter(m => !(m.files && !m.files.length)).map(this.item) */}
                 {refreshControlBottom}
             </ScrollView>
         );

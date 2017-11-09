@@ -192,7 +192,7 @@ export default class Avatar extends SafeComponent {
     get inlineImage() {
         const { inlineImage, onInlineImageAction } = this.props;
         return inlineImage ?
-            <FileInlineImage key={inlineImage} image={inlineImage} onAction={onInlineImageAction} /> : null;
+            <FileInlineImage key="inline image" image={inlineImage} onAction={onInlineImageAction} /> : null;
     }
 
     get errorCircle() {
