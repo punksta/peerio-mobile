@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.190.0",
+  "version": "3.191.0",
   "private": true,
   "scripts": {
     "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
@@ -17,7 +17,7 @@
     "android-signed": "npm run build-android && bash scripts/release_android.sh",
     "lint": "eslint --fix --ext .js,.jsx .",
     "localize": "tx pull -af",
-    "release": "standard-version -r minor && git push --follow-tags origin dev",
+    "release": "standard-version -r minor && git push --follow-tags origin feat-limbo-files",
     "link": "react-native link",
     "build-ios-sim-debug": "cd ios && xcodebuild -project peeriomobile.xcodeproj -configuration Debug -scheme peeriomobile -destination platform='iOS Simulator,name=iPhone 6,OS=10.2' -derivedDataPath build",
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
