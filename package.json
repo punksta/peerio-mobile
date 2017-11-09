@@ -3,7 +3,7 @@
   "version": "3.190.0",
   "private": true,
   "scripts": {
-    "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh",
+    "postinstall": "sh scripts/setup-env.sh && npm run icebear:compile && bash scripts/setup-rn-debugging.sh && bash scripts/copy-android-resources.sh && bash scripts/android-switch-to-rn-fork.sh && node scripts/test-deps.js",
     "commit": "git-cz",
     "code:packager": "./node_modules/react-native/packager/packager.sh --reset-cache",
     "icebear:compile": "babel node_modules/peerio-icebear/src -d app/lib/peerio-icebear && bash ./scripts/remove-require-crypto.sh",
