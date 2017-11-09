@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.194.0"></a>
+# [3.194.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.193.0...v3.194.0) (2017-11-09)
+
+
+### Bug Fixes
+
+* navigate folders in file share ([95c342a](https://github.com/PeerioTechnologies/peerio-mobile/commit/95c342a))
+
+
+
 <a name="3.193.0"></a>
 # [3.193.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.192.0...v3.193.0) (2017-11-09)
 
