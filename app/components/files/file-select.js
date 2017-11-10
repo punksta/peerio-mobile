@@ -60,13 +60,14 @@ export default class FileSelect extends SafeComponent {
     item = f => {
         const changeFolder = () => { this.currentFolder = f; };
         const submitSelection = () => fileState.submitSelectFiles([f]);
+        const nested = f.files && f.files.length;
         return (
             f.isFolder ?
                 <FolderInnerItem
                     key={f.fId}
                     folder={f}
-                    hideArrow={!f.hasNested || f.isRoot}
-                    onPress={f.hasNested ? changeFolder : null} />
+                    hideArrow={!nested || f.isRoot}
+                    onPress={nested ? changeFolder : null} />
                 : <FileInnerItem onPress={submitSelection} file={f} />
         );
     }
