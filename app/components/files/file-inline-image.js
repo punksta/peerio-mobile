@@ -50,7 +50,7 @@ export default class FileInlineImage extends SafeComponent {
         when(() => this.cachedImage, () => this.fetchSize());
         const { image } = this.props;
         const { fileId, url, isOverInlineSizeLimit, isOversizeCutoff, tmpCachePath } = image;
-        this.tooBig = isOverInlineSizeLimit;
+        this.tooBig = isOverInlineSizeLimit || isOversizeCutoff;
         this.oversizeCutoff = isOversizeCutoff;
         this.loadImage = forceShowMap.get(url || fileId)
             || clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
@@ -248,7 +248,7 @@ export default class FileInlineImage extends SafeComponent {
                         {!downloading && this.opened && this.loadImage && width && height ?
                             <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} /> : null}
                         {this.opened && !this.loadImage && !this.tooBig && this.displayImageOffer}
-                        {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer}
+                        {this.opened && !this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
                         {this.oversizeCutoff && this.displayCutOffImageOffer}
                     </View>
                 </View>
