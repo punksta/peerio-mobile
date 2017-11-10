@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.199.0"></a>
+# [3.199.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.198.0...v3.199.0) (2017-11-10)
+
+
+### Bug Fixes
+
+* image size preference should be in reverse ([fef6ce6](https://github.com/PeerioTechnologies/peerio-mobile/commit/fef6ce6))
+
+
+
 <a name="3.198.0"></a>
 # [3.198.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.197.0...v3.198.0) (2017-11-10)
 
