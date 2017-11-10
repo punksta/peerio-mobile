@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.197.0"></a>
+# [3.197.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.190.0...v3.197.0) (2017-11-10)
+
+
+### Bug Fixes
+
+* display image limits ([7d0a37f](https://github.com/PeerioTechnologies/peerio-mobile/commit/7d0a37f))
+* navigate folders in file share ([95c342a](https://github.com/PeerioTechnologies/peerio-mobile/commit/95c342a))
+* pr template [skip ci] ([150a1a7](https://github.com/PeerioTechnologies/peerio-mobile/commit/150a1a7))
+* restore new line at the end of file ([8f3224f](https://github.com/PeerioTechnologies/peerio-mobile/commit/8f3224f))
+
+
+### Features
+
+* dependecy check ([640b339](https://github.com/PeerioTechnologies/peerio-mobile/commit/640b339))
+
+
+
 <a name="3.191.0"></a>
 # [3.191.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.190.0...v3.191.0) (2017-11-10)
 
