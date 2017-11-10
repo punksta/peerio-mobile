@@ -90,15 +90,13 @@ export default class ChatList extends SafeComponent {
     }
 
     item = (chat) => {
-        console.log(chat);
-        console.log(chat.isRoomInvite);
         if (!chat.id) return null;
         if (chat.isRoomInvite) {
             return (
                 <ChatChannelInvitesSection
                     title={tx('title_viewChannelInvites')}
                     data={chatInviteStore.received.length}
-                    onPress={() => routes.modal.channelInviteList()}
+                    onPress={routes.modal.channelInviteList}
                 />);
         } else if (chat.isChannel) {
             return <ChannelListItem chat={chat} />;

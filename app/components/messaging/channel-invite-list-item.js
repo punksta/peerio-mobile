@@ -67,15 +67,15 @@ export default class ChannelInviteListItem extends SafeComponent {
                                     name="clear"
                                     iconColor="white"
                                     onPress={() => chatInviteStore.rejectInvite(kegDbId)}
-                                    radius={25}
-                                    margin={30}
+                                    radius={vars.iconSize}
+                                    margin={vars.iconSizeBigger}
                                     bgColor="gray"
                                 />
                                 <CircleButtonWithIcon
                                     name="done"
                                     iconColor="white"
                                     onPress={() => this.acceptInvite(kegDbId)}
-                                    radius={25}
+                                    radius={vars.iconSize}
                                     margin={0}
                                     bgColor={vars.bg}
                                 />
@@ -85,8 +85,8 @@ export default class ChannelInviteListItem extends SafeComponent {
                                 <CircleButtonWithIcon
                                     name="info"
                                     iconColor="gray"
-                                    iconSize={30}
-                                    radius={30}
+                                    iconSize={vars.iconSizeBigger}
+                                    radius={vars.iconSizeBigger}
                                     margin={0}
                                     bgColor="white"
                                 />
