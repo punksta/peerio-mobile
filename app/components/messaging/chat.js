@@ -254,16 +254,17 @@ export default class Chat extends SafeComponent {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            margin: vars.spacing.small.maxi2x
+            justifyContent: 'center',
+            marginTop: vars.spacing.small.midi,
+            marginBottom: vars.spacing.small.midi,
+            marginLeft: vars.spacing.small.maxi2x,
+            marginRight: vars.spacing.small.maxi2x
         };
         const securityIcon = {
-            flex: 1,
-            backgroundColor: 'green',
-            alignItems: 'center'
+            marginRight: vars.spacing.small.midi
         };
         const idVerificationText = {
             flex: 9,
-            backgroundColor: 'red'
         };
         const hyperlink = {
             textDecorationLine: 'underline'
@@ -271,22 +272,22 @@ export default class Chat extends SafeComponent {
 
         return (
             <View style={idVerificationContainer} >
-                <Icon
-                    style={securityIcon}
+                <Icon style={securityIcon}
                     name="security"
                     size={vars.iconSize}
                     color="gray"
                 />
-                <View style={idVerificationText}>
+                <Text style={idVerificationText}>
                     <Text>
                         You can verify any user’s identity with their Peerio ID#.
+                        &nbsp;
                     </Text>
                     <Text
                         style={hyperlink}
                         onPress={() => Linking.openURL('http://peerio.com')}>
                         Show me how
                     </Text>
-                </View>
+                </Text>
             </View>
         );
     }
