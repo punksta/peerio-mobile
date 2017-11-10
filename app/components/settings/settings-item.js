@@ -41,10 +41,10 @@ export default class SettingsItem extends SafeComponent {
                 <View style={[itemContainerStyle]} pointerEvents={this.props.untappable ? undefined : 'none'}>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text style={{
-                            color: this.props.disabled ? vars.txtLight : vars.txtDark }}>
+                            color: this.props.disabled ? vars.txtLightGrey : vars.txtDark }}>
                             {t(this.props.title)}
                         </Text>
-                        {!!this.props.description && <Text style={{ fontSize: vars.font.size.smaller }}>
+                        {!!this.props.description && <Text style={{ color: vars.txtLightGrey, fontSize: vars.font.size.xsmall }}>
                             {this.props.description}
                         </Text>}
                     </View>
