@@ -3,6 +3,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
 import { observable, when, reaction } from 'mobx';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
@@ -60,7 +61,7 @@ export default class Chat extends SafeComponent {
         return !!chatState.currentChat && !chatState.loading;
     }
 
-    _refs = { };
+    _refs = {};
     _itemActionMap = {};
 
     item = (item, index) => {
@@ -247,6 +248,30 @@ export default class Chat extends SafeComponent {
         ) : null;
     }
 
+    get identityVerificationNotice() {
+        return (
+            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: vars.spacing.small.maxi2x }}>
+                <Icon
+                    style={{ flex: 1, backgroundColor: 'green', alignItems: 'center' }}
+                    name="security"
+                    size={vars.iconSize}
+                    color="gray"
+                />
+                <View style={{ flex: 9, backgroundColor: 'red'}}>
+                    <View style={{ backgroundColor: 'yellow', flexDirection: 'row', flexWrap: 'wrap' }}>
+                        <Text>
+                            You can verify any user’s identity with their Peerio ID#.
+                    </Text>
+                        <Text
+                            onPress={() => Linking.openURL('http://peerio.com')}>
+                            Show me how
+                    </Text>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
     zeroStateItem() {
         const zsContainer = {
             borderBottomWidth: 0,
@@ -278,9 +303,7 @@ export default class Chat extends SafeComponent {
                     {tx('title_chatBeginning', { chatName: chat.name })}
                 </Text>
                 {this.archiveNotice}
-                <Text>
-                    You can verify any user’s identity with their Peerio ID#. Show me how
-                </Text>
+                {this.identityVerificationNotice}
             </View>
         );
     }
