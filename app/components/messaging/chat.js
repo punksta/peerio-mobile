@@ -249,24 +249,43 @@ export default class Chat extends SafeComponent {
     }
 
     get identityVerificationNotice() {
+        const idVerificationContainer = {
+            color: vars.txtMedium,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            margin: vars.spacing.small.maxi2x
+        };
+        const securityIcon = {
+            flex: 1,
+            backgroundColor: 'green',
+            alignItems: 'center'
+        };
+        const idVerificationText = {
+            flex: 9,
+            backgroundColor: 'red'
+        };
+        const hyperlink = {
+            textDecorationLine: 'underline'
+        };
+
         return (
-            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', margin: vars.spacing.small.maxi2x }}>
+            <View style={idVerificationContainer} >
                 <Icon
-                    style={{ flex: 1, backgroundColor: 'green', alignItems: 'center' }}
+                    style={securityIcon}
                     name="security"
                     size={vars.iconSize}
                     color="gray"
                 />
-                <View style={{ flex: 9, backgroundColor: 'red'}}>
-                    <View style={{ backgroundColor: 'yellow', flexDirection: 'row', flexWrap: 'wrap' }}>
-                        <Text>
-                            You can verify any user’s identity with their Peerio ID#.
+                <View style={idVerificationText}>
+                    <Text>
+                        You can verify any user’s identity with their Peerio ID#.
                     </Text>
-                        <Text
-                            onPress={() => Linking.openURL('http://peerio.com')}>
-                            Show me how
+                    <Text
+                        style={hyperlink}
+                        onPress={() => Linking.openURL('http://peerio.com')}>
+                        Show me how
                     </Text>
-                    </View>
                 </View>
             </View>
         );
