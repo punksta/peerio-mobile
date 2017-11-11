@@ -28,7 +28,7 @@ export default (c, icebear) => {
         googleAuthA: 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en',
         googleAuthI: 'https://itunes.apple.com/app/google-authenticator/id388497605',
         authy: 'https://authy.com',
-		download: 'https://peerio.com'
+        download: 'https://peerio.com'
     };
 
     setUrlMap(cfg.translator.urlMap);
