@@ -12,6 +12,7 @@ import buttons from '../helpers/buttons';
 import loginState from '../login/login-state';
 import TwoFactorAuthCodes from './two-factor-auth-codes';
 import TwoFactorAuthCodesGenerate from './two-factor-auth-codes-generate';
+import uiState from '../layout/ui-state';
 
 const paddingVertical = vars.listViewPaddingVertical;
 const paddingHorizontal = vars.listViewPaddingHorizontal;
@@ -42,7 +43,7 @@ async function twoFactorAuthPopup(active2FARequest) {
         tx('title_2FA'),
         tx('dialog_enter2FA'),
         type === 'login' ? tx('title_trustThisDevice') : null,
-        false,
+        uiState.trustDevice2FA,
         true
     );
     if (result === false) {
@@ -53,6 +54,7 @@ async function twoFactorAuthPopup(active2FARequest) {
         return;
     }
     const { value, checked } = result;
+    uiState.trustDevice2FA = checked;
     submit(value, checked);
 }
 

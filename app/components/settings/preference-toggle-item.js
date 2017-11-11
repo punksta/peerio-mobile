@@ -18,6 +18,7 @@ export default class PreferenceToggleItem extends SafeComponent {
             <ToggleItem
                 state={state}
                 prop={this.props.property}
+                reverse={this.props.reverse}
                 title={this.props.title}
                 description={this.props.description}
                 onPress={this.toggle}

@@ -7,6 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import WarningItem from './warning-item';
 import PreferenceToggleItem from './preference-toggle-item';
 import preferenceStore from './preference-store';
+import { config, util } from '../../lib/icebear';
 
 const bgStyle = {
     flexGrow: 1,
@@ -37,8 +38,9 @@ export default class Display extends SafeComponent {
                     title={tx('title_showImagePreviews')}
                     description={tx('title_showImagePreviewsDescription')} />
                 <PreferenceToggleItem
+                    reverse
                     property={'limitInlineImageSize'}
-                    title={tx('title_showLargeImages')} />
+                    title={tx('title_showLargeImages', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })} />
                 {<Text style={text}>{tx('title_urlPreview')}</Text>}
                 <WarningItem
                     content={tx('title_EnableUrlPreviewWarning')}

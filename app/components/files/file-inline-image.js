@@ -42,20 +42,20 @@ export default class FileInlineImage extends SafeComponent {
     outerPadding = 8;
 
     componentWillMount() {
-        reaction(() => clientApp.uiUserPrefs.externalContentConsented, () => {
-            this.showUpdateSettingsLink = true;
-        });
         this.optimalContentHeight = Dimensions.get('window').height;
-        this.opened = clientApp.uiUserPrefs.peerioContentEnabled;
         when(() => this.cachedImage, () => this.fetchSize());
         const { image } = this.props;
         const { fileId, url, isOverInlineSizeLimit, isOversizeCutoff, tmpCachePath } = image;
-        this.tooBig = isOverInlineSizeLimit;
+        this.tooBig = isOverInlineSizeLimit || isOversizeCutoff;
         this.oversizeCutoff = isOversizeCutoff;
-        this.loadImage = forceShowMap.get(url || fileId)
-            || clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
+        this.loadImage = forceShowMap.get(url || fileId);
         if (fileId) {
             // we have local inline file
+            when(() => clientApp.uiUserPrefs.peerioContentEnabled, () => { this.opened = true; });
+            if (!this.loadImage) {
+                when(() => clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig && !this.oversizeCutoff,
+                    () => { this.loadImage = true; });
+            }
             when(() => image.tmpCached, () => {
                 this.cachedImage = inlineImageCacheStore.getImage(tmpCachePath);
             });
@@ -70,9 +70,13 @@ export default class FileInlineImage extends SafeComponent {
             }
         } else {
             // we have external url
+            when(() => clientApp.uiUserPrefs.externalContentConsented && clientApp.uiUserPrefs.externalContentEnabled,
+                () => { this.loadImage = true; });
+            this.opened =
+                clientApp.uiUserPrefs.externalContentConsented && clientApp.uiUserPrefs.externalContentEnabled;
             when(() => this.loadImage, () => {
-                this.opened = true;
                 this.cachedImage = inlineImageCacheStore.getImage(url);
+                this.opened = true;
             });
         }
     }
@@ -192,7 +196,7 @@ export default class FileInlineImage extends SafeComponent {
         const { source } = this.cachedImage || {};
         const isLocal = !!fileId;
         if (!clientApp.uiUserPrefs.externalContentConsented && !isLocal) {
-            return <InlineUrlPreviewConsent />;
+            return <InlineUrlPreviewConsent onChange={() => { this.showUpdateSettingsLink = true; }} />;
         }
 
         // console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
@@ -229,6 +233,7 @@ export default class FileInlineImage extends SafeComponent {
         const inner = {
             backgroundColor: loaded ? vars.white : vars.lightGrayBg
         };
+
         return (
             <View>
                 <View style={outer} onLayout={this.layout}>
@@ -244,15 +249,16 @@ export default class FileInlineImage extends SafeComponent {
                             {downloading && <ActivityIndicator />}
                         </View>}
                     </View>
-                    <View style={inner}>
-                        {!downloading && this.opened && this.loadImage && width && height ?
-                            <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} /> : null}
-                        {this.opened && !this.loadImage && !this.tooBig && this.displayImageOffer}
-                        {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer}
-                        {this.oversizeCutoff && this.displayCutOffImageOffer}
-                    </View>
+                    {this.opened &&
+                        <View style={inner}>
+                            {!downloading && this.loadImage && width && height ?
+                                <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} /> : null}
+                            {!this.loadImage && !this.tooBig && this.displayImageOffer}
+                            {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
+                            {this.oversizeCutoff && this.displayCutOffImageOffer}
+                        </View>}
                 </View>
-                {showUpdateSettingsLink && this.updateSettingsOffer}
+                {!isLocal && showUpdateSettingsLink && this.updateSettingsOffer}
             </View>
         );
     }
