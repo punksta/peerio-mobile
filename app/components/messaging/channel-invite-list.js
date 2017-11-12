@@ -1,21 +1,69 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { View, Text, SectionList } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { View, SectionList } from 'react-native';
 import { observable, reaction } from 'mobx';
+import { chatInviteStore } from '../../lib/icebear';
+import ChannelUpgradeOffer from '../channels/channel-upgrade-offer';
+import ChannelInviteListItem from './channel-invite-list-item';
 import SafeComponent from '../shared/safe-component';
 import chatState from './chat-state';
-import { vars } from '../../styles/styles';
-import { chatInviteStore } from '../../lib/icebear';
-import ChannelInviteListItem from './channel-invite-list-item';
-import ChatChannelInvitesSection from './chat-channel-invites-section';
-import ChannelUpgradeOffer from '../channels/channel-upgrade-offer';
 import { tx } from '../utils/translator';
+import Layout1 from '../layout/layout1';
+import Bottom from '../controls/bottom';
+import SnackBar from '../snackbars/snackbar';
+import icons from '../helpers/icons';
+import { vars } from '../../styles/styles';
+import routes from '../routes/routes';
 
 const INITIAL_LIST_SIZE = 20;
 
+const caughtUpContainerStyle = {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1,
+    flex: 1,
+    marginBottom: 100
+};
+
+const allCaughtUpTextStyle = {
+    fontSize: vars.font.size.huge,
+    color: 'black',
+    marginBottom: 3
+};
+
+const thumbsUpTextStyle = {
+    fontSize: 48,
+    marginBottom: 15
+};
+
 @observer
 export default class ChannelInviteList extends SafeComponent {
+    header() {
+        const container = {
+            flexGrow: 1,
+            flexDirection: 'row',
+            padding: vars.spacing.small.midi2x,
+            alignItems: 'center'
+        };
+        const textStyle = {
+            marginLeft: vars.iconSize * 2,
+            textAlign: 'center',
+            flexGrow: 1,
+            flexShrink: 1,
+            fontSize: vars.font.size.big,
+            fontWeight: vars.font.weight.semiBold,
+            color: vars.txtDark
+        };
+        return (
+            <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
+                <View style={container}>
+                    <Text style={textStyle}>{tx('title_channelInvites')}</Text>
+                    {icons.dark('close', () => routes.modal.discard(this))}
+                </View>
+            </View>
+        );
+    }
+
     dataSource = [];
     @observable refreshing = false
 
@@ -50,10 +98,6 @@ export default class ChannelInviteList extends SafeComponent {
         );
     }
 
-    header({ section: /* data, */ { key } }) {
-        return <ChatChannelInvitesSection key={key} data={this.data && this.data.length} title={key} />;
-    }
-
     listView() {
         return (
             <SectionList
@@ -62,23 +106,60 @@ export default class ChannelInviteList extends SafeComponent {
                 sections={this.dataSource}
                 keyExtractor={item => item.id || item.kegDbId}
                 renderItem={this.item}
-                renderSectionHeader={this.header}
                 ref={sv => { this.scrollView = sv; }}
             />
         );
     }
 
-    renderThrow() {
+    allCaughtUp() {
         return (
-            <View
-                style={{ flexGrow: 1, flex: 1, backgroundColor: vars.white }}>
-                <ChannelUpgradeOffer />
-                {this.listView()}
+            <View style={caughtUpContainerStyle}>
+                <Text style={thumbsUpTextStyle}>
+                    {'👍'}
+                </Text>
+                <Text style={allCaughtUpTextStyle}>
+                    {tx('title_allCaughtUp')}
+                </Text>
+                <Text>
+                    {tx('title_noMoreInvites')}
+                </Text>
             </View>
         );
     }
-}
 
-ChannelInviteList.propTypes = {
-    store: PropTypes.any
-};
+    body() {
+        return (
+            <View style={{ flexGrow: 1, flex: 1, backgroundColor: vars.white }}>
+                <ChannelUpgradeOffer />
+                {this.data.length > 0
+                    ?
+                    this.listView()
+                    :
+                    this.allCaughtUp()
+                }
+            </View>
+        );
+    }
+
+    renderThrow() {
+        const header = this.header();
+        const body = this.body();
+        const layoutStyle = {
+            backgroundColor: 'white'
+        };
+        const snackbar = (
+            <Bottom>
+                <SnackBar />
+            </Bottom>
+        );
+        return (
+            <Layout1
+                defaultBar
+                body={body}
+                header={header}
+                noFitHeight
+                footerAbsolute={snackbar}
+                style={layoutStyle} />
+        );
+    }
+}
