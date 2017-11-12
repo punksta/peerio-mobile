@@ -5,6 +5,7 @@ import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import PreferenceToggleItem from './preference-toggle-item';
+import SettingsToggleItem from './settings-toggle-item';
 
 const bgStyle = {
     flexGrow: 1,
@@ -68,12 +69,12 @@ export default class Notifications extends SafeComponent {
                     }
                     <View style={spacer} />
                     <Text style={text}>{tx('title_emailNotifs')}</Text>
-                    <PreferenceToggleItem
+                    {/* <PreferenceToggleItem
                         property={'allEmailNotifsEnabled'}
                         title={tx('title_allActivity')}
-                    />
-                    <PreferenceToggleItem
-                        property={'newMessageEmailNotifsEnabled'}
+                    /> */}
+                    <SettingsToggleItem
+                        property={'messageNotifications'}
                         title={tx('title_forNewMessage')}
                     />
                 </ScrollView>
