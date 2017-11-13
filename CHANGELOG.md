@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.204.0"></a>
+# [3.204.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.203.0...v3.204.0) (2017-11-13)
+
+
+### Features
+
+* localize no files in folder and show it in file-select dialog ([7f2704e](https://github.com/PeerioTechnologies/peerio-mobile/commit/7f2704e))
+
+
+
 <a name="3.203.0"></a>
 # [3.203.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.202.0...v3.203.0) (2017-11-12)
 
