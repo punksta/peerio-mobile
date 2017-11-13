@@ -138,11 +138,10 @@ class FileState extends RoutedState {
     uploadInFiles = async (data) => {
         await promiseWhen(() => socket.authenticated);
         const folder = this.currentFolder;
-        const file = fileStore.upload(data.url, data.fileName);
+        const file = fileStore.upload(data.url, data.fileName, folder.isRoot ? null : folder.folderId);
         if (folder && !folder.isRoot) {
             await promiseWhen(() => file.fileId);
             folder.moveInto(file);
-            this.store.fileFolders.save();
         }
         data.file = file;
         await this.renamePostProcessing(data);

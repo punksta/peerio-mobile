@@ -64,7 +64,6 @@ export default class FolderSelect extends SafeComponent {
             const file = fileState.currentFile;
             if (!file) return;
             folder.moveInto(file);
-            fileState.store.fileFolders.save();
             routes.modal.discard();
         };
         const changeFolder = () => {
