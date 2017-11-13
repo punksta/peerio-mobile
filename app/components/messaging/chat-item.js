@@ -8,6 +8,7 @@ import contactState from '../contacts/contact-state';
 import fileState from '../files/file-state';
 import { systemMessages } from '../../lib/icebear';
 import IdentityVerificationNotice from '../shared/identityVerificationNotice';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class ChatItem extends SafeComponent {
@@ -66,7 +67,11 @@ export default class ChatItem extends SafeComponent {
                 />
                 {
                     systemMessageText === 'Joined' ?
-                        <IdentityVerificationNotice /> :
+                        (
+                            <View style={{ paddingTop: vars.spacing.small.midi, paddingBottom: vars.spacing.small.midi }}>
+                                <IdentityVerificationNotice />
+                            </View>
+                        ) :
                         null
                 }
             </View>
