@@ -8,7 +8,9 @@ import Toggle from './toggle';
 @observer
 export default class ToggleItem extends SafeComponent {
     get active() {
-        return this.props.state[this.props.prop];
+        return this.props.reverse ?
+            !this.props.state[this.props.prop]
+            : this.props.state[this.props.prop];
     }
 
     toggle = () => {

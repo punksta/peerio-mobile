@@ -10,10 +10,11 @@ import ChannelListItem from './channel-list-item';
 import ProgressOverlay from '../shared/progress-overlay';
 import chatState from './chat-state';
 import ChatSectionHeader from './chat-section-header';
-import ChatChannelInviteSection from './chat-channel-invites-section';
+import ChatChannelInvitesSection from './chat-channel-invites-section';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import CreateActionSheet from './create-action-sheet';
 import { tx } from '../utils/translator';
+import routes from '../routes/routes';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -58,10 +59,12 @@ export default class ChatList extends SafeComponent {
             this.maxLoadedIndex
         ], () => {
             const channels = this.data.filter(d => !!d.isChannel);
+            if (chatInviteStore.received.length) {
+                channels.unshift({ id: true, isRoomInvite: true });
+            }
             const dms = this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex);
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
                 title_channels: channels,
-                title_channelInvites: chatInviteStore.received,
                 title_directMessages: dms,
                 dummy: []
             });
@@ -76,19 +79,11 @@ export default class ChatList extends SafeComponent {
             r[title] = component;
             return r;
         };
-        const invitesCount = chatInviteStore.received.length;
         const titles = {
             ...i('title_channels',
                 <ChatSectionHeader state="collapseChannels" title={tx('title_channels')} />),
             ...i('title_directMessages',
                 <ChatSectionHeader state="collapseDMs" title={tx('title_directMessages')} />),
-            ...i('title_channelInvites',
-                (
-                    <ChatChannelInviteSection
-                        title={tx('title_channelInvites')}
-                        data={invitesCount} onPress={() => chatState.routerMain.channelInviteList()} />
-                ),
-            ),
             ...i('dummy', <View />)
         };
         return data && data.length ? titles[key] : null;
@@ -96,9 +91,17 @@ export default class ChatList extends SafeComponent {
 
     item = (chat) => {
         if (!chat.id) return null;
-        return chat.isChannel ? <ChannelListItem chat={chat} /> : (
-            <ChatListItem key={chat.id} chat={chat} />
-        );
+        if (chat.isRoomInvite) {
+            return (
+                <ChatChannelInvitesSection
+                    title={tx('title_viewChannelInvites')}
+                    data={chatInviteStore.received.length}
+                    onPress={routes.modal.channelInviteList}
+                />);
+        } else if (chat.isChannel) {
+            return <ChannelListItem chat={chat} />;
+        }
+        return <ChatListItem key={chat.id} chat={chat} />;
     }
 
     onEndReached = () => {

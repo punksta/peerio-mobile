@@ -46,7 +46,6 @@ class RouterMain extends Router {
         this.add('contacts', [<ContactList />, <ContactView nonModal />], contactState);
         this.add('contactAdd', [<ContactAdd />], contactAddState);
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
-        this.add('channelInviteList', [<ChannelInviteList />], chatState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('logs', [<Logs />], { title: <T k="title_logs" /> });
     }

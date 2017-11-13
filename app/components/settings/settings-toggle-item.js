@@ -3,20 +3,21 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import ToggleItem from './toggle-item';
-import preferenceStore from './preference-store';
-
-const state = preferenceStore.prefs;
+import { User } from '../../lib/icebear';
 
 @observer
-export default class PreferenceToggleItem extends SafeComponent {
+export default class SettingsToggleItem extends SafeComponent {
+    get state() { return User.current.settings; }
+
     toggle = () => {
-        state[this.props.property] = !state[this.props.property];
+        this.state[this.props.property] = !this.state[this.props.property];
+        User.current.saveSettings();
     }
 
     renderThrow() {
         return (
             <ToggleItem
-                state={state}
+                state={this.state}
                 prop={this.props.property}
                 reverse={this.props.reverse}
                 title={this.props.title}
@@ -27,7 +28,7 @@ export default class PreferenceToggleItem extends SafeComponent {
     }
 }
 
-PreferenceToggleItem.propTypes = {
+SettingsToggleItem.propTypes = {
     property: PropTypes.any.isRequired,
     title: PropTypes.any.isRequired,
     description: PropTypes.any

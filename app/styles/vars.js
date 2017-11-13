@@ -80,6 +80,8 @@ const vars = {
     iconSizeSmall: 16,
     iconFileViewSize: 72,
     iconPadding: 12,
+    iconSizeBigger: 25,
+    iconMargin: 30,
     menuWidthRatio: 0.8,
     animationDuration: 200,
     listItemHeight: 64,
@@ -88,6 +90,7 @@ const vars = {
     modalPaddingVertical: 40,
     modalPaddingHorizontal: 40,
     wizardPadding: 36,
+
     font: {
         size: {
             xsmall: scaleDim(8),

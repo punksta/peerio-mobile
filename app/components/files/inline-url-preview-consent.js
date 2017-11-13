@@ -71,6 +71,7 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
             prefs.externalContentEnabled = false;
             prefs.externalContentJustForFavs = false;
         }
+        this.props.onChange && this.props.onChange();
     }
 
     userActionDismiss = () => {

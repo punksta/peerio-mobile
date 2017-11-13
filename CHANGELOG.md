@@ -2,6 +2,51 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.203.0"></a>
+# [3.203.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.202.0...v3.203.0) (2017-11-12)
+
+
+
+<a name="3.202.0"></a>
+# [3.202.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.201.0...v3.202.0) (2017-11-12)
+
+
+### Bug Fixes
+
+* messageNotifications toggle ([985e0c3](https://github.com/PeerioTechnologies/peerio-mobile/commit/985e0c3))
+
+
+
+<a name="3.201.0"></a>
+# [3.201.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.200.0...v3.201.0) (2017-11-11)
+
+
+
+<a name="3.200.0"></a>
+# [3.200.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.199.0...v3.200.0) (2017-11-11)
+
+
+
+<a name="3.199.0"></a>
+# [3.199.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.198.0...v3.199.0) (2017-11-10)
+
+
+### Bug Fixes
+
+* image size preference should be in reverse ([fef6ce6](https://github.com/PeerioTechnologies/peerio-mobile/commit/fef6ce6))
+
+
+
+<a name="3.198.0"></a>
+# [3.198.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.197.0...v3.198.0) (2017-11-10)
+
+
+### Features
+
+* always expand content when content is enabled ([40dafc6](https://github.com/PeerioTechnologies/peerio-mobile/commit/40dafc6))
+
+
+
 <a name="3.197.0"></a>
 # [3.197.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.190.0...v3.197.0) (2017-11-10)
 

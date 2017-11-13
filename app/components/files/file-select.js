@@ -60,14 +60,13 @@ export default class FileSelect extends SafeComponent {
     item = f => {
         const changeFolder = () => { this.currentFolder = f; };
         const submitSelection = () => fileState.submitSelectFiles([f]);
-        const nested = f.files && f.files.length;
         return (
             f.isFolder ?
                 <FolderInnerItem
                     key={f.fId}
                     folder={f}
-                    hideArrow={!nested || f.isRoot}
-                    onPress={nested ? changeFolder : null} />
+                    hideArrow={f.isRoot}
+                    onPress={changeFolder} />
                 : <FileInnerItem onPress={submitSelection} file={f} />
         );
     }
@@ -93,7 +92,7 @@ export default class FileSelect extends SafeComponent {
             textAlign: 'center',
             marginTop: vars.headerSpacing
         };
-        return <Text style={s}>No files in this folder</Text>;
+        return <Text style={s}>{tx('title_noFilesInFolder')}</Text>;
     }
 
     exitRow() {

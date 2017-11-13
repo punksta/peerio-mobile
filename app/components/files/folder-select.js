@@ -9,6 +9,7 @@ import { vars } from '../../styles/styles';
 import Center from '../controls/center';
 import icons from '../helpers/icons';
 import routes from '../routes/routes';
+import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -101,7 +102,7 @@ export default class FolderSelect extends SafeComponent {
             textAlign: 'center',
             marginTop: vars.headerSpacing
         };
-        return <Text style={s}>No files in this folder</Text>;
+        return <Text style={s}>{tx('title_noFilesInFolder')}</Text>;
     }
 
     exitRow() {

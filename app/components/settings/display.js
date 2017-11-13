@@ -38,6 +38,7 @@ export default class Display extends SafeComponent {
                     title={tx('title_showImagePreviews')}
                     description={tx('title_showImagePreviewsDescription')} />
                 <PreferenceToggleItem
+                    reverse
                     property={'limitInlineImageSize'}
                     title={tx('title_showLargeImages', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })} />
                 {<Text style={text}>{tx('title_urlPreview')}</Text>}
