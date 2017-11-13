@@ -82,7 +82,8 @@ const fullnameTextStyle = {
 const usernameTextStyle = {
     color: vars.txtMedium,
     fontStyle: 'italic',
-    fontSize: vars.font.size.normal
+    fontSize: vars.font.size.normal,
+    fontWeight: 'normal'
 };
 
 const dateTextStyle = {
@@ -307,6 +308,7 @@ export default class Avatar extends SafeComponent {
     }
 
     get name() {
+        const fullnameBoldStyle = this.props.fullnameIsBold ? { fontWeight: 'bold' } : null;
         const unreadStyle = this.props.unread
             ? { fontWeight: '600' }
             : null;
@@ -317,7 +319,7 @@ export default class Avatar extends SafeComponent {
                 <View style={{ flexShrink: 1 }}>
                     <Text ellipsizeMode="tail" numberOfLines={1}>
                         {this.star}
-                        <Text style={[fullnameTextStyle, unreadStyle]}>
+                        <Text style={[fullnameTextStyle, unreadStyle, fullnameBoldStyle]}>
                             {contact ? contact.fullName : ''}
                             <Text style={[usernameTextStyle, unreadStyle]}>
                                 {` `}{text}
@@ -473,6 +475,7 @@ Avatar.propTypes = {
     message: PropTypes.string,
     messageComponent: PropTypes.any,
     title: PropTypes.any,
+    fullnameIsBold: PropTypes.any,
     isChat: PropTypes.any,
     systemMessage: PropTypes.any,
     firstOfTheDay: PropTypes.bool,
