@@ -13,6 +13,7 @@ import PlusBorderIcon from '../layout/plus-border-icon';
 import { upgradeForFiles } from '../payments/payments';
 import BackIcon from '../layout/back-icon';
 import { vars } from '../../styles/styles';
+import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -120,7 +121,7 @@ export default class Files extends SafeComponent {
             textAlign: 'center',
             marginTop: vars.headerSpacing
         };
-        return <Text style={s}>No files in this folder</Text>;
+        return <Text style={s}>{tx('title_noFilesInFolder')}</Text>;
     }
 
     renderThrow() {
