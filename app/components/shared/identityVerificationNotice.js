@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
 
 export default class IdentityVerificationNotice extends Component {
+    verificationLink = 'https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-';
+
     idVerificationContainer = {
         color: vars.txtMedium,
         display: 'flex',
@@ -44,7 +46,7 @@ export default class IdentityVerificationNotice extends Component {
                     </Text>
                     <Text
                         style={this.hyperlink}
-                        onPress={() => Linking.openURL('http://peerio.com')}>
+                        onPress={() => Linking.openURL(this.verificationLink)}>
                         Show me how
                     </Text>
                 </Text>
