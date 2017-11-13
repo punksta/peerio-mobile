@@ -3,7 +3,6 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
 import { observable, when, reaction } from 'mobx';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
@@ -15,6 +14,7 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
+import IdentityVerificationNotice from '../shared/identityVerificationNotice';
 
 const { width } = Dimensions.get('window');
 
@@ -248,50 +248,6 @@ export default class Chat extends SafeComponent {
         ) : null;
     }
 
-    get identityVerificationNotice() {
-        const idVerificationContainer = {
-            color: vars.txtMedium,
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: vars.spacing.small.midi,
-            marginBottom: vars.spacing.small.midi,
-            marginLeft: vars.spacing.small.maxi2x,
-            marginRight: vars.spacing.small.maxi2x
-        };
-        const securityIcon = {
-            marginRight: vars.spacing.small.midi
-        };
-        const idVerificationText = {
-            flex: 9,
-        };
-        const hyperlink = {
-            textDecorationLine: 'underline'
-        };
-
-        return (
-            <View style={idVerificationContainer} >
-                <Icon style={securityIcon}
-                    name="security"
-                    size={vars.iconSize}
-                    color="gray"
-                />
-                <Text style={idVerificationText}>
-                    <Text>
-                        You can verify any user’s identity with their Peerio ID#.
-                        &nbsp;
-                    </Text>
-                    <Text
-                        style={hyperlink}
-                        onPress={() => Linking.openURL('http://peerio.com')}>
-                        Show me how
-                    </Text>
-                </Text>
-            </View>
-        );
-    }
-
     zeroStateItem() {
         const zsContainer = {
             borderBottomWidth: 0,
@@ -323,6 +279,7 @@ export default class Chat extends SafeComponent {
                     {tx('title_chatBeginning', { chatName: chat.name })}
                 </Text>
                 {this.archiveNotice}
+                <IdentityVerificationNotice />
                 {this.identityVerificationNotice}
             </View>
         );

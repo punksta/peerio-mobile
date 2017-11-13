@@ -180,11 +180,6 @@ export default class Avatar extends SafeComponent {
         return systemMessage && (
             <Text style={[lastMessageTextStyle, systemMessageStyle]}>
                 {systemMessage}
-                {
-                    systemMessage === 'Joined' ?
-                    <Text>You can verify any user’s identity with their Peerio ID#. Show me how</Text> :
-                    <Text></Text>
-                }
             </Text>
         );
     }
