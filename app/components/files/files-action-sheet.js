@@ -7,7 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 import { tx } from '../utils/translator';
-import { popupInputCancelCheckbox } from '../shared/popups';
+import { popupInputCancel } from '../shared/popups';
 import imagepicker from '../helpers/imagepicker';
 
 @observer
@@ -51,8 +51,8 @@ export default class FilesActionSheet extends SafeComponent {
 
     get createFolder() {
         const action = async () => {
-            const result = await popupInputCancelCheckbox(
-                tx('title_createFolder'), tx('title_createFolderPlaceholder'), null, null, true);
+            const result = await popupInputCancel(
+                tx('title_createFolder'), tx('title_createFolderPlaceholder'), true);
             if (!result) return;
             requestAnimationFrame(() => {
                 fileState.store.fileFolders.createFolder(result.value, fileState.currentFolder);

@@ -6,7 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
-import { popupInputCancelCheckbox } from '../shared/popups';
+import { popup2FA } from '../shared/popups';
 import { clientApp, User } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
 import loginState from '../login/login-state';
@@ -39,7 +39,7 @@ async function twoFactorAuthPopup(active2FARequest) {
     if (!active2FARequest) return;
     console.log(JSON.stringify(active2FARequest));
     const { submit, cancel, type } = active2FARequest;
-    const result = await popupInputCancelCheckbox(
+    const result = await popup2FA(
         tx('title_2FA'),
         tx('dialog_enter2FA'),
         type === 'login' ? tx('title_trustThisDevice') : null,
