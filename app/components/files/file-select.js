@@ -17,7 +17,7 @@ const PAGE_SIZE = 2;
 
 @observer
 export default class FileSelect extends SafeComponent {
-    @observable currentFolder = fileState.store.fileFolders.root;
+    @observable currentFolder = fileState.store.folders.root;
 
     constructor(props) {
         super(props);
