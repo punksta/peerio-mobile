@@ -143,6 +143,7 @@
     }
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "setupFiles": ["./tests/unit/setup.js"]
   }
 }
