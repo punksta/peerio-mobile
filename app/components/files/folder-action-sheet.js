@@ -13,7 +13,7 @@ export default class FolderActionSheet extends SafeComponent {
     folder = null;
 
     actionSheetItems = [
-        { title: tx('button_delete'), action: () => fileState.store.fileFolders.deleteFolder(this.folder) },
+        { title: tx('button_delete'), action: () => fileState.store.folders.deleteFolder(this.folder) },
         { title: tx('button_cancel') }
     ];
 

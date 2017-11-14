@@ -16,7 +16,7 @@ class FileState extends RoutedState {
     _prefix = 'files';
 
     @action async init() {
-        this.currentFolder = fileStore.fileFolders.root;
+        this.currentFolder = fileStore.folders.root;
         return new Promise(resolve => when(() => !this.store.loading, resolve));
     }
 
