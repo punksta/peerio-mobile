@@ -17,7 +17,7 @@ export default class CircleButtonWithIcon extends Component {
             justifyContent: 'center'
         };
         return (
-            <TouchableOpacity>
+            <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset}>
                 <View style={iconStyle}>
                     {icons.basic(
                         this.props.name,
@@ -25,8 +25,7 @@ export default class CircleButtonWithIcon extends Component {
                         this.props.onPress,
                         { fontSize: this.props.iconSize },
                         vars.iconSize,
-                        true
-                        )}
+                        true)}
                 </View>
             </TouchableOpacity>
         );
