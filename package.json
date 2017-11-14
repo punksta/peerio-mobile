@@ -23,7 +23,6 @@
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
     "build-android-debug": "cd android && ./gradlew assembleDebug",
     "test": "bash scripts/setup_tests.sh && bash scripts/run-tests.sh",
-    "unit-test": "jest",
     "gp-peerio": "npm run build-android && bash scripts/release_android.sh && fastlane android alpha",
     "commit-msg": "validate-commit-msg"
   },
@@ -92,7 +91,6 @@
     "appium": "1.7.1",
     "authorize-ios": "1.0.4",
     "babel-eslint": "8.0.1",
-    "babel-jest": "21.2.0",
     "babel-plugin-console-kungfu": "github:PeerioTechnologies/babel-plugin-console-kungfu#v1.0.0",
     "babel-plugin-transform-decorators-legacy": "1.3.4",
     "babel-plugin-transform-inline-environment-variables": "6.8.0",
@@ -106,12 +104,10 @@
     "eslint-config-peerio": "1.20.0",
     "glob": "7.1.1",
     "husky": "0.13.1",
-    "jest": "21.2.1",
     "madge": "1.6.0",
     "mocha": "3.2.0",
     "npm-run-all": "4.1.1",
     "opt-cli": "1.6.0",
-    "react-test-renderer": "16.1.1",
     "repeating-cli": "2.0.0",
     "semantic-release": "6.3.2",
     "sinon": "1.17.7",
@@ -141,9 +137,5 @@
       "subjectPattern": ".+",
       "helpMessage": "Convention: https://goo.gl/3TgTsh"
     }
-  },
-  "jest": {
-    "preset": "react-native",
-    "setupFiles": ["./tests/unit/setup.js"]
   }
 }
