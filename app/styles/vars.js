@@ -58,6 +58,7 @@ const vars = {
     pickerText: '#fff',
     subtleBg: '#c3dfee',
     subtleText: 'rgba(0, 0, 0, .54)',
+    extraSubtleText: 'rgba(0, 0, 0, .38)',
     subtleTextBold: 'rgba(0, 0, 0, .54',
     inputBgInactive: 'rgba(255, 255, 255, .5)',
     inputBgInactiveText: 'rgba(0,0,0, .54)',

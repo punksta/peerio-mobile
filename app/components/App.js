@@ -19,6 +19,7 @@ import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
 import MockComponent from './mocks';
+import LoadingScreen from './layout/loading-screen';
 
 const { height, width } = Dimensions.get('window');
 
@@ -106,6 +107,7 @@ export default class App extends SafeComponent {
     }
 
     renderThrow() {
+        if (true) return <LoadingScreen/>;
         if (!uiState.locale) return this._placeHolder();
         if (MockComponent) return <MockComponent />;
         const tabletHack = { top: 0, height, left: 0, right: 0 };
