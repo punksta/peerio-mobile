@@ -9,6 +9,7 @@ import fileState from '../files/file-state';
 import { systemMessages } from '../../lib/icebear';
 import IdentityVerificationNotice from '../shared/identityVerificationNotice';
 import { vars } from '../../styles/styles';
+import { tx } from '../utils/translator';
 
 @observer
 export default class ChatItem extends SafeComponent {
@@ -66,7 +67,7 @@ export default class ChatItem extends SafeComponent {
                     ref={this.setRef}
                 />
                 {
-                    systemMessageText === 'Joined' ?
+                    systemMessageText === tx('title_userJoined') ?
                         (
                             <View style={{ paddingTop: vars.spacing.small.midi, paddingBottom: vars.spacing.small.midi }}>
                                 <IdentityVerificationNotice />

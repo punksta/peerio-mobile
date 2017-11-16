@@ -61,7 +61,7 @@ export default class Chat extends SafeComponent {
         return !!chatState.currentChat && !chatState.loading;
     }
 
-    _refs = {};
+    _refs = { };
     _itemActionMap = {};
 
     item = (item, index) => {
@@ -280,7 +280,6 @@ export default class Chat extends SafeComponent {
                 </Text>
                 {this.archiveNotice}
                 <IdentityVerificationNotice />
-                {this.identityVerificationNotice}
             </View>
         );
     }
