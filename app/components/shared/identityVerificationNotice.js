@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Linking } from 'react-native';
+import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 
 export default class IdentityVerificationNotice extends Component {
-    verificationLink = 'https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-';
-
     idVerificationContainer = {
-        color: vars.txtMedium,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
@@ -25,10 +22,12 @@ export default class IdentityVerificationNotice extends Component {
     };
 
     idVerificationText = {
+        color: vars.txtMedium,
         flex: 9
     };
 
     hyperlink = {
+        color: vars.txtMedium,
         textDecorationLine: 'underline'
     };
 
@@ -46,8 +45,7 @@ export default class IdentityVerificationNotice extends Component {
                         &nbsp;
                     </Text>
                     <Text
-                        style={this.hyperlink}
-                        onPress={() => Linking.openURL(this.verificationLink)}>
+                        style={this.hyperlink}>
                         {tx('button_showMeHow')}
                     </Text>
                 </Text>

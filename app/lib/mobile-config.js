@@ -29,7 +29,8 @@ export default (c, icebear) => {
         googleAuthI: 'https://itunes.apple.com/app/google-authenticator/id388497605',
         authy: 'https://authy.com',
         download: 'https://peerio.com',
-        learnUrlTracking: 'https://peerio.zendesk.com/hc/en-us/articles/115005090766'
+        learnUrlTracking: 'https://peerio.zendesk.com/hc/en-us/articles/115005090766',
+        identityVerification: 'https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-'
     };
 
     setUrlMap(cfg.translator.urlMap);

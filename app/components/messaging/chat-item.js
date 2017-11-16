@@ -36,6 +36,8 @@ export default class ChatItem extends SafeComponent {
         if (i.hasUrls && i.externalImages.length) {
             firstImage = i.externalImages[0];
         }
+        const shouldDisplayIdentityNotice = i.systemData && i.systemData.action === 'join';
+        
         return (
             <View>
                 <Avatar
@@ -67,7 +69,7 @@ export default class ChatItem extends SafeComponent {
                     ref={this.setRef}
                 />
                 {
-                    systemMessageText === tx('title_userJoined') ?
+                    shouldDisplayIdentityNotice ?
                         (
                             <View style={{ paddingTop: vars.spacing.small.midi, paddingBottom: vars.spacing.small.midi }}>
                                 <IdentityVerificationNotice />
