@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { chatInviteStore, User } from '../../lib/icebear';
-import { tx } from '../utils/translator';
+import { T } from '../utils/translator';
 import CircleButtonWithIcon from '../controls/circle-button-with-icon';
 
 @observer
@@ -58,7 +58,7 @@ export default class ChannelInviteListItem extends SafeComponent {
                                 {`# ${channelName}`}
                             </Text>
                             <Text style={smallTextStyle}>
-                                {tx('title_invitedBy', { username })}
+                                <T k="title_invitedBy">{{ username }}</T>
                             </Text>
                         </View>
                         {(User.current.channelsLeft > 0) ?
@@ -79,8 +79,7 @@ export default class ChannelInviteListItem extends SafeComponent {
                                     margin={0}
                                     bgColor={vars.bg}
                                 />
-                            </View>
-                        :
+                            </View> :
                             <View style={actionButtonStyle}>
                                 <CircleButtonWithIcon
                                     name="info"
