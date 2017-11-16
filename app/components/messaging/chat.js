@@ -14,7 +14,7 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
-import IdentityVerificationNotice from '../shared/identityVerificationNotice';
+import IdentityVerificationNotice from './identity-verification-notice';
 
 const { width } = Dimensions.get('window');
 
