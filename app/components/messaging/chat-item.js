@@ -7,9 +7,8 @@ import Avatar from '../shared/avatar';
 import contactState from '../contacts/contact-state';
 import fileState from '../files/file-state';
 import { systemMessages } from '../../lib/icebear';
-import IdentityVerificationNotice from '../shared/identityVerificationNotice';
+import IdentityVerificationNotice from './identity-verification-notice';
 import { vars } from '../../styles/styles';
-import { tx } from '../utils/translator';
 
 @observer
 export default class ChatItem extends SafeComponent {
