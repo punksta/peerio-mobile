@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
-import { tx } from '../utils/translator';
+import { T } from '../utils/translator';
 
 export default class IdentityVerificationNotice extends Component {
     idVerificationContainer = {
@@ -40,14 +40,7 @@ export default class IdentityVerificationNotice extends Component {
                     color="gray"
                 />
                 <Text style={this.idVerificationText}>
-                    <Text>
-                        {tx('title_verifyUserIdentity')}
-                        &nbsp;
-                    </Text>
-                    <Text
-                        style={this.hyperlink}>
-                        {tx('button_showMeHow')}
-                    </Text>
+                    <T k="title_verifyUserIdentity" />
                 </Text>
             </View>
         );

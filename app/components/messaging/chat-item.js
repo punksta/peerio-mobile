@@ -37,7 +37,7 @@ export default class ChatItem extends SafeComponent {
             firstImage = i.externalImages[0];
         }
         const shouldDisplayIdentityNotice = i.systemData && i.systemData.action === 'join';
-        
+
         return (
             <View>
                 <Avatar
@@ -68,15 +68,10 @@ export default class ChatItem extends SafeComponent {
                     extraPaddingTop={8}
                     ref={this.setRef}
                 />
-                {
-                    shouldDisplayIdentityNotice ?
-                        (
-                            <View style={{ paddingTop: vars.spacing.small.midi, paddingBottom: vars.spacing.small.midi }}>
-                                <IdentityVerificationNotice />
-                            </View>
-                        ) :
-                        null
-                }
+                {shouldDisplayIdentityNotice &&
+                    <View style={{ paddingVertical: vars.spacing.small.midi }}>
+                        <IdentityVerificationNotice />
+                    </View>}
             </View>
         );
     }
