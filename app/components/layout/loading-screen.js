@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { Animated, View, Text, Image, Easing } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, computed } from 'mobx';
+import { observable, computed, when } from 'mobx';
 import { vars } from '../../styles/styles';
+import loginState from '../login/login-state';
+import routerApp from '../routes/router-app';
+import { socket } from '../../lib/icebear';
+import { promiseWhen } from '../helpers/sugar';
 
 const connectingInProgress = require('../../assets/loading_screens/connecting-inProgress.png');
 const connectingDone = require('../../assets/loading_screens/connecting-done.png');
@@ -46,19 +50,21 @@ export default class LoadingScreen extends Component {
             transform: [{ scale: this.growValue }],
             opacity: this.fadeValue
         };
-        // TODO Delete setInterval(.....)
-        setInterval(this.changeState, 2000);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        await loginState.load();
+        if (!loginState.loaded) routerApp.routes.loginStart.transition();
+        await promiseWhen(() => socket.connected);
+        this.goToNextStep();
+        await promiseWhen(() => socket.authenticated);
+        this.goToNextStep();
         this.fadeInOut();
         this.growIcon();
     }
 
-    // Modify this function to accept input about when loadStep changes
-    changeState = () => {
-        const nextStep = (this.loadingStep === 4) ? 0 : this.loadingStep + 1;
-        this.loadingStep = nextStep;
+    goToNextStep = () => {
+        this.loadingStep++;
         this.growIcon();
     }
 
