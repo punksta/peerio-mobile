@@ -308,9 +308,9 @@ export default class Avatar extends SafeComponent {
     }
 
     get name() {
-        const fullnameBoldStyle = this.props.fullnameIsBold ? { fontWeight: 'bold' } : null;
+        const fullnameBoldStyle = this.props.fullnameIsBold ? { fontWeight: vars.font.weight.bold } : null;
         const unreadStyle = this.props.unread
-            ? { fontWeight: '600' }
+            ? { fontWeight: vars.font.weight.seminBold }
             : null;
         const { contact, title } = this.props;
         const text = contact ? contact.username : title;
