@@ -33,9 +33,7 @@ export default class WarningItem extends SafeComponent {
                     <Text>
                         {this.props.content}
                     </Text>
-                    <Link>
-                        {this.props.linkContent}
-                    </Link>
+                    {this.props.linkContent}
                 </View>
             </View>
         );
