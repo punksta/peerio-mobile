@@ -212,7 +212,7 @@ function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
             id: 'ok', text: tu('button_submit'), action: () => resolve(o), get disabled() { return !o.value; }
         });
         const contents = (
-            <View style={{ minHeight: 110 }}>
+            <View style={{ minHeight: vars.popupMinHeight }}>
                 {inputControl(o, placeholder)}
                 <Text style={helperTextStyle}>
                     {tx('title_2FAHelperText')}
