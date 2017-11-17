@@ -22,6 +22,7 @@ import { fileState, mainState, ghostState, chatState, settingsState, contactStat
 // import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
 import { T } from '../utils/translator';
+import loginState from '../login/login-state';
 
 class RouterMain extends Router {
     // current route object
@@ -31,6 +32,9 @@ class RouterMain extends Router {
     @observable blackStatusBar = false;
     @observable currentIndex = 0;
     @observable suppressTransition = false;
+    @observable chatStateLoaded = false;
+    @observable fileStateLoaded = false;
+    @observable contactStateLoaded = false;
     @observable loading = false;
     @observable invoked = false;
     _initialRoute = 'chats';
@@ -65,10 +69,14 @@ class RouterMain extends Router {
         // if (EN === 'peeriomobile') await enablePushNotifications();
         await mainState.init();
         await chatState.init();
-        await contactState.init();
+        this.chatStateLoaded = true;
         await fileState.init();
+        this.fileStateLoaded = true;
+        await contactState.init();
+        this.contactStateLoaded = true;
         this.loading = false;
         this.initialRoute();
+        loginState.transition();
     }
 
     add(key, components, routeState) {

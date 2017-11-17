@@ -6,6 +6,9 @@ import { vars } from '../../styles/styles';
 import routerApp from '../routes/router-app';
 import loginState from '../login/login-state';
 import SnackBarConnection from '../snackbars/snackbar-connection';
+import { promiseWhen } from '../helpers/sugar';
+import { socket } from '../../lib/icebear';
+import routerMain from '../routes/router-main';
 
 const tabs = {
     backgroundColor: vars.tabsBg,
@@ -15,7 +18,12 @@ const tabs = {
 @observer
 export default class MockLoadingReturn extends Component {
     async componentDidMount() {
+        await promiseWhen(() => socket.connected);
         await loginState.load();
+        await promiseWhen(() => socket.authenticated);
+        await promiseWhen(() => routerMain.chatStateLoaded);
+        await promiseWhen(() => routerMain.fileStateLoaded);
+        await promiseWhen(() => routerMain.contactStateLoaded);
         if (!loginState.loaded) routerApp.routes.loginStart.transition();
     }
 
