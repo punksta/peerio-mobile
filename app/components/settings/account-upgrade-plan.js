@@ -157,7 +157,7 @@ export default class AccountUpgradePlan extends Component {
                                 </Text>
                             </Text>
                         </TouchableOpacity>
-                        <Text style={popupTextStyle}>{'   |   '}</Text>
+                        <Text style={popupTextStyle}>   |   </Text>
                         <TouchableOpacity
                             onPress={() => Linking.openURL('https://peerio.com/privacy.html')}
                             pressRetentionOffset={vars.pressRetentionOffset}>

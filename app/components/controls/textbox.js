@@ -19,10 +19,9 @@ export default class TextBox extends SafeComponent {
     @observable end = 0;
 
     get nextField() {
-        const byOrder = this.props.state.byOrder;
-        const byName = this.props.state.byName;
+        const { byOrder, byName } = this.props.state;
         if (!byOrder || !byName) return null;
-        const name = this.props.name;
+        const { name } = this.props;
         return byOrder[byName[name] + 1];
     }
 
@@ -123,8 +122,8 @@ export default class TextBox extends SafeComponent {
         const s = this.props.state;
         if (!s) return;
         // if no next field, we are the last one in form
-        const nextField = this.nextField;
-        if (!this.nextField) {
+        const { nextField } = this;
+        if (!nextField) {
             this.props.onSubmit && this.props.onSubmit();
             return;
         }
@@ -169,7 +168,7 @@ export default class TextBox extends SafeComponent {
         const style = (this.focused || (this.value && this.value.length)) ?
             textbox.hint.small : textbox.hint.normal;
         return (
-            <View key={`hint`}
+            <View key="hint"
                 pointerEvents="none"
                 style={[style.container]}>
                 <Text style={style.text}>
@@ -210,7 +209,7 @@ export default class TextBox extends SafeComponent {
                                 style={[style.textbox, { fontSize },
                                     { height: vars.inputPaddedHeight, top: 0, marginRight: this.secretIcon ? 42 : 0 }]}
                                 ref={ref => { this.textinput = ref; }}
-                                underlineColorAndroid={'transparent'}
+                                underlineColorAndroid="transparent"
                                 returnKeyType={returnKeyType}
                                 secureTextEntry={this.props.secureTextEntry && !this.showSecret}
                                 value={this._value}

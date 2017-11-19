@@ -62,7 +62,7 @@ export default class Notifications extends SafeComponent {
                             {/* <View style={spacer} /> */}
                             <Text style={text}>{tx('title_playSound')}</Text>
                             <PreferenceToggleItem
-                                property={'allActivitySoundsEnabled'}
+                                property="allActivitySoundsEnabled"
                                 title={tx('title_allActivity')}
                             />
                         </View>
@@ -74,7 +74,7 @@ export default class Notifications extends SafeComponent {
                         title={tx('title_allActivity')}
                     /> */}
                     <SettingsToggleItem
-                        property={'messageNotifications'}
+                        property="messageNotifications"
                         title={tx('title_forNewMessage')}
                     />
                 </ScrollView>

@@ -130,7 +130,7 @@ export default class FolderSelect extends SafeComponent {
         return (
             <View style={container}>
                 {leftIcon}
-                <Center style={style}><Text style={textStyle}>{'Move file to...'}</Text></Center>
+                <Center style={style}><Text style={textStyle}>Move file to...</Text></Center>
                 {icons.placeholder()}
             </View>
         );

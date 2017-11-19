@@ -28,7 +28,7 @@ export default class ChatListItem extends SafeComponent {
         if (m.systemData) {
             return <Text numberOfLines={1} ellipsizeMode="tail" style={{ fontStyle: 'italic' }}>{systemMessages.getSystemMessageText(m)}</Text>;
         }
-        let username = m.sender.username;
+        let { username } = m.sender;
         if (username === User.current.username) username = tx('title_you');
         return (
             <Text numberOfLines={1} ellipsizeMode="tail">
@@ -55,7 +55,7 @@ export default class ChatListItem extends SafeComponent {
         // two participants
         if (participants && participants.length === 1) {
             contact = participants[0];
-            isDeleted = contact.isDeleted;
+            ({ isDeleted } = contact);
         }
 
         const key = chat.id;

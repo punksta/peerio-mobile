@@ -40,8 +40,7 @@ export default class SettingsItem extends SafeComponent {
                 onPress={() => !this.props.untappable && !this.props.disabled && this.press()}>
                 <View style={[itemContainerStyle]} pointerEvents={this.props.untappable ? undefined : 'none'}>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
-                        <Text style={{
-                            color: this.props.disabled ? vars.txtLightGrey : vars.txtDark }}>
+                        <Text style={{ color: this.props.disabled ? vars.txtLightGrey : vars.txtDark }}>
                             {t(this.props.title)}
                         </Text>
                         {!!this.props.description && <Text style={{ color: vars.txtLightGrey, fontSize: vars.font.size.xsmall }}>

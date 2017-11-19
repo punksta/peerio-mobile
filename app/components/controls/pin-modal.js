@@ -38,7 +38,7 @@ export default class PinModal extends SafeComponent {
                     onSuccess={r => this.onSuccess(r)}
                     onEnter={this.onEnter}
                     messageInitial={this.initialText}
-                    messageEnter={' '} />
+                    messageEnter=" " />
                 <View style={{ flexGrow: 0, flex: 0, flexDirection: 'row', justifyContent: 'flex-start' }}>
                     <Button testID="pin-skip" text={this.skipText} onPress={() => this.hide()} />
                 </View>

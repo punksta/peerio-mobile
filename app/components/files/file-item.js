@@ -34,7 +34,7 @@ export default class FileItem extends SafeComponent {
     }
 
     renderThrow() {
-        const file = this.props.file;
+        const { file } = this.props;
         return (
             <View style={{ backgroundColor: 'white' }}>
                 {file.isFolder ?

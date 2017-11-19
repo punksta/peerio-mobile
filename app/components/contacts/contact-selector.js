@@ -133,7 +133,7 @@ export default class ContactSelector extends SafeComponent {
             <View style={container}>
                 {icons.dark('search')}
                 <TextInput
-                    underlineColorAndroid={'transparent'}
+                    underlineColorAndroid="transparent"
                     value={this.findUserText}
                     onSubmitEditing={this.onSubmit}
                     returnKeyType="done"

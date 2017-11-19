@@ -253,7 +253,7 @@ export default class Avatar extends SafeComponent {
 
     get avatar() {
         if (this.props.hideAvatar) return null;
-        const height = this.props.height;
+        const { height } = this.props;
         const style = height ? {
             alignSelf: 'center',
             justifyContent: 'center',
@@ -274,7 +274,7 @@ export default class Avatar extends SafeComponent {
 
     get star() {
         return this.props.starred ?
-            <Text style={{ color: vars.gold }}>{'★ '}</Text> : null;
+            <Text style={{ color: vars.gold }}>★ </Text> : null;
     }
 
     get title() {

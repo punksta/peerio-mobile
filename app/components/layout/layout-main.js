@@ -61,9 +61,8 @@ export default class LayoutMain extends SafeComponent {
             paddingBottom: global.platform === 'android' ? 0 : uiState.keyboardHeight
         };
 
-        const pages = routerMain.pages;
+        const { pages, currentComponent } = routerMain;
         const currentPage = pages[routerMain.currentIndex];
-        const currentComponent = routerMain.currentComponent;
         const { actionsBar, showInput, leftIcon, rightIcon, layoutTitle } = currentComponent;
 
         const animatedBlock = (
