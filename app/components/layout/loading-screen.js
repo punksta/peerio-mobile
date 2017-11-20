@@ -66,7 +66,7 @@ export default class LoadingScreen extends Component {
             this.goToNextStep();
             if (!loginState.loaded) routerApp.routes.loginStart.transition();
         } catch (e) {
-            console.log('loading-return.js: loading screen error');
+            console.log('loading-screen.js: loading screen error');
             console.error(e);
         }
         this.fadeInOut();
