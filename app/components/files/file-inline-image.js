@@ -204,7 +204,8 @@ export default class FileInlineImage extends SafeComponent {
             padding: this.outerPadding,
             borderColor: vars.lightGrayBg,
             borderWidth: 1,
-            marginVertical: 4
+            marginVertical: 4,
+            borderRadius: 2
         };
 
         const header = {
