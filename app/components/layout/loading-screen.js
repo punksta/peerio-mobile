@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Animated, View, Text, Image, Easing } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, computed, when } from 'mobx';
+import { observable, computed } from 'mobx';
 import { vars } from '../../styles/styles';
 import loginState from '../login/login-state';
 import routerApp from '../routes/router-app';
 import { socket } from '../../lib/icebear';
 import { promiseWhen } from '../helpers/sugar';
+import routerMain from '../routes/router-main';
 
 const connectingInProgress = require('../../assets/loading_screens/connecting-inProgress.png');
 const connectingDone = require('../../assets/loading_screens/connecting-done.png');
@@ -53,12 +54,21 @@ export default class LoadingScreen extends Component {
     }
 
     async componentDidMount() {
-        await loginState.load();
-        if (!loginState.loaded) routerApp.routes.loginStart.transition();
-        await promiseWhen(() => socket.connected);
-        this.goToNextStep();
-        await promiseWhen(() => socket.authenticated);
-        this.goToNextStep();
+        try {
+            await loginState.load();
+            await promiseWhen(() => socket.authenticated);
+            this.goToNextStep();
+            await promiseWhen(() => routerMain.chatStateLoaded);
+            this.goToNextStep();
+            await promiseWhen(() => routerMain.fileStateLoaded);
+            this.goToNextStep();
+            await promiseWhen(() => routerMain.contactStateLoaded);
+            this.goToNextStep();
+            if (!loginState.loaded) routerApp.routes.loginStart.transition();
+        } catch (e) {
+            console.log('loading-return.js: loading screen error');
+            console.error(e);
+        }
         this.fadeInOut();
         this.growIcon();
     }
