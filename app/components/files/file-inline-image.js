@@ -223,7 +223,8 @@ export default class FileInlineImage extends SafeComponent {
 
         const titleText = {
             color: vars.bg,
-            marginVertical: 2
+            marginVertical: 2,
+            ellipsizeMode: 'tail'
         };
 
         const descText = {
