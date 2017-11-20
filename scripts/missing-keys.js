@@ -2,7 +2,7 @@
 const fs = require('fs');
 const glob = require('glob');
 
-const keys = require('peerio-copy/icebear_en');
+const keys = require('peerio-icebear/src/copy/en.json');
 
 glob('app/components/**/*.js', (err, files) => {
     for (const i of files) {
