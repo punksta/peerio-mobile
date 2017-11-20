@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { setUrlMap, setTagHandler } from 'peerio-translator';
 import tagHandlers from '../components/controls/tag-handlers';
 import rnFileStream from './rn-file-stream';
@@ -53,7 +54,12 @@ export default (c, icebear) => {
         });
 
     cfg.appVersion = require('../../package.json').version;
-    cfg.platform = 'ios';
+
+    if (Platform.OS !== 'ios' && Platform.OS !== 'android') {
+        console.error(`mobile-config.js: unknown platform ${Platform.OS}`);
+    }
+
+    cfg.platform = Platform.OS;
     Object.assign(cfg.chat, {
         maxInitialChats: 15,
         initialPageSize: 20, // amount of messages to load to a newly opened chat
