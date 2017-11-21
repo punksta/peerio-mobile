@@ -17,7 +17,6 @@ export default class IdentityVerificationNotice extends Component {
     };
 
     securityIcon = {
-        flexShrink: 0,
         margin: vars.spacing.small.mini,
         marginRight: vars.spacing.small.midi
     };
