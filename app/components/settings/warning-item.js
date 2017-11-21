@@ -5,7 +5,6 @@ import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import Link from '../controls/link';
 
 const container = {
     marginHorizontal: vars.spacing.medium.midi2x,

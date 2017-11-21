@@ -61,7 +61,7 @@ export default class Chat extends SafeComponent {
         return !!chatState.currentChat && !chatState.loading;
     }
 
-    _refs = { };
+    _refs = {};
     _itemActionMap = {};
 
     item = (item, index) => {
@@ -196,7 +196,7 @@ export default class Chat extends SafeComponent {
         const updater = () => {
             const { contentHeight, scrollViewHeight, chat } = this;
             if (!contentHeight || !scrollViewHeight || !chat) return;
-            const y = nativeEvent.contentOffset.y;
+            const { y } = nativeEvent.contentOffset;
             const h = this.contentHeight - this.scrollViewHeight;
             // trigger previous page if we are at the top
             if (y < this.indicatorHeight / 2) this._onGoUp();

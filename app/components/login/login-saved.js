@@ -52,7 +52,7 @@ export default class LoginSaved extends SafeComponent {
                 </Center>
                 <Pin
                     inProgress={loginState.isInProgress}
-                    messageEnter={' '}
+                    messageEnter=" "
                     checkPin={this.checkPin} />
             </View>
         );

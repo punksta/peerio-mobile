@@ -13,7 +13,7 @@ export default class RouteNavigator extends Component {
     @observable route = null;
 
     componentDidMount() {
-        const routes = this.props.routes;
+        const { routes } = this.props;
         this.bindRouteroutes = reaction(() => routes.route, route => {
             console.log(`route-navigator: ${routes.prevRoute}, ${route}`);
             routes.prevRoute = route;

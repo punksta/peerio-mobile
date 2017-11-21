@@ -89,7 +89,7 @@ export default class ChannelInfo extends SafeComponent {
                         noBorderBottom
                         contact={contact}
                         key={username || i}
-                        message={''}
+                        message=""
                         hideOnline />
                 </View>
                 <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>

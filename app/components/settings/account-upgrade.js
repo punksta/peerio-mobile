@@ -48,7 +48,7 @@ export default class AccountUpgrade extends SafeComponent {
             <View style={{ margin, marginBottom, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text>
                     <Text style={boldLabel}>{boldText}</Text>
-                    <Text>{' - '}</Text>
+                    <Text> - </Text>
                     <Text style={mediumLabel}>{normalText}</Text>
                 </Text>
                 {rightBlock}
@@ -81,12 +81,12 @@ export default class AccountUpgrade extends SafeComponent {
     renderPlan = (plan) => {
         let actionButton = null;
         if (plan.isCurrent) actionButton = <Text style={smallLabel}>(current)</Text>;
-        let price = plan.price;
+        let { price } = plan;
         let choiceItem = null;
         if (plan.priceOptions && plan.priceOptions.length) {
             const priceOptions = plan.priceOptions.filter(p => p.id === plan.selected)[0];
             if (!priceOptions) return null;
-            price = priceOptions.price;
+            ({ price } = priceOptions);
 
             if (!plan.isCurrent && plan.canUpgradeTo) {
                 actionButton = this.renderButton1(

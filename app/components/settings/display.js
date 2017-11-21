@@ -34,12 +34,12 @@ export default class Display extends SafeComponent {
             <View style={bgStyle}>
                 <Text style={text}>{tx('title_imagePreview')}</Text>
                 <PreferenceToggleItem
-                    property={'peerioContentEnabled'}
+                    property="peerioContentEnabled"
                     title={tx('title_showImagePreviews')}
                     description={tx('title_showImagePreviewsDescription')} />
                 <PreferenceToggleItem
                     reverse
-                    property={'limitInlineImageSize'}
+                    property="limitInlineImageSize"
                     title={tx('title_showLargeImages', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })} />
                 {<Text style={text}>{tx('title_urlPreview')}</Text>}
                 <WarningItem
@@ -48,11 +48,11 @@ export default class Display extends SafeComponent {
                     link=""
                 />
                 <PreferenceToggleItem
-                    property={'externalContentEnabled'}
+                    property="externalContentEnabled"
                     title={tx('title_enableAllUrlPreview')} />
                 {preferenceStore.prefs.externalContentEnabled &&
                     <PreferenceToggleItem
-                        property={'externalContentJustForFavs'}
+                        property="externalContentJustForFavs"
                         title={tx('title_onlyFromFavourites')} />}
                 <View style={spacer} />
             </View>

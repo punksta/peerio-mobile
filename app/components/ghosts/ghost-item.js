@@ -57,7 +57,7 @@ export default class GhostItem extends SafeComponent {
     renderThrow() {
         const g = this.props.ghost;
         const text = g.expired ? (
-            <Text style={[lightText, { color: vars.txtAlert }]}>{'EXPIRED'}</Text>
+            <Text style={[lightText, { color: vars.txtAlert }]}>EXPIRED</Text>
         ) : (
             <Text style={lightText}>{moment(g.timestamp).format(`L`)}</Text>
         );

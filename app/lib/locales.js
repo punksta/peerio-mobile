@@ -11,7 +11,7 @@ const existsFile = (isIOS ? RNFS.exists : RNFS.existsAssets).bind(RNFS);
 
 module.exports = {
     loadLocaleFile(lc) {
-        const def = require('peerio-copy/icebear_en.json');
+        const def = require('./peerio-icebear/copy/en.json');
         const path = formatPath(`locales/${lc}.json`);
         return existsFile(path)
             .then(exists => (exists ? readFile(path).then(JSON.parse) : def))

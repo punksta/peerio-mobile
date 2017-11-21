@@ -22,7 +22,7 @@ export default class LoginStart extends LoginWizardPage {
     progress(current) {
         const count = 3;
         const circles = [];
-        const circleSize = vars.circleSize;
+        const { circleSize } = vars;
         const circle = {
             backgroundColor: vars.txtMedium,
             margin: circleSize,
@@ -50,7 +50,7 @@ export default class LoginStart extends LoginWizardPage {
     _scrollerWidth = Dimensions.get('window').width - padding * 2;
 
     handleScroll = event => {
-        const x = event.nativeEvent.contentOffset.x;
+        const { x } = event.nativeEvent.contentOffset;
         this._selected = Math.round(x / this._scrollerWidth);
     }
 

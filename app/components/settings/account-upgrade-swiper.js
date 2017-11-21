@@ -53,7 +53,7 @@ export default class AccountUpgradeSwiper extends Component {
     }
 
     handleScroll = event => {
-        const x = event.nativeEvent.contentOffset.x;
+        const { x } = event.nativeEvent.contentOffset;
         this.selected = Math.round(x / width);
     }
 

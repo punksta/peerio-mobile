@@ -14,12 +14,12 @@ export default class FileProgress extends SafeComponent {
     prevFile = null;
 
     get hidden() {
-        const file = this.props.file;
+        const { file } = this.props;
         return !file || (!file.downloading && !file.uploading);
     }
 
     get value() {
-        const file = this.props.file;
+        const { file } = this.props;
         if (!file) return 0;
         const max = file.progressMax || 1;
         // console.log(`file-progress.js: ${file.progress}, ${file.progressMax}`);

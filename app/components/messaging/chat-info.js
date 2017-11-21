@@ -53,7 +53,7 @@ export default class ChatInfo extends SafeComponent {
                 noBorderBottom
                 contact={contact}
                 key={username || i}
-                message={''}
+                message=""
                 hideOnline />
         );
     }

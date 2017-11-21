@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
+import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import contactState from '../contacts/contact-state';
@@ -54,6 +54,7 @@ export default class ChatItem extends SafeComponent {
                     timestampText={i.messageTimestampText}
                     message={text}
                     isChat
+                    fullnameIsBold
                     systemMessage={systemMessageText}
                     key={key}
                     error={error}
@@ -67,10 +68,12 @@ export default class ChatItem extends SafeComponent {
                     extraPaddingTop={8}
                     ref={this.setRef}
                 />
-                {shouldDisplayIdentityNotice &&
+                {
+                    shouldDisplayIdentityNotice &&
                     <View style={{ paddingVertical: vars.spacing.small.midi }}>
                         <IdentityVerificationNotice />
-                    </View>}
+                    </View>
+                }
             </View>
         );
     }
