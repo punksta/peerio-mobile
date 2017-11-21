@@ -17,11 +17,13 @@ export default class IdentityVerificationNotice extends Component {
     };
 
     securityIcon = {
+        flexShrink: 0,
         margin: vars.spacing.small.mini,
         marginRight: vars.spacing.small.midi
     };
 
     idVerificationText = {
+        flex: 1,
         color: vars.txtMedium,
         flexGrow: 1
     };
