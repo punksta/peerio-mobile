@@ -45,7 +45,7 @@ export default class MessagingPlaceholder extends SafeComponent {
         };
 
         const textParser = {
-            emphasis: () => <Bold>{'hi'}</Bold>,
+            emphasis: () => <Bold>hi</Bold>,
             plusIcon: () => (
                 <Icon name="add" />
             )

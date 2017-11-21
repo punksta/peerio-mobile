@@ -156,9 +156,9 @@ function popupInput(title, subTitle, value) {
     });
 }
 
-function popupInputCancelCheckbox(title, placeholder, checkBoxText, checked, cancelable) {
+function popupInputCancel(title, placeholder, cancelable) {
     return new Promise((resolve) => {
-        const o = observable({ value: '', checked });
+        const o = observable({ value: '' });
         const buttons = [];
         cancelable && buttons.push({
             id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
@@ -168,7 +168,6 @@ function popupInputCancelCheckbox(title, placeholder, checkBoxText, checked, can
         });
         const contents = (
             <View>
-                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; })}
                 {inputControl(o, placeholder)}
             </View>
         );
@@ -192,6 +191,39 @@ function popupTOS() {
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: resolve
             }]
+        });
+    });
+}
+
+function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
+    const helperTextStyle = {
+        color: vars.subtleText,
+        fontSize: vars.font.size.smaller,
+        fontWeight: vars.font.weight.regular,
+        paddingVertical: vars.spacing.small.midi
+    };
+    return new Promise((resolve) => {
+        const o = observable({ value: '', checked });
+        const buttons = [];
+        cancelable && buttons.push({
+            id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
+        });
+        buttons.push({
+            id: 'ok', text: tu('button_submit'), action: () => resolve(o), get disabled() { return !o.value; }
+        });
+        const contents = (
+            <View style={{ minHeight: vars.popupMinHeight }}>
+                {inputControl(o, placeholder)}
+                <Text style={helperTextStyle}>
+                    {tx('title_2FAHelperText')}
+                </Text>
+                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; })}
+            </View>
+        );
+        popupState.showPopup({
+            title,
+            contents,
+            buttons
         });
     });
 }
@@ -243,8 +275,9 @@ export {
     popupYesSkip,
     popupInput,
     popupTOS,
+    popup2FA,
     popupCopyCancel,
-    popupInputCancelCheckbox,
+    popupInputCancel,
     popupUpgrade,
     popupSystemWarning,
     popupDeleteAccount,

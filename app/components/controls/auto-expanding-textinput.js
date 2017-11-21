@@ -61,7 +61,7 @@ export default class AutoExpandingTextInput extends Component {
                 {...this.props}
                 ref={ti => { this.ti = ti; }}
                 placeholderTextColor={vars.txtMedium}
-                underlineColorAndroid={'transparent'}
+                underlineColorAndroid="transparent"
                 multiline
                 onChange={this._onChange}
                 style={[style, this.props.style, { height: tmpHeight }]}

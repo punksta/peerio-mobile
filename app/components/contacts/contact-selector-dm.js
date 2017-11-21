@@ -98,7 +98,7 @@ export default class ContactSelectorDM extends SafeComponent {
             <View style={container}>
                 <Text style={label}>{tx('title_to')}</Text>
                 <TextInput
-                    underlineColorAndroid={'transparent'}
+                    underlineColorAndroid="transparent"
                     value={this.findUserText}
                     returnKeyType="done"
                     blurOnSubmit

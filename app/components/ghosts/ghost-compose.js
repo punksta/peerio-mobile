@@ -228,7 +228,7 @@ export default class ComposeMessage extends SafeComponent {
                         <View style={[recipient, { flexGrow: 1 }]}>
                             <TextInput
                                 keyboardType="email-address"
-                                underlineColorAndroid={'transparent'}
+                                underlineColorAndroid="transparent"
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 autoComplete={false}
@@ -248,7 +248,7 @@ export default class ComposeMessage extends SafeComponent {
             <View style={row}>
                 {this.textWithColon(tx('title_subject'))}
                 <TextInput
-                    underlineColorAndroid={'transparent'}
+                    underlineColorAndroid="transparent"
                     autoCapitalize="none"
                     autoCorrect={false}
                     autoComplete={false}
@@ -296,7 +296,7 @@ export default class ComposeMessage extends SafeComponent {
                     {this.attachments()}
                 </View>
                 <TextInput
-                    underlineColorAndroid={'transparent'}
+                    underlineColorAndroid="transparent"
                     multiline
                     value={this.value}
                     onChangeText={text => { this.value = text; }}

@@ -10,7 +10,7 @@ import fileState from './file-state';
 import FileSignatureError from './file-signature-error';
 import FileTypeIcon from './file-type-icon';
 
-const width = Dimensions.get('window').width;
+const { width } = Dimensions.get('window');
 const height = 64;
 const checkBoxWidth = height;
 const itemContainerStyle = {
@@ -39,7 +39,7 @@ const fileInfoContainerStyle = {
 @observer
 export default class FileInnerItem extends SafeComponent {
     onPress() {
-        const file = this.props.file;
+        const { file } = this.props;
         this.props.onPress ? this.props.onPress(this.props.file)
             : (file.selected = !file.selected);
     }
@@ -67,7 +67,7 @@ export default class FileInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const file = this.props.file;
+        const { file } = this.props;
         if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
         const action = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
@@ -105,10 +105,10 @@ export default class FileInnerItem extends SafeComponent {
                         <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]}>
                             <View style={[loadingStyle, { flex: 0 }]}>
                                 {icon ||
-                                <FileTypeIcon
-                                    size="small"
-                                    type={file.iconType}
-                                />}
+                                    <FileTypeIcon
+                                        size="small"
+                                        type={file.iconType}
+                                    />}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
                                 <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>

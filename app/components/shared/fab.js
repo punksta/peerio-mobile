@@ -6,7 +6,7 @@ import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
 import routerMain from '../routes/router-main';
 
-const fabSize = vars.fabSize;
+const { fabSize } = vars;
 
 const fabContainer = {
     alignItems: 'flex-end',

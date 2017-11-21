@@ -37,7 +37,7 @@ export default class HeaderMain extends SafeComponent {
             paddingTop: vars.statusBarHeight,
             minHeight: vars.headerHeight
         };
-        const titleAction = routerMain.titleAction;
+        const { titleAction } = routerMain;
         const iconPlaceHolderWidth = (32 + vars.iconSize);
         const paddingRight = !rightIcon && leftIcon ? iconPlaceHolderWidth : 0;
         const paddingLeft = rightIcon && !leftIcon ? iconPlaceHolderWidth : 0;

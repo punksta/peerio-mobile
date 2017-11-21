@@ -14,12 +14,12 @@ export default class TextInputStateful extends SafeComponent {
                 <TextInput
                     testID={this.props.name}
                     style={{ height: vars.inputHeight, paddingLeft: vars.iconPadding }}
-                    underlineColorAndroid={'transparent'}
+                    underlineColorAndroid="transparent"
                     value={s.value}
                     selectTextOnFocus
                     onChangeText={text => { s.value = text; }}
                     placeholder={this.props.placeholder}
-                    autoCapitalize={'none'}
+                    autoCapitalize="none"
                     autoCorrect={false}
                     autoComplete={false}
                 />
