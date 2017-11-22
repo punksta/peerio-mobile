@@ -8,6 +8,7 @@ import routerApp from '../routes/router-app';
 import { socket } from '../../lib/icebear';
 import { promiseWhen } from '../helpers/sugar';
 import routerMain from '../routes/router-main';
+import { tx } from '../utils/translator';
 
 const connectingInProgress = require('../../assets/loading_screens/connecting-inProgress.png');
 const connectingDone = require('../../assets/loading_screens/connecting-done.png');
@@ -33,6 +34,7 @@ export default class LoadingScreen extends Component {
     growValue;
     smallIcon;
     bigIcon;
+    randomMessage;
 
     constructor(props) {
         super(props);
@@ -51,6 +53,7 @@ export default class LoadingScreen extends Component {
             transform: [{ scale: this.growValue }],
             opacity: this.fadeValue
         };
+        this.randomMessage = tx(this.randomMessages[Math.floor(Math.random() * this.randomMessages.length)]);
     }
 
     async componentDidMount() {
@@ -142,17 +145,17 @@ export default class LoadingScreen extends Component {
     getStatusText() {
         switch (this.loadingStep) {
             case (0):
-                return 'Connecting...';
+                return tx('title_connecting');
             case (1):
-                return 'Authenticating...';
+                return tx('title_authenticating');
             case (2):
-                return 'Decrypting...';
+                return tx('title_decrypting');
             case (3):
-                return 'Confirming data...';
+                return tx('title_confirming');
             case (4):
-                return 'Done!';
+                return tx('title_done');
             default:
-                return 'Connecting...';
+                return tx('title_connecting');
         }
     }
 
@@ -199,7 +202,7 @@ export default class LoadingScreen extends Component {
         return (
             <View style={container}>
                 <Text style={flavorTextStyle}>
-                    Lorem Ipsum dolores sit resgtihm. orleoro colares ip
+                    {this.randomMessage}
                 </Text>
                 <View style={loadingProgressContainer}>
                     <View style={iconContainer}>
@@ -256,6 +259,13 @@ export default class LoadingScreen extends Component {
             </View>
         );
     }
+
+    randomMessages = [
+        'title_randomMessage1',
+        'title_randomMessage2',
+        'title_randomMessage3',
+        'title_randomMessage4'
+    ];
 
     // Maps each Loading Step to the assets that each image should use
     images = {
