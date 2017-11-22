@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.215.0"></a>
+# [3.215.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.213.0...v3.215.0) (2017-11-22)
+
+
+### Bug Fixes
+
+* android spacing ([773c9a6](https://github.com/PeerioTechnologies/peerio-mobile/commit/773c9a6))
+* make link work and simplify it ([3c7b9fe](https://github.com/PeerioTechnologies/peerio-mobile/commit/3c7b9fe))
+* remove extra ([e086de6](https://github.com/PeerioTechnologies/peerio-mobile/commit/e086de6))
+* translation and url map + verification to display ([4412172](https://github.com/PeerioTechnologies/peerio-mobile/commit/4412172))
+
+
+
+<a name="3.214.0"></a>
+# [3.214.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.213.0...v3.214.0) (2017-11-22)
+
+
+
 <a name="3.213.0"></a>
 # [3.213.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.212.0...v3.213.0) (2017-11-20)
 
