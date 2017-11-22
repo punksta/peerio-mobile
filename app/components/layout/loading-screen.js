@@ -59,6 +59,7 @@ export default class LoadingScreen extends Component {
     async componentDidMount() {
         try {
             await loginState.load();
+            this.goToNextStep();
             await promiseWhen(() => socket.authenticated);
             this.goToNextStep();
             await promiseWhen(() => routerMain.chatStateLoaded);
@@ -66,7 +67,6 @@ export default class LoadingScreen extends Component {
             await promiseWhen(() => routerMain.fileStateLoaded);
             this.goToNextStep();
             await promiseWhen(() => routerMain.contactStateLoaded);
-            this.goToNextStep();
             if (!loginState.loaded) routerApp.routes.loginStart.transition();
         } catch (e) {
             console.log('loading-screen.js: loading screen error');
