@@ -103,7 +103,7 @@
     "commitizen": "2.9.6",
     "cz-conventional-changelog": "2.1.0",
     "detect-indent-cli": "1.0.1",
-    "eslint-config-peerio": "1.21.6",
+    "eslint-config-peerio": "1.21.7",
     "glob": "7.1.1",
     "husky": "0.14.3",
     "madge": "1.6.0",
