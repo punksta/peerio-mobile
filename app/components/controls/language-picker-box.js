@@ -22,7 +22,7 @@ export default class LanguagePickerBox extends SafeComponent {
                 style={pickerBox}
                 value={uiState.languageSelected}
                 hint=""
-                />
+            />
         );
     }
 }

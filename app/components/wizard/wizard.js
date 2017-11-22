@@ -16,7 +16,7 @@ export default class Wizard extends SafeComponent {
 
     constructor(props) {
         super(props);
-        reaction(() => this.index, i => {
+        reaction(() => this.index, () => {
             LayoutAnimation.easeInEaseOut();
         });
     }

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
@@ -53,7 +53,7 @@ export default class ChatInfo extends SafeComponent {
                 noBorderBottom
                 contact={contact}
                 key={username || i}
-                message={''}
+                message=""
                 hideOnline />
         );
     }
@@ -64,7 +64,7 @@ export default class ChatInfo extends SafeComponent {
             <View>
                 {this.lineBlock(this.action(tx('button_hideChat'), 'remove-circle-outline', this.hideChat))}
                 {chat.participants && this.lineBlock(
-                    <View style={{ paddingVertical: 8 }}>
+                    <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
                         {chat.participants.map(this.participant)}
                     </View>
                 )}

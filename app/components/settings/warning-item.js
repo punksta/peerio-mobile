@@ -5,13 +5,12 @@ import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import Link from '../controls/link';
 
 const container = {
-    marginHorizontal: 20,
+    marginHorizontal: vars.spacing.medium.midi2x,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 12
+    marginBottom: vars.spacing.small.maxi2x
 };
 
 const textStyle = {
@@ -24,18 +23,16 @@ export default class WarningItem extends SafeComponent {
         return (
             <View style={container}>
                 <Icon
-                    style={{ paddingHorizontal: 16 }}
+                    style={{ paddingHorizontal: vars.spacing.medium.mini2x }}
                     name="warning"
                     size={vars.iconSize}
                     color="gray"
-                    />
+                />
                 <View style={textStyle}>
                     <Text>
                         {this.props.content}
                     </Text>
-                    <Link>
-                        {this.props.linkContent}
-                    </Link>
+                    {this.props.linkContent}
                 </View>
             </View>
         );
@@ -48,4 +45,3 @@ WarningItem.propTypes = {
     linkContent: PropTypes.any,
     link: PropTypes.any
 };
-

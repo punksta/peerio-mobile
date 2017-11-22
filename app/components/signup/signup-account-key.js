@@ -10,33 +10,32 @@ import signupState from './signup-state';
 import { t, tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import LoginWizardPage, {
-    header, innerSmall, circleTopSmall, title2, row, container
+    header2, innerSmall, circleTopSmall, title2, buttonRowStyle, container
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 import snackbarState from '../snackbars/snackbar-state';
-import icons from '../helpers/icons';
 
 const formStyle = {
-    padding: 20,
+    padding: vars.spacing.medium.midi2x,
     justifyContent: 'space-between'
 };
 
 const addPhotoText = {
-    fontSize: 14,
+    fontSize: vars.font.size.normal,
     color: vars.txtMedium,
     textAlign: 'center'
 };
 
 const addPhotoPlus = [addPhotoText, {
-    fontSize: 30,
+    fontSize: vars.signupFontSize,
     fontWeight: 'bold',
     color: vars.white
 }];
 
 const textNormal = {
     color: vars.txtDark,
-    fontSize: 16,
+    fontSize: vars.font.size.bigger,
     lineHeight: 24
 };
 
@@ -44,8 +43,8 @@ const accountKeyText = {
     color: vars.txtDark,
     fontFamily: 'Verdana',
     fontWeight: 'bold',
-    fontSize: 18,
-    width: 240
+    fontSize: vars.font.size.big,
+    width: 224
 };
 
 const accountKeyRow = {
@@ -54,13 +53,13 @@ const accountKeyRow = {
 };
 
 const smallText = {
-    fontSize: 12,
-    marginVertical: 8,
+    fontSize: vars.font.size.smaller,
+    marginVertical: vars.spacing.small.midi2x,
     color: vars.txtDark
 };
 
 const accountKeyView = {
-    marginVertical: 10
+    marginVertical: vars.spacing.small.maxi
 };
 
 @observer
@@ -106,8 +105,8 @@ export default class SignupStep1 extends LoginWizardPage {
     }
 
     get body() {
-        const { keySaved, savingScreenshot } = this;
-        const saveTitle = keySaved ? tx('title_savedToCameraRoll') : tx('button_saveAccountKey');
+        const { /* keySaved, */ savingScreenshot } = this;
+        // const saveTitle = keySaved ? tx('title_savedToCameraRoll') : tx('button_saveAccountKey');
         return (
             <View>
                 <Text style={textNormal}>{t('title_helloName', { name: (signupState.firstName || signupState.username) })}</Text>
@@ -122,7 +121,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     </View>
                 </View>
                 <Text style={textNormal}>{tx('title_accountKey2')}</Text>
-                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: 24 }}>
+                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: vars.spacing.large.midi2x }}>
                     {/* buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
                     {/* signupState.keyBackedUp && icons.plaindark('check-circle') */}
                 </View>
@@ -134,7 +133,7 @@ export default class SignupStep1 extends LoginWizardPage {
         return (
             <View style={container} onLayout={this._layout}>
                 <ViewShot ref={ref => { this._viewShot = ref; }}>
-                    <View style={header}>
+                    <View style={header2}>
                         <Text style={title2}>{tx('title_AccountKey')}</Text>
                     </View>
                     <View>
@@ -151,7 +150,7 @@ export default class SignupStep1 extends LoginWizardPage {
                         </TouchableOpacity>
                     </View>
                 </ViewShot>
-                <View style={[row, { justifyContent: 'space-between' }]}>
+                <View style={buttonRowStyle}>
                     {this.button('button_back', () => signupState.prev())}
                     {this.button(signupState.keyBackedUp ? 'button_finish' : 'button_next', () => signupState.next(), false, !signupState.nextAvailable)}
                 </View>

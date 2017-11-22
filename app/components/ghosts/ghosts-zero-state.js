@@ -2,6 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Text, Dimensions, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
+import { vars } from '../../styles/styles';
 
 const ghostZeroState = require('../../assets/ghost-zero-state.png');
 const arrowDownZeroState = require('../../assets/arrow-down-zero-state.png');
@@ -17,11 +18,11 @@ export default class GhostsZeroState extends SafeComponent {
     messaging() {
         const headerStyle = {
             textAlign: 'center',
-            fontSize: 20
+            fontSize: vars.font.size.huge
         };
         const infoStyle = {
             textAlign: 'center',
-            fontSize: 16
+            fontSize: vars.font.size.bigger
         };
         const outerContainerStyle = {
             flex: 1,
@@ -40,25 +41,26 @@ export default class GhostsZeroState extends SafeComponent {
             alignItems: 'flex-end',
             borderWidth: 0,
             borderColor: 'yellow',
-            paddingRight: 25,
-            paddingBottom: 75
-
+            paddingRight: vars.spacing.large.mini,
+            paddingBottom: vars.spacing.huge.maxi2x
         };
         return (
             <View style={outerContainerStyle}>
-                <View style={{ flex: 1,
+                <View style={{
+                    flex: 1,
                     width: this.width,
-                    justifyContent: 'center' }}>
-                    <View style={{ flex: 0, alignItems: 'center', marginTop: 40 }}>
+                    justifyContent: 'center'
+                }}>
+                    <View style={{ flex: 0, alignItems: 'center', marginTop: vars.spacing.large.maxi }}>
                         <Text style={infoStyle}>
                             Encrypted, self destructing messages and
                             file sharing for your non-Peerio contacts
                         </Text>
                     </View>
-                    <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: 60, paddingRight: 60 }}>
+                    <View style={{ borderColor: 'red', borderWidth: 0, flex: 1, paddingLeft: vars.spacing.huge.midi, paddingRight: vars.spacing.huge.midi }}>
                         <Image source={ghostZeroState}
-                               resizeMode="contain"
-                               style={{ flex: 1, width: null, height: null }} />
+                            resizeMode="contain"
+                            style={{ flex: 1, width: null, height: null }} />
                     </View>
                     <View style={{ flex: 0.5 }}>
                         <Text style={headerStyle}>Send something.</Text>
@@ -66,8 +68,8 @@ export default class GhostsZeroState extends SafeComponent {
                             <View style={{ flex: 1, flexGrow: 0.5, borderWidth: 0, borderColor: 'red' }} />
                             <View style={{ flex: 1, borderWidth: 0, borderColor: 'green', justifyContent: 'flex-end' }}>
                                 <Image source={arrowDownZeroState}
-                                       resizeMode="contain"
-                                       style={imageStyle} />
+                                    resizeMode="contain"
+                                    style={imageStyle} />
                             </View>
                         </View>
                     </View>

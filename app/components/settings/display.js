@@ -7,6 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import WarningItem from './warning-item';
 import PreferenceToggleItem from './preference-toggle-item';
 import preferenceStore from './preference-store';
+import { config, util } from '../../lib/icebear';
 
 const bgStyle = {
     flexGrow: 1,
@@ -22,8 +23,8 @@ const spacer = {
 
 const text = {
     color: vars.txtMedium,
-    marginBottom: 8,
-    marginLeft: 8
+    marginBottom: vars.spacing.small.midi2x,
+    marginLeft: vars.spacing.small.midi2x
 };
 
 @observer
@@ -33,24 +34,25 @@ export default class Display extends SafeComponent {
             <View style={bgStyle}>
                 <Text style={text}>{tx('title_imagePreview')}</Text>
                 <PreferenceToggleItem
-                    property={'peerioContentEnabled'}
+                    property="peerioContentEnabled"
                     title={tx('title_showImagePreviews')}
                     description={tx('title_showImagePreviewsDescription')} />
                 <PreferenceToggleItem
-                    property={'limitInlineImageSize'}
-                    title={tx('title_showLargeImages')} />
+                    reverse
+                    property="limitInlineImageSize"
+                    title={tx('title_showLargeImages', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })} />
                 {<Text style={text}>{tx('title_urlPreview')}</Text>}
                 <WarningItem
                     content={tx('title_EnableUrlPreviewWarning')}
                     linkContent={tx('title_learnMore')}
                     link=""
-                    />
+                />
                 <PreferenceToggleItem
-                    property={'externalContentEnabled'}
+                    property="externalContentEnabled"
                     title={tx('title_enableAllUrlPreview')} />
                 {preferenceStore.prefs.externalContentEnabled &&
                     <PreferenceToggleItem
-                        property={'externalContentJustForFavs'}
+                        property="externalContentJustForFavs"
                         title={tx('title_onlyFromFavourites')} />}
                 <View style={spacer} />
             </View>

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, Text, Image, ScrollView, LayoutAnimation, Dimensions } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { t, tx } from '../utils/translator';
 import loginState from './login-state';
 import LoginWizardPage, {
-    header, inner, padding, title1, title1Black, title2, title2Black, row, circleTop, container, embeddedImageCircleSize
+    headerWelcome, inner, padding, title1, title1Black, title2, title2Black, row, circleTop, container, embeddedImageCircleSize
 } from './login-wizard-page';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
@@ -22,7 +22,7 @@ export default class LoginStart extends LoginWizardPage {
     progress(current) {
         const count = 3;
         const circles = [];
-        const circleSize = 4;
+        const { circleSize } = vars;
         const circle = {
             backgroundColor: vars.txtMedium,
             margin: circleSize,
@@ -50,7 +50,7 @@ export default class LoginStart extends LoginWizardPage {
     _scrollerWidth = Dimensions.get('window').width - padding * 2;
 
     handleScroll = event => {
-        const x = event.nativeEvent.contentOffset.x;
+        const { x } = event.nativeEvent.contentOffset;
         this._selected = Math.round(x / this._scrollerWidth);
     }
 
@@ -69,7 +69,7 @@ export default class LoginStart extends LoginWizardPage {
         return (
             <View style={container}>
                 <DebugMenuTrigger>
-                    <View style={header}>
+                    <View style={headerWelcome}>
                         <Text style={title1}>{t('title_welcome')}</Text>
                         <Text style={title2}>{t('title_welcomeSubHeading')}</Text>
                     </View>
@@ -87,7 +87,7 @@ export default class LoginStart extends LoginWizardPage {
                                     <Text style={title1Black}>{title}</Text>
                                     <Text style={title2Black}>{subtitle}</Text>
                                 </View>
-                                <View style={{ flex: 1, paddingBottom: 20, justifyContent: 'flex-end' }}>
+                                <View style={{ flex: 1, paddingBottom: vars.spacing.medium.midi2x, justifyContent: 'flex-end' }}>
                                     {this.progress(i)}
                                 </View>
                             </View>

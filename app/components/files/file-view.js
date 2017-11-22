@@ -9,17 +9,18 @@ import FileProgress from './file-progress';
 import FileActions from './file-actions';
 import { fileState } from '../states';
 import { tx } from '../utils/translator';
+import FileTypeIcon from './file-type-icon';
 
 const firstRowStyle = {
     flex: 0,
     flexDirection: 'row',
-    marginTop: 12,
-    paddingRight: 16
+    marginTop: vars.spacing.small.maxi2x,
+    paddingRight: vars.spacing.medium.mini2x
 };
 
 const secondRowStyle = {
     flexDirection: 'row',
-    marginTop: 16,
+    marginTop: vars.spacing.medium.mini2x,
     flex: 0
 };
 
@@ -45,10 +46,10 @@ export default class FileView extends SafeComponent {
 
     renderThrow() {
         const { file } = this;
-        let icon = 'image';
+        let icon = null;
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
-        icon = icons.plaindark(icon, vars.iconFileViewSize);
+        if (icon) icon = icons.plaindark(icon, vars.iconFileViewSize);
         return (
             <View
                 style={{
@@ -58,10 +59,14 @@ export default class FileView extends SafeComponent {
                 <View>
                     <View style={firstRowStyle}>
                         <View style={{
-                            marginLeft: 4,
-                            marginRight: 12
+                            marginLeft: vars.spacing.small.mini2x,
+                            marginRight: vars.spacing.small.maxi2x
                         }}>
-                            {icon}
+                            {icon ||
+                                <FileTypeIcon
+                                    size="large"
+                                    type={file.iconType}
+                                />}
                         </View>
                         <View style={firstColumnStyle}>
                             <View style={{ flexGrow: 1, flexShrink: 1 }}>

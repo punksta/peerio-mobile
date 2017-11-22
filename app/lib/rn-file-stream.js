@@ -9,9 +9,12 @@ const { bytesToB64, b64ToBytes } = icebear.crypto.cryptoUtil;
 
 const ROOT = Platform.OS === 'ios' ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
 
+function getTemporaryDirectory() {
+    return pathUtils.join(ROOT, 'cache');
+}
+
 export default (fileStream) => {
     class RNFileStream extends fileStream {
-
         open() {
             if (this.mode === 'read') {
                 this.fileDescriptor = this.filePath; // read stream doesn't really have descriptor
@@ -39,7 +42,7 @@ export default (fileStream) => {
          */
         readInternal(size) {
             return RNFS.readFileChunk(this.filePath, this.pos, size)
-                        .then(contents => b64ToBytes(contents));
+                .then(contents => b64ToBytes(contents));
         }
 
         /**
@@ -98,6 +101,9 @@ export default (fileStream) => {
             return RNFS.unlink(path);
         }
 
+        static getTempCachePath(name) {
+            return pathUtils.join(getTemporaryDirectory(), name);
+        }
     }
 
     return RNFileStream;

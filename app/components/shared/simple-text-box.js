@@ -33,7 +33,7 @@ export default class SimpleTextBox extends SafeComponent {
         return (
             <TextInput
                 {...this.props}
-                underlineColorAndroid={'transparent'}
+                underlineColorAndroid="transparent"
                 onBlur={this.onBlur}
                 onFocus={this.onFocus}
                 onLayout={this.onLayout}

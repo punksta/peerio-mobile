@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
 import { observable, when, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -14,8 +14,16 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
+import IdentityVerificationNotice from './identity-verification-notice';
 
 const { width } = Dimensions.get('window');
+
+function getOrMake(id, map, make) {
+    if (!map[id]) {
+        map[id] = make();
+    }
+    return map[id];
+}
 
 @observer
 export default class Chat extends SafeComponent {
@@ -24,6 +32,7 @@ export default class Chat extends SafeComponent {
     @observable refreshing = false;
     @observable waitForScrollToEnd = true;
     @observable scrollEnabled = false;
+    @observable limboMessages = null;
     indicatorHeight = 16;
 
     componentDidMount() {
@@ -52,18 +61,23 @@ export default class Chat extends SafeComponent {
         return !!chatState.currentChat && !chatState.loading;
     }
 
-    _refs = { };
+    _refs = {};
+    _itemActionMap = {};
 
     item = (item, index) => {
         const key = item.id || index;
+        const actions = getOrMake(
+            key, this._itemActionMap, () => ({
+                ref: ref => { this._refs[key] = ref; },
+                onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
+                onRetryCancel: () => this._actionSheet.show(item, this.chat)
+            }));
         return (
             <ChatItem
                 key={key}
-                ref={ref => { this._refs[key] = ref; }}
                 message={item}
-                onInlineImageAction={image => this._inlineImageActionSheet.show(image, item, this.chat)}
-                onRetryCancel={() => this._actionSheet.show(item, this.chat)}
-                />
+                {...actions}
+            />
         );
     }
 
@@ -73,14 +87,17 @@ export default class Chat extends SafeComponent {
     }
 
     contentSizeChanged = async (contentWidth, contentHeight) => {
-        console.log(`chat.js: content size changed ${contentWidth}, ${contentHeight}`);
+        // console.log(`chat.js: content size changed ${contentWidth}, ${contentHeight}`);
         if (!this.scrollView || !this.chat) return;
 
         // set current content heigth
         if (contentHeight) this.contentHeight = contentHeight;
 
         // waiting for page loads or other updates
-        if (this.refreshing || this.disableNextScroll) { return; }
+        if (this.refreshing || this.disableNextScroll) {
+            console.debug(`refreshing: ${this.refreshing}, disableNextScroll: ${this.disableNextScroll}`);
+            return;
+        }
 
         // throttle calls
         if (this._contentSizeChanged) clearTimeout(this._contentSizeChanged);
@@ -91,7 +108,7 @@ export default class Chat extends SafeComponent {
                 if (this.chat.canGoDown) indicatorSpacing += this.indicatorHeight;
                 const y = this.contentHeight - this.scrollViewHeight;
                 this.scrollEnabled = y - indicatorSpacing > 0;
-                // console.log('chat.js: auto scroll');
+                console.debug(`in timeout refreshing: ${this.refreshing}, disableNextScroll: ${this.disableNextScroll}`);
                 if (!this.refreshing && !this.disableNextScroll) {
                     console.log('chat.js: auto scrolling');
                     this.scrollView.scrollTo({ y, animated: !this.waitForScrollToEnd });
@@ -104,7 +121,7 @@ export default class Chat extends SafeComponent {
             } else {
                 setTimeout(() => this.contentSizeChanged(), 1000);
             }
-        }, 100);
+        }, 300);
     }
 
     async measureItemById(id) {
@@ -141,9 +158,9 @@ export default class Chat extends SafeComponent {
             y = newMeasures.pageY - oldMeasures.pageY;
             if (bottom) {
                 console.log(newMeasures);
-                y = newMeasures.frameY + newMeasures.pageY; // + this.scrollViewHeight / 2;
+                y = newMeasures.frameY - this.indicatorHeight; // + this.scrollViewHeight / 2;
                 const maxScroll = this.contentHeight - this.scrollViewHeight;
-                if (y > maxScroll) {
+                if (y > maxScroll || Platform.OS === 'android') {
                     y = maxScroll;
                 }
             }
@@ -179,7 +196,7 @@ export default class Chat extends SafeComponent {
         const updater = () => {
             const { contentHeight, scrollViewHeight, chat } = this;
             if (!contentHeight || !scrollViewHeight || !chat) return;
-            const y = nativeEvent.contentOffset.y;
+            const { y } = nativeEvent.contentOffset;
             const h = this.contentHeight - this.scrollViewHeight;
             // trigger previous page if we are at the top
             if (y < this.indicatorHeight / 2) this._onGoUp();
@@ -194,11 +211,11 @@ export default class Chat extends SafeComponent {
     listView() {
         if (chatState.loading) return null;
         const refreshControlTop = this.chat.canGoUp ? (
-            <ActivityIndicator size="large" style={{ padding: 10 }}
+            <ActivityIndicator size="large" style={{ padding: vars.spacing.small.maxi }}
                 onLayout={e => { this.indicatorHeight = e.nativeEvent.layout.height; }} />
         ) : null;
         const refreshControlBottom = this.chat.canGoDown ? (
-            <ActivityIndicator size="large" style={{ padding: 10 }} />
+            <ActivityIndicator size="large" style={{ padding: vars.spacing.small.maxi }} />
         ) : null;
         return (
             <ScrollView
@@ -214,7 +231,8 @@ export default class Chat extends SafeComponent {
                 ref={sv => { this.scrollView = sv; }}>
                 {this.chat.canGoUp ? refreshControlTop : this.zeroStateItem()}
                 {this.data.map(this.item)}
-                {this.chat.limboMessages && this.chat.limboMessages.map(this.item)}
+                {this.chat.limboMessages &&
+                    this.chat.limboMessages.filter(m => !(m.files && !m.files.length)).map(this.item)}
                 {refreshControlBottom}
             </ScrollView>
         );
@@ -224,7 +242,7 @@ export default class Chat extends SafeComponent {
         // TODO: archive notice
         /* eslint-disable */
         return true || this.props.archiveNotice ? (
-            <Text style={{ textAlign: 'left', margin: 12, marginTop: 0, marginBottom: 16, color: vars.txtMedium }}>
+            <Text style={{ textAlign: 'left', margin: vars.spacing.small.maxi2x, marginTop: 0, marginBottom: vars.spacing.medium.mini2x, color: vars.txtMedium }}>
                 {tx('title_chatArchive')}
             </Text>
         ) : null;
@@ -234,7 +252,7 @@ export default class Chat extends SafeComponent {
         const zsContainer = {
             borderBottomWidth: 0,
             borderBottomColor: '#CFCFCF',
-            marginBottom: 8
+            marginBottom: vars.spacing.small.midi2x
         };
         const { chat } = this;
         const participants = chat.participants || [];
@@ -256,11 +274,12 @@ export default class Chat extends SafeComponent {
         ));
         return (
             <View style={zsContainer}>
-                <View style={{ flexDirection: 'row', marginRight: 48, paddingLeft: -marginLeft }}>{avatars}</View>
-                <Text style={{ textAlign: 'left', margin: 12, color: vars.txtDark }}>
+                <View style={{ flexDirection: 'row', marginRight: vars.spacing.large.maxi2x, paddingLeft: -marginLeft }}>{avatars}</View>
+                <Text style={{ textAlign: 'left', margin: vars.spacing.small.maxi2x, color: vars.txtDark }}>
                     {tx('title_chatBeginning', { chatName: chat.name })}
                 </Text>
                 {this.archiveNotice}
+                <IdentityVerificationNotice />
             </View>
         );
     }
@@ -268,7 +287,7 @@ export default class Chat extends SafeComponent {
     renderThrow() {
         return (
             <View
-                style={{ flexGrow: 1, paddingBottom: 4 }}>
+                style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
                 {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
                 <View style={{ flex: 1, flexGrow: 1 }}>
                     {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
@@ -285,4 +304,3 @@ Chat.propTypes = {
     hideInput: PropTypes.bool,
     archiveNotice: PropTypes.bool
 };
-

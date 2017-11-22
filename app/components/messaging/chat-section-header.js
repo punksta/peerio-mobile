@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -12,8 +12,8 @@ export default class ChatSectionHeader extends SafeComponent {
     renderThrow() {
         const { title, collapsible } = this.props;
         const style = {
-            paddingLeft: 18,
-            paddingRight: 16,
+            paddingLeft: vars.spacing.medium.midi,
+            paddingRight: vars.spacing.medium.mini2x,
             height: 48,
             justifyContent: 'space-between',
             backgroundColor: vars.lightGrayBg,

@@ -56,7 +56,7 @@ class InlineImageCacheStore {
     }
 
     async getSizeByFilename(path) {
-        return await ImagePicker.getImageDimensions(path);
+        return ImagePicker.getImageDimensions(path);
     }
 }
 

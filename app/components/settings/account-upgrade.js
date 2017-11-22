@@ -9,31 +9,31 @@ import ChoiceItem from './choice-item';
 import { User } from '../../lib/icebear';
 import plans from '../payments/payments-config';
 
-const margin = 18;
+const margin = vars.spacing.medium.midi;
 const marginLeft = margin;
-const marginBottom = 12;
+const marginBottom = vars.spacing.small.maxi2x;
 const paddingWhite = 10;
 const marginWhite = margin - paddingWhite;
 
 const smallLabel = {
     color: vars.txtDate,
-    fontSize: 10
+    fontSize: vars.font.size.small
 };
 
 const boldLabel = {
     color: vars.txtDark,
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: vars.font.size.bigger
 };
 
 const mediumLabel = {
     color: vars.txtDate,
-    fontSize: 14
+    fontSize: vars.font.size.normal
 };
 
 const descLabel = {
     color: vars.txtDark,
-    fontSize: 12
+    fontSize: vars.font.size.smaller
 };
 
 const descIncludesLabel = [descLabel, {
@@ -48,7 +48,7 @@ export default class AccountUpgrade extends SafeComponent {
             <View style={{ margin, marginBottom, flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text>
                     <Text style={boldLabel}>{boldText}</Text>
-                    <Text>{' - '}</Text>
+                    <Text> - </Text>
                     <Text style={mediumLabel}>{normalText}</Text>
                 </Text>
                 {rightBlock}
@@ -65,7 +65,7 @@ export default class AccountUpgrade extends SafeComponent {
             <TouchableOpacity
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={{ paddingTop: 2 }}>
+                style={{ paddingTop: vars.spacing.small.mini }}>
                 <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
                     {tu(text)}
                 </Text>
@@ -81,12 +81,12 @@ export default class AccountUpgrade extends SafeComponent {
     renderPlan = (plan) => {
         let actionButton = null;
         if (plan.isCurrent) actionButton = <Text style={smallLabel}>(current)</Text>;
-        let price = plan.price;
+        let { price } = plan;
         let choiceItem = null;
         if (plan.priceOptions && plan.priceOptions.length) {
             const priceOptions = plan.priceOptions.filter(p => p.id === plan.selected)[0];
             if (!priceOptions) return null;
-            price = priceOptions.price;
+            ({ price } = priceOptions);
 
             if (!plan.isCurrent && plan.canUpgradeTo) {
                 actionButton = this.renderButton1(

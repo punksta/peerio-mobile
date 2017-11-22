@@ -17,7 +17,7 @@ export default class ContactSectionHeader extends SafeComponent {
         };
 
         const textStyle = {
-            marginLeft: 25,
+            marginLeft: vars.spacing.large.mini,
             fontWeight: 'bold',
             color: vars.txtMedium
         };

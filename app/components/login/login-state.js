@@ -153,7 +153,7 @@ class LoginState extends RoutedState {
             return;
         }
         await User.removeLastAuthenticated();
-        const username = User.current.username;
+        const { username } = User.current;
         await TinyDb.system.removeValue(`${username}::${loginConfiguredKey}`);
         await TinyDb.system.removeValue(`user::${username}::touchid`);
         await TinyDb.system.removeValue(`user::${username}::keychain`);
@@ -199,7 +199,7 @@ class LoginState extends RoutedState {
         let data = await keychain.get(await mainState.getKeychainKey(this.username));
         if (!data) {
             return await popupYesCancel(null, tx('error_keychainRead'))
-                && await this.loadFromKeychain();
+                && this.loadFromKeychain();
         }
         try {
             const touchIdKey = `user::${this.username}::touchid`;

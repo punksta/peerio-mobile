@@ -7,32 +7,36 @@ import Button from '../controls/button';
 import { vars, wizard, helpers } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 
-const padding = 20;
+const padding = vars.spacing.medium.midi2x;
 
 const container = {
-    justifyContent: 'space-between',
     flex: 1,
     flexGrow: 1,
     padding,
-    paddingTop: padding + vars.statusBarHeight
+    paddingTop: vars.spacing.huge.minixx + vars.statusBarHeight
 };
 
-const header = {
+const headerWelcome = {
     justifyContent: 'center',
-    marginBottom: 12
+    marginBottom: vars.spacing.large.maxi
 };
 
-const topCircleSize = 76;
+const header2 = {
+    justifyContent: 'center',
+    marginBottom: vars.spacing.small.midi2x
+};
 
-const embeddedImageCircleSize = topCircleSize * 2 - 20;
+const topCircleSize = 68;
 
-const topCircleSizeSmall = 60;
+const embeddedImageCircleSize = topCircleSize * 2;
+
+const topCircleSizeSmall = 52;
 
 const inner = {
     flex: 1,
     borderRadius: 4,
     marginTop: topCircleSize,
-    paddingTop: topCircleSize + 12,
+    paddingTop: topCircleSize + vars.spacing.small.maxi2x,
     backgroundColor: vars.lightGrayBg
 };
 
@@ -59,28 +63,33 @@ const circleTopSmall = [circleTop, helpers.circle(topCircleSizeSmall * 2), {
 
 const row = {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height: 90
 };
 
 const title1 = {
     color: vars.white,
     textAlign: 'center',
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10
+    fontSize: vars.font.size.massive,
+    fontWeight: '500',
+    marginBottom: vars.spacing.small.maxi
 };
 
-const title1Black = [title1, { color: vars.txtDark, fontSize: 20, marginBottom: 20 }];
+const title1Black = [title1, {
+    color: vars.txtDark,
+    fontSize: vars.font.size.huge,
+    marginBottom: vars.spacing.medium.midi2x
+}];
 
 const title2 = {
     color: vars.white,
     textAlign: 'center',
-    fontSize: 18
+    fontSize: vars.font.size.bigger
 };
 
 const title2Black = [title2, {
-    marginHorizontal: 60,
-    marginVertical: 6,
+    marginHorizontal: vars.spacing.huge.midi2x,
+    marginVertical: vars.spacing.small.midi,
     color: vars.txtDark
 }];
 
@@ -89,17 +98,23 @@ const title3 = {
     textAlign: 'center'
 };
 
+const buttonRowStyle = {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+};
+
 export {
-    header, inner, innerSmall, title1, title1Black, title2,
+    headerWelcome, header2, inner, innerSmall, title1, title1Black, title2,
     title2Black, title3, row, circleTop, circleTopSmall,
     container, topCircleSizeSmall, embeddedImageCircleSize,
-    padding };
+    padding, buttonRowStyle
+};
 
 @observer
 export default class LoginWizardPage extends SafeComponent {
     button(text, onPress, hidden, disabled) {
         const buttonContainer = {
-            marginVertical: 20,
+            marginVertical: vars.spacing.medium.midi2x,
             alignItems: 'stretch',
             opacity: hidden ? 0 : 1
         };
@@ -108,7 +123,7 @@ export default class LoginWizardPage extends SafeComponent {
         };
         const buttonText = {
             fontWeight: 'bold',
-            fontSize: 16
+            fontSize: vars.font.size.bigger
         };
         return (
             <View style={buttonContainer} key={text}>
@@ -120,10 +135,10 @@ export default class LoginWizardPage extends SafeComponent {
     _button(text, onPress, style, textStyle, disabled) {
         return (
             <Button style={[style, disabled && { opacity: 0.5 }]}
-            {...testLabel(text)}
-            textStyle={textStyle}
-            text={tu(text)}
-            onPress={disabled ? null : onPress} />
+                {...testLabel(text)}
+                textStyle={textStyle}
+                text={tu(text)}
+                onPress={disabled ? null : onPress} />
         );
     }
 
@@ -139,6 +154,4 @@ export default class LoginWizardPage extends SafeComponent {
     items() {
         return null;
     }
-
-
 }

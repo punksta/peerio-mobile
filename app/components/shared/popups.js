@@ -6,11 +6,12 @@ import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
+import { vars } from '../../styles/styles';
 
 function textControl(str) {
     const text = {
         color: '#000000AA',
-        marginVertical: 10,
+        marginVertical: vars.spacing.small.maxi,
         lineHeight: 22
     };
 
@@ -26,9 +27,9 @@ function checkBoxControl(str, checked, press) {
     return <CheckBox text={str} isChecked={checked} onChange={press} />;
 }
 
-function inputControl(state) {
+function inputControl(state, placeholder) {
     return (
-        <TextInputStateful state={state} />
+        <TextInputStateful placeholder={placeholder} state={state} />
     );
 }
 
@@ -53,7 +54,7 @@ function popupSystemWarning(title, contents, buttons) {
             contents: textControl(contents),
             buttons: buttons ?
                 buttons.map(i => (i.action ? swButton(i) : button(i, resolve)))
-                    : [button(tu('button_ok'), resolve)]
+                : [button(tu('button_ok'), resolve)]
         });
     });
 }
@@ -155,25 +156,23 @@ function popupInput(title, subTitle, value) {
     });
 }
 
-function popupInputCancelCheckbox(title, subTitle, checkBoxText, checked, cancelable) {
+function popupInputCancel(title, placeholder, cancelable) {
     return new Promise((resolve) => {
-        const o = observable({ value: '', checked });
+        const o = observable({ value: '' });
         const buttons = [];
         cancelable && buttons.push({
             id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
         });
         buttons.push({
-            id: 'ok', text: tu('button_ok'), action: () => resolve(o)
+            id: 'ok', text: tu('button_ok'), action: () => resolve(o), get disabled() { return !o.value; }
         });
         const contents = (
             <View>
-                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; })}
-                {inputControl(o)}
+                {inputControl(o, placeholder)}
             </View>
         );
         popupState.showPopup({
             title,
-            subTitle: textControl(subTitle),
             contents,
             buttons
         });
@@ -188,10 +187,43 @@ function popupTOS() {
         popupState.showPopup({
             fullScreen: 1,
             contents: <WebView
-            source={{ html: tos }} />,
+                source={{ html: tos }} />,
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: resolve
             }]
+        });
+    });
+}
+
+function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
+    const helperTextStyle = {
+        color: vars.subtleText,
+        fontSize: vars.font.size.smaller,
+        fontWeight: vars.font.weight.regular,
+        paddingVertical: vars.spacing.small.midi
+    };
+    return new Promise((resolve) => {
+        const o = observable({ value: '', checked });
+        const buttons = [];
+        cancelable && buttons.push({
+            id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
+        });
+        buttons.push({
+            id: 'ok', text: tu('button_submit'), action: () => resolve(o), get disabled() { return !o.value; }
+        });
+        const contents = (
+            <View style={{ minHeight: vars.popupMinHeight }}>
+                {inputControl(o, placeholder)}
+                <Text style={helperTextStyle}>
+                    {tx('title_2FAHelperText')}
+                </Text>
+                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; })}
+            </View>
+        );
+        popupState.showPopup({
+            title,
+            contents,
+            buttons
         });
     });
 }
@@ -243,8 +275,9 @@ export {
     popupYesSkip,
     popupInput,
     popupTOS,
+    popup2FA,
     popupCopyCancel,
-    popupInputCancelCheckbox,
+    popupInputCancel,
     popupUpgrade,
     popupSystemWarning,
     popupDeleteAccount,

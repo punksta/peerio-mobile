@@ -43,8 +43,7 @@ export default class Swiper extends SafeComponent {
     }
 
     animate(toValue, fast, cb) {
-        Animated.timing(this.animatedX, {
-            toValue, duration: fast ? 0 : 200, easing: Easing.bezier(0.4, 0.0, 1, 1) }).start(cb);
+        Animated.timing(this.animatedX, { toValue, duration: fast ? 0 : 200, easing: Easing.bezier(0.4, 0.0, 1, 1) }).start(cb);
     }
 
     show() {
@@ -62,8 +61,7 @@ export default class Swiper extends SafeComponent {
     }
 
     setPosition(e) {
-        let x = this.x;
-        let y = this.y;
+        let { x, y } = this;
         const tx = e.nativeEvent.pageX - this.drag.x;
         const ty = e.nativeEvent.pageY - this.drag.y;
         x += tx;
@@ -168,7 +166,7 @@ export default class Swiper extends SafeComponent {
             <Animated.View
                 {...handlers}
                 style={[containerStyle, s]}>
-                { this.props.children }
+                {this.props.children}
             </Animated.View>
         );
     }

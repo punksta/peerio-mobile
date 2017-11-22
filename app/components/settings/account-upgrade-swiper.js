@@ -18,7 +18,7 @@ const { width } = Dimensions.get('window');
 const card = {
     width,
     backgroundColor: 'transparent',
-    paddingTop: 36
+    paddingTop: vars.spacing.large.midi2x
 };
 
 const basicColor = '#82A9BE';
@@ -53,7 +53,7 @@ export default class AccountUpgradeSwiper extends Component {
     }
 
     handleScroll = event => {
-        const x = event.nativeEvent.contentOffset.x;
+        const { x } = event.nativeEvent.contentOffset;
         this.selected = Math.round(x / width);
     }
 

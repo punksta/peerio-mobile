@@ -1,7 +1,6 @@
 import { observable } from 'mobx';
 import randomWords from 'random-words';
 import capitalize from 'capitalize';
-import RNFS from 'react-native-fs';
 import mockContactStore from './mock-contact-store';
 import mockFileStore from './mock-file-store';
 import { popupCancelConfirm } from '../shared/popups';
@@ -42,10 +41,11 @@ class MockChannel {
         this.addAdmin(this.participants[0]);
         this.addAdmin(this.participants[1]);
 
-        for (let i = 0; i < 5; ++i) {
+        for (let i = 0; i < 10; ++i) {
+            this.addInlineImageMessage();
             // this.addRandomMessage();
         }
-        this.addInlineImageMessage();
+        // this.addInlineImageMessage();
         // this.addExternalUrlMessage();
     }
 
@@ -98,9 +98,10 @@ class MockChannel {
 
     addInlineImageMessage() {
         const m = this.createMock(false);
-        const name = `${randomWords({ min: 1, max: 2, join: '_' })}.png`;
+        const name = `${randomWords({ min: 8, max: 12, join: '_' })}.png`;
         const url = randomImages.random();
-        m.inlineImage = { url, name, isLocal: true };
+        m.hasUrls = true;
+        m.externalImages = [{ url, name, oversized: true /* , fileId: 1 */ }];
         this.messages.push(m);
     }
 

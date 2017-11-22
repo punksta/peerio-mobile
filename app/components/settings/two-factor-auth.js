@@ -6,17 +6,18 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
-import { popupInputCancelCheckbox } from '../shared/popups';
+import { popup2FA } from '../shared/popups';
 import { clientApp, User } from '../../lib/icebear';
 import buttons from '../helpers/buttons';
 import loginState from '../login/login-state';
 import TwoFactorAuthCodes from './two-factor-auth-codes';
 import TwoFactorAuthCodesGenerate from './two-factor-auth-codes-generate';
+import uiState from '../layout/ui-state';
 
 const paddingVertical = vars.listViewPaddingVertical;
 const paddingHorizontal = vars.listViewPaddingHorizontal;
-const marginVertical = 18;
-const marginBottom = 8;
+const marginVertical = vars.spacing.medium.midi;
+const marginBottom = vars.spacing.small.midi2x;
 
 const bgStyle = {
     flexGrow: 1,
@@ -31,18 +32,18 @@ const labelStyle = {
 };
 
 const whiteStyle = {
-    backgroundColor: vars.white, paddingTop: 10, paddingHorizontal
+    backgroundColor: vars.white, paddingTop: vars.spacing.small.maxi, paddingHorizontal
 };
 
 async function twoFactorAuthPopup(active2FARequest) {
     if (!active2FARequest) return;
     console.log(JSON.stringify(active2FARequest));
     const { submit, cancel, type } = active2FARequest;
-    const result = await popupInputCancelCheckbox(
+    const result = await popup2FA(
         tx('title_2FA'),
         tx('dialog_enter2FA'),
         type === 'login' ? tx('title_trustThisDevice') : null,
-        false,
+        uiState.trustDevice2FA,
         true
     );
     if (result === false) {
@@ -53,6 +54,7 @@ async function twoFactorAuthPopup(active2FARequest) {
         return;
     }
     const { value, checked } = result;
+    uiState.trustDevice2FA = checked;
     submit(value, checked);
 }
 
@@ -143,12 +145,13 @@ export default class TwoFactorAuth extends SafeComponent {
                         backgroundColor: vars.white,
                         paddingHorizontal
                     }}>
-                        <TextInput style={{
-                            color: vars.txtDark,
-                            marginVertical: 8,
-                            height: vars.inputHeight,
-                            flexGrow: 1
-                        }}
+                        <TextInput
+                            style={{
+                                color: vars.txtDark,
+                                marginVertical: vars.spacing.small.midi2x,
+                                height: vars.inputHeight,
+                                flexGrow: 1
+                            }}
                             placeholderTextColor={vars.txtDate}
                             placeholder="123456"
                             onChangeText={text => { this.confirmCode = text; }}

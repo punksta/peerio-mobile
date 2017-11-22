@@ -5,13 +5,14 @@ import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import { uiState, fileState } from '../states';
-import contactState from '../contacts/contact-state';
 import icons from '../helpers/icons';
+import routes from '../routes/routes';
+import { vars } from '../../styles/styles';
 
 const actionCellStyle = {
     flex: 1,
     alignItems: 'center',
-    height: 56,
+    height: vars.tabCellHeight,
     justifyContent: 'center'
 };
 
@@ -23,13 +24,13 @@ const bottomRowStyle = {
     flex: 0,
     flexDirection: 'row',
     backgroundColor: 'rgba(0, 0, 0, .12)',
-    height: 56,
+    height: vars.tabsHeight,
+    paddingBottom: vars.iPhoneXBottom,
     padding: 0
 };
 
 @observer
 export default class FileActions extends SafeComponent {
-
     action(text, icon, onPress, enabled) {
         return (
             <TouchableOpacity
@@ -45,30 +46,22 @@ export default class FileActions extends SafeComponent {
     }
 
     onViewFile = () => {
-        console.log('onviewfile');
-        // uiState.externalViewer = true;
         return Promise.resolve()
             .then(() => this.props.file.launchViewer())
             .finally(() => { uiState.externalViewer = false; });
     }
 
     renderThrow() {
-        const animation = {
-            overflow: 'hidden',
-            height: this.props.height
-        };
-        const file = this.props.file;
+        const { file } = this.props;
         const enabled = file && file.readyForDownload || fileState.showSelection;
-
         const leftAction = file && !file.isPartialDownload && file.cached ?
             this.action(t('button_open'), 'open-in-new', this.onViewFile, enabled) :
             this.action(t('title_download'), 'file-download', () => fileState.download(), enabled);
-
-
         return (
-            <Animated.View style={[bottomRowStyle, animation]}>
+            <Animated.View style={bottomRowStyle}>
                 {leftAction}
-                {this.action(t('button_share'), 'reply', () => contactState.shareFile(), file && file.canShare && enabled)}
+                {this.action(t('button_share'), 'reply', () => routes.modal.shareFileTo(), file && file.canShare && enabled)}
+                {this.action(t('Move'), 'repeat', () => routes.modal.moveFileTo(), file)}
                 {this.action(t('button_delete'), 'delete', () => fileState.delete(), enabled)}
                 {/* {this.action(t('button_more'), 'more-horiz')} */}
             </Animated.View>
@@ -77,6 +70,5 @@ export default class FileActions extends SafeComponent {
 }
 
 FileActions.propTypes = {
-    file: PropTypes.any,
-    height: PropTypes.any
+    file: PropTypes.any
 };

@@ -6,6 +6,7 @@ import { contactStore, warnings, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { loadGroupSettings } from './contacts-groups';
 import contactAddState from './contact-add-state';
+import chatState from '../messaging/chat-state';
 
 class ContactState extends RoutedState {
     _prefix = 'contacts';
@@ -15,14 +16,6 @@ class ContactState extends RoutedState {
     @action async init() {
         await loadGroupSettings();
         return new Promise(resolve => when(() => !this.store.loading, resolve));
-    }
-
-    composeMessage() {
-        this.routerModal.compose();
-    }
-
-    shareFile() {
-        this.routerModal.shareFileTo();
     }
 
     @action exit() {
@@ -61,7 +54,7 @@ class ContactState extends RoutedState {
     }
 
     @action sendTo(contact) {
-        this.send(null, contact);
+        chatState.startChat(null, contact);
     }
 
     get title() {

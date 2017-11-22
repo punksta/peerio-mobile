@@ -15,8 +15,8 @@ export default class SignupAvatarActionSheet extends Component {
     render() {
         return (
             <AvatarActionSheet
-            onSave={this.saveAvatar}
-            ref={sheet => { this._actionSheet = sheet; }} />
+                onSave={this.saveAvatar}
+                ref={sheet => { this._actionSheet = sheet; }} />
         );
     }
 }

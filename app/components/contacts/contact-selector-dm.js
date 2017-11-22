@@ -64,8 +64,8 @@ export default class ContactSelectorDM extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            paddingHorizontal: 12,
-            margin: 12,
+            paddingHorizontal: vars.spacing.small.maxi2x,
+            margin: vars.spacing.small.maxi2x,
             borderColor: vars.bg,
             borderWidth: 1,
             height,
@@ -73,13 +73,13 @@ export default class ContactSelectorDM extends SafeComponent {
         };
         const label = {
             color: vars.bg,
-            fontSize: 12
+            fontSize: vars.font.size.smaller
         };
         const style = {
             flexGrow: 1,
             height,
-            marginLeft: 8,
-            fontSize: 12
+            marginLeft: vars.spacing.small.midi2x,
+            fontSize: vars.font.size.smaller
         };
 
         let rightIcon = null;
@@ -91,14 +91,14 @@ export default class ContactSelectorDM extends SafeComponent {
         }
 
         if (this.inProgress || contactState.inProgress) {
-            rightIcon = <ActivityIndicator style={{ marginRight: 8 }} />;
+            rightIcon = <ActivityIndicator style={{ marginRight: vars.spacing.small.midi2x }} />;
         }
 
         return (
             <View style={container}>
                 <Text style={label}>{tx('title_to')}</Text>
                 <TextInput
-                    underlineColorAndroid={'transparent'}
+                    underlineColorAndroid="transparent"
                     value={this.findUserText}
                     returnKeyType="done"
                     blurOnSubmit
@@ -117,7 +117,7 @@ export default class ContactSelectorDM extends SafeComponent {
         const container = {
             flexGrow: 1,
             flexDirection: 'row',
-            padding: 8,
+            padding: vars.spacing.small.midi2x,
             alignItems: 'center'
         };
         const textStyle = {
@@ -125,7 +125,7 @@ export default class ContactSelectorDM extends SafeComponent {
             textAlign: 'center',
             flexGrow: 1,
             flexShrink: 1,
-            fontSize: 18,
+            fontSize: vars.font.size.big,
             fontWeight: vars.font.weight.semiBold,
             color: vars.txtDark
         };
@@ -148,7 +148,7 @@ export default class ContactSelectorDM extends SafeComponent {
 
     sectionHeader({ section: { data, key } }) {
         if (!data || !data.length) return null;
-        const s = { fontWeight: 'bold', margin: 10 };
+        const s = { fontWeight: 'bold', margin: vars.spacing.small.maxi };
         return (
             <Text style={s}>
                 {tx(key, { found: data && data.length })}
@@ -235,13 +235,13 @@ export default class ContactSelectorDM extends SafeComponent {
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
         const notFound = !this.inProgress && !!this.notFound && (
-            <View style={{ flexDirection: 'row', marginHorizontal: 36, marginVertical: 10 }}>
-                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: 8 }} />
+            <View style={{ flexDirection: 'row', marginHorizontal: vars.spacing.large.midi2x, marginVertical: vars.spacing.small.maxi }}>
+                <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: vars.spacing.small.midi2x }} />
                 <Text style={{ color: vars.txtDate }}>{t('error_userNotFoundTryEmail', { user: this.notFound })}</Text>
             </View>
         );
         return (
-            <View style={{ marginHorizontal: 12 }}>
+            <View style={{ marginHorizontal: vars.spacing.small.maxi2x }}>
                 {notFound}
                 {this.inviteContact}
                 {!!this.legacyContact &&

@@ -26,14 +26,14 @@ const textboxInput = {
     flex: 1,
     flexGrow: 1,
     flexShrink: 1,
-    fontSize: 16,
+    fontSize: vars.font.size.bigger,
     color: vars.txtDark,
-    marginLeft: 8
+    marginLeft: vars.spacing.small.midi2x
 };
 
 const textArea = {
-    fontSize: 14,
-    marginHorizontal: 10,
+    fontSize: vars.font.size.normal,
+    marginHorizontal: vars.spacing.small.maxi,
     color: vars.txtDark,
     height: vars.inputHeight
 };
@@ -135,7 +135,7 @@ export default class ComposeMessage extends SafeComponent {
 
     textWithColon(text) {
         return (
-            <Text style={{ color: vars.subtleText, padding: 8 }}>
+            <Text style={{ color: vars.subtleText, padding: vars.spacing.small.midi2x }}>
                 {text}:
             </Text>
         );
@@ -157,8 +157,8 @@ export default class ComposeMessage extends SafeComponent {
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 8,
-            margin: 4,
-            paddingHorizontal: 8,
+            margin: vars.spacing.small.mini2x,
+            paddingHorizontal: vars.spacing.small.midi2x,
             flexGrow: 1,
             flexShrink: 1,
             flexDirection: 'row'
@@ -228,7 +228,7 @@ export default class ComposeMessage extends SafeComponent {
                         <View style={[recipient, { flexGrow: 1 }]}>
                             <TextInput
                                 keyboardType="email-address"
-                                underlineColorAndroid={'transparent'}
+                                underlineColorAndroid="transparent"
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 autoComplete={false}
@@ -248,7 +248,7 @@ export default class ComposeMessage extends SafeComponent {
             <View style={row}>
                 {this.textWithColon(tx('title_subject'))}
                 <TextInput
-                    underlineColorAndroid={'transparent'}
+                    underlineColorAndroid="transparent"
                     autoCapitalize="none"
                     autoCorrect={false}
                     autoComplete={false}
@@ -265,8 +265,8 @@ export default class ComposeMessage extends SafeComponent {
             flex: 0,
             backgroundColor: vars.bg,
             borderRadius: 4,
-            padding: 4,
-            margin: 4
+            padding: vars.spacing.small.mini2x,
+            margin: vars.spacing.small.mini2x
         };
         const text = {
             color: 'white'
@@ -296,7 +296,7 @@ export default class ComposeMessage extends SafeComponent {
                     {this.attachments()}
                 </View>
                 <TextInput
-                    underlineColorAndroid={'transparent'}
+                    underlineColorAndroid="transparent"
                     multiline
                     value={this.value}
                     onChangeText={text => { this.value = text; }}

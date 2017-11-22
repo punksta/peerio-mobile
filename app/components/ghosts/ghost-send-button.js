@@ -6,7 +6,7 @@ import {
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
 
-const fabSize = vars.fabSize;
+const { fabSize } = vars;
 
 const fabContainer = {
     position: 'absolute',

@@ -23,8 +23,8 @@ const spacer = {
 
 const text = {
     color: vars.txtMedium,
-    marginBottom: 8,
-    marginLeft: 8
+    marginBottom: vars.spacing.small.midi2x,
+    marginLeft: vars.spacing.small.midi2x
 };
 
 const groupSettings = observable({
@@ -53,14 +53,12 @@ export { saveGroupSettings, loadGroupSettings, groupSettings };
 
 @observer
 export default class ContactsGroups extends Component {
-
     checkBoxItem(title, prop) {
         const state = groupSettings;
         const value = state[prop];
         const onPress = async () => {
             state[prop] = !state[prop];
             await saveGroupSettings();
-//            await loadGroupSettings();
         };
         return (
             <SettingsItem

@@ -8,6 +8,7 @@ import snackbarState from '../snackbars/snackbar-state';
 import uiState from '../layout/ui-state';
 import { tx } from '../utils/translator';
 import keychain from '../../lib/keychain-bridge';
+import { vars } from '../../styles/styles';
 
 class SettingsState extends RoutedState {
     @observable subroute = null;
@@ -68,14 +69,14 @@ class SettingsState extends RoutedState {
 
     async showPassphrase() {
         const user = User.current;
-        let passphrase = user.passphrase;
+        let { passphrase } = user;
         if (!passphrase && keychain.hasPlugin) {
             const data = await keychain.get(`user::${user.username}`);
-            if (data) passphrase = JSON.parse(data).passphrase;
+            if (data) ({ passphrase } = JSON.parse(data));
         }
         if (passphrase) {
             const mp = (
-                <Text style={{ fontWeight: 'bold', fontSize: 14 }}>
+                <Text style={{ fontWeight: 'bold', fontSize: vars.font.size.normal }}>
                     {passphrase}
                 </Text>
             );

@@ -3,9 +3,9 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import ToggleItem from './toggle-item';
-import PreferenceStore from './preference-store';
+import preferenceStore from './preference-store';
 
-const state = PreferenceStore.prefs;
+const state = preferenceStore.prefs;
 
 @observer
 export default class PreferenceToggleItem extends SafeComponent {
@@ -18,6 +18,7 @@ export default class PreferenceToggleItem extends SafeComponent {
             <ToggleItem
                 state={state}
                 prop={this.props.property}
+                reverse={this.props.reverse}
                 title={this.props.title}
                 description={this.props.description}
                 onPress={this.toggle}

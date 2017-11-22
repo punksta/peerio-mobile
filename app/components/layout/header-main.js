@@ -20,7 +20,7 @@ export default class HeaderMain extends SafeComponent {
             flexGrow: 1,
             flexShrink: 1,
             color: vars.white,
-            fontSize: 18,
+            fontSize: vars.font.size.big,
             fontWeight: 'bold',
             textAlign: 'center',
             alignItems: 'center',
@@ -37,17 +37,11 @@ export default class HeaderMain extends SafeComponent {
             paddingTop: vars.statusBarHeight,
             minHeight: vars.headerHeight
         };
-        const titleAction = routerMain.titleAction;
+        const { titleAction } = routerMain;
         const iconPlaceHolderWidth = (32 + vars.iconSize);
         const paddingRight = !rightIcon && leftIcon ? iconPlaceHolderWidth : 0;
         const paddingLeft = rightIcon && !leftIcon ? iconPlaceHolderWidth : 0;
-        return gradient({
-            paddingTop: vars.statusBarHeight,
-            height: vars.headerHeight,
-            flex: -1,
-            justifyContent: 'flex-end',
-            backgroundColor: vars.bg
-        },
+        const header = (
             <TouchableOpacity activeOpacity={titleAction ? 0.2 : 1} onPress={titleAction}
                 pressRetentionOffset={vars.retentionOffset}>
                 <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
@@ -59,7 +53,7 @@ export default class HeaderMain extends SafeComponent {
                         numberOfLines={1}
                         style={[textStyle, { paddingRight, paddingLeft }]}>
                         {this.props.title || routerMain.title}
-                        {titleAction && <Text style={{ fontSize: 14 }}>
+                        {titleAction && <Text style={{ fontSize: vars.font.size.normal }}>
                             {'  ▼  '}
                         </Text>}
                     </Text>
@@ -69,6 +63,13 @@ export default class HeaderMain extends SafeComponent {
                 </View>
             </TouchableOpacity>
         );
+        return gradient({
+            paddingTop: vars.statusBarHeight,
+            height: vars.headerHeight,
+            flex: -1,
+            justifyContent: 'flex-end',
+            backgroundColor: vars.bg
+        }, header);
     }
 }
 

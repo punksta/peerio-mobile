@@ -5,9 +5,8 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars } from '../../styles/styles';
 import { clientApp } from '../../lib/icebear';
-import { tx, tu } from '../utils/translator';
+import { tx, tu, T } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
-import Link from '../controls/link';
 import RadioGroup from '../controls/radio-group';
 
 const container = {
@@ -71,6 +70,7 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
             prefs.externalContentEnabled = false;
             prefs.externalContentJustForFavs = false;
         }
+        this.props.onChange && this.props.onChange();
     }
 
     userActionDismiss = () => {
@@ -99,9 +99,7 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
                 <Text>
                     {tx('title_UrlPreviewsWarning')}
                 </Text>
-                <Link>
-                    {tx('title_learnMore')}
-                </Link>
+                <T k="title_learnMore" />
                 {this.spacer}
                 <RadioGroup
                     onSelect={this.onSelectRadioButton}

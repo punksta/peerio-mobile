@@ -11,7 +11,6 @@ import { vars } from '../../styles/styles';
 
 @observer
 export default class MockChatList extends Component {
-
     componentDidMount() {
         User.current = {};
         chatState.store = mockChatStore;

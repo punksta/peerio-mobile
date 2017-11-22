@@ -5,7 +5,6 @@ import PureRenderMixin from 'react-addons-pure-render-mixin';
 import { vars } from '../../styles/styles';
 
 export default class AutoExpandingTextInput extends Component {
-
     constructor(props) {
         super(props);
         // initial state
@@ -53,8 +52,8 @@ export default class AutoExpandingTextInput extends Component {
         const style = {
             textAlign: 'left',
             padding: 0,
-            paddingBottom: 6,
-            marginTop: 6
+            paddingBottom: vars.spacing.small.midi,
+            marginTop: vars.spacing.small.midi
         };
 
         return (
@@ -62,7 +61,7 @@ export default class AutoExpandingTextInput extends Component {
                 {...this.props}
                 ref={ti => { this.ti = ti; }}
                 placeholderTextColor={vars.txtMedium}
-                underlineColorAndroid={'transparent'}
+                underlineColorAndroid="transparent"
                 multiline
                 onChange={this._onChange}
                 style={[style, this.props.style, { height: tmpHeight }]}

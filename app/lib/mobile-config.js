@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { setUrlMap, setTagHandler } from 'peerio-translator';
 import tagHandlers from '../components/controls/tag-handlers';
 import rnFileStream from './rn-file-stream';
@@ -27,7 +28,10 @@ export default (c, icebear) => {
         androidApp: 'https://play.google.com/store/apps/details?id=com.peerio.app',
         googleAuthA: 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en',
         googleAuthI: 'https://itunes.apple.com/app/google-authenticator/id388497605',
-        authy: 'https://authy.com'
+        authy: 'https://authy.com',
+        download: 'https://peerio.com',
+        learnUrlTracking: 'https://peerio.zendesk.com/hc/en-us/articles/115005090766',
+        identityVerification: 'https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-'
     };
 
     setUrlMap(cfg.translator.urlMap);
@@ -51,12 +55,19 @@ export default (c, icebear) => {
         });
 
     cfg.appVersion = require('../../package.json').version;
-    cfg.platform = 'ios';
+
+    if (Platform.OS !== 'ios' && Platform.OS !== 'android') {
+        console.error(`mobile-config.js: unknown platform ${Platform.OS}`);
+    }
+
+    cfg.platform = Platform.OS;
     Object.assign(cfg.chat, {
         maxInitialChats: 15,
         initialPageSize: 20, // amount of messages to load to a newly opened chat
         pageSize: 20, // when next/prev pages is requested, chat will load this amount of messages
         maxLoadedMessages: 60, // chat will remove excess of messages if paging resulted in larger count
-        decryptQueueThrottle: 10 // ms, delay between processing messages in a batch
+        decryptQueueThrottle: 10, // ms, delay between processing messages in a batch
+        inlineImageSizeLimitCutoff: 10 * 1024 * 1024,
+        inlineImageSizeLimit: 3 * 1024 * 1024
     });
 };

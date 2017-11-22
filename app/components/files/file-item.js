@@ -6,6 +6,7 @@ import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FileProgress from './file-progress';
 import FileInnerItem from './file-inner-item';
+import FolderInnerItem from './folder-inner-item';
 import fileState from './file-state';
 
 @observer
@@ -33,10 +34,12 @@ export default class FileItem extends SafeComponent {
     }
 
     renderThrow() {
-        const file = this.props.file;
+        const { file } = this.props;
         return (
             <View style={{ backgroundColor: 'white' }}>
-                <FileInnerItem onPress={f => this.press(f)} file={file} />
+                {file.isFolder ?
+                    <FolderInnerItem folder={file} onLongPress={this.props.onLongPress} onPress={() => this.props.onChangeFolder(file)} /> :
+                    <FileInnerItem onPress={f => this.press(f)} file={file} />}
                 <FileProgress file={file} />
             </View>
         );
@@ -44,5 +47,6 @@ export default class FileItem extends SafeComponent {
 }
 
 FileItem.propTypes = {
-    file: PropTypes.any.isRequired
+    file: PropTypes.any.isRequired,
+    onChangeFolder: PropTypes.any
 };

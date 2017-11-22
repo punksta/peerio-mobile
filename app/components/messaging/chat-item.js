@@ -1,14 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import contactState from '../contacts/contact-state';
 import fileState from '../files/file-state';
 import { systemMessages } from '../../lib/icebear';
+import IdentityVerificationNotice from './identity-verification-notice';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class ChatItem extends SafeComponent {
+    setRef = ref => { this._ref = ref; };
+
     renderThrow() {
         if (!this.props || !this.props.message) return null;
         const i = this.props.message;
@@ -18,6 +23,8 @@ export default class ChatItem extends SafeComponent {
         const text = msg.replace(/\n[ ]+/g, '\n');
         const onPressAvatar = () => contactState.contactView(i.sender);
         const onPress = i.sendError ? this.props.onRetryCancel : null;
+
+        // this causes double update on add message
         const error = !!i.signatureError;
         const systemMessageText =
             i.systemData && systemMessages.getSystemMessageText(i) || null;
@@ -28,35 +35,46 @@ export default class ChatItem extends SafeComponent {
         if (i.hasUrls && i.externalImages.length) {
             firstImage = i.externalImages[0];
         }
+        const shouldDisplayIdentityNotice = i.systemData && i.systemData.action === 'join';
+
         return (
-            <Avatar
-                noTap={!i.sendError}
-                sendError={i.sendError}
-                sending={i.sending}
-                contact={i.sender}
-                isDeleted={i.sender ? i.sender.isDeleted : false}
-                files={normalFiles.map(f => f.fileId)}
-                inlineImage={firstImage}
-                receipts={i.receipts}
-                hideOnline
-                firstOfTheDay={i.firstOfTheDay}
-                timestamp={i.timestamp}
-                timestampText={i.messageTimestampText}
-                message={text}
-                isChat
-                systemMessage={systemMessageText}
-                key={key}
-                error={error}
-                onPress={onPress}
-                onPressAvatar={onPressAvatar}
-                onLayout={this.props.onLayout}
-                onRetryCancel={this.props.onRetryCancel}
-                onInlineImageAction={this.props.onInlineImageAction}
-                noBorderBottom
-                collapsed={!!i.groupWithPrevious}
-                extraPaddingTop={8}
-                ref={ref => { this._ref = ref; }}
-            />
+            <View>
+                <Avatar
+                    noTap={!i.sendError}
+                    sendError={i.sendError}
+                    sending={i.sending}
+                    contact={i.sender}
+                    isDeleted={i.sender ? i.sender.isDeleted : false}
+                    files={normalFiles.map(f => f.fileId)}
+                    inlineImage={firstImage}
+                    receipts={i.receipts}
+                    hideOnline
+                    firstOfTheDay={i.firstOfTheDay}
+                    timestamp={i.timestamp}
+                    timestampText={i.messageTimestampText}
+                    message={text}
+                    isChat
+                    fullnameIsBold
+                    systemMessage={systemMessageText}
+                    key={key}
+                    error={error}
+                    onPress={onPress}
+                    onPressAvatar={onPressAvatar}
+                    onLayout={this.props.onLayout}
+                    onRetryCancel={this.props.onRetryCancel}
+                    onInlineImageAction={this.props.onInlineImageAction}
+                    noBorderBottom
+                    collapsed={!!i.groupWithPrevious}
+                    extraPaddingTop={8}
+                    ref={this.setRef}
+                />
+                {
+                    shouldDisplayIdentityNotice &&
+                    <View style={{ paddingVertical: vars.spacing.small.midi }}>
+                        <IdentityVerificationNotice />
+                    </View>
+                }
+            </View>
         );
     }
 }

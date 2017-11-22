@@ -8,8 +8,9 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import fileState from './file-state';
 import FileSignatureError from './file-signature-error';
+import FileTypeIcon from './file-type-icon';
 
-const width = Dimensions.get('window').width;
+const { width } = Dimensions.get('window');
 const height = 64;
 const checkBoxWidth = height;
 const itemContainerStyle = {
@@ -25,7 +26,7 @@ const itemContainerStyle = {
     width,
     borderWidth: 0,
     borderColor: 'red',
-    paddingLeft: 8
+    paddingLeft: vars.spacing.small.midi2x
 };
 
 const fileInfoContainerStyle = {
@@ -38,7 +39,7 @@ const fileInfoContainerStyle = {
 @observer
 export default class FileInnerItem extends SafeComponent {
     onPress() {
-        const file = this.props.file;
+        const { file } = this.props;
         this.props.onPress ? this.props.onPress(this.props.file)
             : (file.selected = !file.selected);
     }
@@ -52,7 +53,7 @@ export default class FileInnerItem extends SafeComponent {
         const icon = checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
             backgroundColor: color,
-            padding: 4,
+            padding: vars.spacing.small.mini2x,
             flex: 0,
             width: checkBoxWidth,
             justifyContent: 'center',
@@ -66,29 +67,29 @@ export default class FileInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const file = this.props.file;
-        if (file.signatureError) return <View style={{ marginHorizontal: 6 }}><FileSignatureError /></View>;
+        const { file } = this.props;
+        if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
         const action = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
             icons.dark('keyboard-arrow-right', action);
         const nameStyle = {
             color: vars.txtDark,
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.bold
         };
         const infoStyle = {
             color: vars.subtleText,
-            fontSize: 12,
+            fontSize: vars.font.size.smaller,
             fontWeight: vars.font.weight.regular
         };
-        let icon = 'image';
+        let icon = null;
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
         let opacity = 1;
         if (file.uploading /* || !file.readyForDownload */) {
             opacity = 0.5;
         }
-        icon = icons.dark(icon);
+        if (icon) icon = icons.dark(icon);
         const loadingStyle = null;
         const marginLeft = this.props.checkbox === 'always' ? 0 : -checkBoxWidth;
         const arrow = this.props.hideArrow ? null : (
@@ -103,9 +104,13 @@ export default class FileInnerItem extends SafeComponent {
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]}>
                             <View style={[loadingStyle, { flex: 0 }]}>
-                                {icon}
+                                {icon ||
+                                    <FileTypeIcon
+                                        size="small"
+                                        type={file.iconType}
+                                    />}
                             </View>
-                            <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: 16 }}>
+                            <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
                                 <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                 <Text style={infoStyle}>
                                     {moment(file.uploadedAt).format(`MMM Do YYYY, hh:mm a`)}

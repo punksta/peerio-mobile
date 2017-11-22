@@ -2,6 +2,267 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.214.0"></a>
+# [3.214.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.213.0...v3.214.0) (2017-11-22)
+
+
+
+<a name="3.213.0"></a>
+# [3.213.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.212.0...v3.213.0) (2017-11-20)
+
+
+### Bug Fixes
+
+* copy resources from icebear ([39917c9](https://github.com/PeerioTechnologies/peerio-mobile/commit/39917c9))
+* report correct plaftorm to server to fix the push behaviour ([4719142](https://github.com/PeerioTechnologies/peerio-mobile/commit/4719142))
+
+
+
+<a name="3.212.0"></a>
+# [3.212.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.211.0...v3.212.0) (2017-11-17)
+
+
+
+<a name="3.211.0"></a>
+# [3.211.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.210.0...v3.211.0) (2017-11-15)
+
+
+
+<a name="3.210.0"></a>
+# [3.210.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.209.0...v3.210.0) (2017-11-14)
+
+
+
+<a name="3.209.0"></a>
+# [3.209.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.208.0...v3.209.0) (2017-11-14)
+
+
+### Bug Fixes
+
+* touchableopacity for room invite icon ([891c307](https://github.com/PeerioTechnologies/peerio-mobile/commit/891c307))
+
+
+
+<a name="3.208.0"></a>
+# [3.208.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.207.0...v3.208.0) (2017-11-14)
+
+
+### Bug Fixes
+
+* channel invite list items ([3ff385c](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ff385c))
+
+
+
+<a name="3.207.0"></a>
+# [3.207.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.206.0...v3.207.0) (2017-11-14)
+
+
+
+<a name="3.206.0"></a>
+# [3.206.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.205.0...v3.206.0) (2017-11-14)
+
+
+
+<a name="3.205.0"></a>
+# [3.205.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.204.0...v3.205.0) (2017-11-13)
+
+
+### Features
+
+* bump icebear support to file folder kegs ([3810a90](https://github.com/PeerioTechnologies/peerio-mobile/commit/3810a90))
+
+
+
+<a name="3.204.0"></a>
+# [3.204.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.203.0...v3.204.0) (2017-11-13)
+
+
+### Features
+
+* localize no files in folder and show it in file-select dialog ([7f2704e](https://github.com/PeerioTechnologies/peerio-mobile/commit/7f2704e))
+
+
+
+<a name="3.203.0"></a>
+# [3.203.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.202.0...v3.203.0) (2017-11-12)
+
+
+
+<a name="3.202.0"></a>
+# [3.202.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.201.0...v3.202.0) (2017-11-12)
+
+
+### Bug Fixes
+
+* messageNotifications toggle ([985e0c3](https://github.com/PeerioTechnologies/peerio-mobile/commit/985e0c3))
+
+
+
+<a name="3.201.0"></a>
+# [3.201.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.200.0...v3.201.0) (2017-11-11)
+
+
+
+<a name="3.200.0"></a>
+# [3.200.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.199.0...v3.200.0) (2017-11-11)
+
+
+
+<a name="3.199.0"></a>
+# [3.199.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.198.0...v3.199.0) (2017-11-10)
+
+
+### Bug Fixes
+
+* image size preference should be in reverse ([fef6ce6](https://github.com/PeerioTechnologies/peerio-mobile/commit/fef6ce6))
+
+
+
+<a name="3.198.0"></a>
+# [3.198.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.197.0...v3.198.0) (2017-11-10)
+
+
+### Features
+
+* always expand content when content is enabled ([40dafc6](https://github.com/PeerioTechnologies/peerio-mobile/commit/40dafc6))
+
+
+
+<a name="3.197.0"></a>
+# [3.197.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.190.0...v3.197.0) (2017-11-10)
+
+
+### Bug Fixes
+
+* display image limits ([7d0a37f](https://github.com/PeerioTechnologies/peerio-mobile/commit/7d0a37f))
+* navigate folders in file share ([95c342a](https://github.com/PeerioTechnologies/peerio-mobile/commit/95c342a))
+* pr template [skip ci] ([150a1a7](https://github.com/PeerioTechnologies/peerio-mobile/commit/150a1a7))
+* restore new line at the end of file ([8f3224f](https://github.com/PeerioTechnologies/peerio-mobile/commit/8f3224f))
+
+
+### Features
+
+* dependecy check ([640b339](https://github.com/PeerioTechnologies/peerio-mobile/commit/640b339))
+
+
+
+<a name="3.191.0"></a>
+# [3.191.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.190.0...v3.191.0) (2017-11-10)
+
+
+### Bug Fixes
+
+* display image limits ([7d0a37f](https://github.com/PeerioTechnologies/peerio-mobile/commit/7d0a37f))
+* navigate folders in file share ([95c342a](https://github.com/PeerioTechnologies/peerio-mobile/commit/95c342a))
+* pr template [skip ci] ([150a1a7](https://github.com/PeerioTechnologies/peerio-mobile/commit/150a1a7))
+* restore new line at the end of file ([8f3224f](https://github.com/PeerioTechnologies/peerio-mobile/commit/8f3224f))
+
+
+### Features
+
+* dependecy check ([640b339](https://github.com/PeerioTechnologies/peerio-mobile/commit/640b339))
+
+
+
+<a name="3.190.0"></a>
+# [3.190.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.189.0...v3.190.0) (2017-11-08)
+
+
+### Features
+
+* don't download images which user uploaded. copy them instead ([b316093](https://github.com/PeerioTechnologies/peerio-mobile/commit/b316093))
+* file selection supports folders for inline sharing ([36e74ec](https://github.com/PeerioTechnologies/peerio-mobile/commit/36e74ec))
+
+
+
+<a name="3.189.0"></a>
+# [3.189.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.188.0...v3.189.0) (2017-11-07)
+
+
+### Bug Fixes
+
+* root folder should be displayed as Files ([3a4ec3c](https://github.com/PeerioTechnologies/peerio-mobile/commit/3a4ec3c))
+
+
+### Features
+
+* display image cutoff limits ([f4801e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/f4801e8))
+
+
+
+<a name="3.188.0"></a>
+# [3.188.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.187.0...v3.188.0) (2017-11-07)
+
+
+### Bug Fixes
+
+* add root to move folder to ([65c9b7e](https://github.com/PeerioTechnologies/peerio-mobile/commit/65c9b7e))
+* nested folder created underneath ([1ebd93e](https://github.com/PeerioTechnologies/peerio-mobile/commit/1ebd93e))
+
+
+
+<a name="3.187.0"></a>
+# [3.187.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.186.0...v3.187.0) (2017-11-06)
+
+
+### Bug Fixes
+
+* copy for inline image ([a1ae77b](https://github.com/PeerioTechnologies/peerio-mobile/commit/a1ae77b))
+
+
+### Features
+
+* for large files display warning ([5b9b155](https://github.com/PeerioTechnologies/peerio-mobile/commit/5b9b155))
+* support for iPhoneX ([de05ddd](https://github.com/PeerioTechnologies/peerio-mobile/commit/de05ddd))
+
+
+
+<a name="3.186.0"></a>
+# [3.186.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.185.0...v3.186.0) (2017-11-05)
+
+
+
+<a name="3.185.0"></a>
+# [3.185.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.184.0...v3.185.0) (2017-11-05)
+
+
+### Bug Fixes
+
+* folder sorting ([7568904](https://github.com/PeerioTechnologies/peerio-mobile/commit/7568904))
+* shrink strategy for inline image ([55f54b7](https://github.com/PeerioTechnologies/peerio-mobile/commit/55f54b7))
+* typo ([7da711b](https://github.com/PeerioTechnologies/peerio-mobile/commit/7da711b))
+
+
+### Features
+
+* disable primary for input popup if there's no value entered ([693d597](https://github.com/PeerioTechnologies/peerio-mobile/commit/693d597))
+* iPhoneX layout fix (partial) ([f5f05fc](https://github.com/PeerioTechnologies/peerio-mobile/commit/f5f05fc))
+* style input dialog according to Paul ([65daa96](https://github.com/PeerioTechnologies/peerio-mobile/commit/65daa96))
+
+
+
+<a name="3.184.0"></a>
+# [3.184.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.183.0...v3.184.0) (2017-11-01)
+
+
+### Bug Fixes
+
+* server override field ([3ee7061](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ee7061))
+
+
+### Features
+
+* add sorting for folders and folder title in the top ([0cc9c7a](https://github.com/PeerioTechnologies/peerio-mobile/commit/0cc9c7a))
+* folder action sheet ([58659e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/58659e8))
+* rework inline images to have separate temporary and main cache ([4be8eb9](https://github.com/PeerioTechnologies/peerio-mobile/commit/4be8eb9))
+
+
+
+<a name="3.183.0"></a>
+# [3.183.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.182.0...v3.183.0) (2017-10-26)
+
+
+
 <a name="3.182.0"></a>
 # [3.182.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.179.0...v3.182.0) (2017-10-26)
 

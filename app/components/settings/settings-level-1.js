@@ -77,14 +77,15 @@ export default class SettingsLevel1 extends SafeComponent {
                     {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
                     <SettingsItem title="title_settingsAccount" onPress={() => settingsState.transition('account')} />
                     {this.spacer}
-                    <SettingsItem title="title_About" onPress={() => popupYes('About', AboutContent)} />
+                    <SettingsItem title="title_About" icon={null} onPress={() => popupYes('About', AboutContent)} />
                     {this.spacer}
                     <ButtonWithIcon text={tu('button_logout')}
                         style={{
                             backgroundColor: vars.white,
                             width: '100%',
-                            paddingVertical: 16,
-                            borderRadius: 4 }}
+                            paddingVertical: vars.spacing.medium.mini2x,
+                            borderRadius: 4
+                        }}
                         bold
                         textStyle={{ color: vars.bg }}
                         onPress={loginState.signOut}
@@ -94,9 +95,9 @@ export default class SettingsLevel1 extends SafeComponent {
                     {__DEV__ && <SettingsItem title="toggle connection" onPress={toggleConnection} />}
                     {__DEV__ && <SettingsItem title="damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
                     {__DEV__ && <SettingsItem title="snackbar" onPress={() =>
-                            snackbarState.pushTemporary('test')} />}
+                        snackbarState.pushTemporary('test')} />}
                     {__DEV__ && <SettingsItem title="snackbar long" onPress={() =>
-                            snackbarState.pushTemporary('test whatever you have been testing for a longer snackbar for the win whatever you have been testing for a longer snackbar for the win')} />}
+                        snackbarState.pushTemporary('test whatever you have been testing for a longer snackbar for the win whatever you have been testing for a longer snackbar for the win')} />}
                     {__DEV__ && <SettingsItem title="test Contacts" onPress={() => contactState.testImport()} />}
                     {__DEV__ && <SettingsItem title="test Share" onPress={() => this.testShare()} />}
                     {__DEV__ && <SettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}

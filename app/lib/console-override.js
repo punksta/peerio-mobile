@@ -7,7 +7,7 @@ class ConsoleOverride {
     @observable verbose = false;
 
     async areVerboseLogsEnabled() {
-        return process.env.VERBOSE_LOGS || await TinyDb.system.getValue(VERBOSE_LOGS_KEY);
+        return process.env.VERBOSE_LOGS || TinyDb.system.getValue(VERBOSE_LOGS_KEY);
     }
 
     async configureConsole() {
@@ -36,13 +36,13 @@ class ConsoleOverride {
             if (delta > STEP) console.stack.splice(0, delta);
         };
 
-        const log = console.log;
+        const { log } = console;
         console.log = function () {
             __DEV__ && log.apply(console, arguments);
             Array.from(arguments).forEach(console.stackPush);
         };
 
-        const warn = console.warn;
+        const { warn } = console;
         console.warn = function () {
             __DEV__ && warn.apply(console, arguments);
             Array.from(arguments).forEach(console.stackPush);
@@ -50,13 +50,13 @@ class ConsoleOverride {
 
         console.disableYellowBox = true;
 
-        const error = console.error;
+        const { error } = console;
         console.error = function () {
             __DEV__ && error.apply(console, arguments);
             Array.from(arguments).forEach(console.stackPush);
         };
 
-        const debug = console.debug;
+        const { debug } = console;
         console.debug = function () {
             __DEV__ && verbose && debug.apply(console, arguments);
             verbose && Array.from(arguments).forEach(console.stackPush);

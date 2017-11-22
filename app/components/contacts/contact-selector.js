@@ -47,9 +47,9 @@ export default class ContactSelector extends SafeComponent {
             borderRadius: 16,
             flexDirection: 'row',
             alignItems: 'center',
-            margin: 4,
+            margin: vars.spacing.small.mini2x,
             padding: 0,
-            paddingLeft: 12,
+            paddingLeft: vars.spacing.small.maxi2x,
             height: 32,
             overflow: 'hidden'
         };
@@ -62,7 +62,7 @@ export default class ContactSelector extends SafeComponent {
                 <View style={style}>
                     <Text style={textStyle}>{contact.username}</Text>
                     <Icon
-                        style={{ paddingRight: 4, marginLeft: 8 }}
+                        style={{ paddingRight: vars.spacing.small.mini2x, marginLeft: vars.spacing.small.midi2x }}
                         name="cancel"
                         size={vars.iconSize}
                         color="white"
@@ -78,7 +78,7 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'flex-start',
-            paddingLeft: 8,
+            paddingLeft: vars.spacing.small.midi2x,
             flexWrap: 'wrap'
         };
         const boxes = this.recipients.items.map((c, i) => this.userbox(c, i));
@@ -120,20 +120,20 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
+            padding: vars.spacing.small.mini2x,
             paddingTop: 0,
             paddingBottom: 0
         };
         const style = {
             flexGrow: 1,
-            marginLeft: 8
+            marginLeft: vars.spacing.small.midi2x
         };
 
         return (
             <View style={container}>
                 {icons.dark('search')}
                 <TextInput
-                    underlineColorAndroid={'transparent'}
+                    underlineColorAndroid="transparent"
                     value={this.findUserText}
                     onSubmitEditing={this.onSubmit}
                     returnKeyType="done"
@@ -151,7 +151,7 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: 4,
+            padding: vars.spacing.small.mini2x,
             paddingTop: 0,
             paddingBottom: 0
         };
@@ -159,7 +159,7 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1
         };
         const textStyle = {
-            fontSize: 14,
+            fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.semiBold,
             color: 'rgba(0, 0, 0, .54)'
         };
@@ -262,7 +262,7 @@ export default class ContactSelector extends SafeComponent {
         console.log(this.props.exclude);
         const found = contactState.getFiltered(this.findUserText, this.props.exclude);
         const mockItems = found.map((item, i) => this.item(item, i));
-        const activityIndicator = <ActivityIndicator style={{ marginTop: 10 }} />;
+        const activityIndicator = <ActivityIndicator style={{ marginTop: vars.spacing.small.maxi }} />;
         // const result = findUserText && findUserText.length ? mockItems : chat;
         const result = mockItems;
         const body = !this.toInvite && !found.length && contactState.loading || this.inProgress ? activityIndicator : result;

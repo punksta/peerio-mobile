@@ -8,8 +8,8 @@ import inlineImageCacheStore from './inline-image-cache-store';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import settingsState from '../settings/settings-state';
-import { clientApp } from '../../lib/icebear';
-import { T } from '../utils/translator';
+import { clientApp, config, util } from '../../lib/icebear';
+import { T, tx } from '../utils/translator';
 
 const toSettings = text => (
     <Text
@@ -22,6 +22,8 @@ const toSettings = text => (
     </Text>
 );
 
+const forceShowMap = observable.map();
+
 const toSettingsParser = { toSettings };
 
 @observer
@@ -33,36 +35,56 @@ export default class FileInlineImage extends SafeComponent {
     @observable opened;
     @observable loaded;
     @observable tooBig;
+    @observable oversizeCutoff;
     @observable loadImage;
     @observable showUpdateSettingsLink;
     @observable cachedImage;
     outerPadding = 8;
 
     componentWillMount() {
-        reaction(() => clientApp.uiUserPrefs.externalContentConsented, () => {
-            this.showUpdateSettingsLink = true;
-        });
         this.optimalContentHeight = Dimensions.get('window').height;
-        this.opened = clientApp.uiUserPrefs.peerioContentEnabled;
         when(() => this.cachedImage, () => this.fetchSize());
         const { image } = this.props;
-        const { fileId, url, oversized } = image;
-        this.tooBig = oversized;
+        const { fileId, url, isOverInlineSizeLimit, isOversizeCutoff, tmpCachePath } = image;
+        this.tooBig = isOverInlineSizeLimit || isOversizeCutoff;
+        this.oversizeCutoff = isOversizeCutoff;
+        this.loadImage = forceShowMap.get(url || fileId);
         if (fileId) {
-            when(() => image.cached || image.tmpCached, () => {
-                this.cachedImage = inlineImageCacheStore.getImage(image.tmpCachePath);
-            });
-            if (!image.cached && !image.tmpCached) {
-                when(() => this.loadImage, () => image.tryToCacheTemporarily());
+            // we have local inline file
+            when(() => clientApp.uiUserPrefs.peerioContentEnabled, () => { this.opened = true; });
+            if (!this.loadImage) {
+                when(() => clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig && !this.oversizeCutoff,
+                    () => { this.loadImage = true; });
             }
-            this.loadImage = clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig;
+            when(() => image.tmpCached, () => {
+                this.cachedImage = inlineImageCacheStore.getImage(tmpCachePath);
+            });
+            if (!image.tmpCached) {
+                when(() => this.loadImage, async () => {
+                    if (await config.FileStream.exists(tmpCachePath)) {
+                        image.tmpCached = true;
+                        return;
+                    }
+                    image.tryToCacheTemporarily(true);
+                });
+            }
         } else {
-            this.loadImage = clientApp.uiUserPrefs.externalContentEnabled;
+            // we have external url
+            when(() => clientApp.uiUserPrefs.externalContentConsented && clientApp.uiUserPrefs.externalContentEnabled,
+                () => { this.loadImage = true; });
+            this.opened =
+                clientApp.uiUserPrefs.externalContentConsented && clientApp.uiUserPrefs.externalContentEnabled;
             when(() => this.loadImage, () => {
-                this.opened = true;
                 this.cachedImage = inlineImageCacheStore.getImage(url);
+                this.opened = true;
             });
         }
+    }
+
+    forceShow = () => {
+        this.loadImage = true;
+        const { url, fileId } = this.props.image;
+        forceShowMap.set(url || fileId, true);
     }
 
     fetchSize() {
@@ -95,9 +117,6 @@ export default class FileInlineImage extends SafeComponent {
         this.optimalContentWidth = evt.nativeEvent.layout.width - this.outerPadding * 2 - 2;
     }
 
-    renderInner() {
-    }
-
     get displayTooBigImageOffer() {
         const outer = {
             padding: this.outerPadding
@@ -112,10 +131,28 @@ export default class FileInlineImage extends SafeComponent {
         };
         return (
             <View style={outer}>
-                <Text style={text0}>Images larger than 1 MB are not displayed.</Text>
-                <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={() => { this.loadImage = true; }}>
-                    <Text style={text}>Display this image anyway</Text>
+                <Text style={text0}>
+                    {tx('title_imageSizeWarning', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })}
+                </Text>
+                <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={this.forceShow}>
+                    <Text style={text}>{tx('button_displayThisImageAfterWarning')}</Text>
                 </TouchableOpacity>
+            </View>
+        );
+    }
+
+    get displayCutOffImageOffer() {
+        const outer = {
+            padding: this.outerPadding
+        };
+        const text0 = {
+            color: vars.txtDark
+        };
+        return (
+            <View style={outer}>
+                <Text style={text0}>
+                    {tx('title_imageTooBigCutoff', { size: util.formatBytes(config.chat.inlineImageSizeLimitCutoff) })}
+                </Text>
             </View>
         );
     }
@@ -129,7 +166,7 @@ export default class FileInlineImage extends SafeComponent {
         };
         return (
             <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={() => { this.loadImage = true; }}>
-                <Text style={text}>Display this image</Text>
+                <Text style={text}>{tx('button_displayThisImage')}</Text>
             </TouchableOpacity>
         );
     }
@@ -154,12 +191,12 @@ export default class FileInlineImage extends SafeComponent {
 
     renderThrow() {
         const { image } = this.props;
-        const { name, title, description, fileId, downloading /* , length, oversized */ } = image;
+        const { name, title, description, fileId, downloading } = image;
         const { width, height, loaded, showUpdateSettingsLink } = this;
         const { source } = this.cachedImage || {};
         const isLocal = !!fileId;
         if (!clientApp.uiUserPrefs.externalContentConsented && !isLocal) {
-            return <InlineUrlPreviewConsent />;
+            return <InlineUrlPreviewConsent onChange={() => { this.showUpdateSettingsLink = true; }} />;
         }
 
         // console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
@@ -196,6 +233,7 @@ export default class FileInlineImage extends SafeComponent {
         const inner = {
             backgroundColor: loaded ? vars.white : vars.lightGrayBg
         };
+
         return (
             <View>
                 <View style={outer} onLayout={this.layout}>
@@ -211,14 +249,16 @@ export default class FileInlineImage extends SafeComponent {
                             {downloading && <ActivityIndicator />}
                         </View>}
                     </View>
-                    <View style={inner}>
-                        {!downloading && this.opened && this.loadImage && width && height ?
-                            <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} /> : null}
-                        {this.opened && !this.loadImage && !this.tooBig && this.displayImageOffer}
-                        {this.opened && !this.loadImage && this.tooBig && this.displayTooBigImageOffer}
-                    </View>
+                    {this.opened &&
+                        <View style={inner}>
+                            {!downloading && this.loadImage && width && height ?
+                                <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} /> : null}
+                            {!this.loadImage && !this.tooBig && this.displayImageOffer}
+                            {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
+                            {this.oversizeCutoff && this.displayCutOffImageOffer}
+                        </View>}
                 </View>
-                {showUpdateSettingsLink && this.updateSettingsOffer}
+                {!isLocal && showUpdateSettingsLink && this.updateSettingsOffer}
             </View>
         );
     }

@@ -12,7 +12,6 @@ import TwoFactorAuthCodesGenerate from '../settings/two-factor-auth-codes-genera
 
 @observer
 export default class MockTwoFactorAuth extends Component {
-
     componentDidMount() {
         User.current = {};
         chatState.store = mockChatStore;

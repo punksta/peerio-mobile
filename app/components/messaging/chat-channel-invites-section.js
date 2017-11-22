@@ -11,42 +11,28 @@ export default class ChatChannelInvitesSection extends SafeComponent {
         const { data, onPress, title } = this.props;
         if (!data || data <= 0) return null;
 
-        const style = {
-            height: 48,
-            paddingLeft: 18,
-            paddingRight: 16,
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            backgroundColor: vars.lightGrayBg,
-            flexDirection: 'row'
-        };
-
-        const textStyle = {
-            color: vars.txtDark
-        };
-
-        const circleRadius = 12;
-        const circleStyle = {
-            width: circleRadius * 2,
-            height: circleRadius * 2,
-            borderRadius: circleRadius,
-            backgroundColor: vars.bg,
-            overflow: 'hidden',
+        const container = {
+            marginHorizontal: 16,
+            marginTop: 10,
+            marginBottom: 6,
+            borderRadius: 5,
+            borderColor: vars.bg,
+            borderWidth: 1,
             alignItems: 'center',
             justifyContent: 'center'
         };
 
-        const textCircleStyle = {
-            fontSize: 10,
-            fontWeight: 'bold',
-            color: vars.white
+        const textStyle = {
+            color: vars.bg,
+            paddingVertical: 9,
+            fontSize: vars.font.size.bigger,
+            fontWeight: '500'
         };
 
         return (
-            <View style={{ backgroundColor: vars.bg }}>
-                <TouchableOpacity disabled={!onPress} onPress={onPress} style={style} pressRetentionOffset={vars.pressRetentionOffset}>
+            <View >
+                <TouchableOpacity disabled={!onPress} onPress={onPress} style={container} pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text style={textStyle}>{title}</Text>
-                    {onPress && <View style={circleStyle}><Text style={textCircleStyle}>{data}</Text></View>}
                 </TouchableOpacity>
             </View>
         );

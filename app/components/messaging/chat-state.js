@@ -1,9 +1,9 @@
 import { observable, action, when, reaction } from 'mobx';
-import { User, TinyDb, chatStore, chatInviteStore, clientApp, warnings } from '../../lib/icebear';
+import { chatStore, chatInviteStore, clientApp, warnings } from '../../lib/icebear';
 import RoutedState from '../routes/routed-state';
-import contactState from '../contacts/contact-state';
 import sounds from '../../lib/sounds';
 import { tx } from '../utils/translator';
+import routes from '../routes/routes';
 
 class ChatState extends RoutedState {
     @observable store = chatStore;
@@ -116,11 +116,16 @@ class ChatState extends RoutedState {
         this.routerMain.chats(this.store.activeChat, true);
     }
 
-    @action addMessage(msg, files) {
+    @action addMessage(msg) {
         this.selfNewMessageCounter++;
-        this.currentChat && (
-            files ? this.currentChat.shareFiles(files) : this.currentChat.sendMessage(msg)
-        ).catch(sounds.destroy);
+        this.currentChat && msg &&
+            this.currentChat.sendMessage(msg).catch(sounds.destroy);
+    }
+
+    @action shareFiles(files) {
+        this.selfNewMessageCounter++;
+        this.currentChat && files && files.length &&
+            this.currentChat.shareFiles(files).catch(sounds.destroy);
     }
 
     @action addAck() {
@@ -138,7 +143,7 @@ class ChatState extends RoutedState {
 
     fabAction() {
         console.log(`chat-state.js: fab action`);
-        contactState.composeMessage();
+        routes.modal.compose();
     }
 }
 

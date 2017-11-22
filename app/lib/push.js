@@ -17,11 +17,11 @@ function onRegister(token) {
         // TODO: remove when server is persisting tokensif (pushState.registered) return;
         console.log(`🚲 push.js: sending registration OS: ${JSON.stringify(payload)}`);
         socket.send('/auth/mobile-device/register', payload)
-        .then(r => {
-            console.log(`🚲 push.js: register result success ${JSON.stringify(r)}`);
-            pushState.registered = true;
-        })
-        .catch(e => console.log('🚲 push.js: error registering', JSON.stringify(e)));
+            .then(r => {
+                console.log(`🚲 push.js: register result success ${JSON.stringify(r)}`);
+                pushState.registered = true;
+            })
+            .catch(e => console.log('🚲 push.js: error registering', JSON.stringify(e)));
     };
     if (socket.authenticated) registerServerSide();
     socket.onAuthenticated(registerServerSide);
