@@ -218,7 +218,8 @@ export default class FileInlineImage extends SafeComponent {
             flexGrow: 1,
             flexShrink: 1,
             fontWeight: 'bold',
-            color: vars.txtMedium
+            color: vars.txtMedium,
+            textAlignVertical: 'bottom'
         };
 
         const titleText = {
@@ -244,7 +245,7 @@ export default class FileInlineImage extends SafeComponent {
                         {!!description && <Text style={descText}>{description}</Text>}
                     </View>
                     <View style={header}>
-                        {!!name && <Text style={text}>{name}</Text>}
+                        {!!name && <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
                         {isLocal && <View style={{ flexDirection: 'row' }}>
                             {!downloading && icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
                             {!downloading && icons.darkNoPadding('more-vert', () => this.props.onAction(this.props.image))}
