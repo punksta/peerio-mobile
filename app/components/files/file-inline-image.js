@@ -219,7 +219,8 @@ export default class FileInlineImage extends SafeComponent {
             flexShrink: 1,
             fontWeight: 'bold',
             color: vars.txtMedium,
-            textAlignVertical: 'bottom'
+            textAlignVertical: 'top',
+            lineHeight: 25
         };
 
         const titleText = {
