@@ -41,11 +41,13 @@ export default class Display extends SafeComponent {
                     reverse
                     property="limitInlineImageSize"
                     title={tx('title_showLargeImages', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })} />
+                <View style={spacer} />
                 {<Text style={text}>{tx('title_urlPreview')}</Text>}
                 <WarningItem
                     content={tx('title_EnableUrlPreviewWarning')}
                     linkContent={tx('title_learnMore')}
                     link=""
+                    iconType="security"
                 />
                 <PreferenceToggleItem
                     property="externalContentEnabled"
