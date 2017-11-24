@@ -18,7 +18,7 @@ const bgStyle = {
 };
 
 const spacer = {
-    height: 24
+    height: vars.spacing.medium.midi
 };
 
 const text = {
