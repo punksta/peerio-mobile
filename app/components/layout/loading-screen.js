@@ -10,23 +10,6 @@ import { promiseWhen } from '../helpers/sugar';
 import routerMain from '../routes/router-main';
 import { tx } from '../utils/translator';
 
-const connectingInProgress = require('../../assets/loading_screens/connecting-inProgress.png');
-const connectingDone = require('../../assets/loading_screens/connecting-done.png');
-const authenticatingDormant = require('../../assets/loading_screens/authenticating-dormant.png');
-const authenticatingInProgress = require('../../assets/loading_screens/authenticating-inProgress.png');
-const authenticatingDone = require('../../assets/loading_screens/authenticating-done.png');
-const decryptingDormant = require('../../assets/loading_screens/decrypting-dormant.png');
-const decryptingInProgress = require('../../assets/loading_screens/decrypting-inProgress.png');
-const decryptingDone = require('../../assets/loading_screens/decrypting-done.png');
-const confirmingDormant = require('../../assets/loading_screens/confirming-dormant.png');
-const confirmingInProgress = require('../../assets/loading_screens/confirming-inProgress.png');
-const confirmingDone = require('../../assets/loading_screens/confirming-done.png');
-const doneDormant = require('../../assets/loading_screens/done-dormant.png');
-const doneInProgress = require('../../assets/loading_screens/done-inProgress.png');
-const lineDormant = require('../../assets/loading_screens/line-dormant.png');
-const lineInProgress = require('../../assets/loading_screens/line-inProgress.png');
-const lineDone = require('../../assets/loading_screens/line-done.png');
-
 @observer
 export default class LoadingScreen extends Component {
     @observable loadingStep = 0;
@@ -145,18 +128,44 @@ export default class LoadingScreen extends Component {
     getStatusText() {
         switch (this.loadingStep) {
             case (0):
-                return tx('title_connecting');
+                return tx(this.imageDescriptions.connecting.copy);
             case (1):
-                return tx('title_authenticating');
+                return tx(this.imageDescriptions.authenticating.copy);
             case (2):
-                return tx('title_decrypting');
+                return tx(this.imageDescriptions.decrypting.copy);
             case (3):
-                return tx('title_confirming');
+                return tx(this.imageDescriptions.confirming.copy);
             case (4):
-                return tx('title_done');
+                return tx(this.imageDescriptions.done.copy);
             default:
-                return tx('title_connecting');
+                return tx(this.imageDescriptions.connecting.copy);
         }
+    }
+
+    renderImages = (name) => {
+        const lineStyle = {
+            height: 3,
+            width: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginHorizontal: 5
+        };
+        return (
+            <View style={{ flexDirection: 'row', height: 48, justifyContent: 'center', alignItems: 'center' }}>
+                <Animated.Image
+                    key={`${name}Icon`}
+                    source={this.getSource(`${name}Icon`)}
+                    style={this[`${name}IconStyle`]}
+                    resizeMode="contain"
+                />
+                <Image
+                    key={`${name}Line`}
+                    source={this.getSource(`${name}Line`)}
+                    style={lineStyle}
+                    resizeMode="contain"
+                />
+            </View>
+        );
     }
 
     render() {
@@ -192,13 +201,6 @@ export default class LoadingScreen extends Component {
             color: vars.subtleText,
             textAlign: 'center'
         };
-        const lineStyle = {
-            height: 3,
-            width: 20,
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginHorizontal: 5
-        };
         return (
             <View style={container}>
                 <Text style={flavorTextStyle}>
@@ -206,51 +208,7 @@ export default class LoadingScreen extends Component {
                 </Text>
                 <View style={loadingProgressContainer}>
                     <View style={iconContainer}>
-                        <Animated.Image
-                            source={this.getSource('connectingIcon')}
-                            style={this.connectingIconStyle}
-                            resizeMode="contain"
-                        />
-                        <Image
-                            source={this.getSource('connectingLine')}
-                            style={lineStyle}
-                            resizeMode="contain"
-                        />
-                        <Animated.Image
-                            source={this.getSource('authenticatingIcon')}
-                            style={this.authenticatingIconStyle}
-                            resizeMode="contain"
-                        />
-                        <Image
-                            source={this.getSource('authenticatingLine')}
-                            style={lineStyle}
-                            resizeMode="contain"
-                        />
-                        <Animated.Image
-                            source={this.getSource('decryptingIcon')}
-                            style={this.decryptingIconStyle}
-                            resizeMode="contain"
-                        />
-                        <Image
-                            source={this.getSource('decryptingLine')}
-                            style={lineStyle}
-                            resizeMode="contain"
-                        />
-                        <Animated.Image
-                            source={this.getSource('confirmingIcon')}
-                            style={this.confirmingIconStyle}
-                            resizeMode="contain"
-                        />
-                        <Image
-                            source={this.getSource('confirmingLine')}
-                            style={lineStyle}
-                            resizeMode="contain"
-                        />
-                        <Animated.Image
-                            source={this.getSource('doneIcon')}
-                            style={this.doneIconStyle}
-                            resizeMode="contain"
-                        />
+                        {this.states.map(this.renderImages)}
                     </View>
                     <Text style={statusTextStyle}>
                         {this.getStatusText()}
@@ -267,69 +225,125 @@ export default class LoadingScreen extends Component {
         'title_randomMessage4'
     ];
 
+    states = [
+        'connecting',
+        'authenticating',
+        'decrypting',
+        'confirming',
+        'done'
+    ];
+
+    imageDescriptions = {
+        connecting: {
+            copy: 'title_connecting',
+            source: {
+                inProgress: require('../../assets/loading_screens/connecting-inProgress.png'),
+                Done: require('../../assets/loading_screens/connecting-done.png')
+            }
+        },
+        authenticating: {
+            copy: 'title_authenticating',
+            source: {
+                dormant: require('../../assets/loading_screens/authenticating-dormant.png'),
+                inProgress: require('../../assets/loading_screens/authenticating-inProgress.png'),
+                done: require('../../assets/loading_screens/authenticating-done.png')
+            }
+        },
+        decrypting: {
+            copy: 'title_decrypting',
+            source: {
+                dormant: require('../../assets/loading_screens/decrypting-dormant.png'),
+                inProgress: require('../../assets/loading_screens/decrypting-inProgress.png'),
+                done: require('../../assets/loading_screens/decrypting-done.png')
+            }
+        },
+        confirming: {
+            copy: 'title_confirming',
+            source: {
+                dormant: require('../../assets/loading_screens/confirming-dormant.png'),
+                inProgress: require('../../assets/loading_screens/confirming-inProgress.png'),
+                done: require('../../assets/loading_screens/confirming-done.png')
+            }
+        },
+        done: {
+            copy: 'title_done',
+            source: {
+                dormant: require('../../assets/loading_screens/done-dormant.png'),
+                inProgress: require('../../assets/loading_screens/done-inProgress.png')
+            }
+        },
+        line: {
+            source: {
+                dormant: require('../../assets/loading_screens/line-dormant.png'),
+                inProgress: require('../../assets/loading_screens/line-inProgress.png'),
+                done: require('../../assets/loading_screens/line-done.png')
+            }
+        }
+    };
+
     // Maps each Loading Step to the assets that each image should use
     images = {
         // Loading Step
         0: {
             // Icons
-            connectingIcon: connectingInProgress,
-            connectingLine: lineInProgress,
-            authenticatingIcon: authenticatingDormant,
-            authenticatingLine: lineDormant,
-            decryptingIcon: decryptingDormant,
-            decryptingLine: lineDormant,
-            confirmingIcon: confirmingDormant,
-            confirmingLine: lineDormant,
-            doneIcon: doneDormant,
-            doneLine: lineDormant
+            connectingIcon: this.imageDescriptions.connecting.source.inProgress,
+            connectingLine: this.imageDescriptions.line.source.InProgress,
+            authenticatingIcon: this.imageDescriptions.authenticating.source.dormant,
+            authenticatingLine: this.imageDescriptions.line.source.dormant,
+            decryptingIcon: this.imageDescriptions.decrypting.source.dormant,
+            decryptingLine: this.imageDescriptions.line.source.dormant,
+            confirmingIcon: this.imageDescriptions.confirming.source.dormant,
+            confirmingLine: this.imageDescriptions.line.source.dormant,
+            doneIcon: this.imageDescriptions.done.source.dormant,
+            doneLine: this.imageDescriptions.line.source.dormant
         },
         1: {
-            connectingIcon: connectingDone,
-            connectingLine: lineDone,
-            authenticatingIcon: authenticatingInProgress,
-            authenticatingLine: lineInProgress,
-            decryptingIcon: decryptingDormant,
-            decryptingLine: lineDormant,
-            confirmingIcon: confirmingDormant,
-            confirmingLine: lineDormant,
-            doneIcon: doneDormant,
-            doneLine: lineDormant
+            connectingIcon: this.imageDescriptions.connecting.source.done,
+            connectingLine: this.imageDescriptions.line.source.done,
+            authenticatingIcon: this.imageDescriptions.authenticating.source.inProgress,
+            authenticatingLine: this.imageDescriptions.line.source.inProgress,
+            decryptingIcon: this.imageDescriptions.decrypting.source.dormant,
+            decryptingLine: this.imageDescriptions.line.source.dormant,
+            confirmingIcon: this.imageDescriptions.confirming.source.dormant,
+            confirmingLine: this.imageDescriptions.line.source.dormant,
+            doneIcon: this.imageDescriptions.done.source.dormant,
+            doneLine: this.imageDescriptions.line.source.dormant
         },
         2: {
-            connectingIcon: connectingDone,
-            connectingLine: lineDone,
-            authenticatingIcon: authenticatingDone,
-            authenticatingLine: lineDone,
-            decryptingIcon: decryptingInProgress,
-            decryptingLine: lineInProgress,
-            confirmingIcon: confirmingDormant,
-            confirmingLine: lineDormant,
-            doneIcon: doneDormant,
-            doneLine: lineDormant
+            connectingIcon: this.imageDescriptions.connecting.source.done,
+            connectingLine: this.imageDescriptions.line.source.done,
+            authenticatingIcon: this.imageDescriptions.authenticating.source.done,
+            authenticatingLine: this.imageDescriptions.line.source.done,
+            decryptingIcon: this.imageDescriptions.decrypting.source.inProgress,
+            decryptingLine: this.imageDescriptions.line.source.inProgress,
+            confirmingIcon: this.imageDescriptions.confirming.source.dormant,
+            confirmingLine: this.imageDescriptions.line.source.dormant,
+            doneIcon: this.imageDescriptions.done.source.dormant,
+            doneLine: this.imageDescriptions.line.source.dormant
         },
         3: {
-            connectingIcon: connectingDone,
-            connectingLine: lineDone,
-            authenticatingIcon: authenticatingDone,
-            authenticatingLine: lineDone,
-            decryptingIcon: decryptingDone,
-            decryptingLine: lineDone,
-            confirmingIcon: confirmingInProgress,
-            confirmingLine: lineInProgress,
-            doneIcon: doneDormant,
-            doneLine: lineDormant
+            connectingIcon: this.imageDescriptions.connecting.source.done,
+            connectingLine: this.imageDescriptions.line.source.done,
+            authenticatingIcon: this.imageDescriptions.authenticating.source.done,
+            authenticatingLine: this.imageDescriptions.line.source.done,
+            decryptingIcon: this.imageDescriptions.decrypting.source.done,
+            decryptingLine: this.imageDescriptions.line.source.done,
+            confirmingIcon: this.imageDescriptions.decrypting.source.inProgress,
+            confirmingLine: this.imageDescriptions.line.source.inProgress,
+            doneIcon: this.imageDescriptions.done.source.dormant,
+            doneLine: this.imageDescriptions.line.source.dormant
         },
         4: {
-            connectingIcon: connectingDone,
-            connectingLine: lineDone,
-            authenticatingIcon: authenticatingDone,
-            authenticatingLine: lineDone,
-            decryptingIcon: decryptingDone,
-            decryptingLine: lineDone,
-            confirmingIcon: confirmingDone,
-            confirmingLine: lineDone,
-            doneIcon: doneInProgress,
-            doneLine: lineInProgress
+            connectingIcon: this.imageDescriptions.connecting.source.done,
+            connectingLine: this.imageDescriptions.line.source.done,
+            authenticatingIcon: this.imageDescriptions.authenticating.source.done,
+            authenticatingLine: this.imageDescriptions.line.source.done,
+            decryptingIcon: this.imageDescriptions.decrypting.source.done,
+            decryptingLine: this.imageDescriptions.line.source.done,
+            confirmingIcon: this.imageDescriptions.confirming.source.done,
+            confirmingLine: this.imageDescriptions.line.source.done,
+            doneIcon: this.imageDescriptions.done.source.inProgress,
+            doneLine: this.imageDescriptions.line.source.inProgress
         }
     };
 }
