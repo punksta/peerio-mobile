@@ -14,7 +14,13 @@ const container = {
 };
 
 const textStyle = {
-    overflow: 'hidden'
+    overflow: 'hidden',
+    paddingRight: vars.spacing.medium.mini2x
+};
+
+const text = {
+    fontSize: vars.font.size.smaller,
+    color: vars.txtDark
 };
 
 @observer
@@ -24,15 +30,15 @@ export default class WarningItem extends SafeComponent {
             <View style={container}>
                 <Icon
                     style={{ paddingHorizontal: vars.spacing.medium.mini2x }}
-                    name="warning"
+                    name={this.props.iconType || 'warning'}
                     size={vars.iconSize}
                     color="gray"
                 />
                 <View style={textStyle}>
-                    <Text>
-                        {this.props.content}
+                    <Text style={text}>
+                        {this.props.content}&nbsp;
+                        {this.props.linkContent}
                     </Text>
-                    {this.props.linkContent}
                 </View>
             </View>
         );
