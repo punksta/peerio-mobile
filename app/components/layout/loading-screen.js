@@ -63,33 +63,6 @@ export default class LoadingScreen extends Component {
         this.growIcon();
     }
 
-    goToNextStep = () => {
-        this.loadingStep++;
-        this.growIcon(); // Restarts animation
-        this.iconState = this.getCurrentState();
-    }
-
-    getCurrentState = () => {
-        const result = {};
-        Object.keys(this.images).forEach((name, i) => {
-            result[name] = {};
-            if (i < this.loadingStep) {
-                if (i === 4) result[name].line = null; // Icon on the far right should not have a line
-                else result[name].line = this.images.line.source.done;
-                result[name].icon = this.images[name].source.done;
-            } else if (i === this.loadingStep) {
-                if (i === 4) result[name].line = null; // Icon on the far right should not have a line
-                else result[name].line = this.images.line.source.inProgress;
-                result[name].icon = this.images[name].source.inProgress;
-            } else {
-                if (i === 4) result[name].line = null; // Icon on the far right should not have a line
-                else result[name].line = this.images.line.source.dormant;
-                result[name].icon = this.images[name].source.dormant;
-            }
-        });
-        return result;
-    }
-
     fadeInOut() {
         Animated.sequence([
             Animated.timing(
@@ -122,50 +95,39 @@ export default class LoadingScreen extends Component {
             }).start();
     }
 
+    goToNextStep = () => {
+        this.loadingStep++;
+        this.growIcon(); // Restarts animation
+        this.iconState = this.currentState;
+    }
+
+    @computed get currentState() {
+        const result = {};
+        Object.keys(this.images).forEach((name, i) => {
+            result[name] = {};
+            if (i < this.loadingStep) {
+                if (i === 4) result[name].line = null; // Icon on the far right should not have a line
+                else result[name].line = this.images.line.source.done;
+                result[name].icon = this.images[name].source.done;
+                result[name].iconStyle = this.smallIcon;
+            } else if (i === this.loadingStep) {
+                if (i === 4) result[name].line = null; // Icon on the far right should not have a line
+                else result[name].line = this.images.line.source.inProgress;
+                result[name].icon = this.images[name].source.inProgress;
+                result[name].iconStyle = this.bigIcon;
+                result.statusText = tx(this.images[name].copy);
+            } else {
+                if (i === 4) result[name].line = null; // Icon on the far right should not have a line
+                else result[name].line = this.images.line.source.dormant;
+                result[name].icon = this.images[name].source.dormant;
+                result[name].iconStyle = this.smallIcon;
+            }
+        });
+        return result;
+    }
+
     getSource(imageName) {
         return this.imagesNew[this.loadingStep][imageName];
-    }
-
-    @computed get connectingIconStyle() {
-        if (this.loadingStep === 0) return this.bigIcon;
-        return this.smallIcon;
-    }
-
-    @computed get authenticatingIconStyle() {
-        if (this.loadingStep === 1) return this.bigIcon;
-        return this.smallIcon;
-    }
-
-    @computed get decryptingIconStyle() {
-        if (this.loadingStep === 2) return this.bigIcon;
-        return this.smallIcon;
-    }
-
-    @computed get confirmingIconStyle() {
-        if (this.loadingStep === 3) return this.bigIcon;
-        return this.smallIcon;
-    }
-
-    @computed get doneIconStyle() {
-        if (this.loadingStep === 4) return this.bigIcon;
-        return this.smallIcon;
-    }
-
-    getStatusText() {
-        switch (this.loadingStep) {
-            case (0):
-                return tx(this.images.connecting.copy);
-            case (1):
-                return tx(this.images.authenticating.copy);
-            case (2):
-                return tx(this.images.decrypting.copy);
-            case (3):
-                return tx(this.images.confirming.copy);
-            case (4):
-                return tx(this.images.done.copy);
-            default:
-                return tx(this.images.connecting.copy);
-        }
     }
 
     renderImages = (name) => {
@@ -176,13 +138,14 @@ export default class LoadingScreen extends Component {
             alignItems: 'center',
             marginHorizontal: 5
         };
-        this.iconState = this.getCurrentState();
+        this.iconState = this.currentState;
         return (
             <View style={{ flexDirection: 'row', height: 48, justifyContent: 'center', alignItems: 'center' }}>
                 <Animated.Image
                     key={`${name}Icon`}
                     source={this.iconState[`${name}`].icon}
-                    style={this[`${name}IconStyle`]}
+                    // style={this[`${name}IconStyle`]}
+                    style={this.iconState[`${name}`].iconStyle}
                     resizeMode="contain"
                 />
                 <Image
@@ -238,7 +201,7 @@ export default class LoadingScreen extends Component {
                         {this.states.map(this.renderImages)}
                     </View>
                     <Text style={statusTextStyle}>
-                        {this.getStatusText()}
+                        {this.iconState.statusText}
                     </Text>
                 </View>
             </View>
