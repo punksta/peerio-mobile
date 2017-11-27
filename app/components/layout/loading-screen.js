@@ -145,7 +145,6 @@ export default class LoadingScreen extends Component {
                 <Animated.Image
                     key={`${name}Icon`}
                     source={this.iconState[`${name}`].icon}
-                    // style={this[`${name}IconStyle`]}
                     style={this.iconState[`${name}`].iconStyle}
                     resizeMode="contain"
                 />
@@ -199,7 +198,7 @@ export default class LoadingScreen extends Component {
                 </Text>
                 <View style={loadingProgressContainer}>
                     <View style={iconContainer}>
-                        {this.states.map(this.renderImages)}
+                        {Object.keys(this.icons).map(this.renderImages)}
                     </View>
                     <Text style={statusTextStyle}>
                         {this.iconState.statusText}
@@ -214,14 +213,6 @@ export default class LoadingScreen extends Component {
         'title_randomMessage2',
         'title_randomMessage3',
         'title_randomMessage4'
-    ];
-
-    states = [
-        'connecting',
-        'authenticating',
-        'decrypting',
-        'confirming',
-        'done'
     ];
 
     lines = {
