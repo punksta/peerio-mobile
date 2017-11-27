@@ -89,6 +89,8 @@ const vars = {
     listItemHeight: 64,
     listViewPaddingVertical: 36,
     listViewPaddingHorizontal: 8,
+    loadingScreenMarginBottom: scaleDim(170),
+    loadingScreenMarginTop: scaleDim(206),
     modalPaddingVertical: 40,
     modalPaddingHorizontal: 40,
     wizardPadding: 36,

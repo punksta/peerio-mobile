@@ -10,14 +10,24 @@ import { promiseWhen } from '../helpers/sugar';
 import routerMain from '../routes/router-main';
 import { tx } from '../utils/translator';
 
+const smallIcon = {
+    height: 24,
+    width: 24,
+    marginHorizontal: 6,
+    transform: [{ scale: 1 }]
+};
+const bigIcon = {
+    height: 24,
+    width: 24,
+    marginHorizontal: 6
+};
+
 @observer
 export default class LoadingScreen extends Component {
     // Animations
+    animationStyle;
     fadeValue;
     growValue;
-    // Styles
-    smallIcon;
-    bigIcon;
     // States
     @observable loadingStep = 0;
     iconState;
@@ -27,16 +37,7 @@ export default class LoadingScreen extends Component {
         super(props);
         this.fadeValue = new Animated.Value(0.70);
         this.growValue = new Animated.Value(1);
-        this.smallIcon = {
-            height: 24,
-            width: 24,
-            marginHorizontal: 6,
-            transform: [{ scale: 1 }]
-        };
-        this.bigIcon = {
-            height: 24,
-            width: 24,
-            marginHorizontal: 6,
+        this.animationStyle = {
             transform: [{ scale: this.growValue }],
             opacity: this.fadeValue
         };
@@ -103,24 +104,24 @@ export default class LoadingScreen extends Component {
 
     @computed get currentState() {
         const result = {};
-        Object.keys(this.images).forEach((name, i) => {
+        Object.keys(this.icons).forEach((name, i) => {
             result[name] = {};
             if (i < this.loadingStep) {
-                if (i === 4) result[name].line = null; // Icon on the far right should not have a line
-                else result[name].line = this.images.line.source.done;
-                result[name].icon = this.images[name].source.done;
-                result[name].iconStyle = this.smallIcon;
+                if (i === this.icons.length - 1) result[name].line = null; // Icon on the far right should not have a line
+                else result[name].line = this.lines.done;
+                result[name].icon = this.icons[name].source.done;
+                result[name].iconStyle = smallIcon;
             } else if (i === this.loadingStep) {
-                if (i === 4) result[name].line = null; // Icon on the far right should not have a line
-                else result[name].line = this.images.line.source.inProgress;
-                result[name].icon = this.images[name].source.inProgress;
-                result[name].iconStyle = this.bigIcon;
-                result.statusText = tx(this.images[name].copy);
+                if (i === this.icons.length - 1) result[name].line = null; // Icon on the far right should not have a line
+                else result[name].line = this.lines.inProgress;
+                result[name].icon = this.icons[name].source.inProgress;
+                result[name].iconStyle = [bigIcon, this.animationStyle];
+                result.statusText = tx(this.icons[name].copy);
             } else {
-                if (i === 4) result[name].line = null; // Icon on the far right should not have a line
-                else result[name].line = this.images.line.source.dormant;
-                result[name].icon = this.images[name].source.dormant;
-                result[name].iconStyle = this.smallIcon;
+                if (i === this.icons.length - 1) result[name].line = null; // Icon on the far right should not have a line
+                else result[name].line = this.lines.dormant;
+                result[name].icon = this.icons[name].source.dormant;
+                result[name].iconStyle = smallIcon;
             }
         });
         return result;
@@ -223,7 +224,13 @@ export default class LoadingScreen extends Component {
         'done'
     ];
 
-    images = {
+    lines = {
+        dormant: require('../../assets/loading_screens/line-dormant.png'),
+        inProgress: require('../../assets/loading_screens/line-inProgress.png'),
+        done: require('../../assets/loading_screens/line-done.png')
+    };
+
+    icons = {
         connecting: {
             copy: 'title_connecting',
             source: {
@@ -261,13 +268,6 @@ export default class LoadingScreen extends Component {
                 dormant: require('../../assets/loading_screens/done-dormant.png'),
                 inProgress: require('../../assets/loading_screens/done-inProgress.png'),
                 done: require('../../assets/loading_screens/done-done.png')
-            }
-        },
-        line: {
-            source: {
-                dormant: require('../../assets/loading_screens/line-dormant.png'),
-                inProgress: require('../../assets/loading_screens/line-inProgress.png'),
-                done: require('../../assets/loading_screens/line-done.png')
             }
         }
     };
