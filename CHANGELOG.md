@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.216.0"></a>
+# [3.216.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.215.0...v3.216.0) (2017-11-27)
+
+
+### Features
+
+* support HEIF and HEIC images ([12f3ade](https://github.com/PeerioTechnologies/peerio-mobile/commit/12f3ade))
+
+
+
 <a name="3.215.0"></a>
 # [3.215.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.213.0...v3.215.0) (2017-11-22)
 
