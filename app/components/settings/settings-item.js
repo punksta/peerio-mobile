@@ -12,9 +12,10 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingLeft: vars.spacing.small.maxi,
+    paddingLeft: vars.spacing.small.maxi2x,
     marginBottom: vars.spacing.small.mini,
-    minHeight: vars.iconLayoutSize
+    minHeight: vars.iconLayoutSize,
+    borderRadius: 4
 };
 
 @observer
@@ -43,7 +44,7 @@ export default class SettingsItem extends SafeComponent {
                         <Text style={{ color: this.props.disabled ? vars.txtLightGrey : vars.txtDark }}>
                             {t(this.props.title)}
                         </Text>
-                        {!!this.props.description && <Text style={{ color: vars.txtLightGrey, fontSize: vars.font.size.xsmall }}>
+                        {!!this.props.description && <Text style={{ color: vars.txtLightGrey, fontSize: vars.font.size.smaller }}>
                             {this.props.description}
                         </Text>}
                     </View>
