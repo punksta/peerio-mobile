@@ -22,7 +22,7 @@ const spacer = {
 };
 
 const text = {
-    color: vars.txtMedium,
+    color: vars.txtLightGrey,
     marginBottom: vars.spacing.small.midi2x,
     marginLeft: vars.spacing.small.midi2x
 };
@@ -40,7 +40,8 @@ export default class Display extends SafeComponent {
                 <PreferenceToggleItem
                     reverse
                     property="limitInlineImageSize"
-                    title={tx('title_showLargeImages', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })} />
+                    title={tx('title_showLargeImages', { size: util.formatBytes(config.chat.inlineImageSizeLimitCutoff) })}
+                    description={tx('title_imageTooBigCutoff', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })} />
                 <View style={spacer} />
                 {<Text style={text}>{tx('title_urlPreview')}</Text>}
                 <WarningItem

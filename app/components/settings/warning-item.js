@@ -20,7 +20,7 @@ const textStyle = {
 
 const text = {
     fontSize: vars.font.size.smaller,
-    color: vars.txtDark
+    color: vars.txtMedium
 };
 
 @observer
