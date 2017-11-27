@@ -42,14 +42,16 @@ async function processResponse(functor, params) {
     if (!response.path && response.uri) {
         response.path = response.uri;
     }
+    // if it's a HEIF or HEIC file, it would still give you path to JPG asset
+    // for the sake of compatibility
+    const ext = fileHelpers.getFileExtension(response.path).trim().toLowerCase();
     if (params.isCamera) {
-        const ext = fileHelpers.getFileExtension(response.path);
         response.fileName = `${moment(Date.now()).format('llll')}.${ext}`;
     }
+    // we may or may not have fileName, path or uri, depending on platform
     const { fileName, path, uri } = response;
-    const normalizedFileName = fileHelpers.getFileName(fileName || path || uri);
-    const ext = fileHelpers.getFileExtension(normalizedFileName);
-    return { url: normalizeUri(response), fileName: normalizedFileName, ext, response };
+    const normalizedFileName = fileHelpers.getFileNameWithoutExtension(fileName || path || uri);
+    return { url: normalizeUri(response), fileName: `${normalizedFileName}.${ext}`, ext, response };
 }
 
 const cameraSettings = {

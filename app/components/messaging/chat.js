@@ -14,6 +14,7 @@ import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
+import IdentityVerificationNotice from './identity-verification-notice';
 
 const { width } = Dimensions.get('window');
 
@@ -278,6 +279,7 @@ export default class Chat extends SafeComponent {
                     {tx('title_chatBeginning', { chatName: chat.name })}
                 </Text>
                 {this.archiveNotice}
+                <IdentityVerificationNotice />
             </View>
         );
     }
