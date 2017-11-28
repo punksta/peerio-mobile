@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.218.0"></a>
+# [3.218.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.217.0...v3.218.0) (2017-11-28)
+
+
+### Bug Fixes
+
+* code style ([493c323](https://github.com/PeerioTechnologies/peerio-mobile/commit/493c323))
+* code style ([2794068](https://github.com/PeerioTechnologies/peerio-mobile/commit/2794068))
+* code style ([4317bad](https://github.com/PeerioTechnologies/peerio-mobile/commit/4317bad))
+* code style ([ee923b0](https://github.com/PeerioTechnologies/peerio-mobile/commit/ee923b0))
+* code style ([3ea2e93](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ea2e93))
+* minor visual bugs ([0c572d7](https://github.com/PeerioTechnologies/peerio-mobile/commit/0c572d7))
+* swap inlineImageSizeLimitCutoff and inlineImageSizeLimit config ([56a8a8e](https://github.com/PeerioTechnologies/peerio-mobile/commit/56a8a8e))
+* switch inlineImageSizeLimit and inlineImageSizeLimitCutoff ([3bccde8](https://github.com/PeerioTechnologies/peerio-mobile/commit/3bccde8))
+
+
+### Reverts
+
+* switch inlineImageSizeLimit and inlineImageSizeLimitCutoff ([92ef136](https://github.com/PeerioTechnologies/peerio-mobile/commit/92ef136))
+
+
+
 <a name="3.217.0"></a>
 # [3.217.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.216.0...v3.217.0) (2017-11-27)
 
