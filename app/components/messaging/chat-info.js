@@ -30,11 +30,6 @@ export default class ChatInfo extends SafeComponent {
         );
     }
 
-    hideChat = () => {
-        chatState.currentChat.hide();
-        chatState.routerModal.discard();
-    }
-
     action(title, icon, action) {
         return (
             <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={action}>
@@ -62,7 +57,6 @@ export default class ChatInfo extends SafeComponent {
         const chat = chatState.currentChat;
         const body = (
             <View>
-                {this.lineBlock(this.action(tx('button_hideChat'), 'remove-circle-outline', this.hideChat))}
                 {chat.participants && this.lineBlock(
                     <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
                         {chat.participants.map(this.participant)}
