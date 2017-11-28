@@ -90,8 +90,12 @@ class LoginState extends RoutedState {
                 User.current = null;
                 this.passphraseValidationMessage = tx('error_wrongAK');
                 return Promise.reject(new Error(this.error));
-            })
-            .then(() => mainState.activateAndTransition(user))
+            });
+    }
+
+    transition() {
+        const user = User.current;
+        return new Promise(() => mainState.activateAndTransition(user))
             .then(() => this.clean())
             .then(async () => {
                 if (this._resetTouchId) {
