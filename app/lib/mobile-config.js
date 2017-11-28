@@ -16,6 +16,7 @@ export default (c, icebear) => {
         tfaDetail: 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-',
         msgSignature: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
         upgrade: 'route:modal:accountUpgradeSwiper',
+        createRoom: 'route:modal:createChannel',
         signup: 'route:app:signupStep1',
         settings: 'route:main:settings',
         proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',

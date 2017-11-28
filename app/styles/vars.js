@@ -41,6 +41,7 @@ const vars = {
     disabled: '#00000020',
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',
+    black: '#000',
     white: '#fff',
     whiteIcon: '#fff',
     notificationIcon: '#f00',
@@ -149,6 +150,7 @@ const vars = {
             mini: scaleDim(25),
             mini2x: scaleDim(30),
             midi: scaleDim(32),
+            midixx: scaleDim(34),
             midi2x: scaleDim(36),
             maxi: scaleDim(40),
             maxi2x: scaleDim(48)
