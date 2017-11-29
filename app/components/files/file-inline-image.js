@@ -157,6 +157,26 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
+    get displayPoorConnectionDownload() {
+        console.log('IT WORKS');
+        const outer = {
+            padding: this.outerPadding
+        };
+        const text0 = {
+            color: vars.txtDark,
+            backgroundColor: vars.lightGrayBg,
+            paddingVertical: 54,
+            textAlign: 'center'
+        };
+        return (
+            <View style={outer}>
+                <Text style={text0}>
+                    Testing
+                </Text>
+            </View>
+        );
+    }
+
     get displayImageOffer() {
         const text = {
             color: vars.bg,
@@ -191,7 +211,9 @@ export default class FileInlineImage extends SafeComponent {
 
     renderThrow() {
         const { image } = this.props;
-        const { name, title, description, fileId, downloading } = image;
+        const { name, title, description, fileId, downloading, cachingFailed } = image;
+        console.log(cachingFailed);
+        console.log(image);
         const { width, height, loaded, showUpdateSettingsLink } = this;
         const { source } = this.cachedImage || {};
         const isLocal = !!fileId;
@@ -260,6 +282,7 @@ export default class FileInlineImage extends SafeComponent {
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
                             {this.oversizeCutoff && this.displayCutOffImageOffer}
+                            {cachingFailed && this.displayPoorConnectionDownload}
                         </View>}
                 </View>
                 {!isLocal && showUpdateSettingsLink && this.updateSettingsOffer}
