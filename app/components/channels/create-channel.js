@@ -1,66 +1,24 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Dimensions, LayoutAnimation } from 'react-native';
+import { View, Text, ScrollView, Dimensions, LayoutAnimation, TextInput } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction } from 'mobx';
 import ContactSelector from '../contacts/contact-selector';
 import { t, tx } from '../utils/translator';
-import buttons from '../helpers/buttons';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
-import SimpleTextBox from '../shared/simple-text-box';
 import ChannelUpgradeOffer from './channel-upgrade-offer';
-import contactState from '../contacts/contact-state';
 import chatState from '../messaging/chat-state';
-import { User } from '../../lib/icebear';
+import { User, config, socket } from '../../lib/icebear';
+import SnackBarConnection from '../snackbars/snackbar-connection';
 
 const fillView = { flex: 1, flexGrow: 1, backgroundColor: vars.white };
-
-const rowCenter = {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: vars.spacing.small.maxi,
-    borderTopWidth: 1,
-    borderTopColor: vars.lightGrayBg
-};
-
-const bottomRowText = {
-    flexShrink: 1,
-    flex: 1,
-    color: vars.txtDate,
-    fontSize: vars.font.size.smaller,
-    marginHorizontal: vars.spacing.medium.mini2x
-};
-
-const textinputContainer = {
-    backgroundColor: vars.white,
-    marginBottom: vars.spacing.small.mini,
-    flexDirection: 'row',
-    alignItems: 'center',
-    overflow: 'hidden'
-};
-
-const textinput = {
-    fontSize: vars.font.size.normal,
-    height: vars.inputHeight,
-    color: vars.txtDark,
-    marginLeft: vars.inputPaddingLeft,
-    flex: 1,
-    flexGrow: 1
-};
-
-const label = {
-    color: vars.txtDate,
-    marginVertical: vars.spacing.small.mini2x,
-    marginLeft: vars.spacing.small.maxi
-};
 
 const { width } = Dimensions.get('window');
 
 const card = {
     width,
-    backgroundColor: vars.lightGrayBg,
+    backgroundColor: vars.white,
     flexGrow: 1
 };
 
@@ -69,6 +27,7 @@ export default class CreateChannel extends Component {
     @observable channelName = '';
     @observable channelPurpose = '';
     @observable step = 0;
+    @observable inProgress = false;
 
     componentDidMount() {
         reaction(() => this.step, () => {
@@ -82,16 +41,26 @@ export default class CreateChannel extends Component {
         if (this.step === 0) {
             this.step = 1;
         } else {
+            if (this.inProgress) return;
             this._contactSelector.action();
         }
     }
 
     get isValid() {
-        return this.channelName.trim().length > 0;
+        return this.channelName.trim().length > 0
+            && this.channelName.trim().length <= config.chat.maxChatNameLength
+            && socket.authenticated
+            && !this.inProgress;
     }
 
-    get isReady() {
-        return this.isValid && contactState.recipients.length;
+    nextIcon() {
+        if (this.step === 1) return icons.text(t('button_go'), () => this.next());
+        return icons.text(t('button_next'), () => this.next());
+    }
+
+    nextIconDisabled() {
+        if (this.step === 1) return icons.disabledText(t('button_go'));
+        return icons.disabledText(t('button_next'));
     }
 
     get exitRow() {
@@ -101,54 +70,75 @@ export default class CreateChannel extends Component {
             alignItems: 'center',
             padding: vars.spacing.small.mini2x,
             paddingTop: vars.statusBarHeight * 2,
-            paddingBottom: 0
+            paddingBottom: 0,
+            // To make room for invite
+            marginBottom: this.step === 0 ? vars.spacing.huge.minixx : vars.spacing.medium.mini
         };
         const textStyle = {
+            textAlign: 'center',
             flexGrow: 1,
             flexShrink: 1,
-            textAlign: 'center',
-            fontSize: vars.font.size.normal,
+            fontSize: vars.font.size.huge,
             fontWeight: vars.font.weight.semiBold,
-            color: 'rgba(0, 0, 0, .54)'
+            color: vars.txtDark
         };
         return (
             <View style={container}>
                 {icons.dark('close', () => chatState.routerModal.discard())}
                 <Text style={textStyle}>{tx('button_createChannel')}</Text>
-                {this.isValid ?
-                    icons.text(t('button_go'), () => this.next()) : icons.placeholder()}
+                {this.isValid ? this.nextIcon() : this.nextIconDisabled()}
             </View>
         );
     }
 
-    get createChatRow() {
-        const hideStyle = {
-            height: this.step > 0 ? 0 : 60,
-            overflow: 'hidden'
+    renderTextBox(labelText, placeholderText, property, bottomText) {
+        const height = vars.inputHeight;
+        const container = {
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: vars.spacing.medium.maxi,
+            marginHorizontal: vars.spacing.medium.mini2x,
+            marginVertical: vars.spacing.small.midi,
+            borderColor: vars.bg,
+            borderWidth: 1,
+            height,
+            borderRadius: height
         };
-        return (
-            <View style={hideStyle}>
-                <View style={[rowCenter, { height: 60 }]}>
-                    <Text numberOfLines={2} style={bottomRowText}>{tx('title_goCreateChat')}</Text>
-                    {buttons.uppercaseBlueButton(tx('button_createChat'), () => chatState.routerModal.compose())}
-                </View>
-            </View>
-        );
-    }
+        const titleStyle = {
+            color: vars.bg,
+            fontSize: vars.font.size.bigger
+        };
+        const placeholderStyle = {
+            flexGrow: 1,
+            height,
+            marginLeft: vars.spacing.small.midi,
+            fontSize: vars.font.size.normal
+        };
+        const bottomTextStyle = {
+            fontSize: vars.font.size.smaller,
+            color: vars.txtDate,
+            marginLeft: vars.spacing.large.midixx,
+            marginBottom: vars.spacing.medium.mini2x
+        };
 
-    renderTextBox(labelText, placeholderText, property) {
         return (
-            <View style={{ margin: vars.spacing.small.midi2x }}>
-                <Text style={label}>{tx(labelText)}</Text>
-                <View style={textinputContainer}>
-                    <SimpleTextBox
-                        autoCorrect={false}
-                        autoCapitalize="none"
+            <View>
+                <View style={container}>
+                    <Text style={titleStyle}>{tx(labelText)}</Text>
+                    <TextInput
+                        underlineColorAndroid="transparent"
+                        value={this.findUserText}
+                        returnKeyType="done"
+                        blurOnSubmit
                         onChangeText={text => { this[property] = text; }}
-                        placeholder={tx(placeholderText)} style={textinput}
-                        value={this[property]} />
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        placeholder={tx(placeholderText)}
+                        ref={ti => { this.textInput = ti; }}
+                        style={placeholderStyle}
+                        maxLength={config.chat.maxChatNameLength} />
                 </View>
-                {this.validationError}
+                <Text style={bottomTextStyle}>{tx(bottomText)}</Text>
             </View>
         );
     }
@@ -163,16 +153,28 @@ export default class CreateChannel extends Component {
                 key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
                 <View style={card}>
                     <ChannelUpgradeOffer />
-                    {this.renderTextBox(tx('title_channelName'), tx('title_channelNamePlaceholder'), 'channelName')}
-                    {this.renderTextBox(tx('title_channelPurpose'), tx('title_channelPurposePlaceholder'), 'channelPurpose')}
+                    {this.renderTextBox(
+                        tx('title_channelName'),
+                        tx('title_channelNamePlaceholder'),
+                        'channelName',
+                        tx('title_channelNameLimit', { maxChatNameLength: config.chat.maxChatNameLength })
+                    )}
+                    {this.renderTextBox(
+                        tx('title_channelTopic'),
+                        tx('title_channelTopicPlaceholder'),
+                        'channelPurpose',
+                        tx('title_channelTopicOptional')
+                    )}
                 </View>
                 <View style={card}>
                     <ContactSelector
                         action={async contacts => {
+                            this.inProgress = true;
                             await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
                             chatState.routerModal.discard();
                         }}
-                        hideHeader ref={ref => { this._contactSelector = ref; }} />
+                        hideHeader ref={ref => { this._contactSelector = ref; }}
+                        inputPlaceholder="title_roomParticipants" />
                 </View>
             </ScrollView>
         );
@@ -187,6 +189,7 @@ export default class CreateChannel extends Component {
             <ScrollView keyboardShouldPersistTaps={this.step > 0 ? 'handled' : 'never'} scrollEnabled={false} style={fillView} contentContainerStyle={fillView}>
                 {this.exitRow}
                 {User.current.channelsLeft <= 0 ? this.paywall : this.scrollView}
+                <SnackBarConnection />
             </ScrollView>
         );
     }

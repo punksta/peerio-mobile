@@ -94,6 +94,10 @@ class ChatState extends RoutedState {
         return this.canSend && this.currentChat.canSendAck;
     }
 
+    get canSendJitsi() {
+        return this.canSend && this.currentChat.canSendJitsi;
+    }
+
     @action startChat(recipients, isChannel = false, name, purpose) {
         try {
             const chat = this.store.startChat(recipients, isChannel, name, purpose);
@@ -126,6 +130,11 @@ class ChatState extends RoutedState {
         this.selfNewMessageCounter++;
         this.currentChat && files && files.length &&
             this.currentChat.shareFiles(files).catch(sounds.destroy);
+    }
+
+    @action addVideoMessage(link) {
+        this.selfNewMessageCounter++;
+        this.currentChat && this.currentChat.createVideoCall(link);
     }
 
     @action addAck() {

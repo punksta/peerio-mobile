@@ -2,6 +2,76 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.221.0"></a>
+# [3.221.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.220.0...v3.221.0) (2017-11-28)
+
+
+### Bug Fixes
+
+* multiple room creation on tap [#7737](https://github.com/PeerioTechnologies/peerio-mobile/issues/7737) ([553cdd8](https://github.com/PeerioTechnologies/peerio-mobile/commit/553cdd8))
+
+
+
+<a name="3.220.0"></a>
+# [3.220.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.219.0...v3.220.0) (2017-11-28)
+
+
+
+<a name="3.219.0"></a>
+# [3.219.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.218.0...v3.219.0) (2017-11-28)
+
+
+
+<a name="3.218.0"></a>
+# [3.218.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.217.0...v3.218.0) (2017-11-28)
+
+
+### Bug Fixes
+
+* code style ([493c323](https://github.com/PeerioTechnologies/peerio-mobile/commit/493c323))
+* code style ([2794068](https://github.com/PeerioTechnologies/peerio-mobile/commit/2794068))
+* code style ([4317bad](https://github.com/PeerioTechnologies/peerio-mobile/commit/4317bad))
+* code style ([ee923b0](https://github.com/PeerioTechnologies/peerio-mobile/commit/ee923b0))
+* code style ([3ea2e93](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ea2e93))
+* minor visual bugs ([0c572d7](https://github.com/PeerioTechnologies/peerio-mobile/commit/0c572d7))
+* swap inlineImageSizeLimitCutoff and inlineImageSizeLimit config ([56a8a8e](https://github.com/PeerioTechnologies/peerio-mobile/commit/56a8a8e))
+* switch inlineImageSizeLimit and inlineImageSizeLimitCutoff ([3bccde8](https://github.com/PeerioTechnologies/peerio-mobile/commit/3bccde8))
+
+
+### Reverts
+
+* switch inlineImageSizeLimit and inlineImageSizeLimitCutoff ([92ef136](https://github.com/PeerioTechnologies/peerio-mobile/commit/92ef136))
+
+
+
+<a name="3.217.0"></a>
+# [3.217.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.216.0...v3.217.0) (2017-11-27)
+
+
+
+<a name="3.216.0"></a>
+# [3.216.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.215.0...v3.216.0) (2017-11-27)
+
+
+### Features
+
+* support HEIF and HEIC images ([12f3ade](https://github.com/PeerioTechnologies/peerio-mobile/commit/12f3ade))
+
+
+
+<a name="3.215.0"></a>
+# [3.215.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.213.0...v3.215.0) (2017-11-22)
+
+
+### Bug Fixes
+
+* android spacing ([773c9a6](https://github.com/PeerioTechnologies/peerio-mobile/commit/773c9a6))
+* make link work and simplify it ([3c7b9fe](https://github.com/PeerioTechnologies/peerio-mobile/commit/3c7b9fe))
+* remove extra ([e086de6](https://github.com/PeerioTechnologies/peerio-mobile/commit/e086de6))
+* translation and url map + verification to display ([4412172](https://github.com/PeerioTechnologies/peerio-mobile/commit/4412172))
+
+
+
 <a name="3.214.0"></a>
 # [3.214.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.213.0...v3.214.0) (2017-11-22)
 
