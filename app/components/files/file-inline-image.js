@@ -171,7 +171,7 @@ export default class FileInlineImage extends SafeComponent {
         return (
             <View style={outer}>
                 <Text style={text0}>
-                    Testing
+                    {tx('title_poorConnectionInlineImage')}
                 </Text>
             </View>
         );
