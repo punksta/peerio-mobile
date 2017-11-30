@@ -75,7 +75,6 @@ class LoginState extends RoutedState {
     }
 
     @action _login(user) {
-        console.log(`login-state.js: logging in`);
         User.current = user;
         return user.login()
             .then(() => console.log('login-state.js: logged in'))
@@ -86,6 +85,7 @@ class LoginState extends RoutedState {
                 await this.enableAutomaticLogin(user);
             })
             .catch(e => {
+                this.isInProgress = false;
                 console.error(e);
                 User.current = null;
                 this.passphraseValidationMessage = tx('error_wrongAK');
