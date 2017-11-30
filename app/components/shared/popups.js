@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, WebView, View } from 'react-native';
+import { Text, WebView, View, Image } from 'react-native';
 import { observable } from 'mobx';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
@@ -7,6 +7,7 @@ import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
 import { vars } from '../../styles/styles';
+import FileTypeIcon from '../files/file-type-icon';
 
 function textControl(str) {
     const text = {
@@ -179,6 +180,37 @@ function popupInputCancel(title, placeholder, cancelable) {
     });
 }
 
+function popupFilePreview(title, textPlaceholder, cancelable, file) {
+    return new Promise((resolve) => {
+        const o = observable({ value: '' });
+        const buttons = [];
+        cancelable && buttons.push({
+            id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
+        });
+        buttons.push({
+            id: 'share', text: tu('button_share'), action: () => resolve(o), get disabled() { return !o.value; }
+        });
+        console.log(file);
+        const filePlaceholder = (file.iconType === 'img')
+            ? <Image src={file.uri} />
+            : <FileTypeIcon type={file.iconType} size={24} />;
+        const contents = (
+            <View>
+                {filePlaceholder}
+                {inputControl(o, textPlaceholder)}
+            </View>
+        );
+        /*                 <Image
+                    src={image}
+                /> */
+        popupState.showPopup({
+            title,
+            contents,
+            buttons
+        });
+    });
+}
+
 let tos = '';
 
 function popupTOS() {
@@ -278,6 +310,7 @@ export {
     popup2FA,
     popupCopyCancel,
     popupInputCancel,
+    popupFilePreview,
     popupUpgrade,
     popupSystemWarning,
     popupDeleteAccount,

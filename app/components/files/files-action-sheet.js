@@ -7,7 +7,7 @@ import SafeComponent from '../shared/safe-component';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 import { tx } from '../utils/translator';
-import { popupInputCancel } from '../shared/popups';
+import { popupInputCancel, popupFilePreview } from '../shared/popups';
 import imagepicker from '../helpers/imagepicker';
 
 @observer
@@ -17,13 +17,6 @@ export default class FilesActionSheet extends SafeComponent {
     async doUpload(sourceFunction) {
         (this.props.inline ?
             fileState.uploadInline : fileState.uploadInFiles)(await sourceFunction());
-    }
-
-    get shareFromPeerio() {
-        return {
-            title: tx('title_shareFromFiles'),
-            async action() { chatState.shareFiles(await fileState.selectFiles()); }
-        };
     }
 
     get takePhoto() {
@@ -41,11 +34,40 @@ export default class FilesActionSheet extends SafeComponent {
     }
 
     get androidFilePicker() {
+        const action = async () => {
+            const result = await popupFilePreview(
+                tx('title_uploadAndShare'),
+                tx('title_addMessage'),
+                true,
+                await imagepicker.getImageFromAndroidFilePicker()
+            );
+            if (!result) return;
+            // fileState.uploadInFiles()
+            // Share file in correct chat
+            // Share a message with the file
+        };
         return {
             title: tx('title_chooseFromFiles'),
-            async action() {
-                fileState.uploadInFiles(await imagepicker.getImageFromAndroidFilePicker());
-            }
+            action
+        };
+    }
+
+    get shareFromPeerio() {
+        const action = async () => {
+            const result = await popupFilePreview(
+                tx('title_uploadAndShare'),
+                tx('title_addMessage'),
+                true,
+                await fileState.selectFiles()
+            );
+            if (!result) return;
+            // Share file in correct chat
+            // Share a message with the file
+        };
+        return {
+            title: tx('title_shareFromFiles'),
+            // async action() { chatState.shareFiles(await fileState.selectFiles()); }
+            action
         };
     }
 
