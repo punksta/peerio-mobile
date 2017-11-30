@@ -27,6 +27,7 @@ export default class CreateChannel extends Component {
     @observable channelName = '';
     @observable channelPurpose = '';
     @observable step = 0;
+    @observable inProgress = false;
 
     componentDidMount() {
         reaction(() => this.step, () => {
@@ -40,12 +41,16 @@ export default class CreateChannel extends Component {
         if (this.step === 0) {
             this.step = 1;
         } else {
+            if (this.inProgress) return;
             this._contactSelector.action();
         }
     }
 
     get isValid() {
-        return this.channelName.trim().length > 0 && this.channelName.trim().length <= config.chat.maxChatNameLength && socket.authenticated;
+        return this.channelName.trim().length > 0
+            && this.channelName.trim().length <= config.chat.maxChatNameLength
+            && socket.authenticated
+            && !this.inProgress;
     }
 
     nextIcon() {
@@ -164,6 +169,7 @@ export default class CreateChannel extends Component {
                 <View style={card}>
                     <ContactSelector
                         action={async contacts => {
+                            this.inProgress = true;
                             await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
                             chatState.routerModal.discard();
                         }}

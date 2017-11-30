@@ -2,6 +2,41 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.223.0"></a>
+# [3.223.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.222.0...v3.223.0) (2017-11-30)
+
+
+### Bug Fixes
+
+* some more loading screen transition fixes [ch303] ([d12be60](https://github.com/PeerioTechnologies/peerio-mobile/commit/d12be60))
+
+
+
+<a name="3.222.0"></a>
+# [3.222.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.221.0...v3.222.0) (2017-11-30)
+
+
+### Bug Fixes
+
+* transition to login on error ([d713a1a](https://github.com/PeerioTechnologies/peerio-mobile/commit/d713a1a))
+
+
+
+<a name="3.221.0"></a>
+# [3.221.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.220.0...v3.221.0) (2017-11-28)
+
+
+### Bug Fixes
+
+* multiple room creation on tap [#7737](https://github.com/PeerioTechnologies/peerio-mobile/issues/7737) ([553cdd8](https://github.com/PeerioTechnologies/peerio-mobile/commit/553cdd8))
+
+
+
+<a name="3.220.0"></a>
+# [3.220.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.219.0...v3.220.0) (2017-11-28)
+
+
+
 <a name="3.219.0"></a>
 # [3.219.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.218.0...v3.219.0) (2017-11-28)
 

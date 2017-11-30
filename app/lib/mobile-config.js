@@ -46,7 +46,8 @@ export default (c, icebear) => {
     cfg.upload.uploadBufferSize = 1024 * 1024;
 
     cfg.isMobile = true;
-    cfg.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://icebear.peerio.com';
+    // socket server is always taken from env
+    cfg.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://changeme.peerio.com';
     cfg.FileStream = rnFileStream(icebear.FileStreamAbstract);
     cfg.StorageEngine = KeyValueStorage;
 
