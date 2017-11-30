@@ -47,6 +47,7 @@ export default class LoadingScreen extends Component {
     async componentDidMount() {
         try {
             await loginState.load();
+            if (!loginState.loaded) throw new Error('error logging in after return');
             this.goToNextStep();
             await promiseWhen(() => socket.authenticated);
             this.goToNextStep();
@@ -57,9 +58,9 @@ export default class LoadingScreen extends Component {
             await promiseWhen(() => routerMain.contactStateLoaded);
         } catch (e) {
             console.log('loading-screen.js: loading screen error');
-            console.error(e);
-        } finally {
             if (!loginState.loaded) routerApp.routes.loginStart.transition();
+            console.error(e);
+            return;
         }
         this.fadeInOut();
         this.growIcon();
@@ -142,7 +143,7 @@ export default class LoadingScreen extends Component {
         };
         this.iconState = this.currentState;
         return (
-            <View style={{ flexDirection: 'row', height: 48, justifyContent: 'center', alignItems: 'center' }}>
+            <View key={name} style={{ flexDirection: 'row', height: 48, justifyContent: 'center', alignItems: 'center' }}>
                 <Animated.Image
                     key={`${name}Icon`}
                     source={this.iconState[`${name}`].icon}

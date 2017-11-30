@@ -19,7 +19,6 @@ import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
 import MockComponent from './mocks';
-import LoadingScreen from './layout/loading-screen';
 
 const { height, width } = Dimensions.get('window');
 
