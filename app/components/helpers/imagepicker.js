@@ -45,7 +45,7 @@ async function processResponse(functor, params) {
     // if it's a HEIF or HEIC file, it would still give you path to JPG asset
     // for the sake of compatibility
     const ext = fileHelpers.getFileExtension(response.path).trim().toLowerCase();
-    if (params.isCamera) {
+    if (params && params.isCamera) {
         response.fileName = `${moment(Date.now()).format('llll')}.${ext}`;
     }
     // we may or may not have fileName, path or uri, depending on platform

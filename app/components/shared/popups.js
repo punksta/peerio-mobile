@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, WebView, View, Linking, Platform } from 'react-native';
+import { Text, WebView, View, Image, Linking, Platform } from 'react-native';
 import { observable } from 'mobx';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
@@ -191,13 +191,23 @@ function popupFilePreview(title, textPlaceholder, cancelable, file) {
             id: 'share', text: tu('button_share'), action: () => resolve(o), get disabled() { return !o.value; }
         });
         console.log(file);
-        const filePlaceholder = (file.iconType === 'img')
-            ? <Image src={file.uri} />
-            : <FileTypeIcon type={file.iconType} size={24} />;
+        const fileImagePlaceholder = (file.url)
+            ? <Image source={{ uri: file.url }} style={{ width: 48, height: 48 }} />
+            : <FileTypeIcon type={file[0].iconType} size={{ height: 24, width: 24 }} />;
         const contents = (
-            <View>
-                {filePlaceholder}
-                {inputControl(o, textPlaceholder)}
+            <View style={{ paddingHorizontal: vars.spacing.small.mini2x }}>
+                <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                    {fileImagePlaceholder}
+                    <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)', height: 48, width: 240 }}>
+                        <Text>
+                            {tx('title_name')}
+                        </Text>
+                        <Text>
+                            {file.fileName || file[0].name}
+                        </Text>
+                    </View>
+                </View>
+                { /* inputControl(o, textPlaceholder) */}
             </View>
         );
         /*                 <Image
