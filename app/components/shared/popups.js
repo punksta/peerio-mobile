@@ -8,6 +8,7 @@ import locales from '../../lib/locales';
 import CheckBox from './checkbox';
 import { vars } from '../../styles/styles';
 import FileTypeIcon from '../files/file-type-icon';
+import icons from '../helpers/icons';
 
 function textControl(str) {
     const text = {
@@ -193,21 +194,32 @@ function popupFilePreview(title, textPlaceholder, cancelable, file) {
         console.log(file);
         const fileImagePlaceholder = (file.url)
             ? <Image source={{ uri: file.url }} style={{ width: 48, height: 48 }} />
-            : <FileTypeIcon type={file[0].iconType} size={{ height: 24, width: 24 }} />;
+            : <FileTypeIcon type={file[0].iconType} size="medium" />;
         const contents = (
             <View style={{ paddingHorizontal: vars.spacing.small.mini2x }}>
-                <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {fileImagePlaceholder}
-                    <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)', height: 48, width: 240 }}>
-                        <Text>
+                    <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)', height: 48, width: 240, paddingHorizontal: 8, paddingTop: 2, paddingBottom: 8 }}>
+                        <Text style={{ marginBottom: 4, fontSize: 12 }}>
                             {tx('title_name')}
                         </Text>
-                        <Text>
+                        <Text >
                             {file.fileName || file[0].name}
                         </Text>
                     </View>
                 </View>
-                { /* inputControl(o, textPlaceholder) */}
+                <View style={{ marginVertical: 16, flexDirection: 'row' }}>
+                    <View>
+                        <Text style={{ fontSize: 12, color: vars.extraSubtleText, marginBottom: 2 }}>
+                            {tx('title_shareWith')}
+                        </Text>
+                        <Text style={{ fontSize: 14, color: vars.lighterBlackText }}>
+                            Recipient Name
+                        </Text>
+                    </View>
+                    {icons.dark('keyboard-arrow-right')}
+                </View>
+                {inputControl(o, textPlaceholder)}
             </View>
         );
         /*                 <Image
