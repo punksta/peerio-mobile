@@ -22,6 +22,7 @@ export default class TextInputStateful extends SafeComponent {
                     autoCapitalize="none"
                     autoCorrect={false}
                     autoComplete={false}
+                    {...this.props}
                 />
             </View>
         );

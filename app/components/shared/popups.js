@@ -27,9 +27,9 @@ function checkBoxControl(str, checked, press) {
     return <CheckBox text={str} isChecked={checked} onChange={press} />;
 }
 
-function inputControl(state, placeholder) {
+function inputControl(state, placeholder, props) {
     return (
-        <TextInputStateful placeholder={placeholder} state={state} />
+        <TextInputStateful placeholder={placeholder} state={state} {...props} />
     );
 }
 
@@ -168,7 +168,7 @@ function popupInputCancel(title, placeholder, cancelable) {
         });
         const contents = (
             <View>
-                {inputControl(o, placeholder)}
+                {inputControl(o, placeholder, { autoCapitalize: 'sentences' })}
             </View>
         );
         popupState.showPopup({
