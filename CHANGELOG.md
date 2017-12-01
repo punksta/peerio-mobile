@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.224.0"></a>
+# [3.224.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.221.0...v3.224.0) (2017-12-01)
+
+
+### Bug Fixes
+
+* picking file in android file picker didn't work ([d63fbfd](https://github.com/PeerioTechnologies/peerio-mobile/commit/d63fbfd))
+* some more loading screen transition fixes [ch303] ([987d17b](https://github.com/PeerioTechnologies/peerio-mobile/commit/987d17b))
+* transition to login on error ([a66c911](https://github.com/PeerioTechnologies/peerio-mobile/commit/a66c911))
+
+
+### Features
+
+* make input autoCapitalize ([8244cb7](https://github.com/PeerioTechnologies/peerio-mobile/commit/8244cb7))
+
+
+
 <a name="3.223.0"></a>
 # [3.223.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.222.0...v3.223.0) (2017-11-30)
 
