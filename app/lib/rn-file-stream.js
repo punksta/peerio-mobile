@@ -102,7 +102,7 @@ export default (fileStream) => {
         }
 
         static rename(oldPath, newPath) {
-            return RNSF.moveFile(oldPath, newPath);
+            return RNFS.moveFile(oldPath, newPath);
         }
 
         static getTempCachePath(name) {
