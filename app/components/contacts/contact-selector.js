@@ -116,32 +116,64 @@ export default class ContactSelector extends SafeComponent {
     }
 
     textbox() {
+        const height = 48;
         const container = {
-            flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            padding: vars.spacing.small.mini2x,
-            paddingTop: 0,
-            paddingBottom: 0
+            paddingHorizontal: vars.spacing.medium.maxi,
+            marginHorizontal: vars.spacing.medium.mini2x,
+            marginVertical: vars.spacing.small.midi,
+            borderColor: vars.bg,
+            borderWidth: 1,
+            height,
+            borderRadius: height
         };
-        const style = {
+        const titleStyle = {
+            color: vars.bg,
+            fontSize: vars.font.size.bigger
+        };
+        const placeholderStyle = {
             flexGrow: 1,
-            marginLeft: vars.spacing.small.midi2x
+            height,
+            marginLeft: vars.spacing.small.midi,
+            fontSize: vars.font.size.normal
+        };
+        const bottomTextStyle = {
+            fontSize: 12,
+            color: vars.txtDate,
+            marginLeft: vars.spacing.large.midixx
         };
 
+        let rightIcon = null;
+        if (this.findUserText) {
+            rightIcon = icons.coloredSmall('close', () => {
+                this.findUserText = '';
+                this.onChangeFindUserText('');
+            }, vars.bg);
+        }
+
+        if (this.inProgress || contactState.inProgress) {
+            rightIcon = <ActivityIndicator style={{ marginRight: vars.spacing.small.midi2x }} />;
+        }
+
         return (
-            <View style={container}>
-                {icons.dark('search')}
-                <TextInput
-                    underlineColorAndroid="transparent"
-                    value={this.findUserText}
-                    onSubmitEditing={this.onSubmit}
-                    returnKeyType="done"
-                    onChangeText={text => { this.clean = !text.length; this.onChangeFindUserText(text); }}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    placeholder={tx('title_userSearch')}
-                    ref={ti => { this.textInput = ti; }} style={style} />
+            <View>
+                <View style={container}>
+                    <Text style={titleStyle}>{tx('title_with')}</Text>
+                    <TextInput
+                        underlineColorAndroid="transparent"
+                        value={this.findUserText}
+                        returnKeyType="done"
+                        onSubmitEditing={this.onSubmit}
+                        onChangeText={text => { this.clean = !text.length; this.onChangeFindUserText(text); }}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        placeholder={tx(this.props.inputPlaceholder)}
+                        ref={ti => { this.textInput = ti; }}
+                        style={placeholderStyle} />
+                    {rightIcon}
+                </View>
+                <Text style={bottomTextStyle}>{tx('title_searchByUsernameOrEmail')}</Text>
             </View>
         );
     }
@@ -191,17 +223,18 @@ export default class ContactSelector extends SafeComponent {
     }
 
     item(contact, i) {
-        const { username, fullName } = contact;
+        const { username, fullName, isLegacy, isAdded } = contact;
         return (
             <Avatar
-                starred={contact.isAdded}
+                noBorderBottom
+                starred={isAdded}
                 contact={contact}
                 checkbox={this.props.limit > 1}
                 checkedKey={username}
                 checkedState={this.recipients.itemsMap}
                 key={username || i}
                 title={fullName}
-                title2={username}
+                title2={isLegacy ? username : null}
                 height={56}
                 hideOnline
                 onPress={() => this.toggle(contact)} />
@@ -257,6 +290,17 @@ export default class ContactSelector extends SafeComponent {
         });
     }
 
+    sectionHeader() {
+        const found = contactState.getFiltered(this.findUserText, this.props.exclude);
+        if (!found || !found.length) return null;
+        const s = { fontWeight: 'bold', marginHorizontal: vars.spacing.small.maxi, marginVertical: vars.spacing.medium.mini2x };
+        return (
+            <Text style={s}>
+                {tx('title_allYourContacts', { found: found && found.length })}
+            </Text>
+        );
+    }
+
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
         console.log(this.props.exclude);
@@ -269,23 +313,14 @@ export default class ContactSelector extends SafeComponent {
         const invite = this.inviteContactDuck;
         const inviteControl = invite ? <ContactInviteItem contact={invite} /> : null;
         const legacy = this.legacyContact;
-        const legacyControl = legacy ? <ContactLegacyItem contact={legacy} /> : null;
+        const legacyControl = legacy ? <ContactLegacyItem noBorderBottom contact={legacy} /> : null;
         return (
-            <View>
+            <View style={{ marginHorizontal: vars.spacing.medium.maxi }}>
+                {this.sectionHeader()}
                 {inviteControl}
                 {legacyControl}
                 {body}
             </View>
-        );
-    }
-
-    lineBlock(content) {
-        const s = {
-            borderBottomWidth: 1,
-            borderBottomColor: 'rgba(0, 0, 0, .12)'
-        };
-        return (
-            <View style={s}>{content}</View>
         );
     }
 
@@ -296,10 +331,10 @@ export default class ContactSelector extends SafeComponent {
         const recipients = this.recipients.items;
         return (
             <View style={{ paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight * 2 }}>
-                {this.props.hideHeader ? null : this.lineBlock(exitRow)}
+                {this.props.hideHeader ? null : exitRow}
                 {/* TODO combine recipients and search */}
-                {recipients.length ? this.lineBlock(userRow) : null}
-                {this.lineBlock(tbSearch)}
+                {recipients.length ? userRow : <View style={{ height: vars.spacing.large.maxi }} />}
+                {tbSearch}
             </View>
         );
     }
@@ -332,5 +367,6 @@ ContactSelector.propTypes = {
     exclude: PropTypes.any,
     title: PropTypes.any,
     action: PropTypes.func,
-    onExit: PropTypes.func
+    onExit: PropTypes.func,
+    inputPlaceholder: PropTypes.string
 };

@@ -12,6 +12,12 @@ const goStyle = {
     color: vars.bg
 };
 
+const disabledStyle = {
+    fontSize: vars.font.size.normal,
+    fontWeight: vars.font.weight.semiBold,
+    color: vars.disabled
+};
+
 const icons = {
     basic(name, color, onPress, style, size, noPadding) {
         return (
@@ -97,6 +103,18 @@ const icons = {
                 onPress={onPress}>
                 <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={[goStyle, style]}>{text}</Text>
+                </View>
+            </TouchableOpacity>
+        );
+    },
+
+    disabledText(text, style) {
+        const size = vars.iconPadding * 2 + vars.iconSize;
+        return (
+            <TouchableOpacity
+                pressRetentionOffset={vars.retentionOffset} >
+                <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={[disabledStyle, style]}>{text}</Text>
                 </View>
             </TouchableOpacity>
         );

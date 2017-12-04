@@ -4,7 +4,7 @@ import Router from './router';
 import Login from '../login/login';
 import SignupWizard from '../signup/signup-wizard';
 import LayoutMain from '../layout/layout-main';
-import LoadingReturn from '../layout/loading-return';
+import LoadingScreen from '../layout/loading-screen';
 import LoginAutomatic from '../login/login-automatic';
 import PopupState from '../layout/popup-state';
 import routerMain from './router-main';
@@ -14,7 +14,7 @@ class RouterApp extends Router {
     constructor() {
         super();
         routes.app = this;
-        this.add('loading', LoadingReturn);
+        this.add('loading', LoadingScreen);
         this.add('loginStart', Login.Wizard);
         this.add('loginSaved', Login.Saved);
         this.add('signupStep1', SignupWizard);

@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { computed } from 'mobx';
 import { observer } from 'mobx-react/native';
+import { t, tx } from '../utils/translator';
 import ContactSelector from '../contacts/contact-selector';
 import chatState from '../messaging/chat-state';
 import SafeComponent from '../shared/safe-component';
@@ -31,7 +32,8 @@ export default class ChannelAddPeople extends SafeComponent {
                 <ContactSelector
                     exclude={this.excluded}
                     onExit={() => chatState.routerModal.discard()}
-                    action={this.addPeople} title="Add people to channel" />
+                    action={this.addPeople} title="Add people to channel"
+                    inputPlaceholder={tx('title_TryUsernameOrEmail')} />
             </View>
         );
     }

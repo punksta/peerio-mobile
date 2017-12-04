@@ -64,8 +64,10 @@ export default class ContactSelectorDM extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            paddingHorizontal: vars.spacing.small.maxi2x,
-            margin: vars.spacing.small.maxi2x,
+            paddingHorizontal: vars.spacing.medium.maxi,
+            marginHorizontal: vars.spacing.medium.mini2x,
+            marginTop: vars.spacing.medium.mini2x,
+            marginBottom: vars.spacing.small.midi,
             borderColor: vars.bg,
             borderWidth: 1,
             height,
@@ -73,13 +75,13 @@ export default class ContactSelectorDM extends SafeComponent {
         };
         const label = {
             color: vars.bg,
-            fontSize: vars.font.size.smaller
+            fontSize: vars.font.size.bigger
         };
         const style = {
             flexGrow: 1,
             height,
-            marginLeft: vars.spacing.small.midi2x,
-            fontSize: vars.font.size.smaller
+            marginLeft: vars.spacing.small.midi,
+            fontSize: vars.font.size.normal
         };
 
         let rightIcon = null;
@@ -113,11 +115,24 @@ export default class ContactSelectorDM extends SafeComponent {
         );
     }
 
+    roomRedirectText() {
+        return (
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <Text style={{ fontSize: vars.font.size.normal, color: vars.subtleText }}>
+                    {tx('title_chatWithGroup')}
+                </Text>
+                <Text style={{ fontSize: vars.font.size.normal, color: vars.bg }}>
+                    {tx('title_createRoom')}
+                </Text>
+            </View>);
+    }
+
     exitRow() {
         const container = {
             flexGrow: 1,
             flexDirection: 'row',
-            padding: vars.spacing.small.midi2x,
+            paddingTop: vars.spacing.small.midi2x,
+            paddingHorizontal: vars.spacing.small.midi2x,
             alignItems: 'center'
         };
         const textStyle = {
@@ -241,7 +256,7 @@ export default class ContactSelectorDM extends SafeComponent {
             </View>
         );
         return (
-            <View style={{ marginHorizontal: vars.spacing.small.maxi2x }}>
+            <View style={{ marginHorizontal: vars.spacing.medium.maxi }}>
                 {notFound}
                 {this.inviteContact}
                 {!!this.legacyContact &&
@@ -255,6 +270,7 @@ export default class ContactSelectorDM extends SafeComponent {
         return (
             <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
                 {this.exitRow()}
+                {this.roomRedirectText()}
                 {this.textbox()}
             </View>
         );
