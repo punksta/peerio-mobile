@@ -101,6 +101,10 @@ export default (fileStream) => {
             return RNFS.unlink(path);
         }
 
+        static rename(oldPath, newPath) {
+            return RNSF.moveFile(oldPath, newPath);
+        }
+
         static getTempCachePath(name) {
             return pathUtils.join(getTemporaryDirectory(), name);
         }
