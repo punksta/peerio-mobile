@@ -7,7 +7,6 @@ import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
 import { vars } from '../../styles/styles';
-import FilePreview from '../controls/popup-file-preview';
 
 function textControl(str) {
     const text = {
@@ -176,22 +175,6 @@ function popupInputCancel(title, placeholder, cancelable) {
             title,
             contents,
             buttons
-        });
-    });
-}
-
-function popupFilePreview (cancelable, file) {
-    return new Promise((resolve) => {
-        const contents = (
-            <FilePreview
-                file={file}
-                onSubmit={resolve}
-            />
-        );
-        const title = tx('title_uploadAndShare');
-        popupState.showPopup({
-            title,
-            contents
         });
     });
 }

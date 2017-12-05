@@ -66,7 +66,7 @@ const messageInputStyle = {
     marginTop: vars.spacing.small.midi2x
 };
 
-export default class FilePreview extends SafeComponent {
+export default class FileSharePreview extends SafeComponent {
     fileName;
     message;
 
@@ -78,6 +78,9 @@ export default class FilePreview extends SafeComponent {
 
         return (
             <View>
+                <Text style={}>
+                    {tx('title_uploadAndShare')}
+                </Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {fileImagePlaceholder}
                     <View style={nameContainer}>
@@ -141,7 +144,7 @@ export default class FilePreview extends SafeComponent {
     }
 }
 
-FilePreview.propTypes = {
+FileSharePreview.propTypes = {
     file: PropTypes.any,
     onSubmit: PropTypes.any
 };
