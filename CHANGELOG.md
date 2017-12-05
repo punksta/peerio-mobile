@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.225.0"></a>
+# [3.225.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.224.0...v3.225.0) (2017-12-05)
+
+
+### Bug Fixes
+
+* typo ([c960ef3](https://github.com/PeerioTechnologies/peerio-mobile/commit/c960ef3))
+
+
+### Features
+
+* **file-stream:** add rename method ([#68](https://github.com/PeerioTechnologies/peerio-mobile/issues/68)) ([da4f068](https://github.com/PeerioTechnologies/peerio-mobile/commit/da4f068))
+* refactor purchase flow to satisfy apple ([dd2e345](https://github.com/PeerioTechnologies/peerio-mobile/commit/dd2e345))
+
+
+
 <a name="3.224.0"></a>
 # [3.224.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.221.0...v3.224.0) (2017-12-01)
 
