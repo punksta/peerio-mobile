@@ -5,4 +5,4 @@
 // import MockPopups from './mock-popups';
 
 export default null;
-// export default __DEV__ ? MockChannel : null;
+// export default __DEV__ ? MockPopups : null;

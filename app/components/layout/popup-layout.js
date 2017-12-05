@@ -78,7 +78,8 @@ export default class PopupLayout extends SafeComponent {
             },
             borderBottomLeftRadius: 8,
             borderBottomRightRadius: 8,
-            backgroundColor: vars.white
+            backgroundColor: vars.white,
+            justifyContent: 'space-between'
         };
 
         const title = {
