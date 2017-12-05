@@ -152,26 +152,24 @@ class LoginState extends RoutedState {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         await !force && inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
         if (!force && User.current.autologinEnabled) {
-            const popupResult = await popupSignOutAutologin();
-            if (!popupResult) {
-                routes.main.settings();
-                settingsState.transition('security');
-                return;
-            }
-            await User.removeLastAuthenticated();
-            const { username } = User.current;
-            await TinyDb.system.removeValue(`${username}::${loginConfiguredKey}`);
-            await TinyDb.system.removeValue(`user::${username}::touchid`);
-            await TinyDb.system.removeValue(`user::${username}::keychain`);
-            await TinyDb.system.removeValue(`${username}::skipTouchID`);
-            try {
-                await keychain.delete(await mainState.getKeychainKey());
-            } catch (e) {
-                console.log(e);
-            }
-            await User.current.signout(popupResult.checked);
-            await RNRestart.Restart();
+            routes.main.settings();
+            settingsState.transition('security');
+            return;
         }
+        const popupResult = await popupSignOutAutologin();
+        await User.removeLastAuthenticated();
+        const { username } = User.current;
+        await TinyDb.system.removeValue(`${username}::${loginConfiguredKey}`);
+        await TinyDb.system.removeValue(`user::${username}::touchid`);
+        await TinyDb.system.removeValue(`user::${username}::keychain`);
+        await TinyDb.system.removeValue(`${username}::skipTouchID`);
+        try {
+            await keychain.delete(await mainState.getKeychainKey());
+        } catch (e) {
+            console.log(e);
+        }
+        await User.current.signout(popupResult.checked);
+        await RNRestart.Restart();
     }
 
     async load() {
