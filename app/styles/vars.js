@@ -82,6 +82,7 @@ const vars = {
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconSizeSmall: 16,
+    iconSizeLarge: 48,
     iconFileViewSize: 72,
     iconPadding: 12,
     iconSizeBigger: 25,
