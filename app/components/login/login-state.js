@@ -151,12 +151,16 @@ class LoginState extends RoutedState {
     async signOut(force) {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         await !force && inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
+        let untrust = false;
         if (!force && User.current.autologinEnabled) {
-            routes.main.settings();
-            settingsState.transition('security');
-            return;
+            const popupResult = await popupSignOutAutologin();
+            if (!popupResult) {
+                routes.main.settings();
+                settingsState.transition('security');
+                return;
+            }
+            untrust = popupResult.checked;
         }
-        const popupResult = await popupSignOutAutologin();
         await User.removeLastAuthenticated();
         const { username } = User.current;
         await TinyDb.system.removeValue(`${username}::${loginConfiguredKey}`);
@@ -168,7 +172,7 @@ class LoginState extends RoutedState {
         } catch (e) {
             console.log(e);
         }
-        await User.current.signout(popupResult.checked);
+        await User.current.signout(untrust);
         await RNRestart.Restart();
     }
 
