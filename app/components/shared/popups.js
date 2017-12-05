@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, WebView, View, Linking, Platform } from 'react-native';
+import { Text, WebView, View } from 'react-native';
 import { observable } from 'mobx';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
@@ -250,14 +250,13 @@ function popupDeleteAccount() {
     }));
 }
 
-function popupControl(contents) {
+function popupControl(contents, button) {
     console.log(`popups.js: popup control`);
     return new Promise((resolve) => {
         popupState.showPopup({
-            fullScreen: 1,
             contents,
             buttons: [{
-                id: 'ok', text: tu('button_ok'), action: resolve
+                id: 'ok', text: tu(button || 'button_ok'), action: resolve
             }]
         });
     });
