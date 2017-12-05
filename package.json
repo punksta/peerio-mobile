@@ -23,6 +23,7 @@
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
     "build-android-debug": "cd android && ./gradlew assembleDebug",
     "test": "bash scripts/setup_tests.sh && bash scripts/run-tests.sh",
+    "cucumber": "bash scripts/cucumber.sh",
     "gp-peerio": "npm run build-android && bash scripts/release_android.sh && fastlane android alpha",
     "commit-msg": "validate-commit-msg"
   },
@@ -103,6 +104,8 @@
     "babel-preset-stage-0": "6.24.1",
     "chai": "3.5.0",
     "commitizen": "2.9.6",
+    "cucumber": "3.1.0",
+    "cucumber-pretty": "0.0.5",
     "cz-conventional-changelog": "2.1.0",
     "detect-indent-cli": "1.0.1",
     "eslint-config-peerio": "1.21.7",
@@ -117,7 +120,8 @@
     "sinon-chai": "2.14.0",
     "standard-version": "4.0.0",
     "user-home-cli": "1.0.1",
-    "validate-commit-message": "3.0.1"
+    "validate-commit-message": "3.0.1",
+    "webdriverio": "4.9.10"
   },
   "config": {
     "commitizen": {
