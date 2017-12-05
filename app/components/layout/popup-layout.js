@@ -105,9 +105,9 @@ export default class PopupLayout extends SafeComponent {
                             {popup.subTitle}
                             {popup.contents}
                         </View>
-                        <View style={buttonBar}>
+                        {popup.buttons && <View style={buttonBar}>
                             {popup.buttons.map(this.button)}
-                        </View>
+                        </View>}
                     </View>
                 </View>
             </View>

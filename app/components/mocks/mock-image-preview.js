@@ -8,18 +8,17 @@ import { tx } from '../utils/translator';
 
 @observer
 export default class MockImagePreview extends Component {
-    componentDidMount() {
-        popupFilePreview(
-            tx('title_uploadAndShare'),
-            tx('title_addMessage'),
+    async componentDidMount() {
+        const result = await popupFilePreview(
             true,
             {
                 0: {
                     iconType: 'img',
                     name: 'testFile'
                 }
-            }
+            },
         );
+        console.log(result);
     }
 
     render() {

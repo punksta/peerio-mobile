@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, WebView, View, Image, Linking, Platform } from 'react-native';
+import { Text, WebView, View, Linking, Platform } from 'react-native';
 import { observable } from 'mobx';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
@@ -7,8 +7,7 @@ import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
 import { vars } from '../../styles/styles';
-import FileTypeIcon from '../files/file-type-icon';
-import icons from '../helpers/icons';
+import FilePreview from '../controls/popup-file-preview';
 
 function textControl(str) {
     const text = {
@@ -29,9 +28,9 @@ function checkBoxControl(str, checked, press) {
     return <CheckBox text={str} isChecked={checked} onChange={press} />;
 }
 
-function inputControl(state, placeholder) {
+function inputControl(state, placeholder, style) {
     return (
-        <TextInputStateful placeholder={placeholder} state={state} />
+        <TextInputStateful placeholder={placeholder} state={state} style={style} />
     );
 }
 
@@ -181,54 +180,18 @@ function popupInputCancel(title, placeholder, cancelable) {
     });
 }
 
-function popupFilePreview(title, textPlaceholder, cancelable, file) {
+function popupFilePreview (cancelable, file) {
     return new Promise((resolve) => {
-        const o = observable({ value: '' });
-        const buttons = [];
-        cancelable && buttons.push({
-            id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
-        });
-        buttons.push({
-            id: 'share', text: tu('button_share'), action: () => resolve(o), get disabled() { return !o.value; }
-        });
-        console.log(file);
-        const fileImagePlaceholder = (file.url)
-            ? <Image source={{ uri: file.url }} style={{ width: 48, height: 48 }} />
-            : <FileTypeIcon type={file[0].iconType} size="medium" />;
         const contents = (
-            <View style={{ paddingHorizontal: vars.spacing.small.mini2x }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    {fileImagePlaceholder}
-                    <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.05)', height: 48, width: 240, paddingHorizontal: 8, paddingTop: 2, paddingBottom: 8 }}>
-                        <Text style={{ marginBottom: 4, fontSize: 12 }}>
-                            {tx('title_name')}
-                        </Text>
-                        <Text >
-                            {file.fileName || file[0].name}
-                        </Text>
-                    </View>
-                </View>
-                <View style={{ marginVertical: 16, flexDirection: 'row' }}>
-                    <View>
-                        <Text style={{ fontSize: 12, color: vars.extraSubtleText, marginBottom: 2 }}>
-                            {tx('title_shareWith')}
-                        </Text>
-                        <Text style={{ fontSize: 14, color: vars.lighterBlackText }}>
-                            Recipient Name
-                        </Text>
-                    </View>
-                    {icons.dark('keyboard-arrow-right')}
-                </View>
-                {inputControl(o, textPlaceholder)}
-            </View>
+            <FilePreview
+                file={file}
+                onSubmit={resolve}
+            />
         );
-        /*                 <Image
-                    src={image}
-                /> */
+        const title = tx('title_uploadAndShare');
         popupState.showPopup({
             title,
-            contents,
-            buttons
+            contents
         });
     });
 }
