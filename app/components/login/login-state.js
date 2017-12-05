@@ -151,7 +151,8 @@ class LoginState extends RoutedState {
     async signOut(force) {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         await !force && inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
-        if (!force && User.current.autologinEnabled && !await popupSignOutAutologin()) {
+        const popupResult = await popupSignOutAutologin();
+        if (!force && User.current.autologinEnabled && !popupResult) {
             routes.main.settings();
             settingsState.transition('security');
             return;
@@ -167,7 +168,7 @@ class LoginState extends RoutedState {
         } catch (e) {
             console.log(e);
         }
-        await User.current.signout();
+        await User.current.signout(popupResult.checked);
         await RNRestart.Restart();
     }
 
