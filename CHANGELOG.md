@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.226.0"></a>
+# [3.226.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.223.0...v3.226.0) (2017-12-05)
+
+
+### Bug Fixes
+
+* picking file in android file picker didn't work ([b040a06](https://github.com/PeerioTechnologies/peerio-mobile/commit/b040a06))
+
+
+### Features
+
+* refactor purchase flow to satisfy apple ([247a9c3](https://github.com/PeerioTechnologies/peerio-mobile/commit/247a9c3))
+
+
+
 <a name="3.225.0"></a>
 # [3.225.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.224.0...v3.225.0) (2017-12-05)
 
