@@ -112,7 +112,7 @@ function popupSignOutAutologin() {
         const contents = (
             <View style={{ minHeight: vars.popupMinHeight }}>
                 {textControl(t('title_signOutConfirmKeys'))}
-                {!User.current.trustedDevice &&
+                {User.current.trustedDevice &&
                     checkBoxControl(
                         t('title_stopTrustingThisDevice'),
                         o.checked,
