@@ -151,10 +151,15 @@ class LoginState extends RoutedState {
     async signOut(force) {
         const inProgress = !!fileStore.files.filter(f => f.downloading || f.uploading).length;
         await !force && inProgress ? rnAlertYesNo(tx('dialog_confirmLogOutDuringTransfer')) : Promise.resolve(true);
-        if (!force && User.current.autologinEnabled && !await popupSignOutAutologin()) {
-            routes.main.settings();
-            settingsState.transition('security');
-            return;
+        let untrust = false;
+        if (!force && User.current.autologinEnabled) {
+            const popupResult = await popupSignOutAutologin();
+            if (!popupResult) {
+                routes.main.settings();
+                settingsState.transition('security');
+                return;
+            }
+            untrust = popupResult.checked;
         }
         await User.removeLastAuthenticated();
         const { username } = User.current;
@@ -167,7 +172,7 @@ class LoginState extends RoutedState {
         } catch (e) {
             console.log(e);
         }
-        await User.current.signout();
+        await User.current.signout(untrust);
         await RNRestart.Restart();
     }
 

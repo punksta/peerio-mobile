@@ -7,6 +7,7 @@ import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
 import { vars } from '../../styles/styles';
+import { User } from '../../lib/icebear';
 
 function textControl(str) {
     const text = {
@@ -107,12 +108,24 @@ function popupYesSkip(title, subTitle, text) {
 
 function popupSignOutAutologin() {
     return new Promise((resolve) => {
+        const o = observable({ value: '', checked: false });
+        const contents = (
+            <View style={{ minHeight: vars.popupMinHeight }}>
+                {textControl(t('title_signOutConfirmKeys'))}
+                {User.current.trustedDevice &&
+                    checkBoxControl(
+                        t('title_stopTrustingThisDevice'),
+                        o.checked,
+                        v => { o.checked = v; })
+                }
+            </View>
+        );
         popupState.showPopup({
             title: t('title_gotYourKeys'),
-            contents: textControl(t('title_signOutConfirmKeys')),
+            contents,
             buttons: [
                 { id: 'no', text: tu('button_getKey'), action: () => resolve(false) },
-                { id: 'yes', text: tu('button_lock'), action: () => resolve(true), secondary: true }
+                { id: 'yes', text: tu('button_lock'), action: () => resolve(o), secondary: true }
             ]
         });
     });

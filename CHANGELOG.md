@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.228.0"></a>
+# [3.228.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.227.0...v3.228.0) (2017-12-06)
+
+
+### Bug Fixes
+
+* do not show untrust checkbox if the device is not trusted ([3a15071](https://github.com/PeerioTechnologies/peerio-mobile/commit/3a15071))
+* icebear version ([1087db8](https://github.com/PeerioTechnologies/peerio-mobile/commit/1087db8))
+* icebear version, checkbox text clip ([17845a7](https://github.com/PeerioTechnologies/peerio-mobile/commit/17845a7))
+* signout logic ([021f0ac](https://github.com/PeerioTechnologies/peerio-mobile/commit/021f0ac))
+* signout logic - attempt [#2](https://github.com/PeerioTechnologies/peerio-mobile/issues/2) ([a5698b3](https://github.com/PeerioTechnologies/peerio-mobile/commit/a5698b3))
+* signout logic - attempt [#3](https://github.com/PeerioTechnologies/peerio-mobile/issues/3) ([c01f0ca](https://github.com/PeerioTechnologies/peerio-mobile/commit/c01f0ca))
+
+
+### Features
+
+* add checkbox to logout popup ([f023a76](https://github.com/PeerioTechnologies/peerio-mobile/commit/f023a76))
+
+
+
 <a name="3.227.0"></a>
 # [3.227.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.226.0...v3.227.0) (2017-12-06)
 
