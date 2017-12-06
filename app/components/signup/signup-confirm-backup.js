@@ -10,6 +10,7 @@ import { tx } from '../utils/translator';
 import LoginWizardPage, {
     header, innerSmall, circleTopSmall, title2, row, container, topCircleSizeSmall
 } from '../login/login-wizard-page';
+import testLabel from '../helpers/test-label';
 
 const imageWelcomeSafe = require('../../assets/welcome-safe.png');
 
@@ -77,7 +78,7 @@ export default class SignupConfirmBackup extends LoginWizardPage {
                                     state={this}
                                     name="confirmText"
                                     placeholder={this.confirmTextSample}
-                                    testID="confirmText"
+                                    {...testLabel('confirmText')}
                                     hint={this.confirmTextSample} />
                             </View>
                         </View>

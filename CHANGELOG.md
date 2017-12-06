@@ -2,6 +2,64 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.227.0"></a>
+# [3.227.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.226.0...v3.227.0) (2017-12-06)
+
+
+### Features
+
+* UI tests with Appium and CucumberJS ([#70](https://github.com/PeerioTechnologies/peerio-mobile/issues/70)) ([bf48be7](https://github.com/PeerioTechnologies/peerio-mobile/commit/bf48be7))
+
+
+
+<a name="3.225.0"></a>
+# [3.225.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.224.0...v3.225.0) (2017-12-05)
+
+
+### Bug Fixes
+
+* typo ([c960ef3](https://github.com/PeerioTechnologies/peerio-mobile/commit/c960ef3))
+
+
+### Features
+
+* **file-stream:** add rename method ([#68](https://github.com/PeerioTechnologies/peerio-mobile/issues/68)) ([da4f068](https://github.com/PeerioTechnologies/peerio-mobile/commit/da4f068))
+* refactor purchase flow to satisfy apple ([dd2e345](https://github.com/PeerioTechnologies/peerio-mobile/commit/dd2e345))
+
+
+
+<a name="3.224.0"></a>
+# [3.224.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.223.0...v3.224.0) (2017-12-01)
+
+
+### Bug Fixes
+
+* picking file in android file picker didn't work ([d63fbfd](https://github.com/PeerioTechnologies/peerio-mobile/commit/d63fbfd))
+* some more loading screen transition fixes [ch303] ([987d17b](https://github.com/PeerioTechnologies/peerio-mobile/commit/987d17b))
+* transition to login on error ([a66c911](https://github.com/PeerioTechnologies/peerio-mobile/commit/a66c911))
+
+
+### Features
+
+* make input autoCapitalize ([8244cb7](https://github.com/PeerioTechnologies/peerio-mobile/commit/8244cb7))
+
+
+
+<a name="3.226.0"></a>
+# [3.226.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.223.0...v3.226.0) (2017-12-05)
+
+
+### Bug Fixes
+
+* picking file in android file picker didn't work ([b040a06](https://github.com/PeerioTechnologies/peerio-mobile/commit/b040a06))
+
+
+### Features
+
+* refactor purchase flow to satisfy apple ([247a9c3](https://github.com/PeerioTechnologies/peerio-mobile/commit/247a9c3))
+
+
+
 <a name="3.225.0"></a>
 # [3.225.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.224.0...v3.225.0) (2017-12-05)
 
