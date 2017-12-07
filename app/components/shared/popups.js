@@ -295,7 +295,6 @@ export {
     popup2FA,
     popupCopyCancel,
     popupInputCancel,
-    popupFilePreview,
     popupUpgrade,
     popupSystemWarning,
     popupDeleteAccount,

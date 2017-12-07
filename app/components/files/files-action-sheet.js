@@ -7,8 +7,9 @@ import SafeComponent from '../shared/safe-component';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 import { tx } from '../utils/translator';
-import { popupInputCancel, popupFilePreview } from '../shared/popups';
+import { popupInputCancel } from '../shared/popups';
 import imagepicker from '../helpers/imagepicker';
+import routes from '../routes/routes';
 
 @observer
 export default class FilesActionSheet extends SafeComponent {
@@ -35,13 +36,9 @@ export default class FilesActionSheet extends SafeComponent {
 
     get androidFilePicker() {
         const action = async () => {
-            const result = await popupFilePreview(
-                tx('title_uploadAndShare'),
-                tx('title_addMessage'),
-                true,
-                await imagepicker.getImageFromAndroidFilePicker()
-            );
+            const result = await imagepicker.getImageFromAndroidFilePicker();
             if (!result) return;
+            routes.modal.fileSharePreview();
             // fileState.uploadInFiles()
             // Share file in correct chat
             // Share a message with the file
@@ -54,13 +51,12 @@ export default class FilesActionSheet extends SafeComponent {
 
     get shareFromPeerio() {
         const action = async () => {
-            const result = await popupFilePreview(
-                tx('title_uploadAndShare'),
-                tx('title_addMessage'),
-                true,
-                await fileState.selectFiles()
-            );
+            const result = await fileState.selectFiles();
             if (!result) return;
+            // result = selected files
+            // need to pass result to modal
+            routes.modal.fileSharePreview();
+            // if (!result) return;
             // Share file in correct chat
             // Share a message with the file
         };
