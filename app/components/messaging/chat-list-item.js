@@ -46,7 +46,8 @@ export default class ChatListItem extends SafeComponent {
         if (chatState.collapseDMs) return null;
         if (!this.props || !this.props.chat) return null;
         const { chat } = this.props;
-        const { participants } = chat;
+        const { participants, headLoaded } = chat;
+        if (!headLoaded) return null;
         // group chats have null for contact
         let contact = null;
         let isDeleted = false;

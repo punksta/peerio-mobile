@@ -4,6 +4,7 @@ import RoutedState from '../routes/routed-state';
 import sounds from '../../lib/sounds';
 import { tx } from '../utils/translator';
 import routes from '../routes/routes';
+import { promiseWhen } from '../helpers/sugar';
 
 class ChatState extends RoutedState {
     @observable store = chatStore;
@@ -34,8 +35,13 @@ class ChatState extends RoutedState {
     }
 
     @action async init() {
-        this.chatStore.loadAllChats();
-        return new Promise(resolve => when(() => this.chatStore.loaded, resolve));
+        const { store } = this;
+        store.loadAllChats();
+        await promiseWhen(() => store.loaded);
+        await promiseWhen(
+            () => store.chats.filter(c => c.headLoaded).length === store.chats.length,
+            5000
+        );
     }
 
     get currentChat() {

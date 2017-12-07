@@ -11,7 +11,8 @@ export default class ChannelListItem extends SafeComponent {
     renderThrow() {
         if (chatState.collapseChannels) return null;
         const { chat } = this.props;
-        const { name, unreadCount } = chat;
+        const { name, unreadCount, headLoaded } = chat;
+        if (!headLoaded) return null;
         if (!chat) return null;
         const containerStyle = {
             height: 48,
