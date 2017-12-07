@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.232.0"></a>
+# [3.232.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.231.0...v3.232.0) (2017-12-07)
+
+
+### Bug Fixes
+
+* fix android crashing on request permissions ([fbb0c2f](https://github.com/PeerioTechnologies/peerio-mobile/commit/fbb0c2f))
+
+
+### Features
+
+* android smoother loading screen (chat and channel names) ([875c270](https://github.com/PeerioTechnologies/peerio-mobile/commit/875c270))
+
+
+
 <a name="3.231.0"></a>
 # [3.231.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.230.0...v3.231.0) (2017-12-06)
 
