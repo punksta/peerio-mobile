@@ -37,7 +37,7 @@ async function processResponse(functor, params) {
     if (response.didRequestPermission) {
         console.log('imagepicker.js: permissions requested');
         await waitForPermissions();
-        response = await functor();
+        response = await functor(params);
     }
     if (!response.path && response.uri) {
         response.path = response.uri;
