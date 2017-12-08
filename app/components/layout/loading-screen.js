@@ -11,15 +11,15 @@ import routerMain from '../routes/router-main';
 import { tx } from '../utils/translator';
 
 const smallIcon = {
-    height: 24,
-    width: 24,
-    marginHorizontal: 6,
+    height: vars.iconSize,
+    width: vars.iconSize,
+    marginHorizontal: vars.spacing.small.midi,
     transform: [{ scale: 1 }]
 };
 const bigIcon = {
-    height: 24,
-    width: 24,
-    marginHorizontal: 6
+    height: vars.iconSize,
+    width: vars.iconSize,
+    marginHorizontal: vars.spacing.small.midi
 };
 
 @observer
@@ -106,21 +106,22 @@ export default class LoadingScreen extends Component {
 
     @computed get currentState() {
         const result = {};
+        const numberOfSteps = Object.keys(this.icons).length - 1;
         Object.keys(this.icons).forEach((name, i) => {
             result[name] = {};
             if (i < this.loadingStep) {
-                if (i === this.icons.length - 1) result[name].line = null; // Icon on the far right should not have a line
+                if (i === numberOfSteps) result[name].line = null; // Icon on the far right should not have a line
                 else result[name].line = this.lines.done;
                 result[name].icon = this.icons[name].source.done;
                 result[name].iconStyle = smallIcon;
             } else if (i === this.loadingStep) {
-                if (i === this.icons.length - 1) result[name].line = null; // Icon on the far right should not have a line
+                if (i === numberOfSteps) result[name].line = null; // Icon on the far right should not have a line
                 else result[name].line = this.lines.inProgress;
                 result[name].icon = this.icons[name].source.inProgress;
                 result[name].iconStyle = [bigIcon, this.animationStyle];
                 result.statusText = tx(this.icons[name].copy);
             } else {
-                if (i === this.icons.length - 1) result[name].line = null; // Icon on the far right should not have a line
+                if (i === numberOfSteps) result[name].line = null; // Icon on the far right should not have a line
                 else result[name].line = this.lines.dormant;
                 result[name].icon = this.icons[name].source.dormant;
                 result[name].iconStyle = smallIcon;
@@ -143,19 +144,19 @@ export default class LoadingScreen extends Component {
         };
         this.iconState = this.currentState;
         return (
-            <View key={name} style={{ flexDirection: 'row', height: 48, justifyContent: 'center', alignItems: 'center' }}>
+            <View key={name} style={{ flexDirection: 'row', height: vars.iconSizeLarge, justifyContent: 'center', alignItems: 'center' }}>
                 <Animated.Image
                     key={`${name}Icon`}
                     source={this.iconState[`${name}`].icon}
                     style={this.iconState[`${name}`].iconStyle}
                     resizeMode="contain"
                 />
-                <Image
+                {this.iconState[`${name}`].line && <Image
                     key={`${name}Line`}
                     source={this.iconState[`${name}`].line}
                     style={lineStyle}
                     resizeMode="contain"
-                />
+                />}
             </View>
         );
     }
@@ -170,25 +171,25 @@ export default class LoadingScreen extends Component {
         const flavorTextStyle = {
             fontSize: vars.font.size.big,
             color: vars.subtleText,
-            paddingHorizontal: 24,
+            paddingHorizontal: vars.spacing.medium.maxi2x,
             textAlign: 'center',
-            marginTop: vars.spacing.huge.maxi2x * 2.75
+            marginTop: vars.loadingScreenMarginTop
         };
         const loadingProgressContainer = {
             flex: 1,
             flexGrow: 1,
             justifyContent: 'flex-end',
-            marginBottom: vars.spacing.huge.maxi2x * 2.25
+            marginBottom: vars.loadingScreenMarginBottom
         };
         const iconContainer = {
             flexDirection: 'row',
-            paddingHorizontal: 40,
-            height: 48,
+            paddingHorizontal: vars.spacing.large.maxi,
+            height: vars.iconSizeLarge,
             justifyContent: 'center',
             alignItems: 'center'
         };
         const statusTextStyle = {
-            marginTop: 20,
+            marginTop: vars.spacing.medium.midi2x,
             fontSize: vars.font.size.big,
             color: vars.subtleText,
             textAlign: 'center'

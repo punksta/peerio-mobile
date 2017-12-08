@@ -7,6 +7,7 @@ import Bold from '../controls/bold';
 import { T } from '../utils/translator';
 import BgPattern from '../controls/bg-pattern';
 import { vars } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class MessagingPlaceholder extends SafeComponent {
@@ -55,7 +56,7 @@ export default class MessagingPlaceholder extends SafeComponent {
             <View style={outerContainerStyle}>
                 <BgPattern />
                 <View style={inpagePopupStyle}>
-                    <Text style={title}><T k="title_welcomeHeading" /></Text>
+                    <Text {...testLabel('title_welcomeHeading')} style={title}><T k="title_welcomeHeading" /></Text>
                     <T k="dialog_chatZeroState">{textParser}</T>
                 </View>
             </View>

@@ -17,7 +17,7 @@ class InlineImageCacheStore {
         if (!result) {
             result = new CachedImage();
             data[imagePath] = result;
-            imagePath.startsWith('http') ?
+            imagePath.toLowerCase().startsWith('http') ?
                 this.getImageByUrl(result, imagePath) :
                 this.getImageByFileName(result, imagePath);
         }

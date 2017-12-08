@@ -22,6 +22,7 @@ export default class CheckBox extends Component {
             flexGrow: 1,
             flex: 1,
             justifyContent: 'flex-end',
+            alignItems: 'center',
             paddingVertical: vars.spacing.medium.mini2x
         };
         const checkbox = {
@@ -35,7 +36,7 @@ export default class CheckBox extends Component {
         };
         const text = {
             color: '#000000AA',
-            height: 16
+            height: 20
         };
         return (
             <TouchableOpacity onPress={() => this.toggle()} pressRetentionOffset={vars.retentionOffset} style={container}>

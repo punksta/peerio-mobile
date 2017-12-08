@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, WebView, View, Linking, Platform } from 'react-native';
+import { Text, WebView, View } from 'react-native';
 import { observable } from 'mobx';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
@@ -7,6 +7,7 @@ import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
 import { vars } from '../../styles/styles';
+import { User } from '../../lib/icebear';
 
 function textControl(str) {
     const text = {
@@ -27,9 +28,9 @@ function checkBoxControl(str, checked, press) {
     return <CheckBox text={str} isChecked={checked} onChange={press} />;
 }
 
-function inputControl(state, placeholder, style) {
+function inputControl(state, placeholder, props) {
     return (
-        <TextInputStateful placeholder={placeholder} state={state} style={style} />
+        <TextInputStateful placeholder={placeholder} state={state} {...props} />
     );
 }
 
@@ -107,12 +108,24 @@ function popupYesSkip(title, subTitle, text) {
 
 function popupSignOutAutologin() {
     return new Promise((resolve) => {
+        const o = observable({ value: '', checked: false });
+        const contents = (
+            <View style={{ minHeight: vars.popupMinHeight }}>
+                {textControl(t('title_signOutConfirmKeys'))}
+                {User.current.trustedDevice &&
+                    checkBoxControl(
+                        t('title_stopTrustingThisDevice'),
+                        o.checked,
+                        v => { o.checked = v; })
+                }
+            </View>
+        );
         popupState.showPopup({
             title: t('title_gotYourKeys'),
-            contents: textControl(t('title_signOutConfirmKeys')),
+            contents,
             buttons: [
                 { id: 'no', text: tu('button_getKey'), action: () => resolve(false) },
-                { id: 'yes', text: tu('button_lock'), action: () => resolve(true), secondary: true }
+                { id: 'yes', text: tu('button_lock'), action: () => resolve(o), secondary: true }
             ]
         });
     });
@@ -168,7 +181,7 @@ function popupInputCancel(title, placeholder, cancelable) {
         });
         const contents = (
             <View>
-                {inputControl(o, placeholder)}
+                {inputControl(o, placeholder, { autoCapitalize: 'sentences' })}
             </View>
         );
         popupState.showPopup({
@@ -250,14 +263,13 @@ function popupDeleteAccount() {
     }));
 }
 
-function popupControl(contents) {
+function popupControl(contents, button) {
     console.log(`popups.js: popup control`);
     return new Promise((resolve) => {
         popupState.showPopup({
-            fullScreen: 1,
             contents,
             buttons: [{
-                id: 'ok', text: tu('button_ok'), action: resolve
+                id: 'ok', text: tu(button || 'button_ok'), action: resolve
             }]
         });
     });
