@@ -8,6 +8,7 @@ import icons from '../helpers/icons';
 import SafeComponent from '../shared/safe-component';
 import ButtonText from '../controls/button-text';
 import uiState from '../layout/ui-state';
+import fileState from './file-state';
 
 const modalStyle = {
     position: 'absolute',
@@ -119,10 +120,13 @@ export default class FileSharePreview extends SafeComponent {
     message;
 
     render() {
-        this.fileName = this.props.file.fileName || this.props.file[0].name;
-        const fileImagePlaceholder = (this.props.file.url)
-            ? <Image source={{ uri: this.props.file.url }} style={imagePreviewStyle} />
-            : <FileTypeIcon type={this.props.file[0].iconType} size="medium" />;
+        const file = fileState.selectedFile;
+        this.fileName = file.name;
+        // const file = fileState.selectedFile;
+        // this.fileName = file.name;
+        const fileImagePlaceholder = file.url
+            ? <Image source={{ uri: file.url }} style={imagePreviewStyle} />
+            : <FileTypeIcon type={file.iconType} size="medium" />;
 
         return (
             <View style={popupNonAnimatedStyle}>

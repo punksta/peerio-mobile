@@ -10,14 +10,7 @@ export default class MockImagePreview extends Component {
     render() {
         return (
             <View style={{ backgroundColor: 'white', flex: 1, flexGrow: 1, paddingTop: vars.layoutPaddingTop }}>
-                <FilePreview
-                    file={{
-                        0: {
-                            iconType: 'img',
-                            name: 'testFile'
-                        }
-                    }}
-                />
+                <FilePreview />
                 { /* <StatusBar barStyle="default" /> */}
             </View>
         );

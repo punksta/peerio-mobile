@@ -38,6 +38,7 @@ export default class FilesActionSheet extends SafeComponent {
         const action = async () => {
             const result = await imagepicker.getImageFromAndroidFilePicker();
             if (!result) return;
+            fileState.selectedFile = result[0];
             routes.modal.fileSharePreview();
             // fileState.uploadInFiles()
             // Share file in correct chat
@@ -53,10 +54,8 @@ export default class FilesActionSheet extends SafeComponent {
         const action = async () => {
             const result = await fileState.selectFiles();
             if (!result) return;
-            // result = selected files
-            // need to pass result to modal
+            fileState.selectedFile = result[0];
             routes.modal.fileSharePreview();
-            // if (!result) return;
             // Share file in correct chat
             // Share a message with the file
         };

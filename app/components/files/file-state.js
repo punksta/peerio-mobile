@@ -14,6 +14,7 @@ class FileState extends RoutedState {
     localFileMap = observable.map();
     store = fileStore;
     _prefix = 'files';
+    selectedFile = null;
 
     @action async init() {
         this.currentFolder = fileStore.folders.root;
@@ -90,6 +91,7 @@ class FileState extends RoutedState {
     }
 
     @action resetSelection() {
+        this.selectedFile = null;
         this.selected.forEach(f => { f.selected = false; });
     }
 

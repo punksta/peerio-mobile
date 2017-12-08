@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ContactSelector from '../contacts/contact-selector';
 import { t, tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
-import fileState from '../files/file-state';
+import fileState from './file-state';
 
 export default class FileShare extends Component {
     render() {
