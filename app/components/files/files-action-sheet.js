@@ -35,19 +35,12 @@ export default class FilesActionSheet extends SafeComponent {
     }
 
     get androidFilePicker() {
-        const action = async () => {
-            const result = await imagepicker.getImageFromAndroidFilePicker();
-            if (!result) return;
-            fileState.selectedFile = result[0];
-            routes.modal.fileSharePreview();
-            // fileState.uploadInFiles()
-            // Share file in correct chat
-            // Share a message with the file
-        };
         return {
             title: tx('title_chooseFromFiles'),
-            action
-        };
+            async action() {
+                fileState.uploadInFiles(await imagepicker.getImageFromAndroidFilePicker());
+            }
+        }
     }
 
     get shareFromPeerio() {
