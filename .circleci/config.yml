@@ -3,44 +3,44 @@ jobs:
   build:
     macos:
       xcode: "8.3.3"
-      environment:
-        XCODE_SCHEME: peeriomobile
-        PATH: '$PATH:$HOME/node/node-v8.4.0-darwin-x64/bin'
-        PEERIO_IOS_SIM: 'iPhone 6 Plus'
-        PEERIO_IOS_VERSION: '10.3'
-        PEERIO_TEST_PLATFORM: 'ios'
-      steps:
-        - checkout
-        - makend:
-          name: "Make node dir"
-          command: ls "$HOME/node/node-v8.4.0-darwin-x64" || mkdir "$HOME/node"
-        - download-node:
-          name: "Download node"
-          command: ls "$HOME/node/node-v8.4.0-darwin-x64" || curl -L "https://nodejs.org/dist/v8.4.0/node-v8.4.0-darwin-x64.tar.gz" -o "$HOME/node/node-v8.4.0-darwin-x64.tar.gz"
-        - extract-node:
-          name: "Extract node"
-          command: ls "$HOME/node/node-v8.4.0-darwin-x64" || tar -xzf "$HOME/node/node-v8.4.0-darwin-x64.tar.gz" -C "$HOME/node/"
-        - cleanup-node:
-          name: "Cleanup node installation"
-          command: rm -f "$HOME/node/node-v8.4.0-darwin-x64.tar.gz"
-        - check-node:
-          name: "Check node installation"
-          command: ls "$HOME/node/node-v8.4.0-darwin-x64"
-        - check-path:
-          name: "Checking $PATH"
-          command: echo $PATH
-        - check-working-dir:
-          name: "Check working dir"
-          command: pwd
-        - npm-install:
-          name: "Install npm modules"
-          command: npm install
-        - setup-tests:
-          name: "Setup tests"
-          command: bash scripts/setup_tests.sh
-        - compile:
-          name: "Compile and run"
-          command: ./node_modules/.bin/react-native run-ios
+    environment:
+      XCODE_SCHEME: peeriomobile
+      PATH: '$PATH:$HOME/node/node-v8.4.0-darwin-x64/bin'
+      PEERIO_IOS_SIM: 'iPhone 6 Plus'
+      PEERIO_IOS_VERSION: '10.3'
+      PEERIO_TEST_PLATFORM: 'ios'
+    steps:
+      - checkout
+      - makend:
+        name: "Make node dir"
+        command: ls "$HOME/node/node-v8.4.0-darwin-x64" || mkdir "$HOME/node"
+      - download-node:
+        name: "Download node"
+        command: ls "$HOME/node/node-v8.4.0-darwin-x64" || curl -L "https://nodejs.org/dist/v8.4.0/node-v8.4.0-darwin-x64.tar.gz" -o "$HOME/node/node-v8.4.0-darwin-x64.tar.gz"
+      - extract-node:
+        name: "Extract node"
+        command: ls "$HOME/node/node-v8.4.0-darwin-x64" || tar -xzf "$HOME/node/node-v8.4.0-darwin-x64.tar.gz" -C "$HOME/node/"
+      - cleanup-node:
+        name: "Cleanup node installation"
+        command: rm -f "$HOME/node/node-v8.4.0-darwin-x64.tar.gz"
+      - check-node:
+        name: "Check node installation"
+        command: ls "$HOME/node/node-v8.4.0-darwin-x64"
+      - check-path:
+        name: "Checking $PATH"
+        command: echo $PATH
+      - check-working-dir:
+        name: "Check working dir"
+        command: pwd
+      - npm-install:
+        name: "Install npm modules"
+        command: npm install
+      - setup-tests:
+        name: "Setup tests"
+        command: bash scripts/setup_tests.sh
+      - compile:
+        name: "Compile and run"
+        command: ./node_modules/.bin/react-native run-ios
 
 workflows:
   version: 2
