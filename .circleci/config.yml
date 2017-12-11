@@ -5,12 +5,14 @@ jobs:
       xcode: "8.3.3"
     environment:
       XCODE_SCHEME: peeriomobile
-      PATH: '$PATH:$HOME/node/node-v8.4.0-darwin-x64/bin'
       PEERIO_IOS_SIM: 'iPhone 6 Plus'
       PEERIO_IOS_VERSION: '10.3'
       PEERIO_TEST_PLATFORM: 'ios'
     steps:
       - checkout
+      - run:
+          name: "Set PATH"
+          command: export PATH='$PATH:$HOME/node/node-v8.4.0-darwin-x64/bin'
       - run:
           name: "Make node dir"
           command: ls "$HOME/node/node-v8.4.0-darwin-x64" || mkdir "$HOME/node"
