@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: "Set PATH"
-          command: export PATH="$PATH:$HOME/node/node-v8.4.0-darwin-x64/bin"
+          command: echo "export PATH=\"$PATH:$HOME/node/node-v8.4.0-darwin-x64/bin\"" >> $BASH_ENV
       - run:
           name: "Make node dir"
           command: ls "$HOME/node/node-v8.4.0-darwin-x64" || mkdir "$HOME/node"
