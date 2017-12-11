@@ -9,6 +9,7 @@ jobs:
       PEERIO_IOS_VERSION: '10.3'
       PEERIO_TEST_PLATFORM: 'ios'
       CIRCLE_TEST_REPORTS: ~/reports
+      CIRCLE_ARTIFACTS: ~/artifacts
     steps:
       - checkout
       - run:
@@ -42,21 +43,18 @@ jobs:
           name: "Install npm modules"
           command: npm install
       - run:
-          name: "Setup tests"
-          command: bash scripts/setup_tests.sh
-      - run:
           name: "Compile and run"
           command: ./node_modules/.bin/react-native run-ios
       - run:
           name: "Create artifact folder"
-          command: mkdir ~/reports && mkdir ~/reports/py.test
+          command: mkdir ~/reports && mkdir ~/reports/py.test && mkdir ~/artifacts
       - run:
           name: "Run tests"
           command: npm test
       - store_test_results:
-          path: ~/reports
+          path: ~/reports/py.test
       - store_artifacts:
-          path: ~/reports
+          path: ~/artifacts
 
 workflows:
   version: 2
