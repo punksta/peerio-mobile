@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-    build-and-test:
+    build:
         macos:
             xcode: "8.3.3"
         environment:
@@ -12,7 +12,7 @@ jobs:
             PEERIO_TEST_PLATFORM: 'ios'
         steps:
             - checkout
-            - make-node-dir
+            - make_node_dir
               name: "Make node dir"
               command: ls "$HOME/node/node-v8.4.0-darwin-x64" || mkdir "$HOME/node"
             - download-node
@@ -56,4 +56,4 @@ test:
 
 workflows:
     version: 2
-    build-and-test
+    build
