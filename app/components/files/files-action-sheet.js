@@ -40,7 +40,7 @@ export default class FilesActionSheet extends SafeComponent {
             async action() {
                 fileState.uploadInFiles(await imagepicker.getImageFromAndroidFilePicker());
             }
-        }
+        };
     }
 
     get shareFromPeerio() {

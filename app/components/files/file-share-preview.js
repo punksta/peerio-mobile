@@ -122,8 +122,6 @@ export default class FileSharePreview extends SafeComponent {
     render() {
         const file = fileState.selectedFile;
         this.fileName = file.name;
-        // const file = fileState.selectedFile;
-        // this.fileName = file.name;
         const fileImagePlaceholder = file.url
             ? <Image source={{ uri: file.url }} style={imagePreviewStyle} />
             : <FileTypeIcon type={file.iconType} size="medium" />;
