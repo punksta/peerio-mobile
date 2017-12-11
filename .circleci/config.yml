@@ -32,7 +32,7 @@ jobs:
       - run:
           name: "Check working dir"
           command: pwd
-      - rub:
+      - run:
           name: "Install npm modules"
           command: npm install
       - run:
