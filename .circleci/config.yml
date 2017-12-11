@@ -24,6 +24,9 @@ jobs:
           name: "Extract node"
           command: ls "$HOME/node/node-v8.4.0-darwin-x64" || tar -xzf "$HOME/node/node-v8.4.0-darwin-x64.tar.gz" -C "$HOME/node/"
       - run:
+          name: "Install node-gyp"
+          command: npm install node-gyp -g
+      - run:
           name: "Cleanup node installation"
           command: rm -f "$HOME/node/node-v8.4.0-darwin-x64.tar.gz"
       - run:
