@@ -27,7 +27,7 @@ case "${unameOut}" in
         ;;
 esac
 
-./node_modules/.bin/appium &
+./node_modules/.bin/appium > /dev/null &
 APPIUM_PID=$!
 
 trap "exit" INT TERM
