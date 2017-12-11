@@ -12,7 +12,7 @@ case "${unameOut}" in
     Darwin*)
         echo "Mac..."
         killall -9 Simulator
-        SIM_UDID=`xcrun instruments -s | grep -E "$PEERIO_IOS_SIM \($PEERIO_IOS_VERSION*\)" | grep -o "\[.*\]" | tr -d '[]'`
+        SIM_UDID=`xcrun instruments -s | grep -E "$PEERIO_IOS_SIM \($PEERIO_IOS_VERSION.*\)" | grep -o "\[.*\]" | tr -d '[]'`
         if [ -z $"$SIM_UDID" ]; then
           echo "Could not find simulator: $PEERIO_IOS_SIM ($PEERIO_IOS_VERSION)"
           echo "Available simulators:"
