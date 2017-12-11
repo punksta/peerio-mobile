@@ -8,6 +8,7 @@ jobs:
       PEERIO_IOS_SIM: 'iPhone 6 Plus'
       PEERIO_IOS_VERSION: '10.3'
       PEERIO_TEST_PLATFORM: 'ios'
+      CIRCLE_TEST_REPORTS: ~/reports
     steps:
       - checkout
       - run:
@@ -43,6 +44,16 @@ jobs:
       - run:
           name: "Compile and run"
           command: ./node_modules/.bin/react-native run-ios
+      - run:
+          name: "Create artifact folder"
+          command: mkdir ~/reports && mkdir ~/reports/py.test
+      - run:
+          name: "Run tests"
+          command: npm test
+      - store_test_results:
+          path: ~/reports
+      - store_artifacts:
+          path: ~/reports
 
 workflows:
   version: 2
