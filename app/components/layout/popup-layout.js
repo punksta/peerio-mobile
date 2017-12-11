@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, LayoutAnimation, Platform } from 'react-native';
+import { ScrollView, View, Text, LayoutAnimation, Platform } from 'react-native';
 import { reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import popupState from './popup-state';
@@ -49,10 +49,14 @@ export default class PopupLayout extends SafeComponent {
         };
 
         const popupNonAnimatedStyle = [modalStyle, {
-            justifyContent: 'center',
-            backgroundColor: '#00000020',
             transform: [{ translateY: 0 }]
         }];
+        const contentContainerStyle = {
+            flexGrow: 1,
+            justifyContent: 'center',
+            backgroundColor: '#00000020',
+            paddingBottom: uiState.keyboardHeight
+        };
         const backgroundColor = colors[popup.type];
         const margin = vars.spacing.large.mini2;
         const wrapper = {
@@ -98,7 +102,8 @@ export default class PopupLayout extends SafeComponent {
         };
 
         return (
-            <View style={popupNonAnimatedStyle}>
+            // scroll view so clicking outside of textboxes would close keyboard
+            <ScrollView scrollEnabled={false} style={popupNonAnimatedStyle} contentContainerStyle={contentContainerStyle}>
                 <View style={wrapper}>
                     <View style={container}>
                         <View style={{ padding: vars.spacing.medium.midi2x, flexGrow: 1, flexShrink: 1 }}>
@@ -111,7 +116,7 @@ export default class PopupLayout extends SafeComponent {
                         </View>}
                     </View>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }

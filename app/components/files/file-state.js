@@ -11,6 +11,7 @@ import { promiseWhen } from '../helpers/sugar';
 class FileState extends RoutedState {
     @observable currentFile = null;
     @observable currentFolder = null;
+    @observable previewFile = null;
     localFileMap = observable.map();
     store = fileStore;
     _prefix = 'files';

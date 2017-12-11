@@ -10,6 +10,7 @@ import { tx } from '../utils/translator';
 import { popupInputCancel } from '../shared/popups';
 import imagepicker from '../helpers/imagepicker';
 import routes from '../routes/routes';
+import FileSharePreview from './file-share-preview';
 
 @observer
 export default class FilesActionSheet extends SafeComponent {
@@ -48,7 +49,8 @@ export default class FilesActionSheet extends SafeComponent {
             const result = await fileState.selectFiles();
             if (!result) return;
             fileState.selectedFile = result[0];
-            routes.modal.fileSharePreview();
+            console.log(result[0]);
+            await FileSharePreview.popup(fileState.selectedFile);
             // Share file in correct chat
             // Share a message with the file
         };
