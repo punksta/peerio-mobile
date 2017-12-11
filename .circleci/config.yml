@@ -6,7 +6,7 @@ jobs:
     environment:
       XCODE_SCHEME: peeriomobile
       PEERIO_IOS_SIM: 'iPhone 6 Plus'
-      PEERIO_IOS_VERSION: '10.3'
+      PEERIO_IOS_VERSION: '10.3.1'
       PEERIO_TEST_PLATFORM: 'ios'
       CIRCLE_TEST_REPORTS: ~/reports
       CIRCLE_ARTIFACTS: ~/artifacts
