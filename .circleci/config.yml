@@ -11,7 +11,7 @@ jobs:
             PEERIO_TEST_PLATFORM: 'ios'
         steps:
             - checkout
-            - make-node-dir:
+            - makend:
                 name: "Make node dir"
                 command: ls "$HOME/node/node-v8.4.0-darwin-x64" || mkdir "$HOME/node"
             - download-node:
