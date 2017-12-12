@@ -7,6 +7,10 @@ defineSupportCode(({ setDefaultTimeout, setWorldConstructor, Before, After }) =>
 
     setWorldConstructor(World);
 
+    Before('@noCacheReset', function () {
+        this.context.platform.desiredCapabilities.noReset = true;
+    });
+
     Before(function () {
         return this.openApp();
     });

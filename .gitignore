@@ -55,6 +55,7 @@ tests/console.py
 .pyenv
 *.pyc
 misc
+test/screenshots
 
 # env settings
 env.sh
