@@ -11,6 +11,7 @@ function isIphoneX() {
     );
 }
 
+const iPhoneStatusBar = (Platform.OS === 'ios' ? 20 : 0);
 const iPhoneXTop = isIphoneX() ? 16 : 0;
 const iPhoneXBottom = iPhoneXTop;
 
@@ -78,7 +79,7 @@ const vars = {
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
-    headerHeight: 80 + iPhoneXTop,
+    headerHeight: 56 + iPhoneStatusBar + iPhoneXTop,
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconSizeSmall: 16,
