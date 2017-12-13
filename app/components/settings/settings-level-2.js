@@ -13,6 +13,7 @@ import PaymentsQuotas from '../payments/payments-quotas';
 import ProfileEdit from './profile-edit';
 import AccountEdit from './account-edit';
 import AccountUpgrade from './account-upgrade';
+import Logs from '../logs/logs';
 import keychain from '../../lib/keychain-bridge';
 
 const bgStyle = {
@@ -73,6 +74,8 @@ export default class SettingsLevel2 extends SafeComponent {
     account = () => <AccountEdit />;
 
     upgrade = () => <AccountUpgrade />;
+
+    logs = () => <Logs />;
 
     autoLoginToggle() {
         const user = User.current;
