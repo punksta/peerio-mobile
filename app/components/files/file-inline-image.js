@@ -248,8 +248,16 @@ export default class FileInlineImage extends SafeComponent {
                     <View style={header}>
                         {!!name && <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
                         {isLocal && <View style={{ flexDirection: 'row' }}>
-                            {!downloading && icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
-                            {!downloading && icons.darkNoPadding('more-vert', () => this.props.onAction(this.props.image))}
+                            {!downloading && icons.darkNoPadding(
+                                this.opened ? 'arrow-drop-up' : 'arrow-drop-down',
+                                () => { this.opened = !this.opened; },
+                                { marginHorizontal: vars.spacing.small.maxi2x }
+                            )}
+                            {!downloading && icons.darkNoPadding(
+                                'more-vert',
+                                () => this.props.onAction(this.props.image),
+                                { marginHorizontal: vars.spacing.small.maxi2x }
+                            )}
                             {downloading && <ActivityIndicator />}
                         </View>}
                     </View>
