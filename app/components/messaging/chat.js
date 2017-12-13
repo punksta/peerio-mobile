@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
-import { observable, when, reaction } from 'mobx';
+import { observable, when, reaction, computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
 import MessagingPlaceholder from '../messaging/messaging-placeholder';
@@ -16,6 +16,7 @@ import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
 import VideoIcon from '../layout/video-icon';
 import IdentityVerificationNotice from './identity-verification-notice';
+import { User } from '../../lib/icebear';
 
 const { width } = Dimensions.get('window');
 
@@ -235,7 +236,7 @@ export default class Chat extends SafeComponent {
                 keyboardShouldPersistTaps="never"
                 enableEmptySections
                 ref={sv => { this.scrollView = sv; }}>
-                {this.chat.canGoUp ? refreshControlTop : this.zeroStateItem()}
+                {this.chat.canGoUp ? refreshControlTop : this.zeroStateItem}
                 {this.data.map(this.item)}
                 {this.chat.limboMessages &&
                     this.chat.limboMessages.filter(m => !(m.files && !m.files.length)).map(this.item)}
@@ -246,22 +247,22 @@ export default class Chat extends SafeComponent {
 
     get archiveNotice() {
         // TODO: archive notice
-        /* eslint-disable */
-        return true || this.props.archiveNotice ? (
+        return true || this.props.archiveNotice ? ( // eslint-disable-line
             <Text style={{ textAlign: 'left', margin: vars.spacing.small.maxi2x, marginTop: 0, marginBottom: vars.spacing.medium.mini2x, color: vars.txtMedium }}>
                 {tx('title_chatArchive')}
             </Text>
         ) : null;
     }
 
-    zeroStateItem() {
+    @computed get zeroStateItem() {
         const zsContainer = {
             borderBottomWidth: 0,
             borderBottomColor: '#CFCFCF',
             marginBottom: vars.spacing.small.midi2x
         };
         const { chat } = this;
-        const participants = chat.participants || [];
+        const participants = (chat.participants || []).slice();
+        participants.push(contactState.store.getContact(User.current.username));
         const w = 3 * 36;
         const shiftX = (width - w - w * participants.length) / participants.length;
         const shift = shiftX < 0 ? shiftX : 0;
@@ -299,8 +300,8 @@ export default class Chat extends SafeComponent {
                     {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
                 </View>
                 <ProgressOverlay enabled={chatState.loading} />
-                <ChatActionSheet ref={sheet => (this._actionSheet = sheet)} />
-                <InlineImageActionSheet ref={sheet => (this._inlineImageActionSheet = sheet)} />
+                <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
+                <InlineImageActionSheet ref={sheet => { this._inlineImageActionSheet = sheet; }} />
             </View>
         );
     }

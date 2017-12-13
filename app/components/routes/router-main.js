@@ -19,7 +19,6 @@ import ContactListInvite from '../contacts/contact-list-invite';
 import { fileState, mainState, ghostState, chatState, settingsState, contactState, contactAddState } from '../states';
 // import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
-import { T } from '../utils/translator';
 import loginState from '../login/login-state';
 
 class RouterMain extends Router {
