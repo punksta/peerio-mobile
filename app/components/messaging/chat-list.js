@@ -4,7 +4,7 @@ import { View, ListView } from 'react-native';
 import { observable, reaction } from 'mobx';
 import { chatInviteStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
-import MessagingPlaceholder from './messaging-placeholder';
+import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import ChatListItem from './chat-list-item';
 import ChannelListItem from './channel-list-item';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -130,7 +130,7 @@ export default class ChatList extends SafeComponent {
 
     renderThrow() {
         const body = ((this.data.length || chatInviteStore.received.length) && chatState.store.loaded) ?
-            this.listView() : <MessagingPlaceholder />;
+            this.listView() : <ChatZeroStatePlaceholder />;
 
         return (
             <View

@@ -5,7 +5,7 @@ import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions
 import { observable, when, reaction, computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
-import MessagingPlaceholder from '../messaging/messaging-placeholder';
+import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
 import ChatActionSheet from './chat-action-sheet';
@@ -297,7 +297,7 @@ export default class Chat extends SafeComponent {
                 style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
                 {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
                 <View style={{ flex: 1, flexGrow: 1 }}>
-                    {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
+                    {this.data ? this.listView() : !chatState.loading && <ChatZeroStatePlaceholder />}
                 </View>
                 <ProgressOverlay enabled={chatState.loading} />
                 <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />

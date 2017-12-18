@@ -15,6 +15,15 @@ const iPhoneStatusBar = (Platform.OS === 'ios' ? 20 : 0);
 const iPhoneXTop = isIphoneX() ? 16 : 0;
 const iPhoneXBottom = iPhoneXTop;
 
+const isDeviceScreenBig = isBigScreenSize();
+const isDeviceScreenSmall = !isDeviceScreenBig;
+
+// Find a better way to determine if a device is considered 'big' or 'small'
+function isBigScreenSize() {
+    if (width >= 350 || height >= 600) return true;
+    return false;
+}
+
 const { bg, bgGradient, tabsBg, tabsFg } = branding;
 
 const statusBarHeight = (Platform.OS === 'android' ? 0 : 10) + iPhoneXTop;
@@ -61,8 +70,9 @@ const vars = {
     subtleBg: '#c3dfee',
     subtleText: 'rgba(0, 0, 0, .54)',
     extraSubtleText: 'rgba(0, 0, 0, .38)',
-    subtleTextBold: 'rgba(0, 0, 0, .54',
+    subtleTextBold: 'rgba(0, 0, 0, .54)',
     verySubtleGrey: 'rgba(0, 0, 0, .12)',
+    lighterBlackText: 'rgba(0, 0, 0, .87)',
     inputBgInactive: 'rgba(255, 255, 255, .5)',
     inputBgInactiveText: 'rgba(0,0,0, .54)',
     checkboxInactive: 'rgba(0,0,0,.06)',
@@ -76,6 +86,7 @@ const vars = {
     gold: '#ffd700',
     fabEnabled: '#FF7D00',
     fabDisabled: '#CFCFCF',
+    buttonGreen: '#2CCF84',
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
@@ -84,8 +95,11 @@ const vars = {
     iconSize: 24,
     iconSizeSmall: 16,
     iconSizeLarge: 48,
+    iconSizeLarge2x: 56,
+    iconSizeHuge: 64,
     iconFileViewSize: 72,
     iconPadding: 12,
+    iconPaddingLarge: 16,
     iconSizeBigger: 25,
     iconMargin: 30,
     menuWidthRatio: 0.8,
@@ -95,6 +109,8 @@ const vars = {
     listViewPaddingHorizontal: 8,
     loadingScreenMarginBottom: scaleDim(170),
     loadingScreenMarginTop: scaleDim(206),
+    chatZeroStateImageWidth: scaleDim(327),
+    chatZeroStateImageHeight: scaleDim(125),
     modalPaddingVertical: 40,
     modalPaddingHorizontal: 40,
     wizardPadding: 36,
@@ -169,7 +185,9 @@ const vars = {
             maxi: scaleDim(74),
             maxi2x: scaleDim(75)
         }
-    }
+    },
+    isDeviceScreenBig,
+    isDeviceScreenSmall
 };
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;
