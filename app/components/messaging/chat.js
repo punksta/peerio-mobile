@@ -35,6 +35,7 @@ export default class Chat extends SafeComponent {
     @observable waitForScrollToEnd = true;
     @observable scrollEnabled = false;
     @observable limboMessages = null;
+    @observable initialScrollDone = false;
     indicatorHeight = 16;
 
     componentDidMount() {
@@ -119,6 +120,7 @@ export default class Chat extends SafeComponent {
                 if (!this.refreshing && !this.disableNextScroll) {
                     console.log('chat.js: auto scrolling');
                     this.scrollView.scrollTo({ y, animated: !this.waitForScrollToEnd });
+                    requestAnimationFrame(() => { this.initialScrollDone = true; });
                 }
 
                 if (this.waitForScrollToEnd) {
@@ -227,6 +229,7 @@ export default class Chat extends SafeComponent {
         return (
             <ScrollView
                 onLayout={this.layoutScrollView}
+                contentContainerStyle={{ opacity: this.initialScrollDone ? 1 : 0 }}
                 style={{ flexGrow: 1, flex: 1, backgroundColor: vars.white }}
                 initialListSize={1}
                 onContentSizeChange={this.contentSizeChanged}

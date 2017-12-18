@@ -4,7 +4,7 @@ import {
     View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { when, observable } from 'mobx';
+import { when, observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
@@ -31,6 +31,14 @@ export default class ContactSelector extends SafeComponent {
     @observable legacyContact = null;
     @observable found = [];
     @observable findUserText;
+
+    componentDidMount() {
+        this._recipientReaction = reaction(() => !!this.recipients.items.length, () => LayoutAnimation.easeInEaseOut());
+    }
+
+    componentWillUnmount() {
+        this._recipientReaction();
+    }
 
     get inviteContactDuck() {
         if (!this.toInvite) return null;
@@ -78,6 +86,7 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'flex-start',
+            marginTop: vars.spacing.small.midi2x,
             paddingLeft: vars.spacing.small.midi2x,
             flexWrap: 'wrap'
         };
@@ -332,9 +341,9 @@ export default class ContactSelector extends SafeComponent {
         return (
             <View style={{ paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight * 2 }}>
                 {this.props.hideHeader ? null : exitRow}
-                {/* TODO combine recipients and search */}
-                {recipients.length ? userRow : <View style={{ height: vars.spacing.large.maxi }} />}
                 {tbSearch}
+                {/* TODO combine recipients and search */}
+                {recipients.length ? userRow : null}
             </View>
         );
     }
