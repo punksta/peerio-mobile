@@ -16,11 +16,9 @@ import ContactAdd from '../contacts/contact-add';
 import ContactView from '../contacts/contact-view';
 import ContactList from '../contacts/contact-list';
 import ContactListInvite from '../contacts/contact-list-invite';
-import Logs from '../logs/logs';
 import { fileState, mainState, ghostState, chatState, settingsState, contactState, contactAddState } from '../states';
 // import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
-import { T } from '../utils/translator';
 import loginState from '../login/login-state';
 
 class RouterMain extends Router {
@@ -50,7 +48,6 @@ class RouterMain extends Router {
         this.add('contactAdd', [<ContactAdd />], contactAddState);
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
-        this.add('logs', [<Logs />], { title: <T k="title_logs" /> });
     }
 
     @action initialRoute() {

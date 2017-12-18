@@ -12,8 +12,18 @@ function isIphoneX() {
     );
 }
 
+const iPhoneStatusBar = (Platform.OS === 'ios' ? 20 : 0);
 const iPhoneXTop = isIphoneX() ? 16 : 0;
 const iPhoneXBottom = iPhoneXTop;
+
+const isDeviceScreenBig = isBigScreenSize();
+const isDeviceScreenSmall = !isDeviceScreenBig;
+
+// Find a better way to determine if a device is considered 'big' or 'small'
+function isBigScreenSize() {
+    if (width >= 350 || height >= 600) return true;
+    return false;
+}
 
 const { bg, bgGradient, tabsBg, tabsFg } = branding;
 
@@ -79,16 +89,20 @@ const vars = {
     gold: '#ffd700',
     fabEnabled: '#FF7D00',
     fabDisabled: '#CFCFCF',
+    buttonGreen: '#2CCF84',
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
-    headerHeight: 80 + iPhoneXTop,
+    headerHeight: 56 + iPhoneStatusBar + iPhoneXTop,
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconSizeSmall: 16,
     iconSizeLarge: 48,
+    iconSizeLarge2x: 56,
+    iconSizeHuge: 64,
     iconFileViewSize: 72,
     iconPadding: 12,
+    iconPaddingLarge: 16,
     iconSizeBigger: 25,
     iconMargin: 30,
     imagePreviewSize: 48,
@@ -99,6 +113,8 @@ const vars = {
     listViewPaddingHorizontal: 8,
     loadingScreenMarginBottom: scaleDim(170),
     loadingScreenMarginTop: scaleDim(206),
+    chatZeroStateImageWidth: scaleDim(327),
+    chatZeroStateImageHeight: scaleDim(125),
     modalPaddingVertical: 40,
     modalPaddingHorizontal: 40,
     wizardPadding: 36,
@@ -175,7 +191,9 @@ const vars = {
             maxi: scaleDim(74),
             maxi2x: scaleDim(75)
         }
-    }
+    },
+    isDeviceScreenBig,
+    isDeviceScreenSmall
 };
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;

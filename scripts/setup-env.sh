@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "Checking env.sh"
 echo `pwd`
 # ls -la app/lib

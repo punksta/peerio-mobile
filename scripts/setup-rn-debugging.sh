@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "Patching RN to disable automatic package launching"
 perl -pi -e 's/RCT_NO_LAUNCH_PACKAGER/MAC_OS_X_PRODUCT_BUILD_VERSION/g' node_modules/react-native/React/React.xcodeproj/project.pbxproj
 echo "Patching RN to enable device debugging"

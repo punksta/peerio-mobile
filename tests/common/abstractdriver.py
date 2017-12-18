@@ -133,5 +133,7 @@ class AbstractDriver:
         path = '.'
         if key in os.environ:
             path = os.environ[key]
-        self.appium.save_screenshot(path + '/' + name)
+        path = os.path.join(path, name)
+        print "Saving screenshot to %s" % path
+        self.appium.save_screenshot(path)
 

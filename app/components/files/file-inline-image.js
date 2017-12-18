@@ -105,7 +105,7 @@ export default class FileInlineImage extends SafeComponent {
             }
             this.width = Math.floor(w);
             this.height = Math.floor(h);
-            console.debug(`calculated width: ${this.width}, ${this.height}`);
+            // console.debug(`calculated width: ${this.width}, ${this.height}`);
         });
     }
 
@@ -189,6 +189,10 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
+    onLoad = async () => {
+        this.loaded = true;
+    }
+
     renderThrow() {
         const { image } = this.props;
         const { name, title, description, fileId, downloading } = image;
@@ -199,7 +203,7 @@ export default class FileInlineImage extends SafeComponent {
             return <InlineUrlPreviewConsent onChange={() => { this.showUpdateSettingsLink = true; }} />;
         }
 
-        // console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
+        console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
         const outer = {
             padding: this.outerPadding,
             borderColor: vars.lightGrayBg,
@@ -248,15 +252,26 @@ export default class FileInlineImage extends SafeComponent {
                     <View style={header}>
                         {!!name && <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
                         {isLocal && <View style={{ flexDirection: 'row' }}>
-                            {!downloading && icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
-                            {!downloading && icons.darkNoPadding('more-vert', () => this.props.onAction(this.props.image))}
+                            {!downloading && icons.darkNoPadding(
+                                this.opened ? 'arrow-drop-up' : 'arrow-drop-down',
+                                () => { this.opened = !this.opened; },
+                                { marginHorizontal: vars.spacing.small.maxi2x }
+                            )}
+                            {!downloading && icons.darkNoPadding(
+                                'more-vert',
+                                () => this.props.onAction(this.props.image),
+                                { marginHorizontal: vars.spacing.small.maxi2x }
+                            )}
                             {downloading && <ActivityIndicator />}
                         </View>}
                     </View>
                     {this.opened &&
                         <View style={inner}>
                             {!downloading && this.loadImage && width && height ?
-                                <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} /> : null}
+                                <Image
+                                    onLoad={this.onLoad}
+                                    source={source}
+                                    style={{ width, height }} /> : null}
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
                             {this.oversizeCutoff && this.displayCutOffImageOffer}
