@@ -70,9 +70,7 @@ export default class CreateChannel extends Component {
             alignItems: 'center',
             padding: vars.spacing.small.mini2x,
             paddingTop: vars.statusBarHeight * 2,
-            paddingBottom: 0,
-            // To make room for invite
-            marginBottom: this.step === 0 ? vars.spacing.huge.minixx : vars.spacing.medium.mini
+            paddingBottom: 0
         };
         const textStyle = {
             textAlign: 'center',
@@ -152,6 +150,7 @@ export default class CreateChannel extends Component {
                 ref={sv => { this._scrollView = sv; }}
                 key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
                 <View style={card}>
+                    {this.exitRow}
                     <ChannelUpgradeOffer />
                     {this.renderTextBox(
                         tx('title_channelName'),
@@ -167,6 +166,7 @@ export default class CreateChannel extends Component {
                     )}
                 </View>
                 <View style={card}>
+                    {this.exitRow}
                     <ContactSelector
                         action={async contacts => {
                             this.inProgress = true;
@@ -186,11 +186,10 @@ export default class CreateChannel extends Component {
 
     render() {
         return (
-            <ScrollView keyboardShouldPersistTaps={this.step > 0 ? 'handled' : 'never'} scrollEnabled={false} style={fillView} contentContainerStyle={fillView}>
-                {this.exitRow}
+            <View style={fillView} contentContainerStyle={fillView}>
                 {User.current.channelsLeft <= 0 ? this.paywall : this.scrollView}
                 <SnackBarConnection />
-            </ScrollView>
+            </View>
         );
     }
 }
