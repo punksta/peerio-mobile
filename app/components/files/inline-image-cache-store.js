@@ -3,6 +3,9 @@ import { Image, Platform } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import { TinyDb } from '../../lib/icebear';
 
+// TODO: clean up the db once in a while
+const imageCacheTinyDb = TinyDb.open('imageCaches');
+
 class CachedImage {
     @observable source = null;
     @observable width = 0;
@@ -12,11 +15,11 @@ class CachedImage {
     @action.bound async setImageSize(width, height) {
         this.width = width;
         this.height = height;
-        await TinyDb.user.setValue(this.cacheKey, { width, height });
+        await imageCacheTinyDb.setValue(this.cacheKey, { width, height });
     }
 
     @action.bound async loadImageSize() {
-        const cache = await TinyDb.user.getValue(this.cacheKey);
+        const cache = await imageCacheTinyDb.getValue(this.cacheKey);
         if (cache) {
             const { width, height } = cache;
             Object.assign(this, { width, height });
