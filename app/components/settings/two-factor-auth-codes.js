@@ -106,7 +106,7 @@ export default class TwoFactorAuthCodes extends SafeComponent {
             filePath = (await RNHTMLtoPDF.convert({ html })).filePath;
         } */
         console.log(filePath);
-        await FileOpener.open(filePath, mimeType);
+        await FileOpener.open(filePath, mimeType, '2fa');
         // await RNFS.unlink(filePath);
     }
 
