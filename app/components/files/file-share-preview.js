@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
-import { observable } from 'mobx';
+import { observable, action, when } from 'mobx';
 import { observer } from 'mobx-react/native';
+import ImagePicker from 'react-native-image-crop-picker';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import FileTypeIcon from '../files/file-type-icon';
@@ -12,6 +13,7 @@ import ButtonText from '../controls/button-text';
 import popupState from '../layout/popup-state';
 import routes from '../routes/routes';
 import fileState from './file-state';
+import { fileHelpers, chatStore, config } from '../../lib/icebear';
 
 // TODO Workaround negative margin
 const buttonContainer = {
@@ -25,7 +27,8 @@ const buttonContainer = {
 
 const imagePreviewStyle = {
     width: vars.imagePreviewSize,
-    height: vars.imagePreviewSize
+    height: vars.imagePreviewSize,
+    borderRadius: 2
 };
 
 const nameContainer = {
@@ -45,8 +48,9 @@ const inputStyle = {
 };
 
 const shareContainer = {
-    marginTop: vars.spacing.medium.mini2x,
-    flexDirection: 'row'
+    marginVertical: vars.spacing.medium.mini,
+    flexDirection: 'row',
+    alignItems: 'center'
 };
 
 const shareTextStyle = {
@@ -75,16 +79,23 @@ const previewContainerSmall = {
     alignItems: 'center',
     justifyContent: 'center',
     minWidth: vars.searchInputHeight * 2,
+    marginRight: vars.spacing.small.maxi,
     flex: 0
 };
 
 @observer
 export default class FileSharePreview extends SafeComponent {
-    static popup (file) {
+    static popup(path, fileName) {
         fileState.previewFile = observable({
-            file,
-            name: file.name,
-            recipient: 'current'
+            path,
+            ext: fileHelpers.getFileExtension(path).trim().toLowerCase(),
+            name: fileHelpers.getFileNameWithoutExtension(fileName || path),
+            // message to send with shared file
+            message: '',
+            // chat in which we uploading the file
+            chat: chatStore.activeChat,
+            // contact to be selected in "change recipient"
+            contact: {}
         });
         return new Promise((resolve) => {
             const showPopup = () => popupState.showPopup({
@@ -92,9 +103,14 @@ export default class FileSharePreview extends SafeComponent {
                 contents: <FileSharePreview
                     state={fileState.previewFile}
                     onSubmit={() => {
+                        popupState.discardPopup();
                         const { previewFile } = fileState;
                         fileState.previewFile = null;
                         resolve(previewFile);
+                    }}
+                    onCancel={() => {
+                        popupState.discardPopup();
+                        resolve(false);
                     }}
                     onChooseRecipients={async () => {
                         await routes.modal.changeRecipient();
@@ -106,17 +122,63 @@ export default class FileSharePreview extends SafeComponent {
         });
     }
 
+    // width of the container in which image or file type icon is shown
+    @observable previewContainerWidth;
+    // height of the container in which image or file type icon is shown
+    @observable previewContainerHeight;
+    // original width of the image we preview
+    @observable width;
+    // original height of the image we preview
+    @observable height;
+    // scaled down width of the image we preview
+    @observable previewSmallWidth;
+    // scaled down height of the image we preview
+    @observable previewSmallHeight;
+
+    async componentWillMount() {
+        when(() => this.previewContainerWidth && this.width, () => {
+            const { previewContainerWidth, previewContainerHeight, width, height } = this;
+            const dims = vars.optimizeImageSize(width, height, previewContainerWidth, previewContainerHeight);
+            this.previewSmallWidth = dims.width;
+            this.previewSmallHeight = dims.height;
+        });
+        const { path } = this.props.state;
+        const { width, height } = await ImagePicker.getImageDimensions(path);
+        Object.assign(this, { width, height });
+    }
+
+    @action.bound layoutPreviewContainer(e) {
+        const { width, height } = e.nativeEvent.layout;
+        this.previewContainerWidth = width;
+        this.previewContainerHeight = height;
+    }
+
+    @action.bound launchPreviewViewer() {
+        config.FileStream.launchViewer(this.props.state.path);
+    }
+
+    get previewImage() {
+        return (
+            <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={this.launchPreviewViewer}>
+                <Image
+                    source={{ uri: this.props.state.path, width: this.previewSmallWidth, height: this.previewSmallHeight }}
+                    style={imagePreviewStyle} />
+            </TouchableOpacity>
+        );
+    }
+
     renderThrow() {
         const { state } = this.props;
-        const { type, url } = state.file;
-        const fileImagePlaceholder = url
-            ? <Image source={{ uri: url }} style={imagePreviewStyle} />
+        const { path, chat, contact, type } = state;
+        const recipient = chat ? chat.name : contact.fullName;
+        const fileImagePlaceholder = path
+            ? this.previewImage
             : <FileTypeIcon type={type} size="medium" />;
 
         return (
             <View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={previewContainerSmall}>
+                    <View style={previewContainerSmall} onLayout={this.layoutPreviewContainer}>
                         {fileImagePlaceholder}
                     </View>
                     <View style={nameContainer}>
@@ -134,20 +196,22 @@ export default class FileSharePreview extends SafeComponent {
                 </View>
                 <TouchableOpacity
                     onPress={this.props.onChooseRecipients}
-                    pressRetentionOffset={vars.pressRetentionOffset} style={shareContainer}>
+                    pressRetentionOffset={vars.pressRetentionOffset}
+                    style={shareContainer}>
                     <View style={{ flexGrow: 1 }}>
                         <Text style={shareTextStyle}>
                             {tx('title_shareWith')}
                         </Text>
                         <Text style={recipientStyle}>
-                            Recipient Name
+                            {recipient}
                         </Text>
                     </View>
-                    {icons.dark('keyboard-arrow-right')}
+                    {icons.plaindark('keyboard-arrow-right')}
                 </TouchableOpacity>
                 <TextInput
                     placeholder={tx('title_addMessage')}
-                    onChangeText={text => { this.message = text; }}
+                    onChangeText={text => { state.message = text; }}
+                    value={state.message}
                     underlineColorAndroid="transparent"
                     placeholderTextColor={vars.extraSubtleText}
                     autoCapitalize="none"
@@ -159,23 +223,12 @@ export default class FileSharePreview extends SafeComponent {
                 <View style={buttonContainer}>
                     <ButtonText
                         text={tx('button_cancel')}
-                        onPress={() => {
-                            popupState.discardPopup();
-                            this.props.onSubmit(false);
-                        }}
+                        onPress={this.props.onCancel}
                         secondary
                     />
                     <ButtonText
                         text={tx('button_share')}
-                        onPress={() => {
-                            popupState.discardPopup();
-                            this.props.onSubmit({
-                                name: this.name,
-                                selectedContact: this.selectedContact, // Use Contact ID(?) instead
-                                message: this.message
-                            });
-                        }}
-                    />
+                        onPress={this.props.onSubmit} />
                 </View>
             </View>
         );

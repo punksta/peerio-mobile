@@ -198,4 +198,20 @@ const vars = {
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;
 
+vars.optimizeImageSize = (sourceWidth, sourceHeight, containerWidth, containerHeight) => {
+    let w = sourceWidth + 0.0, h = sourceHeight + 0.0;
+    if (w > containerWidth) {
+        h *= containerWidth / w;
+        w = containerWidth;
+    }
+    if (h > containerHeight) {
+        w *= containerHeight / h;
+        h = containerHeight;
+    }
+    return {
+        width: Math.floor(w),
+        height: Math.floor(h)
+    };
+};
+
 export default vars;

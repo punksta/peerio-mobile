@@ -89,22 +89,10 @@ export default class FileInlineImage extends SafeComponent {
 
     fetchSize() {
         const { cachedImage } = this;
-        // console.log('fetch size');
         when(() => cachedImage.width && cachedImage.height && this.optimalContentWidth, () => {
             const { width, height } = cachedImage;
             const { optimalContentWidth, optimalContentHeight } = this;
-            let w = width + 0.0, h = height + 0.0;
-            // console.log(w, h, optimalContentHeight, optimalContentWidth);
-            if (w > optimalContentWidth) {
-                h *= optimalContentWidth / w;
-                w = optimalContentWidth;
-            }
-            if (h > optimalContentHeight) {
-                w *= optimalContentHeight / h;
-                h = optimalContentHeight;
-            }
-            this.width = Math.floor(w);
-            this.height = Math.floor(h);
+            Object.assign(this, vars.optimizeImageSize(width, height, optimalContentWidth, optimalContentHeight));
             // console.debug(`calculated width: ${this.width}, ${this.height}`);
         });
     }

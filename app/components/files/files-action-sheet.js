@@ -9,7 +9,6 @@ import chatState from '../messaging/chat-state';
 import { tx } from '../utils/translator';
 import { popupInputCancel } from '../shared/popups';
 import imagepicker from '../helpers/imagepicker';
-import routes from '../routes/routes';
 import FileSharePreview from './file-share-preview';
 
 @observer
@@ -17,8 +16,15 @@ export default class FilesActionSheet extends SafeComponent {
     @observable image;
 
     async doUpload(sourceFunction) {
-        (this.props.inline ?
-            fileState.uploadInline : fileState.uploadInFiles)(await sourceFunction());
+        const uploader = this.props.inline ?
+            fileState.uploadInline : fileState.uploadInFiles;
+        const source = observable(await sourceFunction());
+        if (this.props.inline) {
+            const userSelection = await FileSharePreview.popup(source.url, source.fileName);
+            source.fileName = `${userSelection.name}.${source.ext}`;
+            source.message = userSelection.message;
+        }
+        uploader(source);
     }
 
     get takePhoto() {
@@ -38,26 +44,16 @@ export default class FilesActionSheet extends SafeComponent {
     get androidFilePicker() {
         return {
             title: tx('title_chooseFromFiles'),
-            async action() {
-                fileState.uploadInFiles(await imagepicker.getImageFromAndroidFilePicker());
-            }
+            action: () => this.doUpload(imagepicker.getImageFromAndroidFilePicker)
         };
     }
 
     get shareFromPeerio() {
-        const action = async () => {
-            const result = await fileState.selectFiles();
-            if (!result) return;
-            fileState.selectedFile = result[0];
-            console.log(result[0]);
-            await FileSharePreview.popup(fileState.selectedFile);
-            // Share file in correct chat
-            // Share a message with the file
-        };
         return {
             title: tx('title_shareFromFiles'),
-            // async action() { chatState.shareFiles(await fileState.selectFiles()); }
-            action
+            async action() {
+                chatState.shareFiles(await fileState.selectFiles());
+            }
         };
     }
 

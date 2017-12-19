@@ -28,6 +28,15 @@ function normalizeUri(response) {
     return uri;
 }
 
+/**
+ * Returns object with the following fields:
+ * url - local path
+ * fileName - human-readable filename
+ * ext - original extension
+ * response - original response
+ * @param {Function} functor picks up the actual source
+ * @param {Object} params for functor
+ */
 async function processResponse(functor, params) {
     let response = await functor(params);
     if (response.error) {
