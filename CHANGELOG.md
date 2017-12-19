@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.233.0"></a>
+# [3.233.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.232.0...v3.233.0) (2017-12-19)
+
+
+### Bug Fixes
+
+* android header height ([#76](https://github.com/PeerioTechnologies/peerio-mobile/issues/76)) ([211ff74](https://github.com/PeerioTechnologies/peerio-mobile/commit/211ff74))
+* inline image button spacing ([#77](https://github.com/PeerioTechnologies/peerio-mobile/issues/77)) ([2adc36c](https://github.com/PeerioTechnologies/peerio-mobile/commit/2adc36c))
+* logs title and back button [ch945] [ch944] ([a7dd838](https://github.com/PeerioTechnologies/peerio-mobile/commit/a7dd838))
+* mock image ([faa49e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/faa49e8))
+* show yourself in contact list initial zero state in chats ([9b6593f](https://github.com/PeerioTechnologies/peerio-mobile/commit/9b6593f))
+* url schema is case insensitive ([08d93ee](https://github.com/PeerioTechnologies/peerio-mobile/commit/08d93ee))
+
+
+### Features
+
+* cache image sizes when loaded to prevent resize ([e75b3c8](https://github.com/PeerioTechnologies/peerio-mobile/commit/e75b3c8))
+* launch screen generator scripts [ch1070] ([ea6fe47](https://github.com/PeerioTechnologies/peerio-mobile/commit/ea6fe47))
+* Mobile tests - autologin ([#75](https://github.com/PeerioTechnologies/peerio-mobile/issues/75)) ([5bec33c](https://github.com/PeerioTechnologies/peerio-mobile/commit/5bec33c))
+* new launch images/privacy screen [ch1070] ([30baf7b](https://github.com/PeerioTechnologies/peerio-mobile/commit/30baf7b))
+* switch to circleci 2.0 ([f4d75f9](https://github.com/PeerioTechnologies/peerio-mobile/commit/f4d75f9))
+* switching chats doesn't cause scroll jumps anymore ([8360c10](https://github.com/PeerioTechnologies/peerio-mobile/commit/8360c10))
+* tests should fail if specific simuator is not found ([1cc47df](https://github.com/PeerioTechnologies/peerio-mobile/commit/1cc47df))
+* use separate tinydb for image cache sizes ([3f5f85d](https://github.com/PeerioTechnologies/peerio-mobile/commit/3f5f85d))
+* zero chat state [ch326] ([7a53949](https://github.com/PeerioTechnologies/peerio-mobile/commit/7a53949))
+
+
+
 <a name="3.232.0"></a>
 # [3.232.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.231.0...v3.232.0) (2017-12-07)
 
