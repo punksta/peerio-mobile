@@ -26,8 +26,6 @@ const buttonContainer = {
 };
 
 const imagePreviewStyle = {
-    width: vars.imagePreviewSize,
-    height: vars.imagePreviewSize,
     borderRadius: 2
 };
 
@@ -94,7 +92,7 @@ export default class FileSharePreview extends SafeComponent {
             // message to send with shared file
             message: '',
             // chat in which we uploading the file
-            chat: chatStore.activeChat,
+            chat: chatStore.activeChat || {},
             // contact to be selected in "change recipient"
             contact: {}
         });

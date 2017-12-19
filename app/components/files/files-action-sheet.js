@@ -21,6 +21,7 @@ export default class FilesActionSheet extends SafeComponent {
         const source = observable(await sourceFunction());
         if (this.props.inline) {
             const userSelection = await FileSharePreview.popup(source.url, source.fileName);
+            if (!userSelection) return;
             source.fileName = `${userSelection.name}.${source.ext}`;
             source.message = userSelection.message;
         }

@@ -11,10 +11,8 @@ import FileSharePreview from '../files/file-share-preview';
 export default class MockImagePreview extends Component {
     componentWillMount() {
         const path = '/Users/seavan/Library/Developer/CoreSimulator/Devices/BEEBFAB7-125B-469D-923B-AAF5EB5E47D5/data/Containers/Data/Application/FFE08229-965D-4B1C-8D19-0FF74E7BFE37/Library/Caches/cache/d73b44ad8eea613e8a5d55aebc04d3fc.jpg';
-        const chat = {
-            name: '# test room'
-        };
-        FileSharePreview.popup(path, chat, {});
+        const fileName = 'image-001.jpg';
+        FileSharePreview.popup(path, fileName);
     }
 
     render() {
