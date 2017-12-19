@@ -2,7 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<<<<<<< HEAD
+<a name="3.236.0"></a>
+# [3.236.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.235.0...v3.236.0) (2017-12-19)
+
+
+### Bug Fixes
+
+* don't crash when renaming to the same paths ([3ababe0](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ababe0))
+* don't crash when renaming to the same paths ([713d33e](https://github.com/PeerioTechnologies/peerio-mobile/commit/713d33e))
+
+
+
 <a name="3.235.0"></a>
 # [3.235.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.234.0...v3.235.0) (2017-12-19)
 
