@@ -49,20 +49,13 @@ All notable changes to this project will be documented in this file. See [standa
 
 * cache image sizes when loaded to prevent resize ([e75b3c8](https://github.com/PeerioTechnologies/peerio-mobile/commit/e75b3c8))
 * launch screen generator scripts [ch1070] ([ea6fe47](https://github.com/PeerioTechnologies/peerio-mobile/commit/ea6fe47))
-<<<<<<< HEAD
 * make preview controller have proper title ([2a064c0](https://github.com/PeerioTechnologies/peerio-mobile/commit/2a064c0))
-=======
->>>>>>> dev
 * Mobile tests - autologin ([#75](https://github.com/PeerioTechnologies/peerio-mobile/issues/75)) ([5bec33c](https://github.com/PeerioTechnologies/peerio-mobile/commit/5bec33c))
 * new launch images/privacy screen [ch1070] ([30baf7b](https://github.com/PeerioTechnologies/peerio-mobile/commit/30baf7b))
 * switch to circleci 2.0 ([f4d75f9](https://github.com/PeerioTechnologies/peerio-mobile/commit/f4d75f9))
 * switching chats doesn't cause scroll jumps anymore ([8360c10](https://github.com/PeerioTechnologies/peerio-mobile/commit/8360c10))
 * tests should fail if specific simuator is not found ([1cc47df](https://github.com/PeerioTechnologies/peerio-mobile/commit/1cc47df))
 * use separate tinydb for image cache sizes ([3f5f85d](https://github.com/PeerioTechnologies/peerio-mobile/commit/3f5f85d))
-<<<<<<< HEAD
-* use separate tinydb for image cache sizes ([4a01230](https://github.com/PeerioTechnologies/peerio-mobile/commit/4a01230))
-=======
->>>>>>> dev
 * zero chat state [ch326] ([7a53949](https://github.com/PeerioTechnologies/peerio-mobile/commit/7a53949))
 
 
