@@ -66,7 +66,7 @@
     "react-native-cli": "2.0.1",
     "react-native-contacts": "github:PeerioTechnologies/react-native-contacts",
     "react-native-device-info": "github:PeerioTechnologies/react-native-device-info",
-    "react-native-file-opener": "github:PeerioTechnologies/react-native-file-opener",
+    "react-native-file-opener": "github:PeerioTechnologies/react-native-file-opener#9ffcb70a5028ed2fabd4ffcb68bda9fdba4d5d96",
     "react-native-file-picker": "github:PeerioTechnologies/react-native-file-picker-clean",
     "react-native-fs": "github:PeerioTechnologies/react-native-fs",
     "react-native-image-crop-picker": "github:PeerioTechnologies/react-native-image-crop-picker",
