@@ -188,6 +188,7 @@ const vars = {
             mini2x: scaleDim(56),
             midi: scaleDim(60),
             midi2x: scaleDim(64),
+            midi3x: scaleDim(68),
             maxi: scaleDim(74),
             maxi2x: scaleDim(75)
         }
