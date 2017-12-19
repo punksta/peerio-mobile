@@ -27,7 +27,9 @@ export default class FilesActionSheet extends SafeComponent {
             let { chat } = userSelection;
             if (userSelection.contact && chat === null) {
                 chat = await chatState.startChat([userSelection.contact]);
-                chatState.activate(chat);
+                // TODO: switching to new DMs without timeout causes file
+                // to be shared in previous chat. Couldn't figure out why
+                await new Promise(resolve => setTimeout(resolve, 1000));
             }
         }
         uploader(source);

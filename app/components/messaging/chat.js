@@ -16,7 +16,6 @@ import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
 import VideoIcon from '../layout/video-icon';
 import IdentityVerificationNotice from './identity-verification-notice';
-import { User } from '../../lib/icebear';
 
 const { width } = Dimensions.get('window');
 
