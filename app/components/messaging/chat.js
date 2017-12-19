@@ -264,8 +264,7 @@ export default class Chat extends SafeComponent {
             marginBottom: vars.spacing.small.midi2x
         };
         const { chat } = this;
-        const participants = (chat.participants || []).slice();
-        participants.push(contactState.store.getContact(User.current.username));
+        const participants = chat.isChannel ? chat.allJoinedParticipants : chat.otherParticipants;
         const w = 3 * 36;
         const shiftX = (width - w - w * participants.length) / participants.length;
         const shift = shiftX < 0 ? shiftX : 0;

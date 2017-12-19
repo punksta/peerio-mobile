@@ -57,9 +57,9 @@ export default class ChatInfo extends SafeComponent {
         const chat = chatState.currentChat;
         const body = (
             <View>
-                {chat.participants && this.lineBlock(
+                {chat.otherParticipants && this.lineBlock(
                     <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
-                        {chat.participants.map(this.participant)}
+                        {chat.otherParticipants.map(this.participant)}
                     </View>
                 )}
             </View>
