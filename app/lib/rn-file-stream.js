@@ -101,8 +101,15 @@ export default (fileStream) => {
             return RNFS.unlink(path);
         }
 
-        static rename(oldPath, newPath) {
-            return RNFS.moveFile(oldPath, newPath);
+        static async rename(oldPath, newPath) {
+            if (oldPath === newPath) {
+                console.log(`rn-file-stream: ${oldPath} equals to new destination`);
+                return;
+            }
+            if (await RNFS.exists(newPath)) {
+                await RNFS.unlink(newPath);
+            }
+            await RNFS.moveFile(oldPath, newPath);
         }
 
         static getTempCachePath(name) {
