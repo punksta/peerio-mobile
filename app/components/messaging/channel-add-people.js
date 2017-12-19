@@ -13,7 +13,7 @@ const fillView = { flex: 1, flexGrow: 1 };
 export default class ChannelAddPeople extends SafeComponent {
     @computed get excluded() {
         const excluded = {};
-        chatState.currentChat.joinedParticipants.forEach(
+        chatState.currentChat.allJoinedParticipants.forEach(
             i => { excluded[i.username] = i; console.log(`excluded: ${i.username}`); }
         );
         return excluded;
