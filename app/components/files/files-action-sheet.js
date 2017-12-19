@@ -24,6 +24,11 @@ export default class FilesActionSheet extends SafeComponent {
             if (!userSelection) return;
             source.fileName = `${userSelection.name}.${source.ext}`;
             source.message = userSelection.message;
+            let { chat } = userSelection;
+            if (userSelection.contact && chat === null) {
+                chat = await chatState.startChat([userSelection.contact]);
+                chatState.activate(chat);
+            }
         }
         uploader(source);
     }
