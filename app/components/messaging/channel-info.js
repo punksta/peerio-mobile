@@ -161,7 +161,7 @@ export default class ChannelInfo extends SafeComponent {
                 {this.lineBlock(canIAdmin ? this.topicTextBox : this.topicTextView)}
                 {canILeave && this.lineBlock(this.action(tx('button_leaveChannel'), 'remove-circle-outline', this.leaveChannel), true)}
                 {canIAdmin && this.lineBlock(this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel))}
-                {chat.joinedParticipants && this.lineBlock(
+                {chat.allJoinedParticipants && this.lineBlock(
                     <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
                             <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x }]}>
@@ -169,7 +169,7 @@ export default class ChannelInfo extends SafeComponent {
                             </Text>
                             {canIAdmin && icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
                         </View>
-                        {chat.joinedParticipants.map(this.participant)}
+                        {chat.allJoinedParticipants.map(this.participant)}
                     </View>
                 )}
                 {invited && this.lineBlock(
