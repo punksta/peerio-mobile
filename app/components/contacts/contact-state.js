@@ -54,7 +54,8 @@ class ContactState extends RoutedState {
     }
 
     @action sendTo(contact) {
-        chatState.startChat(null, contact);
+        chatState.startChat([contact]);
+        this.routerModal.discard();
     }
 
     get title() {
