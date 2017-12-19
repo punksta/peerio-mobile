@@ -169,7 +169,7 @@ export default class FileSharePreview extends SafeComponent {
     renderThrow() {
         const { state } = this.props;
         const { path, chat, contact, type } = state;
-        const recipient = chat ? chat.name : contact.fullName;
+        const recipient = chat ? `# ${chat.name}` : contact.fullName;
         const fileImagePlaceholder = path
             ? this.previewImage
             : <FileTypeIcon type={type} size="medium" />;

@@ -46,10 +46,16 @@ export default class Chat extends SafeComponent {
                 this.scrollView.scrollTo({ y, animated: true });
             }
         });
+        this.chatReaction = reaction(() => chatState.store.activeChat, () => {
+            this.initialScrollDone = false;
+            this.waitForScrollToEnd = true;
+            this.contentHeight = 0;
+        });
     }
 
     componentWillUnmount() {
         this.selfMessageReaction();
+        this.chatReaction();
     }
 
     get rightIcon() {
