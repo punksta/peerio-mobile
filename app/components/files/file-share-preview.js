@@ -30,11 +30,10 @@ const imagePreviewStyle = {
 
 const nameContainer = {
     backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    height: vars.inputHeight,
-    width: vars.largeInputWidth,
     paddingHorizontal: vars.spacing.small.midi2x,
     paddingTop: vars.spacing.small.mini,
-    paddingBottom: vars.spacing.small.midi2x
+    paddingBottom: vars.spacing.small.midi2x,
+    flexGrow: 1
 };
 
 // Padding 0 should be kept
@@ -42,7 +41,7 @@ const inputStyle = {
     color: vars.lighterBlackText,
     paddingVertical: 0,
     paddingLeft: 0,
-    height: vars.inputHeight
+    height: vars.searchInputHeight
 };
 
 const shareContainer = {
@@ -63,6 +62,7 @@ const recipientStyle = {
 
 const messageInputStyle = {
     height: vars.inputHeightLarge,
+    fontSize: vars.font.size.normal,
     paddingLeft: vars.iconPadding,
     textAlignVertical: 'top',
     backgroundColor: vars.black03,
@@ -71,8 +71,15 @@ const messageInputStyle = {
     marginTop: vars.spacing.small.midi2x
 };
 
+const previewContainerSmall = {
+    alignItems: 'center',
+    justifyContent: 'center',
+    minWidth: vars.searchInputHeight * 2,
+    flex: 0
+};
+
 @observer
-export default class FilePreview extends SafeComponent {
+export default class FileSharePreview extends SafeComponent {
     static popup (file) {
         fileState.previewFile = observable({
             file,
@@ -82,7 +89,7 @@ export default class FilePreview extends SafeComponent {
         return new Promise((resolve) => {
             const showPopup = () => popupState.showPopup({
                 title: tx('title_uploadAndShare'),
-                contents: <FilePreview
+                contents: <FileSharePreview
                     state={fileState.previewFile}
                     onSubmit={() => {
                         const { previewFile } = fileState;
@@ -109,9 +116,11 @@ export default class FilePreview extends SafeComponent {
         return (
             <View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    {fileImagePlaceholder}
+                    <View style={previewContainerSmall}>
+                        {fileImagePlaceholder}
+                    </View>
                     <View style={nameContainer}>
-                        <Text style={{ fontSize: vars.font.size.smaller }}>
+                        <Text style={{ fontSize: vars.font.size.smaller, color: vars.txtLightGrey }}>
                             {tx('title_name')}
                         </Text>
                         <TextInput
@@ -173,7 +182,7 @@ export default class FilePreview extends SafeComponent {
     }
 }
 
-FilePreview.propTypes = {
+FileSharePreview.propTypes = {
     file: PropTypes.any,
     files: PropTypes.any,
     onSubmit: PropTypes.any
