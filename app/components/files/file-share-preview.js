@@ -88,6 +88,7 @@ export default class FileSharePreview extends SafeComponent {
     static popup(path, fileName) {
         fileState.previewFile = observable({
             path,
+            fileName,
             ext: fileHelpers.getFileExtension(path).trim().toLowerCase(),
             name: fileHelpers.getFileNameWithoutExtension(fileName || path),
             // message to send with shared file
@@ -154,7 +155,7 @@ export default class FileSharePreview extends SafeComponent {
     }
 
     @action.bound launchPreviewViewer() {
-        config.FileStream.launchViewer(this.props.state.path);
+        config.FileStream.launchViewer(this.props.state.path, this.props.state.fileName);
     }
 
     get previewImage() {
