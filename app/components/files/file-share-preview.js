@@ -84,10 +84,11 @@ const previewContainerSmall = {
 @observer
 export default class FileSharePreview extends SafeComponent {
     static popup(path, fileName) {
+        console.debug(`path: ${path}, filename: ${fileName}`);
         fileState.previewFile = observable({
             path,
             fileName,
-            ext: fileHelpers.getFileExtension(path).trim().toLowerCase(),
+            ext: fileHelpers.getFileExtension(fileName || path).trim().toLowerCase(),
             name: fileHelpers.getFileNameWithoutExtension(fileName || path),
             // message to send with shared file
             message: '',
