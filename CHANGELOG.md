@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.237.0"></a>
+# [3.237.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.236.0...v3.237.0) (2017-12-19)
+
+
+### Bug Fixes
+
+* fix image type recognition for android media urls ([2fbd997](https://github.com/PeerioTechnologies/peerio-mobile/commit/2fbd997))
+* starting message from contact view should work ([5098555](https://github.com/PeerioTechnologies/peerio-mobile/commit/5098555))
+
+
+
 <a name="3.236.0"></a>
 # [3.236.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.235.0...v3.236.0) (2017-12-19)
 
