@@ -258,7 +258,7 @@ export default class FileInlineImage extends SafeComponent {
                             {!downloading && this.loadImage && width && height ?
                                 <Image
                                     onLoad={this.onLoad}
-                                    source={source}
+                                    source={{ uri: source.uri, width, height }}
                                     style={{ width, height }} /> : null}
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
