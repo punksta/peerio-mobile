@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.240.0"></a>
+# [3.240.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.239.0...v3.240.0) (2017-12-20)
+
+
+### Bug Fixes
+
+* paywall in create room is ugly and bad. make it just ugly ([0f599af](https://github.com/PeerioTechnologies/peerio-mobile/commit/0f599af))
+
+
+
 <a name="3.239.0"></a>
 # [3.239.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.238.0...v3.239.0) (2017-12-20)
 
