@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.239.0"></a>
+# [3.239.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.238.0...v3.239.0) (2017-12-20)
+
+
+### Bug Fixes
+
+* fix scrolling ([9efdfde](https://github.com/PeerioTechnologies/peerio-mobile/commit/9efdfde))
+* quick dirty fix for padding ([d8175d8](https://github.com/PeerioTechnologies/peerio-mobile/commit/d8175d8))
+
+
+
 <a name="3.238.0"></a>
 # [3.238.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.232.0...v3.238.0) (2017-12-20)
 
