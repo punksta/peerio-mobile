@@ -172,7 +172,8 @@ export default class Chat extends SafeComponent {
             y = newMeasures.pageY - oldMeasures.pageY;
             if (bottom) {
                 console.log(newMeasures);
-                y = newMeasures.frameY - this.indicatorHeight; // + this.scrollViewHeight / 2;
+                y = this.contentHeight - this.scrollViewHeight * 1.5;
+                // y = newMeasures.frameY - this.indicatorHeight; // + this.scrollViewHeight / 2;
                 const maxScroll = this.contentHeight - this.scrollViewHeight;
                 if (y > maxScroll || Platform.OS === 'android') {
                     y = maxScroll;
@@ -199,10 +200,10 @@ export default class Chat extends SafeComponent {
         this.refreshing = true;
         const id = await this.saveItemPositionById(this.data.length - 1);
         this.chat.loadNextPage();
-        when(() => !this.chat.loadingBottomPage, () => requestAnimationFrame(() => {
+        when(() => !this.chat.loadingBottomPage, () => setTimeout(() => {
             this.restoreScrollPositionById(id, true);
             setTimeout(() => { this.refreshing = false; }, 1000);
-        }));
+        }), 100);
     }
 
     onScroll = (event) => {
@@ -216,7 +217,7 @@ export default class Chat extends SafeComponent {
             if (y < this.indicatorHeight / 2) this._onGoUp();
             // trigger next page if we are at the bottom
             if (y >= h - this.indicatorHeight / 2) this._onGoDown();
-            this.disableNextScroll = y < h - this.indicatorHeight;
+            // this.disableNextScroll = y < h - this.indicatorHeight;
         };
         if (this._updater) clearTimeout(this._updater);
         this._updater = setTimeout(updater, 500);
