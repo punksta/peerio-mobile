@@ -1,4 +1,4 @@
-import { observable } from 'mobx';
+import { observable, computed } from 'mobx';
 import randomWords from 'random-words';
 import capitalize from 'capitalize';
 import mockContactStore from './mock-contact-store';
@@ -33,6 +33,7 @@ class MockChannel {
     @observable isFavorite = false;
     @observable isMuted = false;
     @observable adminMap = observable.map();
+    @observable headLoaded = true;
 
     constructor() {
         TinyDb.userCollection = TinyDb.open('testuser');
@@ -134,9 +135,12 @@ class MockChatStore {
     @observable chats = [];
     @observable invites = [];
     @observable loaded = true;
+    @computed get channels() {
+        return this.chats.filter(chat => chat.isChannel);
+    }
 
     constructor() {
-        for (let i = 0; i < 2; ++i) {
+        for (let i = 0; i < 5; ++i) {
             this.chats.push(this.createMockChannel());
         }
 

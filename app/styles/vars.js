@@ -1,4 +1,5 @@
 import { Platform, Dimensions } from 'react-native';
+
 import branding from './branding';
 
 const { width, height } = Dimensions.get('window');
@@ -68,10 +69,12 @@ const vars = {
     pickerBg: 'rgba(255, 255, 255, .12)',
     pickerText: '#fff',
     subtleBg: '#c3dfee',
+    black03: 'rgba(0, 0, 0, 0.03)',
+    black12: 'rgba(0, 0, 0, 0.12)',
     subtleText: 'rgba(0, 0, 0, .54)',
+    verySubtleGrey: 'rgba(0, 0, 0, .12)',
     extraSubtleText: 'rgba(0, 0, 0, .38)',
     subtleTextBold: 'rgba(0, 0, 0, .54)',
-    verySubtleGrey: 'rgba(0, 0, 0, .12)',
     lighterBlackText: 'rgba(0, 0, 0, .87)',
     inputBgInactive: 'rgba(255, 255, 255, .5)',
     inputBgInactiveText: 'rgba(0,0,0, .54)',
@@ -102,6 +105,7 @@ const vars = {
     iconPaddingLarge: 16,
     iconSizeBigger: 25,
     iconMargin: 30,
+    imagePreviewSize: 48,
     menuWidthRatio: 0.8,
     animationDuration: 200,
     listItemHeight: 64,
@@ -138,10 +142,12 @@ const vars = {
     signupFontSize: scaleDim(36),
     profileEditFontSize: scaleDim(60),
     readReceiptFontSize: scaleDim(9),
+    largeInputWidth: 240,
     inputHeight: 48,
     searchInputHeight: 32,
     inputPaddingLeft: 10,
     inputPaddedHeight: 56,
+    inputHeightLarge: 68,
     fabSize: 60,
     fabRight: 16,
     fabBottom: 32,
@@ -182,6 +188,7 @@ const vars = {
             mini2x: scaleDim(56),
             midi: scaleDim(60),
             midi2x: scaleDim(64),
+            midi3x: scaleDim(68),
             maxi: scaleDim(74),
             maxi2x: scaleDim(75)
         }
@@ -191,5 +198,21 @@ const vars = {
 };
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;
+
+vars.optimizeImageSize = (sourceWidth, sourceHeight, containerWidth, containerHeight) => {
+    let w = sourceWidth + 0.0, h = sourceHeight + 0.0;
+    if (w > containerWidth) {
+        h *= containerWidth / w;
+        w = containerWidth;
+    }
+    if (h > containerHeight) {
+        w *= containerHeight / h;
+        h = containerHeight;
+    }
+    return {
+        width: Math.floor(w),
+        height: Math.floor(h)
+    };
+};
 
 export default vars;

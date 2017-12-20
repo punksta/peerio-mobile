@@ -104,18 +104,20 @@ class ChatState extends RoutedState {
         return this.canSend && this.currentChat.canSendJitsi;
     }
 
-    @action startChat(recipients, isChannel = false, name, purpose) {
+    @action async startChat(recipients, isChannel = false, name, purpose) {
         try {
             const chat = this.store.startChat(recipients, isChannel, name, purpose);
             this.loading = true;
-            when(() => !chat.loadingMeta, () => {
+            return new Promise(resolve => when(() => !chat.loadingMeta, () => {
                 this.loading = false;
                 this.routerMain.chats(chat, true);
-            });
+                resolve(chat);
+            }));
         } catch (e) {
             this.loading = false;
             warnings.add(e.message);
             console.error(e);
+            return null;
         }
     }
 

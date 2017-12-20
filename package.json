@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.233.0",
+  "version": "3.237.0",
   "private": true,
   "scripts": {
     "postinstall": "./scripts/setup-env.sh && npm run icebear:compile && ./scripts/setup-rn-debugging.sh && ./scripts/copy-android-resources.sh && ./scripts/android-switch-to-rn-fork.sh && node scripts/test-deps.js",
@@ -50,7 +50,7 @@
     "path": "0.12.7",
     "pbkdf2": "github:PeerioTechnologies/pbkdf2",
     "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v4.0.1",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v4.1.0",
     "peerio-translator": "github:PeerioTechnologies/peerio-translator#v1.0.0",
     "process": "0.11.9",
     "prop-types": "15.5.10",
@@ -66,7 +66,7 @@
     "react-native-cli": "2.0.1",
     "react-native-contacts": "github:PeerioTechnologies/react-native-contacts",
     "react-native-device-info": "github:PeerioTechnologies/react-native-device-info",
-    "react-native-file-opener": "github:PeerioTechnologies/react-native-file-opener#9ffcb70a5028ed2fabd4ffcb68bda9fdba4d5d96",
+    "react-native-file-opener": "github:PeerioTechnologies/react-native-file-opener#9c01d8f574ae55b123a7bba38472fe453b4991fb",
     "react-native-file-picker": "github:PeerioTechnologies/react-native-file-picker-clean",
     "react-native-fs": "github:PeerioTechnologies/react-native-fs",
     "react-native-image-crop-picker": "github:PeerioTechnologies/react-native-image-crop-picker",

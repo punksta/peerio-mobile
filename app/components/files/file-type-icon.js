@@ -15,6 +15,9 @@ export default class FileTypeIcon extends React.Component {
             case 'small':
                 sizeStyle = { height: 24, width: 24 };
                 break;
+            case 'medium':
+                sizeStyle = { height: 48, width: 48 };
+                break;
             case 'large': default:
                 sizeStyle = { height: 72, width: 72 };
                 break;

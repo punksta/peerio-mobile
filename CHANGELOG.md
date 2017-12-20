@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.237.0"></a>
+# [3.237.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.236.0...v3.237.0) (2017-12-19)
+
+
+### Bug Fixes
+
+* fix image type recognition for android media urls ([2fbd997](https://github.com/PeerioTechnologies/peerio-mobile/commit/2fbd997))
+* starting message from contact view should work ([5098555](https://github.com/PeerioTechnologies/peerio-mobile/commit/5098555))
+
+
+
+<a name="3.236.0"></a>
+# [3.236.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.235.0...v3.236.0) (2017-12-19)
+
+
+### Bug Fixes
+
+* don't crash when renaming to the same paths ([3ababe0](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ababe0))
+* don't crash when renaming to the same paths ([713d33e](https://github.com/PeerioTechnologies/peerio-mobile/commit/713d33e))
+
+
+
+<a name="3.235.0"></a>
+# [3.235.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.234.0...v3.235.0) (2017-12-19)
+
+
+
+<a name="3.234.0"></a>
+# [3.234.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.233.0...v3.234.0) (2017-12-19)
+
+
+
 <a name="3.233.0"></a>
 # [3.233.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.232.0...v3.233.0) (2017-12-19)
 
@@ -9,6 +41,9 @@ All notable changes to this project will be documented in this file. See [standa
 ### Bug Fixes
 
 * android header height ([#76](https://github.com/PeerioTechnologies/peerio-mobile/issues/76)) ([211ff74](https://github.com/PeerioTechnologies/peerio-mobile/commit/211ff74))
+* icebear version ([1197629](https://github.com/PeerioTechnologies/peerio-mobile/commit/1197629))
+* inline image button spacing ([#77](https://github.com/PeerioTechnologies/peerio-mobile/issues/77)) ([2adc36c](https://github.com/PeerioTechnologies/peerio-mobile/commit/2adc36c))
+* left padding for collapsed chat item ([072bbf5](https://github.com/PeerioTechnologies/peerio-mobile/commit/072bbf5))
 * inline image button spacing ([#77](https://github.com/PeerioTechnologies/peerio-mobile/issues/77)) ([2adc36c](https://github.com/PeerioTechnologies/peerio-mobile/commit/2adc36c))
 * logs title and back button [ch945] [ch944] ([a7dd838](https://github.com/PeerioTechnologies/peerio-mobile/commit/a7dd838))
 * mock image ([faa49e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/faa49e8))
@@ -20,6 +55,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 * cache image sizes when loaded to prevent resize ([e75b3c8](https://github.com/PeerioTechnologies/peerio-mobile/commit/e75b3c8))
 * launch screen generator scripts [ch1070] ([ea6fe47](https://github.com/PeerioTechnologies/peerio-mobile/commit/ea6fe47))
+* make preview controller have proper title ([2a064c0](https://github.com/PeerioTechnologies/peerio-mobile/commit/2a064c0))
 * Mobile tests - autologin ([#75](https://github.com/PeerioTechnologies/peerio-mobile/issues/75)) ([5bec33c](https://github.com/PeerioTechnologies/peerio-mobile/commit/5bec33c))
 * new launch images/privacy screen [ch1070] ([30baf7b](https://github.com/PeerioTechnologies/peerio-mobile/commit/30baf7b))
 * switch to circleci 2.0 ([f4d75f9](https://github.com/PeerioTechnologies/peerio-mobile/commit/f4d75f9))

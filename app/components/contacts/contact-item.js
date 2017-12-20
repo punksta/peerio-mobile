@@ -8,13 +8,20 @@ import contactState from './contact-state';
 
 @observer
 export default class ContactItem extends SafeComponent {
+    onPress = () => {
+        const { contact, onPress } = this.props;
+        if (onPress) return this.props.onPress();
+        if (contact.username) return contactState.routerMain.contacts(contact);
+        return false;
+    }
+
     renderThrow() {
         const { contact } = this.props;
         const { username, fullName, email, isDeleted } = contact;
         const isInvited = !username;
         return (
             <Avatar
-                onPress={() => !isInvited && contactState.routerMain.contacts(contact)}
+                onPress={this.onPress}
                 noTap={isInvited}
                 height={56}
                 contact={contact}

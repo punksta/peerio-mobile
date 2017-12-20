@@ -16,7 +16,6 @@ import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
 import VideoIcon from '../layout/video-icon';
 import IdentityVerificationNotice from './identity-verification-notice';
-import { User } from '../../lib/icebear';
 
 const { width } = Dimensions.get('window');
 
@@ -46,10 +45,16 @@ export default class Chat extends SafeComponent {
                 this.scrollView.scrollTo({ y, animated: true });
             }
         });
+        this.chatReaction = reaction(() => chatState.store.activeChat, () => {
+            this.initialScrollDone = false;
+            this.waitForScrollToEnd = true;
+            this.contentHeight = 0;
+        });
     }
 
     componentWillUnmount() {
         this.selfMessageReaction();
+        this.chatReaction();
     }
 
     get rightIcon() {
@@ -301,7 +306,7 @@ export default class Chat extends SafeComponent {
                 <View style={{ flex: 1, flexGrow: 1 }}>
                     {this.data ? this.listView() : !chatState.loading && <ChatZeroStatePlaceholder />}
                 </View>
-                <ProgressOverlay enabled={chatState.loading} />
+                <ProgressOverlay enabled={chatState.loading || !this.initialScrollDone} />
                 <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
                 <InlineImageActionSheet ref={sheet => { this._inlineImageActionSheet = sheet; }} />
             </View>

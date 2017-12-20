@@ -8,6 +8,12 @@ import chatState from './chat-state';
 
 @observer
 export default class ChannelListItem extends SafeComponent {
+    onPress = () => {
+        const { chat, onPress } = this.props;
+        if (onPress) return onPress(chat);
+        return chatState.routerMain.chats(chat);
+    }
+
     renderThrow() {
         if (chatState.collapseChannels) return null;
         const { chat } = this.props;
@@ -52,7 +58,7 @@ export default class ChannelListItem extends SafeComponent {
         return (
             <View style={{ backgroundColor: vars.bg }}>
                 <TouchableOpacity
-                    onPress={() => chatState.routerMain.chats(chat)}
+                    onPress={this.onPress}
                     style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text style={[textStyle, (unreadCount > 0 && textUnreadStyle)]}>
                         {`# ${name}`}

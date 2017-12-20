@@ -3,7 +3,7 @@
 // import MockChatList from './mock-chat-list';
 // import MockTwoFactorAuth from './mock-two-factor-auth';
 // import MockPopups from './mock-popups';
-// import MockImageError from './mock-image-error';
+import MockImagePreview from './mock-image-preview';
 
 export default null;
-// export default __DEV__ ? MockImageError : null;
+// export default __DEV__ ? MockImagePreview : null;
