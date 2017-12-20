@@ -151,7 +151,6 @@ export default class CreateChannel extends Component {
                 key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
                 <View style={card}>
                     {this.exitRow}
-                    <ChannelUpgradeOffer />
                     {this.renderTextBox(
                         tx('title_channelName'),
                         tx('title_channelNamePlaceholder'),
@@ -181,7 +180,7 @@ export default class CreateChannel extends Component {
     }
 
     get paywall() {
-        return <View style={card}><ChannelUpgradeOffer /></View>;
+        return <View style={card}>{this.exitRow}<ChannelUpgradeOffer /></View>;
     }
 
     render() {
