@@ -4,8 +4,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Jumpy from '../shared/jumpy';
 import { vars } from '../../styles/styles';
 
-const iconAddChat = require('../../assets/icon-add-chat.png');
-
 const goStyle = {
     fontSize: vars.font.size.normal,
     fontWeight: vars.font.weight.semiBold,
@@ -153,16 +151,16 @@ const icons = {
         );
     },
 
-    iconAddChat(onPress) {
+    iconImage(source, onPress) {
         const width = vars.iconSize;
         const height = width;
         const padding = vars.iconPadding;
         return (
             <TouchableOpacity
-                style={{ padding }}
+                style={{ padding, opacity: vars.sublteGrayOpacity }}
                 onPress={onPress}
                 pressRetentionOffset={vars.retentionOffset}>
-                <Image style={{ width, height }} source={iconAddChat} />
+                <Image style={{ width, height }} source={source} />
             </TouchableOpacity>
         );
     }

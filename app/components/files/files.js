@@ -16,6 +16,8 @@ import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import icons from '../helpers/icons';
 
+const iconClear = require('../../assets/file_icons/ic_close.png');
+
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
@@ -169,15 +171,15 @@ export default class Files extends SafeComponent {
             alignItems: 'center',
             paddingHorizontal: vars.spacing.small.midi2x,
             marginHorizontal: vars.spacing.medium.mini2x,
-            marginVertical: vars.spacing.small.midi,
+            marginVertical: vars.spacing.small.midi2x,
             borderColor: vars.verySubtleGrey,
             borderWidth: 1,
             height,
             borderRadius: height
         };
-        const fontSize = vars.font.size.normal;
+        const fontSize = vars.font.size.bigger;
         const marginTop =
-            Platform.OS === 'android' ? (height - fontSize) / 2 : 0;
+            Platform.OS === 'android' ? (height - fontSize + 2) / 2 : 0;
         const placeholderStyle = {
             flexGrow: 1,
             height,
@@ -192,10 +194,10 @@ export default class Files extends SafeComponent {
 
         let rightIcon = null;
         if (this.findFilesText) {
-            rightIcon = icons.coloredSmall('close', () => {
+            rightIcon = icons.iconImage(iconClear, () => {
                 this.findFilesText = '';
                 this.onChangeFindFilesText('');
-            }, vars.bg);
+            });
         }
 
         return (

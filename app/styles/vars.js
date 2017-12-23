@@ -66,6 +66,7 @@ const vars = {
     txtDate: 'rgba(0, 0, 0, .38)',
     inputBg: '#fff',
     lightGrayBg: '#f0f0f0',
+    sublteGrayOpacity: 0.54,
     pickerBg: 'rgba(255, 255, 255, .12)',
     pickerText: '#fff',
     subtleBg: '#c3dfee',
