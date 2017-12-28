@@ -28,7 +28,8 @@ export default class ContactItem extends SafeComponent {
                 isDeleted={isDeleted}
                 title={username || email}
                 title2={fullName || <Text style={{ fontStyle: 'italic' }}>(invited)</Text>}
-                hideOnline />
+                hideOnline
+                invited={isInvited} />
         );
     }
 }

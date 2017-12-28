@@ -314,7 +314,7 @@ export default class Avatar extends SafeComponent {
                 style={style}
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={this.props.onPressAvatar || this.onPressAll}>
-                <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
+                <AvatarCircle contact={this.props.contact} loading={this.props.loading} invited={this.props.invited} />
                 <DeletedCircle visible={this.props.isDeleted} />
             </TouchableOpacity>
         );

@@ -12,7 +12,7 @@ const avatarDiameter = 36;
 @observer
 export default class AvatarCircle extends SafeComponent {
     renderThrow() {
-        const { large, medium, contact, loading } = this.props;
+        const { large, medium, contact, loading, invited } = this.props;
         let ratio = 1;
         if (large) ratio = 3;
         if (medium) ratio = 2;
@@ -40,6 +40,8 @@ export default class AvatarCircle extends SafeComponent {
             if (contact.hasAvatar) {
                 const uri = (large || medium) ? contact.largeAvatarUrl : contact.mediumAvatarUrl;
                 inner = <Image source={{ uri, cache: 'force-cache' }} key={uri} style={avatarStyle} />;
+            } else if (invited) {
+                inner = <View style={[avatarStyle, { justifyContent: 'center', alignItems: 'center' }]}>{icons.plaindark('person')}</View>;
             } else {
                 inner = (
                     <View style={coloredAvatarStyle}>
