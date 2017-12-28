@@ -87,6 +87,7 @@ const vars = {
     snackbarHeight: 48,
     popupMinHeight: scaleDim(110),
     settingsBg: 'rgba(0, 0, 0, 0.06)',
+    headerBorderColor: 'rgba(0,0,0,.06)',
     gold: '#ffd700',
     fabEnabled: '#FF7D00',
     fabDisabled: '#CFCFCF',

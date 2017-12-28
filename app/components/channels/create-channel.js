@@ -70,7 +70,11 @@ export default class CreateChannel extends Component {
             alignItems: 'center',
             padding: vars.spacing.small.mini2x,
             paddingTop: vars.statusBarHeight * 2,
-            paddingBottom: 0
+            paddingBottom: 0,
+            borderBottomWidth: 1,
+            borderBottomColor: vars.headerBorderColor,
+            marginBottom: vars.spacing.medium.mini2x,
+            height: vars.inputHeight
         };
         const textStyle = {
             textAlign: 'center',
@@ -96,7 +100,7 @@ export default class CreateChannel extends Component {
             alignItems: 'center',
             paddingHorizontal: vars.spacing.medium.maxi,
             marginHorizontal: vars.spacing.medium.mini2x,
-            marginVertical: vars.spacing.small.midi,
+            marginBottom: vars.spacing.small.midi2x,
             borderColor: vars.bg,
             borderWidth: 1,
             height,
