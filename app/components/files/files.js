@@ -169,9 +169,10 @@ export default class Files extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
+            backgroundColor: 'white',
             paddingHorizontal: vars.spacing.small.midi2x,
+            marginVertical: vars.spacing.small.midi,
             marginHorizontal: vars.spacing.medium.mini2x,
-            marginVertical: vars.spacing.small.midi2x,
             borderColor: vars.verySubtleGrey,
             borderWidth: 1,
             height,
@@ -237,7 +238,7 @@ export default class Files extends SafeComponent {
         return (
             <View
                 style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, paddingHorizontal: vars.spacing.medium.mini2x, backgroundColor: vars.lightGrayBg }}>
                     {this.searchTextbox()}
                     {upgradeForFiles()}
                     {!this.data.length && !fileState.currentFolder.isRoot ?
