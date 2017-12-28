@@ -65,7 +65,7 @@ export default class ChatListItem extends SafeComponent {
         return (
             <Avatar
                 disableMessageTapping
-                starred={chat.isFavorite}
+                pinned={chat.isFavorite}
                 rightIcon={this.rightIcon}
                 extraPaddingTop={8}
                 extraPaddingVertical={8}

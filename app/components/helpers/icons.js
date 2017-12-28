@@ -163,6 +163,20 @@ const icons = {
                 <Image style={{ width, height }} source={source} />
             </TouchableOpacity>
         );
+    },
+
+    iconPinnedChat(source, onPress) {
+        const width = vars.pinnedChatIconSize;
+        const height = width;
+        const paddingHorizontal = vars.pinnedChatPaddingHorizontal;
+        return (
+            <TouchableOpacity
+                style={{ paddingHorizontal, opacity: vars.sublteGrayOpacity }}
+                onPress={onPress}
+                pressRetentionOffset={vars.retentionOffset}>
+                <Image style={{ width, height }} source={source} />
+            </TouchableOpacity>
+        );
     }
 };
 

@@ -114,6 +114,8 @@ const vars = {
     listItemHeight: 56,
     listViewPaddingVertical: 36,
     listViewPaddingHorizontal: 8,
+    pinnedChatIconSize: 18,
+    pinnedChatPaddingHorizontal: 2,
     fileInnerItemPaddingRight: 8,
     loadingScreenMarginBottom: scaleDim(170),
     loadingScreenMarginTop: scaleDim(206),

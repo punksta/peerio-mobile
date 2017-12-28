@@ -11,6 +11,9 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 
+const pinOff = require('../../assets/chat/icon-pin-off.png');
+const pinOn = require('../../assets/chat/icon-pin-on.png');
+
 @observer
 export default class ChatInfo extends SafeComponent {
     @observable chatName = '';
@@ -64,7 +67,7 @@ export default class ChatInfo extends SafeComponent {
                 )}
             </View>
         );
-        const rightIcon = icons.gold(chat.isFavorite ? 'star' : 'star-border',
+        const rightIcon = icons.iconImage(chat.isFavorite ? pinOn : pinOff,
             () => chat.toggleFavoriteState());
         return (<LayoutModalExit
             body={body}

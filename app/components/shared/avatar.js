@@ -21,6 +21,7 @@ import preferenceStore from '../settings/preference-store';
 import { popupSetupVideo } from '../shared/popups';
 import CircleButtonWithIcon from '../controls/circle-button-with-icon';
 
+const pinOn = require('../../assets/chat/icon-pin.png');
 
 const itemStyle = {
     flex: 1,
@@ -320,9 +321,9 @@ export default class Avatar extends SafeComponent {
         );
     }
 
-    get star() {
-        return this.props.starred ?
-            <Text style={{ color: vars.gold }}>★ </Text> : null;
+    get pinned() {
+        return this.props.pinned ?
+            icons.iconPinnedChat(pinOn) : null;
     }
 
     get title() {
@@ -332,9 +333,8 @@ export default class Avatar extends SafeComponent {
         const { contact, title, title2 } = this.props;
         return (
             <View style={nameContainerStyle}>
-                <View style={{ flexShrink: 1 }}>
+                <View style={{ flexShrink: 1, flexDirection: 'row', alignItems: 'center' }}>
                     <Text ellipsizeMode="tail" numberOfLines={title2 ? 2 : 1}>
-                        {this.star}
                         <Text style={[nameTextStyle, unreadStyle]}>
                             {title ||
                                 <Text>
@@ -364,9 +364,8 @@ export default class Avatar extends SafeComponent {
         const text = contact ? contact.username : title;
         return (
             <View style={nameContainerStyle}>
-                <View style={{ flexShrink: 1 }}>
+                <View style={{ flexShrink: 1, flexDirection: 'row', alignItems: 'center' }}>
                     <Text ellipsizeMode="tail" numberOfLines={1}>
-                        {this.star}
                         <Text style={[fullnameTextStyle, unreadStyle, fullnameBoldStyle]}>
                             {contact ? contact.fullName : ''}
                             <Text style={[usernameTextStyle, unreadStyle]}>
@@ -463,6 +462,7 @@ export default class Avatar extends SafeComponent {
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
                         style={itemContainerStyle}>
+                        {this.pinned}
                         {this.avatar}
                         <View style={[nameMessageContainerStyle]}>
                             {this.props.isChat ? this.name : this.title}
@@ -542,6 +542,7 @@ Avatar.propTypes = {
     sendError: PropTypes.bool,
     ellipsize: PropTypes.bool,
     unread: PropTypes.bool,
+    pinned: PropTypes.bool,
     starred: PropTypes.bool,
     isDeleted: PropTypes.bool,
     disableMessageTapping: PropTypes.bool,
