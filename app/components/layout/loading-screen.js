@@ -9,6 +9,7 @@ import { socket } from '../../lib/icebear';
 import { promiseWhen } from '../helpers/sugar';
 import routerMain from '../routes/router-main';
 import { tx } from '../utils/translator';
+import SnackBarConnection from '../snackbars/snackbar-connection';
 
 const smallIcon = {
     height: vars.iconSize,
@@ -31,7 +32,7 @@ export default class LoadingScreen extends Component {
     // States
     @observable loadingStep = 0;
     iconState;
-    randomMessage;
+    @observable randomMessage;
 
     constructor(props) {
         super(props);
@@ -109,7 +110,13 @@ export default class LoadingScreen extends Component {
         const numberOfSteps = Object.keys(this.icons).length - 1;
         Object.keys(this.icons).forEach((name, i) => {
             result[name] = {};
-            if (i < this.loadingStep) {
+            if (!socket.connected) {
+                if (i === numberOfSteps) result[name].line = null; // Icon on the far right should not have a line
+                else result[name].line = this.lines.dormant;
+                result[name].icon = this.icons[name].source.dormant;
+                result[name].iconStyle = smallIcon;
+                result.statusText = tx('title_waitingToConnect');
+            } else if (i < this.loadingStep) {
                 if (i === numberOfSteps) result[name].line = null; // Icon on the far right should not have a line
                 else result[name].line = this.lines.done;
                 result[name].icon = this.icons[name].source.done;
@@ -196,9 +203,9 @@ export default class LoadingScreen extends Component {
         };
         return (
             <View style={container}>
-                <Text style={flavorTextStyle}>
+                {socket.connected && <Text style={flavorTextStyle}>
                     {this.randomMessage}
-                </Text>
+                </Text>}
                 <View style={loadingProgressContainer}>
                     <View style={iconContainer}>
                         {Object.keys(this.icons).map(this.renderImages)}
@@ -206,6 +213,9 @@ export default class LoadingScreen extends Component {
                     <Text style={statusTextStyle}>
                         {this.iconState.statusText}
                     </Text>
+                </View>
+                <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                    <SnackBarConnection />
                 </View>
             </View>
         );
@@ -228,6 +238,7 @@ export default class LoadingScreen extends Component {
         connecting: {
             copy: 'title_connecting',
             source: {
+                dormant: require('../../assets/loading_screens/connecting-dormant.png'),
                 inProgress: require('../../assets/loading_screens/connecting-inProgress.png'),
                 done: require('../../assets/loading_screens/connecting-done.png')
             }
