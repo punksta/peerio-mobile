@@ -36,6 +36,7 @@ export default class ChatItem extends SafeComponent {
         if (i.hasUrls && i.externalImages.length) {
             firstImage = i.externalImages[0];
         }
+        const hasDeletedFile = i.files && !i.files.find(id => fileState.store.getById(id));
         const shouldDisplayIdentityNotice = i.systemData && i.systemData.action === 'join';
 
         return (
@@ -54,6 +55,7 @@ export default class ChatItem extends SafeComponent {
                     timestamp={i.timestamp}
                     timestampText={i.messageTimestampText}
                     message={text}
+                    hasDeletedFile={hasDeletedFile}
                     isChat
                     fullnameIsBold
                     systemMessage={systemMessageText}

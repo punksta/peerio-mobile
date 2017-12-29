@@ -8,8 +8,8 @@ const imageCacheTinyDb = TinyDb.open('imageCaches');
 
 class CachedImage {
     @observable source = null;
-    @observable width = 0;
-    @observable height = 0;
+    @observable width = undefined;
+    @observable height = undefined;
     get cacheKey() { return `cache:${this.source.uri}`; }
 
     @action.bound async setImageSize(width, height) {

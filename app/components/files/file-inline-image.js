@@ -39,6 +39,7 @@ export default class FileInlineImage extends SafeComponent {
     @observable loadImage;
     @observable showUpdateSettingsLink;
     @observable cachedImage;
+    @observable errorLoading = false;
     outerPadding = 8;
 
     componentWillMount() {
@@ -89,9 +90,11 @@ export default class FileInlineImage extends SafeComponent {
 
     fetchSize() {
         const { cachedImage } = this;
-        when(() => cachedImage.width && cachedImage.height && this.optimalContentWidth, () => {
+        // if width or height is undefined, there was an error loading it
+        when(() => cachedImage.width !== undefined && cachedImage.height !== undefined && this.optimalContentWidth, () => {
             const { width, height } = cachedImage;
             const { optimalContentWidth, optimalContentHeight } = this;
+            if (width <= 0 && height <= 0) this.onErrorLoadingImage();
             Object.assign(this, vars.optimizeImageSize(width, height, optimalContentWidth, optimalContentHeight));
             // console.debug(`calculated width: ${this.width}, ${this.height}`);
         });
@@ -177,8 +180,32 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
-    onLoad = async () => {
+    handleOnLoad = async() => {
         this.loaded = true;
+    }
+
+    onErrorLoadingImage = () => {
+        this.errorLoading = true;
+    }
+
+    get displayErrorLoading() {
+        const outer = {
+            padding: this.outerPadding
+        };
+        const text0 = {
+            color: vars.txtDark,
+            backgroundColor: vars.lightGrayBg,
+            paddingVertical: vars.spacing.large.midi2x,
+            textAlign: 'center',
+            paddingHorizontal: vars.spacing.small.maxi
+        };
+        return (
+            <View style={outer}>
+                <Text style={text0}>
+                    {tx('error_loadingImage')}
+                </Text>
+            </View>
+        );
     }
 
     renderThrow() {
@@ -257,12 +284,15 @@ export default class FileInlineImage extends SafeComponent {
                         <View style={inner}>
                             {!downloading && this.loadImage && width && height ?
                                 <Image
-                                    onLoad={this.onLoad}
-                                    source={{ uri: source.uri, width, height }}
-                                    style={{ width, height }} /> : null}
+                                    source={source}
+                                    style={{ width, height }}
+                                    onLoad={this.handleOnLoad}
+                                    onError={this.onErrorLoadingImage}
+                                /> : null}
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
                             {this.oversizeCutoff && this.displayCutOffImageOffer}
+                            {this.errorLoading && this.displayErrorLoading}
                         </View>}
                 </View>
                 {!isLocal && showUpdateSettingsLink && this.updateSettingsOffer}
