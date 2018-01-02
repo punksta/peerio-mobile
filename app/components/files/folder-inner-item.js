@@ -21,7 +21,7 @@ const itemContainerStyle = {
     height,
     borderWidth: 0,
     borderColor: 'red',
-    paddingLeft: vars.spacing.small.midi2x
+    paddingLeft: vars.spacing.medium.mini2x
 };
 
 const folderInfoContainerStyle = {
@@ -85,7 +85,7 @@ export default class FolderInnerItem extends SafeComponent {
                     {this.radio}
                     <View style={itemContainerStyle}>
                         <View style={[loadingStyle, { flex: 0 }]}>
-                            {icons.darkNoPadding('folder')}
+                            {icons.darkNoPadding('folder', null, null, vars.iconSizeMedium)}
                         </View>
                         <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
                             <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>

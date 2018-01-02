@@ -9,6 +9,7 @@ import { fileStore, chatStore } from '../../lib/icebear';
 import contactState from '../contacts/contact-state';
 import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
+import uiState from './ui-state';
 
 const actionCellStyle = {
     flex: 1,
@@ -54,6 +55,7 @@ export default class Tabs extends SafeComponent {
     }
 
     renderThrow() {
+        if (uiState.keyboardHeight) return null;
         if (routerMain.currentIndex !== 0) return null;
         return (
             <View style={bottomRowStyle}>

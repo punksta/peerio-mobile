@@ -71,8 +71,10 @@ export default class CreateChannel extends Component {
             padding: vars.spacing.small.mini2x,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0,
-            // To make room for invite
-            marginBottom: this.step === 0 ? vars.spacing.huge.minixx : vars.spacing.medium.mini
+            borderBottomWidth: 1,
+            borderBottomColor: vars.headerBorderColor,
+            marginBottom: vars.spacing.medium.mini2x,
+            height: vars.inputHeight
         };
         const textStyle = {
             textAlign: 'center',
@@ -98,7 +100,7 @@ export default class CreateChannel extends Component {
             alignItems: 'center',
             paddingHorizontal: vars.spacing.medium.maxi,
             marginHorizontal: vars.spacing.medium.mini2x,
-            marginVertical: vars.spacing.small.midi,
+            marginBottom: vars.spacing.small.midi2x,
             borderColor: vars.bg,
             borderWidth: 1,
             height,
@@ -152,7 +154,7 @@ export default class CreateChannel extends Component {
                 ref={sv => { this._scrollView = sv; }}
                 key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
                 <View style={card}>
-                    <ChannelUpgradeOffer />
+                    {this.exitRow}
                     {this.renderTextBox(
                         tx('title_channelName'),
                         tx('title_channelNamePlaceholder'),
@@ -167,6 +169,7 @@ export default class CreateChannel extends Component {
                     )}
                 </View>
                 <View style={card}>
+                    {this.exitRow}
                     <ContactSelector
                         action={async contacts => {
                             this.inProgress = true;
@@ -181,16 +184,15 @@ export default class CreateChannel extends Component {
     }
 
     get paywall() {
-        return <View style={card}><ChannelUpgradeOffer /></View>;
+        return <View style={card}>{this.exitRow}<ChannelUpgradeOffer /></View>;
     }
 
     render() {
         return (
-            <ScrollView keyboardShouldPersistTaps={this.step > 0 ? 'handled' : 'never'} scrollEnabled={false} style={fillView} contentContainerStyle={fillView}>
-                {this.exitRow}
+            <View style={fillView} contentContainerStyle={fillView}>
                 {User.current.channelsLeft <= 0 ? this.paywall : this.scrollView}
                 <SnackBarConnection />
-            </ScrollView>
+            </View>
         );
     }
 }

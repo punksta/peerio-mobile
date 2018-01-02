@@ -28,6 +28,15 @@ function normalizeUri(response) {
     return uri;
 }
 
+/**
+ * Returns object with the following fields:
+ * url - local path
+ * fileName - human-readable filename
+ * ext - original extension
+ * response - original response
+ * @param {Function} functor picks up the actual source
+ * @param {Object} params for functor
+ */
 async function processResponse(functor, params) {
     let response = await functor(params);
     if (response.error) {
@@ -37,7 +46,7 @@ async function processResponse(functor, params) {
     if (response.didRequestPermission) {
         console.log('imagepicker.js: permissions requested');
         await waitForPermissions();
-        response = await functor();
+        response = await functor(params);
     }
     if (!response.path && response.uri) {
         response.path = response.uri;

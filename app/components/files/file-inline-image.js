@@ -39,6 +39,7 @@ export default class FileInlineImage extends SafeComponent {
     @observable loadImage;
     @observable showUpdateSettingsLink;
     @observable cachedImage;
+    @observable errorLoading = false;
     outerPadding = 8;
 
     componentWillMount() {
@@ -89,23 +90,13 @@ export default class FileInlineImage extends SafeComponent {
 
     fetchSize() {
         const { cachedImage } = this;
-        // console.log('fetch size');
-        when(() => cachedImage.width && cachedImage.height && this.optimalContentWidth, () => {
+        // if width or height is undefined, there was an error loading it
+        when(() => cachedImage.width !== undefined && cachedImage.height !== undefined && this.optimalContentWidth, () => {
             const { width, height } = cachedImage;
             const { optimalContentWidth, optimalContentHeight } = this;
-            let w = width + 0.0, h = height + 0.0;
-            // console.log(w, h, optimalContentHeight, optimalContentWidth);
-            if (w > optimalContentWidth) {
-                h *= optimalContentWidth / w;
-                w = optimalContentWidth;
-            }
-            if (h > optimalContentHeight) {
-                w *= optimalContentHeight / h;
-                h = optimalContentHeight;
-            }
-            this.width = Math.floor(w);
-            this.height = Math.floor(h);
-            console.debug(`calculated width: ${this.width}, ${this.height}`);
+            if (width <= 0 && height <= 0) this.onErrorLoadingImage();
+            Object.assign(this, vars.optimizeImageSize(width, height, optimalContentWidth, optimalContentHeight));
+            // console.debug(`calculated width: ${this.width}, ${this.height}`);
         });
     }
 
@@ -189,6 +180,34 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
+    handleOnLoad = async() => {
+        this.loaded = true;
+    }
+
+    onErrorLoadingImage = () => {
+        this.errorLoading = true;
+    }
+
+    get displayErrorLoading() {
+        const outer = {
+            padding: this.outerPadding
+        };
+        const text0 = {
+            color: vars.txtDark,
+            backgroundColor: vars.lightGrayBg,
+            paddingVertical: vars.spacing.large.midi2x,
+            textAlign: 'center',
+            paddingHorizontal: vars.spacing.small.maxi
+        };
+        return (
+            <View style={outer}>
+                <Text style={text0}>
+                    {tx('error_loadingImage')}
+                </Text>
+            </View>
+        );
+    }
+
     renderThrow() {
         const { image } = this.props;
         const { name, title, description, fileId, downloading } = image;
@@ -199,7 +218,7 @@ export default class FileInlineImage extends SafeComponent {
             return <InlineUrlPreviewConsent onChange={() => { this.showUpdateSettingsLink = true; }} />;
         }
 
-        // console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
+        console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
         const outer = {
             padding: this.outerPadding,
             borderColor: vars.lightGrayBg,
@@ -248,18 +267,32 @@ export default class FileInlineImage extends SafeComponent {
                     <View style={header}>
                         {!!name && <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
                         {isLocal && <View style={{ flexDirection: 'row' }}>
-                            {!downloading && icons.darkNoPadding(this.opened ? 'arrow-drop-up' : 'arrow-drop-down', () => { this.opened = !this.opened; })}
-                            {!downloading && icons.darkNoPadding('more-vert', () => this.props.onAction(this.props.image))}
+                            {!downloading && icons.darkNoPadding(
+                                this.opened ? 'arrow-drop-up' : 'arrow-drop-down',
+                                () => { this.opened = !this.opened; },
+                                { marginHorizontal: vars.spacing.small.maxi2x }
+                            )}
+                            {!downloading && icons.darkNoPadding(
+                                'more-vert',
+                                () => this.props.onAction(this.props.image),
+                                { marginHorizontal: vars.spacing.small.maxi2x }
+                            )}
                             {downloading && <ActivityIndicator />}
                         </View>}
                     </View>
                     {this.opened &&
                         <View style={inner}>
                             {!downloading && this.loadImage && width && height ?
-                                <Image onLoad={() => { this.loaded = true; }} source={source} style={{ width, height }} /> : null}
+                                <Image
+                                    source={source}
+                                    style={{ width, height }}
+                                    onLoad={this.handleOnLoad}
+                                    onError={this.onErrorLoadingImage}
+                                /> : null}
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
                             {this.oversizeCutoff && this.displayCutOffImageOffer}
+                            {this.errorLoading && this.displayErrorLoading}
                         </View>}
                 </View>
                 {!isLocal && showUpdateSettingsLink && this.updateSettingsOffer}

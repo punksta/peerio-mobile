@@ -4,6 +4,7 @@ import RoutedState from '../routes/routed-state';
 import sounds from '../../lib/sounds';
 import { tx } from '../utils/translator';
 import routes from '../routes/routes';
+import { promiseWhen } from '../helpers/sugar';
 
 class ChatState extends RoutedState {
     @observable store = chatStore;
@@ -34,8 +35,13 @@ class ChatState extends RoutedState {
     }
 
     @action async init() {
-        this.chatStore.loadAllChats();
-        return new Promise(resolve => when(() => this.chatStore.loaded, resolve));
+        const { store } = this;
+        store.loadAllChats();
+        await promiseWhen(() => store.loaded);
+        await promiseWhen(
+            () => store.chats.filter(c => c.headLoaded).length === store.chats.length,
+            5000
+        );
     }
 
     get currentChat() {
@@ -98,18 +104,20 @@ class ChatState extends RoutedState {
         return this.canSend && this.currentChat.canSendJitsi;
     }
 
-    @action startChat(recipients, isChannel = false, name, purpose) {
+    @action async startChat(recipients, isChannel = false, name, purpose) {
         try {
             const chat = this.store.startChat(recipients, isChannel, name, purpose);
             this.loading = true;
-            when(() => !chat.loadingMeta, () => {
+            return new Promise(resolve => when(() => !chat.loadingMeta, () => {
                 this.loading = false;
                 this.routerMain.chats(chat, true);
-            });
+                resolve(chat);
+            }));
         } catch (e) {
             this.loading = false;
             warnings.add(e.message);
             console.error(e);
+            return null;
         }
     }
 

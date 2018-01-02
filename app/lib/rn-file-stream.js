@@ -78,9 +78,9 @@ export default (fileStream) => {
         /**
          * Launch external viewer
          */
-        static launchViewer(path) {
+        static launchViewer(path, title) {
             console.debug(`rn-file-stream.js: opening viewer for ${path}`);
-            return FileOpener.open(path, 'image/jpeg');
+            return FileOpener.open(path, 'image/jpeg', title || path);
         }
 
         static getStat(path) {
@@ -99,6 +99,17 @@ export default (fileStream) => {
 
         static delete(path) {
             return RNFS.unlink(path);
+        }
+
+        static async rename(oldPath, newPath) {
+            if (oldPath === newPath) {
+                console.log(`rn-file-stream: ${oldPath} equals to new destination`);
+                return;
+            }
+            if (await RNFS.exists(newPath)) {
+                await RNFS.unlink(newPath);
+            }
+            await RNFS.moveFile(oldPath, newPath);
         }
 
         static getTempCachePath(name) {

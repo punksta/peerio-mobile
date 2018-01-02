@@ -22,6 +22,11 @@ if (!Uint8Array.prototype.join) {
   });
 }
 
+// https://tc39.github.io/ecma262/#sec-%typedarray%.prototype.fill
+if (!Uint8Array.prototype.fill) {
+	Uint8Array.prototype.fill = Array.prototype.fill;
+}
+
 // global.location = global.location || { port: 80 }
 var isDev = typeof __DEV__ === 'boolean' && __DEV__;
 const env = process.env;

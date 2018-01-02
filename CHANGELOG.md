@@ -2,6 +2,268 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.240.0"></a>
+# [3.240.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.239.0...v3.240.0) (2017-12-20)
+
+
+### Bug Fixes
+
+* paywall in create room is ugly and bad. make it just ugly ([0f599af](https://github.com/PeerioTechnologies/peerio-mobile/commit/0f599af))
+
+
+
+<a name="3.239.0"></a>
+# [3.239.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.238.0...v3.239.0) (2017-12-20)
+
+
+### Bug Fixes
+
+* fix scrolling ([9efdfde](https://github.com/PeerioTechnologies/peerio-mobile/commit/9efdfde))
+* quick dirty fix for padding ([d8175d8](https://github.com/PeerioTechnologies/peerio-mobile/commit/d8175d8))
+
+
+
+<a name="3.238.0"></a>
+# [3.238.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.232.0...v3.238.0) (2017-12-20)
+
+
+### Bug Fixes
+
+* android header height ([#76](https://github.com/PeerioTechnologies/peerio-mobile/issues/76)) ([211ff74](https://github.com/PeerioTechnologies/peerio-mobile/commit/211ff74))
+* don't crash when renaming to the same paths ([3ababe0](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ababe0))
+* inline image button spacing ([#77](https://github.com/PeerioTechnologies/peerio-mobile/issues/77)) ([2adc36c](https://github.com/PeerioTechnologies/peerio-mobile/commit/2adc36c))
+* logs title and back button [ch945] [ch944] ([a7dd838](https://github.com/PeerioTechnologies/peerio-mobile/commit/a7dd838))
+* mock image ([faa49e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/faa49e8))
+* show yourself in contact list initial zero state in chats ([9b6593f](https://github.com/PeerioTechnologies/peerio-mobile/commit/9b6593f))
+* starting message from contact view should work ([5098555](https://github.com/PeerioTechnologies/peerio-mobile/commit/5098555))
+* url schema is case insensitive ([08d93ee](https://github.com/PeerioTechnologies/peerio-mobile/commit/08d93ee))
+
+
+### Features
+
+* cache image sizes when loaded to prevent resize ([e75b3c8](https://github.com/PeerioTechnologies/peerio-mobile/commit/e75b3c8))
+* file share preview [ch220] ([7f25fd5](https://github.com/PeerioTechnologies/peerio-mobile/commit/7f25fd5))
+* launch screen generator scripts [ch1070] ([ea6fe47](https://github.com/PeerioTechnologies/peerio-mobile/commit/ea6fe47))
+* Mobile tests - autologin ([#75](https://github.com/PeerioTechnologies/peerio-mobile/issues/75)) ([5bec33c](https://github.com/PeerioTechnologies/peerio-mobile/commit/5bec33c))
+* new launch images/privacy screen [ch1070] ([30baf7b](https://github.com/PeerioTechnologies/peerio-mobile/commit/30baf7b))
+* switch to circleci 2.0 ([f4d75f9](https://github.com/PeerioTechnologies/peerio-mobile/commit/f4d75f9))
+* switching chats doesn't cause scroll jumps anymore ([8360c10](https://github.com/PeerioTechnologies/peerio-mobile/commit/8360c10))
+* tests should fail if specific simuator is not found ([1cc47df](https://github.com/PeerioTechnologies/peerio-mobile/commit/1cc47df))
+* use separate tinydb for image cache sizes ([3f5f85d](https://github.com/PeerioTechnologies/peerio-mobile/commit/3f5f85d))
+* zero chat state [ch326] ([7a53949](https://github.com/PeerioTechnologies/peerio-mobile/commit/7a53949))
+
+
+
+<a name="3.237.0"></a>
+# [3.237.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.236.0...v3.237.0) (2017-12-19)
+
+
+### Bug Fixes
+
+* fix image type recognition for android media urls ([2fbd997](https://github.com/PeerioTechnologies/peerio-mobile/commit/2fbd997))
+* starting message from contact view should work ([5098555](https://github.com/PeerioTechnologies/peerio-mobile/commit/5098555))
+
+
+
+<a name="3.236.0"></a>
+# [3.236.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.235.0...v3.236.0) (2017-12-19)
+
+
+### Bug Fixes
+
+* don't crash when renaming to the same paths ([3ababe0](https://github.com/PeerioTechnologies/peerio-mobile/commit/3ababe0))
+* don't crash when renaming to the same paths ([713d33e](https://github.com/PeerioTechnologies/peerio-mobile/commit/713d33e))
+
+
+
+<a name="3.235.0"></a>
+# [3.235.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.234.0...v3.235.0) (2017-12-19)
+
+
+
+<a name="3.234.0"></a>
+# [3.234.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.233.0...v3.234.0) (2017-12-19)
+
+
+
+<a name="3.233.0"></a>
+# [3.233.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.232.0...v3.233.0) (2017-12-19)
+
+
+### Bug Fixes
+
+* android header height ([#76](https://github.com/PeerioTechnologies/peerio-mobile/issues/76)) ([211ff74](https://github.com/PeerioTechnologies/peerio-mobile/commit/211ff74))
+* icebear version ([1197629](https://github.com/PeerioTechnologies/peerio-mobile/commit/1197629))
+* inline image button spacing ([#77](https://github.com/PeerioTechnologies/peerio-mobile/issues/77)) ([2adc36c](https://github.com/PeerioTechnologies/peerio-mobile/commit/2adc36c))
+* left padding for collapsed chat item ([072bbf5](https://github.com/PeerioTechnologies/peerio-mobile/commit/072bbf5))
+* inline image button spacing ([#77](https://github.com/PeerioTechnologies/peerio-mobile/issues/77)) ([2adc36c](https://github.com/PeerioTechnologies/peerio-mobile/commit/2adc36c))
+* logs title and back button [ch945] [ch944] ([a7dd838](https://github.com/PeerioTechnologies/peerio-mobile/commit/a7dd838))
+* mock image ([faa49e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/faa49e8))
+* show yourself in contact list initial zero state in chats ([9b6593f](https://github.com/PeerioTechnologies/peerio-mobile/commit/9b6593f))
+* url schema is case insensitive ([08d93ee](https://github.com/PeerioTechnologies/peerio-mobile/commit/08d93ee))
+
+
+### Features
+
+* cache image sizes when loaded to prevent resize ([e75b3c8](https://github.com/PeerioTechnologies/peerio-mobile/commit/e75b3c8))
+* launch screen generator scripts [ch1070] ([ea6fe47](https://github.com/PeerioTechnologies/peerio-mobile/commit/ea6fe47))
+* make preview controller have proper title ([2a064c0](https://github.com/PeerioTechnologies/peerio-mobile/commit/2a064c0))
+* Mobile tests - autologin ([#75](https://github.com/PeerioTechnologies/peerio-mobile/issues/75)) ([5bec33c](https://github.com/PeerioTechnologies/peerio-mobile/commit/5bec33c))
+* new launch images/privacy screen [ch1070] ([30baf7b](https://github.com/PeerioTechnologies/peerio-mobile/commit/30baf7b))
+* switch to circleci 2.0 ([f4d75f9](https://github.com/PeerioTechnologies/peerio-mobile/commit/f4d75f9))
+* switching chats doesn't cause scroll jumps anymore ([8360c10](https://github.com/PeerioTechnologies/peerio-mobile/commit/8360c10))
+* tests should fail if specific simuator is not found ([1cc47df](https://github.com/PeerioTechnologies/peerio-mobile/commit/1cc47df))
+* use separate tinydb for image cache sizes ([3f5f85d](https://github.com/PeerioTechnologies/peerio-mobile/commit/3f5f85d))
+* zero chat state [ch326] ([7a53949](https://github.com/PeerioTechnologies/peerio-mobile/commit/7a53949))
+
+
+
+<a name="3.232.0"></a>
+# [3.232.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.231.0...v3.232.0) (2017-12-07)
+
+
+### Bug Fixes
+
+* fix android crashing on request permissions ([fbb0c2f](https://github.com/PeerioTechnologies/peerio-mobile/commit/fbb0c2f))
+
+
+### Features
+
+* android smoother loading screen (chat and channel names) ([875c270](https://github.com/PeerioTechnologies/peerio-mobile/commit/875c270))
+
+
+
+<a name="3.231.0"></a>
+# [3.231.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.230.0...v3.231.0) (2017-12-06)
+
+
+
+<a name="3.230.0"></a>
+# [3.230.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.229.0...v3.230.0) (2017-12-06)
+
+
+### Bug Fixes
+
+* add Uint8Array.prototype.fill to polyfill ([a224116](https://github.com/PeerioTechnologies/peerio-mobile/commit/a224116))
+
+
+
+<a name="3.229.0"></a>
+# [3.229.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.227.0...v3.229.0) (2017-12-06)
+
+
+
+<a name="3.228.0"></a>
+# [3.228.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.227.0...v3.228.0) (2017-12-06)
+
+
+### Bug Fixes
+
+* do not show untrust checkbox if the device is not trusted ([3a15071](https://github.com/PeerioTechnologies/peerio-mobile/commit/3a15071))
+* icebear version ([1087db8](https://github.com/PeerioTechnologies/peerio-mobile/commit/1087db8))
+* icebear version, checkbox text clip ([17845a7](https://github.com/PeerioTechnologies/peerio-mobile/commit/17845a7))
+* signout logic ([021f0ac](https://github.com/PeerioTechnologies/peerio-mobile/commit/021f0ac))
+* signout logic - attempt [#2](https://github.com/PeerioTechnologies/peerio-mobile/issues/2) ([a5698b3](https://github.com/PeerioTechnologies/peerio-mobile/commit/a5698b3))
+* signout logic - attempt [#3](https://github.com/PeerioTechnologies/peerio-mobile/issues/3) ([c01f0ca](https://github.com/PeerioTechnologies/peerio-mobile/commit/c01f0ca))
+
+
+### Features
+
+* add checkbox to logout popup ([f023a76](https://github.com/PeerioTechnologies/peerio-mobile/commit/f023a76))
+
+
+
+<a name="3.227.0"></a>
+# [3.227.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.226.0...v3.227.0) (2017-12-06)
+
+
+### Features
+
+* UI tests with Appium and CucumberJS ([#70](https://github.com/PeerioTechnologies/peerio-mobile/issues/70)) ([bf48be7](https://github.com/PeerioTechnologies/peerio-mobile/commit/bf48be7))
+
+
+
+<a name="3.225.0"></a>
+# [3.225.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.224.0...v3.225.0) (2017-12-05)
+
+
+### Bug Fixes
+
+* typo ([c960ef3](https://github.com/PeerioTechnologies/peerio-mobile/commit/c960ef3))
+
+
+### Features
+
+* **file-stream:** add rename method ([#68](https://github.com/PeerioTechnologies/peerio-mobile/issues/68)) ([da4f068](https://github.com/PeerioTechnologies/peerio-mobile/commit/da4f068))
+* refactor purchase flow to satisfy apple ([dd2e345](https://github.com/PeerioTechnologies/peerio-mobile/commit/dd2e345))
+
+
+
+<a name="3.224.0"></a>
+# [3.224.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.223.0...v3.224.0) (2017-12-01)
+
+
+### Bug Fixes
+
+* picking file in android file picker didn't work ([d63fbfd](https://github.com/PeerioTechnologies/peerio-mobile/commit/d63fbfd))
+* some more loading screen transition fixes [ch303] ([987d17b](https://github.com/PeerioTechnologies/peerio-mobile/commit/987d17b))
+* transition to login on error ([a66c911](https://github.com/PeerioTechnologies/peerio-mobile/commit/a66c911))
+
+
+### Features
+
+* make input autoCapitalize ([8244cb7](https://github.com/PeerioTechnologies/peerio-mobile/commit/8244cb7))
+
+
+
+<a name="3.226.0"></a>
+# [3.226.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.223.0...v3.226.0) (2017-12-05)
+
+
+### Bug Fixes
+
+* picking file in android file picker didn't work ([b040a06](https://github.com/PeerioTechnologies/peerio-mobile/commit/b040a06))
+
+
+### Features
+
+* refactor purchase flow to satisfy apple ([247a9c3](https://github.com/PeerioTechnologies/peerio-mobile/commit/247a9c3))
+
+
+
+<a name="3.225.0"></a>
+# [3.225.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.224.0...v3.225.0) (2017-12-05)
+
+
+### Bug Fixes
+
+* typo ([c960ef3](https://github.com/PeerioTechnologies/peerio-mobile/commit/c960ef3))
+
+
+### Features
+
+* **file-stream:** add rename method ([#68](https://github.com/PeerioTechnologies/peerio-mobile/issues/68)) ([da4f068](https://github.com/PeerioTechnologies/peerio-mobile/commit/da4f068))
+* refactor purchase flow to satisfy apple ([dd2e345](https://github.com/PeerioTechnologies/peerio-mobile/commit/dd2e345))
+
+
+
+<a name="3.224.0"></a>
+# [3.224.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.221.0...v3.224.0) (2017-12-01)
+
+
+### Bug Fixes
+
+* picking file in android file picker didn't work ([d63fbfd](https://github.com/PeerioTechnologies/peerio-mobile/commit/d63fbfd))
+* some more loading screen transition fixes [ch303] ([987d17b](https://github.com/PeerioTechnologies/peerio-mobile/commit/987d17b))
+* transition to login on error ([a66c911](https://github.com/PeerioTechnologies/peerio-mobile/commit/a66c911))
+
+
+### Features
+
+* make input autoCapitalize ([8244cb7](https://github.com/PeerioTechnologies/peerio-mobile/commit/8244cb7))
+
+
+
 <a name="3.223.0"></a>
 # [3.223.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.222.0...v3.223.0) (2017-11-30)
 

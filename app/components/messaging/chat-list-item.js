@@ -46,15 +46,16 @@ export default class ChatListItem extends SafeComponent {
         if (chatState.collapseDMs) return null;
         if (!this.props || !this.props.chat) return null;
         const { chat } = this.props;
-        const { participants } = chat;
+        const { otherParticipants, headLoaded } = chat;
+        if (!headLoaded) return null;
         // group chats have null for contact
         let contact = null;
         let isDeleted = false;
         // no participants means chat with yourself
-        if (!participants) contact = contactStore.getContact(User.current.username);
+        if (!otherParticipants) contact = contactStore.getContact(User.current.username);
         // two participants
-        if (participants && participants.length === 1) {
-            contact = participants[0];
+        if (otherParticipants && otherParticipants.length === 1) {
+            contact = otherParticipants[0];
             ({ isDeleted } = contact);
         }
 
@@ -64,7 +65,7 @@ export default class ChatListItem extends SafeComponent {
         return (
             <Avatar
                 disableMessageTapping
-                starred={chat.isFavorite}
+                pinned={chat.isFavorite}
                 rightIcon={this.rightIcon}
                 extraPaddingTop={8}
                 extraPaddingVertical={8}

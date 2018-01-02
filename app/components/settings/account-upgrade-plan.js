@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Text, View, ActivityIndicator, TouchableOpacity, Linking, ScrollView } from 'react-native';
+import { Text, View, ActivityIndicator, ScrollView } from 'react-native';
 import { observer } from 'mobx-react/native';
 import AccountUpgradeToggle from './account-upgrade-toggle';
+import PaymentsInfoPopup from '../payments/payments-info-popup';
 import payments from '../payments/payments';
 import { vars } from '../../styles/styles';
 import { popupControl } from '../shared/popups';
@@ -108,7 +109,7 @@ export default class AccountUpgradePlan extends Component {
     }
 
     get priceOptions() {
-        const { priceOptions, canUpgradeTo, isCurrent } = this.props.plan;
+        const { priceOptions, canUpgradeTo, isCurrent, paymentInfo } = this.props.plan;
         // if (!priceOptions) return this.alwaysFree;
         if (isCurrent) return <Text style={planFooterInfo}>{tx('title_yourCurrentPlan')}</Text>;
         if (!canUpgradeTo) return <Text style={planFooterInfo}>{tx('title_cannotUpgradePlan')}</Text>;
@@ -116,7 +117,11 @@ export default class AccountUpgradePlan extends Component {
             <View style={{ flexDirection: 'row' }}>
                 {priceOptions.map(({ title, price, id }, i) => (
                     <AccountUpgradeToggle
-                        onPress={() => payments.purchase(id)}
+                        key={i}
+                        onPress={async () => {
+                            await popupControl(<PaymentsInfoPopup text={paymentInfo} />, 'button_upgrade');
+                            payments.purchase(id);
+                        }}
                         text1={price}
                         text2={tx(title).toLowerCase()}
                         left={i === 0}
@@ -130,58 +135,8 @@ export default class AccountUpgradePlan extends Component {
         return payments.inProgress ? <ActivityIndicator color="white" style={{ marginBottom: vars.spacing.large.mini2x }} /> : this.priceOptions;
     }
 
-    subscriptionInfo(text) {
-        console.log('subscription info');
-        console.log(text);
-        const textStyle = {
-            color: vars.white,
-            fontSize: vars.font.size.normal,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            marginTop: vars.spacing.medium.midi
-        };
-        const popupTextStyle = { color: vars.txtDark, fontSize: vars.font.size.smaller };
-        const popup = () => {
-            popupControl(
-                <ScrollView style={{ flex: 1, flexGrow: 1 }}>
-                    <Text style={popupTextStyle}>
-                        {text}
-                    </Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                        <TouchableOpacity
-                            onPress={() => Linking.openURL('https://peerio.com/conditions.html')}
-                            pressRetentionOffset={vars.pressRetentionOffset}>
-                            <Text style={popupTextStyle}>
-                                <Text style={{ textDecorationLine: 'underline' }}>
-                                    {tx('title_termsOfUse')}
-                                </Text>
-                            </Text>
-                        </TouchableOpacity>
-                        <Text style={popupTextStyle}>   |   </Text>
-                        <TouchableOpacity
-                            onPress={() => Linking.openURL('https://peerio.com/privacy.html')}
-                            pressRetentionOffset={vars.pressRetentionOffset}>
-                            <Text style={popupTextStyle}>
-                                <Text style={{ textDecorationLine: 'underline' }}>
-                                    {tx('title_privacyPolicy')}
-                                </Text>
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                </ScrollView>
-            );
-        };
-        return (
-            <TouchableOpacity onPress={popup} pressRetentionOffset={vars.pressRetentionOffset}>
-                <Text style={textStyle}>
-                    {`${tx('title_subscriptionDetails')} >`}
-                </Text>
-            </TouchableOpacity>
-        );
-    }
-
     render() {
-        const { title, includes, info, storage, paymentInfo } = this.props.plan;
+        const { title, includes, info, storage } = this.props.plan;
         return (
             <View style={{ flexDirection: 'column', flexGrow: 1, flex: 1, justifyContent: 'space-between' }}>
                 <ScrollView>
@@ -200,7 +155,6 @@ export default class AccountUpgradePlan extends Component {
                 </ScrollView>
                 <View style={block1}>
                     {this.footer}
-                    {paymentInfo && this.subscriptionInfo(paymentInfo)}
                 </View>
             </View>
         );

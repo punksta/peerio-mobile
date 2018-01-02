@@ -26,7 +26,7 @@ const itemContainerStyle = {
     width,
     borderWidth: 0,
     borderColor: 'red',
-    paddingLeft: vars.spacing.small.midi2x
+    paddingLeft: vars.spacing.medium.mini2x
 };
 
 const fileInfoContainerStyle = {
@@ -103,7 +103,7 @@ export default class FileInnerItem extends SafeComponent {
                     <View style={[fileInfoContainerStyle, { opacity, marginLeft }]}>
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]}>
-                            <View style={[loadingStyle, { flex: 0 }]}>
+                            <View style={[loadingStyle, { flex: 0, paddingRight: vars.fileInnerItemPaddingRight }]}>
                                 {icon ||
                                     <FileTypeIcon
                                         size="small"

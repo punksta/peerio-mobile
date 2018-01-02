@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Animated, Text } from 'react-native';
+import { View, ListView, Animated, Text, TextInput, Platform } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FilesPlaceholder from './files-placeholder';
@@ -14,6 +14,9 @@ import { upgradeForFiles } from '../payments/payments';
 import BackIcon from '../layout/back-icon';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
+import icons from '../helpers/icons';
+
+const iconClear = require('../../assets/file_icons/ic_close.png');
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -26,6 +29,8 @@ function backFolderAction() {
 
 @observer
 export default class Files extends SafeComponent {
+    @observable findFilesText;
+
     constructor(props) {
         super(props);
         this.dataSource = new ListView.DataSource({
@@ -53,7 +58,9 @@ export default class Files extends SafeComponent {
     actionsHeight = new Animated.Value(0)
 
     get data() {
-        return fileState.currentFolder.foldersAndFilesDefaultSorting;
+        return fileState.store.currentFilter ?
+            fileState.store.visibleFilesAndFolders
+            : fileState.currentFolder.foldersAndFilesDefaultSorting;
     }
 
     componentWillUnmount() {
@@ -74,7 +81,8 @@ export default class Files extends SafeComponent {
             this.currentFolder,
             this.data,
             this.data.length,
-            this.maxLoadedIndex
+            this.maxLoadedIndex,
+            fileState.store.currentFilter
         ], () => {
             // console.log(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
             this.dataSource = this.dataSource.cloneWithRows(this.data.slice(0, this.maxLoadedIndex));
@@ -124,18 +132,118 @@ export default class Files extends SafeComponent {
         return <Text style={s}>{tx('title_noFilesInFolder')}</Text>;
     }
 
-    renderThrow() {
-        const body = (this.data.length || !fileState.currentFolder.isRoot) ?
-            this.listView() : !fileState.store.loading && <FilesPlaceholder />;
+    onChangeFindFilesText(text) {
+        const items = text.split(/[ ,;]/);
+        if (items.length > 1) {
+            this.findFilesText = items[0].trim();
+            this.onSubmit();
+            return;
+        }
+        this.findFilesText = text;
+        this.searchFileTimeout(text);
+    }
 
+    searchFileTimeout(filename) {
+        if (this._searchTimeout) {
+            clearTimeout(this._searchTimeout);
+            this._searchTimeout = null;
+        }
+        if (!filename) {
+            fileState.store.clearFilter();
+            return;
+        }
+        this._searchTimeout = setTimeout(() => this.searchFile(filename), 500);
+    }
+
+    searchFile = val => {
+        if (val === '' || val === null) {
+            fileState.store.clearFilter();
+            return;
+        }
+        fileState.store.filterByName(val);
+    };
+
+    searchTextbox() {
+        const height = vars.searchInputHeight;
+        const container = {
+            flexGrow: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            paddingHorizontal: vars.spacing.small.midi2x,
+            marginVertical: vars.spacing.small.midi,
+            marginHorizontal: vars.spacing.medium.mini2x,
+            borderColor: vars.verySubtleGrey,
+            borderWidth: 1,
+            height,
+            borderRadius: height
+        };
+        const fontSize = vars.font.size.bigger;
+        const marginTop =
+            Platform.OS === 'android' ? (height - fontSize + 2) / 2 : 0;
+        const placeholderStyle = {
+            flexGrow: 1,
+            height,
+            lineHeight: height * 1.5,
+            paddingTop: 0,
+            marginTop,
+            marginLeft: vars.spacing.small.midi,
+            fontSize
+        };
+
+        const leftIcon = icons.plain('search', vars.iconSize, vars.txtDate);
+
+        let rightIcon = null;
+        if (this.findFilesText) {
+            rightIcon = icons.iconImage(iconClear, () => {
+                this.findFilesText = '';
+                this.onChangeFindFilesText('');
+            });
+        }
+
+        return (
+            <View>
+                <View style={container}>
+                    {leftIcon}
+                    <TextInput
+                        underlineColorAndroid="transparent"
+                        value={this.findFilesText}
+                        returnKeyType="done"
+                        onSubmitEditing={this.onSubmit}
+                        onChangeText={text => { this.clean = !text.length; this.onChangeFindFilesText(text); }}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        placeholder={tx('title_search')}
+                        ref={ti => { this.textInput = ti; }}
+                        style={placeholderStyle} />
+                    {rightIcon}
+                </View>
+            </View>
+        );
+    }
+
+    body() {
+        if (this.data.length || !fileState.currentFolder.isRoot) return this.listView();
+        if (!this.data.length && this.findFilesText && !fileState.store.loading) {
+            return (
+                <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
+                    {tx('title_noFilesMatchSearch')}
+                </Text>
+            );
+        }
+        return !fileState.store.loading && <FilesPlaceholder />;
+    }
+
+    renderThrow() {
         return (
             <View
                 style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, paddingHorizontal: vars.spacing.medium.mini2x, backgroundColor: vars.lightGrayBg }}>
+                    {this.searchTextbox()}
                     {upgradeForFiles()}
                     {!this.data.length && !fileState.currentFolder.isRoot ?
                         this.noFilesInFolder : null}
-                    {body}
+                    {this.body()}
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
                 <FolderActionSheet ref={ref => { this._folderActionSheet = ref; }} />

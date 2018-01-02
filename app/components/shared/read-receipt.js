@@ -12,7 +12,7 @@ const circleStyle = {
     width: circleDiameter,
     height: circleDiameter,
     borderRadius: circleDiameter / 2,
-    margin: vars.spacing.small.mini2x,
+    margin: circleDiameter / 16,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center'

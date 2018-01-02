@@ -72,7 +72,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     <SettingsItem title="title_storageUsage" icon={null} onPress={paymentCheckout}>
                         <PaymentStorageUsage />
                     </SettingsItem>
-                    <SettingsItem title="title_help" onPress={() => settingsState.routerMain.logs()} />
+                    <SettingsItem title="title_help" onPress={() => settingsState.transition('logs')} />
                     {this.spacer}
                     {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
                     <SettingsItem title="title_settingsAccount" onPress={() => settingsState.transition('account')} />

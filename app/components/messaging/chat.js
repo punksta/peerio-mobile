@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
-import { observable, when, reaction } from 'mobx';
+import { observable, when, reaction, computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
-import MessagingPlaceholder from '../messaging/messaging-placeholder';
+import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
 import ChatActionSheet from './chat-action-sheet';
@@ -34,6 +34,7 @@ export default class Chat extends SafeComponent {
     @observable waitForScrollToEnd = true;
     @observable scrollEnabled = false;
     @observable limboMessages = null;
+    @observable initialScrollDone = false;
     indicatorHeight = 16;
 
     componentDidMount() {
@@ -44,10 +45,16 @@ export default class Chat extends SafeComponent {
                 this.scrollView.scrollTo({ y, animated: true });
             }
         });
+        this.chatReaction = reaction(() => chatState.store.activeChat, () => {
+            this.initialScrollDone = false;
+            this.waitForScrollToEnd = true;
+            this.contentHeight = 0;
+        });
     }
 
     componentWillUnmount() {
         this.selfMessageReaction();
+        this.chatReaction();
     }
 
     get rightIcon() {
@@ -118,6 +125,7 @@ export default class Chat extends SafeComponent {
                 if (!this.refreshing && !this.disableNextScroll) {
                     console.log('chat.js: auto scrolling');
                     this.scrollView.scrollTo({ y, animated: !this.waitForScrollToEnd });
+                    requestAnimationFrame(() => { this.initialScrollDone = true; });
                 }
 
                 if (this.waitForScrollToEnd) {
@@ -164,7 +172,8 @@ export default class Chat extends SafeComponent {
             y = newMeasures.pageY - oldMeasures.pageY;
             if (bottom) {
                 console.log(newMeasures);
-                y = newMeasures.frameY - this.indicatorHeight; // + this.scrollViewHeight / 2;
+                y = this.contentHeight - this.scrollViewHeight * 1.5;
+                // y = newMeasures.frameY - this.indicatorHeight; // + this.scrollViewHeight / 2;
                 const maxScroll = this.contentHeight - this.scrollViewHeight;
                 if (y > maxScroll || Platform.OS === 'android') {
                     y = maxScroll;
@@ -191,10 +200,10 @@ export default class Chat extends SafeComponent {
         this.refreshing = true;
         const id = await this.saveItemPositionById(this.data.length - 1);
         this.chat.loadNextPage();
-        when(() => !this.chat.loadingBottomPage, () => requestAnimationFrame(() => {
+        when(() => !this.chat.loadingBottomPage, () => setTimeout(() => {
             this.restoreScrollPositionById(id, true);
             setTimeout(() => { this.refreshing = false; }, 1000);
-        }));
+        }), 100);
     }
 
     onScroll = (event) => {
@@ -208,7 +217,7 @@ export default class Chat extends SafeComponent {
             if (y < this.indicatorHeight / 2) this._onGoUp();
             // trigger next page if we are at the bottom
             if (y >= h - this.indicatorHeight / 2) this._onGoDown();
-            this.disableNextScroll = y < h - this.indicatorHeight;
+            // this.disableNextScroll = y < h - this.indicatorHeight;
         };
         if (this._updater) clearTimeout(this._updater);
         this._updater = setTimeout(updater, 500);
@@ -226,6 +235,7 @@ export default class Chat extends SafeComponent {
         return (
             <ScrollView
                 onLayout={this.layoutScrollView}
+                contentContainerStyle={{ opacity: this.initialScrollDone ? 1 : 0 }}
                 style={{ flexGrow: 1, flex: 1, backgroundColor: vars.white }}
                 initialListSize={1}
                 onContentSizeChange={this.contentSizeChanged}
@@ -235,7 +245,7 @@ export default class Chat extends SafeComponent {
                 keyboardShouldPersistTaps="never"
                 enableEmptySections
                 ref={sv => { this.scrollView = sv; }}>
-                {this.chat.canGoUp ? refreshControlTop : this.zeroStateItem()}
+                {this.chat.canGoUp ? refreshControlTop : this.zeroStateItem}
                 {this.data.map(this.item)}
                 {this.chat.limboMessages &&
                     this.chat.limboMessages.filter(m => !(m.files && !m.files.length)).map(this.item)}
@@ -246,22 +256,21 @@ export default class Chat extends SafeComponent {
 
     get archiveNotice() {
         // TODO: archive notice
-        /* eslint-disable */
-        return true || this.props.archiveNotice ? (
+        return true || this.props.archiveNotice ? ( // eslint-disable-line
             <Text style={{ textAlign: 'left', margin: vars.spacing.small.maxi2x, marginTop: 0, marginBottom: vars.spacing.medium.mini2x, color: vars.txtMedium }}>
                 {tx('title_chatArchive')}
             </Text>
         ) : null;
     }
 
-    zeroStateItem() {
+    @computed get zeroStateItem() {
         const zsContainer = {
             borderBottomWidth: 0,
             borderBottomColor: '#CFCFCF',
             marginBottom: vars.spacing.small.midi2x
         };
         const { chat } = this;
-        const participants = chat.participants || [];
+        const participants = chat.isChannel ? chat.allJoinedParticipants : chat.otherParticipants;
         const w = 3 * 36;
         const shiftX = (width - w - w * participants.length) / participants.length;
         const shift = shiftX < 0 ? shiftX : 0;
@@ -296,11 +305,11 @@ export default class Chat extends SafeComponent {
                 style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
                 {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
                 <View style={{ flex: 1, flexGrow: 1 }}>
-                    {this.data ? this.listView() : !chatState.loading && <MessagingPlaceholder />}
+                    {this.data ? this.listView() : !chatState.loading && <ChatZeroStatePlaceholder />}
                 </View>
-                <ProgressOverlay enabled={chatState.loading} />
-                <ChatActionSheet ref={sheet => (this._actionSheet = sheet)} />
-                <InlineImageActionSheet ref={sheet => (this._inlineImageActionSheet = sheet)} />
+                <ProgressOverlay enabled={chatState.loading || !this.initialScrollDone} />
+                <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
+                <InlineImageActionSheet ref={sheet => { this._inlineImageActionSheet = sheet; }} />
             </View>
         );
     }

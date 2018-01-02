@@ -28,6 +28,7 @@ export default class ChannelUpgradeOffer extends Component {
 
         const offerTextStyle = {
             color: 'white',
+            backgroundColor: 'transparent',
             fontSize: vars.font.size.smaller,
             lineHeight: 20,
             textAlign: 'justify',
@@ -41,7 +42,7 @@ export default class ChannelUpgradeOffer extends Component {
             marginTop: vars.spacing.medium.midi
         };
 
-        return (gradient({ flex: 1, flexGrow: 1, maxHeight: 75 },
+        return (gradient({ height: 100, alignItems: 'center' },
             <View style={container}>
                 <View style={offerStyle}>
                     <Text style={offerTextStyle}>

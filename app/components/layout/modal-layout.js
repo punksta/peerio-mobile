@@ -29,8 +29,11 @@ export default class ModalLayout extends SafeComponent {
                 setTimeout(() => Animated.timing(this.modalAnimated, { toValue: 0, duration, useNativeDriver })
                     .start(() => { routerModal.animating = false; }), 20);
             } else {
+                // this.modal = null;
                 Animated.timing(this.modalAnimated, { toValue: this.height, duration, useNativeDriver })
-                    .start(() => { this.modal = null; });
+                    .start(() => {
+                        setTimeout(() => { this.modal = null; }, 10);
+                    });
             }
         });
     }

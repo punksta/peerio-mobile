@@ -21,6 +21,7 @@ import preferenceStore from '../settings/preference-store';
 import { popupSetupVideo } from '../shared/popups';
 import CircleButtonWithIcon from '../controls/circle-button-with-icon';
 
+const pinOn = require('../../assets/chat/icon-pin.png');
 
 const itemStyle = {
     flex: 1,
@@ -44,7 +45,7 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: vars.spacing.small.midi2x,
+    paddingLeft: 8,
     paddingRight: vars.spacing.small.mini2x,
     paddingBottom: 0
 
@@ -68,8 +69,8 @@ const nameMessageContainerStyle = {
     borderColor: 'red',
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingLeft: vars.spacing.medium.mini2x,
-    marginLeft: vars.spacing.small.midi,
+    paddingLeft: 16,
+    marginLeft: 6,
     marginRight: vars.spacing.small.midi,
     paddingTop: 0
 };
@@ -264,6 +265,13 @@ export default class Avatar extends SafeComponent {
             </View> : null;
     }
 
+    get fileUnavailable() {
+        return this.props.hasDeletedFile ?
+            <Text style={{ fontStyle: 'italic' }}>
+                {tx('error_fileDeleted')}
+            </Text> : null;
+    }
+
     get date() {
         const unreadStyle = this.props.unread
             ? { color: vars.bg, fontWeight: '600' }
@@ -314,15 +322,15 @@ export default class Avatar extends SafeComponent {
                 style={style}
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={this.props.onPressAvatar || this.onPressAll}>
-                <AvatarCircle contact={this.props.contact} loading={this.props.loading} />
+                <AvatarCircle contact={this.props.contact} loading={this.props.loading} invited={this.props.invited} />
                 <DeletedCircle visible={this.props.isDeleted} />
             </TouchableOpacity>
         );
     }
 
-    get star() {
-        return this.props.starred ?
-            <Text style={{ color: vars.gold }}>★ </Text> : null;
+    get pinned() {
+        return this.props.pinned ?
+            icons.iconPinnedChat(pinOn) : null;
     }
 
     get title() {
@@ -332,9 +340,8 @@ export default class Avatar extends SafeComponent {
         const { contact, title, title2 } = this.props;
         return (
             <View style={nameContainerStyle}>
-                <View style={{ flexShrink: 1 }}>
+                <View style={{ flexShrink: 1, flexDirection: 'row', alignItems: 'center' }}>
                     <Text ellipsizeMode="tail" numberOfLines={title2 ? 2 : 1}>
-                        {this.star}
                         <Text style={[nameTextStyle, unreadStyle]}>
                             {title ||
                                 <Text>
@@ -364,9 +371,8 @@ export default class Avatar extends SafeComponent {
         const text = contact ? contact.username : title;
         return (
             <View style={nameContainerStyle}>
-                <View style={{ flexShrink: 1 }}>
+                <View style={{ flexShrink: 1, flexDirection: 'row', alignItems: 'center' }}>
                     <Text ellipsizeMode="tail" numberOfLines={1}>
-                        {this.star}
                         <Text style={[fullnameTextStyle, unreadStyle, fullnameBoldStyle]}>
                             {contact ? contact.fullName : ''}
                             <Text style={[usernameTextStyle, unreadStyle]}>
@@ -438,7 +444,7 @@ export default class Avatar extends SafeComponent {
                 <View style={[itemStyle, this.errorStyle]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
-                        style={[this.itemContainerStyle, { paddingLeft: vars.spacing.huge.maxi, marginRight: vars.spacing.small.maxi }, shrinkStrategy]}>
+                        style={[this.itemContainerStyle, { paddingLeft: 74, marginRight: vars.spacing.small.maxi }, shrinkStrategy]}>
                         {this.message}
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
@@ -446,6 +452,7 @@ export default class Avatar extends SafeComponent {
                             {this.inlineImage}
                             {this.systemMessage}
                             {this.retryCancel}
+                            {this.fileUnavailable}
                         </View>
                     </View>
                     {this.errorCircle}
@@ -463,6 +470,7 @@ export default class Avatar extends SafeComponent {
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
                         style={itemContainerStyle}>
+                        {this.pinned}
                         {this.avatar}
                         <View style={[nameMessageContainerStyle]}>
                             {this.props.isChat ? this.name : this.title}
@@ -471,6 +479,7 @@ export default class Avatar extends SafeComponent {
                             {this.inlineImage}
                             {this.systemMessage}
                             {this.retryCancel}
+                            {this.fileUnavailable}
                         </View>
                         {this.props.rightIcon}
                         <OnlineCircle visible={!this.props.hideOnline} online={this.props.online} />
@@ -522,6 +531,7 @@ Avatar.propTypes = {
     rightIcon: PropTypes.any,
     message: PropTypes.string,
     messageComponent: PropTypes.any,
+    hasDeletedFile: PropTypes.any,
     title: PropTypes.any,
     fullnameIsBold: PropTypes.any,
     isChat: PropTypes.any,
@@ -542,6 +552,7 @@ Avatar.propTypes = {
     sendError: PropTypes.bool,
     ellipsize: PropTypes.bool,
     unread: PropTypes.bool,
+    pinned: PropTypes.bool,
     starred: PropTypes.bool,
     isDeleted: PropTypes.bool,
     disableMessageTapping: PropTypes.bool,

@@ -4,7 +4,7 @@ import {
     View, Text, TextInput, ActivityIndicator, TouchableOpacity, LayoutAnimation
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { when, observable } from 'mobx';
+import { when, observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
@@ -31,6 +31,14 @@ export default class ContactSelector extends SafeComponent {
     @observable legacyContact = null;
     @observable found = [];
     @observable findUserText;
+
+    componentDidMount() {
+        this._recipientReaction = reaction(() => !!this.recipients.items.length, () => LayoutAnimation.easeInEaseOut());
+    }
+
+    componentWillUnmount() {
+        this._recipientReaction();
+    }
 
     get inviteContactDuck() {
         if (!this.toInvite) return null;
@@ -78,6 +86,7 @@ export default class ContactSelector extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'flex-start',
+            marginTop: vars.spacing.small.midi2x,
             paddingLeft: vars.spacing.small.midi2x,
             flexWrap: 'wrap'
         };
@@ -122,7 +131,7 @@ export default class ContactSelector extends SafeComponent {
             alignItems: 'center',
             paddingHorizontal: vars.spacing.medium.maxi,
             marginHorizontal: vars.spacing.medium.mini2x,
-            marginVertical: vars.spacing.small.midi,
+            marginBottom: vars.spacing.small.midi2x,
             borderColor: vars.bg,
             borderWidth: 1,
             height,
@@ -139,7 +148,7 @@ export default class ContactSelector extends SafeComponent {
             fontSize: vars.font.size.normal
         };
         const bottomTextStyle = {
-            fontSize: 12,
+            fontSize: vars.font.size.smaller,
             color: vars.txtDate,
             marginLeft: vars.spacing.large.midixx
         };
@@ -180,12 +189,16 @@ export default class ContactSelector extends SafeComponent {
 
     exitRow() {
         const container = {
-            flexGrow: 1,
+            flex: 0,
             flexDirection: 'row',
             alignItems: 'center',
             padding: vars.spacing.small.mini2x,
-            paddingTop: 0,
-            paddingBottom: 0
+            paddingTop: vars.statusBarHeight * 2,
+            paddingBottom: 0,
+            borderBottomWidth: 1,
+            borderBottomColor: vars.headerBorderColor,
+            marginBottom: vars.spacing.medium.mini2x,
+            height: vars.inputHeight
         };
         const style = {
             flexGrow: 1
@@ -293,7 +306,13 @@ export default class ContactSelector extends SafeComponent {
     sectionHeader() {
         const found = contactState.getFiltered(this.findUserText, this.props.exclude);
         if (!found || !found.length) return null;
-        const s = { fontWeight: 'bold', marginHorizontal: vars.spacing.small.maxi, marginVertical: vars.spacing.medium.mini2x };
+        const s = {
+            color: vars.lighterBlackText,
+            fontWeight: vars.font.weight.semiBold,
+            marginHorizontal: vars.spacing.small.maxi,
+            marginTop: vars.spacing.medium.mini2x,
+            marginBottom: vars.spacing.small.midi
+        };
         return (
             <Text style={s}>
                 {tx('title_allYourContacts', { found: found && found.length })}
@@ -329,12 +348,15 @@ export default class ContactSelector extends SafeComponent {
         const userRow = this.userboxline();
         const exitRow = this.exitRow();
         const recipients = this.recipients.items;
+        const headerStyle = {
+            paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight * 2
+        };
         return (
-            <View style={{ paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight * 2 }}>
+            <View style={headerStyle}>
                 {this.props.hideHeader ? null : exitRow}
-                {/* TODO combine recipients and search */}
-                {recipients.length ? userRow : <View style={{ height: vars.spacing.large.maxi }} />}
                 {tbSearch}
+                {/* TODO combine recipients and search */}
+                {recipients.length ? userRow : null}
             </View>
         );
     }

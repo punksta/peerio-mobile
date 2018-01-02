@@ -13,7 +13,7 @@ const fillView = { flex: 1, flexGrow: 1 };
 export default class ChannelAddPeople extends SafeComponent {
     @computed get excluded() {
         const excluded = {};
-        chatState.currentChat.joinedParticipants.forEach(
+        chatState.currentChat.allJoinedParticipants.forEach(
             i => { excluded[i.username] = i; console.log(`excluded: ${i.username}`); }
         );
         return excluded;
@@ -32,7 +32,7 @@ export default class ChannelAddPeople extends SafeComponent {
                 <ContactSelector
                     exclude={this.excluded}
                     onExit={() => chatState.routerModal.discard()}
-                    action={this.addPeople} title="Add people to channel"
+                    action={this.addPeople} title={tx('title_addPeopleToRoom')}
                     inputPlaceholder={tx('title_TryUsernameOrEmail')} />
             </View>
         );

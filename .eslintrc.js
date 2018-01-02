@@ -12,6 +12,7 @@ module.exports = {
         'react/sort-comp': 0,
         'react/require-default-props': 0,
         'react/no-array-index-key': 1,
+        'react/prop-types': 0,
         'no-mixed-operators': 0,
         'new-cap': 0,
         'prefer-rest-params': 0,

@@ -5,7 +5,7 @@ import Italic from './italic';
 import Link from './link';
 import routes from '../routes/routes';
 
-function a(text, url) {
+function a(text, url, style) {
     if (!url) {
         console.error(`tag-handlers.js: bad ${text} link`);
         return text;
@@ -13,9 +13,9 @@ function a(text, url) {
     if (url.startsWith('route:')) {
         const [, type, route] = url.split(':');
         const action = () => routes[type][route]();
-        if (action) return <Link key={text} onPress={action}>{text}</Link>;
+        if (action) return <Link key={text} onPress={action} style={style}>{text}</Link>;
     }
-    return <Link key={url} url={url}>{text}</Link>;
+    return <Link key={url} url={url} style={style}>{text}</Link>;
 }
 
 function b(text) {

@@ -8,6 +8,7 @@ import channelInviteList from '../messaging/channel-invite-list';
 import FileShare from '../files/file-share';
 import FileMove from '../files/file-move';
 import FileSelect from '../files/file-select';
+import FileChooseRecipient from '../files/file-choose-recipient';
 import ContactView from '../contacts/contact-view';
 import ChatInfo from '../messaging/chat-info';
 import ChannelInfo from '../messaging/channel-info';
@@ -15,6 +16,7 @@ import PinModalAsk from '../controls/pin-modal-ask';
 import AccountUpgradeSwiper from '../settings/account-upgrade-swiper';
 import popupState from '../layout/popup-state';
 import routes from './routes';
+import { vars } from '../../styles/styles';
 
 class RouterModal extends Router {
     @observable animating = false;
@@ -28,6 +30,7 @@ class RouterModal extends Router {
         this.add('channelAddPeople', ChannelAddPeople);
         this.add('channelInviteList', channelInviteList);
         this.add('shareFileTo', FileShare);
+        this.add('changeRecipient', FileChooseRecipient);
         this.add('moveFileTo', FileMove);
         this.add('selectFiles', FileSelect);
         this.add('contactView', ContactView);
@@ -53,7 +56,9 @@ class RouterModal extends Router {
     flushResolver(value) {
         if (this.resolver) {
             console.log('router-modal.js: auto-resolving unclosed resolver');
-            this.resolver(value);
+            const { resolver } = this;
+            // wait for modal to close
+            setTimeout(() => resolver(value), vars.animationDuration);
             this.resolver = null;
         }
     }

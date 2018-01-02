@@ -9,21 +9,30 @@ import chatState from '../messaging/chat-state';
 import { tx } from '../utils/translator';
 import { popupInputCancel } from '../shared/popups';
 import imagepicker from '../helpers/imagepicker';
+import FileSharePreview from './file-share-preview';
 
 @observer
 export default class FilesActionSheet extends SafeComponent {
     @observable image;
 
     async doUpload(sourceFunction) {
-        (this.props.inline ?
-            fileState.uploadInline : fileState.uploadInFiles)(await sourceFunction());
-    }
-
-    get shareFromPeerio() {
-        return {
-            title: tx('title_shareFromFiles'),
-            async action() { chatState.shareFiles(await fileState.selectFiles()); }
-        };
+        const uploader = this.props.inline ?
+            fileState.uploadInline : fileState.uploadInFiles;
+        const source = observable(await sourceFunction());
+        if (this.props.inline) {
+            const userSelection = await FileSharePreview.popup(source.url, source.fileName);
+            if (!userSelection) return;
+            source.fileName = `${userSelection.name}.${source.ext}`;
+            source.message = userSelection.message;
+            let { chat } = userSelection;
+            if (userSelection.contact && chat === null) {
+                chat = await chatState.startChat([userSelection.contact]);
+                // TODO: switching to new DMs without timeout causes file
+                // to be shared in previous chat. Couldn't figure out why
+                await new Promise(resolve => setTimeout(resolve, 1000));
+            }
+        }
+        uploader(source);
     }
 
     get takePhoto() {
@@ -43,8 +52,15 @@ export default class FilesActionSheet extends SafeComponent {
     get androidFilePicker() {
         return {
             title: tx('title_chooseFromFiles'),
+            action: () => this.doUpload(imagepicker.getImageFromAndroidFilePicker)
+        };
+    }
+
+    get shareFromPeerio() {
+        return {
+            title: tx('title_shareFromFiles'),
             async action() {
-                fileState.uploadInFiles(await imagepicker.getImageFromAndroidFilePicker());
+                chatState.shareFiles(await fileState.selectFiles());
             }
         };
     }

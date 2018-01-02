@@ -4,7 +4,6 @@ import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
 import { contactStore, warnings, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
-import { loadGroupSettings } from './contacts-groups';
 import contactAddState from './contact-add-state';
 import chatState from '../messaging/chat-state';
 
@@ -14,7 +13,6 @@ class ContactState extends RoutedState {
     _permissionHandler = null;
 
     @action async init() {
-        await loadGroupSettings();
         return new Promise(resolve => when(() => !this.store.loading, resolve));
     }
 
@@ -54,7 +52,8 @@ class ContactState extends RoutedState {
     }
 
     @action sendTo(contact) {
-        chatState.startChat(null, contact);
+        chatState.startChat([contact]);
+        this.routerModal.discard();
     }
 
     get title() {
