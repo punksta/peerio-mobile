@@ -150,7 +150,7 @@ export default class TextBox extends SafeComponent {
         const { customIcon } = this.props;
         return customIcon ?
             <View style={textbox.iconContainer}>
-                {icons.dark(customIcon)}
+                {icons.colored(customIcon, null, vars.buttonGreen)}
             </View> : null;
     }
 

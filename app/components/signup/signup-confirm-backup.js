@@ -71,7 +71,7 @@ export default class SignupConfirmBackup extends LoginWizardPage {
                             <Text style={textNormal}>{tx('title_confirmTextInput', { sample: this.confirmTextSample })}</Text>
                             <View style={{ flex: 1, flexGrow: 1, justifyContent: 'center' }}>
                                 <TextBox
-                                    customIcon={this.isOk ? 'check-circle' : null}
+                                    customIcon={this.isOk ? 'check' : null}
                                     disabled={this.isOk}
                                     ref={ref => { this._textBox = ref; }}
                                     lowerCase key="usernameLogin"
