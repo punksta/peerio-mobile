@@ -4,10 +4,10 @@ import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
-import FileProgress from './file-progress';
 import FileInnerItem from './file-inner-item';
 import FolderInnerItem from './folder-inner-item';
 import fileState from './file-state';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class FileItem extends SafeComponent {
@@ -36,11 +36,10 @@ export default class FileItem extends SafeComponent {
     renderThrow() {
         const { file } = this.props;
         return (
-            <View style={{ backgroundColor: 'white' }}>
+            <View style={{ backgroundColor: 'white', marginHorizontal: vars.spacing.medium.mini2x }}>
                 {file.isFolder ?
                     <FolderInnerItem folder={file} onLongPress={this.props.onLongPress} onPress={() => this.props.onChangeFolder(file)} /> :
                     <FileInnerItem onPress={f => this.press(f)} file={file} />}
-                <FileProgress file={file} />
             </View>
         );
     }

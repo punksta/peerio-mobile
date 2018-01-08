@@ -19,9 +19,7 @@ const firstRowStyle = {
 };
 
 const secondRowStyle = {
-    flexDirection: 'row',
-    marginTop: vars.spacing.medium.mini2x,
-    flex: 0
+    marginTop: vars.spacing.medium.mini2x
 };
 
 const firstColumnStyle = {

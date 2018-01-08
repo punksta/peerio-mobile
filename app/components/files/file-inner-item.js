@@ -9,6 +9,7 @@ import icons from '../helpers/icons';
 import fileState from './file-state';
 import FileSignatureError from './file-signature-error';
 import FileTypeIcon from './file-type-icon';
+import FileProgress from './file-progress';
 
 const { width } = Dimensions.get('window');
 const height = 64;
@@ -91,7 +92,6 @@ export default class FileInnerItem extends SafeComponent {
         }
         if (icon) icon = icons.dark(icon);
         const loadingStyle = null;
-        const marginLeft = this.props.checkbox === 'always' ? 0 : -checkBoxWidth;
         const arrow = this.props.hideArrow ? null : (
             <View style={{ flex: 0 }}>
                 {iconRight}
@@ -100,9 +100,8 @@ export default class FileInnerItem extends SafeComponent {
         return (
             <View style={{ backgroundColor: 'white' }}>
                 <TouchableOpacity onPress={action}>
-                    <View style={[fileInfoContainerStyle, { opacity, marginLeft }]}>
-                        {this.checkbox()}
-                        <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]}>
+                    <View style={[fileInfoContainerStyle, { opacity }]}>
+                        <View style={[itemContainerStyle, { width }]}>
                             <View style={[loadingStyle, { flex: 0, paddingRight: vars.fileInnerItemPaddingRight }]}>
                                 {icon ||
                                     <FileTypeIcon
@@ -120,6 +119,7 @@ export default class FileInnerItem extends SafeComponent {
                         </View>
                     </View>
                 </TouchableOpacity>
+                <FileProgress file={file} />
             </View>
         );
     }

@@ -1,8 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { observable, when, reaction } from 'mobx';
+import { observable, when, reaction, action } from 'mobx';
 import { View, Image, Text, Dimensions, LayoutAnimation, TouchableOpacity, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
+import Progress from '../shared/progress';
+import FileProgress from './file-progress';
 import InlineUrlPreviewConsent from './inline-url-preview-consent';
 import inlineImageCacheStore from './inline-image-cache-store';
 import { vars } from '../../styles/styles';
@@ -28,18 +30,27 @@ const toSettingsParser = { toSettings };
 
 @observer
 export default class FileInlineImage extends SafeComponent {
+    @observable cachedImage;
     @observable width = 0;
     @observable height = 0;
     @observable optimalContentWidth = 0;
     @observable optimalContentHeight = 0;
     @observable opened;
     @observable loaded;
+    // image is a bit big but we still can display it manually
     @observable tooBig;
+    // image is too big to be displayed
     @observable oversizeCutoff;
+    // force loading image
     @observable loadImage;
     @observable showUpdateSettingsLink;
-    @observable cachedImage;
-    @observable errorLoading = false;
+    @observable handleLoadingTimeout;
+    // set this to true when we have network download problems
+    @observable downloadError;
+    // set this to true, when we have decoding problems
+    @observable errorDisplayingImage;
+    @observable loadedBytesCount = 0;
+    @observable totalBytesCount = 0;
     outerPadding = 8;
 
     componentWillMount() {
@@ -78,6 +89,7 @@ export default class FileInlineImage extends SafeComponent {
             when(() => this.loadImage, () => {
                 this.cachedImage = inlineImageCacheStore.getImage(url);
                 this.opened = true;
+                this.handleLoadStart();
             });
         }
     }
@@ -180,15 +192,65 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
-    handleOnLoad = async() => {
+    get downloadErrorMessage() {
+        const outer = {
+            padding: this.outerPadding,
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
+            justifyContent: 'center'
+        };
+        const textStyle = {
+            color: vars.txtDark,
+            backgroundColor: 'transparent',
+            textAlign: 'center'
+        };
+        return (
+            <View style={outer}>
+                <Text style={textStyle}>
+                    {tx('title_poorConnectionExternalURL')}
+                </Text>
+            </View>
+        );
+    }
+
+    @action.bound handleLoadStart() {
+        this.loadingTimeoutId = setTimeout(() => {
+            console.log('loading timeout');
+            // this.handleLoadingTimeout();
+            this.downloadError = true;
+        }, vars.loadingTimeout);
+    }
+
+    @action.bound handleLoadingTimeout() {
+        console.log('handle loading timeout');
+        // this.downloadError = true;
+    }
+
+    @action.bound handleLoadEnd() {
+        if (this.loadingTimeoutId) {
+            clearTimeout(this.loadingTimeoutId);
+            this.loadingTimeoutId = null;
+        }
+    }
+
+    @action.bound handleProgress(e) {
+        const { loaded, total } = e.nativeEvent;
+        this.loadedBytesCount = loaded;
+        this.totalBytesCount = total;
+    }
+
+    onLoad = () => {
         this.loaded = true;
     }
 
     onErrorLoadingImage = () => {
-        this.errorLoading = true;
+        this.errorDisplayingImage = true;
     }
 
-    get displayErrorLoading() {
+    get displayErrorMessage() {
         const outer = {
             padding: this.outerPadding
         };
@@ -212,13 +274,12 @@ export default class FileInlineImage extends SafeComponent {
         const { image } = this.props;
         const { name, title, description, fileId, downloading } = image;
         const { width, height, loaded, showUpdateSettingsLink } = this;
-        const { source } = this.cachedImage || {};
+        const { source, acquiringSize } = this.cachedImage || {};
         const isLocal = !!fileId;
         if (!clientApp.uiUserPrefs.externalContentConsented && !isLocal) {
             return <InlineUrlPreviewConsent onChange={() => { this.showUpdateSettingsLink = true; }} />;
         }
 
-        console.debug(`received source: ${width}, ${height}, ${JSON.stringify(source)}`);
         const outer = {
             padding: this.outerPadding,
             borderColor: vars.lightGrayBg,
@@ -254,7 +315,9 @@ export default class FileInlineImage extends SafeComponent {
         };
 
         const inner = {
-            backgroundColor: loaded ? vars.white : vars.lightGrayBg
+            backgroundColor: loaded ? vars.white : vars.lightGrayBg,
+            minHeight: loaded ? undefined : 140,
+            justifyContent: 'center'
         };
 
         return (
@@ -277,22 +340,29 @@ export default class FileInlineImage extends SafeComponent {
                                 () => this.props.onAction(this.props.image),
                                 { marginHorizontal: vars.spacing.small.maxi2x }
                             )}
-                            {downloading && <ActivityIndicator />}
                         </View>}
                     </View>
                     {this.opened &&
                         <View style={inner}>
                             {!downloading && this.loadImage && width && height ?
                                 <Image
-                                    source={source}
-                                    style={{ width, height }}
-                                    onLoad={this.handleOnLoad}
+                                    onProgress={this.handleProgress}
+                                    onLoadEnd={this.handleLoadEnd}
+                                    onLoad={this.onLoad}
                                     onError={this.onErrorLoadingImage}
-                                /> : null}
+                                    source={{ uri: source.uri, width, height }}
+                                    style={{ width, height }}
+                                /> : null }
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
                             {this.oversizeCutoff && this.displayCutOffImageOffer}
-                            {this.errorLoading && this.displayErrorLoading}
+                            {!this.loaded && this.downloadError && this.downloadErrorMessage}
+                            {this.errorDisplayingImage && this.displayErrorMessage}
+                            {acquiringSize && !this.downloadError && <ActivityIndicator />}
+                            {this.totalBytesCount > 0 && <Progress max={this.totalBytesCount} value={this.loadedBytesCount} />}
+                            <View style={{ alignSelf: 'flex-end' }}>
+                                {isLocal && <FileProgress file={image} />}
+                            </View>
                         </View>}
                 </View>
                 {!isLocal && showUpdateSettingsLink && this.updateSettingsOffer}
