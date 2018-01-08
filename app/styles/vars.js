@@ -199,6 +199,7 @@ const vars = {
             maxi2x: scaleDim(75)
         }
     },
+    loadingTimeout: 15000,
     isDeviceScreenBig,
     isDeviceScreenSmall
 };

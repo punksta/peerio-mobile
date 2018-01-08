@@ -10,6 +10,7 @@ class CachedImage {
     @observable source = null;
     @observable width = undefined;
     @observable height = undefined;
+    @observable acquiringSize = false;
     get cacheKey() { return `cache:${this.source.uri}`; }
 
     @action.bound async setImageSize(width, height) {
@@ -51,7 +52,9 @@ class InlineImageCacheStore {
         // the renderer should call image.setImageSize
         // after the image has been loaded
         if (await image.loadImageSize()) return;
+        image.acquiringSize = true;
         const { width, height } = await this.getSizeByUrl(url);
+        image.acquiringSize = false;
         console.debug(`remote filesize: ${width}, ${height}`);
         image.setImageSize(width, height);
     }
@@ -63,7 +66,9 @@ class InlineImageCacheStore {
         image.source = { uri: normalizedPath };
         // calculate size
         if (await image.loadImageSize()) return;
+        image.acquiringSize = true;
         const { width, height } = await this.getSizeByFilename(normalizedPath);
+        image.acquiringSize = false;
         console.debug(`local filesize: ${width}, ${height}`);
         image.setImageSize(width, height);
     }
