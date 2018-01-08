@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.241.0"></a>
+# [3.241.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.240.0...v3.241.0) (2018-01-08)
+
+
+### Bug Fixes
+
+* create room UI ([#83](https://github.com/PeerioTechnologies/peerio-mobile/issues/83)) ([f39b0c7](https://github.com/PeerioTechnologies/peerio-mobile/commit/f39b0c7))
+* file share comment location [ch1891] ([#94](https://github.com/PeerioTechnologies/peerio-mobile/issues/94)) ([b94a8e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/b94a8e8))
+* icon name and color ([#90](https://github.com/PeerioTechnologies/peerio-mobile/issues/90)) ([60d3361](https://github.com/PeerioTechnologies/peerio-mobile/commit/60d3361))
+* invite contact icon ([#86](https://github.com/PeerioTechnologies/peerio-mobile/issues/86)) ([ff8e96a](https://github.com/PeerioTechnologies/peerio-mobile/commit/ff8e96a))
+* loading screen disconnect ([#84](https://github.com/PeerioTechnologies/peerio-mobile/issues/84)) ([6ef58c2](https://github.com/PeerioTechnologies/peerio-mobile/commit/6ef58c2))
+* pinned chat icon ([#87](https://github.com/PeerioTechnologies/peerio-mobile/issues/87)) ([aa64091](https://github.com/PeerioTechnologies/peerio-mobile/commit/aa64091))
+* searchbar ui bugs ([7bcff35](https://github.com/PeerioTechnologies/peerio-mobile/commit/7bcff35))
+* several file ui fixes ([#82](https://github.com/PeerioTechnologies/peerio-mobile/issues/82)) ([f86e0d9](https://github.com/PeerioTechnologies/peerio-mobile/commit/f86e0d9))
+
+
+### Features
+
+* handle deleted images [ch252] ([54b7df9](https://github.com/PeerioTechnologies/peerio-mobile/commit/54b7df9))
+* remove groups functionality ([#85](https://github.com/PeerioTechnologies/peerio-mobile/issues/85)) [ch916] ([8b4f922](https://github.com/PeerioTechnologies/peerio-mobile/commit/8b4f922))
+
+
+
 <a name="3.240.0"></a>
 # [3.240.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.239.0...v3.240.0) (2017-12-20)
 
