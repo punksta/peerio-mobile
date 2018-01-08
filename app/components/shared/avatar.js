@@ -445,11 +445,11 @@ export default class Avatar extends SafeComponent {
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
                         style={[this.itemContainerStyle, { paddingLeft: 74, marginRight: vars.spacing.small.maxi }, shrinkStrategy]}>
-                        {this.message}
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
                             {this.files}
                             {this.inlineImage}
+                            {this.message}
                             {this.systemMessage}
                             {this.retryCancel}
                             {this.fileUnavailable}
@@ -474,9 +474,9 @@ export default class Avatar extends SafeComponent {
                         {this.avatar}
                         <View style={[nameMessageContainerStyle]}>
                             {this.props.isChat ? this.name : this.title}
-                            {this.message}
                             {this.files}
                             {this.inlineImage}
+                            {this.message}
                             {this.systemMessage}
                             {this.retryCancel}
                             {this.fileUnavailable}
