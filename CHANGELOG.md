@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.242.0"></a>
+# [3.242.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.241.0...v3.242.0) (2018-01-09)
+
+
+### Features
+
+* **ui:** show proper progress bar, timeout messages and UI when downloading external images [ch 285] ([ef6a286](https://github.com/PeerioTechnologies/peerio-mobile/commit/ef6a286))
+
+
+
 <a name="3.241.0"></a>
 # [3.241.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.240.0...v3.241.0) (2018-01-08)
 
