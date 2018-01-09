@@ -90,6 +90,7 @@ export default class SettingsLevel1 extends SafeComponent {
                         textStyle={{ color: vars.bg }}
                         onPress={loginState.signOut}
                         iconName="power-settings-new"
+                        testID="button_signOut"
                     />
                     {this.spacer}
                     {__DEV__ && <SettingsItem title="toggle connection" onPress={toggleConnection} />}

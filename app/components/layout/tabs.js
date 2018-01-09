@@ -9,6 +9,7 @@ import { fileStore, chatStore } from '../../lib/icebear';
 import contactState from '../contacts/contact-state';
 import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
+import testLabel from '../helpers/test-label';
 import uiState from './ui-state';
 
 const actionCellStyle = {
@@ -34,6 +35,7 @@ const bottomRowStyle = {
 @observer
 export default class Tabs extends SafeComponent {
     action(text, route, icon, bubble) {
+        const testID = `${route}-tab`;
         const color = routerMain.route === route ? vars.bg : vars.tabsFg;
         const indicator = bubble ? (
             <View style={{ position: 'absolute', right: -5, top: 0 }}>
@@ -44,7 +46,8 @@ export default class Tabs extends SafeComponent {
             <TouchableOpacity
                 onPress={() => routerMain[route]()}
                 pressRetentionOffset={vars.retentionOffset}
-                style={actionCellStyle}>
+                style={actionCellStyle}
+                {...testLabel(testID)}>
                 <View pointerEvents="none" style={{ alignItems: 'center' }}>
                     {icons.plain(icon, undefined, color)}
                     <Text style={[actionTextStyle, { color }]}>{text}</Text>

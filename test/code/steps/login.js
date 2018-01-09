@@ -25,6 +25,10 @@ defineSupportCode(({ Given, When, Then }) => {
         await this.createAccountPage.finishButton.click();
     });
 
+    Then('I am taken to the Login Start screen', async function () {
+        await this.loginStartPage.signInButton; // Verify that the correct screen is shown
+    });
+
     Then('I am taken to the home tab', function () {
         return this.homePage.welcomeMessage;
     });

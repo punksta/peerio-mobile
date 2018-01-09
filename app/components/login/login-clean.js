@@ -10,6 +10,7 @@ import LoginWizardPage, {
 } from './login-wizard-page';
 import { vars } from '../../styles/styles';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
+import testLabel from '../helpers/test-label';
 
 const header2 = [header, { marginBottom: vars.spacing.medium.midi2x, justifyContent: 'flex-end' }];
 
@@ -43,7 +44,9 @@ export default class LoginClean extends LoginWizardPage {
                 <View style={header2}>
                     <DebugMenuTrigger>
                         <View style={header2}>
-                            <Text style={title1}>{t('title_welcome')}</Text>
+                            <Text style={title1}>
+                                {t('title_welcome')}
+                            </Text>
                             <Text style={title2}>{t('title_login')}</Text>
                         </View>
                     </DebugMenuTrigger>
