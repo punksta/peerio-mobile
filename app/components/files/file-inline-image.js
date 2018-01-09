@@ -28,6 +28,22 @@ const forceShowMap = observable.map();
 
 const toSettingsParser = { toSettings };
 
+const textMessageOuter = {
+    padding: this.outerPadding,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    top: 0,
+    justifyContent: 'center'
+};
+
+const textMessageTextStyle = {
+    color: vars.txtDark,
+    backgroundColor: 'transparent',
+    textAlign: 'center'
+};
+
 @observer
 export default class FileInlineImage extends SafeComponent {
     @observable cachedImage;
@@ -44,11 +60,12 @@ export default class FileInlineImage extends SafeComponent {
     // force loading image
     @observable loadImage;
     @observable showUpdateSettingsLink;
-    @observable handleLoadingTimeout;
     // set this to true when we have network download problems
-    @observable downloadError;
+    @observable downloadSlow;
     // set this to true, when we have decoding problems
     @observable errorDisplayingImage;
+    // TODO: fix icebear behaviour when it doesn't redownload cachingFailed images
+    @observable cachingFailed = false;
     @observable loadedBytesCount = 0;
     @observable totalBytesCount = 0;
     outerPadding = 8;
@@ -61,6 +78,7 @@ export default class FileInlineImage extends SafeComponent {
         this.tooBig = isOverInlineSizeLimit || isOversizeCutoff;
         this.oversizeCutoff = isOversizeCutoff;
         this.loadImage = forceShowMap.get(url || fileId);
+        when(() => image.cachingFailed, () => { this.cachingFailed = true; });
         if (fileId) {
             // we have local inline file
             when(() => clientApp.uiUserPrefs.peerioContentEnabled, () => { this.opened = true; });
@@ -78,6 +96,7 @@ export default class FileInlineImage extends SafeComponent {
                         return;
                     }
                     image.tryToCacheTemporarily(true);
+                    this.handleLoadStart();
                 });
             }
         } else {
@@ -160,6 +179,25 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
+    get displayPoorConnectionDownload() {
+        const outer = {
+            padding: this.outerPadding
+        };
+        const text0 = {
+            color: vars.txtDark,
+            backgroundColor: vars.lightGrayBg,
+            paddingVertical: 54,
+            textAlign: 'center'
+        };
+        return (
+            <View style={outer}>
+                <Text style={text0}>
+                    {tx('title_poorConnectionInlineImage')}
+                </Text>
+            </View>
+        );
+    }
+
     get displayImageOffer() {
         const text = {
             color: vars.bg,
@@ -193,23 +231,19 @@ export default class FileInlineImage extends SafeComponent {
     }
 
     get downloadErrorMessage() {
-        const outer = {
-            padding: this.outerPadding,
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            top: 0,
-            justifyContent: 'center'
-        };
-        const textStyle = {
-            color: vars.txtDark,
-            backgroundColor: 'transparent',
-            textAlign: 'center'
-        };
         return (
-            <View style={outer}>
-                <Text style={textStyle}>
+            <View style={textMessageOuter}>
+                <Text style={textMessageTextStyle}>
+                    {tx('Image preview is not available')}
+                </Text>
+            </View>
+        );
+    }
+
+    get downloadSlowMessage() {
+        return (
+            <View style={textMessageOuter}>
+                <Text style={textMessageTextStyle}>
                     {tx('title_poorConnectionExternalURL')}
                 </Text>
             </View>
@@ -218,15 +252,10 @@ export default class FileInlineImage extends SafeComponent {
 
     @action.bound handleLoadStart() {
         this.loadingTimeoutId = setTimeout(() => {
-            console.log('loading timeout');
-            // this.handleLoadingTimeout();
-            this.downloadError = true;
+            if (!this.loaded) {
+                this.downloadSlow = true;
+            }
         }, vars.loadingTimeout);
-    }
-
-    @action.bound handleLoadingTimeout() {
-        console.log('handle loading timeout');
-        // this.downloadError = true;
     }
 
     @action.bound handleLoadEnd() {
@@ -242,11 +271,11 @@ export default class FileInlineImage extends SafeComponent {
         this.totalBytesCount = total;
     }
 
-    onLoad = () => {
+    @action.bound onLoad() {
         this.loaded = true;
     }
 
-    onErrorLoadingImage = () => {
+    @action.bound onErrorLoadingImage() {
         this.errorDisplayingImage = true;
     }
 
@@ -273,7 +302,7 @@ export default class FileInlineImage extends SafeComponent {
     renderThrow() {
         const { image } = this.props;
         const { name, title, description, fileId, downloading } = image;
-        const { width, height, loaded, showUpdateSettingsLink } = this;
+        const { width, height, loaded, showUpdateSettingsLink, cachingFailed } = this;
         const { source, acquiringSize } = this.cachedImage || {};
         const isLocal = !!fileId;
         if (!clientApp.uiUserPrefs.externalContentConsented && !isLocal) {
@@ -356,14 +385,15 @@ export default class FileInlineImage extends SafeComponent {
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
                             {this.oversizeCutoff && this.displayCutOffImageOffer}
-                            {!this.loaded && this.downloadError && this.downloadErrorMessage}
+                            {!this.loaded && cachingFailed && this.downloadErrorMessage}
+                            {!this.loaded && !cachingFailed && this.downloadSlow && this.downloadSlowMessage}
                             {this.errorDisplayingImage && this.displayErrorMessage}
-                            {acquiringSize && !this.downloadError && <ActivityIndicator />}
+                            {(acquiringSize || downloading)
+                                && !this.downloadSlow
+                                && !cachingFailed && <ActivityIndicator />}
                             {this.totalBytesCount > 0 && <Progress max={this.totalBytesCount} value={this.loadedBytesCount} />}
-                            <View style={{ alignSelf: 'flex-end' }}>
-                                {isLocal && <FileProgress file={image} />}
-                            </View>
                         </View>}
+                    {isLocal && <FileProgress file={image} />}
                 </View>
                 {!isLocal && showUpdateSettingsLink && this.updateSettingsOffer}
             </View>
