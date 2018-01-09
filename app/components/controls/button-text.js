@@ -4,11 +4,12 @@ import { Text, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class ButtonText extends SafeComponent {
     renderThrow() {
-        const { text, secondary, disabled, onPress } = this.props;
+        const { text, secondary, disabled, onPress, testID } = this.props;
         const textStyle = {
             color: (disabled || secondary) ? vars.txtDate : vars.bg,
             fontWeight: 'bold'
@@ -20,7 +21,7 @@ export default class ButtonText extends SafeComponent {
 
         return (
             <TouchableOpacity
-                testID={this.props.testID}
+                {...testLabel(`popupButton-${testID}`)}
                 pressRetentionOffset={vars.retentionOffset}
                 style={touchable}
                 disabled={disabled}

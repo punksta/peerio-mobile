@@ -1,8 +1,10 @@
 const webDriver = require('webdriverio');
 const iOSFactory = require('./iOSFactory');
 const AndroidFactory = require('./AndroidFactory');
+const LoginStartPage = require('./pages/login/loginStartPage');
 const CreateAccountPage = require('./pages/createAccountPage');
 const HomePage = require('./pages/homePage');
+const SettingsPage = require('./pages/settings/settingsPage');
 
 class World {
     constructor(opts) {
@@ -21,6 +23,8 @@ class World {
 
     createPages() {
         this.homePage = new HomePage(this.app);
+        this.settingsPage = new SettingsPage(this.app);
+        this.loginStartPage = new LoginStartPage(this.app);
         this.createAccountPage = new CreateAccountPage(this.app);
         this.alertsPage = this.context.alertsPage(this.app);
     }

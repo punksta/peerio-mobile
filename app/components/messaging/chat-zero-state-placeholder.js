@@ -4,6 +4,7 @@ import { View, Text, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 const redArrowSrc = require('../../assets/zero_chat_state/arrow-red.png');
 const roomSrc = require('../../assets/zero_chat_state/zeroState-room-big.png');
@@ -50,7 +51,7 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
     title() {
         return (
             <View>
-                <Text style={titleStyle}>
+                <Text style={titleStyle} {...testLabel('title_startSecureChat')}>
                     {tx('title_startSecureChat')}
                 </Text>
                 <Image

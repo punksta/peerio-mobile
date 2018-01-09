@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { vars, button } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 const defaultTextStyle = {
     backgroundColor: 'transparent',
@@ -40,7 +41,7 @@ export default class ButtonWithIcon extends Component {
                 onPress={press}
                 accessible={this.props.accessible}
                 accessibilityLabel={this.props.accessibilityLabel}
-                testID={this.props.testID}>
+                {...testLabel(this.props.testID)}>
                 <View style={[this.props.style, containerStyle]}>
                     <Icon
                         style={{ paddingHorizontal: 7 }}
