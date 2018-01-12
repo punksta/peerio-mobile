@@ -51,16 +51,14 @@ export default class AutoExpandingTextInput extends Component {
 
         const style = {
             textAlign: 'left',
-            padding: 0,
-            paddingBottom: vars.spacing.small.midi,
-            marginTop: vars.spacing.small.midi
+            padding: 0
         };
 
         return (
             <TextInput
                 {...this.props}
                 ref={ti => { this.ti = ti; }}
-                placeholderTextColor={vars.txtMedium}
+                placeholderTextColor={vars.extraSubtleText}
                 underlineColorAndroid="transparent"
                 multiline
                 onChange={this._onChange}

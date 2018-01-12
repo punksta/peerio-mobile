@@ -3,25 +3,22 @@ import vars from './vars';
 const sendIconStyleNormal = {
     alignItems: 'center',
     backgroundColor: vars.checkboxIconInactive,
-    borderRadius: 20,
+    borderRadius: vars.iconSizeSmall,
     justifyContent: 'center',
-    height: 40,
-    marginRight: 8,
-    width: 40
+    height: vars.iconSizeSmall * 2,
+    width: vars.iconSizeSmall * 2
 };
 
 export default {
     tiStyle: {
         color: vars.txtDark,
-        borderWidth: 0,
-        borderColor: 'red',
-        fontSize: 14
+        fontSize: vars.font.size.normal
     },
 
     iconStyle: {
-        width: 24,
-        height: 24,
-        margin: -12
+        width: vars.iconSizeSmall,
+        height: vars.iconSizeSmall,
+        margin: -vars.iconSizeSmall / 2
     },
 
     outerStyle: {
@@ -32,12 +29,13 @@ export default {
     autoExpandingInputContainerStyle: {
         flex: 1,
         flexGrow: 1,
-        alignItems: 'stretch'
+        alignItems: 'stretch',
+        marginVertical: vars.iconSizeSmall / 2
     },
 
     sendIconStyleNormal,
 
     sendIconStyleActive: [sendIconStyleNormal, {
-        backgroundColor: vars.checkboxActive
+        backgroundColor: vars.bg
     }]
 };
