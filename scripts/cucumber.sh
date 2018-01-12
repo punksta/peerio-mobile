@@ -36,11 +36,11 @@ case "${unameOut}" in
         ;;
 esac
 
-./node_modules/.bin/appium &
+./node_modules/.bin/appium > ./appium.log 2> ./appium.log &
 APPIUM_PID=$!
 
 trap "exit" INT TERM
-trap "kill $APPIUM_PID" EXIT
+trap "kill -9 $APPIUM_PID" EXIT
 sleep 1
 
 echo "Waiting appium to launch on 4723..."
