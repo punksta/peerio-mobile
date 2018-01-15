@@ -9,6 +9,7 @@ import LoginAutomatic from '../login/login-automatic';
 import PopupState from '../layout/popup-state';
 import routerMain from './router-main';
 import routes from './routes';
+import fileState from '../files/file-state';
 
 class RouterApp extends Router {
     constructor() {
@@ -38,6 +39,10 @@ class RouterApp extends Router {
             }
             // allow to back from main state when index is 0
             if (this.route === 'main') {
+                if (routes.main.route === 'files' && !fileState.currentFolder.isRoot) {
+                    fileState.currentFolder = fileState.currentFolder.parent;
+                    return true;
+                }
                 if (routes.main.currentIndex > 0) {
                     routes.main.back();
                     return true;
