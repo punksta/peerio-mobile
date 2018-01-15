@@ -125,7 +125,7 @@ function popupSignOutAutologin() {
             contents,
             buttons: [
                 { id: 'no', text: tu('button_getKey'), action: () => resolve(false) },
-                { id: 'yes', text: tu('button_lock'), action: () => resolve(o), secondary: true }
+                { id: 'yes', text: tu('button_logout'), action: () => resolve(o), secondary: true }
             ]
         });
     });
