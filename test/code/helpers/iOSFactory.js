@@ -1,5 +1,5 @@
-const { iOS } = require('./platforms');
-const AlertsPage = require('./pages/alertsPage/iOSAlertsPage');
+const { iOS } = require('../platforms');
+const AlertsPage = require('../pages/alerts/alertsPage/iOSAlertsPage');
 
 class iOSFactory {
     get bundleId() { return 'com.peerio'; }

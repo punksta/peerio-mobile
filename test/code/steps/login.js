@@ -1,55 +1,69 @@
 const { defineSupportCode } = require('cucumber');
 
-defineSupportCode(({ Given, When, Then }) => {
+defineSupportCode(function ({ Given, When, Then }) {
+    let username;
+    let passphrase;
+
     // Scenario: User signs up successfully
-    When('I choose the create account option', async function () {
-        await this.alertsPage.dismissNotificationsAlert();
-        await this.createAccountPage.createAccountButton.click();
+    async function selectCreateAccount(that) {
+        await that.alertsPage.dismissNotificationsAlert();
+        await that.loginStartPage.createAccountButton.click();
+    }
+    When('I choose the create account option', function () {
+        return selectCreateAccount(this);
     });
 
+    async function typePersonalInfo(that) {
+        username = new Date().getTime();
+        console.log('Creating account with username', username);
+
+        await that.createAccountPage.firstName.setValue('test-first-name').hideDeviceKeyboard();
+        await that.createAccountPage.lastName.setValue('test-last-name').hideDeviceKeyboard();
+        await that.createAccountPage.username.setValue(username).hideDeviceKeyboard();
+        await that.createAccountPage.email.setValue('test@email.io').hideDeviceKeyboard();
+        await that.createAccountPage.nextButton.click();
+    }
     When('I input my personal info', async function () {
-        await this.createAccountPage.firstName.setValue('test-first-name').hideDeviceKeyboard();
-        await this.createAccountPage.lastName.setValue('test-last-name').hideDeviceKeyboard();
-        await this.createAccountPage.username.setValue(new Date().getTime()).hideDeviceKeyboard();
-        await this.createAccountPage.email.setValue('test@email.io').hideDeviceKeyboard();
-        await this.createAccountPage.nextButton.click();
+        await typePersonalInfo(this);
     });
 
+    async function savePasscode(that) {
+        await that.createAccountPage.passphrase.getText().then(innerText => {
+            passphrase = innerText;
+        });
+        console.log('Creating account with passphrase', passphrase);
+        await that.createAccountPage.nextButton.click();
+    }
     Then('I am presented with my passcode', async function () {
-        await this.app.pause(5000); // wait / check for something?
-        await this.createAccountPage.nextButton.click();
+        await savePasscode(this);
     });
 
+    async function confirmSavingPasscode(that) {
+        await that.createAccountPage.confirmInput.setValue('I have saved my account key').hideDeviceKeyboard();
+        await that.createAccountPage.finishButton.click();
+    }
     Then('I confirm that I saved my passcode', async function () {
-        await this.createAccountPage.confirmInput.setValue('I have saved my account key').hideDeviceKeyboard();
-        await this.createAccountPage.finishButton.click();
+        await confirmSavingPasscode(this);
     });
 
     Then('I am taken to the Login Start screen', async function () {
-        await this.loginStartPage.signInButton; // Verify that the correct screen is shown
+        await this.loginStartPage.loginButton;
     });
 
+    async function seeWelcomeScreen(that) {
+        await that.homePage.chatsTab.isExisting();
+    }
     Then('I am taken to the home tab', function () {
-        return this.homePage.welcomeMessage;
+        return seeWelcomeScreen(this);
     });
 
     // Scenario: Autologin
     Given('I have signed up', async function () {
-        await this.alertsPage.dismissNotificationsAlert();
-        await this.createAccountPage.createAccountButton.click();
-
-        await this.createAccountPage.firstName.setValue('test-first-name').hideDeviceKeyboard();
-        await this.createAccountPage.lastName.setValue('test-last-name').hideDeviceKeyboard();
-        await this.createAccountPage.username.setValue(new Date().getTime()).hideDeviceKeyboard();
-        await this.createAccountPage.email.setValue('test@email.io').hideDeviceKeyboard();
-        await this.createAccountPage.nextButton.click();
-
-        await this.app.pause(5000);
-        await this.createAccountPage.nextButton.click();
-
-        await this.createAccountPage.confirmInput.addValue('I have saved my account key').hideDeviceKeyboard();
-        await this.createAccountPage.finishButton.click();
-        await this.homePage.welcomeMessage.click();
+        await selectCreateAccount(this);
+        await typePersonalInfo(this);
+        await savePasscode(this);
+        await confirmSavingPasscode(this);
+        await seeWelcomeScreen(this);
     });
 
     Given('I close Peerio', async function () {
@@ -58,5 +72,19 @@ defineSupportCode(({ Given, When, Then }) => {
 
     When('I open Peerio', async function () {
         await this.app.launch();
+    });
+
+    Given('I sign out', async function () {
+        await this.homePage.settingsTab.click();
+        await this.settingsPage.logoutButton.click();
+        await this.settingsPage.logoutButton.click(); // TODO: need to tap 2x
+        await this.settingsPage.lockButton.click();
+    });
+
+    When('I sign in', async function () {
+        await this.createAccountPage.loginButton.click();
+        await this.loginPage.username.setValue(username).hideDeviceKeyboard();
+        await this.loginPage.passphrase.setValue(passphrase).hideDeviceKeyboard();
+        await this.loginPage.submitButton.click();
     });
 });

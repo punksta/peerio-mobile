@@ -10,6 +10,7 @@ import { tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import { User } from '../../lib/icebear';
 import routes from '../routes/routes';
+import testLabel from '../helpers/test-label';
 
 const paddingVertical = vars.listViewPaddingVertical;
 const paddingHorizontal = vars.listViewPaddingHorizontal;
@@ -119,7 +120,9 @@ export default class TwoFactorAuthCodes extends SafeComponent {
         return (
             <View style={bgStyle}>
                 <View>
-                    <Text style={headerStyle}>
+                    <Text
+                        style={headerStyle}
+                        {...testLabel('title_2FABackupCode')} >
                         {tx('title_2FABackupCode')}
                     </Text>
                     <Text style={infoStyle}>

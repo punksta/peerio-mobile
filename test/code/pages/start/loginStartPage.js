@@ -5,7 +5,7 @@ class LoginStartPage extends Page {
         return this.getWhenVisible('~button_CreateAccount');
     }
 
-    get signInButton() {
+    get loginButton() {
         return this.getWhenVisible('~button_login');
     }
 }

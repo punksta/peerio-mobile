@@ -1,9 +1,12 @@
 const webDriver = require('webdriverio');
-const iOSFactory = require('./iOSFactory');
-const AndroidFactory = require('./AndroidFactory');
-const LoginStartPage = require('./pages/login/loginStartPage');
-const CreateAccountPage = require('./pages/createAccountPage');
-const HomePage = require('./pages/homePage');
+const iOSFactory = require('./helpers/iOSFactory');
+const AndroidFactory = require('./helpers/AndroidFactory');
+const LoginStartPage = require('./pages/start/loginStartPage');
+const CreateAccountPage = require('./pages/start/createAccountPage');
+const LoginPage = require('./pages/start/loginPage');
+const HomePage = require('./pages/start/homePage');
+const TwoStepVerificationPage = require('./pages/settings/twoStepVerificationPage');
+const TwoFactorAuthPrompt = require('./pages/alerts/twoFactorAuthPrompt');
 const SettingsPage = require('./pages/settings/settingsPage');
 
 class World {
@@ -26,7 +29,11 @@ class World {
         this.settingsPage = new SettingsPage(this.app);
         this.loginStartPage = new LoginStartPage(this.app);
         this.createAccountPage = new CreateAccountPage(this.app);
+        this.settingsPage = new SettingsPage(this.app);
         this.alertsPage = this.context.alertsPage(this.app);
+        this.twoStepVerificationPage = new TwoStepVerificationPage(this.app);
+        this.twoFactorAuthPrompt = new TwoFactorAuthPrompt(this.app);
+        this.loginPage = new LoginPage(this.app);
     }
 
     closeApp() {

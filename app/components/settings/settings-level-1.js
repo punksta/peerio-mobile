@@ -79,7 +79,9 @@ export default class SettingsLevel1 extends SafeComponent {
                     {this.spacer}
                     <SettingsItem title="title_About" icon={null} onPress={() => popupYes('About', AboutContent)} />
                     {this.spacer}
-                    <ButtonWithIcon text={tu('button_logout')}
+                    <ButtonWithIcon
+                        text={tu('button_logout')}
+                        accessibilityLabel="button_logout"
                         style={{
                             backgroundColor: vars.white,
                             width: '100%',

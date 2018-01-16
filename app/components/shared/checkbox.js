@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
-
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class CheckBox extends Component {
@@ -39,7 +39,11 @@ export default class CheckBox extends Component {
             height: 20
         };
         return (
-            <TouchableOpacity onPress={() => this.toggle()} pressRetentionOffset={vars.retentionOffset} style={container}>
+            <TouchableOpacity
+                {...testLabel(this.props.accessibilityLabel)}
+                onPress={() => this.toggle()}
+                pressRetentionOffset={vars.retentionOffset}
+                style={container}>
                 <Text style={text}>{this.props.text}</Text>
                 <View style={checkbox}>
                     {this.props.isChecked && <Icon name="check" color={borderColor} />}

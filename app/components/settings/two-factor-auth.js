@@ -13,6 +13,7 @@ import loginState from '../login/login-state';
 import TwoFactorAuthCodes from './two-factor-auth-codes';
 import TwoFactorAuthCodesGenerate from './two-factor-auth-codes-generate';
 import uiState from '../layout/ui-state';
+import testLabel from '../helpers/test-label';
 
 const paddingVertical = vars.listViewPaddingVertical;
 const paddingHorizontal = vars.listViewPaddingHorizontal;
@@ -99,7 +100,9 @@ export default class TwoFactorAuth extends SafeComponent {
     get key2FAControl() {
         if (!this.key2fa) return <ActivityIndicator />;
         return (
-            <Text style={{ fontWeight: 'bold' }}>
+            <Text
+                {...testLabel('secretKey')}
+                style={{ fontWeight: 'bold' }}>
                 {this.key2fa}
             </Text>
         );
@@ -152,12 +155,13 @@ export default class TwoFactorAuth extends SafeComponent {
                                 height: vars.inputHeight,
                                 flexGrow: 1
                             }}
+                            {...testLabel('confirmationCodeInput')}
                             placeholderTextColor={vars.txtDate}
                             placeholder="123456"
                             onChangeText={text => { this.confirmCode = text; }}
                             value={this.confirmCode} />
                         {buttons.uppercaseBlueButton(tx('button_confirm'),
-                            () => this.confirm(), !this.confirmCode || !this.key2fa)}
+                            () => this.confirm(), !this.confirmCode || !this.key2fa, false, 'button_confirm')}
                     </View>
                 </View>
                 <View>

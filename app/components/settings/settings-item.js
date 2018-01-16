@@ -6,6 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { t } from '../utils/translator';
+import testLabel from '../helpers/test-label';
 
 const itemContainerStyle = {
     flexGrow: 1,
@@ -35,9 +36,9 @@ export default class SettingsItem extends SafeComponent {
         const offset = vars.retentionOffset;
         return (
             <TouchableOpacity
+                {...testLabel(this.props.title)}
                 activeOpacity={this.props.untappable ? 1 : 0.3}
                 pressRetentionOffset={offset}
-                testID={this.props.title}
                 onPress={() => !this.props.untappable && !this.props.disabled && this.press()}>
                 <View style={[itemContainerStyle]} pointerEvents={this.props.untappable ? undefined : 'none'}>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>

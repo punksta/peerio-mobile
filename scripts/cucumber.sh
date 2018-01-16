@@ -25,10 +25,13 @@ check() {
 
 wait "checking test environment"
 
+source env.sh
+
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     
         echo "Linux..."
+        adb shell pm uninstall com.peerio.app
         ;;
     Darwin*)    
         echo "Mac..."
@@ -39,7 +42,6 @@ case "${unameOut}" in
         ;;
 esac
 
-source env.sh
 
 unameOut="$(uname -s)"
 case "${unameOut}" in
@@ -64,6 +66,10 @@ case "${unameOut}" in
         check "found $PEERIO_IOS_SIM ($PEERIO_IOS_VERSION) $SIM_UDID$"
         SIM_LOG="$HOME/Library/Logs/CoreSimulator/$SIM_UDID/system.log"
         check "logs ${SIM_LOG}"
+        wait 'Booting selected simulator' && check 'simulator booted'
+        xcrun simctl boot $SIM_UDID
+        wait 'Uninstalling app booted simulators'
+        xcrun simctl uninstall $SIM_UDID com.peerio && check 'app uninstalled'
         ;;
 esac
 

@@ -1,5 +1,5 @@
-const { android } = require('./platforms');
-const AlertsPage = require('./pages/alertsPage/AndroidAlertsPage');
+const { android } = require('../platforms');
+const AlertsPage = require('../pages/alerts/alertsPage/AndroidAlertsPage');
 
 class AndroidFactory {
     get bundleId() { return 'com.peerio.app'; }

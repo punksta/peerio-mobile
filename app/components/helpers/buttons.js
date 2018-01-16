@@ -2,6 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { vars } from '../../styles/styles';
 import { tu } from '../utils/translator';
+import testLabel from '../helpers/test-label';
 
 export default {
     uppercaseWhiteButton(text, onPress, disabled) {
@@ -30,16 +31,18 @@ export default {
         );
     },
 
-    uppercaseBlueButton(text, onPress, disabled, hidden) {
+    uppercaseBlueButton(text, onPress, disabled, hidden, accessibilityId) {
         const opacity = hidden ? 0.0 : 1.0;
         return (
             <View style={{ opacity }}>
                 <TouchableOpacity
+                    {...testLabel(accessibilityId)}
                     disabled={disabled}
                     onPress={disabled ? null : onPress}
                     pressRetentionOffset={vars.pressRetentionOffset}
                     style={{ paddingRight: vars.spacing.small.maxi2x, paddingVertical: vars.spacing.small.maxi }}>
-                    <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
+                    <Text
+                        style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
                         {tu(text)}
                     </Text>
                 </TouchableOpacity>
