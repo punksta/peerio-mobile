@@ -13,12 +13,18 @@ class KeychainBridge {
         console.log(`keychain-bridge.js: ${this.available}`);
     }
 
-    save(key, value, secureWithTouchID) {
+    async save(key, value, secureWithTouchID) {
         console.debug(`keychain-bridge.js: saving ${key}:${value.length}`);
-        return RNKeychain.saveValue(value, key, secureWithTouchID).catch(e => {
-            console.log(`keychain-bridge.js: error saving ${key}`);
+        try {
+            await RNKeychain.saveValue(value, key, secureWithTouchID);
+            return true;
+        } catch (e) {
+            console.log(`keychain-bridge.js: error saving ${key} [${secureWithTouchID}]`);
+            console.log(e.message);
+            console.log(e.code);
             console.log(e);
-        });
+            return false;
+        }
     }
 
     get(key) {
