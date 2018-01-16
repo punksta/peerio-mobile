@@ -242,7 +242,7 @@ export default class ContactAdd extends SafeComponent {
                         <View style={{ height: 180 }} />
                     </View>
                 </ScrollView>
-                <ProgressOverlay enabled={this.waiting || contactState.isInProgress} />
+                <ProgressOverlay enabled={this.waiting} />
             </View>
         );
     }
