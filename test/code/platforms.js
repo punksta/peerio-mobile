@@ -7,7 +7,7 @@ const iOS = {
         platformVersion: process.env.PEERIO_IOS_VERSION || '10.3',
         deviceName: process.env.PEERIO_IOS_SIM || 'iPhone 6s',
         app: iOSBuildPath,
-        noReset: true
+        noReset: false
     }
 };
 
