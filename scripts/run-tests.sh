@@ -1,6 +1,28 @@
 #!/bin/bash
 
 source env.sh
+RED=`tput setaf 1`
+GREEN=`tput setaf 2`
+YELLOW=`tput setaf 3`
+BRIGHT=`tput bold`
+R=`tput sgr0`
+
+info() {
+  echo -e "${BRIGHT}$1${R}"
+}
+
+error() {
+  echo -e "${BRIGHT}$1${R}"
+}
+
+
+wait() {
+  echo -e "💤  ${BRIGHT}$1${R}"
+}
+
+check() {
+  echo "${GREEN}✔ $1${R}"
+}
 
 unameOut="$(uname -s)"
 case "${unameOut}" in
@@ -10,19 +32,22 @@ case "${unameOut}" in
         # adb install -r android/app/build/outputs/apk/app-x86-debug.apk
         ;;
     Darwin*)
-        echo "Mac..."
-        killall -9 Simulator
-        SIM_UDID=`xcrun instruments -s | grep -E "$PEERIO_IOS_SIM \($PEERIO_IOS_VERSION.*\)" | grep -o "\[.*\]" | tr -d '[]'`
+        info 'Mac...'
+        info 'Killing running simulators'
+        killall -9 Simulator && check 'done'
+        wait 'Unbooting booted simulators'
+        xcrun simctl list devices | grep -i "booted" | grep -Eo "\([A-F0-9-]+\)" | tr -d '()' | xargs xcrun simctl shutdown
+        SIM_UDID=`xcrun instruments -s | grep -E "$PEERIO_IOS_SIM \($PEERIO_IOS_VERSION.*\)" | grep -o "\[.*\]" | tr -d '[]' | head -1`
+        info "Looking for simulator: $PEERIO_IOS_SIM ($PEERIO_IOS_VERSION)"
         if [ -z $"$SIM_UDID" ]; then
-          echo "Could not find simulator: $PEERIO_IOS_SIM ($PEERIO_IOS_VERSION)"
+          error "Could not find simulator: $PEERIO_IOS_SIM ($PEERIO_IOS_VERSION)"
           echo "Available simulators:"
           xcrun instruments -s
           exit 1
         fi
+        check "found $PEERIO_IOS_SIM ($PEERIO_IOS_VERSION) $SIM_UDID$"
         SIM_LOG="$HOME/Library/Logs/CoreSimulator/$SIM_UDID/system.log"
-        echo "Logs located:"
-        ls $SIM_LOG
-        echo "$PEERIO_IOS_SIM ($PEERIO_IOS_VERSION) $SIM_UDID"
+        check "logs ${SIM_LOG}"
         # ./node_modules/.bin/react-native run-ios --simulator=$SIM_UDID
         ;;
 esac
@@ -34,13 +59,13 @@ trap "exit" INT TERM
 trap "kill $APPIUM_PID" EXIT
 sleep 1
 
-echo "Waiting appium to launch on 4723..."
+wait "Waiting appium to launch on 4723..."
 
 while ! nc -z localhost 4723; do
   sleep 0.1
 done
 
-echo "Appium launched"
+check "appium launched"
 
 virtualenv .pyenv && source .pyenv/bin/activate
 py.test --platform=$PEERIO_TEST_PLATFORM -s -x tests
