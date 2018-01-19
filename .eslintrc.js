@@ -1,10 +1,9 @@
 module.exports = {
     root: true,
     parser: 'babel-eslint',
-    extends: [
-        "peerio"
-    ],
-    rules:{
+    plugins: [ 'babel' ],
+    extends: [ 'peerio' ],
+    rules: {
         'global-require': 0,
         'generator-star-spacing': 0,
         'react/prefer-stateless-function': 0,
@@ -20,7 +19,8 @@ module.exports = {
         'no-unused-vars': 1,
         'react/no-array-index-key': 0,
         'max-len': 0,
-        'space-before-function-paren': 0
+        'space-before-function-paren': 0,
+        'babel/semi': 1
     },
     globals: {
         'requestAnimationFrame': false,
