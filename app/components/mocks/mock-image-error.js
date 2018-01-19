@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image } from 'react-native';
 import { observer } from 'mobx-react/native';
 
-const goodImage = 'https://www.homedepot.com/hdus/en_US/DTCCOMNEW/fetch/Category_Pages/Doors_and_Windows/windows-A.jpg';
+// const goodImage = 'https://www.homedepot.com/hdus/en_US/DTCCOMNEW/fetch/Category_Pages/Doors_and_Windows/windows-A.jpg';
 const badImage = 'http://10.255.255.1/test.png';
 const uri = badImage;
 

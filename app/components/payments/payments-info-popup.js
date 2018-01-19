@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, TouchableOpacity, Linking } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
