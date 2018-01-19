@@ -193,11 +193,10 @@ export default class ContactSelector extends SafeComponent {
             flexDirection: 'row',
             alignItems: 'center',
             padding: vars.spacing.small.mini2x,
-            paddingTop: vars.statusBarHeight * 2,
-            paddingBottom: 0,
             borderBottomWidth: 1,
             borderBottomColor: vars.headerBorderColor,
-            marginBottom: vars.spacing.medium.mini2x,
+            paddingVertical: vars.spacing.medium.midi,
+            marginBottom: vars.spacing.medium.midi,
             height: vars.inputHeight
         };
         const style = {
@@ -349,7 +348,7 @@ export default class ContactSelector extends SafeComponent {
         const exitRow = this.exitRow();
         const recipients = this.recipients.items;
         const headerStyle = {
-            paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight * 2
+            paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight + vars.spacing.small.midi
         };
         return (
             <View style={headerStyle}>
