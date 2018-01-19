@@ -54,7 +54,7 @@ export default class ChatInfo extends SafeComponent {
                 message=""
                 hideOnline />
         );
-    }
+    };
 
     renderThrow() {
         const chat = chatState.currentChat;

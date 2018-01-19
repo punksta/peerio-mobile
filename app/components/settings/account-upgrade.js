@@ -119,7 +119,7 @@ export default class AccountUpgrade extends SafeComponent {
                 </View>
             </View>
         );
-    }
+    };
 
     renderThrow() {
         return (

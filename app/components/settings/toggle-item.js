@@ -16,7 +16,7 @@ export default class ToggleItem extends SafeComponent {
     toggle = () => {
         const { onPress } = this.props;
         onPress && onPress(!this.active);
-    }
+    };
 
     renderThrow() {
         return (

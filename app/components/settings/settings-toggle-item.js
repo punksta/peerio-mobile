@@ -12,7 +12,7 @@ export default class SettingsToggleItem extends SafeComponent {
     toggle = () => {
         this.state[this.props.property] = !this.state[this.props.property];
         User.current.saveSettings();
-    }
+    };
 
     renderThrow() {
         return (

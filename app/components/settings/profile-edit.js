@@ -85,7 +85,7 @@ export default class ProfileEdit extends SafeComponent {
 
     onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
         uiState.currentScrollViewPosition = y;
-    }
+    };
 
     submit = () => {
         const user = User.current;
@@ -97,7 +97,7 @@ export default class ProfileEdit extends SafeComponent {
         User.current.saveProfile().catch(() => {
             Object.assign(user, { firstName, lastName });
         });
-    }
+    };
 
     saveNewEmail = () => {
         if (this.newEmailText && this.newEmailTextValid) User.current.addEmail(this.newEmailText);
@@ -197,7 +197,7 @@ export default class ProfileEdit extends SafeComponent {
                 {(!primary && canDelete) ? deleteIcon : null}
             </View>
         );
-    }
+    };
 
     get avatarLetter() {
         const contact = contactStore.getContact(User.current.username);

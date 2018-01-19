@@ -26,7 +26,7 @@ export default class FolderSelect extends SafeComponent {
     }
 
     @observable dataSource = null;
-    @observable refreshing = false
+    @observable refreshing = false;
 
     @computed get data() {
         const { currentFolder } = this;
@@ -78,7 +78,7 @@ export default class FolderSelect extends SafeComponent {
                 onSelect={selectFolder}
                 onPress={folder.hasNested ? changeFolder : selectFolder} />
         );
-    }
+    };
 
     listView() {
         return (

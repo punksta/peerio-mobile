@@ -55,7 +55,7 @@ export default class SettingsLevel1 extends SafeComponent {
 
     resetExternalSetting = () => {
         clientApp.uiUserPrefs.externalContentConsented = false;
-    }
+    };
 
     renderThrow() {
         const plan = plans.topPlan();

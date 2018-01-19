@@ -92,12 +92,12 @@ export default class Chat extends SafeComponent {
                 {...actions}
             />
         );
-    }
+    };
 
     layoutScrollView = (event) => {
         this.scrollViewHeight = event.nativeEvent.layout.height;
         this.contentSizeChanged();
-    }
+    };
 
     contentSizeChanged = async (contentWidth, contentHeight) => {
         // console.log(`chat.js: content size changed ${contentWidth}, ${contentHeight}`);
@@ -136,7 +136,7 @@ export default class Chat extends SafeComponent {
                 setTimeout(() => this.contentSizeChanged(), 1000);
             }
         }, 300);
-    }
+    };
 
     async measureItemById(id) {
         if (!id) return null;
@@ -221,7 +221,7 @@ export default class Chat extends SafeComponent {
         };
         if (this._updater) clearTimeout(this._updater);
         this._updater = setTimeout(updater, 500);
-    }
+    };
 
     listView() {
         if (chatState.loading) return null;

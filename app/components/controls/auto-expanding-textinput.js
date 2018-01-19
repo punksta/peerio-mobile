@@ -44,7 +44,7 @@ export default class AutoExpandingTextInput extends Component {
         this.setState({
             height: curHeight
         });
-    }
+    };
 
     render() {
         const tmpHeight = Math.min(this.state.maxHeight, this.state.height);

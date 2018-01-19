@@ -65,7 +65,7 @@ export default class ChannelInviteList extends SafeComponent {
     }
 
     dataSource = [];
-    @observable refreshing = false
+    @observable refreshing = false;
 
     constructor(props) {
         super(props);

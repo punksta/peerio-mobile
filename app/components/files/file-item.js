@@ -19,7 +19,7 @@ export default class FileItem extends SafeComponent {
         set checkBoxHidden(value) {
             // noop
         }
-    }
+    };
 
     select() {
         this.props.file.selected = true;

@@ -27,7 +27,7 @@ export default class FileSelect extends SafeComponent {
     }
 
     @observable dataSource = null;
-    @observable refreshing = false
+    @observable refreshing = false;
 
     @computed get data() {
         return this.currentFolder.foldersAndFilesDefaultSorting;
@@ -69,7 +69,7 @@ export default class FileSelect extends SafeComponent {
                     onPress={changeFolder} />
                 : <FileInnerItem onPress={submitSelection} file={f} />
         );
-    }
+    };
 
     listView() {
         return (

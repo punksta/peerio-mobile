@@ -11,7 +11,7 @@ class KeychainBridge {
         if (!RNKeychain) return;
         this.available = await RNKeychain.isFeatureAvailable();
         console.log(`keychain-bridge.js: ${this.available}`);
-    }
+    };
 
     async save(key, value, secureWithTouchID) {
         console.debug(`keychain-bridge.js: saving ${key}:${value.length}`);

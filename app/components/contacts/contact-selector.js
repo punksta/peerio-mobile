@@ -122,7 +122,7 @@ export default class ContactSelector extends SafeComponent {
 
         this.searchUser(this.findUserText, true);
         if (this.props.limit !== 1) this.findUserText = '';
-    }
+    };
 
     textbox() {
         const height = 48;

@@ -12,7 +12,7 @@ export default class ChannelListItem extends SafeComponent {
         const { chat, onPress } = this.props;
         if (onPress) return onPress(chat);
         return chatState.routerMain.chats(chat);
-    }
+    };
 
     renderThrow() {
         if (chatState.collapseChannels) return null;

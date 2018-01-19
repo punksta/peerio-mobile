@@ -10,15 +10,15 @@ class PopupState {
 
     showPopup = popup => {
         this.popupControls.push(popup);
-    }
+    };
 
     showPopupPromise = caller => {
         return new Promise((resolve, reject) => this.showPopup(caller(resolve, reject)));
-    }
+    };
 
     discardPopup = () => {
         this.popupControls.pop();
-    }
+    };
 
     discardAllPopups() {
         this.popupControls.splice(0, this.popupControls.length);

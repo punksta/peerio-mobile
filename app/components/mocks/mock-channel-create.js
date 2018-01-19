@@ -18,9 +18,9 @@ export default class MockChannelCreate extends Component {
         contactState.store = mockContactStore;
     }
 
-    createChannel = () => { this.isChatMode = false; }
+    createChannel = () => { this.isChatMode = false; };
 
-    createChat = () => { this.isChatMode = true; }
+    createChat = () => { this.isChatMode = true; };
 
     render() {
         return (

@@ -125,7 +125,7 @@ class FileState extends RoutedState {
         const newFileName = await popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fileName));
         if (newFileName) await file.rename(`${newFileName}.${ext}`);
         return file;
-    }
+    };
 
     uploadInline = async (data) => {
         await promiseWhen(() => socket.authenticated);
@@ -134,7 +134,7 @@ class FileState extends RoutedState {
         data.file = chat.uploadAndShareFile(data.url, data.fileName, false, null, data.message);
         await promiseWhen(() => data.file.fileId);
         return data.file;
-    }
+    };
 
     uploadInFiles = async (data) => {
         await promiseWhen(() => socket.authenticated);
@@ -147,7 +147,7 @@ class FileState extends RoutedState {
         data.file = file;
         await this.renamePostProcessing(data);
         return file;
-    }
+    };
 
     cancelUpload(file) {
         return popupYesCancel(tx('title_confirmCancelUpload')).then(r => r && file.cancelUpload());

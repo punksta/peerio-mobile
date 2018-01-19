@@ -24,7 +24,7 @@ export default class ChannelAddPeople extends SafeComponent {
         chatState.currentChat.addParticipants(
             contacts.filter(c => !excluded[c.username])
         );
-    }
+    };
 
     render() {
         return (

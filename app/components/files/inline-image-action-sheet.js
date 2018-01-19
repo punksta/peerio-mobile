@@ -15,7 +15,7 @@ export default class InlineImageActionSheet extends SafeComponent {
     shareImage = () => {
         fileState.currentFile = this.image;
         routerModal.shareFileTo();
-    }
+    };
 
     get openItem() {
         return {
@@ -43,7 +43,7 @@ export default class InlineImageActionSheet extends SafeComponent {
     show = (image) => {
         this.image = image;
         this._actionSheet.show();
-    }
+    };
 
     renderThrow() {
         return (

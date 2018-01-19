@@ -180,7 +180,7 @@ export default class Avatar extends SafeComponent {
             return this.props.onRetryCancel();
         }
         return this.props.onPress && this.props.onPress();
-    }
+    };
 
     get message() {
         const { ellipsize } = this.props;

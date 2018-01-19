@@ -72,7 +72,7 @@ class LoginState extends RoutedState {
         if (__DEV__ && process.env.PEERIO_QUICK_PIN) {
             this.login(process.env.PEERIO_QUICK_PIN);
         }
-    }
+    };
 
     @action _login(user) {
         User.current = user;
@@ -132,7 +132,7 @@ class LoginState extends RoutedState {
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
         }).then(() => mainState.saveUser());
-    }
+    };
 
     @action loginCached = (data) => {
         const user = new User();
@@ -142,7 +142,7 @@ class LoginState extends RoutedState {
         return new Promise(resolve => {
             when(() => socket.connected, () => resolve(this._login(user)));
         });
-    }
+    };
 
     async restart() {
         await RNRestart.Restart();

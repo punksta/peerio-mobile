@@ -74,7 +74,7 @@ export default class TextBox extends SafeComponent {
         this._callState(`OnBlur`);
         uiState.focusedTextBox = null;
         this.focused = false;
-    }
+    };
 
     changeText = (text) => {
         console.log('textbox.js: changeText');
@@ -90,7 +90,7 @@ export default class TextBox extends SafeComponent {
         }
         this._callState(`OnChange`, tx);
         this.props.onChangeText && this.props.onChangeText(this.props.name, tx);
-    }
+    };
 
     focus = () => {
         console.log('textbox.js: focus');
@@ -99,7 +99,7 @@ export default class TextBox extends SafeComponent {
         uiState.focusedTextBox = this.textinput;
         this.focused = true;
         requestAnimationFrame(() => this.textinput.focus());
-    }
+    };
 
 
     onSelectionChange = ({ nativeEvent: { selection: { start, end } } }) => {
@@ -109,14 +109,14 @@ export default class TextBox extends SafeComponent {
         }
         this.start = start;
         this.end = end;
-    }
+    };
 
     toggleSecret = () => {
         // we don't give user the ability to hide passphrase again, because Apple
         this.showSecret = !this.showSecret;
         // prevent cursor skip
         if (this.value && Platform.OS === 'android') this._skip = true;
-    }
+    };
 
     submit = () => {
         const s = this.props.state;
@@ -130,7 +130,7 @@ export default class TextBox extends SafeComponent {
         // we hope that other textbox actually added "focus" handler
         const focuser = s.focus[nextField];
         focuser && focuser();
-    }
+    };
 
     get validationControl() {
         return !this.valid ? (
@@ -183,7 +183,7 @@ export default class TextBox extends SafeComponent {
             this.offsetY = pageY;
             this.offsetHeight = frameHeight;
         });
-    }
+    };
 
     renderThrow() {
         // console.log('re-render');

@@ -8,7 +8,7 @@ export default class SignupAvatarActionSheet extends Component {
     saveAvatar = (buffers, base64File) => {
         signupState.avatarBuffers = buffers;
         signupState.avatarData = base64File;
-    }
+    };
 
     show = () => this._actionSheet.show();
 

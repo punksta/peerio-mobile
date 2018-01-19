@@ -103,7 +103,7 @@ export default class LoadingScreen extends Component {
         this.loadingStep++;
         this.growIcon(); // Restarts animation
         this.iconState = this.currentState;
-    }
+    };
 
     @computed get currentState() {
         const result = {};
@@ -166,7 +166,7 @@ export default class LoadingScreen extends Component {
                 />}
             </View>
         );
-    }
+    };
 
     render() {
         const container = {

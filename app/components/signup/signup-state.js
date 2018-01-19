@@ -48,7 +48,7 @@ class SignupState extends RoutedState {
         this.current = 0;
         this.resetValidationState();
         this.routes.app.loginStart();
-    }
+    };
 
     @action reset() { this.current = 0; }
 

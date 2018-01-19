@@ -189,7 +189,7 @@ export default class ContactSelectorDM extends SafeComponent {
                     this.props.action([item]);
                 }} />
         );
-    }
+    };
 
     searchUserTimeout(username) {
         if (this._searchTimeout) {

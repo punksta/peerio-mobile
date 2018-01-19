@@ -11,7 +11,7 @@ const state = preferenceStore.prefs;
 export default class PreferenceToggleItem extends SafeComponent {
     toggle = () => {
         state[this.props.property] = !state[this.props.property];
-    }
+    };
 
     renderThrow() {
         return (

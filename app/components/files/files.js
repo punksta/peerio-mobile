@@ -53,9 +53,9 @@ export default class Files extends SafeComponent {
     }
 
     @observable dataSource = null;
-    @observable refreshing = false
+    @observable refreshing = false;
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
-    actionsHeight = new Animated.Value(0)
+    actionsHeight = new Animated.Value(0);
 
     get data() {
         return fileState.store.currentFilter ?
@@ -90,7 +90,7 @@ export default class Files extends SafeComponent {
         }, true);
     }
 
-    onChangeFolder = folder => { fileState.currentFolder = folder; }
+    onChangeFolder = folder => { fileState.currentFolder = folder; };
 
     item = file => {
         return (
@@ -100,12 +100,12 @@ export default class Files extends SafeComponent {
                 onChangeFolder={this.onChangeFolder}
                 onLongPress={() => this._folderActionSheet.show(file)} />
         );
-    }
+    };
 
     onEndReached = () => {
         // console.log('files.js: on end reached');
         this.maxLoadedIndex += PAGE_SIZE;
-    }
+    };
 
     listView() {
         return (

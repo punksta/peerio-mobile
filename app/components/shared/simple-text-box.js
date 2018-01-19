@@ -13,12 +13,12 @@ export default class SimpleTextBox extends SafeComponent {
     onBlur = () => {
         uiState.focusedTextBox = null;
         if (this.props.onBlur) this.props.onBlur();
-    }
+    };
 
     onFocus = () => {
         uiState.focusedTextBox = this._ref;
         if (this.props.onFocus) this.props.onBlur();
-    }
+    };
 
     onLayout = () => {
         if (!this._ref.offsetY) {
@@ -27,7 +27,7 @@ export default class SimpleTextBox extends SafeComponent {
                 this._ref.offsetHeight = frameHeight;
             });
         }
-    }
+    };
 
     renderThrow() {
         return (

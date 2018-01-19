@@ -13,7 +13,7 @@ export default class ContactItem extends SafeComponent {
         if (onPress) return this.props.onPress();
         if (contact.username) return contactState.routerMain.contacts(contact);
         return false;
-    }
+    };
 
     renderThrow() {
         const { contact } = this.props;

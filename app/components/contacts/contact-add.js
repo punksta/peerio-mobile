@@ -91,7 +91,7 @@ export default class ContactAdd extends SafeComponent {
 
     onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
         uiState.currentScrollViewPosition = y;
-    }
+    };
 
     inviteContactDuck(toInvite) {
         if (!toInvite) return null;

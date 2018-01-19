@@ -33,7 +33,7 @@ export default class ChatList extends SafeComponent {
     }
 
     @observable dataSource = null;
-    @observable refreshing = false
+    @observable refreshing = false;
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
     @observable collapsible = true;
 
@@ -87,7 +87,7 @@ export default class ChatList extends SafeComponent {
             ...i('dummy', <View />)
         };
         return data && data.length ? titles[key] : null;
-    }
+    };
 
     item = (chat) => {
         if (!chat.id) return null;
@@ -102,12 +102,12 @@ export default class ChatList extends SafeComponent {
             return <ChannelListItem chat={chat} />;
         }
         return <ChatListItem key={chat.id} chat={chat} />;
-    }
+    };
 
     onEndReached = () => {
         console.log('chat-list.js: on end reached');
         this.maxLoadedIndex += PAGE_SIZE;
-    }
+    };
 
     listView() {
         if (chatState.routerMain.currentIndex !== 0) return null;

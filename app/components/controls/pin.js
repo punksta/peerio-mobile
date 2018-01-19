@@ -53,7 +53,7 @@ export default class Pin extends SafeComponent {
         this.isConfirm = true;
         this.message = '';
         this.subTitle = t('title_PINConfirm');
-    }
+    };
 
     error(msg) {
         this.isConfirm = false;

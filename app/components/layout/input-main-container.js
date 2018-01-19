@@ -17,7 +17,7 @@ export default class InputMainContainer extends SafeComponent {
             return;
         }
         chatState.addMessage(message);
-    }
+    };
 
     sendAck = () => chatState.addAck();
 

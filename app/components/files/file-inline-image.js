@@ -117,7 +117,7 @@ export default class FileInlineImage extends SafeComponent {
         this.loadImage = true;
         const { url, fileId } = this.props.image;
         forceShowMap.set(url || fileId, true);
-    }
+    };
 
     fetchSize() {
         const { cachedImage } = this;
@@ -137,7 +137,7 @@ export default class FileInlineImage extends SafeComponent {
 
     layout = (evt) => {
         this.optimalContentWidth = evt.nativeEvent.layout.width - this.outerPadding * 2 - 2;
-    }
+    };
 
     get displayTooBigImageOffer() {
         const outer = {
