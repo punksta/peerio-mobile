@@ -86,6 +86,7 @@ const vars = {
     snackbarBgGreen: '#38CE86',
     snackbarHeight: 48,
     popupMinHeight: scaleDim(110),
+    settingsItemHeight: 56,
     settingsBg: 'rgba(0, 0, 0, 0.06)',
     headerBorderColor: 'rgba(0,0,0,.06)',
     gold: '#ffd700',

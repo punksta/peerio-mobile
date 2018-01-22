@@ -15,8 +15,13 @@ const itemContainerStyle = {
     backgroundColor: 'white',
     paddingLeft: vars.spacing.small.maxi2x,
     marginBottom: vars.spacing.small.mini,
-    minHeight: vars.iconLayoutSize,
+    minHeight: vars.settingsItemHeight,
     borderRadius: 4
+};
+
+const descriptionStyle = {
+    color: vars.txtLightGrey,
+    fontSize: vars.font.size.smaller
 };
 
 @observer
@@ -33,6 +38,10 @@ export default class SettingsItem extends SafeComponent {
     }
 
     renderThrow() {
+        const titleStyle = {
+            color: this.props.disabled ? vars.txtLightGrey : vars.txtDark,
+            fontSize: vars.font.size.bigger
+        };
         const offset = vars.retentionOffset;
         return (
             <TouchableOpacity
@@ -42,10 +51,10 @@ export default class SettingsItem extends SafeComponent {
                 onPress={() => !this.props.untappable && !this.props.disabled && this.press()}>
                 <View style={[itemContainerStyle]} pointerEvents={this.props.untappable ? undefined : 'none'}>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
-                        <Text style={{ color: this.props.disabled ? vars.txtLightGrey : vars.txtDark }}>
+                        <Text style={titleStyle}>
                             {t(this.props.title)}
                         </Text>
-                        {!!this.props.description && <Text style={{ color: vars.txtLightGrey, fontSize: vars.font.size.smaller }}>
+                        {!!this.props.description && <Text style={descriptionStyle}>
                             {this.props.description}
                         </Text>}
                     </View>
