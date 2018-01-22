@@ -1,6 +1,6 @@
 const Page = require('../page');
 
-class LoginStartPage extends Page {
+class StartPage extends Page {
     get createAccountButton() {
         return this.getWhenVisible('~button_CreateAccount');
     }
@@ -10,4 +10,4 @@ class LoginStartPage extends Page {
     }
 }
 
-module.exports = LoginStartPage;
+module.exports = StartPage;

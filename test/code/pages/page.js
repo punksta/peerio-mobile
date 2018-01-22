@@ -26,6 +26,7 @@ class Page {
     getWhenVisible(selector) {
         return this.app
             .waitForExist(selector)
+            .waitForVisible(selector)
             .element(selector);
     }
 
@@ -35,6 +36,15 @@ class Page {
             .waitForExist(selector)
             .waitForEnabled(selector)
             .element(selector);
+    }
+
+    // Get a ref to an element and search inside it
+    getElementInContainer(container, element) {
+        return this.app
+            .waitForExist(container)
+            .waitForVisible(container)
+            .element(container)
+            .element(element);
     }
 }
 

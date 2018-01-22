@@ -37,7 +37,11 @@ export default class ChatList extends SafeComponent {
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
     @observable collapsible = true;
 
-    get rightIcon() { return <PlusBorderIcon action={() => actionSheet.show()} />; }
+    get rightIcon() {
+        return (<PlusBorderIcon
+            action={() => actionSheet.show()}
+            testID="buttonCreateNewChat" />);
+    }
 
     get data() {
         return chatState.store.chats;

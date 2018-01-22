@@ -3,6 +3,7 @@ import { TouchableOpacity, View, Text, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Jumpy from '../shared/jumpy';
 import { vars } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 const goStyle = {
     fontSize: vars.font.size.normal,
@@ -17,11 +18,12 @@ const disabledStyle = {
 };
 
 const icons = {
-    basic(name, color, onPress, style, size, noPadding) {
+    basic(name, color, onPress, style, size, noPadding, testID) {
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
-                onPress={onPress}>
+                onPress={onPress}
+                {...testLabel(testID)}>
                 <View style={{ padding: noPadding ? 0 : vars.iconPadding }}>
                     <Icon
                         style={style}
@@ -33,12 +35,13 @@ const icons = {
         );
     },
 
-    plain(name, size, color) {
+    plain(name, size, color, testID) {
         return (
             <Icon
                 name={name}
                 size={size || vars.iconSize}
-                color={color} />
+                color={color}
+                {...testLabel(testID)} />
         );
     },
 
@@ -54,7 +57,7 @@ const icons = {
         return icons.plain(name, size, vars.whiteIcon);
     },
 
-    white(name, onPress, style, size) {
+    white(name, onPress, style, size, testID) {
         return icons.basic(name, vars.whiteIcon, onPress, style, size);
     },
 
@@ -93,12 +96,13 @@ const icons = {
         );
     },
 
-    text(text, onPress, style) {
+    text(text, onPress, style, testID) {
         const size = vars.iconPadding * 2 + vars.iconSize;
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
-                onPress={onPress}>
+                onPress={onPress}
+                {...testLabel(testID)}>
                 <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={[goStyle, style]}>{text}</Text>
                 </View>
@@ -159,7 +163,7 @@ const icons = {
             <TouchableOpacity
                 style={{ padding, opacity: vars.sublteGrayOpacity }}
                 onPress={onPress}
-                pressRetentionOffset={vars.retentionOffset}>
+                pressRetentionOffset={vars.retentionOffset} >
                 <Image style={{ width, height }} source={source} />
             </TouchableOpacity>
         );

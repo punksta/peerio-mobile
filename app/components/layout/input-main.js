@@ -9,6 +9,7 @@ import AutoExpandingTextInput from '../controls/auto-expanding-textinput';
 import { inputMain, vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { uiState, chatState } from '../states';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class InputMain extends SafeComponent {
@@ -72,9 +73,11 @@ export default class InputMain extends SafeComponent {
                         maxHeight={146}
                         style={tiStyle}
                         ref={ref => { this.input = ref; }}
+                        {...testLabel('textInputMessage')}
                     />
                 </View>
                 <TouchableOpacity
+                    {...testLabel('buttonSendMessage')}
                     pressRetentionOffset={vars.pressRetentionOffset}
                     onPress={this.send}
                     style={{ padding: vars.iconSizeSmall }}>

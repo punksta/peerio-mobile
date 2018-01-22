@@ -4,6 +4,7 @@ import { View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class HeaderIconBase extends SafeComponent {
@@ -13,7 +14,11 @@ export default class HeaderIconBase extends SafeComponent {
     renderThrow() {
         return (
             <View style={[{ flex: 0, opacity: this.disabled ? 0.5 : 1 }, this.style]}>
-                <TouchableOpacity onPress={this.disabled ? null : this.action} activeOpacity={this.disabled ? 0.5 : 1}>
+                <TouchableOpacity
+                    onPress={this.disabled ? null : this.action}
+                    activeOpacity={this.disabled ? 0.5 : 1}
+                    {...testLabel(this.props.testID)}
+                >
                     <View style={[{
                         alignItems: 'center',
                         backgroundColor: 'transparent',

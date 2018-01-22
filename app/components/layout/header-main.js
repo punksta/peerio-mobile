@@ -13,7 +13,7 @@ export default class HeaderMain extends SafeComponent {
         let leftIcon = this.props.leftIcon || null;
         const rightIcon = this.props.rightIcon || null;
         if (routerMain.isBackVisible) {
-            leftIcon = <BackIcon />;
+            leftIcon = <BackIcon testID="buttonChatBack" />;
         }
         const textStyle = {
             flex: 1,
@@ -37,31 +37,43 @@ export default class HeaderMain extends SafeComponent {
             paddingTop: vars.statusBarHeight,
             minHeight: vars.headerHeight
         };
+        const actionContainerStyle = {
+            flex: 1,
+            flexGrow: 1,
+            flexShrink: 1,
+            flexDirection: 'row',
+            alignItems: 'center'
+        };
         const { titleAction } = routerMain;
         const iconPlaceHolderWidth = (32 + vars.iconSize);
         const paddingRight = !rightIcon && leftIcon ? iconPlaceHolderWidth : 0;
         const paddingLeft = rightIcon && !leftIcon ? iconPlaceHolderWidth : 0;
         const header = (
-            <TouchableOpacity activeOpacity={titleAction ? 0.2 : 1} onPress={titleAction}
-                pressRetentionOffset={vars.retentionOffset}>
+            <View>
                 <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
                     <View style={{ flex: 0 }}>
                         {leftIcon}
                     </View>
-                    <Text
-                        ellipsizeMode="middle"
-                        numberOfLines={1}
-                        style={[textStyle, { paddingRight, paddingLeft }]}>
-                        {this.props.title || routerMain.title}
-                        {titleAction && <Text style={{ fontSize: vars.font.size.normal }}>
-                            {'  ▼  '}
-                        </Text>}
-                    </Text>
+                    <TouchableOpacity
+                        style={actionContainerStyle}
+                        activeOpacity={titleAction ? 0.2 : 1}
+                        onPress={titleAction}
+                        pressRetentionOffset={vars.retentionOffset}>
+                        <Text
+                            ellipsizeMode="middle"
+                            numberOfLines={1}
+                            style={[textStyle, { paddingRight, paddingLeft }]}>
+                            {this.props.title || routerMain.title}
+                            {titleAction && <Text style={{ fontSize: vars.font.size.normal }}>
+                                {'  ▼  '}
+                            </Text>}
+                        </Text>
+                    </TouchableOpacity>
                     <View style={{ flex: 0 }}>
                         {rightIcon}
                     </View>
                 </View>
-            </TouchableOpacity>
+            </View>
         );
         return gradient({
             paddingTop: vars.statusBarHeight,

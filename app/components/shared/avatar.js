@@ -20,6 +20,7 @@ import { tx } from '../utils/translator';
 import preferenceStore from '../settings/preference-store';
 import { popupSetupVideo } from '../shared/popups';
 import CircleButtonWithIcon from '../controls/circle-button-with-icon';
+import testLabel from '../helpers/test-label';
 
 const pinOn = require('../../assets/chat/icon-pin.png');
 
@@ -496,6 +497,7 @@ export default class Avatar extends SafeComponent {
         const opacity = this.props.sending ? 0.5 : 1;
         const activeOpacity = this.props.noTap && !this.props.error && !this.props.sendError ?
             1 : 0.2;
+        const testID = this.props.contact.username; // May not cover all cases
         return (
             <View style={{ backgroundColor: vars.bgHighlight }} ref={ref => { this._ref = ref; }}>
                 <TouchableOpacity
@@ -503,7 +505,8 @@ export default class Avatar extends SafeComponent {
                     onPress={this.onPressAll}
                     activeOpacity={activeOpacity}
                     style={{ backgroundColor: vars.white }}
-                    onLayout={this.props.onLayout}>
+                    onLayout={this.props.onLayout}
+                    {...testLabel(testID)}>
                     {this.firstOfTheDay}
                     <View style={{ opacity }}>
                         {inner}

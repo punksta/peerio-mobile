@@ -89,4 +89,4 @@ done
 check "appium launched"
 
 cucumberjs test/spec -r test/code -f node_modules/cucumber-pretty --world-parameters "{\"platform\": \"ios\"}"
-# cucumberjs test/spec -r test/code -f node_modules/cucumber-pretty --world-parameters "{\"platform\": \"android\"}"
+cucumberjs test/spec -r test/code -f node_modules/cucumber-pretty --world-parameters "{\"platform\": \"android\"}"

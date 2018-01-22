@@ -1,69 +1,45 @@
 const { defineSupportCode } = require('cucumber');
 
-defineSupportCode(function ({ Given, When, Then }) {
-    let username;
-    let passphrase;
+defineSupportCode(({ Given, When, Then }) => {
+    const existingUsers = {
+        create_dm_test: {
+            name: process.env.CREATE_DM_TEST_USER,
+            passphrase: process.env.CREATE_DM_TEST_PASS
+        },
+        room_test: {
+            name: process.env.CREATE_ROOM_TEST_USER,
+            passphrase: process.env.CREATE_ROOM_TEST_PASS
+        }
+    };
 
     // Scenario: User signs up successfully
-    async function selectCreateAccount(that) {
-        await that.alertsPage.dismissNotificationsAlert();
-        await that.loginStartPage.createAccountButton.click();
-    }
     When('I choose the create account option', function () {
-        return selectCreateAccount(this);
+        return this.selectCreateAccount();
     });
 
-    async function typePersonalInfo(that) {
-        username = new Date().getTime();
-        console.log('Creating account with username', username);
-
-        await that.createAccountPage.firstName.setValue('test-first-name').hideDeviceKeyboard();
-        await that.createAccountPage.lastName.setValue('test-last-name').hideDeviceKeyboard();
-        await that.createAccountPage.username.setValue(username).hideDeviceKeyboard();
-        await that.createAccountPage.email.setValue('test@email.io').hideDeviceKeyboard();
-        await that.createAccountPage.nextButton.click();
-    }
     When('I input my personal info', async function () {
-        await typePersonalInfo(this);
+        await this.typePersonalInfo();
     });
 
-    async function savePasscode(that) {
-        await that.createAccountPage.passphrase.getText().then(innerText => {
-            passphrase = innerText;
-        });
-        console.log('Creating account with passphrase', passphrase);
-        await that.createAccountPage.nextButton.click();
-    }
     Then('I am presented with my passcode', async function () {
-        await savePasscode(this);
+        await this.savePasscode();
     });
 
-    async function confirmSavingPasscode(that) {
-        await that.createAccountPage.confirmInput.setValue('I have saved my account key').hideDeviceKeyboard();
-        await that.createAccountPage.finishButton.click();
-    }
     Then('I confirm that I saved my passcode', async function () {
-        await confirmSavingPasscode(this);
+        await this.confirmSavingPasscode();
     });
 
     Then('I am taken to the Login Start screen', async function () {
-        await this.loginStartPage.loginButton;
+        await this.startPage.loginButton;
     });
 
-    async function seeWelcomeScreen(that) {
-        await that.homePage.chatsTab.isExisting();
-    }
     Then('I am taken to the home tab', function () {
-        return seeWelcomeScreen(this);
+        return this.seeWelcomeScreen();
     });
 
     // Scenario: Autologin
     Given('I have signed up', async function () {
-        await selectCreateAccount(this);
-        await typePersonalInfo(this);
-        await savePasscode(this);
-        await confirmSavingPasscode(this);
-        await seeWelcomeScreen(this);
+        await this.createNewAccount();
     });
 
     Given('I close Peerio', async function () {
@@ -82,9 +58,16 @@ defineSupportCode(function ({ Given, When, Then }) {
     });
 
     When('I sign in', async function () {
-        await this.createAccountPage.loginButton.click();
-        await this.loginPage.username.setValue(username).hideDeviceKeyboard();
-        await this.loginPage.passphrase.setValue(passphrase).hideDeviceKeyboard();
-        await this.loginPage.submitButton.click();
+        await this.loginExistingAccount(this.username, this.passphrase);
+    });
+
+    When('I log in as {word} user', async function (string) {
+        if (string === 'new') {
+            await this.createNewAccount();
+        } else {
+            const credentials = existingUsers[string];
+            await this.loginExistingAccount(credentials.name, credentials.passphrase);
+        }
     });
 });
+

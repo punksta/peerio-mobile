@@ -21,6 +21,7 @@ import { vars } from '../../styles/styles';
 import contactState from './contact-state';
 import snackbarState from '../snackbars/snackbar-state';
 import ContactCollection from './contact-collection';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class ContactSelector extends SafeComponent {
@@ -179,7 +180,8 @@ export default class ContactSelector extends SafeComponent {
                         autoCorrect={false}
                         placeholder={tx(this.props.inputPlaceholder)}
                         ref={ti => { this.textInput = ti; }}
-                        style={placeholderStyle} />
+                        style={placeholderStyle}
+                        {...testLabel('textInputContactSearch')} />
                     {rightIcon}
                 </View>
                 <Text style={bottomTextStyle}>{tx('title_searchByUsernameOrEmail')}</Text>
@@ -333,7 +335,10 @@ export default class ContactSelector extends SafeComponent {
         const legacy = this.legacyContact;
         const legacyControl = legacy ? <ContactLegacyItem noBorderBottom contact={legacy} /> : null;
         return (
-            <View style={{ marginHorizontal: vars.spacing.medium.maxi }}>
+            <View
+                {...testLabel('foundContacts')}
+                accessible={false}
+                style={{ marginHorizontal: vars.spacing.medium.maxi }}>
                 {this.sectionHeader()}
                 {inviteControl}
                 {legacyControl}

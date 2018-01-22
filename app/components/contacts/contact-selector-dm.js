@@ -18,6 +18,7 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import contactState from './contact-state';
 import ContactCollection from './contact-collection';
+import testLabel from '../helpers/test-label';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -109,7 +110,8 @@ export default class ContactSelectorDM extends SafeComponent {
                     autoCorrect={false}
                     placeholder={tx('title_searchByUsernameOrEmail')}
                     ref={ti => { this.textInput = ti; }}
-                    style={style} />
+                    style={style}
+                    {...testLabel('textInputContactSearch')} />
                 {rightIcon}
             </View>
         );
@@ -228,6 +230,8 @@ export default class ContactSelectorDM extends SafeComponent {
     get listView() {
         return (
             <SectionList
+                {...testLabel('foundContacts')}
+                accessible={false}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 sections={this.dataSource}
                 keyExtractor={item => item.username || item.email}
