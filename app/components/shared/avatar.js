@@ -497,7 +497,7 @@ export default class Avatar extends SafeComponent {
         const opacity = this.props.sending ? 0.5 : 1;
         const activeOpacity = this.props.noTap && !this.props.error && !this.props.sendError ?
             1 : 0.2;
-        const testID = this.props.contact.username; // May not cover all cases
+        const testID = this.props.contact ? this.props.contact.username : null; // May not cover all cases
         return (
             <View style={{ backgroundColor: vars.bgHighlight }} ref={ref => { this._ref = ref; }}>
                 <TouchableOpacity
