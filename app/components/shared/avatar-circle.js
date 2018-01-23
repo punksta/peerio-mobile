@@ -12,12 +12,6 @@ const avatarDiameter = 36;
 
 @observer
 export default class AvatarCircle extends SafeComponent {
-    @observable avatarLoaded;
-
-    @action.bound handleOnLoad() {
-        this.avatarLoaded = true;
-    }
-
     renderThrow() {
         const { large, medium, contact, loading, invited } = this.props;
         let ratio = 1;
@@ -62,13 +56,12 @@ export default class AvatarCircle extends SafeComponent {
             }
             if (contact.hasAvatar) {
                 const uri = (large || medium) ? contact.largeAvatarUrl : contact.mediumAvatarUrl;
-                const opacity = this.avatarLoaded ? 1 : 0;
+                // image is absolute positioned so that it doesn't jump over letter when it loads
                 avatarIcon = (
                     <Image
                         source={{ uri, cache: 'force-cache' }}
                         key={uri}
-                        style={[avatarStyle, { opacity }]}
-                        onLoad={this.handleOnLoad}
+                        style={[avatarStyle, { position: 'absolute' }]}
                     />
                 );
             }
@@ -78,9 +71,9 @@ export default class AvatarCircle extends SafeComponent {
             <View style={{ borderWidth: 0, borderColor: 'green' }}>
                 {/* if we don't have contact specified, show group icon */}
                 {!contact && groupIcon}
-                {avatarIcon}
                 {/* show letter if there's no avatar or it hasn't loaded yet */}
-                {contact && (!avatarIcon || !this.avatarLoaded) && avatarLetter}
+                {contact && avatarLetter}
+                {avatarIcon}
                 <ErrorCircle large={this.props.large} visible={tofuError} />
             </View>
         );
