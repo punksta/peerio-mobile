@@ -12,6 +12,7 @@ class FileState extends RoutedState {
     @observable currentFile = null;
     @observable currentFolder = null;
     @observable previewFile = null;
+    @observable findFilesText;
     localFileMap = observable.map();
     store = fileStore;
     _prefix = 'files';

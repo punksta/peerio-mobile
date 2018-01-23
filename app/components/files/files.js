@@ -135,11 +135,11 @@ export default class Files extends SafeComponent {
     onChangeFindFilesText(text) {
         const items = text.split(/[ ,;]/);
         if (items.length > 1) {
-            this.findFilesText = items[0].trim();
+            fileState.findFilesText = items[0].trim();
             this.onSubmit();
             return;
         }
-        this.findFilesText = text;
+        fileState.findFilesText = text;
         this.searchFileTimeout(text);
     }
 
@@ -194,9 +194,9 @@ export default class Files extends SafeComponent {
         const leftIcon = icons.plain('search', vars.iconSize, vars.txtDate);
 
         let rightIcon = null;
-        if (this.findFilesText) {
+        if (fileState.findFilesText) {
             rightIcon = icons.iconImage(iconClear, () => {
-                this.findFilesText = '';
+                fileState.findFilesText = '';
                 this.onChangeFindFilesText('');
             });
         }
@@ -207,7 +207,7 @@ export default class Files extends SafeComponent {
                     {leftIcon}
                     <TextInput
                         underlineColorAndroid="transparent"
-                        value={this.findFilesText}
+                        value={fileState.findFilesText}
                         returnKeyType="done"
                         onSubmitEditing={this.onSubmit}
                         onChangeText={text => { this.clean = !text.length; this.onChangeFindFilesText(text); }}
@@ -224,7 +224,7 @@ export default class Files extends SafeComponent {
 
     body() {
         if (this.data.length || !fileState.currentFolder.isRoot) return this.listView();
-        if (!this.data.length && this.findFilesText && !fileState.store.loading) {
+        if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
             return (
                 <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
                     {tx('title_noFilesMatchSearch')}
