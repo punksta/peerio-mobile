@@ -10,6 +10,7 @@ import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
 import ChatActionSheet from './chat-action-sheet';
 import InlineImageActionSheet from '../files/inline-image-action-sheet';
+import InlineFileActionSheet from '../files/inline-file-action-sheet';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
@@ -83,6 +84,7 @@ export default class Chat extends SafeComponent {
             key, this._itemActionMap, () => ({
                 ref: ref => { this._refs[key] = ref; },
                 onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
+                onInlineFileAction: file => this._inlineFileActionSheet.show(file, item, this.chat),
                 onRetryCancel: () => this._actionSheet.show(item, this.chat)
             }));
         return (
@@ -310,6 +312,7 @@ export default class Chat extends SafeComponent {
                 <ProgressOverlay enabled={chatState.loading || !this.initialScrollDone} />
                 <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
                 <InlineImageActionSheet ref={sheet => { this._inlineImageActionSheet = sheet; }} />
+                <InlineFileActionSheet ref={sheet => { this._inlineFileActionSheet = sheet; }} />
             </View>
         );
     }
