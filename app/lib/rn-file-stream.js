@@ -15,7 +15,7 @@ function getTemporaryDirectory() {
 
 export default (fileStream) => {
     class RNFileStream extends fileStream {
-        open() {
+        async open() {
             if (this.mode === 'read') {
                 this.fileDescriptor = this.filePath; // read stream doesn't really have descriptor
                 return RNFS.stat(this.filePath)
@@ -24,7 +24,11 @@ export default (fileStream) => {
                         return this;
                     });
             }
-            RNFS.mkdir(pathUtils.dirname(this.filePath));
+            // delete existing file if it is write mode
+            if (this.mode === 'write') {
+                if (await RNFileStream.exists(this.filePath)) await RNFileStream.delete(this.filePath);
+            }
+            await RNFS.mkdir(pathUtils.dirname(this.filePath));
             this.fileDescriptor = this.filePath;
             return Promise.resolve(this);
         }
