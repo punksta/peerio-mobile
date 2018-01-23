@@ -2,7 +2,7 @@ import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
 import chatState from '../messaging/chat-state';
 import RoutedState from '../routes/routed-state';
-import { fileStore, TinyDb, socket, fileHelpers, clientApp } from '../../lib/icebear';
+import { fileStore, TinyDb, socket, fileHelpers, clientApp, chatStore } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { popupInput, popupYesCancel } from '../shared/popups';
@@ -12,6 +12,7 @@ class FileState extends RoutedState {
     @observable currentFile = null;
     @observable currentFolder = null;
     @observable previewFile = null;
+    @observable isFileSelectionMode = null;
     @observable findFilesText;
     localFileMap = observable.map();
     store = fileStore;
@@ -99,25 +100,28 @@ class FileState extends RoutedState {
 
     @action selectFiles() {
         this.resetSelection();
+        this.isFileSelectionMode = true;
         return new Promise((resolve, reject) => {
             this.resolveFileSelection = resolve;
             this.rejectFileSelection = reject;
-            this.routerModal.selectFiles();
+            this.routerMain.files();
         });
     }
 
-    @action exitSelectFiles() {
+    // TODO modify after router push logic is implemented
+    @action exitFileSelect() {
         this.resetSelection();
-        this.routerModal.discard();
+        this.isFileSelectionMode = false;
+        this.routerMain.chats(chatStore.activeChat);
         this.rejectFileSelection && this.rejectFileSelection(new Error(`file-state.js: user cancel`));
         this.rejectFileSelection = null;
     }
 
-    @action submitSelectFiles(files) {
-        this.resolveFileSelection(files || this.selected.slice());
+    @action submitSelectedFiles() {
+        this.resolveFileSelection(this.selected.slice());
         this.resolveFileSelection = null;
-        this.resetSelection();
-        this.routerModal.discard();
+        this.isFileSelectionMode = false;
+        this.exitFileSelect();
     }
 
     renamePostProcessing = async ({ file, fileName, ext }) => {

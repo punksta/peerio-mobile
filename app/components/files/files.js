@@ -15,6 +15,7 @@ import BackIcon from '../layout/back-icon';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import icons from '../helpers/icons';
+import ButtonText from '../controls/button-text';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -44,7 +45,7 @@ export default class Files extends SafeComponent {
     }
 
     get rightIcon() {
-        return <PlusBorderIcon action={() => filesActionSheet.show()} />;
+        return !fileState.isFileSelectionMode && <PlusBorderIcon action={() => filesActionSheet.show()} />;
     }
 
     get layoutTitle() {
@@ -69,12 +70,6 @@ export default class Files extends SafeComponent {
     }
 
     componentDidMount() {
-        reaction(() => fileState.showSelection, v => {
-            const duration = 200;
-            const toValue = v ? 56 : 0;
-            Animated.timing(this.actionsHeight, { toValue, duration }).start();
-        });
-
         this.reaction = reaction(() => [
             fileState.routerMain.route === 'files',
             fileState.routerMain.currentIndex === 0,
@@ -222,6 +217,53 @@ export default class Files extends SafeComponent {
         );
     }
 
+    toolbar() {
+        const container = {
+            height: vars.listItemHeight,
+            backgroundColor: vars.white,
+            flex: 1,
+            flexGrow: 1,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            shadowColor: '#000000',
+            shadowOpacity: 0.25,
+            shadowRadius: 8,
+            shadowOffset: {
+                height: 1,
+                width: 1
+            },
+            elevation: 10,
+            paddingRight: vars.spacing.small.midi2x
+        };
+        return (
+            fileState.isFileSelectionMode && <View style={container}>
+                <ButtonText
+                    testID="fileShareButtonCancel"
+                    onPress={this.handleExit}
+                    secondary
+                    text={tx('button_cancel')} />
+                <ButtonText
+                    testID="fileShareButtonShare"
+                    onPress={this.submitSelection}
+                    text={tx('button_share')}
+                    disabled={!fileState.showSelection} />
+            </View>
+        );
+    }
+
+    handleExit() {
+        fileState.exitFileSelect();
+    }
+
+    submitSelection() {
+        fileState.submitSelectedFiles();
+    }
+
     body() {
         if (this.data.length || !fileState.currentFolder.isRoot) return this.listView();
         if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
@@ -248,6 +290,7 @@ export default class Files extends SafeComponent {
                 <ProgressOverlay enabled={fileState.store.loading} />
                 <FolderActionSheet ref={ref => { this._folderActionSheet = ref; }} />
                 <FilesActionSheet createFolder ref={ref => { filesActionSheet = ref; }} />
+                {this.toolbar()}
             </View>
         );
     }

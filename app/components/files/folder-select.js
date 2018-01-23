@@ -41,12 +41,6 @@ export default class FolderSelect extends SafeComponent {
     }
 
     componentDidMount() {
-        reaction(() => fileState.showSelection, v => {
-            const duration = 200;
-            const toValue = v ? 56 : 0;
-            Animated.timing(this.actionsHeight, { toValue, duration }).start();
-        });
-
         this.reaction = reaction(() => [
             fileState.routerMain.route === 'files',
             fileState.routerMain.currentIndex === 0,

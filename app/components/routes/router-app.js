@@ -39,18 +39,7 @@ class RouterApp extends Router {
             }
             // allow to back from main state when index is 0
             if (this.route === 'main') {
-                if (routes.main.route === 'files' && !fileState.currentFolder.isRoot) {
-                    fileState.currentFolder = fileState.currentFolder.parent;
-                    return true;
-                }
-                if (routes.main.currentIndex > 0) {
-                    routes.main.back();
-                    return true;
-                } else if (routes.main.isInitialRoute) {
-                    return false;
-                }
-                routes.main.initialRoute();
-                return true;
+                return routes.main.androidBackHandler();
             }
             return false;
         });

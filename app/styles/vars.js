@@ -81,7 +81,7 @@ const vars = {
     inputBgInactiveText: 'rgba(0,0,0, .54)',
     checkboxInactive: 'rgba(0,0,0,.06)',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
-    checkboxActive: 'rgba(35, 208, 137, 1)',
+    checkboxIconActive: bg,
     snackbarBg: '#4a4a4a',
     snackbarBgGreen: '#38CE86',
     snackbarHeight: 48,
