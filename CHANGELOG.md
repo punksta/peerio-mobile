@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.244.0"></a>
+# [3.244.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.243.0...v3.244.0) (2018-01-23)
+
+
+### Bug Fixes
+
+* blank avatars when loading contacts ([#105](https://github.com/PeerioTechnologies/peerio-mobile/issues/105)) ([75ff150](https://github.com/PeerioTechnologies/peerio-mobile/commit/75ff150))
+* file share preview username ([#100](https://github.com/PeerioTechnologies/peerio-mobile/issues/100)) ([95ac443](https://github.com/PeerioTechnologies/peerio-mobile/commit/95ac443))
+* padding on share with modal [ch2519] ([025f39f](https://github.com/PeerioTechnologies/peerio-mobile/commit/025f39f))
+* settings ui [branch ch942] ([#107](https://github.com/PeerioTechnologies/peerio-mobile/issues/107)) ([78dab3e](https://github.com/PeerioTechnologies/peerio-mobile/commit/78dab3e))
+* testid shouldn't break existing code ([a1358f2](https://github.com/PeerioTechnologies/peerio-mobile/commit/a1358f2))
+
+
+
 <a name="3.243.0"></a>
 # [3.243.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.242.0...v3.243.0) (2018-01-16)
 
