@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.245.0"></a>
+# [3.245.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.244.0...v3.245.0) (2018-01-23)
+
+
+### Features
+
+* icebear v 4.5.0 ([0720d25](https://github.com/PeerioTechnologies/peerio-mobile/commit/0720d25))
+
+
+
 <a name="3.244.0"></a>
 # [3.244.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.243.0...v3.244.0) (2018-01-23)
 
