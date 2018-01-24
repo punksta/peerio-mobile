@@ -323,7 +323,6 @@ export default class ContactSelector extends SafeComponent {
 
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
-        console.log(this.props.exclude);
         const found = contactState.getFiltered(this.findUserText, this.props.exclude);
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator style={{ marginTop: vars.spacing.small.maxi }} />;
