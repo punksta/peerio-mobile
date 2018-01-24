@@ -148,6 +148,42 @@ export default class CreateChannel extends Component {
         );
     }
 
+    get firstPage() {
+        return (
+            <View style={card}>
+                {this.exitRow()}
+                {this.renderTextBox(
+                    tx('title_channelName'),
+                    tx('title_channelNamePlaceholder'),
+                    'channelName',
+                    tx('title_channelNameLimit', { maxChatNameLength: config.chat.maxChatNameLength })
+                )}
+                {this.renderTextBox(
+                    tx('title_channelTopic'),
+                    tx('title_channelTopicPlaceholder'),
+                    'channelPurpose',
+                    tx('title_channelTopicOptional')
+                )}
+            </View>
+        );
+    }
+
+    get secondPage() {
+        return this.step === 1 ? (
+            <View style={card}>
+                {this.exitRow('chooseContacts')}
+                <ContactSelector
+                    action={async contacts => {
+                        this.inProgress = true;
+                        await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
+                        chatState.routerModal.discard();
+                    }}
+                    hideHeader ref={ref => { this._contactSelector = ref; }}
+                    inputPlaceholder="title_roomParticipants" />
+            </View>
+        ) : <View style={card} />;
+    }
+
     get scrollView() {
         return (
             <ScrollView
@@ -156,32 +192,8 @@ export default class CreateChannel extends Component {
                 showsHorizontalScrollIndicator={false}
                 ref={sv => { this._scrollView = sv; }}
                 key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
-                <View style={card}>
-                    {this.exitRow()}
-                    {this.renderTextBox(
-                        tx('title_channelName'),
-                        tx('title_channelNamePlaceholder'),
-                        'channelName',
-                        tx('title_channelNameLimit', { maxChatNameLength: config.chat.maxChatNameLength })
-                    )}
-                    {this.renderTextBox(
-                        tx('title_channelTopic'),
-                        tx('title_channelTopicPlaceholder'),
-                        'channelPurpose',
-                        tx('title_channelTopicOptional')
-                    )}
-                </View>
-                <View style={card}>
-                    {this.exitRow('chooseContacts')}
-                    <ContactSelector
-                        action={async contacts => {
-                            this.inProgress = true;
-                            await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
-                            chatState.routerModal.discard();
-                        }}
-                        hideHeader ref={ref => { this._contactSelector = ref; }}
-                        inputPlaceholder="title_roomParticipants" />
-                </View>
+                {this.firstPage}
+                {this.secondPage}
             </ScrollView>
         );
     }
