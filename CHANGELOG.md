@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.247.0"></a>
+# [3.247.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.246.0...v3.247.0) (2018-01-24)
+
+
+### Bug Fixes
+
+* checkbox shouldn't have marginleft ([2a08ff7](https://github.com/PeerioTechnologies/peerio-mobile/commit/2a08ff7))
+* expand inline file width ([14536be](https://github.com/PeerioTechnologies/peerio-mobile/commit/14536be))
+* refactor create channel to not have text input clear bug ([414b9d4](https://github.com/PeerioTechnologies/peerio-mobile/commit/414b9d4))
+* room creation exit row height ([ac90123](https://github.com/PeerioTechnologies/peerio-mobile/commit/ac90123))
+
+
+
 <a name="3.246.0"></a>
 # [3.246.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.245.0...v3.246.0) (2018-01-24)
 
