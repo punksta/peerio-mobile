@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View, Text, ScrollView, Dimensions, LayoutAnimation, TextInput } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import ContactSelector from '../contacts/contact-selector';
 import { t, tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
@@ -132,14 +132,13 @@ export default class CreateChannel extends Component {
                     <Text style={titleStyle}>{tx(labelText)}</Text>
                     <TextInput
                         underlineColorAndroid="transparent"
-                        value={this.findUserText}
+                        value={this[property]}
                         returnKeyType="done"
                         blurOnSubmit
-                        onChangeText={text => { this[property] = text; }}
+                        onChangeText={action(text => { this[property] = text; })}
                         autoCapitalize="none"
                         autoCorrect={false}
                         placeholder={tx(placeholderText)}
-                        ref={ti => { this.textInput = ti; }}
                         style={placeholderStyle}
                         maxLength={config.chat.maxChatNameLength}
                         {...testLabel(testID)} />
