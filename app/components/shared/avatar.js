@@ -238,7 +238,11 @@ export default class Avatar extends SafeComponent {
     get files() {
         const { onInlineFileAction } = this.props;
         return this.props.files ?
-            this.props.files.map(file => <FileInlineProgress key={file} file={file} onAction={onInlineFileAction} />) : null;
+            this.props.files.map(file => (
+                <View>
+                    <FileInlineProgress key={file} file={file} onAction={onInlineFileAction} />
+                </View>
+            )) : null;
     }
 
     get inlineImage() {
@@ -439,8 +443,9 @@ export default class Avatar extends SafeComponent {
     }
 
     renderCollapsed() {
+        const { inlineImage, files } = this;
         const shrinkStrategy = { flexShrink: 1 };
-        if (this.props.inlineImage) shrinkStrategy.flexGrow = 1;
+        if (inlineImage || files) shrinkStrategy.flexGrow = 1;
         return (
             <View style={{ flexGrow: 1 }}>
                 <View style={[itemStyle, this.errorStyle]}>
@@ -449,8 +454,8 @@ export default class Avatar extends SafeComponent {
                         style={[this.itemContainerStyle, { paddingLeft: 74, marginRight: vars.spacing.small.maxi }, shrinkStrategy]}>
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
-                            {this.files}
-                            {this.inlineImage}
+                            {files}
+                            {inlineImage}
                             {this.message}
                             {this.systemMessage}
                             {this.retryCancel}

@@ -4,7 +4,6 @@ import { View, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
-import FileProgress from './file-progress';
 
 const outer = {
     padding: 8,
