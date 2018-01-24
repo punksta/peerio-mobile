@@ -1,10 +1,23 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import { observable } from 'mobx';
 
 const { RNKeychain } = NativeModules;
 
 class KeychainBridge {
     get hasPlugin() { return !!RNKeychain; }
+
+    async isIosPasscodeUnset() {
+        if (Platform.OS !== 'ios') return false;
+        try {
+            return !await RNKeychain.isPasscodeSet();
+        } catch (e) {
+            console.log(e.message);
+            console.log(e.code);
+            console.log(e);
+            return true;
+        }
+    }
+
     @observable available = false;
 
     load = async () => {

@@ -17,13 +17,30 @@
 RCT_EXPORT_MODULE();
 
 RCT_REMAP_METHOD(isFeatureAvailable,
-    resolver: (RCTPromiseResolveBlock)resolve
+    isFeatureAvailableResolver: (RCTPromiseResolveBlock)resolve
     rejecter:(RCTPromiseRejectBlock)reject)
 {
     dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         LAContext *context = [[LAContext alloc] init];
         NSNumber *result =
           [NSNumber numberWithBool:[context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:nil]];
+        resolve(result);
+    });
+}
+
+- (BOOL) isPasscodeSetHelper
+{
+  LAContext *context = [[LAContext alloc] init];
+  return [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil];
+}
+
+RCT_REMAP_METHOD(isPasscodeSet,
+    isPasscodeSetResolver: (RCTPromiseResolveBlock)resolve
+    rejecter:(RCTPromiseRejectBlock)reject)
+{
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSNumber *result =
+          [NSNumber numberWithBool:[self isPasscodeSetHelper]];
         resolve(result);
     });
 }
@@ -37,9 +54,10 @@ RCT_REMAP_METHOD(saveValue,
 {
     CFErrorRef error = NULL;
     BOOL bForceTouchID = [forceTouchID boolValue];
+    CFStringRef sacFlag = [self isPasscodeSetHelper] ? kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly : kSecAttrAccessibleWhenUnlocked;
     // Should be the secret invalidated when passcode is removed? If not then use kSecAttrAccessibleWhenUnlocked
     SecAccessControlRef sacObject = SecAccessControlCreateWithFlags(kCFAllocatorDefault,
-                                                kSecAttrAccessibleWhenPasscodeSetThisDeviceOnly,
+                                                sacFlag,
                                                 bForceTouchID ? kSecAccessControlTouchIDAny : 0, &error);
     if (sacObject == NULL || error != NULL) {
         NSString *errorString = [NSString stringWithFormat:@"SecItemAdd can't create sacObject: %@", error];
