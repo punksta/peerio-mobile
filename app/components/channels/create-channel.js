@@ -74,8 +74,7 @@ export default class CreateChannel extends Component {
             paddingBottom: 0,
             borderBottomWidth: 1,
             borderBottomColor: vars.headerBorderColor,
-            marginBottom: vars.spacing.medium.mini2x,
-            height: vars.inputHeight
+            marginBottom: vars.spacing.medium.mini2x
         };
         const textStyle = {
             textAlign: 'center',
@@ -143,7 +142,7 @@ export default class CreateChannel extends Component {
                         ref={ti => { this.textInput = ti; }}
                         style={placeholderStyle}
                         maxLength={config.chat.maxChatNameLength}
-                        {...testLabel(testID) } />
+                        {...testLabel(testID)} />
                 </View>
                 <Text style={bottomTextStyle}>{tx(bottomText)}</Text>
             </View>
