@@ -31,6 +31,7 @@ export default class FileInnerItem extends SafeComponent {
     }
 
     checkbox() {
+        if (!fileState.isFileSelectionMode) return null;
         const checked = this.props.file && this.props.file.selected;
         const v = vars;
         const iconColor = checked ? v.checkboxIconActive : v.checkboxIconInactive;
@@ -93,7 +94,6 @@ export default class FileInnerItem extends SafeComponent {
         }
         if (icon) icon = icons.dark(icon);
         const loadingStyle = null;
-        const marginLeft = fileState.isFileSelectionMode ? 0 : -checkBoxWidth;
         const arrow = this.props.hideArrow ? null : (
             <View style={{ flex: 0 }}>
                 {iconRight}
@@ -102,9 +102,9 @@ export default class FileInnerItem extends SafeComponent {
         return (
             <View style={{ backgroundColor: 'white' }}>
                 <TouchableOpacity onPress={action}>
-                    <View style={[fileInfoContainerStyle, { opacity, marginLeft }]}>
+                    <View style={[fileInfoContainerStyle, { opacity }]}>
                         {this.checkbox()}
-                        <View style={[itemContainerStyle, { width: width - marginLeft - checkBoxWidth }]}>
+                        <View style={[itemContainerStyle, { width }]}>
                             <View style={[loadingStyle, { flex: 0, paddingRight: vars.fileInnerItemPaddingRight }]}>
                                 {icon ||
                                     <FileTypeIcon
