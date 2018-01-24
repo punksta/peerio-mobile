@@ -238,11 +238,9 @@ export default class Avatar extends SafeComponent {
     get files() {
         const { onInlineFileAction } = this.props;
         return this.props.files ?
-            this.props.files.map(file => (
-                <View>
-                    <FileInlineProgress key={file} file={file} onAction={onInlineFileAction} />
-                </View>
-            )) : null;
+            this.props.files.map(file =>
+                <FileInlineProgress key={file} file={file} onAction={onInlineFileAction} />
+            ) : null;
     }
 
     get inlineImage() {
