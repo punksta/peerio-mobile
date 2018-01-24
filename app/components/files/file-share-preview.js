@@ -167,15 +167,33 @@ export default class FileSharePreview extends SafeComponent {
         );
     }
 
+    recipientText(text, italicText) {
+        return (
+            <Text style={recipientStyle}>
+                {text}
+                <Text style={{ fontStyle: 'italic' }}>
+                    {italicText}
+                </Text>
+            </Text>);
+    }
+
     getRecipient(state) {
         const { contact, chat } = state;
         if (contact && contact.firstName) { // Share with selected User
-            return `${contact.firstName}${contact.lastName} @${contact.username}`;
+            return this.recipientText(
+                `${contact.firstName} ${contact.lastName} `,
+                `@${contact.username}`
+            );
         } else if (!chat.isChannel) { // Share with current User
             const user = chatStore.activeChat.otherParticipants[0];
-            return `${user.fullName} @${user.username}`;
-        }
-        return `# ${chat.name}`; // Share with current Room
+            return this.recipientText(
+                `${user.fullName} `,
+                `@${user.username}`
+            );
+        } // Share with current Room
+        return this.recipientText(
+            `# ${chat.name}`
+        );
     }
 
     renderThrow() {
@@ -213,9 +231,7 @@ export default class FileSharePreview extends SafeComponent {
                         <Text style={shareTextStyle}>
                             {tx('title_shareWith')}
                         </Text>
-                        <Text style={recipientStyle}>
-                            {recipient}
-                        </Text>
+                        {recipient}
                     </View>
                     {icons.plaindark('keyboard-arrow-right')}
                 </TouchableOpacity>
