@@ -10,7 +10,6 @@ import LoginWizardPage, {
 } from './login-wizard-page';
 import { vars } from '../../styles/styles';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
-import testLabel from '../helpers/test-label';
 
 const header2 = [header, { marginBottom: vars.spacing.medium.midi2x, justifyContent: 'flex-end' }];
 

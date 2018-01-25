@@ -36,7 +36,6 @@ const bottomRowStyle = {
 @observer
 export default class Tabs extends SafeComponent {
     action(text, route, icon, bubble) {
-        const testID = `${route}-tab`;
         const color = routerMain.route === route ? vars.bg : vars.tabsFg;
         const indicator = bubble ? (
             <View style={{ position: 'absolute', right: -5, top: 0 }}>
@@ -48,8 +47,7 @@ export default class Tabs extends SafeComponent {
                 {...testLabel(icon)}
                 onPress={() => routerMain[route]()}
                 pressRetentionOffset={vars.retentionOffset}
-                style={actionCellStyle}
-                {...testLabel(testID)}>
+                style={actionCellStyle}>
                 <View pointerEvents="none" style={{ alignItems: 'center' }}>
                     {icons.plain(icon, undefined, color)}
                     <Text style={[actionTextStyle, { color }]}>{text}</Text>
