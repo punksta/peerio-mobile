@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { View, Text, TextInput, ActivityIndicator, SectionList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { when, observable } from 'mobx';
+import { when, observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
@@ -35,7 +35,7 @@ export default class ContactSelectorDM extends SafeComponent {
     @observable legacyContact = null;
     @observable notFound = null;
     @observable findUserText;
-    dataSource = [];
+    @observable foundContact = null;
 
     get inviteContact() {
         if (!this.toInvite) return null;
@@ -44,7 +44,9 @@ export default class ContactSelectorDM extends SafeComponent {
         return result && <ContactInviteItemPrompt email={this.toInvite} />;
     }
 
-    onChangeFindUserText(text) {
+    @action.bound onChangeFindUserText(text) {
+        this.clean = !text.length;
+        this.foundContact = null;
         this.toInvite = null;
         this.legacyContact = null;
         this.notFound = null;
@@ -105,7 +107,7 @@ export default class ContactSelectorDM extends SafeComponent {
                     value={this.findUserText}
                     returnKeyType="done"
                     blurOnSubmit
-                    onChangeText={text => { this.clean = !text.length; this.onChangeFindUserText(text); }}
+                    onChangeText={this.onChangeFindUserText}
                     autoCapitalize="none"
                     autoCorrect={false}
                     placeholder={tx('title_searchByUsernameOrEmail')}
@@ -155,16 +157,16 @@ export default class ContactSelectorDM extends SafeComponent {
     }
 
     async action() {
-        const { action } = this.props;
-        if (!action) return;
+        const selectorAction = this.props.action;
+        if (!selectorAction) return;
         this.inProgress = true;
-        await action(this.recipients.items);
+        await selectorAction(this.recipients.items);
         this.inProgress = false;
         this.props.onExit && this.props.onExit();
     }
 
     sectionHeader({ section: { data, key } }) {
-        if (!data || !data.length) return null;
+        if (!data || !data.length || !key) return null;
         const s = { fontWeight: 'bold', margin: vars.spacing.small.maxi };
         return (
             <Text style={s}>
@@ -223,6 +225,8 @@ export default class ContactSelectorDM extends SafeComponent {
                 } else {
                     this.notFound = username;
                 }
+            } else {
+                this.foundContact = c;
             }
         });
     }
@@ -242,9 +246,13 @@ export default class ContactSelectorDM extends SafeComponent {
     }
 
     get dataSource() {
+        const filteredContacts = contactState.getFiltered(this.findUserText).slice();
         const result = [
-            { data: contactState.getFiltered(this.findUserText).slice(), key: 'title_allYourContacts' }
+            { data: filteredContacts, key: 'title_allYourContacts' }
         ];
+        if (this.foundContact) {
+            result.unshift({ data: [this.foundContact], key: null });
+        }
         if (!this.findUserText) {
             result.push({ data: contactState.store.invitedContacts.slice(), key: 'title_allYourInvited' });
         }
