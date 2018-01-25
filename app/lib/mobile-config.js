@@ -40,6 +40,7 @@ export default (c, icebear) => {
         setTagHandler(name, tagHandlers[name]);
     }
 
+    cfg.download.parallelism = 2;
     cfg.download.maxDownloadChunkSize = 1024 * 1024;
     cfg.download.maxDecryptBufferSize = 1024 * 1024 * 2;
     cfg.upload.encryptBufferSize = 1024 * 1024;

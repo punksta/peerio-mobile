@@ -10,6 +10,7 @@ import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
 import ChatActionSheet from './chat-action-sheet';
 import InlineImageActionSheet from '../files/inline-image-action-sheet';
+import InlineFileActionSheet from '../files/inline-file-action-sheet';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
@@ -83,6 +84,7 @@ export default class Chat extends SafeComponent {
             key, this._itemActionMap, () => ({
                 ref: ref => { this._refs[key] = ref; },
                 onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
+                onInlineFileAction: file => this._inlineFileActionSheet.show(file, item, this.chat),
                 onRetryCancel: () => this._actionSheet.show(item, this.chat)
             }));
         return (
@@ -92,12 +94,12 @@ export default class Chat extends SafeComponent {
                 {...actions}
             />
         );
-    }
+    };
 
     layoutScrollView = (event) => {
         this.scrollViewHeight = event.nativeEvent.layout.height;
         this.contentSizeChanged();
-    }
+    };
 
     contentSizeChanged = async (contentWidth, contentHeight) => {
         // console.log(`chat.js: content size changed ${contentWidth}, ${contentHeight}`);
@@ -136,7 +138,7 @@ export default class Chat extends SafeComponent {
                 setTimeout(() => this.contentSizeChanged(), 1000);
             }
         }, 300);
-    }
+    };
 
     async measureItemById(id) {
         if (!id) return null;
@@ -221,7 +223,7 @@ export default class Chat extends SafeComponent {
         };
         if (this._updater) clearTimeout(this._updater);
         this._updater = setTimeout(updater, 500);
-    }
+    };
 
     listView() {
         if (chatState.loading) return null;
@@ -310,6 +312,7 @@ export default class Chat extends SafeComponent {
                 <ProgressOverlay enabled={chatState.loading || !this.initialScrollDone} />
                 <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
                 <InlineImageActionSheet ref={sheet => { this._inlineImageActionSheet = sheet; }} />
+                <InlineFileActionSheet ref={sheet => { this._inlineFileActionSheet = sheet; }} />
             </View>
         );
     }

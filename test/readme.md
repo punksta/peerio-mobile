@@ -29,6 +29,9 @@ appium
 cucumberjs test/spec -r test/code -f node_modules/cucumber-pretty --world-parameters "{\"platform\": \"android\"}"
 
 ```
+4. Certain tests need to login to existing accounts. The credentials for these accounts are found [here](https://github.com/PeerioTechnologies/internal-documentation/blob/master/frontend/e2e-account-credentials.md). Add the contents of `e2e-account-credentials.md` to the env.sh file found in your repo (Env.sh should always be ignored by git).
+
+4. Certain tests need to login to existing accounts. The credentials for these accounts are found [here](https://github.com/PeerioTechnologies/internal-documentation/blob/master/frontend/e2e-account-credentials.md). Add the contents of `e2e-account-credentials.md` to the env.sh file found in your repo (Env.sh should always be ignored by git).
 
 ## Adding new tests
 

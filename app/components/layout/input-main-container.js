@@ -17,7 +17,7 @@ export default class InputMainContainer extends SafeComponent {
             return;
         }
         chatState.addMessage(message);
-    }
+    };
 
     sendAck = () => chatState.addAck();
 
@@ -35,11 +35,10 @@ export default class InputMainContainer extends SafeComponent {
 
     renderThrow() {
         const outer = {
-            backgroundColor: '#fff'
+            backgroundColor: vars.white
         };
         const s = {
-            minHeight: 80,
-            borderTopColor: 'rgba(0, 0, 0, .12)',
+            borderTopColor: vars.lightGrayBg,
             borderTopWidth: 1
         };
         return (

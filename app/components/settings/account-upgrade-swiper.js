@@ -50,12 +50,12 @@ export default class AccountUpgradeSwiper extends Component {
 
     jumpTo = (index, skipAnimated) => {
         this._scrollView.scrollTo({ x: index * width, y: 0, animated: !skipAnimated });
-    }
+    };
 
     handleScroll = event => {
         const { x } = event.nativeEvent.contentOffset;
         this.selected = Math.round(x / width);
-    }
+    };
 
     get exitRow() {
         const s = {

@@ -2,6 +2,75 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.247.0"></a>
+# [3.247.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.246.0...v3.247.0) (2018-01-24)
+
+
+### Bug Fixes
+
+* checkbox shouldn't have marginleft ([2a08ff7](https://github.com/PeerioTechnologies/peerio-mobile/commit/2a08ff7))
+* expand inline file width ([14536be](https://github.com/PeerioTechnologies/peerio-mobile/commit/14536be))
+* refactor create channel to not have text input clear bug ([414b9d4](https://github.com/PeerioTechnologies/peerio-mobile/commit/414b9d4))
+* room creation exit row height ([ac90123](https://github.com/PeerioTechnologies/peerio-mobile/commit/ac90123))
+
+
+
+<a name="3.246.0"></a>
+# [3.246.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.245.0...v3.246.0) (2018-01-24)
+
+
+### Bug Fixes
+
+* delete partial file on restart ([c9ff4f6](https://github.com/PeerioTechnologies/peerio-mobile/commit/c9ff4f6))
+
+
+
+<a name="3.245.0"></a>
+# [3.245.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.244.0...v3.245.0) (2018-01-23)
+
+
+### Features
+
+* icebear v 4.5.0 ([0720d25](https://github.com/PeerioTechnologies/peerio-mobile/commit/0720d25))
+
+
+
+<a name="3.244.0"></a>
+# [3.244.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.243.0...v3.244.0) (2018-01-23)
+
+
+### Bug Fixes
+
+* blank avatars when loading contacts ([#105](https://github.com/PeerioTechnologies/peerio-mobile/issues/105)) ([75ff150](https://github.com/PeerioTechnologies/peerio-mobile/commit/75ff150))
+* file share preview username ([#100](https://github.com/PeerioTechnologies/peerio-mobile/issues/100)) ([95ac443](https://github.com/PeerioTechnologies/peerio-mobile/commit/95ac443))
+* padding on share with modal [ch2519] ([025f39f](https://github.com/PeerioTechnologies/peerio-mobile/commit/025f39f))
+* settings ui [branch ch942] ([#107](https://github.com/PeerioTechnologies/peerio-mobile/issues/107)) ([78dab3e](https://github.com/PeerioTechnologies/peerio-mobile/commit/78dab3e))
+* testid shouldn't break existing code ([a1358f2](https://github.com/PeerioTechnologies/peerio-mobile/commit/a1358f2))
+
+
+
+<a name="3.243.0"></a>
+# [3.243.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.242.0...v3.243.0) (2018-01-16)
+
+
+### Bug Fixes
+
+* android back button behavior when in a folder ([#96](https://github.com/PeerioTechnologies/peerio-mobile/issues/96)) [ch1624] ([04cf49f](https://github.com/PeerioTechnologies/peerio-mobile/commit/04cf49f))
+* changed button lock to button signout [branch ch1606] ([#101](https://github.com/PeerioTechnologies/peerio-mobile/issues/101)) ([1ca076b](https://github.com/PeerioTechnologies/peerio-mobile/commit/1ca076b))
+* keychain save error message box ([f3fba5e](https://github.com/PeerioTechnologies/peerio-mobile/commit/f3fba5e))
+* remove global state waiting for load ([3a76b99](https://github.com/PeerioTechnologies/peerio-mobile/commit/3a76b99))
+
+
+### Features
+
+* **files:** parallel chunk downloads ([#102](https://github.com/PeerioTechnologies/peerio-mobile/issues/102)) ([1e6e8e8](https://github.com/PeerioTechnologies/peerio-mobile/commit/1e6e8e8))
+* **tests:** improve tests initialization scripts ([5024c63](https://github.com/PeerioTechnologies/peerio-mobile/commit/5024c63))
+* E2E tests - login with 2FA ([#92](https://github.com/PeerioTechnologies/peerio-mobile/issues/92)) ([6e69a6a](https://github.com/PeerioTechnologies/peerio-mobile/commit/6e69a6a))
+* refactor and improve input container paddings and margins [ch2279] ([040e04d](https://github.com/PeerioTechnologies/peerio-mobile/commit/040e04d))
+* Update docs with new debug option and android build path options ([#97](https://github.com/PeerioTechnologies/peerio-mobile/issues/97)) ([9c20126](https://github.com/PeerioTechnologies/peerio-mobile/commit/9c20126))
+
+
+
 <a name="3.242.0"></a>
 # [3.242.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.241.0...v3.242.0) (2018-01-09)
 

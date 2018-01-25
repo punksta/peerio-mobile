@@ -3,6 +3,8 @@ import { User, chatStore, TinyDb } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
 import RoutedState from '../routes/routed-state';
 import preferenceStore from '../settings/preference-store';
+import { popupYes } from '../shared/popups';
+import { tx } from '../utils/translator';
 
 class MainState extends RoutedState {
     @observable _loading = false;
@@ -68,7 +70,11 @@ class MainState extends RoutedState {
         keychainKey = `user::${user.username}::${(new Date().getTime())}`;
         console.log(`main-state.js: keychain key: ${keychainKey}`);
         await TinyDb.system.setValue(`user::${user.username}::keychain`, keychainKey);
-        await keychain.save(keychainKey, user.serializeAuthData(), secureWithTouchID);
+        if (!await keychain.save(keychainKey, user.serializeAuthData(), secureWithTouchID)) {
+            await popupYes(null, tx('title_autologinSetFail'));
+            console.log('main-state.js: keychain is not saved');
+            return;
+        }
         console.log('main-state.js: keychain saved');
         user.hasTouchIdCached = true;
     }

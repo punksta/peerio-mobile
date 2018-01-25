@@ -20,6 +20,7 @@ import { tx } from '../utils/translator';
 import preferenceStore from '../settings/preference-store';
 import { popupSetupVideo } from '../shared/popups';
 import CircleButtonWithIcon from '../controls/circle-button-with-icon';
+import testLabel from '../helpers/test-label';
 
 const pinOn = require('../../assets/chat/icon-pin.png');
 
@@ -180,7 +181,7 @@ export default class Avatar extends SafeComponent {
             return this.props.onRetryCancel();
         }
         return this.props.onPress && this.props.onPress();
-    }
+    };
 
     get message() {
         const { ellipsize } = this.props;
@@ -235,8 +236,11 @@ export default class Avatar extends SafeComponent {
     }
 
     get files() {
+        const { onInlineFileAction } = this.props;
         return this.props.files ?
-            this.props.files.map(file => <FileInlineProgress key={file} file={file} />) : null;
+            this.props.files.map(file =>
+                <FileInlineProgress key={file} file={file} onAction={onInlineFileAction} />
+            ) : null;
     }
 
     get inlineImage() {
@@ -437,8 +441,9 @@ export default class Avatar extends SafeComponent {
     }
 
     renderCollapsed() {
+        const { inlineImage, files } = this;
         const shrinkStrategy = { flexShrink: 1 };
-        if (this.props.inlineImage) shrinkStrategy.flexGrow = 1;
+        if (inlineImage || files) shrinkStrategy.flexGrow = 1;
         return (
             <View style={{ flexGrow: 1 }}>
                 <View style={[itemStyle, this.errorStyle]}>
@@ -447,8 +452,8 @@ export default class Avatar extends SafeComponent {
                         style={[this.itemContainerStyle, { paddingLeft: 74, marginRight: vars.spacing.small.maxi }, shrinkStrategy]}>
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
-                            {this.files}
-                            {this.inlineImage}
+                            {files}
+                            {inlineImage}
                             {this.message}
                             {this.systemMessage}
                             {this.retryCancel}
@@ -496,6 +501,7 @@ export default class Avatar extends SafeComponent {
         const opacity = this.props.sending ? 0.5 : 1;
         const activeOpacity = this.props.noTap && !this.props.error && !this.props.sendError ?
             1 : 0.2;
+        const testID = this.props.contact ? this.props.contact.username : null; // May not cover all cases
         return (
             <View style={{ backgroundColor: vars.bgHighlight }} ref={ref => { this._ref = ref; }}>
                 <TouchableOpacity
@@ -503,7 +509,8 @@ export default class Avatar extends SafeComponent {
                     onPress={this.onPressAll}
                     activeOpacity={activeOpacity}
                     style={{ backgroundColor: vars.white }}
-                    onLayout={this.props.onLayout}>
+                    onLayout={this.props.onLayout}
+                    {...testLabel(testID)}>
                     {this.firstOfTheDay}
                     <View style={{ opacity }}>
                         {inner}

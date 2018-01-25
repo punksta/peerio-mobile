@@ -19,7 +19,7 @@ const INITIAL_LIST_SIZE = 20;
 @observer
 export default class ContactListModal extends SafeComponent {
     dataSource = [];
-    @observable refreshing = false
+    @observable refreshing = false;
 
     get data() { return contactState.store.contacts; }
 
@@ -56,7 +56,7 @@ export default class ContactListModal extends SafeComponent {
         return item.isChannel ?
             <ChannelListItem chat={item} onPress={onPress} /> :
             <ContactItem contact={item} onPress={onPress} />;
-    }
+    };
 
     header({ section: /* data, */ { key } }) {
         return <ContactSectionHeader key={key} title={key} />;

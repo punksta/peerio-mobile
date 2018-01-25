@@ -14,21 +14,6 @@ import FileProgress from './file-progress';
 const { width } = Dimensions.get('window');
 const height = 64;
 const checkBoxWidth = height;
-const itemContainerStyle = {
-    flex: 1,
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, .12)',
-    backgroundColor: 'white',
-    height,
-    width,
-    borderWidth: 0,
-    borderColor: 'red',
-    paddingLeft: vars.spacing.medium.mini2x
-};
 
 const fileInfoContainerStyle = {
     flexGrow: 1,
@@ -41,24 +26,26 @@ const fileInfoContainerStyle = {
 export default class FileInnerItem extends SafeComponent {
     onPress() {
         const { file } = this.props;
-        this.props.onPress ? this.props.onPress(this.props.file)
+        this.props.onPress && !fileState.isFileSelectionMode ? this.props.onPress(this.props.file)
             : (file.selected = !file.selected);
     }
 
     checkbox() {
+        if (!fileState.isFileSelectionMode) return null;
         const checked = this.props.file && this.props.file.selected;
         const v = vars;
-        const color = checked ? v.checkboxActive : v.checkboxInactive;
-        const iconColor = checked ? 'white' : v.checkboxIconInactive;
+        const iconColor = checked ? v.checkboxIconActive : v.checkboxIconInactive;
         const iconBgColor = 'transparent';
         const icon = checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
-            backgroundColor: color,
+            backgroundColor: 'white',
             padding: vars.spacing.small.mini2x,
             flex: 0,
             width: checkBoxWidth,
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            borderBottomWidth: 1,
+            borderBottomColor: 'rgba(0, 0, 0, .12)'
         };
         return (
             <View style={outer} pointerEvents="none">
@@ -83,6 +70,21 @@ export default class FileInnerItem extends SafeComponent {
             fontSize: vars.font.size.smaller,
             fontWeight: vars.font.weight.regular
         };
+        const itemContainerStyle = {
+            flex: 1,
+            flexGrow: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderBottomWidth: 1,
+            borderBottomColor: 'rgba(0, 0, 0, .12)',
+            backgroundColor: 'white',
+            height,
+            width,
+            borderWidth: 0,
+            borderColor: 'red',
+            paddingLeft: fileState.isFileSelectionMode ? 0 : vars.spacing.medium.mini2x
+        };
         let icon = null;
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
@@ -101,6 +103,7 @@ export default class FileInnerItem extends SafeComponent {
             <View style={{ backgroundColor: 'white' }}>
                 <TouchableOpacity onPress={action}>
                     <View style={[fileInfoContainerStyle, { opacity }]}>
+                        {this.checkbox()}
                         <View style={[itemContainerStyle, { width }]}>
                             <View style={[loadingStyle, { flex: 0, paddingRight: vars.fileInnerItemPaddingRight }]}>
                                 {icon ||

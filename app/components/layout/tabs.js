@@ -6,6 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import { fileStore, chatStore } from '../../lib/icebear';
+import fileState from '../files/file-state';
 import contactState from '../contacts/contact-state';
 import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
@@ -44,6 +45,7 @@ export default class Tabs extends SafeComponent {
         ) : null;
         return (
             <TouchableOpacity
+                {...testLabel(icon)}
                 onPress={() => routerMain[route]()}
                 pressRetentionOffset={vars.retentionOffset}
                 style={actionCellStyle}
@@ -60,6 +62,7 @@ export default class Tabs extends SafeComponent {
     renderThrow() {
         if (uiState.keyboardHeight) return null;
         if (routerMain.currentIndex !== 0) return null;
+        if (fileState.isFileSelectionMode) return null;
         return (
             <View style={bottomRowStyle}>
                 {this.action(t('title_chats'), 'chats', 'forum', chatStore.unreadMessages)}

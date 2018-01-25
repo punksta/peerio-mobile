@@ -52,7 +52,7 @@ export default class LoginStart extends LoginWizardPage {
     handleScroll = event => {
         const { x } = event.nativeEvent.contentOffset;
         this._selected = Math.round(x / this._scrollerWidth);
-    }
+    };
 
     _scrollItems = [
         scrollItem(tx('title_welcomePrivate'), tx('title_welcomePrivateContent'), imageWelcomePrivate),

@@ -75,7 +75,7 @@ class TinyDb extends SqlDb {
     // get pin encrypted keys from system storage
     getPinForUser = (username, isSystemPin) => {
         return this.getItem(isSystemPin ? systemSetPin : userSetPin, username);
-    }
+    };
 }
 
 const tinydb = new TinyDb();

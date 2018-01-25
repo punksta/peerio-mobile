@@ -1,10 +1,6 @@
-const Page = require('./page');
+const Page = require('../page');
 
 class CreateAccountPage extends Page {
-    get createAccountButton() {
-        return this.getWhenVisible('~button_CreateAccount');
-    }
-
     get firstName() {
         return this.getWhenVisible('~firstName');
     }
@@ -23,6 +19,10 @@ class CreateAccountPage extends Page {
 
     get nextButton() {
         return this.getWhenEnabled('~button_next');
+    }
+
+    get passphrase() {
+        return this.getWhenVisible('~passphrase');
     }
 
     get confirmInput() {

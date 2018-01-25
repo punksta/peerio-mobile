@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { computed } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { t, tx } from '../utils/translator';
+import { tx } from '../utils/translator';
 import ContactSelector from '../contacts/contact-selector';
 import chatState from '../messaging/chat-state';
 import SafeComponent from '../shared/safe-component';
@@ -24,7 +24,7 @@ export default class ChannelAddPeople extends SafeComponent {
         chatState.currentChat.addParticipants(
             contacts.filter(c => !excluded[c.username])
         );
-    }
+    };
 
     render() {
         return (

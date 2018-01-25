@@ -7,7 +7,6 @@ import ChannelAddPeople from '../messaging/channel-add-people';
 import channelInviteList from '../messaging/channel-invite-list';
 import FileShare from '../files/file-share';
 import FileMove from '../files/file-move';
-import FileSelect from '../files/file-select';
 import FileChooseRecipient from '../files/file-choose-recipient';
 import ContactView from '../contacts/contact-view';
 import ChatInfo from '../messaging/chat-info';
@@ -32,7 +31,6 @@ class RouterModal extends Router {
         this.add('shareFileTo', FileShare);
         this.add('changeRecipient', FileChooseRecipient);
         this.add('moveFileTo', FileMove);
-        this.add('selectFiles', FileSelect);
         this.add('contactView', ContactView);
         this.add('askPin', PinModalAsk, true);
         this.add('chatInfo', ChatInfo);

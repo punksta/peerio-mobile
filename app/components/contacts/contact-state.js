@@ -204,7 +204,7 @@ class ContactState extends RoutedState {
     fabAction = () => {
         console.log(`contact-state.js: fab action`);
         this.routerMain.contactAdd();
-    }
+    };
 }
 
 const contactState = new ContactState();

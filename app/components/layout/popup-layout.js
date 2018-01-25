@@ -34,7 +34,7 @@ export default class PopupLayout extends SafeComponent {
                 text={text}
                 testID={id} />
         );
-    }
+    };
 
     renderThrow() {
         const popup = popupState.activePopup;

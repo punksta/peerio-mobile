@@ -1,28 +1,36 @@
 const { defineSupportCode } = require('cucumber');
 
 defineSupportCode(({ Given, When, Then }) => {
+    const existingUsers = {
+        create_dm_test: {
+            name: process.env.CREATE_DM_TEST_USER,
+            passphrase: process.env.CREATE_DM_TEST_PASS
+        },
+        room_test: {
+            name: process.env.CREATE_ROOM_TEST_USER,
+            passphrase: process.env.CREATE_ROOM_TEST_PASS
+        }
+    };
+
     // Scenario: User signs up successfully
-    When('I choose the create account option', async function () {
-        await this.alertsPage.dismissNotificationsAlert();
-        await this.createAccountPage.createAccountButton.click();
+    When('I choose the create account option', function () {
+        return this.selectCreateAccount();
     });
 
     When('I input my personal info', async function () {
-        await this.createAccountPage.firstName.setValue('test-first-name').hideDeviceKeyboard();
-        await this.createAccountPage.lastName.setValue('test-last-name').hideDeviceKeyboard();
-        await this.createAccountPage.username.setValue(new Date().getTime()).hideDeviceKeyboard();
-        await this.createAccountPage.email.setValue('test@email.io').hideDeviceKeyboard();
-        await this.createAccountPage.nextButton.click();
+        await this.typePersonalInfo();
     });
 
     Then('I am presented with my passcode', async function () {
-        await this.app.pause(5000); // wait / check for something?
-        await this.createAccountPage.nextButton.click();
+        await this.savePasscode();
     });
 
     Then('I confirm that I saved my passcode', async function () {
-        await this.createAccountPage.confirmInput.setValue('I have saved my account key').hideDeviceKeyboard();
-        await this.createAccountPage.finishButton.click();
+        await this.confirmSavingPasscode();
+    });
+
+    Then('I am taken to the Login Start screen', async function () {
+        await this.startPage.loginButton;
     });
 
     Then('I am taken to the Login Start screen', async function () {
@@ -30,26 +38,12 @@ defineSupportCode(({ Given, When, Then }) => {
     });
 
     Then('I am taken to the home tab', function () {
-        return this.homePage.welcomeMessage;
+        return this.seeWelcomeScreen();
     });
 
     // Scenario: Autologin
     Given('I have signed up', async function () {
-        await this.alertsPage.dismissNotificationsAlert();
-        await this.createAccountPage.createAccountButton.click();
-
-        await this.createAccountPage.firstName.setValue('test-first-name').hideDeviceKeyboard();
-        await this.createAccountPage.lastName.setValue('test-last-name').hideDeviceKeyboard();
-        await this.createAccountPage.username.setValue(new Date().getTime()).hideDeviceKeyboard();
-        await this.createAccountPage.email.setValue('test@email.io').hideDeviceKeyboard();
-        await this.createAccountPage.nextButton.click();
-
-        await this.app.pause(5000);
-        await this.createAccountPage.nextButton.click();
-
-        await this.createAccountPage.confirmInput.addValue('I have saved my account key').hideDeviceKeyboard();
-        await this.createAccountPage.finishButton.click();
-        await this.homePage.welcomeMessage.click();
+        await this.createNewAccount();
     });
 
     Given('I close Peerio', async function () {
@@ -59,4 +53,25 @@ defineSupportCode(({ Given, When, Then }) => {
     When('I open Peerio', async function () {
         await this.app.launch();
     });
+
+    Given('I sign out', async function () {
+        await this.homePage.settingsTab.click();
+        await this.settingsPage.logoutButton.click();
+        await this.settingsPage.logoutButton.click(); // TODO: need to tap 2x
+        await this.settingsPage.lockButton.click();
+    });
+
+    When('I sign in', async function () {
+        await this.loginExistingAccount(this.username, this.passphrase);
+    });
+
+    When('I log in as {word} user', async function (string) {
+        if (string === 'new') {
+            await this.createNewAccount();
+        } else {
+            const credentials = existingUsers[string];
+            await this.loginExistingAccount(credentials.name, credentials.passphrase);
+        }
+    });
 });
+

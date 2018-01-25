@@ -9,7 +9,6 @@ import Avatar from '../shared/avatar';
 import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
-import { tx } from '../utils/translator';
 
 const pinOff = require('../../assets/chat/icon-pin-off.png');
 const pinOn = require('../../assets/chat/icon-pin-on.png');
@@ -54,7 +53,7 @@ export default class ChatInfo extends SafeComponent {
                 message=""
                 hideOnline />
         );
-    }
+    };
 
     renderThrow() {
         const chat = chatState.currentChat;

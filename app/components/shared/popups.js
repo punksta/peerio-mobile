@@ -8,6 +8,7 @@ import locales from '../../lib/locales';
 import CheckBox from './checkbox';
 import { vars } from '../../styles/styles';
 import { User } from '../../lib/icebear';
+import testLabel from '../helpers/test-label';
 
 function textControl(str) {
     const text = {
@@ -24,8 +25,8 @@ function textControl(str) {
     return <Text style={text}>{formatted}</Text>;
 }
 
-function checkBoxControl(str, checked, press) {
-    return <CheckBox text={str} isChecked={checked} onChange={press} />;
+function checkBoxControl(str, checked, press, accessibilityLabel) {
+    return <CheckBox text={str} isChecked={checked} onChange={press} accessibilityLabel={accessibilityLabel} />;
 }
 
 function inputControl(state, placeholder, props) {
@@ -125,7 +126,7 @@ function popupSignOutAutologin() {
             contents,
             buttons: [
                 { id: 'no', text: tu('button_getKey'), action: () => resolve(false) },
-                { id: 'yes', text: tu('button_lock'), action: () => resolve(o), secondary: true }
+                { id: 'yes', text: tu('button_logout'), action: () => resolve(o), secondary: true }
             ]
         });
     });
@@ -226,11 +227,11 @@ function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
         });
         const contents = (
             <View style={{ minHeight: vars.popupMinHeight }}>
-                {inputControl(o, placeholder)}
+                {inputControl(o, placeholder, testLabel('2faTokenInput'))}
                 <Text style={helperTextStyle}>
                     {tx('title_2FAHelperText')}
                 </Text>
-                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; })}
+                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; }, 'trustDevice')}
             </View>
         );
         popupState.showPopup({

@@ -21,6 +21,7 @@ import { vars } from '../../styles/styles';
 import contactState from './contact-state';
 import snackbarState from '../snackbars/snackbar-state';
 import ContactCollection from './contact-collection';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class ContactSelector extends SafeComponent {
@@ -122,7 +123,7 @@ export default class ContactSelector extends SafeComponent {
 
         this.searchUser(this.findUserText, true);
         if (this.props.limit !== 1) this.findUserText = '';
-    }
+    };
 
     textbox() {
         const height = 48;
@@ -179,7 +180,8 @@ export default class ContactSelector extends SafeComponent {
                         autoCorrect={false}
                         placeholder={tx(this.props.inputPlaceholder)}
                         ref={ti => { this.textInput = ti; }}
-                        style={placeholderStyle} />
+                        style={placeholderStyle}
+                        {...testLabel('textInputContactSearch')} />
                     {rightIcon}
                 </View>
                 <Text style={bottomTextStyle}>{tx('title_searchByUsernameOrEmail')}</Text>
@@ -193,11 +195,10 @@ export default class ContactSelector extends SafeComponent {
             flexDirection: 'row',
             alignItems: 'center',
             padding: vars.spacing.small.mini2x,
-            paddingTop: vars.statusBarHeight * 2,
-            paddingBottom: 0,
             borderBottomWidth: 1,
             borderBottomColor: vars.headerBorderColor,
-            marginBottom: vars.spacing.medium.mini2x,
+            paddingVertical: vars.spacing.medium.midi,
+            marginBottom: vars.spacing.medium.midi,
             height: vars.inputHeight
         };
         const style = {
@@ -322,7 +323,6 @@ export default class ContactSelector extends SafeComponent {
 
     body() {
         if (contactState.empty && this.clean) return <ContactsPlaceholder />;
-        console.log(this.props.exclude);
         const found = contactState.getFiltered(this.findUserText, this.props.exclude);
         const mockItems = found.map((item, i) => this.item(item, i));
         const activityIndicator = <ActivityIndicator style={{ marginTop: vars.spacing.small.maxi }} />;
@@ -334,7 +334,10 @@ export default class ContactSelector extends SafeComponent {
         const legacy = this.legacyContact;
         const legacyControl = legacy ? <ContactLegacyItem noBorderBottom contact={legacy} /> : null;
         return (
-            <View style={{ marginHorizontal: vars.spacing.medium.maxi }}>
+            <View
+                {...testLabel('foundContacts')}
+                accessible={false}
+                style={{ marginHorizontal: vars.spacing.medium.maxi }}>
                 {this.sectionHeader()}
                 {inviteControl}
                 {legacyControl}
@@ -349,7 +352,7 @@ export default class ContactSelector extends SafeComponent {
         const exitRow = this.exitRow();
         const recipients = this.recipients.items;
         const headerStyle = {
-            paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight * 2
+            paddingTop: this.props.hideHeader ? 0 : vars.statusBarHeight + vars.spacing.small.midi
         };
         return (
             <View style={headerStyle}>

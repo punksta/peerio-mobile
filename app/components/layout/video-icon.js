@@ -31,5 +31,5 @@ export default class VideoIcon extends HeaderIconBase {
             }
             this.disabled = true;
         }
-    }
+    };
 }

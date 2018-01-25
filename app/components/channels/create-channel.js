@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View, Text, ScrollView, Dimensions, LayoutAnimation, TextInput } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import ContactSelector from '../contacts/contact-selector';
 import { t, tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
@@ -11,6 +11,7 @@ import ChannelUpgradeOffer from './channel-upgrade-offer';
 import chatState from '../messaging/chat-state';
 import { User, config, socket } from '../../lib/icebear';
 import SnackBarConnection from '../snackbars/snackbar-connection';
+import testLabel from '../helpers/test-label';
 
 const fillView = { flex: 1, flexGrow: 1, backgroundColor: vars.white };
 
@@ -54,8 +55,8 @@ export default class CreateChannel extends Component {
     }
 
     nextIcon() {
-        if (this.step === 1) return icons.text(t('button_go'), () => this.next());
-        return icons.text(t('button_next'), () => this.next());
+        if (this.step === 1) return icons.text(t('button_go'), () => this.next(), null, 'buttonGo');
+        return icons.text(t('button_next'), () => this.next(), null, 'buttonNext');
     }
 
     nextIconDisabled() {
@@ -63,7 +64,7 @@ export default class CreateChannel extends Component {
         return icons.disabledText(t('button_next'));
     }
 
-    get exitRow() {
+    exitRow(testId) {
         const container = {
             flex: 0,
             flexDirection: 'row',
@@ -73,8 +74,7 @@ export default class CreateChannel extends Component {
             paddingBottom: 0,
             borderBottomWidth: 1,
             borderBottomColor: vars.headerBorderColor,
-            marginBottom: vars.spacing.medium.mini2x,
-            height: vars.inputHeight
+            marginBottom: vars.spacing.medium.mini2x
         };
         const textStyle = {
             textAlign: 'center',
@@ -85,7 +85,9 @@ export default class CreateChannel extends Component {
             color: vars.txtDark
         };
         return (
-            <View style={container}>
+            <View style={container}
+                {...testLabel(testId)}
+                accessible={false}>
                 {icons.dark('close', () => chatState.routerModal.discard())}
                 <Text style={textStyle}>{tx('button_createChannel')}</Text>
                 {this.isValid ? this.nextIcon() : this.nextIconDisabled()}
@@ -123,26 +125,63 @@ export default class CreateChannel extends Component {
             marginBottom: vars.spacing.medium.mini2x
         };
 
+        const testID = `textInput-${property}`;
         return (
             <View>
                 <View style={container}>
                     <Text style={titleStyle}>{tx(labelText)}</Text>
                     <TextInput
                         underlineColorAndroid="transparent"
-                        value={this.findUserText}
+                        value={this[property]}
                         returnKeyType="done"
                         blurOnSubmit
-                        onChangeText={text => { this[property] = text; }}
+                        onChangeText={action(text => { this[property] = text; })}
                         autoCapitalize="none"
                         autoCorrect={false}
                         placeholder={tx(placeholderText)}
-                        ref={ti => { this.textInput = ti; }}
                         style={placeholderStyle}
-                        maxLength={config.chat.maxChatNameLength} />
+                        maxLength={config.chat.maxChatNameLength}
+                        {...testLabel(testID)} />
                 </View>
                 <Text style={bottomTextStyle}>{tx(bottomText)}</Text>
             </View>
         );
+    }
+
+    get firstPage() {
+        return (
+            <View style={card}>
+                {this.exitRow()}
+                {this.renderTextBox(
+                    tx('title_channelName'),
+                    tx('title_channelNamePlaceholder'),
+                    'channelName',
+                    tx('title_channelNameLimit', { maxChatNameLength: config.chat.maxChatNameLength })
+                )}
+                {this.renderTextBox(
+                    tx('title_channelTopic'),
+                    tx('title_channelTopicPlaceholder'),
+                    'channelPurpose',
+                    tx('title_channelTopicOptional')
+                )}
+            </View>
+        );
+    }
+
+    get secondPage() {
+        return this.step === 1 ? (
+            <View style={card}>
+                {this.exitRow('chooseContacts')}
+                <ContactSelector
+                    action={async contacts => {
+                        this.inProgress = true;
+                        await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
+                        chatState.routerModal.discard();
+                    }}
+                    hideHeader ref={ref => { this._contactSelector = ref; }}
+                    inputPlaceholder="title_roomParticipants" />
+            </View>
+        ) : <View style={card} />;
     }
 
     get scrollView() {
@@ -153,38 +192,14 @@ export default class CreateChannel extends Component {
                 showsHorizontalScrollIndicator={false}
                 ref={sv => { this._scrollView = sv; }}
                 key="scroll" horizontal pagingEnabled removeClippedSubviews={false}>
-                <View style={card}>
-                    {this.exitRow}
-                    {this.renderTextBox(
-                        tx('title_channelName'),
-                        tx('title_channelNamePlaceholder'),
-                        'channelName',
-                        tx('title_channelNameLimit', { maxChatNameLength: config.chat.maxChatNameLength })
-                    )}
-                    {this.renderTextBox(
-                        tx('title_channelTopic'),
-                        tx('title_channelTopicPlaceholder'),
-                        'channelPurpose',
-                        tx('title_channelTopicOptional')
-                    )}
-                </View>
-                <View style={card}>
-                    {this.exitRow}
-                    <ContactSelector
-                        action={async contacts => {
-                            this.inProgress = true;
-                            await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
-                            chatState.routerModal.discard();
-                        }}
-                        hideHeader ref={ref => { this._contactSelector = ref; }}
-                        inputPlaceholder="title_roomParticipants" />
-                </View>
+                {this.firstPage}
+                {this.secondPage}
             </ScrollView>
         );
     }
 
     get paywall() {
-        return <View style={card}>{this.exitRow}<ChannelUpgradeOffer /></View>;
+        return <View style={card}>{this.exitRow()}<ChannelUpgradeOffer /></View>;
     }
 
     render() {

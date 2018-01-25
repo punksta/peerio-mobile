@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable, when, reaction, action } from 'mobx';
@@ -5,6 +6,7 @@ import { View, Image, Text, Dimensions, LayoutAnimation, TouchableOpacity, Activ
 import SafeComponent from '../shared/safe-component';
 import Progress from '../shared/progress';
 import FileProgress from './file-progress';
+import FileInlineContainer from './file-inline-container';
 import InlineUrlPreviewConsent from './inline-url-preview-consent';
 import inlineImageCacheStore from './inline-image-cache-store';
 import { vars } from '../../styles/styles';
@@ -117,7 +119,7 @@ export default class FileInlineImage extends SafeComponent {
         this.loadImage = true;
         const { url, fileId } = this.props.image;
         forceShowMap.set(url || fileId, true);
-    }
+    };
 
     fetchSize() {
         const { cachedImage } = this;
@@ -137,7 +139,7 @@ export default class FileInlineImage extends SafeComponent {
 
     layout = (evt) => {
         this.optimalContentWidth = evt.nativeEvent.layout.width - this.outerPadding * 2 - 2;
-    }
+    };
 
     get displayTooBigImageOffer() {
         const outer = {
@@ -301,47 +303,13 @@ export default class FileInlineImage extends SafeComponent {
 
     renderThrow() {
         const { image } = this.props;
-        const { name, title, description, fileId, downloading } = image;
+        const { fileId, downloading } = image;
         const { width, height, loaded, showUpdateSettingsLink, cachingFailed } = this;
         const { source, acquiringSize } = this.cachedImage || {};
         const isLocal = !!fileId;
         if (!clientApp.uiUserPrefs.externalContentConsented && !isLocal) {
             return <InlineUrlPreviewConsent onChange={() => { this.showUpdateSettingsLink = true; }} />;
         }
-
-        const outer = {
-            padding: this.outerPadding,
-            borderColor: vars.lightGrayBg,
-            borderWidth: 1,
-            marginVertical: 4,
-            borderRadius: 2
-        };
-
-        const header = {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            marginBottom: !downloading && this.opened ? 10 : 0
-        };
-
-        const text = {
-            flexGrow: 1,
-            flexShrink: 1,
-            fontWeight: 'bold',
-            color: vars.txtMedium,
-            textAlignVertical: 'top',
-            lineHeight: 25
-        };
-
-        const titleText = {
-            color: vars.bg,
-            marginVertical: 2,
-            ellipsizeMode: 'tail'
-        };
-
-        const descText = {
-            color: vars.txtDark,
-            marginBottom: 2
-        };
 
         const inner = {
             backgroundColor: loaded ? vars.white : vars.lightGrayBg,
@@ -351,26 +319,17 @@ export default class FileInlineImage extends SafeComponent {
 
         return (
             <View>
-                <View style={outer} onLayout={this.layout}>
-                    <View>
-                        {!!title && <Text style={titleText}>{title}</Text>}
-                        {!!description && <Text style={descText}>{description}</Text>}
-                    </View>
-                    <View style={header}>
-                        {!!name && <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
-                        {isLocal && <View style={{ flexDirection: 'row' }}>
-                            {!downloading && icons.darkNoPadding(
-                                this.opened ? 'arrow-drop-up' : 'arrow-drop-down',
-                                () => { this.opened = !this.opened; },
-                                { marginHorizontal: vars.spacing.small.maxi2x }
-                            )}
-                            {!downloading && icons.darkNoPadding(
-                                'more-vert',
-                                () => this.props.onAction(this.props.image),
-                                { marginHorizontal: vars.spacing.small.maxi2x }
-                            )}
-                        </View>}
-                    </View>
+                <FileInlineContainer
+                    onLayout={this.layout}
+                    file={image}
+                    onAction={this.props.onAction}
+                    isImage
+                    isOpen={this.opened}
+                    extraActionIcon={!downloading && icons.darkNoPadding(
+                        this.opened ? 'arrow-drop-up' : 'arrow-drop-down',
+                        () => { this.opened = !this.opened; },
+                        { marginHorizontal: vars.spacing.small.maxi2x }
+                    )}>
                     {this.opened &&
                         <View style={inner}>
                             {!downloading && this.loadImage && width && height ?
@@ -394,9 +353,14 @@ export default class FileInlineImage extends SafeComponent {
                             {this.totalBytesCount > 0 && <Progress max={this.totalBytesCount} value={this.loadedBytesCount} />}
                         </View>}
                     {isLocal && <FileProgress file={image} />}
-                </View>
+                </FileInlineContainer>
                 {!isLocal && showUpdateSettingsLink && this.updateSettingsOffer}
             </View>
         );
     }
 }
+
+FileInlineImage.propTypes = {
+    image: PropTypes.any,
+    onAction: PropTypes.any
+};

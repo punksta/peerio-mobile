@@ -55,7 +55,7 @@ export default class SettingsLevel2 extends SafeComponent {
                 {this.touchIdToggle()}
             </View>
         );
-    }
+    };
 
     payments() {
         return (
@@ -125,7 +125,7 @@ export default class SettingsLevel2 extends SafeComponent {
                 <View style={spacer} />
             </View>
         );
-    }
+    };
 
     renderThrow() {
         const view = this[settingsState.subroute];

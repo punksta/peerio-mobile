@@ -39,9 +39,7 @@ export default class ButtonWithIcon extends Component {
             <TouchableOpacity
                 pressRetentionOffset={offset}
                 onPress={press}
-                accessible={this.props.accessible}
-                accessibilityLabel={this.props.accessibilityLabel}
-                {...testLabel(this.props.testID)}>
+                {...testLabel(this.props.accessibilityLabel)}>
                 <View style={[this.props.style, containerStyle]}>
                     <Icon
                         style={{ paddingHorizontal: 7 }}

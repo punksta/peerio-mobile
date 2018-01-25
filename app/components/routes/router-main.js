@@ -140,6 +140,27 @@ class RouterMain extends Router {
         this.isInputVisible = false;
         this.modalRoute = null;
     }
+
+    @action androidBackHandler() {
+        if (this.route === 'files') {
+            if (!fileState.currentFolder.isRoot) {
+                fileState.currentFolder = fileState.currentFolder.parent;
+                return true;
+            }
+            if (fileState.isFileSelectionMode) {
+                fileState.exitFileSelect();
+                return true;
+            }
+        }
+        if (this.currentIndex > 0) {
+            this.back();
+            return true;
+        } else if (this.isInitialRoute) {
+            return false;
+        }
+        this.initialRoute();
+        return true;
+    }
 }
 
 const routerMain = new RouterMain();

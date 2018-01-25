@@ -15,6 +15,7 @@ import LoginWizardPage, {
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 import snackbarState from '../snackbars/snackbar-state';
+import testLabel from '../helpers/test-label';
 
 const formStyle = {
     padding: vars.spacing.medium.midi2x,
@@ -114,7 +115,7 @@ export default class SignupStep1 extends LoginWizardPage {
                 <View style={accountKeyView}>
                     <Text style={smallText}>{tx('title_yourAccountKey')}</Text>
                     <View style={accountKeyRow}>
-                        <Text style={accountKeyText} selectable>
+                        <Text {...testLabel('passphrase')} style={accountKeyText} selectable>
                             {signupState.passphrase}
                         </Text>
                         {buttons.uppercaseBlueButton(tx('button_copy'), this.copyAccountKey, false, savingScreenshot)}

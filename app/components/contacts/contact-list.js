@@ -18,7 +18,7 @@ const INITIAL_LIST_SIZE = 20;
 @observer
 export default class ContactList extends SafeComponent {
     dataSource = [];
-    @observable refreshing = false
+    @observable refreshing = false;
 
     get data() { return contactState.store.contacts; }
 

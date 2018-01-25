@@ -41,7 +41,7 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
 
     onSelectRadioButton = index => {
         this.optionSelected = index;
-    }
+    };
 
     renderButton(text, onPress, colorIsPrimary) {
         return (
@@ -71,12 +71,12 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
             prefs.externalContentJustForFavs = false;
         }
         this.props.onChange && this.props.onChange();
-    }
+    };
 
     userActionDismiss = () => {
         this.optionSelected = 2;
         this.userActionSave();
-    }
+    };
 
     get spacer() {
         return <View style={{ height: 16 }} />;

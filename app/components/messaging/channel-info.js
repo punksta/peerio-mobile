@@ -42,14 +42,14 @@ export default class ChannelInfo extends SafeComponent {
             await this.chat.leave();
             chatState.routerModal.discard();
         }
-    }
+    };
 
     deleteChannel = async () => {
         if (await popupCancelConfirm(tx('button_deleteChannel'), tx('title_confirmChannelDelete'))) {
             await this.chat.delete();
             chatState.routerModal.discard();
         }
-    }
+    };
 
     lineBlock(content, noBorder) {
         const s = {
@@ -122,7 +122,7 @@ export default class ChannelInfo extends SafeComponent {
                 </View>
             </View>
         );
-    }
+    };
 
     get topicTextBox() {
         const chat = chatState.currentChat;

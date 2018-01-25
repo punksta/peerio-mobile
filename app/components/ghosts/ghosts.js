@@ -20,8 +20,8 @@ export default class Ghosts extends SafeComponent {
     get isFabVisible() { return true; }
 
     @observable dataSource = null;
-    @observable refreshing = false
-    actionsHeight = new Animated.Value(0)
+    @observable refreshing = false;
+    actionsHeight = new Animated.Value(0);
 
     get data() {
         return mailStore.ghosts;

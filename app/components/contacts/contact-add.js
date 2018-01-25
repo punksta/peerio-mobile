@@ -91,7 +91,7 @@ export default class ContactAdd extends SafeComponent {
 
     onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
         uiState.currentScrollViewPosition = y;
-    }
+    };
 
     inviteContactDuck(toInvite) {
         if (!toInvite) return null;
@@ -242,7 +242,7 @@ export default class ContactAdd extends SafeComponent {
                         <View style={{ height: 180 }} />
                     </View>
                 </ScrollView>
-                <ProgressOverlay enabled={this.waiting || contactState.isInProgress} />
+                <ProgressOverlay enabled={this.waiting} />
             </View>
         );
     }

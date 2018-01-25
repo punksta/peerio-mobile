@@ -10,8 +10,12 @@ import testLabel from '../helpers/test-label';
 export default class ButtonText extends SafeComponent {
     renderThrow() {
         const { text, secondary, disabled, onPress, testID } = this.props;
+        let textColor;
+        if (disabled) textColor = vars.extraSubtleText;
+        else if (secondary) textColor = vars.subtleText;
+        else textColor = vars.bg;
         const textStyle = {
-            color: (disabled || secondary) ? vars.txtDate : vars.bg,
+            color: textColor,
             fontWeight: 'bold'
         };
         const padding = vars.spacing.small.maxi2x;
