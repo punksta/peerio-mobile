@@ -71,7 +71,7 @@ export default class AvatarCircle extends SafeComponent {
                 {/* if we don't have contact specified, show group icon */}
                 {!contact && groupIcon}
                 {/* show letter if there's no avatar or it hasn't loaded yet */}
-                {contact && avatarLetter}
+                {!invited && contact && avatarLetter}
                 {avatarIcon}
                 <ErrorCircle large={this.props.large} visible={tofuError} />
             </View>
