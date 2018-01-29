@@ -209,6 +209,22 @@ function popupTOS() {
     });
 }
 
+function popupKeychainError(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title,
+            type: 'systemWarning',
+            subTitle: textControl(subTitle),
+            contents: text ? textControl(text) : null,
+            buttons: [
+                { id: 'no', text: t('button_no'), action: () => resolve(false), secondary: true },
+                { id: 'yes', text: t('button_yes'), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
+
 function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
     const helperTextStyle = {
         color: vars.subtleText,
@@ -305,6 +321,7 @@ export {
     popupYesSkip,
     popupInput,
     popupTOS,
+    popupKeychainError,
     popup2FA,
     popupCopyCancel,
     popupInputCancel,

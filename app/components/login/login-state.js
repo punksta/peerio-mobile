@@ -5,7 +5,7 @@ import settingsState from '../settings/settings-state';
 import { User, validation, fileStore, socket, TinyDb, warnings } from '../../lib/icebear';
 import keychain from '../../lib/keychain-bridge';
 import { rnAlertYesNo } from '../../lib/alerts';
-import { popupSignOutAutologin, popupYesCancel } from '../shared/popups';
+import { popupSignOutAutologin, popupKeychainError } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RoutedState from '../routes/routed-state';
 import routes from '../routes/routes';
@@ -207,7 +207,7 @@ class LoginState extends RoutedState {
         if (!keychain.hasPlugin) return false;
         let data = await keychain.get(await mainState.getKeychainKey(this.username));
         if (!data) {
-            return await popupYesCancel(null, tx('error_keychainRead'))
+            return await popupKeychainError(null, tx('error_keychainRead'))
                 && this.loadFromKeychain();
         }
         try {

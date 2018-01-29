@@ -72,7 +72,6 @@ export default class PopupLayout extends SafeComponent {
 
         const container = {
             flexGrow: 1,
-            borderRadius: 8,
             shadowColor: '#000000',
             shadowOpacity: 0.2,
             shadowRadius: 8,
@@ -80,6 +79,7 @@ export default class PopupLayout extends SafeComponent {
                 height: 1,
                 width: 1
             },
+            marginTop: 8,
             borderBottomLeftRadius: 8,
             borderBottomRightRadius: 8,
             backgroundColor: vars.white,
