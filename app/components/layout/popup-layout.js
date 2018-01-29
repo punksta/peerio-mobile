@@ -70,6 +70,7 @@ export default class PopupLayout extends SafeComponent {
             marginBottom: (Platform.OS === 'android' ? 0 : uiState.keyboardHeight) + margin
         };
 
+        const showYellowLine = (popup.type === 'systemWarning');
         const container = {
             flexGrow: 1,
             shadowColor: '#000000',
@@ -79,7 +80,8 @@ export default class PopupLayout extends SafeComponent {
                 height: 1,
                 width: 1
             },
-            marginTop: 8,
+            marginTop: showYellowLine ? 8 : 0,
+            borderRadius: !showYellowLine ? 8 : 0,
             borderBottomLeftRadius: 8,
             borderBottomRightRadius: 8,
             backgroundColor: vars.white,
