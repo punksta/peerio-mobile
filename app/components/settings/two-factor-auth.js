@@ -1,7 +1,7 @@
 import React from 'react';
 import { reaction, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { ScrollView, View, Text, TextInput, Clipboard, ActivityIndicator } from 'react-native';
+import { ScrollView, View, Text, TextInput, Clipboard, ActivityIndicator, Keyboard } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import snackbarState from '../snackbars/snackbar-state';
@@ -92,6 +92,7 @@ export default class TwoFactorAuth extends SafeComponent {
     }
 
     async confirm() {
+        Keyboard.dismiss();
         const { confirmCode } = this;
         this.confirmCode = null;
         this.backupCodes = await User.current.confirm2faSetup(confirmCode, true);
@@ -112,7 +113,9 @@ export default class TwoFactorAuth extends SafeComponent {
         if (this.showReissueCodes) return <TwoFactorAuthCodesGenerate />;
         if (this.backupCodes) return <TwoFactorAuthCodes codes={this.backupCodes} />;
         return (
-            <ScrollView style={bgStyle}>
+            <ScrollView 
+                style={bgStyle}
+                keyboardShouldPersistTaps="handled">
                 <View>
                     <Text style={{ color: vars.txtDark }}>
                         {tx('title_2FADetailDesktop')}

@@ -42,7 +42,7 @@ export default class ModalLayout extends SafeComponent {
         const grow = { flex: 1, flexGrow: 1 };
         return (
             <ScrollView
-                keyboardShouldPersistTaps="never"
+                keyboardShouldPersistTaps="handled"
                 contentContainerStyle={grow} style={grow} scrollEnabled={false}>
                 {this.modal}
             </ScrollView>

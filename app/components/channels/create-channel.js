@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Dimensions, LayoutAnimation, TextInput } from 'react-native';
+import { View, Text, ScrollView, Dimensions, LayoutAnimation, TextInput, Keyboard } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction, action } from 'mobx';
 import ContactSelector from '../contacts/contact-selector';
@@ -39,6 +39,7 @@ export default class CreateChannel extends Component {
     }
 
     next() {
+        Keyboard.dismiss();
         if (this.step === 0) {
             this.step = 1;
         } else {
