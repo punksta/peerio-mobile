@@ -4,7 +4,7 @@ import { View, Text, ScrollView, Dimensions, LayoutAnimation, TextInput } from '
 import { observer } from 'mobx-react/native';
 import { observable, reaction, action } from 'mobx';
 import ContactSelector from '../contacts/contact-selector';
-import { t, tx } from '../utils/translator';
+import { tu, tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import ChannelUpgradeOffer from './channel-upgrade-offer';
@@ -55,13 +55,13 @@ export default class CreateChannel extends Component {
     }
 
     nextIcon() {
-        if (this.step === 1) return icons.text(t('button_go'), () => this.next(), null, 'buttonGo');
-        return icons.text(t('button_next'), () => this.next(), null, 'buttonNext');
+        if (this.step === 1) return icons.text(tu('button_go'), () => this.next(), null, 'buttonGo');
+        return icons.text(tu('button_next'), () => this.next(), null, 'buttonNext');
     }
 
     nextIconDisabled() {
-        if (this.step === 1) return icons.disabledText(t('button_go'));
-        return icons.disabledText(t('button_next'));
+        if (this.step === 1) return icons.disabledText(tu('button_go'));
+        return icons.disabledText(tu('button_next'));
     }
 
     exitRow(testId) {
@@ -74,7 +74,8 @@ export default class CreateChannel extends Component {
             paddingBottom: 0,
             borderBottomWidth: 1,
             borderBottomColor: vars.headerBorderColor,
-            marginBottom: vars.spacing.medium.mini2x
+            marginBottom: vars.spacing.medium.mini2x,
+            height: vars.headerHeight
         };
         const textStyle = {
             textAlign: 'center',
@@ -159,7 +160,7 @@ export default class CreateChannel extends Component {
                     tx('title_channelNameLimit', { maxChatNameLength: config.chat.maxChatNameLength })
                 )}
                 {this.renderTextBox(
-                    tx('title_channelTopic'),
+                    tx('title_roomPurpose'),
                     tx('title_channelTopicPlaceholder'),
                     'channelPurpose',
                     tx('title_channelTopicOptional')

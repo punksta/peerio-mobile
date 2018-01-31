@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { when, observable, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
-import { t, tx } from '../utils/translator';
+import { t, tu, tx } from '../utils/translator';
 import Layout1 from '../layout/layout1';
 import Center from '../controls/center';
 import Bottom from '../controls/bottom';
@@ -214,7 +214,7 @@ export default class ContactSelector extends SafeComponent {
                 {icons.dark('close', this.props.onExit)}
                 <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
                 {this.recipients.items.length ?
-                    icons.text(t('button_go'), () => this.action()) : icons.placeholder()}
+                    icons.text(tu('button_go'), () => this.action()) : icons.placeholder()}
             </View>
         );
     }
