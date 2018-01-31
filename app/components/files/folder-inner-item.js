@@ -89,9 +89,11 @@ export default class FolderInnerItem extends SafeComponent {
                         </View>
                         <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
                             <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
-                            {folder.createdAt && <Text style={infoStyle}>
-                                {moment(folder.createdAt).format(`MMM Do YYYY, hh:mm a`)}
-                            </Text>}
+                            <Text style={infoStyle}>
+                                {folder.size && <Text>{folder.sizeFormatted}</Text>}
+                                &nbsp;&nbsp;
+                                {folder.createdAt && moment(folder.createdAt).format('DD/MM/YYYY')}
+                            </Text>
                         </View>
                         {arrow}
                     </View>

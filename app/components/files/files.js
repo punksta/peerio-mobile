@@ -208,7 +208,7 @@ export default class Files extends SafeComponent {
                         onChangeText={text => { this.clean = !text.length; this.onChangeFindFilesText(text); }}
                         autoCapitalize="none"
                         autoCorrect={false}
-                        placeholder={tx('title_search')}
+                        placeholder={tx('title_searchAllFiles')}
                         ref={ti => { this.textInput = ti; }}
                         style={placeholderStyle} />
                     {rightIcon}

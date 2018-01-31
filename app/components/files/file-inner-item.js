@@ -115,7 +115,9 @@ export default class FileInnerItem extends SafeComponent {
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
                                 <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                 <Text style={infoStyle}>
-                                    {moment(file.uploadedAt).format(`MMM Do YYYY, hh:mm a`)}
+                                    {file.size && <Text>{file.sizeFormatted}</Text>}
+                                    &nbsp;&nbsp;
+                                    {moment(file.uploadedAt).format('DD/MM/YYYY')}
                                 </Text>
                             </View>
                             {arrow}
