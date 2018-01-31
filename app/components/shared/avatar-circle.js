@@ -49,7 +49,7 @@ export default class AvatarCircle extends SafeComponent {
             if (invited) {
                 avatarIcon = (
                     <View style={[avatarStyle, { justifyContent: 'center', alignItems: 'center' }]}>
-                        {icons.plaindark('person')}
+                        {icons.plaindark('person', width)}
                     </View>
                 );
             }
@@ -68,7 +68,7 @@ export default class AvatarCircle extends SafeComponent {
 
         return (
             <View style={{ borderWidth: 0, borderColor: 'green' }}>
-                {/* if we don't have contact specified, show group icon */}
+                {/* if we don't have contact specified show group icon */}
                 {!contact && groupIcon}
                 {/* show letter if there's no avatar or it hasn't loaded yet */}
                 {!invited && contact && avatarLetter}
@@ -83,5 +83,6 @@ AvatarCircle.propTypes = {
     contact: PropTypes.any,
     loading: PropTypes.bool,
     large: PropTypes.bool,
-    medium: PropTypes.bool
+    medium: PropTypes.bool,
+    invited: PropTypes.bool
 };

@@ -31,8 +31,28 @@ export default class ContactView extends SafeComponent {
         contactState.sendTo(this.contact);
     }
 
-    renderThrow() {
-        const { contact } = this;
+    renderInvitedUser(contact) {
+        return (
+            <View style={{ flex: 1, flexGrow: 1 }}>
+                <View style={[flexRow, { backgroundColor: vars.lightGrayBg, paddingRight: vars.spacing.small.maxi }]}>
+                    <AvatarCircle large invited contact={contact} />
+                    <View style={{ flexGrow: 1, flexShrink: 1 }}>
+                        <Text
+                            ellipsizeMode="tail"
+                            numberOfLines={2}
+                            style={{
+                                fontWeight: 'bold',
+                                color: vars.txtDark,
+                                fontSize: vars.font.size.bigger,
+                                marginVertical: vars.spacing.small.mini2x
+                            }}>{contact.email}</Text>
+                    </View>
+                </View>
+                <View style={{ flex: 1, flexGrow: 1 }} />
+            </View>);
+    }
+
+    renderContact(contact) {
         const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted, isAdded, isDeleted } = contact;
         const tofuErrorControl = tofuError && (
             <View style={{ backgroundColor: '#D0021B', flexGrow: 1, padding: vars.spacing.small.maxi }}>
@@ -73,6 +93,14 @@ export default class ContactView extends SafeComponent {
         );
         return this.props.nonModal ? body
             : <LayoutModalExit body={body} title={username} onClose={() => contactState.routerModal.discard()} />;
+    }
+
+    renderThrow() {
+        const { contact } = this;
+        if (contact.username) {
+            return this.renderContact(contact);
+        }
+        return this.renderInvitedUser(contact); // invited user
     }
 }
 
