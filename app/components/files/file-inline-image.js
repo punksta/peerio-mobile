@@ -328,7 +328,7 @@ export default class FileInlineImage extends SafeComponent {
                     extraActionIcon={!downloading && icons.darkNoPadding(
                         this.opened ? 'arrow-drop-up' : 'arrow-drop-down',
                         () => { this.opened = !this.opened; },
-                        { marginHorizontal: vars.spacing.small.maxi2x }
+                        { marginHorizontal: vars.spacing.small.midi2x }
                     )}>
                     {this.opened &&
                         <View style={inner}>

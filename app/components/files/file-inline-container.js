@@ -4,11 +4,17 @@ import { View, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import FileTypeIcon from './file-type-icon';
+import FileProgress from './file-progress';
+import { fileHelpers } from '../../lib/icebear';
 
-const outer = {
-    padding: 8,
+const padding = 8;
+const borderWidth = 1;
+const containerHeight = 30;
+
+const container = {
     borderColor: vars.lightGrayBg,
-    borderWidth: 1,
+    borderWidth,
     marginVertical: 4,
     borderRadius: 2
 };
@@ -27,10 +33,10 @@ const descText = {
 const text = {
     flexGrow: 1,
     flexShrink: 1,
-    fontWeight: 'bold',
+    fontSize: vars.font.size.normal,
+    fontWeight: vars.font.weight.semiBold,
     color: vars.txtMedium,
-    textAlignVertical: 'top',
-    lineHeight: 25
+    paddingLeft: padding
 };
 
 export default class FileInlineContainer extends SafeComponent {
@@ -38,30 +44,41 @@ export default class FileInlineContainer extends SafeComponent {
         const { file, isImage, isOpen, extraActionIcon } = this.props;
         const { title, description, fileId, downloading } = file;
         const isLocal = !!fileId;
+        const spacingDifference = padding - vars.progressBarHeight;
+        const outer = {
+            padding,
+            paddingBottom: (downloading && !isImage) ? spacingDifference : padding
+        };
         const header = {
             flexDirection: 'row',
             justifyContent: 'space-between',
-            marginBottom: isOpen ? 10 : 0
+            alignItems: 'center',
+            paddingBottom: isOpen ? (padding + borderWidth) : 0,
+            height: isOpen ? (containerHeight + padding) : containerHeight
         };
         const name = isImage ? file.name : `${file.name} (${file.sizeFormatted})`;
         return (
-            <View style={outer} {...this.props}>
-                <View>
-                    {!!title && <Text style={titleText}>{title}</Text>}
-                    {!!description && <Text style={descText}>{description}</Text>}
+            <View style={container}>
+                <View style={outer} {...this.props}>
+                    <View>
+                        {!!title && <Text style={titleText}>{title}</Text>}
+                        {!!description && <Text style={descText}>{description}</Text>}
+                    </View>
+                    <View style={[header, { marginBottom: downloading && !isImage ? spacingDifference : 0 }]}>
+                        <FileTypeIcon type={fileHelpers.getFileIconType(file.ext)} size="small" />
+                        {!!name && <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
+                        {isLocal && <View style={{ flexDirection: 'row' }}>
+                            {extraActionIcon}
+                            {!downloading && icons.darkNoPadding(
+                                'more-vert',
+                                () => this.props.onAction(file),
+                                { marginHorizontal: vars.spacing.small.midi2x }
+                            )}
+                        </View>}
+                    </View>
+                    {this.props.children}
                 </View>
-                <View style={[header, { marginBottom: !isImage && downloading ? 4 : 0 }]}>
-                    {!!name && <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
-                    {isLocal && <View style={{ flexDirection: 'row' }}>
-                        {extraActionIcon}
-                        {!downloading && icons.darkNoPadding(
-                            'more-vert',
-                            () => this.props.onAction(file),
-                            { marginHorizontal: vars.spacing.small.maxi2x }
-                        )}
-                    </View>}
-                </View>
-                {this.props.children}
+                {!isImage && <FileProgress file={file} />}
             </View>
         );
     }

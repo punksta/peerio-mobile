@@ -4,7 +4,7 @@ import { Image, View } from 'react-native';
 
 export default class FileTypeIcon extends React.Component {
     /* props
-        size: small, large
+        size: small, medium, large
         type: img, audio, video, txt, zip, pdf, ai, psd, word, xls, ppt, other
     */
 

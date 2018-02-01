@@ -26,7 +26,7 @@ export default class Progress extends SafeComponent {
         const { value, max } = this.props;
         if (!max) return null;
         if (value >= max) return null;
-        const height = 4;
+        const height = vars.progressBarHeight;
 
         const pbContainer = {
             marginTop: -height,

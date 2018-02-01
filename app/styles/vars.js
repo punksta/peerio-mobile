@@ -112,6 +112,7 @@ const vars = {
     imagePreviewSize: 48,
     menuWidthRatio: 0.8,
     animationDuration: 200,
+    progressBarHeight: 4,
     listItemHeight: 56,
     listViewPaddingVertical: 36,
     listViewPaddingHorizontal: 8,

@@ -10,6 +10,7 @@ import FileActions from './file-actions';
 import { fileState } from '../states';
 import { tx } from '../utils/translator';
 import FileTypeIcon from './file-type-icon';
+import { fileHelpers } from '../../lib/icebear';
 
 const firstRowStyle = {
     flex: 0,
@@ -63,7 +64,7 @@ export default class FileView extends SafeComponent {
                             {icon ||
                                 <FileTypeIcon
                                     size="large"
-                                    type={file.iconType}
+                                    type={fileHelpers.getFileIconType(file.ext)}
                                 />}
                         </View>
                         <View style={firstColumnStyle}>

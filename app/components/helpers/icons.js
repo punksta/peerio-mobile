@@ -23,6 +23,7 @@ const icons = {
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={onPress}
+                style={{ justifyContent: 'center' }}
                 {...testLabel(testID)}>
                 <View style={{ padding: noPadding ? 0 : vars.iconPadding }}>
                     <Icon

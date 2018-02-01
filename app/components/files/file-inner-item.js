@@ -10,6 +10,7 @@ import fileState from './file-state';
 import FileSignatureError from './file-signature-error';
 import FileTypeIcon from './file-type-icon';
 import FileProgress from './file-progress';
+import { fileHelpers } from '../../lib/icebear';
 
 const { width } = Dimensions.get('window');
 const height = 64;
@@ -109,7 +110,7 @@ export default class FileInnerItem extends SafeComponent {
                                 {icon ||
                                     <FileTypeIcon
                                         size="small"
-                                        type={file.iconType}
+                                        type={fileHelpers.getFileIconType(file.ext)}
                                     />}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
