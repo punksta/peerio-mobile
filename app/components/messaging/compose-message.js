@@ -1,18 +1,34 @@
 import React, { Component } from 'react';
-import ContactSelectorDM from '../contacts/contact-selector-dm';
+import { View, Text } from 'react-native';
+import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import chatState from './chat-state';
 import { tx } from '../utils/translator';
-
-const LIMIT_PEOPLE = 1;
+import { vars } from '../../styles/styles';
 
 export default class ComposeMessage extends Component {
+    exit = () => chatState.routerModal.discard();
+    action = contacts => chatState.startChat(contacts);
+
+    get roomRedirectText() {
+        return (
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <Text style={{ fontSize: vars.font.size.normal, color: vars.subtleText }}>
+                    {tx('title_chatWithGroup')}
+                </Text>
+                <Text style={{ fontSize: vars.font.size.normal, color: vars.bg }}>
+                    {tx('title_createRoom')}
+                </Text>
+            </View>);
+    }
+
     render() {
         return (
-            <ContactSelectorDM
-                autoStart
+            <ContactSelectorUniversal
                 onExit={() => chatState.routerModal.discard()}
+                subTitleComponent={this.roomRedirectText}
                 action={contacts => chatState.startChat(contacts)}
-                title={tx('title_newDirectMessage')} limit={LIMIT_PEOPLE} />
+                title="title_newDirectMessage"
+                limit={chatState.LIMIT_PEOPLE_DM} />
         );
     }
 }

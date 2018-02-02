@@ -309,7 +309,7 @@ export default class Chat extends SafeComponent {
                 <View style={{ flex: 1, flexGrow: 1 }}>
                     {this.data ? this.listView() : !chatState.loading && <ChatZeroStatePlaceholder />}
                 </View>
-                <ProgressOverlay enabled={chatState.loading || !this.initialScrollDone} />
+                <ProgressOverlay enabled={/* chatState.loading || */ !this.initialScrollDone} />
                 <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
                 <InlineImageActionSheet ref={sheet => { this._inlineImageActionSheet = sheet; }} />
                 <InlineFileActionSheet ref={sheet => { this._inlineFileActionSheet = sheet; }} />

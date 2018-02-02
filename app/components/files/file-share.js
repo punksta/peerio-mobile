@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
-import ContactSelector from '../contacts/contact-selector';
-import { t, tx } from '../utils/translator';
+import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import chatState from '../messaging/chat-state';
 import fileState from './file-state';
 
 export default class FileShare extends Component {
+    exit = () => chatState.routerModal.discard();
+    action = contacts => chatState.startChatAndShareFiles(contacts, fileState.currentFile);
+
     render() {
         return (
-            <ContactSelector
-                limit={1}
-                onExit={() => chatState.routerModal.discard()}
-                action={contacts => chatState.startChatAndShareFiles(contacts, fileState.currentFile)}
-                title={t('title_shareWith')}
-                inputPlaceholder={tx('title_TryUsernameOrEmail')} />
+            <ContactSelectorUniversal
+                onExit={this.exit}
+                action={this.action}
+                title="title_shareWith"
+                inputPlaceholder="title_TryUsernameOrEmail"
+                limit={chatState.LIMIT_PEOPLE_DM} />
         );
     }
 }

@@ -27,7 +27,7 @@ function fromEmail(email) {
 }
 
 @observer
-export default class ContactSelectorDM extends SafeComponent {
+export default class ContactSelectorUniversal extends SafeComponent {
     @observable recipients = new ContactCollection();
     @observable inProgress = false;
     @observable clean = true;
@@ -110,25 +110,13 @@ export default class ContactSelectorDM extends SafeComponent {
                     onChangeText={this.onChangeFindUserText}
                     autoCapitalize="none"
                     autoCorrect={false}
-                    placeholder={tx('title_searchByUsernameOrEmail')}
+                    placeholder={tx(this.props.inputPlaceholder)}
                     ref={ti => { this.textInput = ti; }}
                     style={style}
                     {...testLabel('textInputContactSearch')} />
                 {rightIcon}
             </View>
         );
-    }
-
-    roomRedirectText() {
-        return (
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <Text style={{ fontSize: vars.font.size.normal, color: vars.subtleText }}>
-                    {tx('title_chatWithGroup')}
-                </Text>
-                <Text style={{ fontSize: vars.font.size.normal, color: vars.bg }}>
-                    {tx('title_createRoom')}
-                </Text>
-            </View>);
     }
 
     exitRow() {
@@ -151,7 +139,7 @@ export default class ContactSelectorDM extends SafeComponent {
         return (
             <View style={container}>
                 {icons.dark('close', this.props.onExit)}
-                <Text style={textStyle}>{this.props.title}</Text>
+                <Text style={textStyle}>{tx(this.props.title)}</Text>
             </View>
         );
     }
@@ -282,7 +270,7 @@ export default class ContactSelectorDM extends SafeComponent {
         return (
             <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
                 {this.exitRow()}
-                {this.roomRedirectText()}
+                {this.props.subTitleComponent}
                 {this.textbox()}
             </View>
         );
@@ -311,9 +299,10 @@ export default class ContactSelectorDM extends SafeComponent {
     }
 }
 
-ContactSelectorDM.propTypes = {
-    topRow: PropTypes.any,
+ContactSelectorUniversal.propTypes = {
     title: PropTypes.any,
+    subTitleComponent: PropTypes.any,
+    inputPlaceholder: PropTypes.any,
     action: PropTypes.func,
     onExit: PropTypes.func
 };

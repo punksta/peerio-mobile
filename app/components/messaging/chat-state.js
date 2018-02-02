@@ -12,6 +12,7 @@ class ChatState extends RoutedState {
     @observable collapseChannels = false;
     @observable collapseDMs = false;
     @observable selfNewMessageCounter = 0;
+    LIMIT_PEOPLE_DM = 1;
 
     // to be able to easily refactor, keep the name "chatStore"
     get chatStore() { return this.store; }
@@ -120,7 +121,6 @@ class ChatState extends RoutedState {
             return null;
         }
     }
-
 
     @action async startChatAndShareFiles(recipients, file) {
         if (!file) return;
