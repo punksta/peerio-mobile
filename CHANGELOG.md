@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.249.0"></a>
+# [3.249.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.247.0...v3.249.0) (2018-02-02)
+
+
+### Bug Fixes
+
+* add yellow line to keychain error popup [branch ch1116] ([#117](https://github.com/PeerioTechnologies/peerio-mobile/issues/117)) ([8b2ff8d](https://github.com/PeerioTechnologies/peerio-mobile/commit/8b2ff8d))
+* gave account key close button secondary prop [branch ch1008] ([#115](https://github.com/PeerioTechnologies/peerio-mobile/issues/115)) ([78fa7fb](https://github.com/PeerioTechnologies/peerio-mobile/commit/78fa7fb))
+* invited avatar circle [ch2697] ([60d5484](https://github.com/PeerioTechnologies/peerio-mobile/commit/60d5484))
+* open different media urls on android [ch1425] ([d7cb0be](https://github.com/PeerioTechnologies/peerio-mobile/commit/d7cb0be))
+* popup yellow line only shows during a systemWarning popup ([#118](https://github.com/PeerioTechnologies/peerio-mobile/issues/118)) ([c2139b5](https://github.com/PeerioTechnologies/peerio-mobile/commit/c2139b5))
+
+
+### Features
+
+* made invited user clickable in contact list [branch ch918] ([#116](https://github.com/PeerioTechnologies/peerio-mobile/issues/116)) ([d0604d0](https://github.com/PeerioTechnologies/peerio-mobile/commit/d0604d0))
+
+
+
 <a name="3.248.0"></a>
 # [3.248.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.247.0...v3.248.0) (2018-02-02)
 
