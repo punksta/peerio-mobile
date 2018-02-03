@@ -6,6 +6,10 @@ class AlertsPage extends Page {
             await this.app.alertAccept();
         }
     }
+
+    get emailConfirmationPopup() {
+        return this.getWhenVisible('~popupButton-ok');
+    }
 }
 
 module.exports = AlertsPage;

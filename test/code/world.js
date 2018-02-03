@@ -126,6 +126,12 @@ class World {
         await this.homePage.chatsTab.isExisting();
     }
 
+    async dismissEmailConfirmationPopup() {
+        if (this.alertsPage.emailConfirmationPopup.isVisible()) {
+            this.alertsPage.emailConfirmationPopup.click();
+        }
+    }
+
     async loginExistingAccount(username, passphrase) {
         await this.alertsPage.dismissNotificationsAlert();
         await this.startPage.loginButton.click();
@@ -139,6 +145,7 @@ class World {
             await this.loginPage.submitButton.click();
         }
         await this.seeWelcomeScreen();
+        await this.dismissEmailConfirmationPopup();
     }
 
     async createNewAccount() {
@@ -147,6 +154,7 @@ class World {
         await this.savePasscode();
         await this.confirmSavingPasscode();
         await this.seeWelcomeScreen();
+        await this.dismissEmailConfirmationPopup();
     }
 }
 
