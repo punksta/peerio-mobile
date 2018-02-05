@@ -10,7 +10,17 @@ appium-doctor
 
 ## Running tests
 
-1. If necessary, modify ```code/platforms.js``` with your devices capabilities.
+1. Add your device platform and name in env.sh. 
+Example:
+```
+# iOS
+export PEERIO_IOS_VERSION='10.3'
+export PEERIO_IOS_SIM='iPhone 6s'
+
+# Android
+export PEERIO_ANDROID_VERSION='6.0'
+export PEERIO_ANDROID_DEVICE='Android 6'
+```
 
 2. If necessary, modify Android build path (```androidBuildPath``` prop) in ```code/buildPaths.js```. To run on device use ````${__dirname/../../android/app/build/outputs/apk/app-armeabi-v7a-debug.apk```` and to run on an emulator use ````${__dirname}/../../android/app/build/outputs/apk/app-x86-debug.apk````.
 
