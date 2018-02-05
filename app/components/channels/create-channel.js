@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, Dimensions, LayoutAnimation, TextInput, Keyboard } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction, action } from 'mobx';
-import ContactSelector from '../contacts/contact-selector';
+import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import { tu, tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import ChannelUpgradeOffer from './channel-upgrade-offer';
+import CreateChannelTextBox from './create-channel-textbox';
 import chatState from '../messaging/chat-state';
 import { User, config, socket } from '../../lib/icebear';
 import SnackBarConnection from '../snackbars/snackbar-connection';
@@ -21,6 +22,12 @@ const card = {
     width,
     backgroundColor: vars.white,
     flexGrow: 1
+};
+
+const titleStyle = {
+    color: vars.bg,
+    fontSize: vars.font.size.bigger,
+    marginLeft: vars.spacing.small.maxi
 };
 
 @observer
@@ -38,6 +45,8 @@ export default class CreateChannel extends Component {
         reaction(() => this.step, () => LayoutAnimation.easeInEaseOut());
     }
 
+    refContactSelector = ref => { this._contactSelector = ref; };
+
     next() {
         Keyboard.dismiss();
         if (this.step === 0) {
@@ -46,6 +55,12 @@ export default class CreateChannel extends Component {
             if (this.inProgress) return;
             this._contactSelector.action();
         }
+    }
+
+    @action.bound async createChannel(contacts) {
+        this.inProgress = true;
+        await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
+        chatState.routerModal.discard();
     }
 
     get isValid() {
@@ -73,8 +88,6 @@ export default class CreateChannel extends Component {
             padding: vars.spacing.small.mini2x,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0,
-            borderBottomWidth: 1,
-            borderBottomColor: vars.headerBorderColor,
             marginBottom: vars.spacing.medium.mini2x,
             height: vars.headerHeight
         };
@@ -97,75 +110,23 @@ export default class CreateChannel extends Component {
         );
     }
 
-    renderTextBox(labelText, placeholderText, property, bottomText) {
-        const height = vars.inputHeight;
-        const container = {
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: vars.spacing.medium.maxi,
-            marginHorizontal: vars.spacing.medium.mini2x,
-            marginBottom: vars.spacing.small.midi2x,
-            borderColor: vars.bg,
-            borderWidth: 1,
-            height,
-            borderRadius: height
-        };
-        const titleStyle = {
-            color: vars.bg,
-            fontSize: vars.font.size.bigger
-        };
-        const placeholderStyle = {
-            flexGrow: 1,
-            height,
-            marginLeft: vars.spacing.small.midi,
-            fontSize: vars.font.size.normal
-        };
-        const bottomTextStyle = {
-            fontSize: vars.font.size.smaller,
-            color: vars.txtDate,
-            marginLeft: vars.spacing.large.midixx,
-            marginBottom: vars.spacing.medium.mini2x
-        };
-
-        const testID = `textInput-${property}`;
-        return (
-            <View>
-                <View style={container}>
-                    <Text style={titleStyle}>{tx(labelText)}</Text>
-                    <TextInput
-                        underlineColorAndroid="transparent"
-                        value={this[property]}
-                        returnKeyType="done"
-                        blurOnSubmit
-                        onChangeText={action(text => { this[property] = text; })}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        placeholder={tx(placeholderText)}
-                        style={placeholderStyle}
-                        maxLength={config.chat.maxChatNameLength}
-                        {...testLabel(testID)} />
-                </View>
-                <Text style={bottomTextStyle}>{tx(bottomText)}</Text>
-            </View>
-        );
-    }
-
     get firstPage() {
         return (
             <View style={card}>
                 {this.exitRow()}
-                {this.renderTextBox(
-                    tx('title_channelName'),
-                    tx('title_channelNamePlaceholder'),
-                    'channelName',
-                    tx('title_channelNameLimit', { maxChatNameLength: config.chat.maxChatNameLength })
-                )}
-                {this.renderTextBox(
-                    tx('title_roomPurpose'),
-                    tx('title_channelTopicPlaceholder'),
-                    'channelPurpose',
-                    tx('title_channelTopicOptional')
-                )}
+                <CreateChannelTextBox
+                    labelText="title_channelName"
+                    placeholderText="title_channelNamePlaceholder"
+                    property="channelName"
+                    state={this}
+                    bottomText={tx('title_channelNameLimit',
+                        { maxChatNameLength: config.chat.maxChatNameLength })} />
+                <CreateChannelTextBox
+                    labelText="title_roomPurpose"
+                    placeholderText="title_channelTopicPlaceholder"
+                    property="channelPurpose"
+                    state={this}
+                    bottomText="title_channelTopicOptional" />
             </View>
         );
     }
@@ -174,13 +135,12 @@ export default class CreateChannel extends Component {
         return this.step === 1 ? (
             <View style={card}>
                 {this.exitRow('chooseContacts')}
-                <ContactSelector
-                    action={async contacts => {
-                        this.inProgress = true;
-                        await chatState.startChat(contacts, true, this.channelName, this.channelPurpose);
-                        chatState.routerModal.discard();
-                    }}
-                    hideHeader ref={ref => { this._contactSelector = ref; }}
+                <ContactSelectorUniversal
+                    multiselect
+                    hideHeader
+                    action={this.createChannel}
+                    ref={this.refContactSelector}
+                    leftIconComponent={<Text style={titleStyle}>{tx('title_with')}</Text>}
                     inputPlaceholder="title_roomParticipants" />
             </View>
         ) : <View style={card} />;

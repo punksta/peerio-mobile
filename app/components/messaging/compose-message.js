@@ -27,6 +27,7 @@ export default class ComposeMessage extends Component {
                 onExit={() => chatState.routerModal.discard()}
                 subTitleComponent={this.roomRedirectText}
                 action={contacts => chatState.startChat(contacts)}
+                inputPlaceholder="title_TryUsernameOrEmail"
                 title="title_newDirectMessage"
                 limit={chatState.LIMIT_PEOPLE_DM} />
         );

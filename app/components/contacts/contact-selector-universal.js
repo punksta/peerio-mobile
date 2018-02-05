@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text, TextInput, ActivityIndicator, SectionList } from 'react-native';
+import { View, Text, TextInput, ActivityIndicator, SectionList, TouchableOpacity, LayoutAnimation } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { when, observable, action } from 'mobx';
+import { when, observable, action, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx } from '../utils/translator';
@@ -37,11 +37,69 @@ export default class ContactSelectorUniversal extends SafeComponent {
     @observable findUserText;
     @observable foundContact = null;
 
+    componentDidMount() {
+        this._recipientReaction = reaction(() => !!this.recipients.items.length, () => LayoutAnimation.easeInEaseOut());
+    }
+
+    componentWillUnmount() {
+        this._recipientReaction();
+    }
+
     get inviteContact() {
         if (!this.toInvite) return null;
         const result = fromEmail(this.toInvite);
         result.invited = !!contactState.store.invitedContacts.find(i => i.email === result.email);
         return result && <ContactInviteItemPrompt email={this.toInvite} />;
+    }
+
+    userbox(contact, i) {
+        const style = {
+            backgroundColor: vars.bg,
+            borderRadius: 16,
+            flexDirection: 'row',
+            alignItems: 'center',
+            margin: vars.spacing.small.mini2x,
+            padding: 0,
+            paddingLeft: vars.spacing.small.maxi2x,
+            height: 32,
+            overflow: 'hidden'
+        };
+        const textStyle = {
+            color: 'white'
+        };
+
+        return (
+            <TouchableOpacity key={i} onPress={() => this.recipients.remove(contact)} >
+                <View style={style}>
+                    <Text style={textStyle}>{contact.username}</Text>
+                    <Icon
+                        style={{ paddingRight: vars.spacing.small.mini2x, marginLeft: vars.spacing.small.midi2x }}
+                        name="cancel"
+                        size={vars.iconSize}
+                        color="white"
+                    />
+                </View>
+            </TouchableOpacity>
+        );
+    }
+
+    get userboxline() {
+        if (!this.props.multiselect) return null;
+        const container = {
+            flexGrow: 1,
+            flexDirection: 'row',
+            alignItems: 'flex-start',
+            marginTop: vars.spacing.small.midi2x,
+            paddingLeft: vars.spacing.small.midi2x,
+            flexWrap: 'wrap'
+        };
+        const boxes = this.recipients.items.map((c, i) => this.userbox(c, i));
+
+        return (
+            <View style={container}>
+                {boxes}
+            </View>
+        );
     }
 
     @action.bound onChangeFindUserText(text) {
@@ -67,26 +125,19 @@ export default class ContactSelectorUniversal extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            paddingHorizontal: vars.spacing.medium.maxi,
+            paddingHorizontal: vars.spacing.small.midi,
             marginHorizontal: vars.spacing.medium.mini2x,
-            marginTop: vars.spacing.medium.mini2x,
             marginBottom: vars.spacing.small.midi,
             borderColor: vars.bg,
             borderWidth: 1,
             height,
             borderRadius: height
         };
-        const label = {
-            color: vars.bg,
-            fontSize: vars.font.size.bigger
-        };
         const style = {
             flexGrow: 1,
             height,
-            marginLeft: vars.spacing.small.midi,
             fontSize: vars.font.size.normal
         };
-
         let rightIcon = null;
         if (this.findUserText) {
             rightIcon = icons.coloredSmall('close', () => {
@@ -99,9 +150,11 @@ export default class ContactSelectorUniversal extends SafeComponent {
             rightIcon = <ActivityIndicator style={{ marginRight: vars.spacing.small.midi2x }} />;
         }
 
+        const leftIcon = this.props.leftIconComponent || icons.dark('search');
+
         return (
             <View style={container}>
-                <Text style={label}>{tx('title_to')}</Text>
+                {leftIcon}
                 <TextInput
                     underlineColorAndroid="transparent"
                     value={this.findUserText}
@@ -174,11 +227,16 @@ export default class ContactSelectorUniversal extends SafeComponent {
                 contact={item}
                 title={<Text style={{ fontWeight: 'normal' }}>{fullName || username}</Text>}
                 title2={isLegacy ? username : null}
-                height={56}
+                height={vars.listItemHeight}
                 hideOnline
                 onPress={() => {
-                    this.props.onExit();
-                    this.props.action([item]);
+                    if (this.props.multiselect) {
+                        this.findUserText = '';
+                        this.recipients.toggle(item);
+                    } else {
+                        this.props.onExit();
+                        this.props.action([item]);
+                    }
                 }} />
         );
     };
@@ -267,11 +325,22 @@ export default class ContactSelectorUniversal extends SafeComponent {
     }
 
     header() {
+        if (this.props.hideHeader) {
+            return (
+                <View style={{ flex: 0 }}>
+                    {this.props.subTitleComponent}
+                    {this.textbox()}
+                    {this.userboxline}
+                </View>
+            );
+        }
         return (
             <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
                 {this.exitRow()}
                 {this.props.subTitleComponent}
-                {this.textbox()}
+                <View style={{ marginTop: vars.spacing.medium.mini2x }}>
+                    {this.textbox()}
+                </View>
             </View>
         );
     }
@@ -302,7 +371,9 @@ export default class ContactSelectorUniversal extends SafeComponent {
 ContactSelectorUniversal.propTypes = {
     title: PropTypes.any,
     subTitleComponent: PropTypes.any,
+    leftIconComponent: PropTypes.any,
     inputPlaceholder: PropTypes.any,
+    multiselect: PropTypes.any,
     action: PropTypes.func,
     onExit: PropTypes.func
 };
