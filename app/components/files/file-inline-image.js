@@ -11,6 +11,7 @@ import InlineUrlPreviewConsent from './inline-url-preview-consent';
 import inlineImageCacheStore from './inline-image-cache-store';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import fileState from '../files/file-state';
 import settingsState from '../settings/settings-state';
 import { clientApp, config, util } from '../../lib/icebear';
 import { T, tx } from '../utils/translator';
@@ -25,8 +26,6 @@ const toSettings = text => (
         {text}
     </Text>
 );
-
-const forceShowMap = observable.map();
 
 const toSettingsParser = { toSettings };
 
@@ -76,10 +75,21 @@ export default class FileInlineImage extends SafeComponent {
         this.optimalContentHeight = Dimensions.get('window').height;
         when(() => this.cachedImage, () => this.fetchSize());
         const { image } = this.props;
-        const { fileId, url, isOverInlineSizeLimit, isOversizeCutoff, tmpCachePath } = image;
+        const { fileId, url, isOverInlineSizeLimit, isOversizeCutoff } = image;
+        let { tmpCachePath, tmpCached } = image;
         this.tooBig = isOverInlineSizeLimit || isOversizeCutoff;
         this.oversizeCutoff = isOversizeCutoff;
-        this.loadImage = forceShowMap.get(url || fileId);
+        this.loadImage = fileState.forceShowMap.get(url || fileId);
+
+        // if we uploaded the image ourselves and we have it cached
+        // TODO: this should be moved to icebear
+        const selfTmpCachePath = fileId && fileState.localFileMap.get(fileId);
+        if (selfTmpCachePath) {
+            this.loadImage = true;
+            tmpCached = true;
+            tmpCachePath = selfTmpCachePath;
+        }
+
         when(() => image.cachingFailed, () => { this.cachingFailed = true; });
         if (fileId) {
             // we have local inline file
@@ -88,7 +98,7 @@ export default class FileInlineImage extends SafeComponent {
                 when(() => clientApp.uiUserPrefs.peerioContentEnabled && !this.tooBig && !this.oversizeCutoff,
                     () => { this.loadImage = true; });
             }
-            when(() => image.tmpCached, () => {
+            when(() => tmpCached || image.tmpCached, () => {
                 this.cachedImage = inlineImageCacheStore.getImage(tmpCachePath);
             });
             if (!image.tmpCached) {
@@ -118,7 +128,7 @@ export default class FileInlineImage extends SafeComponent {
     forceShow = () => {
         this.loadImage = true;
         const { url, fileId } = this.props.image;
-        forceShowMap.set(url || fileId, true);
+        fileState.forceShowMap.set(url || fileId, true);
     };
 
     fetchSize() {

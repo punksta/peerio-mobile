@@ -18,10 +18,12 @@ class MockFileStore {
 
     createMock() {
         const id = `file:${randomWords({ min: 1, max: 4, join: '-' })}`;
+        const fileId = id;
         const name = capitalize(`${randomWords({ min: 1, max: 2, join: '_' })}.png`);
         const sizeFormatted = '118 Kb';
         return observable({
             id,
+            fileId,
             name,
             sizeFormatted
         });

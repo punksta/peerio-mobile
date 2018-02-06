@@ -8,6 +8,7 @@ import ChannelInfo from '../messaging/channel-info';
 import PopupLayout from '../layout/popup-layout';
 import ChannelAddPeople from '../messaging/channel-add-people';
 import InputMainContainer from '../layout/input-main-container';
+import FileUploadProgress from '../files/file-upload-progress';
 import { User, clientApp } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
@@ -66,6 +67,15 @@ export default class MockChannel extends Component {
         });
     }
 
+    componentDidMount() {
+        setInterval(() => {
+            this.progress += 10;
+            if (this.progress > this.progressMax) {
+                this.progress = 0;
+            }
+        }, 1000);
+    }
+
     get channelList() {
         return (
             <View style={{ backgroundColor: 'white', flex: 1, flexGrow: 1 }}>
@@ -100,6 +110,16 @@ export default class MockChannel extends Component {
         return this.channelList;
     }
 
+    @observable progressMax = 100;
+    @observable progress = 90;
+
+    get progressBar() {
+        const { progressMax, progress } = this;
+        const file = { progressMax, progress };
+        const title = 'Caaaaaaat1 very long title which grows forever and ever.jpg';
+        return <FileUploadProgress file={file} title={title} />;
+    }
+
     get image() {
         const { originalData } = this;
         if (!originalData) return null;
@@ -115,6 +135,7 @@ export default class MockChannel extends Component {
             <View style={{ flex: 1, flexGrow: 1 }}>
                 {this.body}
                 {this.image}
+                {this.progressBar}
                 <InputMainContainer canSend />
                 <PopupLayout key="popups" />
             </View>

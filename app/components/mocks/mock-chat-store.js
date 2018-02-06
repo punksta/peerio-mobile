@@ -35,6 +35,10 @@ class MockChannel {
     @observable adminMap = observable.map();
     @observable headLoaded = true;
 
+    get allJoinedParticipants() { return this.participants; }
+    get otherParticipants() { return this.participants; }
+
+
     constructor() {
         TinyDb.userCollection = TinyDb.open('testuser');
         for (let i = 0; i < 8; ++i) this.participants.push(mockContactStore.createMock());
@@ -128,6 +132,12 @@ class MockChannel {
         const url = path;
         m.inlineImage = { url, name, isLocal: true };
         this.messages.push(m);
+    }
+
+    get uploadQueue() {
+        const f = mockFileStore.files[0];
+        f.uploading = true;
+        return [f];
     }
 }
 

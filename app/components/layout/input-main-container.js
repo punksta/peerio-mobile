@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import InputMain from './input-main';
 import chatState from '../messaging/chat-state';
-import FileInlineProgress from '../files/file-inline-progress';
+import FileUploadProgress from '../files/file-upload-progress';
 import FilesActionSheet from '../files/files-action-sheet';
 import { vars } from '../../styles/styles';
 
@@ -27,9 +27,7 @@ export default class InputMainContainer extends SafeComponent {
         const chat = chatState.currentChat;
         const q = chat && chat.uploadQueue || [];
         return q.map(f => (
-            <View style={{ margin: vars.spacing.small.maxi2x }} key={f.fileId}>
-                <FileInlineProgress file={f.fileId} transparentOnFinishUpload />
-            </View>
+            <FileUploadProgress file={f} key={f.fileId} transparentOnFinishUpload />
         ));
     }
 
@@ -38,6 +36,7 @@ export default class InputMainContainer extends SafeComponent {
             backgroundColor: vars.white
         };
         const s = {
+            backgroundColor: vars.white,
             borderTopColor: vars.lightGrayBg,
             borderTopWidth: 1
         };

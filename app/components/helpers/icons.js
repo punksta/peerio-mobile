@@ -36,18 +36,19 @@ const icons = {
         );
     },
 
-    plain(name, size, color, testID) {
+    plain(name, size, color, testID, style) {
         return (
             <Icon
                 name={name}
                 size={size || vars.iconSize}
                 color={color}
+                style={style}
                 {...testLabel(testID)} />
         );
     },
 
-    plaindark(name, size) {
-        return icons.plain(name, size, vars.darkIcon);
+    plaindark(name, size, style) {
+        return icons.plain(name, size, vars.darkIcon, undefined, style);
     },
 
     plainalert(name, size) {
@@ -59,7 +60,7 @@ const icons = {
     },
 
     white(name, onPress, style, size, testID) {
-        return icons.basic(name, vars.whiteIcon, onPress, style, size);
+        return icons.basic(name, vars.whiteIcon, onPress, style, size, undefined, testID);
     },
 
     dark(name, onPress, style, size) {

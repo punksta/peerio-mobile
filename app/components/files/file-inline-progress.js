@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, Text } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import fileState from '../files/file-state';
 import icons from '../helpers/icons';
@@ -12,7 +12,7 @@ import FileSignatureError from './file-signature-error';
 export default class FileInlineProgress extends SafeComponent {
     renderThrow() {
         const file = fileState.store.getById(this.props.file);
-        if (!file) return null;
+        if (!file) return <Text>{`no file ${this.props.file}`}</Text>;
         if (file.signatureError) return <FileSignatureError />;
         return (
             <FileInlineContainer

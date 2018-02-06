@@ -15,6 +15,7 @@ class FileState extends RoutedState {
     @observable isFileSelectionMode = null;
     @observable findFilesText;
     localFileMap = observable.map();
+    forceShowMap = observable.map();
     store = fileStore;
     _prefix = 'files';
     selectedFile = null;
@@ -138,6 +139,7 @@ class FileState extends RoutedState {
         if (!chat) throw new Error('file-state.js, uploadInline: no chat selected');
         data.file = chat.uploadAndShareFile(data.url, data.fileName, false, null, data.message);
         await promiseWhen(() => data.file.fileId);
+        this.localFileMap.set(data.file.fileId, data.url);
         return data.file;
     };
 
