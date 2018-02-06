@@ -172,7 +172,6 @@ export default class Avatar extends SafeComponent {
     }
 
     onPressAll = () => {
-        console.log(`avatar.js: onPressText`);
         if (this.props.error) {
             this.showError = !this.showError;
             return null;

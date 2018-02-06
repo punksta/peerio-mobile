@@ -20,13 +20,13 @@ class MappedCollection {
         return !!this.findByKey(this.getKey(item)).length;
     }
 
-    @action add(item) {
+    @action.bound add(item) {
         if (this.exists(item)) return;
         this.items.push(item);
         this.itemsMap.set(this.getKey(item), item);
     }
 
-    @action remove(item) {
+    @action.bound remove(item) {
         const existing = this.items.filter(i => this.getKey(i) === this.getKey(item));
         existing.forEach(e => {
             const i = this.items.indexOf(e);
@@ -36,11 +36,11 @@ class MappedCollection {
         this.itemsMap.delete(this.getKey(item));
     }
 
-    @action toggle(c) {
+    @action.bound toggle(c) {
         this.exists(c) ? this.remove(c) : this.add(c);
     }
 
-    @action clear() {
+    @action.bound clear() {
         this.items = [];
         this.itemsMap.clear();
     }

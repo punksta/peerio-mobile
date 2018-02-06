@@ -39,6 +39,10 @@ export default class ContactInviteItem extends SafeComponent {
     }
 }
 
+ContactInviteItem.fromEmail = email => {
+    return observable({ fullName: email, username: '', invited: null, email });
+};
+
 ContactInviteItem.propTypes = {
     contact: PropTypes.any.isRequired
 };
