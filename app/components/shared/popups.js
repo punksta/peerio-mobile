@@ -302,7 +302,8 @@ function popupSetupVideo() {
             title: textControl(dialog.titleText),
             subTitle: textControl(dialog.subText),
             buttons: [
-                { id: 'ok', text: tu('button_dismiss'), action: resolve(true) }
+                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
+                { id: 'ok', text: tu('button_startVideoCall'), action: () => resolve(true) }
             ]
         });
     });

@@ -18,7 +18,6 @@ class PreferenceStore {
         externalContentEnabled: true,
         externalContentJustForFavs: false,
         peerioContentEnabled: true,
-        hasSeenJitsiSuggestionPopup: false
     };
 
     observePreference(key, dbName, localStore) {

@@ -19,7 +19,6 @@ import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import preferenceStore from '../settings/preference-store';
 import { popupSetupVideo } from '../shared/popups';
-import CircleButtonWithIcon from '../controls/circle-button-with-icon';
 import testLabel from '../helpers/test-label';
 
 const pinOn = require('../../assets/chat/icon-pin.png');
@@ -208,14 +207,8 @@ export default class Avatar extends SafeComponent {
                         <Text style={[lastMessageWithIcon, videoCallMsgStyle]}>
                             {systemMessage}
                         </Text>
-                        <CircleButtonWithIcon
-                            name="info"
-                            iconColor="gray"
-                            onPress={() => popupSetupVideo(videoCallMessage)}
-                            radius={vars.iconSize}
-                        />
                     </View>
-                    <TouchableOpacity onPress={() => prefs.hasSeenJitsiSuggestionPopup ? Linking.openURL(videoCallMessage) : popupSetupVideo(videoCallMessage)}
+                    <TouchableOpacity onPress={() => Linking.openURL(videoCallMessage)}
                         pressRetentionOffset={vars.pressRetentionOffset}>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                             {icons.plaindark('videocam', vars.iconSizeSmall)}
