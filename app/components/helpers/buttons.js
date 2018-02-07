@@ -72,7 +72,7 @@ export default {
             borderRadius: 24,
             paddingHorizontal: vars.spacing.medium.mini2x,
             paddingVertical: vars.spacing.small.maxi,
-            backgroundColor: disabled ? vars.txtMedium : vars.snackbarBgGreen,
+            backgroundColor: disabled ? vars.mediumGrayBg : vars.snackbarBgGreen,
             width: vars.roundedButtonWidth
         };
         return (

@@ -10,10 +10,11 @@ import { invitationState } from '../states';
 import buttons from '../helpers/buttons';
 import ButtonText from '../controls/button-text';
 import BackIcon from '../layout/back-icon';
-import { chatInviteStore, contactStore } from '../../lib/icebear';
+import { User, chatInviteStore, contactStore } from '../../lib/icebear';
 import routerMain from '../routes/router-main';
 import chatState from './chat-state';
 import AvatarCircle from '../shared/avatar-circle';
+import ChannelUpgradeOffer from '../channels/channel-upgrade-offer';
 
 const headingStyle = {
     color: vars.lighterBlackText,
@@ -68,8 +69,10 @@ export default class ChannelInvite extends SafeComponent {
     get leftIcon() { return <BackIcon action={routerMain.chats} />; }
 
     renderThrow() {
+        const hasPaywall = User.current.channelsLeft <= 0;
         return (
             <View style={{ flex: 1, flexGrow: 1 }}>
+                {hasPaywall && <ChannelUpgradeOffer />}
                 <View style={headingSection}>
                     <Text style={headingStyle}>
                         {tx('title_roomInviteHeading')}
@@ -85,7 +88,7 @@ export default class ChannelInvite extends SafeComponent {
                             textColor={vars.bgGreen}
                             style={{ width: vars.roundedButtonWidth, textAlign: 'center' }}
                         />
-                        {buttons.uppercaseGreenBgButton(tx('button_accept'), this.acceptInvite)}
+                        {buttons.uppercaseGreenBgButton(tx('button_accept'), this.acceptInvite, hasPaywall)}
                     </View>
                 </View>
                 <View style={sectionLine} />
