@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { action } from 'mobx';
+import { action, observable } from 'mobx';
 import { Text, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
@@ -15,6 +15,7 @@ import routerMain from '../routes/router-main';
 import chatState from './chat-state';
 import AvatarCircle from '../shared/avatar-circle';
 import ChannelUpgradeOffer from '../channels/channel-upgrade-offer';
+import ProgressOverlay from '../shared/progress-overlay';
 
 const headingStyle = {
     color: vars.lighterBlackText,
@@ -54,11 +55,23 @@ const buttonContainer = {
 
 @observer
 export default class ChannelInvite extends SafeComponent {
+    @observable waiting = false;
+
     get invitation() { return invitationState.currentInvitation; }
 
-    @action.bound acceptInvite() {
-        chatInviteStore.acceptInvite(this.invitation.id);
-        chatState.routerMain.chats(this.invitation.id);
+    @action.bound async acceptInvite() {
+        const chatId = this.invitation.id;
+        chatInviteStore.acceptInvite(chatId);
+        let newChat = null;
+        try {
+            this.waiting = true;
+            newChat = await chatState.store.getChatWhenReady(chatId);
+        } catch (e) {
+            console.error(e);
+        }
+        // if we failed to accept invite, newChat is null
+        // and it just goes to the chat list
+        routerMain.chats(newChat);
     }
 
     @action.bound declineInvite() {
@@ -72,7 +85,7 @@ export default class ChannelInvite extends SafeComponent {
         const hasPaywall = User.current.channelsLeft <= 0;
         return (
             <View style={{ flex: 1, flexGrow: 1 }}>
-                {hasPaywall && <ChannelUpgradeOffer />}
+                {!this.waiting && hasPaywall && <ChannelUpgradeOffer />}
                 <View style={headingSection}>
                     <Text style={headingStyle}>
                         {tx('title_roomInviteHeading')}
@@ -100,6 +113,7 @@ export default class ChannelInvite extends SafeComponent {
                         contact={contactStore.getContact(this.invitation.username)}
                     />
                 </View>
+                <ProgressOverlay enabled={this.waiting} />
             </View>);
     }
 }
