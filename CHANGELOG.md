@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.253.0"></a>
+# [3.253.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.252.0...v3.253.0) (2018-02-07)
+
+
+### Features
+
+* add paywall handling for room invites ([b9b68e3](https://github.com/PeerioTechnologies/peerio-mobile/commit/b9b68e3))
+
+
+
 <a name="3.252.0"></a>
 # [3.252.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.251.0...v3.252.0) (2018-02-07)
 
