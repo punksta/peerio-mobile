@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.252.0"></a>
+# [3.252.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.251.0...v3.252.0) (2018-02-07)
+
+
+### Bug Fixes
+
+* fix file share behaviour bug [ch2869] ([b4db6eb](https://github.com/PeerioTechnologies/peerio-mobile/commit/b4db6eb))
+
+
+### Features
+
+* Confirm starting Jitsi call ([#122](https://github.com/PeerioTechnologies/peerio-mobile/issues/122)) ([ad4e33e](https://github.com/PeerioTechnologies/peerio-mobile/commit/ad4e33e))
+* no auto adding contacts anymore. explicitly add contact. [branch ch2492] ([2fcef67](https://github.com/PeerioTechnologies/peerio-mobile/commit/2fcef67))
+
+
+
 <a name="3.251.0"></a>
 # [3.251.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.250.0...v3.251.0) (2018-02-05)
 
