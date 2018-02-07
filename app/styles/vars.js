@@ -94,6 +94,7 @@ const vars = {
     fabEnabled: '#FF7D00',
     fabDisabled: '#CFCFCF',
     buttonGreen: '#2CCF84',
+    fileUploadProgressColor: 'rgba(50, 206, 195, 0.12)',
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,

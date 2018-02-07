@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
+import { observable, action } from 'mobx';
 import { Text, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
@@ -9,29 +10,42 @@ import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 
 const height = vars.listItemHeight;
-const itemContainerStyle = {
-    flex: 1,
-    flexGrow: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, .12)',
-    height,
-    borderWidth: 0,
-    borderColor: 'red',
-    paddingLeft: vars.spacing.medium.mini2x
-};
 
 const folderInfoContainerStyle = {
     flexGrow: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    height,
+    paddingLeft: vars.spacing.medium.mini2x,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, .12)',
+    alignItems: 'center'
 };
 
 @observer
 export default class FolderInnerItem extends SafeComponent {
+    @observable width = 0;
+
     onPress = () => this.props.onPress && this.props.onPress(this.props.folder);
+
+    get currentProgress() {
+        const { folder } = this.props;
+        const { progress, progressMax } = folder;
+        const { width } = this;
+        if (!width || !progressMax) return 0;
+        return width * progress / progressMax;
+    }
+
+    get currentProgressPercent() {
+        const { folder } = this.props;
+        const { progress, progressMax } = folder;
+        if (!progressMax) return 0;
+        return progress / progressMax * 100;
+    }
+
+    @action.bound layout(evt) {
+        this.width = evt.nativeEvent.layout.width;
+    }
 
     get radio() {
         if (!this.props.radio) return null;
@@ -59,17 +73,46 @@ export default class FolderInnerItem extends SafeComponent {
         );
     }
 
+    fileDetails() {
+        const { folder } = this.props;
+        const infoStyle = {
+            color: vars.extraSubtleText,
+            fontSize: vars.font.size.smaller,
+            fontWeight: vars.font.weight.regular
+        };
+        const progressPercent = this.currentProgressPercent;
+        if (progressPercent) {
+            return (
+                <Text style={infoStyle}>
+                    <Text>{tx('title_sharingFolderPercent', { progressPercent })}</Text>
+                </Text>
+            );
+        }
+        return (
+            <Text style={infoStyle}>
+                {folder.size ?
+                    <Text>{folder.sizeFormatted}</Text> :
+                    <Text>{tx('title_empty')}</Text>}
+                &nbsp;&nbsp;
+                {folder.createdAt && moment(folder.createdAt).format('DD/MM/YYYY')}
+            </Text>);
+    }
+
     renderThrow() {
         const { folder, onPress, onLongPress, onSelect, hideArrow } = this.props;
+        const progressContainer = {
+            backgroundColor: vars.fileUploadProgressColor,
+            width: this.currentProgress,
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0
+        };
         const nameStyle = {
             color: vars.txtDark,
             fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.bold
-        };
-        const infoStyle = {
-            color: vars.subtleText,
-            fontSize: vars.font.size.smaller,
-            fontWeight: vars.font.weight.regular
         };
         const loadingStyle = null;
         const arrow = hideArrow ? null : (
@@ -80,25 +123,18 @@ export default class FolderInnerItem extends SafeComponent {
         return (
             <TouchableOpacity
                 onLongPress={onLongPress}
-                onPress={hideArrow ? onSelect : onPress} style={{ backgroundColor: 'white' }}>
-                <View style={folderInfoContainerStyle}>
+                onPress={hideArrow ? onSelect : onPress}>
+                <View style={folderInfoContainerStyle} onLayout={this.layout}>
+                    <View style={progressContainer} />
                     {this.radio}
-                    <View style={itemContainerStyle}>
-                        <View style={[loadingStyle, { flex: 0 }]}>
-                            {icons.darkNoPadding('folder', null, null, vars.iconSizeMedium)}
-                        </View>
-                        <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
-                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
-                            <Text style={infoStyle}>
-                                {folder.size ?
-                                    <Text>{folder.sizeFormatted}</Text> :
-                                    <Text>{tx('title_empty')}</Text>}
-                                &nbsp;&nbsp;
-                                {folder.createdAt && moment(folder.createdAt).format('DD/MM/YYYY')}
-                            </Text>
-                        </View>
-                        {arrow}
+                    <View style={[loadingStyle, { flex: 0 }]}>
+                        {icons.darkNoPadding('folder', null, null, vars.iconSizeMedium)}
                     </View>
+                    <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
+                        <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
+                        {this.fileDetails()}
+                    </View>
+                    {arrow}
                 </View>
             </TouchableOpacity>
         );

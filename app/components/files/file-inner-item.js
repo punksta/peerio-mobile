@@ -67,7 +67,7 @@ export default class FileInnerItem extends SafeComponent {
             fontWeight: vars.font.weight.bold
         };
         const infoStyle = {
-            color: vars.subtleText,
+            color: vars.extraSubtleText,
             fontSize: vars.font.size.smaller,
             fontWeight: vars.font.weight.regular
         };
