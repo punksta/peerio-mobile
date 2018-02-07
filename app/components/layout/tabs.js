@@ -12,6 +12,7 @@ import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
 import uiState from './ui-state';
+import { invitationState } from '../states';
 
 const actionCellStyle = {
     flex: 1,
@@ -61,6 +62,7 @@ export default class Tabs extends SafeComponent {
         if (uiState.keyboardHeight) return null;
         if (routerMain.currentIndex !== 0) return null;
         if (fileState.isFileSelectionMode) return null;
+        if (invitationState.currentInvitation) return null;
         return (
             <View style={bottomRowStyle}>
                 {this.action(t('title_chats'), 'chats', 'forum', chatStore.unreadMessages)}

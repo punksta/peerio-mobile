@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { contactStore } from '../../lib/icebear';
@@ -13,7 +13,7 @@ import { t, tx } from '../utils/translator';
 export default class ContactInviteItemPrompt extends SafeComponent {
     @observable invited = false;
 
-    invite() {
+    @action.bound invite() {
         const { email } = this.props;
         this.invited = true;
         contactStore.invite(email);
@@ -30,7 +30,7 @@ export default class ContactInviteItemPrompt extends SafeComponent {
                     <Text style={{ color: vars.txtDate }}>{t('title_inviteContactByEmail2', { email })}</Text>
                 </View>
                 <View style={{ alignSelf: 'flex-end', marginTop: vars.spacing.small.maxi2x }}>
-                    {buttons.uppercaseGreenBgButton(title, () => this.invite(), invited)}
+                    {buttons.uppercaseGreenBgButton(title, this.invite, invited)}
                 </View>
             </View>
         );

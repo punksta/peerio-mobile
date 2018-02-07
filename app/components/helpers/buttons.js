@@ -67,21 +67,21 @@ export default {
         );
     },
 
-    uppercaseGreenBgButton(text, onPress, disabled, hidden) {
-        const opacity = hidden ? 0.0 : 1.0;
+    uppercaseGreenBgButton(text, onPress, disabled, style) {
         const s = {
-            borderRadius: 16,
+            borderRadius: 24,
             paddingHorizontal: vars.spacing.medium.mini2x,
             paddingVertical: vars.spacing.small.maxi,
-            backgroundColor: disabled ? vars.txtMedium : vars.snackbarBgGreen
+            backgroundColor: disabled ? vars.txtMedium : vars.snackbarBgGreen,
+            width: vars.roundedButtonWidth
         };
         return (
-            <View style={{ opacity }}>
+            <View>
                 <TouchableOpacity
                     disabled={disabled}
                     onPress={disabled ? null : onPress}
                     pressRetentionOffset={vars.pressRetentionOffset}
-                    style={s}>
+                    style={[s, style]}>
                     <Text style={{ fontWeight: 'bold', textAlign: 'center', color: vars.white }}>
                         {tu(text)}
                     </Text>

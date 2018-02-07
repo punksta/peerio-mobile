@@ -4,93 +4,66 @@ import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import { chatInviteStore, User } from '../../lib/icebear';
-import { T } from '../utils/translator';
-import CircleButtonWithIcon from '../controls/circle-button-with-icon';
+import { t } from '../utils/translator';
+import chatState from './chat-state';
+import routes from '../routes/routes';
 
 @observer
 export default class ChannelInviteListItem extends SafeComponent {
-    async acceptInvite(id) {
-        await chatInviteStore.acceptInvite(id);
-    }
+    onPress = () => {
+        const { id, channelName, username } = this.props;
+        routes.main.channelInvite({
+            channelName,
+            id,
+            username
+        });
+    };
 
     renderThrow() {
-        const { invitation } = this.props;
-        if (!invitation) return null;
-        const { kegDbId, channelName, username } = invitation;
+        if (chatState.collapseChannels) return null;
+        const { channelName } = this.props;
         const containerStyle = {
-            paddingLeft: vars.spacing.medium.mini2x,
-            paddingRight: vars.spacing.medium.maxi2x,
-            paddingVertical: vars.spacing.medium.mini,
-            justifyContent: 'space-between',
+            height: vars.chatListItemHeight,
+            paddingHorizontal: vars.spacing.medium.midi,
             alignItems: 'center',
-            borderBottomWidth: 1,
-            borderBottomColor: vars.lightGrayBg,
+            justifyContent: 'space-between',
             backgroundColor: vars.white,
             flexDirection: 'row'
         };
 
         const textStyle = {
-            fontSize: vars.font.size.bigger,
-            color: vars.txtDark,
-            marginBottom: 4
+            fontSize: vars.fontTitleSize,
+            fontWeight: 'bold',
+            color: vars.txtDark
         };
 
-        const smallTextStyle = {
-            color: vars.txtDate,
-            fontSize: vars.font.size.smaller
-        };
-
-        const actionButtonStyle = {
-            flexDirection: 'row',
-            flex: 1,
-            flexGrow: 1,
+        const circleStyle = {
+            paddingHorizontal: 4,
+            paddingVertical: 1,
+            borderRadius: 5,
+            backgroundColor: vars.bg,
+            overflow: 'hidden',
             alignItems: 'center',
-            justifyContent: 'flex-end'
+            justifyContent: 'center'
         };
-        console.log(`kegDbID: `, invitation);
+
+        const textNewStyle = {
+            fontSize: vars.font.size.smallerx,
+            color: vars.white
+        };
+
         return (
             <View style={{ backgroundColor: vars.bg }}>
-                <TouchableOpacity style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 4 }}>
-                        <View>
-                            <Text style={textStyle}>
-                                {`# ${channelName}`}
-                            </Text>
-                            <Text style={smallTextStyle}>
-                                <T k="title_invitedBy">{{ username }}</T>
-                            </Text>
-                        </View>
-                        {(User.current.channelsLeft > 0) ?
-                            <View style={actionButtonStyle}>
-                                <CircleButtonWithIcon
-                                    name="clear"
-                                    iconColor="white"
-                                    onPress={() => chatInviteStore.rejectInvite(kegDbId)}
-                                    radius={vars.iconSize}
-                                    margin={vars.iconSizeBigger}
-                                    bgColor="gray"
-                                />
-                                <CircleButtonWithIcon
-                                    name="done"
-                                    iconColor="white"
-                                    onPress={() => this.acceptInvite(kegDbId)}
-                                    radius={vars.iconSize}
-                                    margin={0}
-                                    bgColor={vars.bg}
-                                />
-                            </View> :
-                            <View style={actionButtonStyle}>
-                                <CircleButtonWithIcon
-                                    name="info"
-                                    iconColor="gray"
-                                    iconSize={vars.iconSizeBigger}
-                                    radius={vars.iconSizeBigger}
-                                    margin={0}
-                                    bgColor="white"
-                                />
-                            </View>
-                        }
+                <TouchableOpacity
+                    onPress={this.onPress}
+                    style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
+                    <Text style={textStyle}>
+                        {`# ${channelName}`}
+                    </Text>
+                    <View style={circleStyle}>
+                        <Text style={textNewStyle}>
+                            {t('title_new')}
+                        </Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -99,5 +72,7 @@ export default class ChannelInviteListItem extends SafeComponent {
 }
 
 ChannelInviteListItem.propTypes = {
-    invitation: PropTypes.any.isRequired
+    id: PropTypes.any.isRequired,
+    channelName: PropTypes.any.isRequired,
+    username: PropTypes.any.isRequired
 };

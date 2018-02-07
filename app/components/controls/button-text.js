@@ -9,13 +9,14 @@ import testLabel from '../helpers/test-label';
 @observer
 export default class ButtonText extends SafeComponent {
     renderThrow() {
-        const { text, secondary, disabled, onPress, testID } = this.props;
-        let textColor;
-        if (disabled) textColor = vars.extraSubtleText;
-        else if (secondary) textColor = vars.subtleText;
-        else textColor = vars.bg;
+        const { text, style, textColor, secondary, disabled, onPress, testID } = this.props;
+        let fontColor;
+        if (disabled) fontColor = vars.extraSubtleText;
+        else if (secondary) fontColor = vars.subtleText;
+        else if (textColor) fontColor = textColor;
+        else fontColor = vars.bg;
         const textStyle = {
-            color: textColor,
+            color: fontColor,
             fontWeight: 'bold'
         };
         const padding = vars.spacing.small.maxi2x;
@@ -30,7 +31,7 @@ export default class ButtonText extends SafeComponent {
                 style={touchable}
                 disabled={disabled}
                 onPress={disabled ? null : onPress}>
-                <Text style={textStyle}>
+                <Text style={[textStyle, style]}>
                     {text.toUpperCase ? text.toUpperCase() : text}
                 </Text>
             </TouchableOpacity>
@@ -40,7 +41,9 @@ export default class ButtonText extends SafeComponent {
 
 ButtonText.propTypes = {
     text: PropTypes.any,
+    textColor: PropTypes.any,
     testID: PropTypes.any,
     onPress: PropTypes.any,
-    secondary: PropTypes.bool
+    secondary: PropTypes.bool,
+    style: PropTypes.any
 };
