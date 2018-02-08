@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.254.0"></a>
+# [3.254.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.253.0...v3.254.0) (2018-02-08)
+
+
+### Features
+
+* jump to newly created chat when accepting invite ([a5de9e9](https://github.com/PeerioTechnologies/peerio-mobile/commit/a5de9e9))
+* snackbar for added contact [ch2770] ([cdb415e](https://github.com/PeerioTechnologies/peerio-mobile/commit/cdb415e))
+
+
+
 <a name="3.253.0"></a>
 # [3.253.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.252.0...v3.253.0) (2018-02-07)
 
