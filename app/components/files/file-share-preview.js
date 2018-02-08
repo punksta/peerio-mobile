@@ -143,8 +143,15 @@ export default class FileSharePreview extends SafeComponent {
             this.previewSmallHeight = dims.height;
         });
         const { path } = this.props.state;
-        const { width, height } = await ImagePicker.getImageDimensions(path);
-        Object.assign(this, { width, height });
+        console.log(`file-share-preview: trying to make thumbnail for ${path}`);
+        try {
+            const { width, height } = await ImagePicker.getImageDimensions(path);
+            console.log(`file-share-preview: got width ${width} and height ${height}`);
+            Object.assign(this, { width, height });
+        } catch (e) {
+            console.log(`file-share-preview: got an error`);
+            console.error(e);
+        }
     }
 
     @action.bound layoutPreviewContainer(e) {
