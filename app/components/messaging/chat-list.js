@@ -64,8 +64,8 @@ export default class ChatList extends SafeComponent {
             const channels = this.data.filter(d => !!d.isChannel);
             const allChannels = chatInviteStore.received.concat(channels);
             allChannels.sort((a, b) => {
-                const first = a.name || a.channelName;
-                const second = b.name || b.channelName;
+                const first = (a.name || a.channelName).toLocaleLowerCase();
+                const second = (b.name || b.channelName).toLocaleLowerCase();
                 return first.localeCompare(second);
             });
             const dms = this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex);
