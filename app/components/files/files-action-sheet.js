@@ -51,7 +51,6 @@ export default class FilesActionSheet extends SafeComponent {
 
     get renameFile() {
         const { file } = this.props;
-        console.log(file);
         return {
             title: tx('button_rename'),
             async action() {
@@ -77,8 +76,10 @@ export default class FilesActionSheet extends SafeComponent {
     }
 
     onPress = index => {
-        const { action } = this.items[index];
-        action && action();
+        if (this.items[index]) {
+            const { action } = this.items[index];
+            action && action();
+        }
     };
 
     show = () => this._actionSheet.show();
