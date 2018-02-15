@@ -7,7 +7,7 @@ import FilesPlaceholder from './files-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FolderActionSheet from './folder-action-sheet';
-import FilesActionSheet from './files-action-sheet';
+import FileUploadActionSheet from './file-upload-action-sheet';
 import fileState from './file-state';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import { upgradeForFiles } from '../payments/payments';
@@ -22,7 +22,7 @@ const iconClear = require('../../assets/file_icons/ic_close.png');
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
-let filesActionSheet = null;
+let fileUploadActionSheet = null;
 
 function backFolderAction() {
     fileState.currentFolder = fileState.currentFolder.parent;
@@ -45,7 +45,7 @@ export default class Files extends SafeComponent {
     }
 
     get rightIcon() {
-        return !fileState.isFileSelectionMode && <PlusBorderIcon action={() => filesActionSheet.show()} />;
+        return !fileState.isFileSelectionMode && <PlusBorderIcon action={() => fileUploadActionSheet.show()} />;
     }
 
     get layoutTitle() {
@@ -289,7 +289,7 @@ export default class Files extends SafeComponent {
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
                 <FolderActionSheet ref={ref => { this._folderActionSheet = ref; }} />
-                <FilesActionSheet createFolder ref={ref => { filesActionSheet = ref; }} />
+                <FileUploadActionSheet createFolder ref={ref => { fileUploadActionSheet = ref; }} />
                 {this.toolbar()}
             </View>
         );

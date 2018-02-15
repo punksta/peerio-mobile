@@ -8,6 +8,7 @@ import FileInnerItem from './file-inner-item';
 import FolderInnerItem from './folder-inner-item';
 import fileState from './file-state';
 import { vars } from '../../styles/styles';
+import RecentFileInnerItem from './recent-file-inner-item';
 
 @observer
 export default class FileItem extends SafeComponent {
@@ -34,12 +35,13 @@ export default class FileItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { file } = this.props;
+        const { file, isRecentFile } = this.props;
         return (
-            <View style={{ backgroundColor: 'white', marginHorizontal: vars.spacing.medium.mini2x }}>
-                {file.isFolder ?
+            <View style={{ backgroundColor: 'white', marginHorizontal: !isRecentFile ? vars.spacing.medium.mini2x : 0 }}>
+                {isRecentFile && <RecentFileInnerItem file={file} />}
+                {!isRecentFile && (file.isFolder ?
                     <FolderInnerItem folder={file} onLongPress={this.props.onLongPress} onPress={() => this.props.onChangeFolder(file)} /> :
-                    <FileInnerItem onPress={f => this.press(f)} file={file} />}
+                    <FileInnerItem onPress={f => this.press(f)} file={file} />)}
             </View>
         );
     }
@@ -47,5 +49,6 @@ export default class FileItem extends SafeComponent {
 
 FileItem.propTypes = {
     file: PropTypes.any.isRequired,
-    onChangeFolder: PropTypes.any
+    onChangeFolder: PropTypes.any,
+    isRecentFile: PropTypes.bool
 };

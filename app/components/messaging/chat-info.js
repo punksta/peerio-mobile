@@ -9,6 +9,7 @@ import Avatar from '../shared/avatar';
 import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import RecentFilesList from '../files/recent-files-list';
 
 const pinOff = require('../../assets/chat/icon-pin-off.png');
 const pinOn = require('../../assets/chat/icon-pin-on.png');
@@ -64,6 +65,7 @@ export default class ChatInfo extends SafeComponent {
                         {chat.otherParticipants.map(this.participant)}
                     </View>
                 )}
+                <RecentFilesList />
             </View>
         );
         const rightIcon = icons.iconImage(chat.isFavorite ? pinOn : pinOff,

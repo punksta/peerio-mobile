@@ -11,6 +11,7 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { popupCancelConfirm } from '../shared/popups';
 import { tx, tu } from '../utils/translator';
+import RecentFilesList from '../files/recent-files-list';
 
 const textStyle = {
     color: vars.txtDate,
@@ -182,6 +183,7 @@ export default class ChannelInfo extends SafeComponent {
                         {invited.map(this.participant)}
                     </View>
                 )}
+                <RecentFilesList />
             </View>
         );
         return (<LayoutModalExit
