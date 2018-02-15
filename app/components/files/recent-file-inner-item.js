@@ -8,7 +8,7 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import FileTypeIcon from './file-type-icon';
 import { fileHelpers } from '../../lib/icebear';
-import FilesActionSheet from '../files/recent-files-action-sheet';
+import FilesActionSheet from '../files/files-action-sheet';
 
 const { width } = Dimensions.get('window');
 const height = 64;
