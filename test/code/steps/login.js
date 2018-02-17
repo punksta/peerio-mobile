@@ -69,5 +69,16 @@ defineSupportCode(({ Given, When, Then }) => {
             await this.loginExistingAccount(credentials.name, credentials.passphrase);
         }
     });
+
+    When('I delete my account', async function () {
+        await this.homePage.settingsTab.click();
+        await this.settingsPage.accountButton.click();
+        await this.accountSettingsPage.deleteAccountButton.click();
+        await this.accountSettingsPage.confirmDeleteButton.click();
+    });
+
+    Then('I can not login with my credentials', async function () {
+
+    });
 });
 

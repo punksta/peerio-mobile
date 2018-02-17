@@ -119,6 +119,7 @@ export default {
     uppercaseRedButton(text, onPress, disabled) {
         return (
             <TouchableOpacity
+                {...testLabel(text)}
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={{ paddingRight: vars.spacing.small.maxi2x, paddingVertical: vars.spacing.small.maxi }}>

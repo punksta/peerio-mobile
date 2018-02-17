@@ -12,6 +12,7 @@ const HomePage = require('./pages/start/homePage');
 const TwoStepVerificationPage = require('./pages/settings/twoStepVerificationPage');
 const TwoFactorAuthPrompt = require('./pages/popups/twoFactorAuthPrompt');
 const SettingsPage = require('./pages/settings/settingsPage');
+const AccountSettingsPage = require('./pages/settings/accountSettingsPage');
 const otplib = require('otplib');
 
 class World {
@@ -43,6 +44,7 @@ class World {
         this.chatActionSheetPage = this.context.chatActionSheetPage(this.app);
 
         this.settingsPage = new SettingsPage(this.app);
+        this.accountSettingsPage = new AccountSettingsPage(this.app);
         this.twoStepVerificationPage = new TwoStepVerificationPage(this.app);
         this.twoFactorAuthPrompt = new TwoFactorAuthPrompt(this.app);
     }

@@ -1,12 +1,16 @@
 const Page = require('../page');
 
 class SettingsPage extends Page {
-    get logoutButton() {
-        return this.getWhenPresent('~button_logout');
-    }
-
     get securityButton() {
         return this.getWhenVisible('~title_settingsSecurity');
+    }
+
+    get accountButton() {
+        return this.getWhenPresent('~title_settingsAccount');
+    }
+
+    get logoutButton() {
+        return this.getWhenPresent('~button_logout');
     }
 
     get twoStepVerificationButton() {
