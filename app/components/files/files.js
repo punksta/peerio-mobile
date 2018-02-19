@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ListView, Animated, Text, TextInput, Platform } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FilesPlaceholder from './files-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -276,6 +276,10 @@ export default class Files extends SafeComponent {
         return !fileState.store.loading && <FilesPlaceholder />;
     }
 
+    @action.bound fileUploadActionSheetRef(ref) {
+        fileUploadActionSheet = ref;
+    }
+
     renderThrow() {
         return (
             <View
@@ -289,7 +293,7 @@ export default class Files extends SafeComponent {
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
                 <FolderActionSheet ref={ref => { this._folderActionSheet = ref; }} />
-                <FileUploadActionSheet createFolder ref={ref => { fileUploadActionSheet = ref; }} />
+                <FileUploadActionSheet createFolder ref={this.fileUploadActionSheetRef} />
                 {this.toolbar()}
             </View>
         );

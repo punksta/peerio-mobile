@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FileInnerItem from './file-inner-item';
 import FolderInnerItem from './folder-inner-item';
@@ -26,12 +26,18 @@ export default class FileItem extends SafeComponent {
         this.props.file.selected = true;
     }
 
-    press(file) {
+    @action.bound onPressFileInner() {
+        const { file } = this.props;
         if (fileState.showSelection) {
             file.selected = !file.selected;
         } else {
             fileState.routerMain.files(file);
         }
+    }
+
+    @action.bound changeFolder () {
+        const { file, onChangeFolder } = this.props;
+        onChangeFolder(file);
     }
 
     renderThrow() {
@@ -40,8 +46,8 @@ export default class FileItem extends SafeComponent {
             <View style={{ backgroundColor: 'white', marginHorizontal: !isRecentFile ? vars.spacing.medium.mini2x : 0 }}>
                 {isRecentFile && <RecentFileInnerItem file={file} />}
                 {!isRecentFile && (file.isFolder ?
-                    <FolderInnerItem folder={file} onLongPress={this.props.onLongPress} onPress={() => this.props.onChangeFolder(file)} /> :
-                    <FileInnerItem onPress={f => this.press(f)} file={file} />)}
+                    <FolderInnerItem folder={file} onLongPress={this.props.onLongPress} onPress={this.changeFolder} /> :
+                    <FileInnerItem file={file} onPress={this.onPressFileInner} />)}
             </View>
         );
     }
