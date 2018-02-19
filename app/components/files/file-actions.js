@@ -8,6 +8,7 @@ import { uiState, fileState } from '../states';
 import icons from '../helpers/icons';
 import routes from '../routes/routes';
 import { vars } from '../../styles/styles';
+import routerMain from '../routes/router-main';
 
 const actionCellStyle = {
     flex: 1,
@@ -62,7 +63,11 @@ export default class FileActions extends SafeComponent {
                 {leftAction}
                 {this.action(t('button_share'), 'reply', () => routes.modal.shareFileTo(), file && file.canShare && enabled)}
                 {this.action(t('Move'), 'repeat', () => routes.modal.moveFileTo(), file)}
-                {this.action(t('button_delete'), 'delete', () => fileState.delete(), enabled)}
+                {!file.isFolder && this.action(t('button_delete'), 'delete', () => fileState.delete(), enabled)}
+                {file.isFolder && this.action(t('button_delete'), 'delete', () => {
+                    fileState.store.folders.deleteFolder(file);
+                    routerMain.back();
+                }, true) }
                 {/* {this.action(t('button_more'), 'more-horiz')} */}
             </Animated.View>
         );

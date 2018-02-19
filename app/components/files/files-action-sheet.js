@@ -17,34 +17,32 @@ import routerMain from '../routes/router-main';
 
 @observer
 export default class FilesActionSheet extends SafeComponent {
-    DELETE_INDEX = 3;
-    CANCEL_INDEX = 4;
-
+    // TODO add folder sharing when it has been implemented
     get items() {
-        const result = [this.sharefile, this.moveFile, this.renameFile, this.deleteFile, this.cancel];
+        const { file } = this.props;
+        let result;
+        if (file.isFolder) {
+            this.DELETE_INDEX = 2;
+            this.CANCEL_INDEX = 3;
+            result = [this.moveFile, this.renameFile, this.deleteFolder, this.cancel];
+        } else {
+            this.DELETE_INDEX = 3;
+            this.CANCEL_INDEX = 4;
+            result = [this.sharefile, this.moveFile, this.renameFile, this.deleteFile, this.cancel];
+        }
         return result;
     }
 
     get cancel() { return { title: tx('button_cancel') }; }
 
-    get sharefile() {
-        const { file } = this.props;
-        return {
-            title: tx('button_share'),
-            action: () => {
-                fileState.currentFile = file;
-                routerModal.shareFileTo();
-            }
-        };
-    }
-
+    // File and Folder functions
     get moveFile() {
         const { file } = this.props;
         return {
-            title: tx('Move'),
+            title: tx('button_move'),
             action: () => {
                 fileState.currentFile = file;
-                routes.modal.moveFileTo();
+                routerModal.moveFileTo();
             }
         };
     }
@@ -59,7 +57,23 @@ export default class FilesActionSheet extends SafeComponent {
                     '',
                     fileHelpers.getFileNameWithoutExtension(file.name)
                 );
-                if (newFileName) await file.rename(`${newFileName}.${file.ext}`);
+                if (newFileName) {
+                    file.isFolder ?
+                        await file.rename(`${newFileName}`) :
+                        await file.rename(`${newFileName}.${file.ext}`);
+                }
+            }
+        };
+    }
+
+    // File specific functions
+    get sharefile() {
+        const { file } = this.props;
+        return {
+            title: tx('button_share'),
+            action: () => {
+                fileState.currentFile = file;
+                routerModal.shareFileTo();
             }
         };
     }
@@ -71,6 +85,17 @@ export default class FilesActionSheet extends SafeComponent {
             title: tx('button_delete'),
             async action() {
                 fileState.deleteFile(file);
+            }
+        };
+    }
+
+    // Folder Specific functions
+    get deleteFolder() {
+        const { file } = this.props;
+        return {
+            title: tx('button_delete'),
+            async action() {
+                fileState.store.folders.deleteFolder(file);
             }
         };
     }
@@ -112,11 +137,14 @@ export default class FilesActionSheet extends SafeComponent {
             paddingTop: vars.spacing.small.mini,
             lineHeight: 18
         };
+        const folderSizeText = file.size ?
+            file.sizeFormatted :
+            tx('title_empty');
         const title =
             (<TouchableOpacity style={containerStyle} onPress={this.onFileInfoPress}>
                 <View style={containerStyle}>
                     <Text style={[containerStyle, titleTextStyle]}>
-                        {`${file.name}\n${file.sizeFormatted} ${moment(file.uploadedAt).format('DD/MM/YYYY')}`}
+                        {`${file.name}\n${file.isFolder ? folderSizeText : file.sizeFormatted} ${moment(file.uploadedAt).format('DD/MM/YYYY')}`}
                     </Text>
                 </View>
                 {icons.plaindark('info', vars.iconSize, infoIconStyle)}

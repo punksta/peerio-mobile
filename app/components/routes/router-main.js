@@ -11,7 +11,7 @@ import GhostsLevel1 from '../ghosts/ghosts-level-1';
 import Chat from '../messaging/chat';
 import ChatList from '../messaging/chat-list';
 import Files from '../files/files';
-import FileView from '../files/file-view';
+import FileDetailView from '../files/file-detail-view';
 import ContactAdd from '../contacts/contact-add';
 import ContactView from '../contacts/contact-view';
 import ContactList from '../contacts/contact-list';
@@ -42,7 +42,7 @@ class RouterMain extends Router {
         routes.main = this;
         reaction(() => this.currentIndex, i => { this.isBackVisible = i > 0; });
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
-        this.add('files', [<Files />, <FileView />], fileState);
+        this.add('files', [<Files />, <FileDetailView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
         this.add('chats', [<ChatList />, <Chat />], chatState);
         this.add('contacts', [<ContactList />, <ContactView nonModal />], contactState);

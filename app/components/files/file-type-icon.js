@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Image, View } from 'react-native';
+import { vars } from '../../styles/styles';
 
 export default class FileTypeIcon extends React.Component {
     /* props
@@ -13,13 +14,13 @@ export default class FileTypeIcon extends React.Component {
         let sizeStyle;
         switch (this.props.size) {
             case 'small':
-                sizeStyle = { height: 24, width: 24 };
+                sizeStyle = { height: vars.iconSize, width: vars.iconSize };
                 break;
             case 'medium':
-                sizeStyle = { height: 48, width: 48 };
+                sizeStyle = { height: vars.iconSizeLarge, width: vars.iconSizeLarge };
                 break;
             case 'large': default:
-                sizeStyle = { height: 72, width: 72 };
+                sizeStyle = { height: vars.iconFileViewSize, width: vars.iconFileViewSize };
                 break;
         }
         return (

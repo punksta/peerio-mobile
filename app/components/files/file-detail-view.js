@@ -8,16 +8,26 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileProgress from './file-progress';
 import FileActions from './file-actions';
-import { uiState, fileState } from '../states';
+import { fileState } from '../states';
 import { tx } from '../utils/translator';
 import FileTypeIcon from './file-type-icon';
 import { fileHelpers } from '../../lib/icebear';
+
+const containerStyle = {
+    flexGrow: 1,
+    justifyContent: 'space-between'
+};
 
 const firstRowStyle = {
     flex: 0,
     flexDirection: 'row',
     marginTop: vars.spacing.small.maxi2x,
     paddingRight: vars.spacing.medium.mini2x
+};
+
+const iconTypeStyle = {
+    marginLeft: vars.spacing.small.mini2x,
+    marginRight: vars.spacing.small.maxi2x
 };
 
 const secondRowStyle = {
@@ -35,7 +45,7 @@ const hintStyle = {
 };
 
 @observer
-export default class FileView extends SafeComponent {
+export default class FileDetailView extends SafeComponent {
     get file() {
         return fileState.currentFile || {};
     }
@@ -56,24 +66,17 @@ export default class FileView extends SafeComponent {
         }
     }
 
-    renderThrow() {
+    renderFileDetailView() {
         const { file } = this;
         let icon = null;
         if (file.downloading) icon = 'file-download';
         if (file.uploading) icon = 'file-upload';
         if (icon) icon = icons.plaindark(icon, vars.iconFileViewSize);
         return (
-            <View
-                style={{
-                    flexGrow: 1,
-                    justifyContent: 'space-between'
-                }}>
+            <View style={containerStyle}>
                 <View>
                     <View style={firstRowStyle}>
-                        <View style={{
-                            marginLeft: vars.spacing.small.mini2x,
-                            marginRight: vars.spacing.small.maxi2x
-                        }}>
+                        <View style={iconTypeStyle}>
                             <TouchableOpacity
                                 onPress={this.fileAction}
                                 pressRetentionOffset={vars.pressRetentionOffset}>
@@ -113,5 +116,44 @@ export default class FileView extends SafeComponent {
                 </View>
             </View>
         );
+    }
+
+    renderFolderDetailView() {
+        const { file } = this;
+        const folder = file; // for the sake of readability
+        return (
+            <View style={containerStyle}>
+                <View style={firstRowStyle}>
+                    <View style={iconTypeStyle}>
+                        {icons.darkNoPadding('folder', null, null, vars.iconFileViewSize)}
+                    </View>
+                    <View style={firstColumnStyle}>
+                        <View style={{ flexGrow: 1, flexShrink: 1 }}>
+                            <Text
+                                ellipsizeMode="tail"
+                                numberOfLines={1}>{folder.name}
+                            </Text>
+                        </View>
+                        <View style={secondRowStyle}>
+                            <View style={{ flexGrow: 1 }}>
+                                <Text style={hintStyle}>{tx('title_folderSize')}</Text>
+                                <Text>{folder.sizeFormatted}</Text>
+                            </View>
+                            <View style={{ flexGrow: 1 }}>
+                                {folder.createdAt && <Text style={hintStyle}>{tx('title_created')}</Text>}
+                                {folder.createdAt && <Text>{moment(folder.createdAt).format(`MMM DD, YYYY`)}</Text>}
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
+    renderThrow() {
+        const { file } = this;
+        return (file.isFolder ?
+            this.renderFolderDetailView() :
+            this.renderFileDetailView());
     }
 }
