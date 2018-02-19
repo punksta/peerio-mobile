@@ -93,7 +93,7 @@ export default class FileInnerItem extends SafeComponent {
         if (file.uploading /* || !file.readyForDownload */) {
             opacity = 0.5;
         }
-        if (icon) icon = icons.dark(icon);
+        if (icon) icon = icons.darkNoPadding(icon);
         const loadingStyle = null;
         const arrow = this.props.hideArrow ? null : (
             <View style={{ flex: 0 }}>
