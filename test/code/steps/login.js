@@ -53,7 +53,7 @@ defineSupportCode(({ Given, When, Then }) => {
     Given('I sign out', async function () {
         await this.homePage.settingsTab.click();
         await this.app.touchAction([
-            { action: 'swipe', x: 0, y: 200 },
+            { action: 'press', x: 0, y: 200 },
             { action: 'moveTo', x: 0, y: -200 },
             'release'
         ]);
