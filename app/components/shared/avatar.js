@@ -45,10 +45,9 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 8,
-    paddingRight: vars.spacing.small.mini2x,
-    paddingBottom: 0
-
+    paddingBottom: 0,
+    paddingLeft: vars.spacing.medium.mini2x,
+    paddingRight: vars.spacing.medium.mini2x
 };
 
 const nameContainerStyle = {
@@ -69,8 +68,7 @@ const nameMessageContainerStyle = {
     borderColor: 'red',
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingLeft: 16,
-    marginLeft: 6,
+    marginLeft: vars.spacing.medium.mini2x,
     marginRight: vars.spacing.small.midi,
     paddingTop: 0
 };
