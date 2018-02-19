@@ -27,6 +27,7 @@ Feature: Account and login
     @noCacheReset
     Scenario: Delete account
         Given I have signed up
+        And   my email is confirmed
         When  I delete my account
         And   I close Peerio
         And   I open Peerio

@@ -6,7 +6,15 @@ class AccountSettingsPage extends Page {
     }
 
     get confirmDeleteButton() {
-        return this.getWhenPresent('~title_settingsAccount');
+        return this.getWhenVisible('~popupButton-copy');
+    }
+
+    get confirmSuspendedButton() {
+        return this.getWhenVisible('~popupButton-ok');
+    }
+
+    get logoutButton() {
+        return this.getWhenVisible('~popupButton-yes');
     }
 }
 

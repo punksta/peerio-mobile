@@ -102,12 +102,13 @@ class World {
 
     async typePersonalInfo() {
         this.username = new Date().getTime();
+        this.email = `${this.username}@test.lan`;
         console.log('Creating account with username', this.username);
 
         await this.createAccountPage.firstName.setValue('test-first-name').hideDeviceKeyboard();
         await this.createAccountPage.lastName.setValue('test-last-name').hideDeviceKeyboard();
         await this.createAccountPage.username.setValue(this.username).hideDeviceKeyboard();
-        await this.createAccountPage.email.setValue('test@email.io').hideDeviceKeyboard();
+        await this.createAccountPage.email.setValue(this.email).hideDeviceKeyboard();
         await this.createAccountPage.nextButton.click();
     }
 

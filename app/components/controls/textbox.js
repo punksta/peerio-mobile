@@ -135,6 +135,7 @@ export default class TextBox extends SafeComponent {
     get validationControl() {
         return !this.valid ? (
             <Text
+                {...testLabel(this.validationMessage)}
                 style={{
                     height: 14,
                     color: vars.txtDark,

@@ -1,4 +1,5 @@
 const { defineSupportCode } = require('cucumber');
+const { waitForEmail, getUrl } = require('../helpers/emailHelper');
 
 defineSupportCode(({ Given, When, Then }) => {
     const existingUsers = {
@@ -75,10 +76,25 @@ defineSupportCode(({ Given, When, Then }) => {
         await this.settingsPage.accountButton.click();
         await this.accountSettingsPage.deleteAccountButton.click();
         await this.accountSettingsPage.confirmDeleteButton.click();
+        await this.accountSettingsPage.confirmSuspendedButton.click();
+        await this.accountSettingsPage.logoutButton.click();
+    });
+
+    Then('my email is confirmed', async function () {
+        const emailConfirmUrlRegex = /"(https:\/\/hocuspocus\.peerio\.com\/confirm-address\/.*?)"/;
+        const email = await waitForEmail(this.email, 'Welcome to Peerio (Staging)! Confirm your account.');
+        const url = emailConfirmUrlRegex.exec(email.body)[1];
+        await getUrl(url);
     });
 
     Then('I can not login with my credentials', async function () {
-
+        await this.startPage.loginButton.click();
+        await this.loginPage.username.setValue(this.username).hideDeviceKeyboard();
+        await this.loginPage.passphrase.setValue(this.passphrase).hideDeviceKeyboard();
+        // if (await this.seeWelcomeScreen()) {
+            await this.loginPage.submitButton.click();
+        // }
+        await this.loginPage.invalidKeyLabelShown;
     });
 });
 
