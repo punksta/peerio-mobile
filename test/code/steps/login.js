@@ -1,5 +1,5 @@
 const { defineSupportCode } = require('cucumber');
-const { waitForEmail, getUrl } = require('../helpers/emailHelper');
+const { confirmEmail } = require('../../../app/lib/peerio-icebear/test/e2e/code/helpers/confirmEmail.js');
 
 defineSupportCode(({ Given, When, Then }) => {
     const existingUsers = {
@@ -81,19 +81,16 @@ defineSupportCode(({ Given, When, Then }) => {
     });
 
     Then('my email is confirmed', async function () {
-        const emailConfirmUrlRegex = /"(https:\/\/hocuspocus\.peerio\.com\/confirm-address\/.*?)"/;
-        const email = await waitForEmail(this.email, 'Welcome to Peerio (Staging)! Confirm your account.');
-        const url = emailConfirmUrlRegex.exec(email.body)[1];
-        await getUrl(url);
+        await confirmEmail(this.email);
     });
 
     Then('I can not login with my credentials', async function () {
         await this.startPage.loginButton.click();
         await this.loginPage.username.setValue(this.username).hideDeviceKeyboard();
         await this.loginPage.passphrase.setValue(this.passphrase).hideDeviceKeyboard();
-        // if (await this.seeWelcomeScreen()) {
+        if (this.context.platform.desiredCapabilities.platformName === 'Android') {
             await this.loginPage.submitButton.click();
-        // }
+        }
         await this.loginPage.invalidKeyLabelShown;
     });
 });
