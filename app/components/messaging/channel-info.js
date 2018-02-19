@@ -10,7 +10,7 @@ import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { popupCancelConfirm } from '../shared/popups';
-import { tx, tu } from '../utils/translator';
+import { tx } from '../utils/translator';
 
 const textStyle = {
     color: vars.txtDate,
@@ -64,9 +64,11 @@ export default class ChannelInfo extends SafeComponent {
     action(title, icon, action) {
         return (
             <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={action}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: vars.spacing.small.mini2x }}>
                     {icons.dark(icon, action)}
-                    <Text>{title}</Text>
+                    <Text style={{ marginLeft: vars.spacing.medium.mini, color: vars.lighterBlackText }}>
+                        {title}
+                    </Text>
                 </View>
             </TouchableOpacity>
         );
@@ -84,7 +86,7 @@ export default class ChannelInfo extends SafeComponent {
         const isAdmin = chat.isAdmin(contact);
         return (
             <View key={contact.username} style={row}>
-                <View style={{ flex: 1, flexGrow: 1, paddingLeft: vars.spacing.small.mini2x }}>
+                <View style={{ flex: 1, flexGrow: 1 }}>
                     <Avatar
                         noBorderBottom
                         contact={contact}
@@ -93,15 +95,15 @@ export default class ChannelInfo extends SafeComponent {
                         hideOnline />
                 </View>
                 <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
-                    {isAdmin && <View style={{ backgroundColor: vars.bg, borderRadius: 4, padding: vars.spacing.small.mini2x, overflow: 'hidden' }}>
+                    {isAdmin && <View style={{ backgroundColor: vars.tabsFg, borderRadius: 4, padding: vars.spacing.small.mini2x, overflow: 'hidden' }}>
                         <Text style={{ color: vars.white, fontSize: vars.font.size.small }}>
-                            {tu('title_admin')}
+                            {tx('title_admin')}
                         </Text>
                     </View>}
                     {chat.canIAdmin && <Menu>
                         <MenuTrigger
                             renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
-                            style={{ padding: vars.iconPadding }}>
+                            style={{ padding: vars.iconPadding, marginLeft: vars.spacing.small.maxi2x }}>
                             {icons.plaindark('more-vert')}
                         </MenuTrigger>
                         <MenuOptions>

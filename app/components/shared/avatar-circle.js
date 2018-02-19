@@ -22,7 +22,8 @@ export default class AvatarCircle extends SafeComponent {
             width,
             height,
             borderRadius: width / 2,
-            margin: vars.spacing.small.mini2x * ratio
+            marginTop: vars.spacing.small.mini2x * ratio,
+            marginBottom: vars.spacing.small.mini2x * ratio
         };
         if (loading) {
             return <ActivityIndicator style={{ height, margin: vars.spacing.small.mini2x }} />;
