@@ -39,7 +39,6 @@ export default class RecentFilesList extends SafeComponent {
     item({ item }) {
         const fileId = item;
         const file = fileState.store.getById(fileId);
-        console.log(file);
         if (!file) return null;
         return (
             <FileItem
