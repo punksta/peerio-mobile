@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
+import { action } from 'mobx';
 import { Text, Dimensions, View } from 'react-native';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
@@ -20,6 +21,10 @@ const fileInfoContainerStyle = {
 
 @observer
 export default class RecentFileInnerItem extends SafeComponent {
+    @action.bound filesActionSheetRef(ref) {
+        this.filesActionSheet = ref;
+    }
+
     fileOptions = () => this.filesActionSheet.show();
 
     renderThrow() {
@@ -75,7 +80,7 @@ export default class RecentFileInnerItem extends SafeComponent {
                 </View>
                 <FilesActionSheet
                     file={file}
-                    ref={ref => { this.filesActionSheet = ref; }} />
+                    ref={this.filesActionSheetRef} />
             </View>
         );
     }

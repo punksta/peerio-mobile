@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { Text, Dimensions, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
@@ -58,10 +59,14 @@ export default class FileInnerItem extends SafeComponent {
         );
     }
 
+    @action.bound filesActionSheetRef(ref) {
+        this.filesActionSheet = ref;
+    }
+
     renderThrow() {
         const { file } = this.props;
         if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
-        const action = () => !file.uploading && this.onPress();
+        const actionIcon = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
             icons.dark('more-vert', this.showFileOptions);
         const nameStyle = {
@@ -105,7 +110,7 @@ export default class FileInnerItem extends SafeComponent {
         );
         return (
             <View style={{ backgroundColor: 'white' }}>
-                <TouchableOpacity onPress={action}>
+                <TouchableOpacity onPress={actionIcon}>
                     <View style={[fileInfoContainerStyle, { opacity }]}>
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width }]}>
@@ -131,7 +136,7 @@ export default class FileInnerItem extends SafeComponent {
                 <FileProgress file={file} />
                 <FilesActionSheet
                     file={file}
-                    ref={ref => { this.filesActionSheet = ref; }} />
+                    ref={this.filesActionSheetRef} />
             </View>
         );
     }
