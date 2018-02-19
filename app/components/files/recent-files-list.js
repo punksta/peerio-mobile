@@ -5,7 +5,7 @@ import { reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import chatState from '../messaging/chat-state';
 import FileItem from '../files/file-item';
-import RecentFilesSectionHeading from './recent-files-section-heading';
+import ChatInfoSectionHeading from '../messaging/chat-info-section-heading';
 import fileState from '../files/file-state';
 import { tx } from '../utils/translator';
 
@@ -50,7 +50,7 @@ export default class RecentFilesList extends SafeComponent {
     }
 
     header({ section: { key } }) {
-        return <RecentFilesSectionHeading key={key} title={key} />;
+        return <ChatInfoSectionHeading key={key} title={key} state="collapseRecentFiles" collapsible={chatState.currentChat.isChannel} />;
     }
 
     renderThrow() {

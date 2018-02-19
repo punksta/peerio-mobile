@@ -9,6 +9,7 @@ import icons from '../helpers/icons';
 import FileTypeIcon from './file-type-icon';
 import { fileHelpers } from '../../lib/icebear';
 import FilesActionSheet from '../files/files-action-sheet';
+import chatState from '../messaging/chat-state';
 
 const { width } = Dimensions.get('window');
 const height = 64;
@@ -23,6 +24,7 @@ export default class RecentFileInnerItem extends SafeComponent {
     fileOptions = () => this.filesActionSheet.show();
 
     renderThrow() {
+        if (chatState.collapseRecentFiles) return null;
         const { file } = this.props;
         const iconRight = icons.dark('more-vert', this.fileOptions);
         const nameStyle = {
