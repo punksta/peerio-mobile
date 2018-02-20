@@ -16,8 +16,7 @@ class PreferenceStore {
         limitInlineImageSize: true, // will use config.chat.inlineImageSizeLimit
         externalContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
         externalContentEnabled: true,
-        externalContentJustForFavs: false,
-        peerioContentEnabled: true,
+        externalContentJustForFavs: false
     };
 
     observePreference(key, dbName, localStore) {

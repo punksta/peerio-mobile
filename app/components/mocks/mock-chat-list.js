@@ -3,7 +3,7 @@ import { View, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
 import PopupLayout from '../layout/popup-layout';
 import ChatList from '../messaging/chat-list';
-import ChannelInviteList from '../messaging/channel-invite-list';
+import ChannelInvite from '../messaging/channel-invite';
 import { User } from '../../lib/icebear';
 import chatState from '../messaging/chat-state';
 import mockChatStore from './mock-chat-store';
@@ -20,7 +20,7 @@ export default class MockChatList extends Component {
     render() {
         return (
             <View style={{ backgroundColor: 'white', flex: 1, flexGrow: 1, paddingTop: vars.layoutPaddingTop }}>
-                {chatState.routerMain.route === 'channelInviteList' ? <ChannelInviteList /> : <ChatList />}
+                {chatState.routerMain.route === 'channelInviteList' ? <ChannelInvite /> : <ChatList />}
                 <PopupLayout key="popups" />
                 <StatusBar barStyle="default" />
             </View>

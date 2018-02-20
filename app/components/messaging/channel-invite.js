@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import { action, observable } from 'mobx';
 import { Text, View } from 'react-native';
