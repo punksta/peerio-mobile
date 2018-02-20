@@ -190,10 +190,14 @@ export default class Files extends SafeComponent {
 
         let rightIcon = null;
         if (fileState.findFilesText) {
-            rightIcon = icons.iconImage(iconClear, () => {
-                fileState.findFilesText = '';
-                this.onChangeFindFilesText('');
-            });
+            rightIcon = icons.iconImage(
+                iconClear,
+                () => {
+                    fileState.findFilesText = '';
+                    this.onChangeFindFilesText('');
+                },
+                vars.sublteGrayOpacity
+            );
         }
 
         return (

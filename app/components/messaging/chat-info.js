@@ -66,8 +66,11 @@ export default class ChatInfo extends SafeComponent {
                 )}
             </View>
         );
-        const rightIcon = icons.iconImage(chat.isFavorite ? pinOn : pinOff,
-            () => chat.toggleFavoriteState());
+        const rightIcon = icons.iconImage(
+            chat.isFavorite ? pinOn : pinOff,
+            () => chat.toggleFavoriteState(),
+            vars.sublteGrayOpacity
+        );
         return (<LayoutModalExit
             body={body}
             title={chatState.title}
