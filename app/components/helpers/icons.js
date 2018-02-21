@@ -157,13 +157,26 @@ const icons = {
         );
     },
 
-    iconImage(source, onPress) {
+    iconImage(source, onPress, opacity) {
         const width = vars.iconSize;
         const height = width;
         const padding = vars.iconPadding;
         return (
             <TouchableOpacity
-                style={{ padding, opacity: vars.sublteGrayOpacity }}
+                style={{ padding, opacity }}
+                onPress={onPress}
+                pressRetentionOffset={vars.retentionOffset} >
+                <Image style={{ width, height }} source={source} />
+            </TouchableOpacity>
+        );
+    },
+
+    iconImageNoPadding(source, onPress, opacity) {
+        const width = vars.iconSize;
+        const height = width;
+        return (
+            <TouchableOpacity
+                style={{ opacity }}
                 onPress={onPress}
                 pressRetentionOffset={vars.retentionOffset} >
                 <Image style={{ width, height }} source={source} />

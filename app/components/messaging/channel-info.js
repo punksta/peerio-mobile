@@ -13,6 +13,8 @@ import { popupCancelConfirm } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RecentFilesList from '../files/recent-files-list';
 
+const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
+
 const textStyle = {
     color: vars.txtDate,
     marginTop: vars.spacing.small.maxi,
@@ -38,6 +40,10 @@ export default class ChannelInfo extends SafeComponent {
         this.channelTopic = this.chat.purpose;
     }
 
+    addMembers = () => {
+        chatState.routerModal.channelAddPeople();
+    };
+
     leaveChannel = async () => {
         if (await popupCancelConfirm(tx('button_leaveChannel'), tx('title_confirmChannelLeave'))) {
             await this.chat.leave();
@@ -62,12 +68,24 @@ export default class ChannelInfo extends SafeComponent {
         );
     }
 
-    action(title, icon, action) {
+    get spacer() {
+        return <View style={{ height: 8 }} />;
+    }
+
+    action(title, icon, action, image) {
+        const containerStyle = {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginLeft: vars.spacing.medium.mini2x,
+            height: vars.chatListItemHeight
+        };
         return (
             <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={action}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: vars.spacing.small.mini2x }}>
-                    {icons.dark(icon, action)}
-                    <Text style={{ marginLeft: vars.spacing.medium.mini, color: vars.lighterBlackText }}>
+                <View style={containerStyle}>
+                    {icon ?
+                        icons.darkNoPadding(icon, action) :
+                        icons.iconImageNoPadding(image, action)}
+                    <Text style={{ marginLeft: vars.spacing.medium.maxi2x, color: vars.lighterBlackText }}>
                         {title}
                     </Text>
                 </View>
@@ -134,7 +152,7 @@ export default class ChannelInfo extends SafeComponent {
         };
         return (
             <View>
-                <Text style={textStyle}>{tx('title_channelPurpose')}</Text>
+                <Text style={textStyle}>{tx('title_purpose')}</Text>
                 <TextInput
                     onChangeText={text => { this.channelTopic = text; }}
                     onBlur={update}
@@ -148,7 +166,7 @@ export default class ChannelInfo extends SafeComponent {
     get topicTextView() {
         return (
             <View>
-                <Text style={textStyle}>{tx('title_channelPurpose')}</Text>
+                <Text style={textStyle}>{tx('title_purpose')}</Text>
                 <Text style={topicTextStyle}>{this.channelTopic}</Text>
             </View>
         );
@@ -162,15 +180,21 @@ export default class ChannelInfo extends SafeComponent {
         const body = (
             <View>
                 {this.lineBlock(canIAdmin ? this.topicTextBox : this.topicTextView)}
-                {canILeave && this.lineBlock(this.action(tx('button_leaveChannel'), 'remove-circle-outline', this.leaveChannel), true)}
-                {canIAdmin && this.lineBlock(this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel))}
+                {this.lineBlock(
+                    <View>
+                        {this.spacer}
+                        {canIAdmin && this.action(tx('button_inviteToChannel'), 'person-add', this.addMembers)}
+                        {canILeave && this.action(tx('button_leaveChannel'), null, this.leaveChannel, leaveRoomImage)}
+                        {canIAdmin && this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel)}
+                        {this.spacer}
+                    </View>)
+                }
                 {chat.allJoinedParticipants && this.lineBlock(
                     <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', flexGrow: 1 }}>
                             <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x }]}>
                                 {tx('title_Members')}
                             </Text>
-                            {canIAdmin && icons.dark('add-circle-outline', () => chatState.routerModal.channelAddPeople())}
                         </View>
                         {chat.allJoinedParticipants.map(this.participant)}
                     </View>

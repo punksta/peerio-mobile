@@ -7,7 +7,7 @@ import uiState from './ui-state';
 import InputMainContainer from './input-main-container';
 import Bottom from '../controls/bottom';
 import HeaderMain from './header-main';
-import Tabs from './tabs';
+import TabContainer from './tab-container';
 import SnackBar from '../snackbars/snackbar';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -79,7 +79,7 @@ export default class LayoutMain extends SafeComponent {
                 </View>
                 {showInput && <InputMainContainer />}
                 {this.fab}
-                {actionsBar || <Tabs />}
+                {actionsBar || <TabContainer />}
             </View>
         );
         return (

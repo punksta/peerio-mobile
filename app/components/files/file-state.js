@@ -150,6 +150,7 @@ class FileState extends RoutedState {
         if (!chat) throw new Error('file-state.js, uploadInline: no chat selected');
         data.file = chat.uploadAndShareFile(data.url, data.fileName, false, null, data.message);
         await promiseWhen(() => data.file.fileId);
+        // TODO: move this to icebear
         this.localFileMap.set(data.file.fileId, data.url);
         return data.file;
     };
@@ -175,6 +176,10 @@ class FileState extends RoutedState {
         console.log('files on transition');
         clientApp.isInFilesView = active && !!file;
         this.currentFile = active ? file : null;
+    }
+
+    goToRoot() {
+        this.currentFolder = fileStore.folders.root;
     }
 
     get title() {

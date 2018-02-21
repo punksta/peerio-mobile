@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
+import { action } from 'mobx';
 import { View, ScrollView, Share, Text, Platform } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -12,6 +13,7 @@ import { tx, tu } from '../utils/translator';
 import { warnings, config, clientApp } from '../../lib/icebear';
 import { popupYes } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
+import uiState from '../layout/ui-state';
 
 const bgStyle = {
     flexGrow: 1,
@@ -57,6 +59,11 @@ export default class SettingsLevel1 extends SafeComponent {
         clientApp.uiUserPrefs.externalContentConsented = false;
     };
 
+    @action.bound scrollViewRef(sv) {
+        this.scrollView = sv;
+        uiState.currentScrollView = sv;
+    }
+
     renderThrow() {
         const plan = plans.topPlan();
         const upgradeItem = plan ?
@@ -64,7 +71,9 @@ export default class SettingsLevel1 extends SafeComponent {
             <SettingsItem title="button_upgrade" onPress={() => settingsState.upgrade()} />;
         return (
             <View style={bgStyle}>
-                <ScrollView contentContainerStyle={svStyle}>
+                <ScrollView
+                    contentContainerStyle={svStyle}
+                    ref={this.scrollViewRef} >
                     <SettingsItem title="title_settingsProfile" onPress={() => settingsState.transition('profile')} />
                     <SettingsItem title="title_settingsSecurity" onPress={() => settingsState.transition('security')} />
                     <SettingsItem title="title_settingsPreferences" onPress={() => settingsState.transition('preferences')} />

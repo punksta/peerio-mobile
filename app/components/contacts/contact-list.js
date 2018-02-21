@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
 import { View, SectionList } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ContactsPlaceholder from './contacts-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -12,6 +12,7 @@ import contactState from './contact-state';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
+import uiState from '../layout/ui-state';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -62,6 +63,11 @@ export default class ContactList extends SafeComponent {
         return <ContactSectionHeader key={key} title={key} />;
     }
 
+    @action.bound scrollViewRef(sv) {
+        this.scrollView = sv;
+        uiState.currentScrollView = sv;
+    }
+
     listView() {
         return (
             <SectionList
@@ -70,6 +76,7 @@ export default class ContactList extends SafeComponent {
                 keyExtractor={item => item.username || item.email}
                 renderItem={this.item}
                 renderSectionHeader={this.header}
+                ref={this.scrollViewRef}
             />
         );
     }

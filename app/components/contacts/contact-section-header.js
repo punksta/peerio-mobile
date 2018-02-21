@@ -11,7 +11,7 @@ export default class ContactSectionHeader extends SafeComponent {
         const { title } = this.props;
         if (!title) return null;
         const style = {
-            height: 48,
+            height: vars.contactListHeaderHeight,
             justifyContent: 'center',
             backgroundColor: vars.lightGrayBg
         };

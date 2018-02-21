@@ -113,7 +113,7 @@ export default class TwoFactorAuth extends SafeComponent {
         if (this.showReissueCodes) return <TwoFactorAuthCodesGenerate />;
         if (this.backupCodes) return <TwoFactorAuthCodes codes={this.backupCodes} />;
         return (
-            <ScrollView 
+            <ScrollView
                 style={bgStyle}
                 keyboardShouldPersistTaps="handled">
                 <View>

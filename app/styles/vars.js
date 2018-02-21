@@ -114,6 +114,7 @@ const vars = {
     iconMargin: 30,
     imagePreviewSize: 48,
     chatListItemHeight: 48,
+    contactListHeaderHeight: 48,
     roundedButtonWidth: 134,
     menuWidthRatio: 0.8,
     animationDuration: 200,
@@ -211,7 +212,13 @@ const vars = {
     },
     loadingTimeout: 15000,
     isDeviceScreenBig,
-    isDeviceScreenSmall
+    isDeviceScreenSmall,
+    fileType: {
+        smaller: 24,
+        small: 32,
+        medium: 48,
+        large: 72
+    }
 };
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;

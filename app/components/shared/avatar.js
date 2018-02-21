@@ -17,8 +17,6 @@ import CorruptedMessage from './corrupted-message';
 import tagify from './tagify';
 import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
-import preferenceStore from '../settings/preference-store';
-import { popupSetupVideo } from '../shared/popups';
 import testLabel from '../helpers/test-label';
 
 const pinOn = require('../../assets/chat/icon-pin.png');
@@ -197,7 +195,6 @@ export default class Avatar extends SafeComponent {
     get systemMessage() {
         const { systemMessage, videoCallMessage } = this.props;
         if (videoCallMessage) {
-            const { prefs } = preferenceStore;
             const videoCallShort = videoCallMessage.replace(/(https:\/\/)/, '');
             return (
                 <View>
