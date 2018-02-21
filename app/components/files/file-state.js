@@ -166,6 +166,10 @@ class FileState extends RoutedState {
         this.currentFile = active ? file : null;
     }
 
+    goToRoot() {
+        this.currentFolder = fileStore.folders.root;
+    }
+
     get title() {
         return this.currentFile ? this.currentFile.name : tx('title_fileFilterAll');
     }
