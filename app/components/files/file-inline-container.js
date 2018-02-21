@@ -10,7 +10,6 @@ import { fileHelpers } from '../../lib/icebear';
 
 const padding = 8;
 const borderWidth = 1;
-const containerHeight = 30;
 
 const container = {
     borderColor: vars.lightGrayBg,
@@ -45,6 +44,8 @@ export default class FileInlineContainer extends SafeComponent {
         const { title, description, fileId, downloading } = file;
         const isLocal = !!fileId;
         const spacingDifference = padding - vars.progressBarHeight;
+        let containerHeight = isLocal ? 30 : 0;
+        if (isLocal && isOpen) containerHeight += padding;
         const outer = {
             padding,
             paddingBottom: (downloading && !isImage) ? spacingDifference : padding
@@ -53,8 +54,8 @@ export default class FileInlineContainer extends SafeComponent {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingBottom: isOpen ? (padding + borderWidth) : 0,
-            height: isOpen ? (containerHeight + padding) : containerHeight
+            paddingBottom: (isLocal && isOpen) ? (padding + borderWidth) : 0,
+            height: containerHeight
         };
         const name = isImage ? file.name : `${file.name} (${file.sizeFormatted})`;
         return (
@@ -65,7 +66,7 @@ export default class FileInlineContainer extends SafeComponent {
                         {!!description && <Text style={descText}>{description}</Text>}
                     </View>
                     <View style={[header, { marginBottom: downloading && !isImage ? spacingDifference : 0 }]}>
-                        <FileTypeIcon type={fileHelpers.getFileIconType(file.ext)} size="small" />
+                        {isLocal && <FileTypeIcon type={fileHelpers.getFileIconType(file.ext)} size="small" />}
                         {!!name && <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
                         {isLocal && <View style={{ flexDirection: 'row' }}>
                             {extraActionIcon}
