@@ -212,7 +212,13 @@ const vars = {
     },
     loadingTimeout: 15000,
     isDeviceScreenBig,
-    isDeviceScreenSmall
+    isDeviceScreenSmall,
+    fileType: {
+        smaller: 24,
+        small: 32,
+        medium: 48,
+        large: 72
+    }
 };
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;

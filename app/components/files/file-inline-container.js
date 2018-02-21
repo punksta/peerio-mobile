@@ -66,7 +66,7 @@ export default class FileInlineContainer extends SafeComponent {
                         {!!description && <Text style={descText}>{description}</Text>}
                     </View>
                     <View style={[header, { marginBottom: downloading && !isImage ? spacingDifference : 0 }]}>
-                        {isLocal && <FileTypeIcon type={fileHelpers.getFileIconType(file.ext)} size="small" />}
+                        {isLocal && <FileTypeIcon type={fileHelpers.getFileIconType(file.ext)} size="smaller" />}
                         {!!name && <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
                         {isLocal && <View style={{ flexDirection: 'row' }}>
                             {extraActionIcon}

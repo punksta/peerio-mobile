@@ -7,5 +7,5 @@
 // import MockThumbnail from './mock-thumbnail';
 
 export default null;
-// export default MockThumbnail;
+// export default MockChannel;
 // export default __DEV__ ? MockChannel : null;

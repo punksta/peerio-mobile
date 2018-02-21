@@ -109,7 +109,7 @@ export default class FileInnerItem extends SafeComponent {
                             <View style={[loadingStyle, { flex: 0, paddingRight: vars.fileInnerItemPaddingRight }]}>
                                 {icon ||
                                     <FileTypeIcon
-                                        size="small"
+                                        size="smaller"
                                         type={fileHelpers.getFileIconType(file.ext)}
                                     />}
                             </View>
