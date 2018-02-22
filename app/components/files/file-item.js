@@ -44,7 +44,7 @@ export default class FileItem extends SafeComponent {
         const { file, isRecentFile } = this.props;
         return (
             <View style={{ backgroundColor: 'white', marginHorizontal: !isRecentFile ? vars.spacing.medium.mini2x : 0 }}>
-                {isRecentFile && <RecentFileInnerItem file={file} />}
+                {isRecentFile && <RecentFileInnerItem file={file} onMenu={this.props.onMenu} />}
                 {!isRecentFile && (file.isFolder ?
                     <FolderInnerItem folder={file} onLongPress={this.props.onLongPress} onPress={this.changeFolder} /> :
                     <FileInnerItem file={file} onPress={this.onPressFileInner} />)}
