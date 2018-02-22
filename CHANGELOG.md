@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.257.0"></a>
+# [3.257.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.256.0...v3.257.0) (2018-02-22)
+
+
+### Bug Fixes
+
+* padding for admin label in members list ([075ad83](https://github.com/PeerioTechnologies/peerio-mobile/commit/075ad83))
+
+
+
 <a name="3.256.0"></a>
 # [3.256.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.255.0...v3.256.0) (2018-02-21)
 
