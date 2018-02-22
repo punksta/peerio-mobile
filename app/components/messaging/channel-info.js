@@ -114,7 +114,7 @@ export default class ChannelInfo extends SafeComponent {
                         hideOnline />
                 </View>
                 <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
-                    {isAdmin && <View style={{ backgroundColor: vars.tabsFg, borderRadius: 4, padding: vars.spacing.small.mini2x, overflow: 'hidden' }}>
+                    {isAdmin && <View style={{ backgroundColor: vars.tabsFg, borderRadius: 4, padding: vars.spacing.small.mini2x, overflow: 'hidden', marginRight: vars.spacing.small.maxi2x }}>
                         <Text style={{ color: vars.white, fontSize: vars.font.size.small }}>
                             {tx('title_admin')}
                         </Text>
@@ -122,7 +122,7 @@ export default class ChannelInfo extends SafeComponent {
                     {chat.canIAdmin && <Menu>
                         <MenuTrigger
                             renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
-                            style={{ padding: vars.iconPadding, marginLeft: vars.spacing.small.maxi2x }}>
+                            style={{ padding: vars.iconPadding }}>
                             {icons.plaindark('more-vert')}
                         </MenuTrigger>
                         <MenuOptions>
