@@ -436,7 +436,7 @@ export default class Avatar extends SafeComponent {
                 <View style={[itemStyle, this.errorStyle]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
-                        style={[this.itemContainerStyle, { paddingLeft: 74, marginRight: vars.spacing.small.maxi }, shrinkStrategy]}>
+                        style={[this.itemContainerStyle, { paddingLeft: 68, marginRight: 22 }, shrinkStrategy]}>
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
                             {files}
