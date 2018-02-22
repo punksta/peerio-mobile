@@ -4,7 +4,7 @@ import { SectionList, View } from 'react-native';
 import { reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import chatState from '../messaging/chat-state';
-import FileItem from '../files/file-item';
+import RecentFileItem from '../files/recent-file-item';
 import ChatInfoSectionHeading from '../messaging/chat-info-section-heading';
 import fileState from '../files/file-state';
 import FilesActionSheet from '../files/files-action-sheet';
@@ -44,13 +44,13 @@ export default class RecentFilesList extends SafeComponent {
         // TODO: replace with getOrMake pattern
         // for event handler
         return (
-            <FileItem
+            <RecentFileItem
                 onMenu={() => this.filesActionSheet.show(file)}
                 key={fileId}
                 file={file}
                 isRecentFile />
         );
-    }
+    };
 
     header({ section: { key } }) {
         return <ChatInfoSectionHeading key={key} title={key} state="collapseRecentFiles" collapsible={chatState.currentChat.isChannel} />;

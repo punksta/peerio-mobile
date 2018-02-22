@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { action } from 'mobx';
 import { Text, Dimensions, View } from 'react-native';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
@@ -20,7 +19,7 @@ const fileInfoContainerStyle = {
 };
 
 @observer
-export default class RecentFileInnerItem extends SafeComponent {
+export default class RecentFileItem extends SafeComponent {
     renderThrow() {
         if (chatState.collapseRecentFiles) return null;
         const { file } = this.props;
@@ -78,6 +77,6 @@ export default class RecentFileInnerItem extends SafeComponent {
     }
 }
 
-RecentFileInnerItem.propTypes = {
+RecentFileItem.propTypes = {
     file: PropTypes.any.isRequired
 };
