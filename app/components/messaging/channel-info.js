@@ -11,6 +11,7 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { popupCancelConfirm } from '../shared/popups';
 import { tx } from '../utils/translator';
+import { User } from '../../lib/icebear';
 
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
 
@@ -118,27 +119,29 @@ export default class ChannelInfo extends SafeComponent {
                             {tx('title_admin')}
                         </Text>
                     </View>}
-                    {chat.canIAdmin && <Menu>
-                        <MenuTrigger
-                            renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
-                            style={{ padding: vars.iconPadding }}>
-                            {icons.plaindark('more-vert')}
-                        </MenuTrigger>
-                        <MenuOptions>
-                            <MenuOption
-                                onSelect={() => (isAdmin ?
-                                    chat.demoteAdmin(contact) :
-                                    chat.promoteToAdmin(contact))}>
-                                <Text>{isAdmin ?
-                                    tx('button_demoteAdmin') : tx('button_makeAdmin')}
-                                </Text>
-                            </MenuOption>
-                            <MenuOption
-                                onSelect={() => chat.removeParticipant(contact)}>
-                                <Text>{tx('button_remove')}</Text>
-                            </MenuOption>
-                        </MenuOptions>
-                    </Menu>}
+                    {chat.canIAdmin && (
+                        <Menu>
+                            <MenuTrigger
+                                renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
+                                style={{ padding: vars.iconPadding }}>
+                                {icons.plaindark('more-vert')}
+                            </MenuTrigger>
+                            <MenuOptions>
+                                {contact.username !== User.current.username && <MenuOption
+                                    onSelect={() => (isAdmin ?
+                                        chat.demoteAdmin(contact) :
+                                        chat.promoteToAdmin(contact))}>
+                                    <Text>{isAdmin ?
+                                        tx('button_demoteAdmin') : tx('button_makeAdmin')}
+                                    </Text>
+                                </MenuOption>}
+                                <MenuOption
+                                    onSelect={() => chat.removeParticipant(contact)}>
+                                    <Text>{tx('button_remove')}</Text>
+                                </MenuOption>
+                            </MenuOptions>
+                        </Menu>
+                    )}
                 </View>
             </View>
         );
