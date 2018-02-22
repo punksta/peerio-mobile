@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ListView } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import { chatInviteStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
@@ -14,6 +14,7 @@ import ChannelInviteListItem from './channel-invite-list-item';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import CreateActionSheet from './create-action-sheet';
 import { tx } from '../utils/translator';
+import uiState from '../layout/ui-state';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -116,6 +117,11 @@ export default class ChatList extends SafeComponent {
         this.maxLoadedIndex += PAGE_SIZE;
     };
 
+    @action.bound scrollViewRef(sv) {
+        this.scrollView = sv;
+        uiState.currentScrollView = sv;
+    }
+
     listView() {
         if (chatState.routerMain.currentIndex !== 0) return null;
         return (
@@ -130,7 +136,7 @@ export default class ChatList extends SafeComponent {
                 onEndReachedThreshold={20}
                 onContentSizeChange={this.scroll}
                 enableEmptySections
-                ref={sv => { this.scrollView = sv; }}
+                ref={this.scrollViewRef}
             />
         );
     }

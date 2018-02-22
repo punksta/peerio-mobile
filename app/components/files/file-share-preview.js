@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
-import { observable, action, when } from 'mobx';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import ImagePicker from 'react-native-image-crop-picker';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import FileTypeIcon from '../files/file-type-icon';
 import icons from '../helpers/icons';
 import SafeComponent from '../shared/safe-component';
 import ButtonText from '../controls/button-text';
+import Thumbnail from '../shared/thumbnail';
 import popupState from '../layout/popup-state';
 import routes from '../routes/routes';
 import fileState from './file-state';
@@ -23,10 +23,6 @@ const buttonContainer = {
     marginRight: -12,
     flexDirection: 'row',
     justifyContent: 'flex-end'
-};
-
-const imagePreviewStyle = {
-    borderRadius: 2
 };
 
 const nameContainer = {
@@ -73,10 +69,12 @@ const recipientStyle = {
     marginTop: vars.spacing.small.midi2x
 }; */
 
+const thumbnailDim = vars.searchInputHeight * 2;
+
 const previewContainerSmall = {
     alignItems: 'center',
     justifyContent: 'center',
-    minWidth: vars.searchInputHeight * 2,
+    minWidth: thumbnailDim,
     marginRight: vars.spacing.small.maxi,
     flex: 0
 };
@@ -122,54 +120,16 @@ export default class FileSharePreview extends SafeComponent {
         });
     }
 
-    // width of the container in which image or file type icon is shown
-    @observable previewContainerWidth;
-    // height of the container in which image or file type icon is shown
-    @observable previewContainerHeight;
-    // original width of the image we preview
-    @observable width;
-    // original height of the image we preview
-    @observable height;
-    // scaled down width of the image we preview
-    @observable previewSmallWidth;
-    // scaled down height of the image we preview
-    @observable previewSmallHeight;
-
-    async componentWillMount() {
-        when(() => this.previewContainerWidth && this.width, () => {
-            const { previewContainerWidth, previewContainerHeight, width, height } = this;
-            const dims = vars.optimizeImageSize(width, height, previewContainerWidth, previewContainerHeight);
-            this.previewSmallWidth = dims.width;
-            this.previewSmallHeight = dims.height;
-        });
-        const { path } = this.props.state;
-        console.log(`file-share-preview: trying to make thumbnail for ${path}`);
-        try {
-            const { width, height } = await ImagePicker.getImageDimensions(path);
-            console.log(`file-share-preview: got width ${width} and height ${height}`);
-            Object.assign(this, { width, height });
-        } catch (e) {
-            console.log(`file-share-preview: got an error`);
-            console.error(e);
-        }
-    }
-
-    @action.bound layoutPreviewContainer(e) {
-        const { width, height } = e.nativeEvent.layout;
-        this.previewContainerWidth = width;
-        this.previewContainerHeight = height;
-    }
-
     @action.bound launchPreviewViewer() {
         config.FileStream.launchViewer(this.props.state.path, this.props.state.fileName);
     }
 
     get previewImage() {
+        const width = thumbnailDim;
+        const height = width;
         return (
             <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={this.launchPreviewViewer}>
-                <Image
-                    source={{ uri: this.props.state.path, width: this.previewSmallWidth, height: this.previewSmallHeight }}
-                    style={imagePreviewStyle} />
+                <Thumbnail path={this.props.state.path} style={{ width, height }} />
             </TouchableOpacity>
         );
     }

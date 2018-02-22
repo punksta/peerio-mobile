@@ -25,6 +25,7 @@ class MockFileStore {
             id,
             fileId,
             name,
+            ext: 'png',
             sizeFormatted
         });
     }

@@ -9,7 +9,7 @@ import PopupLayout from '../layout/popup-layout';
 import ChannelAddPeople from '../messaging/channel-add-people';
 import InputMainContainer from '../layout/input-main-container';
 import FileUploadProgress from '../files/file-upload-progress';
-import { User, clientApp } from '../../lib/icebear';
+import { User, clientApp, TinyDb } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 import contactState from '../contacts/contact-state';
@@ -24,8 +24,9 @@ export default class MockChannel extends Component {
     @observable showChannelInfo = false;
     @observable showAddPeople = false;
     @observable originalData = null;
+    @observable imagePath = null;
 
-    componentWillMount() {
+    async componentWillMount() {
         clientApp.uiUserPrefs.externalContentConsented = true;
         clientApp.uiUserPrefs.externalContentEnabled = true;
 
@@ -65,6 +66,10 @@ export default class MockChannel extends Component {
                 this.showAddPeople = true;
             }
         });
+
+        this.imagePath = await TinyDb.system.getValue('mock-thumbnail');
+        fileState.localFileMap.set(1, this.imagePath);
+        fileState.localFileMap.set(2, this.imagePath);
     }
 
     componentDidMount() {
@@ -115,7 +120,7 @@ export default class MockChannel extends Component {
 
     get progressBar() {
         const { progressMax, progress } = this;
-        const file = { progressMax, progress };
+        const file = { fileId: 1, progressMax, progress, ext: 'jpg' };
         const title = 'Caaaaaaat1 very long title which grows forever and ever.jpg';
         return <FileUploadProgress file={file} title={title} />;
     }

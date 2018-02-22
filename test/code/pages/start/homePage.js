@@ -6,7 +6,7 @@ class HomePage extends Page {
     }
 
     get chatsTab() {
-        return this.getWhenVisible('~forum');
+        return this.checkIfVisible('~forum');
     }
 
     get settingsTab() {
