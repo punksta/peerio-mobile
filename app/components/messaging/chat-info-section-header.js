@@ -18,7 +18,7 @@ export default class ChatInfoSectionHeader extends SafeComponent {
             flexDirection: 'row',
             height: 48,
             marginTop: 8,
-            marginBottom: 16,
+            marginBottom: !collapsed ? 16 : 0,
             alignItems: 'center',
             justifyContent: 'space-between',
             backgroundColor: vars.white,
