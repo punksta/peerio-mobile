@@ -8,7 +8,6 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import FileTypeIcon from './file-type-icon';
 import { fileHelpers } from '../../lib/icebear';
-import chatState from '../messaging/chat-state';
 
 const { width } = Dimensions.get('window');
 const height = 64;

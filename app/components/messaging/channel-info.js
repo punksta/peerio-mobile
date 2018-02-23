@@ -2,18 +2,14 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { observable } from 'mobx';
-import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
-import Avatar from '../shared/avatar';
 import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { popupCancelConfirm } from '../shared/popups';
 import { tx } from '../utils/translator';
-import RecentFilesList from '../files/recent-files-list';
-import MemberList from '../channels/member-list';
-import { User, contactStore } from '../../lib/icebear';
+import ChannelInfoListState from '../channels/channel-info-list-state';
 
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
 
@@ -95,66 +91,6 @@ export default class ChannelInfo extends SafeComponent {
         );
     }
 
-    invitedParticipant = (invitation, i) => {
-        // they should already be cached
-        const contact = contactStore.getContact(invitation.username);
-        return this.participant(contact, i);
-    }
-
-    participant = (contact, i) => {
-        const { chat } = this;
-        const { username } = contact;
-        const row = {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexGrow: 1
-        };
-        const isAdmin = chat.isAdmin(contact);
-        return (
-            <View key={contact.username} style={row}>
-                <View style={{ flex: 1, flexGrow: 1 }}>
-                    <Avatar
-                        noBorderBottom
-                        contact={contact}
-                        key={username || i}
-                        message=""
-                        hideOnline />
-                </View>
-                <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
-                    {isAdmin && <View style={{ backgroundColor: vars.tabsFg, borderRadius: 4, padding: vars.spacing.small.mini2x, overflow: 'hidden', marginRight: vars.spacing.small.maxi2x }}>
-                        <Text style={{ color: vars.white, fontSize: vars.font.size.small }}>
-                            {tx('title_admin')}
-                        </Text>
-                    </View>}
-                    {chat.canIAdmin && (
-                        <Menu>
-                            <MenuTrigger
-                                renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
-                                style={{ padding: vars.iconPadding }}>
-                                {icons.plaindark('more-vert')}
-                            </MenuTrigger>
-                            <MenuOptions>
-                                {contact.username !== User.current.username && <MenuOption
-                                    onSelect={() => (isAdmin ?
-                                        chat.demoteAdmin(contact) :
-                                        chat.promoteToAdmin(contact))}>
-                                    <Text>{isAdmin ?
-                                        tx('button_demoteAdmin') : tx('button_makeAdmin')}
-                                    </Text>
-                                </MenuOption>}
-                                <MenuOption
-                                    onSelect={() => chat.removeParticipant(contact)}>
-                                    <Text>{tx('button_remove')}</Text>
-                                </MenuOption>
-                            </MenuOptions>
-                        </Menu>
-                    )}
-                </View>
-            </View>
-        );
-    };
-
     get topicTextBox() {
         const chat = chatState.currentChat;
         const update = () => {
@@ -198,8 +134,7 @@ export default class ChannelInfo extends SafeComponent {
                         {this.spacer}
                     </View>)
                 }
-                {this.lineBlock(<MemberList />)}
-                <RecentFilesList />
+                <ChannelInfoListState />
             </View>
         );
         return (<LayoutModalExit

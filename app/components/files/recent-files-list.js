@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { SectionList, View } from 'react-native';
@@ -38,7 +39,9 @@ export default class RecentFilesList extends SafeComponent {
     }
 
     item = ({ item }) => {
-        if (chatState.collapseFirstChannelInfoList) return null;
+        const collapsible = chatState.currentChat.isChannel;
+        const isCollapsed = !chatState.collapseFirstChannelInfoList;
+        if (collapsible && isCollapsed) return null;
         const fileId = item;
         const file = fileState.store.getById(fileId);
         if (!file) return null;
@@ -53,12 +56,14 @@ export default class RecentFilesList extends SafeComponent {
         );
     };
 
-    header({ section: { key } }) {
+    header = ({ section: { key } }) => {
+        const { collapsed, toggleCollapsed } = this.props;
         return (<ChatInfoSectionHeader
             key={key}
             title={key}
-            collapsible={chatState.currentChat.isChannel}
-            isSecondList />);
+            collapsed={collapsed}
+            toggleCollapsed={toggleCollapsed}
+            hidden={!this.hasData} />);
     }
 
     filesActionSheetRef = (ref) => { this.filesActionSheet = ref; };
@@ -71,7 +76,7 @@ export default class RecentFilesList extends SafeComponent {
                     sections={this.dataSource}
                     keyExtractor={fileId => fileId}
                     renderItem={this.item}
-                    renderSectionHeader={this.hasData ? this.header : null}
+                    renderSectionHeader={this.header}
                     style={{ marginBottom: 8 }}
                 />
                 <FilesActionSheet
@@ -80,3 +85,8 @@ export default class RecentFilesList extends SafeComponent {
         );
     }
 }
+
+RecentFilesList.propTypes = {
+    collapsed: PropTypes.bool.isRequired,
+    toggleCollapsed: PropTypes.func
+};

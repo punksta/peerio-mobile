@@ -65,7 +65,7 @@ export default class ChatInfo extends SafeComponent {
                         {chat.otherParticipants.map(this.participant)}
                     </View>
                 )}
-                <RecentFilesList />
+                <RecentFilesList collapsed={false} />
             </View>
         );
         const rightIcon = icons.iconImage(

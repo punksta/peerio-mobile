@@ -1,30 +1,18 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { action } from 'mobx';
 import { Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import chatState from '../messaging/chat-state';
 
 @observer
 export default class ChatInfoSectionHeader extends SafeComponent {
-    @action.bound toggleCollapsed() {
-        if (this.props.collapsible) {
-            chatState.collapseFirstChannelInfoList = !chatState.collapseFirstChannelInfoList;
-        }
-    }
-
-    @action.bound isCollapsed() {
-        return this.props.isSecondList ?
-            !chatState.collapseFirstChannelInfoList :
-            chatState.collapseFirstChannelInfoList;
-    }
-
     renderThrow() {
-        const { title, collapsible } = this.props;
+        const { title, collapsed, toggleCollapsed, hidden } = this.props;
         if (!title) return null;
+        if (hidden) return null;
+        const collapsible = toggleCollapsed;
         const style = {
             flex: 1,
             flexDirection: 'row',
@@ -45,11 +33,11 @@ export default class ChatInfoSectionHeader extends SafeComponent {
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
-                style={style} onPress={this.toggleCollapsed} disabled={!collapsible}>
+                style={style} onPress={toggleCollapsed} disabled={!collapsible}>
                 <Text style={textStyle}>{title}</Text>
                 {collapsible &&
                 <Icon
-                    name={this.isCollapsed
+                    name={collapsed
                         ? 'arrow-drop-down' : 'arrow-drop-up'}
                     size={24}
                     style={{ color: vars.subtleText }}
@@ -61,6 +49,7 @@ export default class ChatInfoSectionHeader extends SafeComponent {
 
 ChatInfoSectionHeader.propTypes = {
     title: PropTypes.any,
-    collapsible: PropTypes.bool,
-    isSecondList: PropTypes.bool
+    collapsed: PropTypes.bool,
+    toggleCollapsed: PropTypes.func,
+    hidden: PropTypes.bool
 };

@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, TouchableOpacity, ListView } from 'react-native';
+import { Text, View, TouchableOpacity, SectionList } from 'react-native';
 import { reaction } from 'mobx';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import SafeComponent from '../shared/safe-component';
@@ -13,15 +14,7 @@ import { vars } from '../../styles/styles';
 
 @observer
 export default class MemberList extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2,
-            sectionHeaderHasChanged: (r1, r2) => r1 !== r2
-        });
-    }
-
-    dataSource = null;
+    dataSource = [];
     channelMembers = null;
     channelInvites = null;
 
@@ -44,32 +37,33 @@ export default class MemberList extends SafeComponent {
             const channel = this.data;
             this.channelMembers = channel.allJoinedParticipants;
             this.channelInvites = chatState.chatInviteStore.sent.get(channel.id);
-            this.dataSource = this.dataSource.cloneWithRowsAndSections({
-                title_Members: this.channelMembers,
-                title_invited: this.channelInvites,
-                dummy: []
-            });
+            this.dataSource = [
+                { data: this.channelMembers, key: tx('title_Members') },
+                { data: this.channelInvites, key: tx('title_invited') }
+            ];
             this.forceUpdate();
         }, true);
     }
 
-    headers = (data, key) => {
-        const i = (title, component) => {
-            const r = {};
-            r[title] = component;
-            return r;
-        };
-        const titles = {
-            ...i('title_Members',
-                <ChatInfoSectionHeader title={tx('title_Members')} collapsible />),
-            ...i('title_invited',
-                <ChatInfoSectionHeader title={tx('title_invited')} />),
-            ...i('dummy', <View />)
-        };
-        return data && data.length ? titles[key] : null;
+    headers = ({ section: { key } }) => {
+        let hidden = false;
+        // TODO: investigate potential bug in this area
+        // bug scenario: no members, but have invites
+        // output will probably be weird for UX, but it wont crash
+        if (key === tx('title_Members')) hidden = !this.channelMembers;
+        else if (key === tx('title_invited')) hidden = this.props.collapsed || !this.channelInvites;
+        return (<ChatInfoSectionHeader
+            key={key}
+            title={key}
+            collapsed={this.props.collapsed}
+            toggleCollapsed={this.props.toggleCollapsed}
+            hidden={hidden}
+        />);
     };
 
-    participant = (contact, i) => {
+    participant = ({ item }) => {
+        if (chatState.collapseFirstChannelInfoList) return null;
+        const contact = item; // readability
         const channel = this.data;
         const { username } = contact;
         const row = {
@@ -85,7 +79,7 @@ export default class MemberList extends SafeComponent {
                     <Avatar
                         noBorderBottom
                         contact={contact}
-                        key={username || i}
+                        key={username}
                         message=""
                         hideOnline />
                 </View>
@@ -125,13 +119,18 @@ export default class MemberList extends SafeComponent {
     renderThrow() {
         if (!this.hasData) return null;
         return (
-            <ListView
-                style={{ flexGrow: 1 }}
-                dataSource={this.dataSource}
-                renderRow={this.participant}
+            <SectionList
+                sections={this.dataSource}
+                keyExtractor={contact => contact.username}
+                renderItem={this.participant}
                 renderSectionHeader={this.headers}
+                style={{ marginBottom: 8 }}
             />
         );
     }
 }
 
+MemberList.propTypes = {
+    collapsed: PropTypes.bool,
+    toggleCollapsed: PropTypes.func
+};
