@@ -11,7 +11,7 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { popupCancelConfirm } from '../shared/popups';
 import { tx } from '../utils/translator';
-import { User } from '../../lib/icebear';
+import { User, contactStore } from '../../lib/icebear';
 
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
 
@@ -91,6 +91,12 @@ export default class ChannelInfo extends SafeComponent {
                 </View>
             </TouchableOpacity>
         );
+    }
+
+    invitedParticipant = (invitation, i) => {
+        // they should already be cached
+        const contact = contactStore.getContact(invitation.username);
+        return this.participant(contact, i);
     }
 
     participant = (contact, i) => {
@@ -208,7 +214,7 @@ export default class ChannelInfo extends SafeComponent {
                                 {tx('title_invited')}
                             </Text>
                         </View>
-                        {invited.map(this.participant)}
+                        {invited.map(this.invitedParticipant)}
                     </View>
                 )}
             </View>
