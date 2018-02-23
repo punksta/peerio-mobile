@@ -5,7 +5,7 @@ import { reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import chatState from '../messaging/chat-state';
 import FileItem from '../files/file-item';
-import ChatInfoSectionHeading from '../messaging/chat-info-section-heading';
+import ChatInfoSectionHeader from '../messaging/chat-info-section-header';
 import fileState from '../files/file-state';
 import { tx } from '../utils/translator';
 
@@ -37,9 +37,9 @@ export default class RecentFilesList extends SafeComponent {
     }
 
     item({ item }) {
+        if (chatState.collapseFirstChannelInfoList) return null;
         const fileId = item;
         const file = fileState.store.getById(fileId);
-        console.log(file);
         if (!file) return null;
         return (
             <FileItem
@@ -50,7 +50,11 @@ export default class RecentFilesList extends SafeComponent {
     }
 
     header({ section: { key } }) {
-        return <ChatInfoSectionHeading key={key} title={key} state="collapseRecentFiles" collapsible={chatState.currentChat.isChannel} />;
+        return (<ChatInfoSectionHeader
+            key={key}
+            title={key}
+            collapsible={chatState.currentChat.isChannel}
+            isSecondList />);
     }
 
     renderThrow() {

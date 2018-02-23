@@ -51,7 +51,6 @@ export default class FilesActionSheet extends SafeComponent {
 
     get renameFile() {
         const { file } = this.props;
-        console.log(file);
         return {
             title: tx('button_rename'),
             async action() {

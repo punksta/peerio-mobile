@@ -9,14 +9,21 @@ import { vars } from '../../styles/styles';
 import chatState from '../messaging/chat-state';
 
 @observer
-export default class ChatInfoSectionHeading extends SafeComponent {
+export default class ChatInfoSectionHeader extends SafeComponent {
     @action.bound toggleCollapsed() {
-        const { state, collapsible } = this.props;
-        if (collapsible) chatState[state] = !chatState[state];
+        if (this.props.collapsible) {
+            chatState.collapseFirstChannelInfoList = !chatState.collapseFirstChannelInfoList;
+        }
+    }
+
+    @action.bound isCollapsed() {
+        return this.props.isSecondList ?
+            !chatState.collapseFirstChannelInfoList :
+            chatState.collapseFirstChannelInfoList;
     }
 
     renderThrow() {
-        const { title, state, collapsible } = this.props;
+        const { title, collapsible } = this.props;
         if (!title) return null;
         const style = {
             flex: 1,
@@ -35,20 +42,25 @@ export default class ChatInfoSectionHeading extends SafeComponent {
             fontWeight: 'bold',
             color: vars.subtleText
         };
-
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
                 style={style} onPress={this.toggleCollapsed} disabled={!collapsible}>
                 <Text style={textStyle}>{title}</Text>
                 {collapsible &&
-                <Icon name={chatState[state] ? 'arrow-drop-down' : 'arrow-drop-up'} size={24} style={{ color: vars.subtleText }} />}
+                <Icon
+                    name={this.isCollapsed
+                        ? 'arrow-drop-down' : 'arrow-drop-up'}
+                    size={24}
+                    style={{ color: vars.subtleText }}
+                />}
             </TouchableOpacity>
         );
     }
 }
 
-ChatInfoSectionHeading.propTypes = {
+ChatInfoSectionHeader.propTypes = {
     title: PropTypes.any,
-    state: PropTypes.any
+    collapsible: PropTypes.bool,
+    isSecondList: PropTypes.bool
 };

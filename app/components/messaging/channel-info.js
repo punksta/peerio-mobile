@@ -12,6 +12,7 @@ import icons from '../helpers/icons';
 import { popupCancelConfirm } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RecentFilesList from '../files/recent-files-list';
+import MemberList from '../channels/member-list';
 
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
 
@@ -176,7 +177,6 @@ export default class ChannelInfo extends SafeComponent {
         const { chat } = this;
         if (!chat) return null;
         const { canIAdmin, canILeave } = chat;
-        const invited = chatState.chatInviteStore.sent.get(chat.id);
         const body = (
             <View>
                 {this.lineBlock(canIAdmin ? this.topicTextBox : this.topicTextView)}
@@ -189,26 +189,7 @@ export default class ChannelInfo extends SafeComponent {
                         {this.spacer}
                     </View>)
                 }
-                {chat.allJoinedParticipants && this.lineBlock(
-                    <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x }]}>
-                                {tx('title_Members')}
-                            </Text>
-                        </View>
-                        {chat.allJoinedParticipants.map(this.participant)}
-                    </View>
-                )}
-                {invited && this.lineBlock(
-                    <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x }]}>
-                                {tx('title_invited')}
-                            </Text>
-                        </View>
-                        {invited.map(this.participant)}
-                    </View>
-                )}
+                {this.lineBlock(<MemberList />)}
                 <RecentFilesList />
             </View>
         );

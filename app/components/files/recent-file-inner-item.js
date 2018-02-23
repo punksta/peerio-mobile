@@ -29,7 +29,6 @@ export default class RecentFileInnerItem extends SafeComponent {
     fileOptions = () => this.filesActionSheet.show();
 
     renderThrow() {
-        if (chatState.collapseRecentFiles) return null;
         const { file } = this.props;
         const iconRight = icons.dark('more-vert', this.fileOptions);
         const nameStyle = {
