@@ -37,10 +37,8 @@ export default class MemberList extends SafeComponent {
             this.data.length
         ], () => {
             const channel = this.data;
-            this.channelMembers = channel.allJoinedParticipants ?
-                channel.allJoinedParticipants : [];
-            this.channelInvites = chatState.chatInviteStore.sent.get(channel.id) ?
-                chatState.chatInviteStore.sent.get(channel.id) : [];
+            this.channelMembers = channel.allJoinedParticipants || [];
+            this.channelInvites = chatState.chatInviteStore.sent.get(channel.id) || [];
             this.dataSource = [
                 { data: this.channelMembers, key: tx('title_Members') },
                 { data: this.channelInvites, key: tx('title_invited') }
