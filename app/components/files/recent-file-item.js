@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { action } from 'mobx';
 import { Text, Dimensions, View } from 'react-native';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
@@ -9,7 +8,6 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import FileTypeIcon from './file-type-icon';
 import { fileHelpers } from '../../lib/icebear';
-import FilesActionSheet from '../files/files-action-sheet';
 import chatState from '../messaging/chat-state';
 
 const { width } = Dimensions.get('window');
@@ -21,16 +19,10 @@ const fileInfoContainerStyle = {
 };
 
 @observer
-export default class RecentFileInnerItem extends SafeComponent {
-    @action.bound filesActionSheetRef(ref) {
-        this.filesActionSheet = ref;
-    }
-
-    fileOptions = () => this.filesActionSheet.show();
-
+export default class RecentFileItem extends SafeComponent {
     renderThrow() {
         const { file } = this.props;
-        const iconRight = icons.dark('more-vert', this.fileOptions);
+        const iconRight = icons.dark('more-vert', this.props.onMenu);
         const nameStyle = {
             color: vars.txtDark,
             fontSize: vars.font.size.normal
@@ -79,14 +71,11 @@ export default class RecentFileInnerItem extends SafeComponent {
                         {arrow}
                     </View>
                 </View>
-                <FilesActionSheet
-                    file={file}
-                    ref={this.filesActionSheetRef} />
             </View>
         );
     }
 }
 
-RecentFileInnerItem.propTypes = {
+RecentFileItem.propTypes = {
     file: PropTypes.any.isRequired
 };

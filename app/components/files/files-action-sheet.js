@@ -1,9 +1,8 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import moment from 'moment';
-import { View, Text, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
+import { observable, action, when } from 'mobx';
 import ActionSheet from 'react-native-actionsheet';
+import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import { fileState } from '../states';
@@ -11,8 +10,6 @@ import routerModal from '../routes/router-modal';
 import routes from '../routes/routes';
 import { popupInput } from '../shared/popups';
 import { fileHelpers } from '../../lib/icebear';
-import icons from '../helpers/icons';
-import { vars } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 
 @observer
@@ -28,32 +25,30 @@ export default class FilesActionSheet extends SafeComponent {
     get cancel() { return { title: tx('button_cancel') }; }
 
     get sharefile() {
-        const { file } = this.props;
         return {
             title: tx('button_share'),
             action: () => {
-                fileState.currentFile = file;
+                fileState.currentFile = this.file;
                 routerModal.shareFileTo();
             }
         };
     }
 
     get moveFile() {
-        const { file } = this.props;
         return {
             title: tx('Move'),
             action: () => {
-                fileState.currentFile = file;
+                fileState.currentFile = this.file;
                 routes.modal.moveFileTo();
             }
         };
     }
 
     get renameFile() {
-        const { file } = this.props;
         return {
             title: tx('button_rename'),
-            async action() {
+            action: async () => {
+                const { file } = this;
                 const newFileName = await popupInput(
                     tx('title_fileName'),
                     '',
@@ -64,61 +59,52 @@ export default class FilesActionSheet extends SafeComponent {
         };
     }
 
-    // Do we need to check if file is ready to be deleted ?
     get deleteFile() {
-        const { file } = this.props;
         return {
             title: tx('button_delete'),
-            async action() {
-                fileState.deleteFile(file);
+            action: async () => {
+                fileState.deleteFile(this.file);
             }
         };
     }
 
     onPress = index => {
-        const { action } = this.items[index];
-        action && action();
+        const { action: pressAction } = this.items[index];
+        pressAction && pressAction();
     };
 
-    show = () => this._actionSheet.show();
+    @observable file = null;
+    @observable _actionSheet = null;
 
-    // Can be simplified ?
+    /**
+     * We need to re-render and re-ref action sheet
+     * so that the title is updated accordingly
+     * @param {File} file
+     */
+    @action.bound show(file) {
+        if (!file) {
+            console.error(`files-action-sheet: file is undefined`);
+            return;
+        }
+        if (this._showWhen) {
+            this._showWhen();
+            this._showWhen = null;
+        }
+        this._actionSheet = null;
+        this.file = file;
+        this._showWhen = when(() => this._actionSheet, () => this._actionSheet.show());
+    }
+
     onFileInfoPress = () => {
-        const { file } = this.props;
         this._actionSheet.hide();
         routerModal.discard();
-        routerMain.files(file);
+        routerMain.files(this.file);
     };
 
     renderThrow() {
-        const { file } = this.props;
-        const containerStyle = {
-            flex: 1,
-            flexGrow: 1,
-            flexDirection: 'row'
-        };
-        const infoIconStyle = {
-            position: 'absolute',
-            right: 16,
-            top: 8,
-            bottom: 8
-        };
-        const titleTextStyle = {
-            fontSize: vars.font.size.smaller,
-            alignItems: 'center',
-            textAlign: 'center',
-            paddingTop: vars.spacing.small.mini,
-            lineHeight: 18
-        };
-        const title =
-            (<TouchableOpacity style={containerStyle} onPress={this.onFileInfoPress}>
-                <View style={containerStyle}>
-                    <Text style={[containerStyle, titleTextStyle]}>
-                        {`${file.name}\n${file.sizeFormatted} ${moment(file.uploadedAt).format('DD/MM/YYYY')}`}
-                    </Text>
-                </View>
-                {icons.plaindark('info', vars.iconSize, infoIconStyle)}
-            </TouchableOpacity>);
+        const { file } = this;
+        if (!file) return null;
+        const title = `${file.name}\n${file.sizeFormatted} ${moment(file.uploadedAt).format('DD/MM/YYYY')}`;
         return (
             <ActionSheet
                 ref={sheet => { this._actionSheet = sheet; }}
@@ -131,7 +117,3 @@ export default class FilesActionSheet extends SafeComponent {
         );
     }
 }
-
-FilesActionSheet.propTypes = {
-    file: PropTypes.any
-};
