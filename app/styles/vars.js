@@ -38,7 +38,8 @@ const tabCellHeight = 56;
 // pixel ratio should be factored into scaleDim somehow: const pixRatio = PixelRatio.get();
 const defaultHeight = 667;
 // scaleDim takes a size value and returns one that is adjusted to the height of the device as it compares to an iPhone 6
-const scaleDim = size => height / defaultHeight * size;
+// const scaleDim = size => height / defaultHeight * size;
+const scaleDim = size => size; // temporary making scaleDim do nothing
 
 const vars = {
     circle: 10,

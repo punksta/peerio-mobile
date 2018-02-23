@@ -13,6 +13,7 @@ import { popupCancelConfirm } from '../shared/popups';
 import { tx } from '../utils/translator';
 import RecentFilesList from '../files/recent-files-list';
 import MemberList from '../channels/member-list';
+import { User, contactStore } from '../../lib/icebear';
 
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
 
@@ -94,6 +95,12 @@ export default class ChannelInfo extends SafeComponent {
         );
     }
 
+    invitedParticipant = (invitation, i) => {
+        // they should already be cached
+        const contact = contactStore.getContact(invitation.username);
+        return this.participant(contact, i);
+    }
+
     participant = (contact, i) => {
         const { chat } = this;
         const { username } = contact;
@@ -120,27 +127,29 @@ export default class ChannelInfo extends SafeComponent {
                             {tx('title_admin')}
                         </Text>
                     </View>}
-                    {chat.canIAdmin && <Menu>
-                        <MenuTrigger
-                            renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
-                            style={{ padding: vars.iconPadding }}>
-                            {icons.plaindark('more-vert')}
-                        </MenuTrigger>
-                        <MenuOptions>
-                            <MenuOption
-                                onSelect={() => (isAdmin ?
-                                    chat.demoteAdmin(contact) :
-                                    chat.promoteToAdmin(contact))}>
-                                <Text>{isAdmin ?
-                                    tx('button_demoteAdmin') : tx('button_makeAdmin')}
-                                </Text>
-                            </MenuOption>
-                            <MenuOption
-                                onSelect={() => chat.removeParticipant(contact)}>
-                                <Text>{tx('button_remove')}</Text>
-                            </MenuOption>
-                        </MenuOptions>
-                    </Menu>}
+                    {chat.canIAdmin && (
+                        <Menu>
+                            <MenuTrigger
+                                renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
+                                style={{ padding: vars.iconPadding }}>
+                                {icons.plaindark('more-vert')}
+                            </MenuTrigger>
+                            <MenuOptions>
+                                {contact.username !== User.current.username && <MenuOption
+                                    onSelect={() => (isAdmin ?
+                                        chat.demoteAdmin(contact) :
+                                        chat.promoteToAdmin(contact))}>
+                                    <Text>{isAdmin ?
+                                        tx('button_demoteAdmin') : tx('button_makeAdmin')}
+                                    </Text>
+                                </MenuOption>}
+                                <MenuOption
+                                    onSelect={() => chat.removeParticipant(contact)}>
+                                    <Text>{tx('button_remove')}</Text>
+                                </MenuOption>
+                            </MenuOptions>
+                        </Menu>
+                    )}
                 </View>
             </View>
         );

@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.260.0"></a>
+# [3.260.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.259.0...v3.260.0) (2018-02-23)
+
+
+
+<a name="3.259.0"></a>
+# [3.259.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.258.0...v3.259.0) (2018-02-22)
+
+
+### Bug Fixes
+
+* revert buffer dependency [ch3852] [ch3849] [ch3848] ([fb3f4b1](https://github.com/PeerioTechnologies/peerio-mobile/commit/fb3f4b1))
+
+
+
 <a name="3.258.0"></a>
 # [3.258.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.257.0...v3.258.0) (2018-02-22)
 

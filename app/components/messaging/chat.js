@@ -280,7 +280,7 @@ export default class Chat extends SafeComponent {
             paddingRight: vars.spacing.medium.mini2x
         };
         const { chat } = this;
-        const participants = chat.isChannel ? chat.allJoinedParticipants : chat.otherParticipants;
+        const participants = chat.isChannel ? chat.allParticipants : chat.otherParticipants;
         const w = 3 * 36;
         const shiftX = (width - w - w * participants.length) / participants.length;
         const shift = shiftX < 0 ? shiftX : 0;
