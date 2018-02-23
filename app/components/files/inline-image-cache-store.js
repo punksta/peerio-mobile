@@ -61,7 +61,11 @@ class InlineImageCacheStore {
 
     async getImageByFileName(image, path) {
         let normalizedPath = path;
-        if (Platform.OS === 'android') normalizedPath = `file://${path}`;
+        if (Platform.OS === 'android') {
+            if (path.startsWith('/')) {
+                normalizedPath = `file://${path}`;
+            }
+        }
         image.isLocal = true;
         image.source = { uri: normalizedPath };
         // calculate size
