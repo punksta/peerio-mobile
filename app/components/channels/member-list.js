@@ -15,14 +15,16 @@ import { vars } from '../../styles/styles';
 @observer
 export default class MemberList extends SafeComponent {
     dataSource = [];
-    channelMembers = null;
-    channelInvites = null;
+    channelMembers = [];
+    channelInvites = [];
 
     get data() { return chatState.currentChat; }
 
-    get hasData() {
-        return !!this.channelMembers || !!this.channelInvites;
-    }
+    get hasData() { return !!this.channelMembers || !!this.channelInvites; }
+
+    get hasChannelMembers() { return this.channelMembers.length; }
+
+    get hasChannelInvites() { return this.channelInvites.length; }
 
     componentWillUnmount() {
         this.reaction && this.reaction();
@@ -35,8 +37,10 @@ export default class MemberList extends SafeComponent {
             this.data.length
         ], () => {
             const channel = this.data;
-            this.channelMembers = channel.allJoinedParticipants;
-            this.channelInvites = chatState.chatInviteStore.sent.get(channel.id);
+            this.channelMembers = channel.allJoinedParticipants ?
+                channel.allJoinedParticipants : [];
+            this.channelInvites = chatState.chatInviteStore.sent.get(channel.id) ?
+                chatState.chatInviteStore.sent.get(channel.id) : [];
             this.dataSource = [
                 { data: this.channelMembers, key: tx('title_Members') },
                 { data: this.channelInvites, key: tx('title_invited') }
@@ -47,16 +51,19 @@ export default class MemberList extends SafeComponent {
 
     headers = ({ section: { key } }) => {
         let hidden = false;
-        // TODO: investigate potential bug in this area
-        // bug scenario: no members, but have invites
-        // output will probably be weird for UX, but it wont crash
-        if (key === tx('title_Members')) hidden = !this.channelMembers;
-        else if (key === tx('title_invited')) hidden = this.props.collapsed || !this.channelInvites;
+        let toggleCollapsed = null;
+        if (key === tx('title_Members')) {
+            toggleCollapsed = this.props.toggleCollapsed;
+            hidden = !this.hasChannelMembers;
+        } else if (key === tx('title_invited')) {
+            toggleCollapsed = null;
+            hidden = this.props.collapsed || !this.hasChannelInvites;
+        }
         return (<ChatInfoSectionHeader
             key={key}
             title={key}
             collapsed={this.props.collapsed}
-            toggleCollapsed={this.props.toggleCollapsed}
+            toggleCollapsed={toggleCollapsed}
             hidden={hidden}
         />);
     };
