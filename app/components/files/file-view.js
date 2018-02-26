@@ -8,7 +8,7 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileProgress from './file-progress';
 import FileActions from './file-actions';
-import { uiState, fileState } from '../states';
+import { fileState } from '../states';
 import { tx } from '../utils/translator';
 import FileTypeIcon from './file-type-icon';
 import { fileHelpers } from '../../lib/icebear';

@@ -11,9 +11,7 @@ export default class IdentityVerificationNotice extends Component {
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: vars.spacing.small.midi,
-        marginBottom: vars.spacing.small.midi,
-        marginLeft: vars.spacing.small.maxi2x,
-        marginRight: vars.spacing.small.maxi2x
+        marginBottom: vars.spacing.small.midi
     };
 
     securityIcon = {

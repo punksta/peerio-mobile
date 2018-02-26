@@ -126,7 +126,7 @@ class World {
     }
 
     async seeWelcomeScreen() {
-        await this.homePage.chatsTab.isExisting();
+        await this.homePage.chatsTab;
     }
 
     async dismissEmailConfirmationPopup() {
@@ -144,7 +144,7 @@ class World {
         // iOS taps on 'Done' button when hides device keyboard
         // Android taps outside
         // 'tapOutside' strategy passed to hideDeviceKeyboard still taps on 'Done' button
-        if (await this.seeWelcomeScreen()) {
+        if (this.context.platform.desiredCapabilities.platformName === 'Android') {
             await this.loginPage.submitButton.click();
         }
         await this.seeWelcomeScreen();

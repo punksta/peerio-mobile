@@ -103,7 +103,10 @@ export default class FileInlineImage extends SafeComponent {
             });
             if (!image.tmpCached) {
                 when(() => this.loadImage, async () => {
-                    if (await config.FileStream.exists(tmpCachePath)) {
+                    // TODO: HACK FOR ANDROID
+                    // should be replaced with FileStream update to handle content paths
+                    if (tmpCachePath.startsWith('content:/')
+                        || await config.FileStream.exists(tmpCachePath)) {
                         image.tmpCached = true;
                         return;
                     }

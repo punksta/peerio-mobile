@@ -17,7 +17,7 @@ class PreferenceStore {
         externalContentConsented: false, // false - no feedback from user yet, true - user expressed their desire
         externalContentEnabled: true,
         externalContentJustForFavs: false,
-        peerioContentEnabled: true,
+        peerioContentEnabled: true
     };
 
     observePreference(key, dbName, localStore) {

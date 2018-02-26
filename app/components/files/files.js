@@ -16,6 +16,7 @@ import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import icons from '../helpers/icons';
 import ButtonText from '../controls/button-text';
+import uiState from '../layout/ui-state';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -112,7 +113,10 @@ export default class Files extends SafeComponent {
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={20}
                 enableEmptySections
-                ref={sv => { this.scrollView = sv; }}
+                ref={sv => {
+                    this.scrollView = sv;
+                    uiState.currentScrollView = sv;
+                }}
             />
         );
     }
@@ -190,10 +194,14 @@ export default class Files extends SafeComponent {
 
         let rightIcon = null;
         if (fileState.findFilesText) {
-            rightIcon = icons.iconImage(iconClear, () => {
-                fileState.findFilesText = '';
-                this.onChangeFindFilesText('');
-            });
+            rightIcon = icons.iconImage(
+                iconClear,
+                () => {
+                    fileState.findFilesText = '';
+                    this.onChangeFindFilesText('');
+                },
+                vars.sublteGrayOpacity
+            );
         }
 
         return (

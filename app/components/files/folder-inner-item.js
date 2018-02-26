@@ -85,9 +85,9 @@ export default class FolderInnerItem extends SafeComponent {
                     {this.radio}
                     <View style={itemContainerStyle}>
                         <View style={[loadingStyle, { flex: 0 }]}>
-                            {icons.darkNoPadding('folder', null, null, vars.iconSizeMedium)}
+                            {icons.darkNoPadding('folder', null, null, vars.iconSize)}
                         </View>
-                        <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
+                        <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
                             <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
                             <Text style={infoStyle}>
                                 {folder.size ?
