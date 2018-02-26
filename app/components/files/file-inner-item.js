@@ -103,7 +103,7 @@ export default class FileInnerItem extends SafeComponent {
         }
         if (icon) icon = icons.dark(icon);
         const loadingStyle = null;
-        const arrow = this.props.hideArrow ? null : (
+        const optionsIcon = this.props.hideArrow ? null : (
             <View style={{ flex: 0 }}>
                 {iconRight}
             </View>
@@ -129,7 +129,7 @@ export default class FileInnerItem extends SafeComponent {
                                     {moment(file.uploadedAt).format('DD/MM/YYYY')}
                                 </Text>
                             </View>
-                            {arrow}
+                            {optionsIcon}
                         </View>
                     </View>
                 </TouchableOpacity>

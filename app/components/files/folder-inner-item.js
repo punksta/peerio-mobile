@@ -75,7 +75,7 @@ export default class FolderInnerItem extends SafeComponent {
             fontWeight: vars.font.weight.regular
         };
         const loadingStyle = null;
-        const arrow = hideMoreOptionsIcon ? null : (
+        const optionsIcon = hideMoreOptionsIcon ? null : (
             <View style={{ flex: 0 }}>
                 {icons.dark('more-vert', this.showFileOptions)}
             </View>
@@ -100,7 +100,7 @@ export default class FolderInnerItem extends SafeComponent {
                                     {folder.createdAt && moment(folder.createdAt).format('DD/MM/YYYY')}
                                 </Text>
                             </View>
-                            {arrow}
+                            {optionsIcon}
                         </View>
                     </View>
                 </TouchableOpacity>
