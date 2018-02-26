@@ -51,7 +51,7 @@
     "path": "0.12.7",
     "pbkdf2": "github:PeerioTechnologies/pbkdf2",
     "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#v4.13.2",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#feat-shared-folders-mvp",
     "peerio-translator": "github:PeerioTechnologies/peerio-translator#v1.0.0",
     "process": "0.11.9",
     "prop-types": "15.5.10",
