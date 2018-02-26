@@ -8,6 +8,7 @@ import SafeComponent from '../shared/safe-component';
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
+import FilesActionSheet from '../files/files-action-sheet';
 
 const height = vars.listItemHeight;
 
@@ -27,6 +28,8 @@ export default class FolderInnerItem extends SafeComponent {
     @observable width = 0;
 
     onPress = () => this.props.onPress && this.props.onPress(this.props.folder);
+
+    showFileOptions = () => this.filesActionSheet.show();
 
     get currentProgress() {
         const { folder } = this.props;
@@ -99,7 +102,8 @@ export default class FolderInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { folder, onPress, onLongPress, onSelect, hideArrow } = this.props;
+        const { folder, onPress, onSelect, hideMoreOptionsIcon } = this.props;
+        const { isShared, isBlocked } = folder;
         const progressContainer = {
             backgroundColor: vars.fileUploadProgressColor,
             width: this.currentProgress,
@@ -110,33 +114,41 @@ export default class FolderInnerItem extends SafeComponent {
             left: 0
         };
         const nameStyle = {
-            color: vars.txtDark,
+            color: isBlocked ? vars.extraSubtleText : vars.txtDark,
             fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.bold
         };
         const loadingStyle = null;
-        const arrow = hideArrow ? null : (
+        const optionsIcon = hideMoreOptionsIcon ? null : (
             <View style={{ flex: 0 }}>
-                {icons.dark('keyboard-arrow-right', this.onPress)}
-            </View>
-        );
+                {icons.dark(
+                    'keyboard-arrow-right',
+                    this.onPress,
+                    isBlocked ? { opacity: 0.38 } : null)}
+            </View>);
         return (
-            <TouchableOpacity
-                onLongPress={onLongPress}
-                onPress={hideArrow ? onSelect : onPress}>
-                <View style={folderInfoContainerStyle} onLayout={this.layout}>
-                    <View style={progressContainer} />
-                    {this.radio}
-                    <View style={[loadingStyle, { flex: 0 }]}>
-                        {icons.darkNoPadding('folder', null, null, vars.iconSizeMedium)}
+            <View>
+                <TouchableOpacity
+                    onPress={hideMoreOptionsIcon ? onSelect : onPress}
+                    style={{ backgroundColor: 'white' }}
+                    disabled={isBlocked}>
+                    <View style={folderInfoContainerStyle} onLayout={this.layout}>
+                        <View style={progressContainer} />
+                        {this.radio}
+                        <View style={[loadingStyle, { flex: 0 }]}>
+                            {icons.darkNoPadding(isShared ? 'folder-shared' : 'folder', null, null, vars.iconSize)}
+                        </View>
+                        <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
+                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
+                            {this.fileDetails()}
+                        </View>
+                        {optionsIcon}
                     </View>
-                    <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
-                        <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
-                        {this.fileDetails()}
-                    </View>
-                    {arrow}
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+                <FilesActionSheet
+                    file={folder}
+                    ref={ref => { this.filesActionSheet = ref; }} />
+            </View>
         );
     }
 }
@@ -145,6 +157,6 @@ FolderInnerItem.propTypes = {
     onPress: PropTypes.func,
     onSelect: PropTypes.func,
     folder: PropTypes.any.isRequired,
-    hideArrow: PropTypes.bool,
+    hideMoreOptionsIcon: PropTypes.bool,
     radio: PropTypes.bool
 };
