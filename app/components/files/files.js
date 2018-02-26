@@ -7,6 +7,8 @@ import FilesPlaceholder from './files-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileUploadActionSheet from './file-upload-action-sheet';
+import FilesActionSheet from '../files/files-action-sheet';
+import FoldersActionSheet from '../files/folders-action-sheet';
 import fileState from './file-state';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import { upgradeForFiles } from '../payments/payments';
@@ -23,6 +25,8 @@ const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
 let fileUploadActionSheet = null;
+let filesActionSheet = null;
+let foldersActionSheet = null;
 
 function backFolderAction() {
     fileState.currentFolder = fileState.currentFolder.parent;
@@ -92,7 +96,9 @@ export default class Files extends SafeComponent {
             <FileItem
                 key={file.fileId || file.folderId}
                 file={file}
-                onChangeFolder={this.onChangeFolder} />
+                onChangeFolder={this.onChangeFolder}
+                onFileActionPress={() => filesActionSheet.show(file)}
+                onFolderActionPress={() => foldersActionSheet.show(file)} />
         );
     };
 
@@ -286,6 +292,14 @@ export default class Files extends SafeComponent {
         fileUploadActionSheet = ref;
     }
 
+    @action.bound filesActionSheetRef(ref) {
+        filesActionSheet = ref;
+    }
+
+    @action.bound foldersActionSheetRef(ref) {
+        foldersActionSheet = ref;
+    }
+
     renderThrow() {
         return (
             <View
@@ -299,6 +313,8 @@ export default class Files extends SafeComponent {
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
                 <FileUploadActionSheet createFolder ref={this.fileUploadActionSheetRef} />
+                <FilesActionSheet ref={this.filesActionSheetRef} />
+                <FoldersActionSheet ref={this.foldersActionSheetRef} />
                 {this.toolbar()}
             </View>
         );

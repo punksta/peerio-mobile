@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { Text, Dimensions, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
@@ -12,7 +11,6 @@ import FileSignatureError from './file-signature-error';
 import FileTypeIcon from './file-type-icon';
 import FileProgress from './file-progress';
 import { fileHelpers } from '../../lib/icebear';
-import FilesActionSheet from '../files/files-action-sheet';
 
 const { width } = Dimensions.get('window');
 const height = 64;
@@ -32,8 +30,6 @@ export default class FileInnerItem extends SafeComponent {
         this.props.onPress && !fileState.isFileSelectionMode ? this.props.onPress(this.props.file)
             : (file.selected = !file.selected);
     }
-
-    showFileOptions = () => this.filesActionSheet.show();
 
     checkbox() {
         if (!fileState.isFileSelectionMode) return null;
@@ -59,16 +55,12 @@ export default class FileInnerItem extends SafeComponent {
         );
     }
 
-    @action.bound filesActionSheetRef(ref) {
-        this.filesActionSheet = ref;
-    }
-
     renderThrow() {
         const { file } = this.props;
         if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
         const actionIcon = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
-            icons.dark('more-vert', this.showFileOptions);
+            icons.dark('more-vert', this.props.onFileActionPress);
         const nameStyle = {
             color: vars.txtDark,
             fontSize: vars.font.size.normal,
@@ -134,9 +126,6 @@ export default class FileInnerItem extends SafeComponent {
                     </View>
                 </TouchableOpacity>
                 <FileProgress file={file} />
-                <FilesActionSheet
-                    file={file}
-                    ref={this.filesActionSheetRef} />
             </View>
         );
     }
@@ -146,5 +135,6 @@ FileInnerItem.propTypes = {
     onPress: PropTypes.func,
     file: PropTypes.any.isRequired,
     checkbox: PropTypes.string,
-    hideArrow: PropTypes.bool
+    hideArrow: PropTypes.bool,
+    onFileActionPress: PropTypes.func
 };

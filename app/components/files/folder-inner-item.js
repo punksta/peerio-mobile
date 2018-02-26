@@ -7,7 +7,6 @@ import SafeComponent from '../shared/safe-component';
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
-import FilesActionSheet from '../files/files-action-sheet';
 
 const height = vars.listItemHeight;
 const itemContainerStyle = {
@@ -33,8 +32,6 @@ const folderInfoContainerStyle = {
 @observer
 export default class FolderInnerItem extends SafeComponent {
     onPress = () => this.props.onPress && this.props.onPress(this.props.folder);
-
-    showFileOptions = () => this.filesActionSheet.show();
 
     get radio() {
         if (!this.props.radio) return null;
@@ -63,7 +60,7 @@ export default class FolderInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { folder, onPress, onSelect, hideMoreOptionsIcon } = this.props;
+        const { folder, onPress, onSelect, hideMoreOptionsIcon, onFolderActionPress } = this.props;
         const nameStyle = {
             color: vars.txtDark,
             fontSize: vars.font.size.normal,
@@ -77,7 +74,7 @@ export default class FolderInnerItem extends SafeComponent {
         const loadingStyle = null;
         const optionsIcon = hideMoreOptionsIcon ? null : (
             <View style={{ flex: 0 }}>
-                {icons.dark('more-vert', this.showFileOptions)}
+                {icons.dark('more-vert', onFolderActionPress)}
             </View>
         );
         return (
@@ -104,9 +101,6 @@ export default class FolderInnerItem extends SafeComponent {
                         </View>
                     </View>
                 </TouchableOpacity>
-                <FilesActionSheet
-                    file={folder}
-                    ref={ref => { this.filesActionSheet = ref; }} />
             </View>
         );
     }
@@ -117,5 +111,6 @@ FolderInnerItem.propTypes = {
     onSelect: PropTypes.func,
     folder: PropTypes.any.isRequired,
     hideMoreOptionsIcon: PropTypes.bool,
-    radio: PropTypes.bool
+    radio: PropTypes.bool,
+    onFolderActionPress: PropTypes.func
 };

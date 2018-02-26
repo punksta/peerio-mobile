@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { action } from 'mobx';
 import { Text, Dimensions, View } from 'react-native';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
@@ -9,7 +8,6 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import FileTypeIcon from './file-type-icon';
 import { fileHelpers } from '../../lib/icebear';
-import FilesActionSheet from '../files/files-action-sheet';
 
 const { width } = Dimensions.get('window');
 const height = 64;
@@ -21,15 +19,9 @@ const fileInfoContainerStyle = {
 
 @observer
 export default class RecentFileInnerItem extends SafeComponent {
-    @action.bound filesActionSheetRef(ref) {
-        this.filesActionSheet = ref;
-    }
-
-    fileOptions = () => this.filesActionSheet.show();
-
     renderThrow() {
-        const { file } = this.props;
-        const iconRight = icons.dark('more-vert', this.fileOptions);
+        const { file, onFileActionPress } = this.props;
+        const iconRight = icons.dark('more-vert', onFileActionPress);
         const nameStyle = {
             color: vars.txtDark,
             fontSize: vars.font.size.normal
@@ -52,7 +44,7 @@ export default class RecentFileInnerItem extends SafeComponent {
             width,
             paddingLeft: vars.spacing.medium.mini2x
         };
-        const arrow = this.props.hideArrow ? null : (
+        const optionsIcon = this.props.hideArrow ? null : (
             <View style={{ flex: 0 }}>
                 {iconRight}
             </View>
@@ -75,17 +67,15 @@ export default class RecentFileInnerItem extends SafeComponent {
                                 {file.fileOwner}
                             </Text>
                         </View>
-                        {arrow}
+                        {optionsIcon}
                     </View>
                 </View>
-                <FilesActionSheet
-                    file={file}
-                    ref={this.filesActionSheetRef} />
             </View>
         );
     }
 }
 
 RecentFileInnerItem.propTypes = {
-    file: PropTypes.any.isRequired
+    file: PropTypes.any.isRequired,
+    onFileActionPress: PropTypes.func
 };

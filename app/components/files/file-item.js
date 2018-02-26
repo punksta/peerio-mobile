@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FileInnerItem from './file-inner-item';
 import FolderInnerItem from './folder-inner-item';
@@ -34,14 +34,29 @@ export default class FileItem extends SafeComponent {
         }
     }
 
+    @action.bound onFileActionPress() {
+        const { file, onFileActionPress } = this.props;
+        onFileActionPress(file);
+    }
+
+    @action.bound onFolderPress() {
+        const { file, onChangeFolder } = this.props;
+        onChangeFolder(file);
+    }
+
+    @action.bound onFolderActionPress() {
+        const { file, onFolderActionPress } = this.props;
+        onFolderActionPress(file);
+    }
+
     renderThrow() {
         const { file, isRecentFile } = this.props;
         return (
             <View style={{ backgroundColor: 'white', marginHorizontal: !isRecentFile ? vars.spacing.medium.mini2x : 0 }}>
-                {isRecentFile && <RecentFileInnerItem file={file} />}
+                {isRecentFile && <RecentFileInnerItem file={file} onFileActionPress={this.onFileActionPress} />}
                 {!isRecentFile && (file.isFolder ?
-                    <FolderInnerItem folder={file} onPress={() => this.props.onChangeFolder(file)} /> :
-                    <FileInnerItem file={file} onPress={f => this.press(f)} />)}
+                    <FolderInnerItem folder={file} onPress={this.onFolderPress} onFolderActionPress={this.onFolderActionPress} /> :
+                    <FileInnerItem file={file} onPress={f => this.press(f)} onFileActionPress={this.onFileActionPress} />)}
             </View>
         );
     }
@@ -50,5 +65,7 @@ export default class FileItem extends SafeComponent {
 FileItem.propTypes = {
     file: PropTypes.any.isRequired,
     onChangeFolder: PropTypes.any,
-    isRecentFile: PropTypes.bool
+    isRecentFile: PropTypes.bool,
+    onFileActionPress: PropTypes.func,
+    onFolderActionPress: PropTypes.func
 };
