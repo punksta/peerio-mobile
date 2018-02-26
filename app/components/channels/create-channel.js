@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Dimensions, LayoutAnimation, TextInput, Keyboard } from 'react-native';
+import { View, Text, ScrollView, Dimensions, LayoutAnimation, Keyboard } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction, action } from 'mobx';
 import ContactSelectorUniversal from '../contacts/contact-selector-universal';

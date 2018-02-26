@@ -11,18 +11,12 @@ export default class FileTypeIcon extends React.Component {
 
     render() {
         const iconSource = this.getIconSource();
-        let sizeStyle;
-        switch (this.props.size) {
-            case 'small':
-                sizeStyle = { height: vars.iconSize, width: vars.iconSize };
-                break;
-            case 'medium':
-                sizeStyle = { height: vars.iconSizeLarge, width: vars.iconSizeLarge };
-                break;
-            case 'large': default:
-                sizeStyle = { height: vars.iconFileViewSize, width: vars.iconFileViewSize };
-                break;
+        const size = vars.fileType[this.props.size];
+        if (!size) {
+            console.error(`file-type-icon.js: cannot find size ${this.props.size}`);
+            return null;
         }
+        const sizeStyle = { width: size, height: size };
         return (
             <View style={sizeStyle}>
                 <Image

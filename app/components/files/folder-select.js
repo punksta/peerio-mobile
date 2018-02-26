@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Animated, Text } from 'react-native';
+import { View, ListView, Text } from 'react-native';
 import { observable, reaction, computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FolderInnerItem from './folder-inner-item';

@@ -14,7 +14,7 @@ export default class InlineFileActionSheet extends SafeComponent {
     sharefile = () => {
         fileState.currentFile = this.file;
         routerModal.shareFileTo();
-    }
+    };
 
     get openItem() {
         const exists = this.file && !this.file.isPartialDownload && this.file.cached;
@@ -44,7 +44,7 @@ export default class InlineFileActionSheet extends SafeComponent {
     show = (file) => {
         this.file = file;
         this._actionSheet.show();
-    }
+    };
 
     renderThrow() {
         return (

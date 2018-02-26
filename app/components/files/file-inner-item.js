@@ -101,7 +101,7 @@ export default class FileInnerItem extends SafeComponent {
         if (file.uploading /* || !file.readyForDownload */) {
             opacity = 0.5;
         }
-        if (icon) icon = icons.dark(icon);
+        if (icon) icon = icons.darkNoPadding(icon);
         const loadingStyle = null;
         const optionsIcon = this.props.hideArrow ? null : (
             <View style={{ flex: 0 }}>
@@ -117,7 +117,7 @@ export default class FileInnerItem extends SafeComponent {
                             <View style={[loadingStyle, { flex: 0, paddingRight: vars.fileInnerItemPaddingRight }]}>
                                 {icon ||
                                     <FileTypeIcon
-                                        size="small"
+                                        size="smaller"
                                         type={fileHelpers.getFileIconType(file.ext)}
                                     />}
                             </View>

@@ -52,8 +52,12 @@ defineSupportCode(({ Given, When, Then }) => {
 
     Given('I sign out', async function () {
         await this.homePage.settingsTab.click();
+        await this.app.touchAction([
+            { action: 'press', x: 0, y: 200 },
+            { action: 'moveTo', x: 0, y: -200 },
+            'release'
+        ]);
         await this.settingsPage.logoutButton.click();
-        await this.settingsPage.logoutButton.click(); // TODO: need to tap 2x
         await this.settingsPage.lockButton.click();
     });
 

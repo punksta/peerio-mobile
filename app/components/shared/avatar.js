@@ -17,8 +17,6 @@ import CorruptedMessage from './corrupted-message';
 import tagify from './tagify';
 import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
-import preferenceStore from '../settings/preference-store';
-import { popupSetupVideo } from '../shared/popups';
 import testLabel from '../helpers/test-label';
 
 const pinOn = require('../../assets/chat/icon-pin.png');
@@ -45,10 +43,9 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: 8,
-    paddingRight: vars.spacing.small.mini2x,
-    paddingBottom: 0
-
+    paddingBottom: 0,
+    paddingLeft: vars.spacing.medium.mini2x,
+    paddingRight: vars.spacing.medium.mini2x
 };
 
 const nameContainerStyle = {
@@ -69,8 +66,7 @@ const nameMessageContainerStyle = {
     borderColor: 'red',
     flexDirection: 'column',
     justifyContent: 'center',
-    paddingLeft: 16,
-    marginLeft: 6,
+    marginLeft: vars.spacing.medium.mini2x,
     marginRight: vars.spacing.small.midi,
     paddingTop: 0
 };
@@ -199,7 +195,6 @@ export default class Avatar extends SafeComponent {
     get systemMessage() {
         const { systemMessage, videoCallMessage } = this.props;
         if (videoCallMessage) {
-            const { prefs } = preferenceStore;
             const videoCallShort = videoCallMessage.replace(/(https:\/\/)/, '');
             return (
                 <View>
@@ -441,7 +436,7 @@ export default class Avatar extends SafeComponent {
                 <View style={[itemStyle, this.errorStyle]}>
                     <View
                         pointerEvents={this.props.disableMessageTapping ? 'none' : undefined}
-                        style={[this.itemContainerStyle, { paddingLeft: 74, marginRight: vars.spacing.small.maxi }, shrinkStrategy]}>
+                        style={[this.itemContainerStyle, { paddingLeft: 68, marginRight: 22 }, shrinkStrategy]}>
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
                             {files}
