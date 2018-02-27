@@ -100,6 +100,7 @@ export default class FolderInnerItem extends SafeComponent {
 
     renderThrow() {
         const { folder, onPress, onSelect, hideMoreOptionsIcon, onFolderActionPress } = this.props;
+        const { isShared, isBlocked } = folder;
         const progressContainer = {
             backgroundColor: vars.fileUploadProgressColor,
             width: this.currentProgress,
@@ -110,24 +111,28 @@ export default class FolderInnerItem extends SafeComponent {
             left: 0
         };
         const nameStyle = {
-            color: vars.txtDark,
+            color: isBlocked ? vars.extraSubtleText : vars.txtDark,
             fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.bold
         };
         const loadingStyle = null;
         const optionsIcon = hideMoreOptionsIcon ? null : (
             <View style={{ flex: 0 }}>
-                {icons.dark('more-vert', onFolderActionPress)}
-            </View>
-        );
+                {icons.dark(
+                    'more-vert',
+                    !isBlocked ? onFolderActionPress : null,
+                    !isBlocked ? null : { opacity: 0.38 })}
+            </View>);
         return (
             <TouchableOpacity
-                onPress={hideMoreOptionsIcon ? onSelect : onPress} style={{ backgroundColor: 'white' }}>
+                onPress={hideMoreOptionsIcon ? onSelect : onPress}
+                style={{ backgroundColor: 'white' }}
+                disabled={isBlocked}>
                 <View style={folderInfoContainerStyle} onLayout={this.layout}>
                     <View style={progressContainer} />
                     {this.radio}
                     <View style={[loadingStyle, { flex: 0 }]}>
-                        {icons.darkNoPadding('folder', null, null, vars.iconSize)}
+                        {icons.darkNoPadding(isShared ? 'folder-shared' : 'folder', null, null, vars.iconSize)}
                     </View>
                     <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
                         <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
