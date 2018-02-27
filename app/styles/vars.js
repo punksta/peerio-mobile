@@ -38,7 +38,8 @@ const tabCellHeight = 56;
 // pixel ratio should be factored into scaleDim somehow: const pixRatio = PixelRatio.get();
 const defaultHeight = 667;
 // scaleDim takes a size value and returns one that is adjusted to the height of the device as it compares to an iPhone 6
-const scaleDim = size => height / defaultHeight * size;
+// const scaleDim = size => height / defaultHeight * size;
+const scaleDim = size => size; // temporary making scaleDim do nothing
 
 const vars = {
     circle: 10,
@@ -47,6 +48,7 @@ const vars = {
     bgGradient,
     tabsBg,
     tabsFg,
+    bgGreen: '#38CE86',
     bgHighlight: 'rgba(50, 176, 227, 0.38)',
     semiTransparentBg: 'rgba(44, 149, 207, 0.24)',
     yellowLine: '#f5e23e',
@@ -67,6 +69,7 @@ const vars = {
     txtDate: 'rgba(0, 0, 0, .38)',
     inputBg: '#fff',
     lightGrayBg: '#f0f0f0',
+    mediumGrayBg: '#D0D0D0',
     sublteGrayOpacity: 0.54,
     pickerBg: 'rgba(255, 255, 255, .12)',
     pickerText: '#fff',
@@ -112,6 +115,9 @@ const vars = {
     iconSizeBigger: 25,
     iconMargin: 30,
     imagePreviewSize: 48,
+    chatListItemHeight: 48,
+    contactListHeaderHeight: 48,
+    roundedButtonWidth: 134,
     menuWidthRatio: 0.8,
     animationDuration: 200,
     progressBarHeight: 4,
@@ -135,6 +141,7 @@ const vars = {
             xsmall: scaleDim(8),
             normal: scaleDim(14),
             smaller: scaleDim(12),
+            smallerx: scaleDim(11),
             small: scaleDim(10),
             big: scaleDim(18),
             bigger: scaleDim(16),
@@ -152,6 +159,7 @@ const vars = {
     signupFontSize: scaleDim(36),
     profileEditFontSize: scaleDim(60),
     readReceiptFontSize: scaleDim(9),
+    fontTitleSize: 16,
     largeInputWidth: 240,
     inputHeight: 48,
     searchInputHeight: 32,
@@ -185,6 +193,7 @@ const vars = {
         },
         large: {
             mini: scaleDim(25),
+            minix: scaleDim(28),
             mini2x: scaleDim(30),
             midi: scaleDim(32),
             midixx: scaleDim(34),
@@ -205,7 +214,13 @@ const vars = {
     },
     loadingTimeout: 15000,
     isDeviceScreenBig,
-    isDeviceScreenSmall
+    isDeviceScreenSmall,
+    fileType: {
+        smaller: 24,
+        small: 32,
+        medium: 48,
+        large: 72
+    }
 };
 
 vars.iconLayoutSize = vars.iconSize + vars.iconPadding * 2;

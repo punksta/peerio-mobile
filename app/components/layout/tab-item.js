@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
-import { t } from '../utils/translator';
 import { vars } from '../../styles/styles';
-import { fileStore, chatStore } from '../../lib/icebear';
 import fileState from '../files/file-state';
-import contactState from '../contacts/contact-state';
 import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
@@ -24,18 +22,32 @@ const actionTextStyle = {
     color: vars.white
 };
 
-const bottomRowStyle = {
-    flex: 0,
-    flexDirection: 'row',
-    backgroundColor: vars.tabsBg,
-    height: vars.tabsHeight,
-    padding: 0,
-    paddingBottom: vars.iPhoneXBottom
-};
-
 @observer
-export default class Tabs extends SafeComponent {
-    action(text, route, icon, bubble) {
+export default class TabItem extends SafeComponent {
+    @action.bound onPressTabItem() {
+        const { route } = this.props;
+        if (routerMain.route === route) {
+            if (routerMain.route === 'files') {
+                fileState.goToRoot();
+            }
+            if (uiState.currentScrollView.scrollTo) {
+                uiState.currentScrollView.scrollTo(0);
+            } else {
+                uiState.currentScrollView.scrollToLocation(
+                    {
+                        itemIndex: 0,
+                        sectionIndex: 0,
+                        viewOffset: vars.contactListHeaderHeight,
+                        viewPosition: 0
+                    });
+            }
+        } else {
+            routerMain[route]();
+        }
+    }
+
+    renderThrow() {
+        const { text, route, icon, bubble } = this.props;
         const color = routerMain.route === route ? vars.bg : vars.tabsFg;
         const indicator = bubble ? (
             <View style={{ position: 'absolute', right: -5, top: 0 }}>
@@ -45,7 +57,7 @@ export default class Tabs extends SafeComponent {
         return (
             <TouchableOpacity
                 {...testLabel(icon)}
-                onPress={() => routerMain[route]()}
+                onPress={this.onPressTabItem}
                 pressRetentionOffset={vars.retentionOffset}
                 style={actionCellStyle}>
                 <View pointerEvents="none" style={{ alignItems: 'center' }}>
@@ -56,23 +68,12 @@ export default class Tabs extends SafeComponent {
             </TouchableOpacity>
         );
     }
-
-    renderThrow() {
-        if (uiState.keyboardHeight) return null;
-        if (routerMain.currentIndex !== 0) return null;
-        if (fileState.isFileSelectionMode) return null;
-        return (
-            <View style={bottomRowStyle}>
-                {this.action(t('title_chats'), 'chats', 'forum', chatStore.unreadMessages)}
-                {this.action(t('title_files'), 'files', 'folder', fileStore.unreadFiles)}
-                {this.action(t('title_contacts'),
-                    contactState.empty ? 'contactAdd' : 'contacts', 'people')}
-                {this.action(t('title_settings'), 'settings', 'settings')}
-            </View>
-        );
-    }
 }
 
-Tabs.propTypes = {
-    height: PropTypes.any
+TabItem.propTypes = {
+    text: PropTypes.any,
+    route: PropTypes.any,
+    icon: PropTypes.any,
+    bubble: PropTypes.any
 };
+

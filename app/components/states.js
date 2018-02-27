@@ -8,6 +8,7 @@ import loginState from './login/login-state';
 import contactState from './contacts/contact-state';
 import contactAddState from './contacts/contact-add-state';
 import ghostState from './ghosts/ghost-state';
+import invitationState from './messaging/invitation-state';
 
 export {
     settingsState,
@@ -19,5 +20,6 @@ export {
     fileState,
     contactState,
     contactAddState,
-    ghostState
+    ghostState,
+    invitationState
 };

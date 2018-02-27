@@ -259,7 +259,13 @@ export default class Chat extends SafeComponent {
     get archiveNotice() {
         // TODO: archive notice
         return true || this.props.archiveNotice ? ( // eslint-disable-line
-            <Text style={{ textAlign: 'left', margin: vars.spacing.small.maxi2x, marginTop: 0, marginBottom: vars.spacing.medium.mini2x, color: vars.txtMedium }}>
+            <Text style={{
+                textAlign: 'left',
+                marginTop: 0,
+                marginRight: vars.spacing.medium.mini2x,
+                marginBottom: vars.spacing.medium.mini2x,
+                color: vars.txtMedium
+            }}>
                 {tx('title_chatArchive')}
             </Text>
         ) : null;
@@ -269,10 +275,12 @@ export default class Chat extends SafeComponent {
         const zsContainer = {
             borderBottomWidth: 0,
             borderBottomColor: '#CFCFCF',
-            marginBottom: vars.spacing.small.midi2x
+            marginBottom: vars.spacing.small.midi2x,
+            paddingLeft: vars.spacing.medium.mini2x,
+            paddingRight: vars.spacing.medium.mini2x
         };
         const { chat } = this;
-        const participants = chat.isChannel ? chat.allJoinedParticipants : chat.otherParticipants;
+        const participants = chat.isChannel ? chat.allParticipants : chat.otherParticipants;
         const w = 3 * 36;
         const shiftX = (width - w - w * participants.length) / participants.length;
         const shift = shiftX < 0 ? shiftX : 0;
@@ -291,8 +299,13 @@ export default class Chat extends SafeComponent {
         ));
         return (
             <View style={zsContainer}>
-                <View style={{ flexDirection: 'row', marginRight: vars.spacing.large.maxi2x, paddingLeft: -marginLeft }}>{avatars}</View>
-                <Text style={{ textAlign: 'left', margin: vars.spacing.small.maxi2x, color: vars.txtDark }}>
+                <View style={{ flexDirection: 'row', paddingLeft: -marginLeft }}>{avatars}</View>
+                <Text style={{
+                    textAlign: 'left',
+                    marginTop: vars.spacing.small.maxi2x,
+                    marginBottom: vars.spacing.small.maxi2x,
+                    color: vars.txtDark
+                }}>
                     {tx('title_chatBeginning', { chatName: chat.name })}
                 </Text>
                 {this.archiveNotice}

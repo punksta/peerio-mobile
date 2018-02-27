@@ -111,7 +111,7 @@ export default class ContactAdd extends SafeComponent {
         this.notFound = false;
         const contact = contactStore.getContactAndSave(this.query);
         when(() => !contact.loading, () => {
-            const { notFound, isLegacy } = contact;
+            const { notFound, isLegacy, fullNameAndUsername: name } = contact;
             if (notFound) {
                 this.notFound = true;
                 const atInd = this.query.indexOf('@');
@@ -127,6 +127,7 @@ export default class ContactAdd extends SafeComponent {
                 isLegacy && snackbarState.pushTemporary(t('title_inviteLegacy'));
             } else {
                 this.query = '';
+                warnings.add(t('title_contactAdded', { name }));
             }
             this.waiting = false;
         });

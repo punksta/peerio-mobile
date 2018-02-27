@@ -9,7 +9,6 @@ import LoginAutomatic from '../login/login-automatic';
 import PopupState from '../layout/popup-state';
 import routerMain from './router-main';
 import routes from './routes';
-import fileState from '../files/file-state';
 
 class RouterApp extends Router {
     constructor() {

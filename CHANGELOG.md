@@ -2,6 +2,103 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.260.0"></a>
+# [3.260.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.259.0...v3.260.0) (2018-02-23)
+
+
+
+<a name="3.259.0"></a>
+# [3.259.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.258.0...v3.259.0) (2018-02-22)
+
+
+### Bug Fixes
+
+* revert buffer dependency [ch3852] [ch3849] [ch3848] ([fb3f4b1](https://github.com/PeerioTechnologies/peerio-mobile/commit/fb3f4b1))
+
+
+
+<a name="3.258.0"></a>
+# [3.258.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.257.0...v3.258.0) (2018-02-22)
+
+
+
+<a name="3.257.0"></a>
+# [3.257.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.256.0...v3.257.0) (2018-02-22)
+
+
+### Bug Fixes
+
+* padding for admin label in members list ([075ad83](https://github.com/PeerioTechnologies/peerio-mobile/commit/075ad83))
+
+
+
+<a name="3.256.0"></a>
+# [3.256.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.255.0...v3.256.0) (2018-02-21)
+
+
+### Bug Fixes
+
+* android sorting room list ([03c9b27](https://github.com/PeerioTechnologies/peerio-mobile/commit/03c9b27))
+* press ([8329354](https://github.com/PeerioTechnologies/peerio-mobile/commit/8329354))
+* reduced folder icon size. Removed extra padding from downloading icon in file list ([#135](https://github.com/PeerioTechnologies/peerio-mobile/issues/135)) ([e8b527f](https://github.com/PeerioTechnologies/peerio-mobile/commit/e8b527f))
+* room action list spacing ([#138](https://github.com/PeerioTechnologies/peerio-mobile/issues/138)) ([7f11df0](https://github.com/PeerioTechnologies/peerio-mobile/commit/7f11df0))
+* scroll ([#133](https://github.com/PeerioTechnologies/peerio-mobile/issues/133)) ([52c7ef5](https://github.com/PeerioTechnologies/peerio-mobile/commit/52c7ef5))
+* updated room action list items and spacing style ([#137](https://github.com/PeerioTechnologies/peerio-mobile/issues/137)) ([94cae54](https://github.com/PeerioTechnologies/peerio-mobile/commit/94cae54))
+
+
+### Features
+
+* bump icebear to v4.13.0 ([a8818c9](https://github.com/PeerioTechnologies/peerio-mobile/commit/a8818c9))
+
+
+
+<a name="3.255.0"></a>
+# [3.255.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.254.0...v3.255.0) (2018-02-08)
+
+
+### Features
+
+* clicking on text or icon in file view will now download/open the file ([#119](https://github.com/PeerioTechnologies/peerio-mobile/issues/119)) ([ca0c18e](https://github.com/PeerioTechnologies/peerio-mobile/commit/ca0c18e))
+
+
+
+<a name="3.254.0"></a>
+# [3.254.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.253.0...v3.254.0) (2018-02-08)
+
+
+### Features
+
+* jump to newly created chat when accepting invite ([a5de9e9](https://github.com/PeerioTechnologies/peerio-mobile/commit/a5de9e9))
+* snackbar for added contact [ch2770] ([cdb415e](https://github.com/PeerioTechnologies/peerio-mobile/commit/cdb415e))
+
+
+
+<a name="3.253.0"></a>
+# [3.253.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.252.0...v3.253.0) (2018-02-07)
+
+
+### Features
+
+* add paywall handling for room invites ([b9b68e3](https://github.com/PeerioTechnologies/peerio-mobile/commit/b9b68e3))
+
+
+
+<a name="3.252.0"></a>
+# [3.252.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.251.0...v3.252.0) (2018-02-07)
+
+
+### Bug Fixes
+
+* fix file share behaviour bug [ch2869] ([b4db6eb](https://github.com/PeerioTechnologies/peerio-mobile/commit/b4db6eb))
+
+
+### Features
+
+* Confirm starting Jitsi call ([#122](https://github.com/PeerioTechnologies/peerio-mobile/issues/122)) ([ad4e33e](https://github.com/PeerioTechnologies/peerio-mobile/commit/ad4e33e))
+* no auto adding contacts anymore. explicitly add contact. [branch ch2492] ([2fcef67](https://github.com/PeerioTechnologies/peerio-mobile/commit/2fcef67))
+
+
+
 <a name="3.251.0"></a>
 # [3.251.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.250.0...v3.251.0) (2018-02-05)
 

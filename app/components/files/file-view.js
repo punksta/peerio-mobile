@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { action } from 'mobx';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
@@ -43,6 +44,18 @@ export default class FileView extends SafeComponent {
         return <FileActions file={this.file} />;
     }
 
+    @action.bound fileAction() {
+        const { file } = this;
+        const enabled = file && file.readyForDownload || fileState.showSelection;
+        if (enabled) {
+            if (file && !file.isPartialDownload && file.cached) {
+                file.launchViewer();
+            } else {
+                fileState.download(file);
+            }
+        }
+    }
+
     renderThrow() {
         const { file } = this;
         let icon = null;
@@ -61,17 +74,25 @@ export default class FileView extends SafeComponent {
                             marginLeft: vars.spacing.small.mini2x,
                             marginRight: vars.spacing.small.maxi2x
                         }}>
-                            {icon ||
+                            <TouchableOpacity
+                                onPress={this.fileAction}
+                                pressRetentionOffset={vars.pressRetentionOffset}>
+                                {icon ||
                                 <FileTypeIcon
                                     size="large"
                                     type={fileHelpers.getFileIconType(file.ext)}
                                 />}
+                            </TouchableOpacity>
                         </View>
                         <View style={firstColumnStyle}>
                             <View style={{ flexGrow: 1, flexShrink: 1 }}>
-                                <Text
-                                    ellipsizeMode="tail"
-                                    numberOfLines={1}>{file.name}</Text>
+                                <TouchableOpacity
+                                    onPress={this.fileAction}
+                                    pressRetentionOffset={vars.pressRetentionOffset}>
+                                    <Text
+                                        ellipsizeMode="tail"
+                                        numberOfLines={1}>{file.name}</Text>
+                                </TouchableOpacity>
                             </View>
                             <View style={secondRowStyle}>
                                 <View style={{ flexGrow: 1 }}>

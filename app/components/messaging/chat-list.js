@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ListView } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import { chatInviteStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
@@ -10,11 +10,11 @@ import ChannelListItem from './channel-list-item';
 import ProgressOverlay from '../shared/progress-overlay';
 import chatState from './chat-state';
 import ChatSectionHeader from './chat-section-header';
-import ChatChannelInvitesSection from './chat-channel-invites-section';
+import ChannelInviteListItem from './channel-invite-list-item';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import CreateActionSheet from './create-action-sheet';
 import { tx } from '../utils/translator';
-import routes from '../routes/routes';
+import uiState from '../layout/ui-state';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -63,12 +63,15 @@ export default class ChatList extends SafeComponent {
             this.maxLoadedIndex
         ], () => {
             const channels = this.data.filter(d => !!d.isChannel);
-            if (chatInviteStore.received.length) {
-                channels.unshift({ id: true, isRoomInvite: true });
-            }
+            const allChannels = chatInviteStore.received.concat(channels);
+            allChannels.sort((a, b) => {
+                const first = (a.name || a.channelName).toLocaleLowerCase();
+                const second = (b.name || b.channelName).toLocaleLowerCase();
+                return first.localeCompare(second);
+            });
             const dms = this.data.filter(d => !d.isChannel).slice(0, this.maxLoadedIndex);
             this.dataSource = this.dataSource.cloneWithRowsAndSections({
-                title_channels: channels,
+                title_channels: allChannels,
                 title_directMessages: dms,
                 dummy: []
             });
@@ -94,15 +97,16 @@ export default class ChatList extends SafeComponent {
     };
 
     item = (chat) => {
-        if (!chat.id) return null;
-        if (chat.isRoomInvite) {
+        if (chat.kegDbId) {
             return (
-                <ChatChannelInvitesSection
-                    title={tx('title_viewChannelInvites')}
-                    data={chatInviteStore.received.length}
-                    onPress={routes.modal.channelInviteList}
+                <ChannelInviteListItem
+                    id={chat.kegDbId}
+                    channelName={chat.channelName}
+                    username={chat.username}
                 />);
-        } else if (chat.isChannel) {
+        }
+        if (!chat.id) return null;
+        else if (chat.isChannel) {
             return <ChannelListItem chat={chat} />;
         }
         return <ChatListItem key={chat.id} chat={chat} />;
@@ -112,6 +116,11 @@ export default class ChatList extends SafeComponent {
         console.log('chat-list.js: on end reached');
         this.maxLoadedIndex += PAGE_SIZE;
     };
+
+    @action.bound scrollViewRef(sv) {
+        this.scrollView = sv;
+        uiState.currentScrollView = sv;
+    }
 
     listView() {
         if (chatState.routerMain.currentIndex !== 0) return null;
@@ -127,7 +136,7 @@ export default class ChatList extends SafeComponent {
                 onEndReachedThreshold={20}
                 onContentSizeChange={this.scroll}
                 enableEmptySections
-                ref={sv => { this.scrollView = sv; }}
+                ref={this.scrollViewRef}
             />
         );
     }

@@ -75,7 +75,7 @@ export default class ChatItem extends SafeComponent {
                 />
                 {
                     shouldDisplayIdentityNotice &&
-                    <View style={{ paddingVertical: vars.spacing.small.midi }}>
+                    <View style={{ padding: vars.spacing.medium.mini2x, paddingVertical: vars.spacing.small.midi }}>
                         <IdentityVerificationNotice />
                     </View>
                 }

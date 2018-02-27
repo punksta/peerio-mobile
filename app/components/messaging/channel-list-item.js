@@ -21,7 +21,7 @@ export default class ChannelListItem extends SafeComponent {
         if (!headLoaded) return null;
         if (!chat) return null;
         const containerStyle = {
-            height: 48,
+            height: vars.chatListItemHeight,
             paddingHorizontal: vars.spacing.medium.midi,
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -30,7 +30,7 @@ export default class ChannelListItem extends SafeComponent {
         };
 
         const textStyle = {
-            fontSize: 16,
+            fontSize: vars.fontTitleSize,
             color: vars.txtDark
         };
 

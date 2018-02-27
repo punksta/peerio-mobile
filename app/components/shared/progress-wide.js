@@ -6,6 +6,9 @@ import { View, Text, TouchableOpacity, LayoutAnimation, Platform } from 'react-n
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import FileTypeIcon from '../files/file-type-icon';
+import Thumbnail from '../shared/thumbnail';
+import { fileHelpers } from '../../lib/icebear';
 
 @observer
 export default class Progress extends SafeComponent {
@@ -38,9 +41,18 @@ export default class Progress extends SafeComponent {
         this.props.onCancel && this.props.onCancel();
     }
 
+    get previewImage() {
+        const size = vars.fileType.small;
+        const s = {
+            width: size,
+            height: size
+        };
+        return <Thumbnail path={this.props.path} style={s} />;
+    }
+
     renderThrow() {
         if (this.hidden) return null;
-        const { max } = this.props;
+        const { max, file } = this.props;
         if (!max) return null;
         const height = 42;
         // height minus borders
@@ -67,9 +79,10 @@ export default class Progress extends SafeComponent {
         };
         const text = {
             backgroundColor: 'transparent',
-            lineHeight: height,
             color: vars.subtleText,
-            flexShrink: 1
+            flexShrink: 1,
+            flexGrow: 1,
+            paddingLeft: 2
         };
         const row = {
             // minus overlapping border
@@ -82,16 +95,29 @@ export default class Progress extends SafeComponent {
             justifyContent: 'space-between',
             paddingLeft: 16
         };
-
         const animation = {
             height: this.visible ? height - 2 : 0
         };
+        let fileImagePlaceholder = null;
+        const fileIconType = fileHelpers.getFileIconType(file.ext);
+        if (fileIconType) {
+            fileImagePlaceholder = (
+                <FileTypeIcon
+                    size="small"
+                    type={fileIconType}
+                />
+            );
+        }
+        if (fileHelpers.isImage(file.ext) && this.props.path) {
+            fileImagePlaceholder = this.previewImage;
+        }
 
         return (
             <View style={animation}>
                 <View style={pbContainer} onLayout={this.layout}>
                     <View style={pbProgress} />
                     <View style={row}>
+                        {fileImagePlaceholder}
                         <Text style={text} numberOfLines={1} ellipsizeMode="tail">
                             {this.props.title}
                         </Text>
