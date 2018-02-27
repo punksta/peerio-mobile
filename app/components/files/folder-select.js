@@ -9,7 +9,9 @@ import { vars } from '../../styles/styles';
 import Center from '../controls/center';
 import icons from '../helpers/icons';
 import routes from '../routes/routes';
+import { popupMoveToSharedFolder } from '../shared/popups';
 import { tx } from '../utils/translator';
+import preferenceStore from '../settings/preference-store';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -54,10 +56,22 @@ export default class FolderSelect extends SafeComponent {
     }
 
     item = folder => {
-        const selectFolder = () => {
+        const selectFolder = async () => {
             const file = fileState.currentFile;
             if (!file) return;
-            folder.moveInto(file);
+            if (folder.isShared) {
+                if (!preferenceStore.showMoveSharedFolderPopup) {
+                    folder.moveInto(file);
+                } else {
+                    const result = await popupMoveToSharedFolder();
+                    if (result) {
+                        if (result.checked) {
+                            preferenceStore.showMoveSharedFolderPopup = false;
+                        }
+                        folder.moveInto(file);
+                    }
+                }
+            } else folder.moveInto(file);
             routes.modal.discard();
         };
         const changeFolder = () => {

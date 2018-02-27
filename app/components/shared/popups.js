@@ -25,8 +25,8 @@ function textControl(str) {
     return <Text style={text}>{formatted}</Text>;
 }
 
-function checkBoxControl(str, checked, press, accessibilityLabel) {
-    return <CheckBox text={str} isChecked={checked} onChange={press} accessibilityLabel={accessibilityLabel} />;
+function checkBoxControl(str, checked, press, alignLeft, accessibilityLabel) {
+    return <CheckBox text={str} isChecked={checked} onChange={press} alignLeft accessibilityLabel={accessibilityLabel} />;
 }
 
 function inputControl(state, placeholder, props) {
@@ -247,7 +247,7 @@ function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
                 <Text style={helperTextStyle}>
                     {tx('title_2FAHelperText')}
                 </Text>
-                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; }, 'trustDevice')}
+                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; }, false, 'trustDevice')}
             </View>
         );
         popupState.showPopup({
@@ -309,11 +309,34 @@ function popupSetupVideo() {
     });
 }
 
+function popupMoveToSharedFolder() {
+    return new Promise((resolve) => {
+        const o = observable({ value: '', checked: false });
+        const alignedLeft = true;
+        popupState.showPopup({
+            title: textControl(tx('title_moveToSharedFolder')),
+            contents: (
+                <View>
+                    {textControl(tx('title_moveToSharedFolderDescription'))}
+                    {checkBoxControl(
+                        tx('title_dontShowMessageAgain'),
+                        o.checked,
+                        v => { o.checked = v; },
+                        alignedLeft
+                    )}
+                </View>
+            ),
+            buttons: [
+                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
+                { id: 'move', text: tu('button_move'), action: () => resolve(o) }
+            ]
+        });
+    });
+}
 
 locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
-
 
 export {
     addSystemWarningAction,
@@ -332,5 +355,7 @@ export {
     popupControl,
     popupSignOutAutologin,
     popupCancelConfirm,
-    popupSetupVideo
+    popupSetupVideo,
+    popupMoveToSharedFolder
 };
+
