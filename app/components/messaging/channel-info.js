@@ -11,7 +11,6 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { popupCancelConfirm } from '../shared/popups';
 import { tx } from '../utils/translator';
-import RecentFilesList from '../files/recent-files-list';
 import { User, contactStore } from '../../lib/icebear';
 
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
@@ -218,7 +217,6 @@ export default class ChannelInfo extends SafeComponent {
                         {invited.map(this.invitedParticipant)}
                     </View>
                 )}
-                <RecentFilesList />
             </View>
         );
         return (<LayoutModalExit
