@@ -58,9 +58,9 @@ export default class FileInnerItem extends SafeComponent {
     renderThrow() {
         const { file } = this.props;
         if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
-        const action = () => !file.uploading && this.onPress();
+        const actionIcon = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
-            icons.dark('keyboard-arrow-right', action);
+            icons.dark('more-vert', this.props.onFileActionPress);
         const nameStyle = {
             color: vars.txtDark,
             fontSize: vars.font.size.normal,
@@ -95,14 +95,14 @@ export default class FileInnerItem extends SafeComponent {
         }
         if (icon) icon = icons.darkNoPadding(icon);
         const loadingStyle = null;
-        const arrow = this.props.hideArrow ? null : (
+        const optionsIcon = this.props.hideArrow ? null : (
             <View style={{ flex: 0 }}>
                 {iconRight}
             </View>
         );
         return (
             <View style={{ backgroundColor: 'white' }}>
-                <TouchableOpacity onPress={action}>
+                <TouchableOpacity onPress={actionIcon}>
                     <View style={[fileInfoContainerStyle, { opacity }]}>
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width }]}>
@@ -121,7 +121,7 @@ export default class FileInnerItem extends SafeComponent {
                                     {moment(file.uploadedAt).format('DD/MM/YYYY')}
                                 </Text>
                             </View>
-                            {arrow}
+                            {optionsIcon}
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -135,5 +135,6 @@ FileInnerItem.propTypes = {
     onPress: PropTypes.func,
     file: PropTypes.any.isRequired,
     checkbox: PropTypes.string,
-    hideArrow: PropTypes.bool
+    hideArrow: PropTypes.bool,
+    onFileActionPress: PropTypes.func
 };

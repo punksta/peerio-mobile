@@ -49,6 +49,17 @@ class FileState extends RoutedState {
             .catch(() => null);
     }
 
+    @action.bound async deleteFile(file) {
+        let t = tx('dialog_confirmDeleteFile');
+        if (file.shared) t += `\n${tx('title_confirmRemoveSharedFiles')}`;
+        try {
+            await rnAlertYesNo(t);
+            await file.remove();
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     async remindAboutEncryption() {
         if (Platform.OS !== 'android') return;
         let text = null;

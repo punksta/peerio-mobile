@@ -15,57 +15,48 @@ import { vars } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 
 @observer
-export default class FilesActionSheet extends SafeComponent {
-    @observable file = null;
-    DELETE_INDEX = 3;
-    CANCEL_INDEX = 4;
+export default class FoldersActionSheet extends SafeComponent {
+    @observable folder = null;
+    DELETE_INDEX = 2;
+    CANCEL_INDEX = 3;
 
-    get items() { return [this.sharefile, this.moveFile, this.renameFile, this.deleteFile, this.cancel]; }
+    // TODO add folder sharing when it has been implemented
+    get items() { return [this.moveFolder, this.renameFolder, this.deleteFolder, this.cancel]; }
 
     get cancel() { return { title: tx('button_cancel') }; }
 
-    get moveFile() {
+    get moveFolder() {
         return {
             title: tx('button_move'),
             action: () => {
-                fileState.currentFile = this.file;
+                fileState.currentFile = this.folder;
                 routerModal.moveFileTo();
             }
         };
     }
 
-    get renameFile() {
-        if (!this.file) return { title: '', action: null };
+    get renameFolder() {
+        if (!this.folder) return { title: '', action: null };
         return {
             title: tx('button_rename'),
             action: async () => {
-                const newFileName = await popupInput(
+                const newFolderName = await popupInput(
                     tx('title_fileName'),
                     '',
-                    fileHelpers.getFileNameWithoutExtension(this.file.name)
+                    fileHelpers.getFileNameWithoutExtension(this.folder.name)
                 );
-                if (newFileName) {
-                    await this.file.rename(`${newFileName}.${this.file.ext}`);
+                if (newFolderName) {
+                    await this.folder.rename(`${newFolderName}`);
                 }
             }
         };
     }
 
-    get sharefile() {
-        return {
-            title: tx('button_share'),
-            action: () => {
-                fileState.currentFile = this.file;
-                routerModal.shareFileTo();
-            }
-        };
-    }
-
-    get deleteFile() {
+    get deleteFolder() {
         return {
             title: tx('button_delete'),
             action: () => {
-                fileState.deleteFile(this.file);
+                fileState.store.folders.deleteFolder(this.folder);
             }
         };
     }
@@ -77,15 +68,15 @@ export default class FilesActionSheet extends SafeComponent {
         }
     };
 
-    show = (file) => {
-        this.file = file;
+    show = (folder) => {
+        this.folder = folder;
         this._actionSheet.show();
     };
 
-    onFileInfoPress = () => {
+    onFolderInfoPress = () => {
         this._actionSheet.hide();
         routerModal.discard();
-        routerMain.files(this.file);
+        routerMain.files(this.folder);
     };
 
     renderThrow() {
@@ -108,12 +99,15 @@ export default class FilesActionSheet extends SafeComponent {
             lineHeight: 18
         };
         let title = null;
-        if (this.file) {
+        if (this.folder) {
+            const folderSizeText = this.folder.size ?
+                this.folder.sizeFormatted :
+                tx('title_empty');
             title =
-                (<TouchableOpacity style={containerStyle} onPress={this.onFileInfoPress}>
+                (<TouchableOpacity style={containerStyle} onPress={this.onFolderInfoPress}>
                     <View style={containerStyle}>
                         <Text style={[containerStyle, titleTextStyle]}>
-                            {`${this.file.name}\n${this.file.sizeFormatted} ${moment(this.file.uploadedAt).format('DD/MM/YYYY')}`}
+                            {`${this.folder.name}\n${folderSizeText} ${moment(this.folder.uploadedAt).format('DD/MM/YYYY')}`}
                         </Text>
                     </View>
                     {icons.plaindark('info', vars.iconSize, infoIconStyle)}
