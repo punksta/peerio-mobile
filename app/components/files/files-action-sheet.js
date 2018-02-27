@@ -94,12 +94,6 @@ export default class FilesActionSheet extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row'
         };
-        const infoIconStyle = {
-            position: 'absolute',
-            right: 16,
-            top: 8,
-            bottom: 8
-        };
         const titleTextStyle = {
             fontSize: vars.font.size.smaller,
             alignItems: 'center',
@@ -111,12 +105,9 @@ export default class FilesActionSheet extends SafeComponent {
         if (this.file) {
             title =
                 (<TouchableOpacity style={containerStyle} onPress={this.onFileInfoPress}>
-                    <View style={containerStyle}>
-                        <Text style={[containerStyle, titleTextStyle]}>
-                            {`${this.file.name}\n${this.file.sizeFormatted} ${moment(this.file.uploadedAt).format('DD/MM/YYYY')}`}
-                        </Text>
-                    </View>
-                    {icons.plaindark('info', vars.iconSize, infoIconStyle)}
+                    <Text style={titleTextStyle}>
+                        {`${this.file.name}\n${this.file.sizeFormatted} ${moment(this.file.uploadedAt).format('DD/MM/YYYY')}`}
+                    </Text>
                 </TouchableOpacity>);
         }
         return (

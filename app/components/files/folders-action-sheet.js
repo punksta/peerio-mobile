@@ -85,12 +85,6 @@ export default class FoldersActionSheet extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row'
         };
-        const infoIconStyle = {
-            position: 'absolute',
-            right: 16,
-            top: 8,
-            bottom: 8
-        };
         const titleTextStyle = {
             fontSize: vars.font.size.smaller,
             alignItems: 'center',
@@ -105,12 +99,9 @@ export default class FoldersActionSheet extends SafeComponent {
                 tx('title_empty');
             title =
                 (<TouchableOpacity style={containerStyle} onPress={this.onFolderInfoPress}>
-                    <View style={containerStyle}>
-                        <Text style={[containerStyle, titleTextStyle]}>
-                            {`${this.folder.name}\n${folderSizeText} ${moment(this.folder.uploadedAt).format('DD/MM/YYYY')}`}
-                        </Text>
-                    </View>
-                    {icons.plaindark('info', vars.iconSize, infoIconStyle)}
+                    <Text style={titleTextStyle}>
+                        {`${this.folder.name}\n${folderSizeText} ${moment(this.folder.uploadedAt).format('DD/MM/YYYY')}`}
+                    </Text>
                 </TouchableOpacity>);
         }
         return (
