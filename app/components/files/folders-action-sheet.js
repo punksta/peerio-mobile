@@ -70,6 +70,10 @@ export default class FoldersActionSheet extends SafeComponent {
     @observable folder = null;
     @observable _actionSheet = null;
 
+    // TODO Action sheet doesn't show for same folder twice in a row;
+    // If you open folder action sheet on folder A and dismiss the action sheet,
+    // you need to open folder action sheet on any other folder B
+    // and then try again on folder A in order for it to show
     /**
      * We need to re-render and re-ref action sheet
      * so that the title is updated accordingly

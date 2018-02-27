@@ -77,6 +77,10 @@ export default class FilesActionSheet extends SafeComponent {
     @observable file = null;
     @observable _actionSheet = null;
 
+    // TODO Action sheet doesn't show for same file twice in a row;
+    // If you open file action sheet on file A and dismiss the action sheet,
+    // you need to open file action sheet on any other file B
+    // and then try again on file A in order for it to show
     /**
      * We need to re-render and re-ref action sheet
      * so that the title is updated accordingly
