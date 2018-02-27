@@ -8,7 +8,6 @@ import FileInnerItem from './file-inner-item';
 import FolderInnerItem from './folder-inner-item';
 import fileState from './file-state';
 import { vars } from '../../styles/styles';
-import RecentFileInnerItem from './recent-file-inner-item';
 
 @observer
 export default class FileItem extends SafeComponent {
@@ -50,13 +49,12 @@ export default class FileItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { file, isRecentFile } = this.props;
+        const { file } = this.props;
         return (
-            <View style={{ backgroundColor: 'white', marginHorizontal: !isRecentFile ? vars.spacing.medium.mini2x : 0 }}>
-                {isRecentFile && <RecentFileInnerItem file={file} onFileActionPress={this.onFileActionPress} />}
-                {!isRecentFile && (file.isFolder ?
+            <View style={{ backgroundColor: 'white', marginHorizontal: vars.spacing.medium.mini2x }}>
+                {file.isFolder ?
                     <FolderInnerItem folder={file} onPress={this.onFolderPress} onFolderActionPress={this.onFolderActionPress} /> :
-                    <FileInnerItem file={file} onPress={f => this.press(f)} onFileActionPress={this.onFileActionPress} />)}
+                    <FileInnerItem file={file} onPress={f => this.press(f)} onFileActionPress={this.onFileActionPress} />}
             </View>
         );
     }
@@ -65,7 +63,6 @@ export default class FileItem extends SafeComponent {
 FileItem.propTypes = {
     file: PropTypes.any.isRequired,
     onChangeFolder: PropTypes.any,
-    isRecentFile: PropTypes.bool,
     onFileActionPress: PropTypes.func,
     onFolderActionPress: PropTypes.func
 };
