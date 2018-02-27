@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { observable } from 'mobx';
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
+import { observable, action, when } from 'mobx';
 import { observer } from 'mobx-react/native';
 import ActionSheet from 'react-native-actionsheet';
 import SafeComponent from '../shared/safe-component';
@@ -16,7 +16,6 @@ import routerMain from '../routes/router-main';
 
 @observer
 export default class FoldersActionSheet extends SafeComponent {
-    @observable folder = null;
     DELETE_INDEX = 2;
     CANCEL_INDEX = 3;
 
@@ -36,17 +35,17 @@ export default class FoldersActionSheet extends SafeComponent {
     }
 
     get renameFolder() {
-        if (!this.folder) return { title: '', action: null };
         return {
             title: tx('button_rename'),
             action: async () => {
+                const { folder } = this;
                 const newFolderName = await popupInput(
                     tx('title_fileName'),
                     '',
-                    fileHelpers.getFileNameWithoutExtension(this.folder.name)
+                    fileHelpers.getFileNameWithoutExtension(folder.name)
                 );
                 if (newFolderName) {
-                    await this.folder.rename(`${newFolderName}`);
+                    await folder.rename(`${newFolderName}`);
                 }
             }
         };
@@ -55,7 +54,7 @@ export default class FoldersActionSheet extends SafeComponent {
     get deleteFolder() {
         return {
             title: tx('button_delete'),
-            action: () => {
+            action: async () => {
                 fileState.store.folders.deleteFolder(this.folder);
             }
         };
@@ -63,27 +62,54 @@ export default class FoldersActionSheet extends SafeComponent {
 
     onPress = index => {
         if (this.items[index]) {
-            const { action } = this.items[index];
-            action && action();
+            const { action: pressAction } = this.items[index];
+            pressAction && pressAction();
         }
     };
 
-    show = (folder) => {
+    @observable folder = null;
+    @observable _actionSheet = null;
+
+    /**
+     * We need to re-render and re-ref action sheet
+     * so that the title is updated accordingly
+     * @param {File} folder
+     */
+    @action.bound show(folder) {
+        if (!folder) {
+            console.error(`folders-action-sheet: folder is undefined`);
+            return;
+        }
+        if (this._showWhen) {
+            this._showWhen();
+            this._showWhen = null;
+        }
+        this._actionSheet = null;
         this.folder = folder;
-        this._actionSheet.show();
-    };
+        this._showWhen = when(() => this._actionSheet, () => this._actionSheet.show());
+    }
 
     onFolderInfoPress = () => {
+        const { folder } = this;
         this._actionSheet.hide();
         routerModal.discard();
-        routerMain.files(this.folder);
+        routerMain.files(folder);
     };
 
-    renderThrow() {
+    get title() { return Platform.OS === 'android' ? this.titleAndroid() : this.titleIOS(); }
+
+    titleAndroid() {
+        const { folder } = this;
         const containerStyle = {
             flex: 1,
             flexGrow: 1,
             flexDirection: 'row'
+        };
+        const infoIconStyle = {
+            position: 'absolute',
+            right: 16,
+            top: 8,
+            bottom: 8
         };
         const titleTextStyle = {
             fontSize: vars.font.size.smaller,
@@ -92,18 +118,28 @@ export default class FoldersActionSheet extends SafeComponent {
             paddingTop: vars.spacing.small.mini,
             lineHeight: 18
         };
-        let title = null;
-        if (this.folder) {
-            const folderSizeText = this.folder.size ?
-                this.folder.sizeFormatted :
-                tx('title_empty');
-            title =
-                (<TouchableOpacity style={containerStyle} onPress={this.onFolderInfoPress}>
-                    <Text style={titleTextStyle}>
-                        {`${this.folder.name}\n${folderSizeText} ${moment(this.folder.uploadedAt).format('DD/MM/YYYY')}`}
+        const folderSizeText = folder.size ?
+            this.folder.sizeFormatted :
+            tx('title_empty');
+        return (
+            <TouchableOpacity style={containerStyle} onPress={this.onFolderInfoPress}>
+                <View style={containerStyle}>
+                    <Text style={[containerStyle, titleTextStyle]}>
+                        {`${folder.name}\n${folderSizeText} ${moment(folder.uploadedAt).format('DD/MM/YYYY')}`}
                     </Text>
-                </TouchableOpacity>);
-        }
+                </View>
+                {icons.plaindark('info', vars.iconSize, infoIconStyle)}
+            </TouchableOpacity>);
+    }
+
+    titleIOS() {
+        const { folder } = this;
+        return `${folder.name}\n${folder.sizeFormatted} ${moment(folder.uploadedAt).format('DD/MM/YYYY')}`;
+    }
+
+    renderThrow() {
+        const { folder } = this;
+        if (!folder) return null;
         return (
             <ActionSheet
                 ref={sheet => { this._actionSheet = sheet; }}
@@ -111,7 +147,7 @@ export default class FoldersActionSheet extends SafeComponent {
                 cancelButtonIndex={this.CANCEL_INDEX}
                 destructiveButtonIndex={this.DELETE_INDEX}
                 onPress={this.onPress}
-                title={title}
+                title={this.title}
             />
         );
     }
