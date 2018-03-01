@@ -97,12 +97,13 @@ export default class FileUploadActionSheet extends SafeComponent {
     };
 
     show = () => this._actionSheet.show();
+    mapItem = item => item.title;
 
     renderThrow() {
         return (
             <ActionSheet
                 ref={this.actionSheetRef}
-                options={this.items.map(i => i.title)}
+                options={this.items.map(this.mapItem)}
                 cancelButtonIndex={this.items.length - 1}
                 onPress={this.onPress}
             />

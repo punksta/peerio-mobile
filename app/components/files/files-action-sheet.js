@@ -77,13 +77,7 @@ export default class FilesActionSheet extends SafeComponent {
     @observable file = null;
     @observable _actionSheet = null;
 
-    // TODO Action sheet doesn't show for same file twice in a row;
-    // If you open file action sheet on file A and dismiss the action sheet,
-    // you need to open file action sheet on any other file B
-    // and then try again on file A in order for it to show
     /**
-     * We need to re-render and re-ref action sheet
-     * so that the title is updated accordingly
      * @param {File} file
      */
     @action.bound show(file) {
@@ -95,8 +89,12 @@ export default class FilesActionSheet extends SafeComponent {
             this._showWhen();
             this._showWhen = null;
         }
-        this._actionSheet = null;
-        this.file = file;
+        // We need to re-render and re-ref action sheet
+        // so that the title is updated accordingly
+        if (this.file !== file) {
+            this._actionSheet = null;
+            this.file = file;
+        }
         this._showWhen = when(() => this._actionSheet, () => this._actionSheet.show());
     }
 
@@ -145,13 +143,17 @@ export default class FilesActionSheet extends SafeComponent {
         return `${file.name}\n${file.sizeFormatted} ${moment(file.uploadedAt).format('DD/MM/YYYY')}`;
     }
 
+    refActionSheet = ref => { this._actionSheet = ref; };
+    mapItem = item => item.title;
+
     renderThrow() {
         const { file } = this;
         if (!file) return null;
         return (
             <ActionSheet
-                ref={sheet => { this._actionSheet = sheet; }}
-                options={this.items.map(i => i.title)}
+                key={file.fileId}
+                ref={this.refActionSheet}
+                options={this.items.map(this.mapItem)}
                 cancelButtonIndex={this.CANCEL_INDEX}
                 destructiveButtonIndex={this.DELETE_INDEX}
                 onPress={this.onPress}

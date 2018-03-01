@@ -70,14 +70,8 @@ export default class FoldersActionSheet extends SafeComponent {
     @observable folder = null;
     @observable _actionSheet = null;
 
-    // TODO Action sheet doesn't show for same folder twice in a row;
-    // If you open folder action sheet on folder A and dismiss the action sheet,
-    // you need to open folder action sheet on any other folder B
-    // and then try again on folder A in order for it to show
     /**
-     * We need to re-render and re-ref action sheet
-     * so that the title is updated accordingly
-     * @param {File} folder
+     * @param {FileFolder} folder
      */
     @action.bound show(folder) {
         if (!folder) {
@@ -88,8 +82,12 @@ export default class FoldersActionSheet extends SafeComponent {
             this._showWhen();
             this._showWhen = null;
         }
-        this._actionSheet = null;
-        this.folder = folder;
+        // We need to re-render and re-ref action sheet
+        // so that the title is updated accordingly
+        if (this.folder !== folder) {
+            this._actionSheet = null;
+            this.folder = folder;
+        }
         this._showWhen = when(() => this._actionSheet, () => this._actionSheet.show());
     }
 
@@ -141,13 +139,17 @@ export default class FoldersActionSheet extends SafeComponent {
         return `${folder.name}\n${folder.sizeFormatted} ${moment(folder.uploadedAt).format('DD/MM/YYYY')}`;
     }
 
+    refActionSheet = ref => { this._actionSheet = ref; };
+    mapItem = item => item.title;
+
     renderThrow() {
         const { folder } = this;
         if (!folder) return null;
         return (
             <ActionSheet
-                ref={sheet => { this._actionSheet = sheet; }}
-                options={this.items.map(i => i.title)}
+                key={folder.folderId}
+                ref={this.refActionSheet}
+                options={this.items.map(this.mapItem)}
                 cancelButtonIndex={this.CANCEL_INDEX}
                 destructiveButtonIndex={this.DELETE_INDEX}
                 onPress={this.onPress}
