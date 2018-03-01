@@ -109,7 +109,7 @@ export default class PopupLayout extends SafeComponent {
                 <View style={wrapper}>
                     <View style={container}>
                         <View style={{ padding: vars.spacing.medium.midi2x, flexGrow: 1, flexShrink: 1 }}>
-                            {popup.title ? <Text style={title} ellipsizeMode="tail" numberOfLines={1}>{popup.title}</Text> : null}
+                            {popup.title ? <Text style={title}>{popup.title}</Text> : null}
                             {popup.subTitle}
                             {popup.contents}
                         </View>

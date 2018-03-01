@@ -21,6 +21,10 @@ import { fileState, mainState, ghostState, chatState, settingsState, contactStat
 // import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
 import loginState from '../login/login-state';
+import popupFileSystemUpgrade from '../shared/popup-filesystem-upgrade';
+import snackbarState from '../snackbars/snackbar-state';
+import { tx } from '../utils/translator';
+import { fileStore } from '../../lib/icebear';
 
 class RouterMain extends Router {
     // current route object
@@ -75,6 +79,26 @@ class RouterMain extends Router {
         this.loading = false;
         this.initialRoute();
         loginState.transition();
+        this.filesystemUpgrade();
+    }
+
+    @action async filesystemUpgrade() {
+        if (popupFileSystemUpgrade.shouldShowPopup) {
+            const dismissPopup = await popupFileSystemUpgrade.showFirstPopup();
+            if (!dismissPopup) {
+                const shouldUnshareAllFiles = await popupFileSystemUpgrade.showConfirmationPopup();
+                if (shouldUnshareAllFiles) {
+                    fileStore.migrationUnshare();
+                    snackbarState.pushTemporary(tx('title_sharedFilesUnshared'));
+                } else {
+                    fileStore.migrationUpgrade();
+                    snackbarState.pushTemporary(tx('title_sharedFilesKept'));
+                }
+            } else {
+                fileStore.migrationUpgrade();
+                snackbarState.pushTemporary(tx('title_sharedFilesKept'));
+            }
+        }
     }
 
     add(key, components, routeState) {

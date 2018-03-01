@@ -330,13 +330,13 @@ function popupSetupVideo() {
     });
 }
 
-
 locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
 
 
 export {
+    textControl,
     addSystemWarningAction,
     popupYes,
     popupYesCancel,

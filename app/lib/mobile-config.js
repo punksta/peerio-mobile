@@ -34,6 +34,7 @@ export default (c, icebear) => {
         learnUrlTracking: 'https://peerio.zendesk.com/hc/en-us/articles/115005090766',
         identityVerification: 'https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-',
         jitsiLink: 'https://jitsi.org/'
+        // sharedFiles: '' TODO: Add link to file
     };
 
     setUrlMap(cfg.translator.urlMap);
