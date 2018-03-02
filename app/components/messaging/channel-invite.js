@@ -40,10 +40,19 @@ const infoSection = {
     alignItems: 'center'
 };
 
-const infoStyle = {
+const infoText = {
+    flexDirection: 'row',
+    justifyContent: 'center'
+};
+
+const hostedByStyle = {
     color: vars.subtleText,
-    fontSize: vars.font.size.normal,
-    textAlign: 'center'
+    fontSize: vars.font.size.normal
+};
+
+const hostNameStyle = {
+    color: vars.black,
+    fontSize: vars.font.size.normal
 };
 
 const buttonContainer = {
@@ -82,6 +91,8 @@ export default class ChannelInvite extends SafeComponent {
 
     renderThrow() {
         const hasPaywall = User.current.channelsLeft <= 0;
+        const host = contactStore.getContact(this.invitation.username);
+
         return (
             <View style={{ flex: 1, flexGrow: 1 }}>
                 {!this.waiting && hasPaywall && <ChannelUpgradeOffer />}
@@ -105,12 +116,16 @@ export default class ChannelInvite extends SafeComponent {
                 </View>
                 <View style={sectionLine} />
                 <View style={infoSection}>
-                    <Text style={infoStyle}>
-                        {tx('title_hostedBy')}
-                    </Text>
-                    <AvatarCircle
-                        contact={contactStore.getContact(this.invitation.username)}
-                    />
+                    <View style={infoText}>
+                        <Text style={hostedByStyle}>
+                            {tx('title_hostedBy')}
+                        </Text>
+                        <Text style={hostNameStyle}>
+                            &nbsp;
+                            {host.fullName}
+                        </Text>
+                    </View>
+                    <AvatarCircle contact={host} />
                 </View>
                 <ProgressOverlay enabled={this.waiting} />
             </View>);
