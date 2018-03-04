@@ -8,7 +8,7 @@ import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import { fileState } from '../states';
 import routerModal from '../routes/router-modal';
-import { popupInput } from '../shared/popups';
+import { popupInput, popupYes } from '../shared/popups';
 import { fileHelpers } from '../../lib/icebear';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
@@ -25,6 +25,15 @@ export default class FoldersActionSheet extends SafeComponent {
     get cancel() { return { title: tx('button_cancel') }; }
 
     get moveFolder() {
+        const { folder } = this;
+        if (folder.isShared) {
+            return {
+                title: <Text style={{ fontSize: vars.font.size.big, color: vars.verySubtleGrey }}>{tx('button_move')}</Text>,
+                action: () => {
+                    popupYes(tx('title_sharedFolderCannotBeMoved'), null, tx('title_sharedFolderCannotBeMovedDescription'));
+                }
+            };
+        }
         return {
             title: tx('button_move'),
             action: () => {
