@@ -42,7 +42,8 @@ export default class FoldersActionSheet extends SafeComponent {
                 const newFolderName = await popupInput(
                     tx('title_fileName'),
                     '',
-                    fileHelpers.getFileNameWithoutExtension(folder.name)
+                    fileHelpers.getFileNameWithoutExtension(folder.name),
+                    { autoCapitalize: 'sentences' }
                 );
                 if (newFolderName) {
                     await folder.rename(`${newFolderName}`);
