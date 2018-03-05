@@ -20,20 +20,29 @@ export default class FoldersActionSheet extends SafeComponent {
     CANCEL_INDEX = 3;
 
     // TODO add folder sharing when it has been implemented
-    get items() { return [this.moveFolder, this.renameFolder, this.deleteFolder, this.cancel]; }
+    // TODO Fix array contents after action sheet has been refactored
+    get items() {
+        const { folder } = this;
+        // return [this.moveFolder, this.renameFolder, this.deleteFolder, this.cancel];
+        if (folder.isShared) {
+            return [this.renameFolder, this.deleteFolder, this.cancel];
+        }
+        return [this.moveFolder, this.renameFolder, this.deleteFolder, this.cancel];
+    }
 
     get cancel() { return { title: tx('button_cancel') }; }
 
+    // TODO uncomment condition when folder is Shared after action sheet has been refactored
     get moveFolder() {
-        const { folder } = this;
-        if (folder.isShared) {
-            return {
-                title: <Text style={{ fontSize: vars.font.size.big, color: vars.verySubtleGrey }}>{tx('button_move')}</Text>,
-                action: () => {
-                    popupYes(tx('title_sharedFolderCannotBeMoved'), null, tx('title_sharedFolderCannotBeMovedDescription'));
-                }
-            };
-        }
+        // const { folder } = this;
+        // if (folder.isShared) {
+        //     return {
+        //         title: <Text style={{ fontSize: vars.font.size.big, color: vars.verySubtleGrey }}>{tx('button_move')}</Text>,
+        //         action: () => {
+        //             popupYes(tx('title_sharedFolderCannotBeMoved'), null, tx('title_sharedFolderCannotBeMovedDescription'));
+        //         }
+        //     };
+        // }
         return {
             title: tx('button_move'),
             action: () => {
