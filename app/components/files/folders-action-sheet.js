@@ -16,13 +16,13 @@ import routerMain from '../routes/router-main';
 
 @observer
 export default class FoldersActionSheet extends SafeComponent {
-    DELETE_INDEX = 2;
-    CANCEL_INDEX = 3;
+    // TODO Fix indices after action sheet has been refactored
+    DELETE_INDEX;
+    CANCEL_INDEX;
 
     // TODO Fix array contents after action sheet has been refactored
     get items() {
         const { folder } = this;
-        // return [this.shareFolder, this.moveFolder, this.renameFolder, this.deleteFolder, this.cancel];
         if (folder.isShared) {
             return [this.shareFolder, this.renameFolder, this.deleteFolder, this.cancel];
         }
@@ -32,7 +32,7 @@ export default class FoldersActionSheet extends SafeComponent {
     get cancel() { return { title: tx('button_cancel') }; }
 
     // TODO add logic for folder.isOwner
-    get sharefolder() {
+    get shareFolder() {
         return {
             title: tx('button_share'),
             action: () => {
@@ -169,11 +169,21 @@ export default class FoldersActionSheet extends SafeComponent {
     }
 
     refActionSheet = ref => { this._actionSheet = ref; };
-    mapItem = item => item.title;
+    mapItem = item => {
+        console.log(item);
+        return item.title;
+    }
 
     renderThrow() {
         const { folder } = this;
         if (!folder) return null;
+        if (folder.isShared) {
+            this.DELETE_INDEX = 2;
+            this.CANCEL_INDEX = 3;
+        } else {
+            this.DELETE_INDEX = 3;
+            this.CANCEL_INDEX = 4;
+        }
         return (
             <ActionSheet
                 key={folder.folderId}
