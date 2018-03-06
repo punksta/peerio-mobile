@@ -5,7 +5,7 @@ import RoutedState from '../routes/routed-state';
 import { fileStore, TinyDb, socket, fileHelpers, clientApp, chatStore } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
-import { popupInput, popupYesCancel } from '../shared/popups';
+import { popupInput, popupYesCancel, popupOkCancel } from '../shared/popups';
 import { promiseWhen } from '../helpers/sugar';
 
 class FileState extends RoutedState {
@@ -50,13 +50,12 @@ class FileState extends RoutedState {
     }
 
     @action async deleteFile(file) {
-        let t = tx('dialog_confirmDeleteFile');
-        if (file.shared) t += `\n${tx('title_confirmRemoveSharedFiles')}`;
-        try {
-            await rnAlertYesNo(t);
+        const title = tx('dialog_confirmDeleteFile');
+        let subtitle = '';
+        if (file.shared) subtitle += `\n${tx('title_confirmRemoveSharedFiles')}`;
+        const result = await popupOkCancel(title, subtitle);
+        if (result) {
             await file.remove();
-        } catch (e) {
-            console.error(e);
         }
     }
 

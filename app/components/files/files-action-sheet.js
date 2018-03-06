@@ -69,8 +69,10 @@ export default class FilesActionSheet extends SafeComponent {
     }
 
     onPress = index => {
-        const { action: pressAction } = this.items[index];
-        pressAction && pressAction();
+        if (this.items[index]) {
+            const { action: pressAction } = this.items[index];
+            pressAction && pressAction();
+        }
     };
 
     @observable file = null;

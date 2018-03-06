@@ -93,6 +93,20 @@ function popupYesCancel(title, subTitle, text) {
     });
 }
 
+function popupOkCancel(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title,
+            subTitle: textControl(subTitle),
+            contents: text ? textControl(text) : null,
+            buttons: [
+                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
+                { id: 'ok', text: tu('button_ok'), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
 function popupYesSkip(title, subTitle, text) {
     return new Promise((resolve) => {
         popupState.showPopup({
@@ -319,6 +333,7 @@ export {
     addSystemWarningAction,
     popupYes,
     popupYesCancel,
+    popupOkCancel,
     popupYesSkip,
     popupInput,
     popupTOS,
