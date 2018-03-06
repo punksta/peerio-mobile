@@ -169,10 +169,7 @@ export default class FoldersActionSheet extends SafeComponent {
     }
 
     refActionSheet = ref => { this._actionSheet = ref; };
-    mapItem = item => {
-        console.log(item);
-        return item.title;
-    }
+    mapItem = item => item.title;
 
     renderThrow() {
         const { folder } = this;
