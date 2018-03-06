@@ -94,6 +94,8 @@ const vars = {
     settingsItemHeight: 56,
     settingsBg: 'rgba(0, 0, 0, 0.06)',
     headerBorderColor: 'rgba(0,0,0,.06)',
+    folderRemoveNotifBg: 'rgba(0,0,0,.06)',
+    folderRemoveNotifHeight: 95,
     gold: '#ffd700',
     fabEnabled: '#FF7D00',
     fabDisabled: '#CFCFCF',

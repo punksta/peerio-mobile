@@ -18,6 +18,7 @@ import { tx } from '../utils/translator';
 import icons from '../helpers/icons';
 import ButtonText from '../controls/button-text';
 import uiState from '../layout/ui-state';
+import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -276,6 +277,14 @@ export default class Files extends SafeComponent {
         fileState.submitSelectedFiles();
     }
 
+    sharedFolderRemovalNotifs() {
+        // TODO: add any missed conditions for when to NOT show this
+        if (!fileState.currentFolder.isRoot) return null;
+        // TODO: map them from a list of notifications from SDK
+        const folder = { folderName: 'test-folder-name' }; // folder can be replaced with folderId
+        return <SharedFolderRemovalNotif folder={folder} />;
+    }
+
     body() {
         if (this.data.length || !fileState.currentFolder.isRoot) return this.listView();
         if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
@@ -309,6 +318,7 @@ export default class Files extends SafeComponent {
                     {upgradeForFiles()}
                     {!this.data.length && !fileState.currentFolder.isRoot ?
                         this.noFilesInFolder : null}
+                    {this.sharedFolderRemovalNotifs()}
                     {this.body()}
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
