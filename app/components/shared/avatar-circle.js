@@ -7,8 +7,6 @@ import icons from '../helpers/icons';
 import ErrorCircle from './error-circle';
 import { vars } from '../../styles/styles';
 
-const avatarDiameter = 36;
-
 @observer
 export default class AvatarCircle extends SafeComponent {
     renderThrow() {
@@ -16,7 +14,7 @@ export default class AvatarCircle extends SafeComponent {
         let ratio = 1;
         if (large) ratio = 3;
         if (medium) ratio = 2;
-        const width = avatarDiameter * ratio;
+        const width = vars.avatarDiameter * ratio;
         const height = width;
         const avatarStyle = {
             width,

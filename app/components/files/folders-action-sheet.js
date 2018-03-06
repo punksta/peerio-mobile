@@ -19,10 +19,20 @@ export default class FoldersActionSheet extends SafeComponent {
     DELETE_INDEX = 2;
     CANCEL_INDEX = 3;
 
-    // TODO add folder sharing when it has been implemented
-    get items() { return [this.moveFolder, this.renameFolder, this.deleteFolder, this.cancel]; }
+    get items() { return [this.sharefolder, this.moveFolder, this.renameFolder, this.deleteFolder, this.cancel]; }
 
     get cancel() { return { title: tx('button_cancel') }; }
+
+    // TODO add logic for folder.isOwner
+    get sharefolder() {
+        return {
+            title: tx('button_share'),
+            action: () => {
+                fileState.currentFile = this.folder;
+                routerModal.shareFolderTo();
+            }
+        };
+    }
 
     get moveFolder() {
         return {

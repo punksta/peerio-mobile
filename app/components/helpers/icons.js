@@ -98,26 +98,26 @@ const icons = {
         );
     },
 
-    text(text, onPress, style, testID) {
+    text(text, onPress, style, testID, extraWidth) {
         const size = vars.iconPadding * 2 + vars.iconSize;
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={onPress}
                 {...testLabel(testID)}>
-                <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ height: size, width: size + extraWidth, alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={[goStyle, style]}>{text}</Text>
                 </View>
             </TouchableOpacity>
         );
     },
 
-    disabledText(text, style) {
+    disabledText(text, style, extraWidth) {
         const size = vars.iconPadding * 2 + vars.iconSize;
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset} >
-                <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ height: size, width: size + extraWidth, alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={[disabledStyle, style]}>{text}</Text>
                 </View>
             </TouchableOpacity>

@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { when, observable, action, reaction, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
-import { t, tx } from '../utils/translator';
+import { t, tx, tu } from '../utils/translator';
 import Layout1 from '../layout/layout1';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
@@ -20,6 +20,8 @@ import ContactCollection from './contact-collection';
 import ContactSelectorUserBoxLine from './contact-selector-userbox-line';
 import ContactSelectorSectionList from './contact-selector-sectionlist';
 import testLabel from '../helpers/test-label';
+import buttons from '../helpers/buttons';
+import ReadReceipt from '../shared/read-receipt';
 
 @observer
 export default class ContactSelectorUniversal extends SafeComponent {
@@ -123,10 +125,10 @@ export default class ContactSelectorUniversal extends SafeComponent {
             flexDirection: 'row',
             paddingTop: vars.spacing.small.midi2x,
             paddingHorizontal: vars.spacing.small.midi2x,
-            alignItems: 'center'
+            alignItems: 'center',
+            height: vars.headerHeight
         };
         const textStyle = {
-            marginRight: vars.iconSize * 2,
             textAlign: 'center',
             flexGrow: 1,
             flexShrink: 1,
@@ -138,11 +140,17 @@ export default class ContactSelectorUniversal extends SafeComponent {
             <View style={container}>
                 {icons.dark('close', this.props.onExit)}
                 <Text style={textStyle}>{tx(this.props.title)}</Text>
+                {this.props.multiselect && this.shareButton}
             </View>
         );
     }
 
-    async action() {
+    get shareButton() {
+        if (this.recipients.items.length) return icons.text(tu('share'), this.action);
+        return icons.disabledText(tu('share'));
+    }
+
+    @action.bound async action() {
         const selectorAction = this.props.action;
         if (!selectorAction) return;
         this.inProgress = true;
@@ -253,9 +261,53 @@ export default class ContactSelectorUniversal extends SafeComponent {
         );
     }
 
+    footer() {
+        if (!this.props.sharedFolderFooter) return null;
+        const bottomRowStyle = {
+            justifyContent: 'space-between',
+            position: 'absolute',
+            bottom: 0,
+            right: 0,
+            left: 0,
+            flex: 1,
+            flexGrow: 1,
+            flexDirection: 'row',
+            paddingVertical: 1,
+            paddingLeft: vars.spacing.small.mini,
+            borderColor: vars.verySubtleGrey,
+            borderTopWidth: 1
+        };
+        return (
+            <View style={bottomRowStyle}>
+                {buttons.uppercaseBlueButtonNoPadding('view shared with', this.props.togglePage)}
+                {this.sharedWithAvatars()}
+            </View>);
+    }
+
+    sharedWithAvatars() {
+        const usersSharedWith = this.recipients.items;
+        if (!usersSharedWith || !usersSharedWith.length) return null;
+        const receiptRow = {
+            alignSelf: 'center',
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            marginRight: vars.spacing.medium.mini2x
+        };
+        return (
+            <View style={receiptRow}>
+                {usersSharedWith.map(r => (
+                    <View key={r.username} style={{ flex: 0, alignItems: 'flex-end' }}>
+                        <ReadReceipt username={r.username} />
+                    </View>
+                ))}
+            </View>
+        );
+    }
+
     renderThrow() {
         const header = this.header();
         const body = this.body();
+        const footer = this.footer();
         const layoutStyle = {
             backgroundColor: 'white'
         };
@@ -270,7 +322,8 @@ export default class ContactSelectorUniversal extends SafeComponent {
                 body={body}
                 header={header}
                 noFitHeight
-                footerAbsolute={snackbar}
+                footer={snackbar}
+                footerAbsolute={footer}
                 style={layoutStyle} />
         );
     }
@@ -281,7 +334,9 @@ ContactSelectorUniversal.propTypes = {
     subTitleComponent: PropTypes.any,
     leftIconComponent: PropTypes.any,
     inputPlaceholder: PropTypes.any,
-    multiselect: PropTypes.any,
     action: PropTypes.func,
-    onExit: PropTypes.func
+    onExit: PropTypes.func,
+    multiselect: PropTypes.any,
+    sharedFolderFooter: PropTypes.bool,
+    togglePage: PropTypes.func
 };
