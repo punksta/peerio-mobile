@@ -11,7 +11,7 @@ import fileState from '../files/file-state';
 import FilesActionSheet from '../files/files-action-sheet';
 import { tx } from '../utils/translator';
 
-const INITIAL_LIST_SIZE = 10;
+const INITIAL_LIST_SIZE = 25;
 
 @observer
 export default class RecentFilesList extends SafeComponent {
