@@ -8,7 +8,7 @@ import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import { fileState } from '../states';
 import routerModal from '../routes/router-modal';
-import { popupInput } from '../shared/popups';
+import { popupInput, popupYes } from '../shared/popups';
 import { fileHelpers } from '../../lib/icebear';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
@@ -19,7 +19,15 @@ export default class FoldersActionSheet extends SafeComponent {
     DELETE_INDEX = 2;
     CANCEL_INDEX = 3;
 
-    get items() { return [this.sharefolder, this.moveFolder, this.renameFolder, this.deleteFolder, this.cancel]; }
+    // TODO Fix array contents after action sheet has been refactored
+    get items() {
+        const { folder } = this;
+        // return [this.shareFolder, this.moveFolder, this.renameFolder, this.deleteFolder, this.cancel];
+        if (folder.isShared) {
+            return [this.shareFolder, this.renameFolder, this.deleteFolder, this.cancel];
+        }
+        return [this.shareFolder, this.moveFolder, this.renameFolder, this.deleteFolder, this.cancel];
+    }
 
     get cancel() { return { title: tx('button_cancel') }; }
 
@@ -34,7 +42,17 @@ export default class FoldersActionSheet extends SafeComponent {
         };
     }
 
+    // TODO uncomment condition when folder is Shared after action sheet has been refactored
     get moveFolder() {
+        // const { folder } = this;
+        // if (folder.isShared) {
+        //     return {
+        //         title: <Text style={{ fontSize: vars.font.size.big, color: vars.verySubtleGrey }}>{tx('button_move')}</Text>,
+        //         action: () => {
+        //             popupYes(tx('title_sharedFolderCannotBeMoved'), null, tx('title_sharedFolderCannotBeMovedDescription'));
+        //         }
+        //     };
+        // }
         return {
             title: tx('button_move'),
             action: () => {
@@ -52,7 +70,8 @@ export default class FoldersActionSheet extends SafeComponent {
                 const newFolderName = await popupInput(
                     tx('title_fileName'),
                     '',
-                    fileHelpers.getFileNameWithoutExtension(folder.name)
+                    fileHelpers.getFileNameWithoutExtension(folder.name),
+                    { autoCapitalize: 'sentences' }
                 );
                 if (newFolderName) {
                     await folder.rename(`${newFolderName}`);
