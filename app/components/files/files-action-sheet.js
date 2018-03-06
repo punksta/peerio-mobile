@@ -126,13 +126,17 @@ export default class FilesActionSheet extends SafeComponent {
             alignItems: 'center',
             textAlign: 'center',
             paddingTop: vars.spacing.small.mini,
+            paddingHorizontal: vars.spacing.huge.mini2x,
             lineHeight: 18
         };
         return (
             <TouchableOpacity style={containerStyle} onPress={this.onFileInfoPress}>
-                <View style={containerStyle}>
-                    <Text style={[containerStyle, titleTextStyle]}>
-                        {`${file.name}\n${file.sizeFormatted} ${moment(file.uploadedAt).format('DD/MM/YYYY')}`}
+                <View style={{ flex: 1 }}>
+                    <Text style={[containerStyle, titleTextStyle]} numberOfLines={1} ellipsizeMode="middle">
+                        {file.name}
+                    </Text>
+                    <Text style={[containerStyle, titleTextStyle]} numberOfLines={1} ellipsizeMode="middle">
+                        {file.sizeFormatted} {moment(file.uploadedAt).format('DD/MM/YYYY')}
                     </Text>
                 </View>
                 {icons.plaindark('info', vars.iconSize, infoIconStyle)}

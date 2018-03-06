@@ -147,6 +147,7 @@ export default class FoldersActionSheet extends SafeComponent {
             alignItems: 'center',
             textAlign: 'center',
             paddingTop: vars.spacing.small.mini,
+            paddingHorizontal: vars.spacing.huge.mini2x,
             lineHeight: 18
         };
         const folderSizeText = folder.size ?
@@ -154,9 +155,12 @@ export default class FoldersActionSheet extends SafeComponent {
             tx('title_empty');
         return (
             <TouchableOpacity style={containerStyle} onPress={this.onFolderInfoPress}>
-                <View style={containerStyle}>
-                    <Text style={[containerStyle, titleTextStyle]}>
-                        {`${folder.name}\n${folderSizeText} ${moment(folder.uploadedAt).format('DD/MM/YYYY')}`}
+                <View style={{ flex: 1 }}>
+                    <Text style={[containerStyle, titleTextStyle]} numberOfLines={1} ellipsizeMode="middle" >
+                        {folder.name}
+                    </Text>
+                    <Text style={[containerStyle, titleTextStyle]} numberOfLines={1} ellipsizeMode="middle">
+                        {folderSizeText} {moment(folder.uploadedAt).format('DD/MM/YYYY')}
                     </Text>
                 </View>
                 {icons.plaindark('info', vars.iconSize, infoIconStyle)}
