@@ -15,6 +15,7 @@ import fileState from '../files/file-state';
 import settingsState from '../settings/settings-state';
 import { clientApp, config, util } from '../../lib/icebear';
 import { T, tx } from '../utils/translator';
+import buttons from '../helpers/buttons';
 
 const toSettings = text => (
     <Text
@@ -255,12 +256,29 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
+    tryAgain() {
+        const { image } = this.props;
+        const { url } = image;
+        // Set var to initial conditions
+        this.opened = false;
+        this.cachingFailed = true;
+        this.cachedImage = false;
+        // Reset vars
+        this.cachingFailed = false;
+        this.cachedImage = inlineImageCacheStore.getImage(url);
+        this.opened = true;
+        this.handleLoadStart();
+    }
+
     get downloadSlowMessage() {
         return (
             <View style={textMessageOuter}>
                 <Text style={textMessageTextStyle}>
                     {tx('title_poorConnectionExternalURL')}
                 </Text>
+                <View style={{ position: 'absolute', bottom: 0, right: 0 }}>
+                    {buttons.uppercaseBlueButton(tx('button_retry'), this.tryAgain)}
+                </View>
             </View>
         );
     }
