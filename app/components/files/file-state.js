@@ -57,6 +57,7 @@ class FileState extends RoutedState {
         if (result) {
             await file.remove();
         }
+        return result; // Used to trigger events after deleting
     }
 
     async remindAboutEncryption() {

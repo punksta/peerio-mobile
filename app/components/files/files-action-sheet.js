@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable, action, when } from 'mobx';
@@ -60,10 +61,12 @@ export default class FilesActionSheet extends SafeComponent {
     }
 
     get deleteFile() {
+        const { refreshData } = this.props;
         return {
             title: tx('button_delete'),
             action: async () => {
-                fileState.deleteFile(this.file);
+                const result = await fileState.deleteFile(this.file);
+                if (result) refreshData();
             }
         };
     }
@@ -79,8 +82,6 @@ export default class FilesActionSheet extends SafeComponent {
     @observable _actionSheet = null;
 
     /**
-     * We need to re-render and re-ref action sheet
-     * so that the title is updated accordingly
      * @param {File} file
      */
     @action.bound show(file) {
@@ -92,16 +93,23 @@ export default class FilesActionSheet extends SafeComponent {
             this._showWhen();
             this._showWhen = null;
         }
-        this._actionSheet = null;
-        this.file = file;
+        // We need to re-render and re-ref action sheet
+        // so that the title is updated accordingly
+        if (this.file !== file) {
+            this._actionSheet = null;
+            this.file = file;
+        }
         this._showWhen = when(() => this._actionSheet, () => this._actionSheet.show());
     }
 
     onFileInfoPress = () => {
+        const { file } = this;
         this._actionSheet.hide();
         routerModal.discard();
-        routerMain.files(this.file);
+        routerMain.files(file);
     };
+
+    refActionSheet = ref => { this._actionSheet = ref; };
 
     renderThrow() {
         const { file } = this;
@@ -109,7 +117,8 @@ export default class FilesActionSheet extends SafeComponent {
         const title = `${file.name}\n${file.sizeFormatted} ${moment(file.uploadedAt).format('DD/MM/YYYY')}`;
         return (
             <ActionSheet
-                ref={sheet => { this._actionSheet = sheet; }}
+                key={file.fileId}
+                ref={this.refActionSheet}
                 options={this.items.map(i => i.title)}
                 cancelButtonIndex={this.CANCEL_INDEX}
                 destructiveButtonIndex={this.DELETE_INDEX}
@@ -119,3 +128,7 @@ export default class FilesActionSheet extends SafeComponent {
         );
     }
 }
+
+FilesActionSheet.propTypes = {
+    refreshData: PropTypes.func
+};

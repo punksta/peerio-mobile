@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { SectionList, View } from 'react-native';
-import { reaction } from 'mobx';
+import { reaction, action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import chatState from '../messaging/chat-state';
 import ChatInfoSectionHeader from '../messaging/chat-info-section-header';
@@ -19,8 +19,17 @@ export default class RecentFilesList extends SafeComponent {
 
     get data() { return chatState.currentChat.recentFiles; }
 
-    get hasData() {
-        return this.dataSource[0] && this.dataSource[0].data.length;
+    get hasData() { return this.dataSource[0] && this.dataSource[0].data.length; }
+
+    // TODO Test after new FS is implemented
+    @action.bound refreshData() {
+        console.log('Old Data');
+        console.log(this.dataSource);
+        const newData = this.data;
+        this.dataSource = [{ data: newData.slice(), key: tx('title_recentFiles') }];
+        console.log('New Data');
+        console.log(this.dataSource);
+        this.forceUpdate();
     }
 
     componentWillUnmount() {
@@ -51,8 +60,7 @@ export default class RecentFilesList extends SafeComponent {
             <RecentFileItem
                 onMenu={() => this.filesActionSheet.show(file)}
                 key={fileId}
-                file={file}
-                isRecentFile />
+                file={file} />
         );
     };
 
@@ -64,7 +72,7 @@ export default class RecentFilesList extends SafeComponent {
             collapsed={collapsed}
             toggleCollapsed={toggleCollapsed}
             hidden={!this.hasData} />);
-    }
+    };
 
     filesActionSheetRef = (ref) => { this.filesActionSheet = ref; };
 
@@ -80,7 +88,8 @@ export default class RecentFilesList extends SafeComponent {
                     style={{ marginBottom: 8 }}
                 />
                 <FilesActionSheet
-                    ref={this.filesActionSheetRef} />
+                    ref={this.filesActionSheetRef}
+                    refreshData={this.refreshData} />
             </View>
         );
     }

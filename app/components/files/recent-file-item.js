@@ -76,5 +76,7 @@ export default class RecentFileItem extends SafeComponent {
 }
 
 RecentFileItem.propTypes = {
-    file: PropTypes.any.isRequired
+    file: PropTypes.any.isRequired,
+    onMenu: PropTypes.func,
+    key: PropTypes.any
 };
