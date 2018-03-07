@@ -78,13 +78,14 @@ export default class FolderInnerItem extends SafeComponent {
         const infoStyle = {
             color: vars.extraSubtleText,
             fontSize: vars.font.size.smaller,
-            fontWeight: vars.font.weight.regular
+            fontWeight: vars.font.weight.regular,
+            fontStyle: 'italic'
         };
         const progressPercent = this.currentProgressPercent;
         if (progressPercent) {
             return (
                 <Text style={infoStyle}>
-                    <Text>{tx('title_sharingFolderPercent', { progressPercent })}</Text>
+                    <Text>{tx(folder.progressText)}{`(${progressPercent}%)`}</Text>
                 </Text>
             );
         }

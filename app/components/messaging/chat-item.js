@@ -8,8 +8,8 @@ import contactState from '../contacts/contact-state';
 import fileState from '../files/file-state';
 import { systemMessages } from '../../lib/icebear';
 import IdentityVerificationNotice from './identity-verification-notice';
+import FolderInlineContainer from '../files/folder-inline-container';
 import { vars } from '../../styles/styles';
-
 @observer
 export default class ChatItem extends SafeComponent {
     setRef = ref => { this._ref = ref; };
@@ -24,6 +24,9 @@ export default class ChatItem extends SafeComponent {
         const onPressAvatar = () => contactState.contactView(i.sender);
         const onPress = i.sendError ? this.props.onRetryCancel : null;
 
+        if (i.systemData && i.systemData.action === 'folder') {
+            return <FolderInlineContainer {...i.systemData} />;
+        }
         // this causes double update on add message
         const error = !!i.signatureError;
         const systemMessageText =
