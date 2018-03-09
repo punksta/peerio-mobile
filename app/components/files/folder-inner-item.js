@@ -88,6 +88,12 @@ export default class FolderInnerItem extends SafeComponent {
                     <Text>{tx(folder.progressText)}{`(${progressPercent}%)`}</Text>
                 </Text>
             );
+        } else if (folder.isBlocked) {
+            return (
+                <Text style={infoStyle}>
+                    {tx('title_locked')}
+                </Text>
+            );
         }
         return (
             <Text style={infoStyle}>
