@@ -13,6 +13,7 @@ const HomePage = require('./pages/start/homePage');
 const TwoStepVerificationPage = require('./pages/settings/twoStepVerificationPage');
 const TwoFactorAuthPrompt = require('./pages/popups/twoFactorAuthPrompt');
 const SettingsPage = require('./pages/settings/settingsPage');
+const ProfileSettingsPage = require('./pages/settings/profileSettingsPage');
 const otplib = require('otplib');
 const FileViewPage = require('./pages/files/fileViewPage');
 
@@ -51,6 +52,7 @@ class World {
         this.settingsPage = new SettingsPage(this.app);
         this.twoStepVerificationPage = new TwoStepVerificationPage(this.app);
         this.twoFactorAuthPrompt = new TwoFactorAuthPrompt(this.app);
+        this.profileSettingsPage = new ProfileSettingsPage(this.app);
     }
 
     closeApp() {

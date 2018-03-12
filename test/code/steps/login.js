@@ -10,6 +10,10 @@ defineSupportCode(({ Given, When, Then }) => {
             name: process.env.CREATE_ROOM_TEST_USER,
             passphrase: process.env.CREATE_ROOM_TEST_PASS
         },
+        profile_test: {
+            name: process.env.PROFILE_TEST_USER,
+            passphrase: process.env.PROFILE_TEST_PASS
+        },
         upload_to_files: {
             name: process.env.UPLOAD_TO_FILES_USER,
             passphrase: process.env.UPLOAD_TO_FILES_PASS
