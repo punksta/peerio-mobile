@@ -1,107 +1,134 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { Platform } from 'react-native';
 import { observer } from 'mobx-react/native';
-import { observable } from 'mobx';
+import { observable, action, when } from 'mobx';
 import ActionSheet from 'react-native-actionsheet';
+import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
-import fileState from '../files/file-state';
-import chatState from '../messaging/chat-state';
 import { tx } from '../utils/translator';
-import { popupInputCancel } from '../shared/popups';
-import imagepicker from '../helpers/imagepicker';
-import FileSharePreview from './file-share-preview';
+import { fileState } from '../states';
+import routerModal from '../routes/router-modal';
+import routes from '../routes/routes';
+import { popupInput } from '../shared/popups';
+import { fileHelpers } from '../../lib/icebear';
+import routerMain from '../routes/router-main';
 
 @observer
 export default class FilesActionSheet extends SafeComponent {
-    @observable image;
-
-    async doUpload(sourceFunction) {
-        const uploader = this.props.inline ?
-            fileState.uploadInline : fileState.uploadInFiles;
-        const source = observable(await sourceFunction());
-        if (this.props.inline) {
-            const userSelection = await FileSharePreview.popup(source.url, source.fileName);
-            if (!userSelection) return;
-            source.fileName = `${userSelection.name}.${source.ext}`;
-            source.message = userSelection.message;
-            let { chat } = userSelection;
-            if (userSelection.contact && chat === null) {
-                chat = await chatState.startChat([userSelection.contact]);
-                // TODO: switching to new DMs without timeout causes file
-                // to be shared in previous chat. Couldn't figure out why
-                await new Promise(resolve => setTimeout(resolve, 1000));
-            }
-        }
-        uploader(source);
-    }
-
-    get takePhoto() {
-        return {
-            title: tx('title_takePhoto'),
-            action: () => this.doUpload(imagepicker.getImageFromCamera)
-        };
-    }
-
-    get chooseFromGallery() {
-        return {
-            title: tx('title_chooseFromGallery'),
-            action: () => this.doUpload(imagepicker.getImageFromGallery)
-        };
-    }
-
-    get androidFilePicker() {
-        return {
-            title: tx('title_chooseFromFiles'),
-            action: () => this.doUpload(imagepicker.getImageFromAndroidFilePicker)
-        };
-    }
-
-    get shareFromPeerio() {
-        return {
-            title: tx('title_shareFromFiles'),
-            async action() {
-                chatState.shareFiles(await fileState.selectFiles());
-            }
-        };
-    }
-
-    get createFolder() {
-        const action = async () => {
-            const result = await popupInputCancel(
-                tx('title_createFolder'), tx('title_createFolderPlaceholder'), true);
-            if (!result) return;
-            requestAnimationFrame(() => {
-                fileState.store.folders.createFolder(result.value, fileState.currentFolder);
-                fileState.store.folders.save();
-            });
-        };
-        return { title: tx('title_createFolder'), action };
-    }
+    DELETE_INDEX = 3;
+    CANCEL_INDEX = 4;
 
     get items() {
-        const result = [this.takePhoto, this.chooseFromGallery];
-        (Platform.OS === 'android') && result.push(this.androidFilePicker);
-        this.props.inline && result.push(this.shareFromPeerio);
-        this.props.createFolder && result.push(this.createFolder);
-        result.push({ title: tx('button_cancel') });
+        const result = [this.sharefile, this.moveFile, this.renameFile, this.deleteFile, this.cancel];
         return result;
     }
 
+    get cancel() { return { title: tx('button_cancel') }; }
+
+    get sharefile() {
+        return {
+            title: tx('button_share'),
+            action: () => {
+                fileState.currentFile = this.file;
+                routerModal.shareFileTo();
+            }
+        };
+    }
+
+    get moveFile() {
+        return {
+            title: tx('Move'),
+            action: () => {
+                fileState.currentFile = this.file;
+                routes.modal.moveFileTo();
+            }
+        };
+    }
+
+    get renameFile() {
+        return {
+            title: tx('button_rename'),
+            action: async () => {
+                const { file } = this;
+                const newFileName = await popupInput(
+                    tx('title_fileName'),
+                    '',
+                    fileHelpers.getFileNameWithoutExtension(file.name)
+                );
+                if (newFileName) await file.rename(`${newFileName}.${file.ext}`);
+            }
+        };
+    }
+
+    get deleteFile() {
+        const { refreshData } = this.props;
+        return {
+            title: tx('button_delete'),
+            action: async () => {
+                const result = await fileState.deleteFile(this.file);
+                if (result) refreshData();
+            }
+        };
+    }
+
     onPress = index => {
-        const { action } = this.items[index];
-        action && action();
+        if (this.items[index]) {
+            const { action: pressAction } = this.items[index];
+            pressAction && pressAction();
+        }
     };
 
-    show = () => this._actionSheet.show();
+    @observable file = null;
+    @observable _actionSheet = null;
+
+    /**
+     * @param {File} file
+     */
+    @action.bound show(file) {
+        if (!file) {
+            console.error(`files-action-sheet: file is undefined`);
+            return;
+        }
+        if (this._showWhen) {
+            this._showWhen();
+            this._showWhen = null;
+        }
+        // We need to re-render and re-ref action sheet
+        // so that the title is updated accordingly
+        if (this.file !== file) {
+            this._actionSheet = null;
+            this.file = file;
+        }
+        this._showWhen = when(() => this._actionSheet, () => this._actionSheet.show());
+    }
+
+    onFileInfoPress = () => {
+        const { file } = this;
+        this._actionSheet.hide();
+        routerModal.discard();
+        routerMain.files(file);
+    };
+
+    refActionSheet = ref => { this._actionSheet = ref; };
 
     renderThrow() {
+        const { file } = this;
+        if (!file) return null;
+        const title = `${file.name}\n${file.sizeFormatted} ${moment(file.uploadedAt).format('DD/MM/YYYY')}`;
         return (
             <ActionSheet
-                ref={sheet => { this._actionSheet = sheet; }}
+                key={file.fileId}
+                ref={this.refActionSheet}
                 options={this.items.map(i => i.title)}
-                cancelButtonIndex={this.items.length - 1}
+                cancelButtonIndex={this.CANCEL_INDEX}
+                destructiveButtonIndex={this.DELETE_INDEX}
                 onPress={this.onPress}
+                title={title}
             />
         );
     }
 }
+
+FilesActionSheet.propTypes = {
+    refreshData: PropTypes.func
+};

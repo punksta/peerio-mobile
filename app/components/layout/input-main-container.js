@@ -5,7 +5,7 @@ import SafeComponent from '../shared/safe-component';
 import InputMain from './input-main';
 import chatState from '../messaging/chat-state';
 import FileUploadProgress from '../files/file-upload-progress';
-import FilesActionSheet from '../files/files-action-sheet';
+import FileUploadActionSheet from '../files/file-upload-action-sheet';
 import { vars } from '../../styles/styles';
 
 @observer
@@ -21,7 +21,7 @@ export default class InputMainContainer extends SafeComponent {
 
     sendAck = () => chatState.addAck();
 
-    plus = () => this.filesActionSheet.show();
+    plus = () => this.fileUploadActionSheet.show();
 
     uploadQueue() {
         const chat = chatState.currentChat;
@@ -52,7 +52,7 @@ export default class InputMainContainer extends SafeComponent {
                         sendAck={this.sendAck}
                         send={this.send} />
                 </View>
-                <FilesActionSheet inline ref={ref => { this.filesActionSheet = ref; }} />
+                <FileUploadActionSheet inline ref={ref => { this.fileUploadActionSheet = ref; }} />
             </View>
         );
     }

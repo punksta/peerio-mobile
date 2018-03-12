@@ -1,0 +1,82 @@
+import PropTypes from 'prop-types';
+import React from 'react';
+import { observer } from 'mobx-react/native';
+import { Text, Dimensions, View } from 'react-native';
+import moment from 'moment';
+import SafeComponent from '../shared/safe-component';
+import { vars } from '../../styles/styles';
+import icons from '../helpers/icons';
+import FileTypeIcon from './file-type-icon';
+import { fileHelpers } from '../../lib/icebear';
+
+const { width } = Dimensions.get('window');
+const height = 64;
+
+const fileInfoContainerStyle = {
+    flexGrow: 1,
+    flexDirection: 'row'
+};
+
+@observer
+export default class RecentFileItem extends SafeComponent {
+    renderThrow() {
+        const { file } = this.props;
+        const iconRight = icons.dark('more-vert', this.props.onMenu);
+        const nameStyle = {
+            color: vars.txtDark,
+            fontSize: vars.font.size.normal
+        };
+        const infoStyle = {
+            color: vars.extraSubtleText,
+            fontSize: vars.font.size.smaller,
+            fontWeight: vars.font.weight.regular
+        };
+        const itemContainerStyle = {
+            flex: 1,
+            flexGrow: 1,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderBottomWidth: 1,
+            borderBottomColor: 'rgba(0, 0, 0, .12)',
+            backgroundColor: 'white',
+            height,
+            width,
+            paddingLeft: vars.spacing.medium.mini2x
+        };
+        const arrow = this.props.hideArrow ? null : (
+            <View style={{ flex: 0 }}>
+                {iconRight}
+            </View>
+        );
+        return (
+            <View style={{ backgroundColor: 'white' }}>
+                <View style={fileInfoContainerStyle}>
+                    <View style={[itemContainerStyle, { width }]}>
+                        <View style={{ flex: 0, paddingRight: vars.fileInnerItemPaddingRight }}>
+                            {<FileTypeIcon
+                                size="small"
+                                type={fileHelpers.getFileIconType(file.ext)}
+                            />}
+                        </View>
+                        <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
+                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
+                            <Text style={infoStyle}>
+                                {moment(file.uploadedAt).format('DD/MM/YYYY')}
+                                {' - '}
+                                {file.fileOwner}
+                            </Text>
+                        </View>
+                        {arrow}
+                    </View>
+                </View>
+            </View>
+        );
+    }
+}
+
+RecentFileItem.propTypes = {
+    file: PropTypes.any.isRequired,
+    onMenu: PropTypes.func,
+    key: PropTypes.any
+};
