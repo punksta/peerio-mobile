@@ -84,6 +84,7 @@ const vars = {
     lighterBlackText: 'rgba(0, 0, 0, .87)',
     inputBgInactive: 'rgba(255, 255, 255, .5)',
     inputBgInactiveText: 'rgba(0,0,0, .54)',
+    checkboxDisabled: 'rgba(0,0,0,.12)',
     checkboxInactive: 'rgba(0,0,0,.06)',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
     checkboxIconActive: bg,

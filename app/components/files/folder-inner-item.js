@@ -2,38 +2,79 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable, action } from 'mobx';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { Text, Dimensions, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
+import fileState from './file-state';
+import chatState from '../messaging/chat-state';
 
+const { width } = Dimensions.get('window');
 const height = vars.listItemHeight;
+const checkBoxWidth = height;
 
 const folderInfoContainerStyle = {
     flexGrow: 1,
     flexDirection: 'row',
-    backgroundColor: 'white',
-    height,
-    paddingLeft: vars.spacing.medium.mini2x,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, .12)',
-    alignItems: 'center'
+    backgroundColor: 'white'
 };
 
 @observer
 export default class FolderInnerItem extends SafeComponent {
-    @observable width = 0;
+    @observable progressWidth = 0;
 
-    onPress = () => this.props.onPress && this.props.onPress(this.props.folder);
+    @action.bound onPress() {
+        const { folder, onPress } = this.props;
+        onPress && onPress(folder);
+    }
+
+    @action.bound onCheckBoxPressed() {
+        const { folder } = this.props;
+        if (!chatState.currentChat.isChannel) {
+            folder.selected = !folder.selected;
+        }
+    }
+
+    checkbox() {
+        if (!fileState.isFileSelectionMode) return null;
+        const checked = this.props.folder && this.props.folder.selected;
+        const v = vars;
+        const disabled = chatState.currentChat.isChannel;
+        const iconBgColor = 'transparent';
+        let iconColor;
+        if (disabled) {
+            iconColor = v.checkboxDisabled;
+        } else {
+            iconColor = checked ? v.checkboxIconActive : v.checkboxIconInactive;
+        }
+        const icon = checked ? 'check-box' : 'check-box-outline-blank';
+        const outer = {
+            backgroundColor: 'white',
+            paddingHorizontal: vars.spacing.small.mini2x,
+            flex: 0,
+            width: checkBoxWidth,
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'absolute',
+            top: vars.spacing.small.mini2x,
+            left: 0,
+            zIndex: 1
+        };
+        return (
+            <View style={outer}>
+                {icons.colored(icon, this.onCheckBoxPressed, iconColor, iconBgColor)}
+            </View>
+        );
+    }
 
     get currentProgress() {
         const { folder } = this.props;
         const { progress, progressMax } = folder;
-        const { width } = this;
-        if (!width || !progressMax) return 0;
-        return width * progress / progressMax;
+        const { progressWidth } = this;
+        if (!progressWidth || !progressMax) return 0;
+        return progressWidth * progress / progressMax;
     }
 
     get currentProgressPercent() {
@@ -44,7 +85,7 @@ export default class FolderInnerItem extends SafeComponent {
     }
 
     @action.bound layout(evt) {
-        this.width = evt.nativeEvent.layout.width;
+        this.progressWidth = evt.nativeEvent.layout.width;
     }
 
     get radio() {
@@ -106,7 +147,7 @@ export default class FolderInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { folder, onPress, onSelect, hideMoreOptionsIcon, onFolderActionPress } = this.props;
+        const { folder, onSelect, hideMoreOptionsIcon, onFolderActionPress } = this.props;
         const { isShared, isBlocked } = folder;
         const progressContainer = {
             backgroundColor: vars.fileUploadProgressColor,
@@ -122,6 +163,18 @@ export default class FolderInnerItem extends SafeComponent {
             fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.bold
         };
+        const itemContainerStyle = {
+            flex: 1,
+            flexGrow: 1,
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            height,
+            width,
+            paddingLeft: fileState.isFileSelectionMode ? checkBoxWidth : vars.spacing.medium.mini2x,
+            borderBottomWidth: 1,
+            borderBottomColor: 'rgba(0, 0, 0, .12)',
+            alignItems: 'center'
+        };
         const loadingStyle = null;
         const optionsIcon = hideMoreOptionsIcon ? null : (
             <View style={{ flex: 0 }}>
@@ -131,23 +184,25 @@ export default class FolderInnerItem extends SafeComponent {
                     !isBlocked ? null : { opacity: 0.38 })}
             </View>);
         return (
-            <TouchableOpacity
-                onPress={hideMoreOptionsIcon ? onSelect : onPress}
-                style={{ backgroundColor: 'white' }}
-                disabled={isBlocked}>
-                <View style={folderInfoContainerStyle} onLayout={this.layout}>
-                    <View style={progressContainer} />
-                    {this.radio}
-                    <View style={[loadingStyle, { flex: 0 }]}>
-                        {icons.darkNoPadding(isShared ? 'folder-shared' : 'folder', null, null, vars.iconSize)}
+            <View style={folderInfoContainerStyle} onLayout={this.layout}>
+                {this.checkbox()}
+                <TouchableOpacity
+                    onPress={hideMoreOptionsIcon ? onSelect : this.onPress}
+                    disabled={isBlocked}>
+                    <View style={itemContainerStyle}>
+                        <View style={progressContainer} />
+                        {this.radio}
+                        <View style={[loadingStyle, { flex: 0 }]}>
+                            {icons.plaindark(isShared ? 'folder-shared' : 'folder', vars.iconSize, null)}
+                        </View>
+                        <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
+                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
+                            {this.fileDetails}
+                        </View>
+                        {optionsIcon}
                     </View>
-                    <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
-                        <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
-                        {this.fileDetails}
-                    </View>
-                    {optionsIcon}
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
         );
     }
 }

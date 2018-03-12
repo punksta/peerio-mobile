@@ -38,9 +38,9 @@ export default class FileItem extends SafeComponent {
         onFileActionPress(file);
     }
 
-    @action.bound onFolderPress() {
-        const { file, onChangeFolder } = this.props;
-        onChangeFolder(file);
+    @action.bound onFolderPress(folder) {
+        const { onChangeFolder } = this.props;
+        onChangeFolder(folder);
     }
 
     @action.bound onFolderActionPress() {

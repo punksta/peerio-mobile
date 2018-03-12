@@ -13,7 +13,7 @@ import FileProgress from './file-progress';
 import { fileHelpers } from '../../lib/icebear';
 
 const { width } = Dimensions.get('window');
-const height = 64;
+const height = vars.listItemHeight;
 const checkBoxWidth = height;
 
 const fileInfoContainerStyle = {
@@ -40,7 +40,7 @@ export default class FileInnerItem extends SafeComponent {
         const icon = checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
             backgroundColor: 'white',
-            padding: vars.spacing.small.mini2x,
+            paddingHorizontal: vars.spacing.small.mini2x,
             flex: 0,
             width: checkBoxWidth,
             justifyContent: 'center',
