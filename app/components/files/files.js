@@ -48,7 +48,7 @@ export default class Files extends SafeComponent {
     get rightIcon() {
         return !fileState.isFileSelectionMode &&
             <PlusBorderIcon
-                action={() => filesUploadActionSheet.show()}
+                action={() => fileUploadActionSheet.show()}
                 testID="buttonUploadFileToFiles" />;
     }
 
