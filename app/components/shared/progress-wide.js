@@ -168,7 +168,7 @@ export default class Progress extends SafeComponent {
         if (this.hidden) return null;
         const { max, file } = this.props;
         if (!max) return null;
-        if (!file.isFolder) return this.renderFolderProgress();
+        if (file.isFolder) return this.renderFolderProgress();
         return this.renderFileProgress();
     }
 }
