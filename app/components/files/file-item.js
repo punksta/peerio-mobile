@@ -39,7 +39,7 @@ export default class FileItem extends SafeComponent {
             <View style={{ backgroundColor: 'white', marginHorizontal: vars.spacing.medium.mini2x }}>
                 {file.isFolder ?
                     <FolderInnerItem folder={file} onLongPress={this.props.onLongPress} onPress={() => this.props.onChangeFolder(file)} /> :
-                    <FileInnerItem onPress={f => this.press(f)} file={file} />}
+                    <FileInnerItem onPress={f => this.press(f)} file={file} rowID={this.props.rowID} />}
             </View>
         );
     }

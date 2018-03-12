@@ -4,15 +4,17 @@ const ChatListPage = require('./pages/messaging/chatListPage');
 const ContactSelectorDmPage = require('./pages/messaging/contactSelectorDmPage');
 const ChatPage = require('./pages/messaging/chatPage');
 const RoomCreationPage = require('./pages/messaging/roomCreationPage');
+const FilesListPage = require('./pages/files/filesListPage');
 const iOSFactory = require('./helpers/iOSFactory');
 const AndroidFactory = require('./helpers/AndroidFactory');
 const StartPage = require('./pages/start/startPage');
-const LoginPage = require('./pages/login/loginCredentialsPage');
+const LoginPage = require('./pages/login/loginPage');
 const HomePage = require('./pages/start/homePage');
 const TwoStepVerificationPage = require('./pages/settings/twoStepVerificationPage');
 const TwoFactorAuthPrompt = require('./pages/popups/twoFactorAuthPrompt');
 const SettingsPage = require('./pages/settings/settingsPage');
 const otplib = require('otplib');
+const FileViewPage = require('./pages/files/fileViewPage');
 
 class World {
     constructor(opts) {
@@ -42,6 +44,10 @@ class World {
         this.chatPage = new ChatPage(this.app);
         this.chatActionSheetPage = this.context.chatActionSheetPage(this.app);
 
+        this.filesListPage = new FilesListPage(this.app);
+        this.fileViewPage = new FileViewPage(this.app);
+        this.fileUploadPage = this.context.fileUploadPage(this.app);
+
         this.settingsPage = new SettingsPage(this.app);
         this.twoStepVerificationPage = new TwoStepVerificationPage(this.app);
         this.twoFactorAuthPrompt = new TwoFactorAuthPrompt(this.app);
@@ -69,7 +75,6 @@ class World {
             .setValue(token)
             .hideDeviceKeyboard();
         await this.twoStepVerificationPage.confirmButton.click();
-        await this.twoStepVerificationPage.confirmButton.click(); // TODO: have to tap 2x
     }
 
     async enterTokenInSettings() {
@@ -81,7 +86,7 @@ class World {
 
     async tryEnterTokenInPrompt() {
         const token = otplib.authenticator.generate(this.secretKey);
-        await this.twoFactorAuthPrompt.tokenInput.setValue(token);
+        await this.twoFactorAuthPrompt.tokenInput.setValue(token).hideDeviceKeyboard();
         await this.twoFactorAuthPrompt.submitButton.click();
         await this.twoFactorAuthPrompt.submitButton.click(); // TODO tap twice
     }
@@ -102,10 +107,14 @@ class World {
         this.username = new Date().getTime();
         console.log('Creating account with username', this.username);
 
-        await this.createAccountPage.firstName.setValue('test-first-name').hideDeviceKeyboard();
-        await this.createAccountPage.lastName.setValue('test-last-name').hideDeviceKeyboard();
-        await this.createAccountPage.username.setValue(this.username).hideDeviceKeyboard();
-        await this.createAccountPage.email.setValue('test@email.io').hideDeviceKeyboard();
+        await this.createAccountPage.firstName.setValue('test-first-name');
+        await this.createAccountPage.hideKeyboardHelper();
+        await this.createAccountPage.lastName.setValue('test-last-name');
+        await this.createAccountPage.hideKeyboardHelper();
+        await this.createAccountPage.username.setValue(this.username);
+        await this.createAccountPage.hideKeyboardHelper();
+        await this.createAccountPage.email.setValue(`${this.username}@test.lan`);
+        await this.createAccountPage.hideKeyboardHelper();
         await this.createAccountPage.nextButton.click();
     }
 
@@ -118,7 +127,8 @@ class World {
     }
 
     async confirmSavingPasscode() {
-        await this.createAccountPage.confirmInput.setValue('I have saved my account key').hideDeviceKeyboard();
+        await this.createAccountPage.confirmInput.setValue('I have saved my account key');
+        await this.createAccountPage.hideKeyboardHelper();
         await this.createAccountPage.finishButton.click();
     }
 

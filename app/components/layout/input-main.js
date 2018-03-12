@@ -53,15 +53,21 @@ export default class InputMain extends SafeComponent {
     renderThrow() {
         const { tiStyle, iconStyle, outerStyle, autoExpandingInputContainerStyle,
             sendIconStyleNormal, sendIconStyleActive } = inputMain;
-        const icon = icons.white(this.hasText ? 'send' : 'thumb-up', this.send, iconStyle, vars.iconSizeSmall);
+        const icon = icons.white(this.hasText ? 'send' : 'thumb-up', this.send, iconStyle, vars.iconSizeSmall, 'buttonSendMessage');
         const sendIconStyle = this.canSend ? sendIconStyleActive : sendIconStyleNormal;
         const chatName = chatState.title;
         return (
             <View style={outerStyle}>
-                {icons.dark('add-circle-outline', this.plus, {
-                    paddingLeft: vars.spacing.small.mini2x,
-                    paddingRight: vars.spacing.medium.maxi2x
-                })}
+                {icons.dark(
+                    'add-circle-outline',
+                    this.plus,
+                    {
+                        paddingLeft: vars.spacing.small.mini2x,
+                        paddingRight: vars.spacing.medium.maxi2x
+                    },
+                    null,
+                    'buttonUploadToChat'
+                )}
                 <View style={autoExpandingInputContainerStyle}>
                     <AutoExpandingTextInput
                         onChangeText={this.onChangeText}
