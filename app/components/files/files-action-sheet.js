@@ -51,8 +51,7 @@ export default class FilesActionSheet extends SafeComponent {
                 const newFileName = await popupInput(
                     tx('title_fileName'),
                     '',
-                    fileHelpers.getFileNameWithoutExtension(file.name),
-                    { autoCapitalize: 'sentences' }
+                    fileHelpers.getFileNameWithoutExtension(file.name)
                 );
                 if (newFileName) await file.rename(`${newFileName}.${file.ext}`);
             }
