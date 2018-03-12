@@ -56,7 +56,7 @@ class UIState extends RoutedState {
         setTimeout(() => { this.pickerVisible = false; }, 0);
     }
 
-    @action hideAll() {
+    @action.bound hideAll() {
         this.hideKeyboard();
         this.hidePicker();
         return new Promise(resolve => when(() => this.keyboardHeight === 0, resolve));

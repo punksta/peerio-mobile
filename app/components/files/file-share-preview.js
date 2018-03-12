@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
-import { observable, action } from 'mobx';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
-import FileTypeIcon from '../files/file-type-icon';
 import icons from '../helpers/icons';
 import SafeComponent from '../shared/safe-component';
 import ButtonText from '../controls/button-text';
-import Thumbnail from '../shared/thumbnail';
 import popupState from '../layout/popup-state';
 import routes from '../routes/routes';
 import fileState from './file-state';
 import { fileHelpers, chatStore, config } from '../../lib/icebear';
+import FilePreview from './file-preview';
 
 // TODO Workaround negative margin
 const buttonContainer = {
@@ -23,22 +22,6 @@ const buttonContainer = {
     marginRight: -12,
     flexDirection: 'row',
     justifyContent: 'flex-end'
-};
-
-const nameContainer = {
-    backgroundColor: 'rgba(0, 0, 0, 0.05)',
-    paddingHorizontal: vars.spacing.small.midi2x,
-    paddingTop: vars.spacing.small.mini,
-    paddingBottom: vars.spacing.small.midi2x,
-    flexGrow: 1
-};
-
-// Padding 0 should be kept
-const inputStyle = {
-    color: vars.lighterBlackText,
-    paddingVertical: 0,
-    paddingLeft: 0,
-    height: vars.searchInputHeight
 };
 
 const shareContainer = {
@@ -56,27 +39,6 @@ const shareTextStyle = {
 const recipientStyle = {
     fontSize: vars.font.size.normal,
     color: vars.lighterBlackText
-};
-
-/* const messageInputStyle = {
-    height: vars.inputHeightLarge,
-    fontSize: vars.font.size.normal,
-    paddingLeft: vars.iconPadding,
-    textAlignVertical: 'top',
-    backgroundColor: vars.black03,
-    borderColor: vars.black12,
-    borderWidth: 1,
-    marginTop: vars.spacing.small.midi2x
-}; */
-
-const thumbnailDim = vars.searchInputHeight * 2;
-
-const previewContainerSmall = {
-    alignItems: 'center',
-    justifyContent: 'center',
-    minWidth: thumbnailDim,
-    marginRight: vars.spacing.small.maxi,
-    flex: 0
 };
 
 @observer
@@ -120,20 +82,6 @@ export default class FileSharePreview extends SafeComponent {
         });
     }
 
-    @action.bound launchPreviewViewer() {
-        config.FileStream.launchViewer(this.props.state.path, this.props.state.fileName);
-    }
-
-    get previewImage() {
-        const width = thumbnailDim;
-        const height = width;
-        return (
-            <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={this.launchPreviewViewer}>
-                <Thumbnail path={this.props.state.path} style={{ width, height }} />
-            </TouchableOpacity>
-        );
-    }
-
     recipientText(text, italicText) {
         return (
             <Text style={recipientStyle}>
@@ -165,31 +113,13 @@ export default class FileSharePreview extends SafeComponent {
 
     renderThrow() {
         const { state } = this.props;
-        const { ext } = state;
         const recipient = this.getRecipient(state);
-        const fileImagePlaceholder = fileHelpers.isImage(ext)
-            ? this.previewImage
-            : <FileTypeIcon type={fileHelpers.getFileIconType(ext)} size="medium" />;
 
         return (
             <View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                    <View style={previewContainerSmall} onLayout={this.layoutPreviewContainer}>
-                        {fileImagePlaceholder}
-                    </View>
-                    <View style={nameContainer}>
-                        <Text style={{ fontSize: vars.font.size.smaller, color: vars.txtLightGrey }}>
-                            {tx('title_name')}
-                        </Text>
-                        <TextInput
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                            value={state.name}
-                            onChangeText={text => { state.name = text; }}
-                            underlineColorAndroid="transparent"
-                            style={inputStyle} />
-                    </View>
-                </View>
+                <FilePreview
+                    state={state}
+                />
                 <TouchableOpacity
                     onPress={this.props.onChooseRecipients}
                     pressRetentionOffset={vars.pressRetentionOffset}
@@ -202,27 +132,18 @@ export default class FileSharePreview extends SafeComponent {
                     </View>
                     {icons.plaindark('keyboard-arrow-right')}
                 </TouchableOpacity>
-                {/* <TextInput
-                    placeholder={tx('title_addMessage')}
-                    onChangeText={text => { state.message = text; }}
-                    value={state.message}
-                    underlineColorAndroid="transparent"
-                    placeholderTextColor={vars.extraSubtleText}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    autoComplete={false}
-                    multiline
-                    style={messageInputStyle}
-                /> */}
                 <View style={buttonContainer}>
                     <ButtonText
                         text={tx('button_cancel')}
                         onPress={this.props.onCancel}
                         secondary
+                        testID="cancel"
                     />
                     <ButtonText
                         text={tx('button_share')}
-                        onPress={this.props.onSubmit} />
+                        onPress={this.props.onSubmit}
+                        testID="share"
+                    />
                 </View>
             </View>
         );

@@ -23,10 +23,11 @@
     "build-android": "cd android && ./gradlew assembleRelease && git add version.properties && git commit -m 'chore(fastlane): android fastlane' && git push",
     "build-android-debug": "cd android && ./gradlew assembleDebug",
     "test": "./scripts/setup_tests.sh && ./scripts/run-tests.sh",
-    "cucumber": "./scripts/cucumber.sh",
+    "cucumber": "source env.sh && ./scripts/cucumber.sh",
     "gp-peerio": "npm run build-android && bash scripts/release_android.sh && fastlane android alpha",
     "commit-msg": "validate-commit-msg",
-    "test-cucumber": "source env.sh && cucumberjs test/spec/logout.feature -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"ios\"}'"
+    "test-cucumber": "source env.sh && cucumberjs test/spec/logout.feature -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"ios\"}'",
+    "test-profile-settings-android": "source env.sh && cucumberjs test/spec/profileSettings.feature -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"android\"}'"
   },
   "dependencies": {
     "babel-cli": "6.26.0",

@@ -6,7 +6,7 @@ defineSupportCode(({ When, Then }) => {
         await this.chatActionSheetPage.newDmOption.click();
         await this.contactSelectorDmPage.textInput.setValue(process.env.CHAT_RECIPIENT_USER).hideDeviceKeyboard();
         await this.contactSelectorDmPage.recipientContact.click();
-        await this.contactSelectorDmPage.recipientContact.click(); // TODO: Remove double click when bug is fixed
+        await this.contactSelectorDmPage.recipientContact.click(); // TODO tap twice
     });
 
     When('I create a new Room', async function () {
@@ -15,10 +15,13 @@ defineSupportCode(({ When, Then }) => {
         await this.chatActionSheetPage.newRoomOption.click();
         await this.roomCreationPage.textInputRoomName.setValue(roomName).hideDeviceKeyboard();
         await this.roomCreationPage.nextButton.click();
-        await this.roomCreationPage.nextButton.click(); // TODO: Remove double click when bug is fixed
         await this.roomCreationPage.textInputContactSearch.setValue(process.env.CHAT_RECIPIENT_USER).hideDeviceKeyboard();
         await this.roomCreationPage.recipientContact.click();
         await this.roomCreationPage.goButton.click();
+    });
+
+    When('I exit the current Chat', async function () {
+        await this.chatPage.buttonExitChat.click();
     });
 
     Then('I can send a message to the current Chat', async function () {

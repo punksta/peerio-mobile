@@ -5,7 +5,7 @@ import RoutedState from '../routes/routed-state';
 import { fileStore, TinyDb, socket, fileHelpers, clientApp, chatStore } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
-import { popupInput, popupYesCancel, popupOkCancel } from '../shared/popups';
+import { popupInputWithPreview, popupInput, popupYesCancel, popupOkCancel } from '../shared/popups';
 import { promiseWhen } from '../helpers/sugar';
 
 class FileState extends RoutedState {
@@ -136,12 +136,17 @@ class FileState extends RoutedState {
         this.exitFileSelect();
     }
 
-    renamePostProcessing = async ({ file, fileName, ext }) => {
-        await promiseWhen(() => file.size);
-        if (file.deleted) return null;
-        const newFileName = await popupInput(tx('title_fileName'), '', fileHelpers.getFileNameWithoutExtension(fileName));
-        if (newFileName) await file.rename(`${newFileName}.${ext}`);
-        return file;
+    preprocess = async ({ fileName, ext, url }) => {
+        const fileProps = {
+            fileName,
+            ext,
+            path: url,
+            name: fileHelpers.getFileNameWithoutExtension(fileName)
+        };
+        const { shouldUpload, newName } = await popupInputWithPreview(tx('title_fileName'), fileProps);
+        const newFileName = `${newName}.${ext}`;
+
+        return { shouldUpload, newFileName };
     };
 
     uploadInline = async (data) => {
@@ -158,13 +163,15 @@ class FileState extends RoutedState {
     uploadInFiles = async (data) => {
         await promiseWhen(() => socket.authenticated);
         const folder = this.currentFolder;
-        const file = fileStore.upload(data.url, data.fileName, folder.isRoot ? null : folder.folderId);
-        if (folder && !folder.isRoot) {
-            await promiseWhen(() => file.fileId);
-            folder.moveInto(file);
+        const { shouldUpload, newFileName } = await this.preprocess(data);
+        let file;
+        if (shouldUpload) {
+            file = fileStore.upload(data.url, newFileName, folder.isRoot ? null : folder.folderId);
+            if (folder && !folder.isRoot) {
+                await promiseWhen(() => file.fileId);
+                folder.moveInto(file);
+            }
         }
-        data.file = file;
-        await this.renamePostProcessing(data);
         return file;
     };
 
