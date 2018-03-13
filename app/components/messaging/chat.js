@@ -78,6 +78,7 @@ export default class Chat extends SafeComponent {
     _refs = {};
     _itemActionMap = {};
 
+    // TODO add folder action sheet
     item = (item, index) => {
         const key = item.id || index;
         const actions = getOrMake(
