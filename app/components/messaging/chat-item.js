@@ -15,7 +15,8 @@ export default class ChatItem extends SafeComponent {
     setRef = ref => { this._ref = ref; };
 
     renderThrow() {
-        if (!this.props || !this.props.message) return null;
+        const { chatId, message } = this.props;
+        if (!message || !chatId) return null;
         const i = this.props.message;
         if (!i.sender) return null;
         const key = i.id;
@@ -29,14 +30,18 @@ export default class ChatItem extends SafeComponent {
         const systemMessageText =
             i.systemData && systemMessages.getSystemMessageText(i) || null;
         const videoCallLink = i.systemData && i.systemData.link || null;
-        const files = i.files && i.files.map(id => fileState.store.getById(id)).filter(f => f) || [];
+        const files = i.files && i.files.map(
+            id => fileState.store.getByIdInChat(id, chatId)
+        ).filter(f => f) || [];
         const images = files.filter(f => f.isImage) || [];
         const normalFiles = files.filter(f => !f.isImage) || [];
         let firstImage = images.length ? images[0] : null;
         if (i.hasUrls && i.externalImages.length) {
             firstImage = i.externalImages[0];
         }
-        const hasDeletedFile = i.files && !i.files.find(id => fileState.store.getById(id));
+        const hasDeletedFile = i.files && !i.files.find(
+            id => fileState.store.getByIdInChat(id, chatId)
+        );
         const shouldDisplayIdentityNotice = i.systemData && i.systemData.action === 'join';
 
         return (
@@ -57,6 +62,7 @@ export default class ChatItem extends SafeComponent {
                     message={text}
                     hasDeletedFile={hasDeletedFile}
                     isChat
+                    chatId={chatId}
                     fullnameIsBold
                     systemMessage={systemMessageText}
                     videoCallMessage={videoCallLink}
