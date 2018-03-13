@@ -19,11 +19,40 @@ const container = {
 };
 
 export default class FolderInlineContainer extends SafeComponent {
+    fileDetails() {
+        // TODO add props
+        const { folderName } = this.props;
+        const isBlocked = false;
+        const nameStyle = {
+            flexGrow: 1,
+            flexShrink: 1,
+            color: isBlocked ? vars.extraSubtleText : vars.txtDark,
+            fontSize: vars.font.size.normal,
+            fontWeight: vars.font.weight.bold,
+            marginLeft: isBlocked ? 0 : vars.spacing.small.midi2x
+        };
+        const infoStyle = {
+            color: vars.extraSubtleText,
+            fontSize: vars.font.size.smaller,
+            fontWeight: vars.font.weight.regular,
+            fontStyle: 'italic'
+        };
+        if (isBlocked) {
+            return (
+                <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.small.midi2x }}>
+                    <Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{folderName}</Text>
+                    <Text style={infoStyle}>
+                        {tx('title_locked')}
+                    </Text>
+                </View>);
+        }
+        return (<Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{folderName}</Text>);
+    }
+
     render() {
         // TODO Adjust props when folder sharing is enabled
         // const { folder, hideMoreOptionsIcon, onFolderActionPress } = this.props;
         // const { isBlocked } = folder;
-        const { folderName } = this.props;
         const isBlocked = false;
         const outer = {
             padding
@@ -33,19 +62,6 @@ export default class FolderInlineContainer extends SafeComponent {
             justifyContent: 'space-between',
             alignItems: 'center',
             height: 38
-        };
-        const nameStyle = {
-            flexGrow: 1,
-            flexShrink: 1,
-            color: isBlocked ? vars.extraSubtleText : vars.txtDark,
-            fontSize: vars.font.size.normal,
-            fontWeight: vars.font.weight.bold
-        };
-        const infoStyle = {
-            color: vars.extraSubtleText,
-            fontSize: vars.font.size.smaller,
-            fontWeight: vars.font.weight.regular,
-            fontStyle: 'italic'
         };
         // TODO Folder action sheet when folder sharing is enabled
         // const optionsIcon = hideMoreOptionsIcon ? null : (
@@ -74,12 +90,7 @@ export default class FolderInlineContainer extends SafeComponent {
                             null,
                             !isBlocked ? null : { opacity: 0.38 },
                             vars.iconSize)}
-                        <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.small.midi2x }}>
-                            <Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{folderName}</Text>
-                            <Text style={infoStyle}>
-                                {tx('title_locked')}
-                            </Text>
-                        </View>
+                        {this.fileDetails()}
                         {optionsIcon}
                     </View>
                 </View>
