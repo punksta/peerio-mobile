@@ -9,6 +9,14 @@ class SettingsPage extends Page {
         return this.getWhenPresent('~title_settingsAccount');
     }
 
+    get publicProfileButton() {
+        return this.getWhenVisible('~title_settingsProfile');
+    }
+
+    get uploadAvatarIcon() {
+        return this.getWhenVisible('~uploadAvatar');
+    }
+
     get logoutButton() {
         return this.getWhenPresent('~button_logout');
     }

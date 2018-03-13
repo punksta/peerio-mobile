@@ -41,7 +41,7 @@ export default class ChannelInviteListItem extends SafeComponent {
             paddingHorizontal: 4,
             paddingVertical: 1,
             borderRadius: 5,
-            backgroundColor: vars.bg,
+            backgroundColor: vars.bgGreen,
             overflow: 'hidden',
             alignItems: 'center',
             justifyContent: 'center'

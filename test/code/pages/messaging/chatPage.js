@@ -9,6 +9,10 @@ class ChatPage extends Page {
         return this.getWhenVisible('~buttonSendMessage');
     }
 
+    get buttonUploadToChat() {
+        return this.getWhenVisible('~buttonUploadToChat');
+    }
+
     get buttonExitChat() {
         return this.getWhenVisible('~buttonChatBack');
     }

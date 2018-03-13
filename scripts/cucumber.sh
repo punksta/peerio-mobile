@@ -31,7 +31,6 @@ unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     
         echo "Linux..."
-        adb shell pm uninstall com.peerio.app
         ;;
     Darwin*)    
         echo "Mac..."
@@ -72,6 +71,16 @@ case "${unameOut}" in
         xcrun simctl uninstall $SIM_UDID com.peerio && check 'app uninstalled'
         ;;
 esac
+
+adb shell pm uninstall com.peerio.app
+if [ `adb shell "if [ -e /sdcard/DCIM/Camera/androidTestImage.png ]; then echo 1; fi"` ]
+then
+echo "Device already has image"
+else
+echo "Pushing image to device"
+adb push test/assets/androidTestImage.png /sdcard/DCIM/Camera/androidTestImage.png
+adb reboot
+fi
 
 ./node_modules/.bin/appium > ./appium.log 2> ./appium.log &
 APPIUM_PID=$!

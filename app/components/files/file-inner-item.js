@@ -9,6 +9,7 @@ import icons from '../helpers/icons';
 import fileState from './file-state';
 import FileSignatureError from './file-signature-error';
 import FileTypeIcon from './file-type-icon';
+import testLabel from '../helpers/test-label';
 import FileProgress from './file-progress';
 import { fileHelpers } from '../../lib/icebear';
 
@@ -100,9 +101,12 @@ export default class FileInnerItem extends SafeComponent {
                 {iconRight}
             </View>
         );
+        const testID = `file${this.props.rowID}`;
         return (
             <View style={{ backgroundColor: 'white' }}>
-                <TouchableOpacity onPress={action}>
+                <TouchableOpacity
+                    onPress={action}
+                    {...testLabel(testID)}>
                     <View style={[fileInfoContainerStyle, { opacity }]}>
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width }]}>

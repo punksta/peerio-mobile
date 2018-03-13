@@ -5,7 +5,7 @@ import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
 import { vars } from '../../styles/styles';
-import { fileStore, chatStore } from '../../lib/icebear';
+import { fileStore, chatInviteStore, chatStore } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import contactState from '../contacts/contact-state';
 import routerMain from '../routes/router-main';
@@ -35,7 +35,7 @@ export default class TabContainer extends SafeComponent {
                     text={t('title_chats')}
                     route="chats"
                     icon="forum"
-                    bubble={chatStore.unreadMessages} />
+                    bubble={chatStore.unreadMessages + chatInviteStore.received.length} />
                 <TabItem
                     text={t('title_files')}
                     route="files"

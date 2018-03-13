@@ -9,6 +9,7 @@ import CheckBox from './checkbox';
 import { vars } from '../../styles/styles';
 import { User } from '../../lib/icebear';
 import testLabel from '../helpers/test-label';
+import FilePreview from '../files/file-preview';
 
 function textControl(str) {
     const text = {
@@ -32,6 +33,12 @@ function checkBoxControl(str, checked, press, accessibilityLabel) {
 function inputControl(state, placeholder, props) {
     return (
         <TextInputStateful placeholder={placeholder} state={state} {...props} />
+    );
+}
+
+function previewAndInputControl(state) {
+    return (
+        <FilePreview state={state} />
     );
 }
 
@@ -88,6 +95,20 @@ function popupYesCancel(title, subTitle, text) {
             buttons: [
                 { id: 'no', text: t('button_no'), action: () => resolve(false), secondary: true },
                 { id: 'yes', text: t('button_yes'), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
+function popupOkCancel(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title,
+            subTitle: textControl(subTitle),
+            contents: text ? textControl(text) : null,
+            buttons: [
+                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
+                { id: 'ok', text: tu('button_ok'), action: () => resolve(true) }
             ]
         });
     });
@@ -166,6 +187,20 @@ function popupInput(title, subTitle, value) {
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: () => resolve(o.value)
             }]
+        });
+    });
+}
+
+function popupInputWithPreview(title, fileProps) {
+    return new Promise((resolve) => {
+        const o = observable({ value: fileProps });
+        popupState.showPopup({
+            title,
+            contents: previewAndInputControl(o.value),
+            buttons: [
+                { id: 'cancel', text: tu('button_cancel'), secondary: true, action: () => resolve({ shouldUpload: false, newName: '' }) },
+                { id: 'ok', text: tu('button_ok'), action: () => { resolve({ shouldUpload: true, newName: o.value.name }); } }
+            ]
         });
     });
 }
@@ -319,8 +354,10 @@ export {
     addSystemWarningAction,
     popupYes,
     popupYesCancel,
+    popupOkCancel,
     popupYesSkip,
     popupInput,
+    popupInputWithPreview,
     popupTOS,
     popupKeychainError,
     popup2FA,

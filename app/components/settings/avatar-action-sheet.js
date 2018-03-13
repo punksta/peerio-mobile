@@ -31,7 +31,7 @@ export default class AvatarActionSheet extends SafeComponent {
     CANCEL_INDEX = 2;
 
     _actionSheetMap = [
-        { title: tx('button_pickFromGallery'), action: () => this.pickCrop(false) },
+        { title: tx('title_chooseFromGallery'), action: () => this.pickCrop(false) },
         { title: tx('button_takeAPicture'), action: () => this.pickCrop(true) },
         { title: tx('button_cancel') }
     ];

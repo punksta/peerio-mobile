@@ -6,7 +6,6 @@ import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import chatState from './chat-state';
 import { User, contactStore, systemMessages } from '../../lib/icebear';
-import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 
@@ -14,10 +13,23 @@ import { vars } from '../../styles/styles';
 export default class ChatListItem extends SafeComponent {
     get rightIcon() {
         const { chat } = this.props;
+        if (chat.unreadCount === 0) return null;
+
+        const circleStyle = {
+            width: vars.spacing.large.mini2x,
+            paddingVertical: 1,
+            borderRadius: 14,
+            backgroundColor: vars.bg,
+            overflow: 'hidden',
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+
         return (
-            <View style={{ flex: 0, width: 46, height: 46, justifyContent: 'center' }}>
-                {chat.unreadCount > 0 ?
-                    icons.unreadBubble(chat.unreadCount) : null}
+            <View style={circleStyle}>
+                <Text style={{ color: vars.white }}>
+                    {`${chat.unreadCount}`}
+                </Text>
             </View>
         );
     }
