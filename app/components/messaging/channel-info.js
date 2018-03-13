@@ -9,6 +9,7 @@ import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { popupCancelConfirm } from '../shared/popups';
 import { tx } from '../utils/translator';
+import { config } from '../../lib/icebear';
 import ChannelInfoListState from '../channels/channel-info-list-state';
 
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
@@ -104,7 +105,8 @@ export default class ChannelInfo extends SafeComponent {
                     onBlur={update}
                     onEndEditing={update}
                     value={this.channelTopic}
-                    style={{ paddingLeft: vars.spacing.medium.midi, height: vars.inputHeight, color: vars.txtDark }} />
+                    style={{ paddingLeft: vars.spacing.medium.midi, height: vars.inputHeight, color: vars.txtDark }}
+                    maxLength={config.chat.maxChatPurposeLength} />
             </View>
         );
     }
