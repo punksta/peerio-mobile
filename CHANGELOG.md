@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.261.0"></a>
+# [3.261.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.260.0...v3.261.0) (2018-03-13)
+
+
+### Bug Fixes
+
+* android inline image upload fix [ch3876] ([26a5ffb](https://github.com/PeerioTechnologies/peerio-mobile/commit/26a5ffb))
+* display avatar for invited users [ch3878] ([0714d1d](https://github.com/PeerioTechnologies/peerio-mobile/commit/0714d1d))
+* fileUploadActionSheet ([faf6e87](https://github.com/PeerioTechnologies/peerio-mobile/commit/faf6e87))
+* rooms bugs (self entry in room info, room name character limit) ([#142](https://github.com/PeerioTechnologies/peerio-mobile/issues/142)) ([4dac29c](https://github.com/PeerioTechnologies/peerio-mobile/commit/4dac29c))
+
+
+### Features
+
+* [ch4399] switch to newfs and update dependencies ([d7e2b3e](https://github.com/PeerioTechnologies/peerio-mobile/commit/d7e2b3e))
+* [ch4399] use getByIdInChat ([04b4bbe](https://github.com/PeerioTechnologies/peerio-mobile/commit/04b4bbe))
+* Add file preview to files upload ([#127](https://github.com/PeerioTechnologies/peerio-mobile/issues/127)) ([1fce9c0](https://github.com/PeerioTechnologies/peerio-mobile/commit/1fce9c0))
+* e2e test for profile edit [branch ch3554] ([#144](https://github.com/PeerioTechnologies/peerio-mobile/issues/144)) ([71751c9](https://github.com/PeerioTechnologies/peerio-mobile/commit/71751c9))
+* redirect apple test user to a different server ([472c353](https://github.com/PeerioTechnologies/peerio-mobile/commit/472c353))
+
+
+
 <a name="3.260.0"></a>
 # [3.260.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.259.0...v3.260.0) (2018-02-23)
 
