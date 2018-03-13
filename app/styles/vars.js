@@ -133,6 +133,7 @@ const vars = {
     avatarDiameter: 36,
     pinnedChatIconSize: 18,
     pinnedChatPaddingHorizontal: 2,
+    fileListHorizontalPadding: scaleDim(16),
     fileInnerItemPaddingRight: 8,
     loadingScreenMarginBottom: scaleDim(170),
     loadingScreenMarginTop: scaleDim(206),

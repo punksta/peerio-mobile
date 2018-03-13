@@ -169,7 +169,7 @@ export default class FolderInnerItem extends SafeComponent {
             flexDirection: 'row',
             justifyContent: 'space-between',
             height,
-            width,
+            width: width - vars.fileListHorizontalPadding * 2,
             paddingLeft: fileState.isFileSelectionMode ? checkBoxWidth : vars.spacing.medium.mini2x,
             borderBottomWidth: 1,
             borderBottomColor: 'rgba(0, 0, 0, .12)',
