@@ -126,7 +126,7 @@ export default class Progress extends SafeComponent {
                             {this.props.title}
                         </Text>
                         <Text style={[percentText, { marginRight: 56 }]} numberOfLines={1}>
-                            ({Math.round(100 * value / max)}%)
+                            ({Math.min(Math.ceil(100 * value / max), 100)}%)
                         </Text>
                         <TouchableOpacity
                             style={iconStyle}
@@ -156,7 +156,7 @@ export default class Progress extends SafeComponent {
                             {this.props.title}
                         </Text>
                         <Text style={percentText} numberOfLines={1}>
-                            ({Math.round(100 * value / max)}%)
+                            ({Math.min(Math.ceil(100 * value / max), 100)}%)
                         </Text>
                     </View>
                 </View>

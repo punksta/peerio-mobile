@@ -71,17 +71,9 @@ export default class FolderInnerItem extends SafeComponent {
 
     get currentProgress() {
         const { folder } = this.props;
-        const { progress, progressMax } = folder;
         const { progressWidth } = this;
-        if (!progressWidth || !progressMax) return 0;
-        return progressWidth * progress / progressMax;
-    }
-
-    get currentProgressPercent() {
-        const { folder } = this.props;
-        const { progress, progressMax } = folder;
-        if (!progressMax) return 0;
-        return progress / progressMax * 100;
+        if (!progressWidth) return 0;
+        return progressWidth * folder.progressPercentage / 100;
     }
 
     @action.bound layout(evt) {
@@ -122,11 +114,11 @@ export default class FolderInnerItem extends SafeComponent {
             fontWeight: vars.font.weight.regular,
             fontStyle: 'italic'
         };
-        const progressPercent = this.currentProgressPercent;
-        if (progressPercent) {
+        const { progressPercentage, progressText, progressMax } = folder;
+        if (progressMax) {
             return (
                 <Text style={infoStyle}>
-                    <Text>{tx(folder.progressText)}{`(${progressPercent}%)`}</Text>
+                    <Text>{tx(progressText)}{`(${progressPercentage}%)`}</Text>
                 </Text>
             );
         } else if (folder.isBlocked) {
