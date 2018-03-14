@@ -42,7 +42,7 @@ export default class ContactEditPermissionItem extends SafeComponent {
             height: vars.warningHeight - marginBottom,
             marginBottom,
             marginLeft: vars.avatarDiameter + avatarPadding * 2,
-            paddingLeft: avatarPadding,
+            paddingLeft: vars.spacing.medium.mini2x,
             borderLeftWidth: 1,
             borderLeftColor: vars.black12,
             flex: 1,
@@ -50,7 +50,8 @@ export default class ContactEditPermissionItem extends SafeComponent {
         };
         const textStyle = {
             color: vars.subtleText,
-            fontWeight: vars.font.weight.semiBold
+            fontWeight: vars.font.weight.semiBold,
+            paddingRight: vars.spacing.medium.mini2x
         };
         return (
             <View style={containerStyle}>
@@ -69,12 +70,12 @@ export default class ContactEditPermissionItem extends SafeComponent {
             flex: 1,
             flexGrow: 1,
             flexDirection: 'row',
-            paddingHorizontal: avatarPadding
+            paddingLeft: avatarPadding
         };
         const nameStyle = {
             fontSize: vars.font.size.normal,
             color: vars.lighterBlackText,
-            paddingLeft: 16
+            paddingLeft: vars.spacing.medium.mini2x
         };
         return (
             <View style={{ backgroundColor: this.showWarning ? vars.black05 : vars.white }}>
@@ -89,7 +90,11 @@ export default class ContactEditPermissionItem extends SafeComponent {
                     </View>
                     {this.showWarning ?
                         this.removeButton() :
-                        icons.darkNoPadding('remove-circle-outline', this.handleShowWarningClick)}
+                        icons.darkNoPadding(
+                            'remove-circle-outline',
+                            this.handleShowWarningClick,
+                            { paddingRight: vars.spacing.medium.mini2x }
+                        )}
                 </View>
                 {this.showWarning && this.deleteWarning()}
             </View>);
