@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { observable, action, reaction } from 'mobx';
-import { View, Keyboard, LayoutAnimation } from 'react-native';
+import { Keyboard, LayoutAnimation } from 'react-native';
 import { observer } from 'mobx-react/native';
 import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import ContactEditPermission from '../contacts/contact-edit-permission';

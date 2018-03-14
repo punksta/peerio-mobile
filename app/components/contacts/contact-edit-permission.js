@@ -17,13 +17,15 @@ import ContactEditPermissionItem from './contact-edit-permission-item';
 export default class ContactEditPermission extends SafeComponent {
     @observable dataSource = [];
 
+    // which contact was selected to be deleted
+    // child items set this property via 'state' prop
+    @observable contactToDelete = null;
+
     get data() { return contactState.store.contacts; }
 
     constructor(props) {
         super(props);
-        this.dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2 || r1.showWarning !== r2.showWarning
-        });
+        this.dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     }
 
     componentDidMount() {
@@ -68,7 +70,7 @@ export default class ContactEditPermission extends SafeComponent {
     }
 
     item = (contact) => {
-        return (<ContactEditPermissionItem contact={contact} />);
+        return (<ContactEditPermissionItem state={this} toDeleteProperty="contactToDelete" contact={contact} />);
     };
 
     body() {
