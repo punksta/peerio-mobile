@@ -261,29 +261,6 @@ export default class ContactSelectorUniversal extends SafeComponent {
         );
     }
 
-    footer() {
-        if (!this.props.sharedFolderFooter) return null;
-        const bottomRowStyle = {
-            justifyContent: 'space-between',
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            left: 0,
-            flex: 1,
-            flexGrow: 1,
-            flexDirection: 'row',
-            paddingVertical: 1,
-            paddingLeft: vars.spacing.small.mini,
-            borderColor: vars.verySubtleGrey,
-            borderTopWidth: 1
-        };
-        return (
-            <View style={bottomRowStyle}>
-                {buttons.uppercaseBlueButtonNoPadding('view shared with', this.props.togglePage)}
-                {this.sharedWithAvatars()}
-            </View>);
-    }
-
     sharedWithAvatars() {
         const usersSharedWith = this.recipients.items;
         if (!usersSharedWith || !usersSharedWith.length) return null;
@@ -305,9 +282,9 @@ export default class ContactSelectorUniversal extends SafeComponent {
     }
 
     renderThrow() {
+        const { sharedFolderFooter } = this.props;
         const header = this.header();
         const body = this.body();
-        const footer = this.footer();
         const layoutStyle = {
             backgroundColor: 'white'
         };
@@ -323,7 +300,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
                 header={header}
                 noFitHeight
                 footer={snackbar}
-                footerAbsolute={footer}
+                footerAbsolute={sharedFolderFooter}
                 style={layoutStyle} />
         );
     }
@@ -337,6 +314,5 @@ ContactSelectorUniversal.propTypes = {
     action: PropTypes.func,
     onExit: PropTypes.func,
     multiselect: PropTypes.any,
-    sharedFolderFooter: PropTypes.bool,
-    togglePage: PropTypes.func
+    sharedFolderFooter: PropTypes.any
 };

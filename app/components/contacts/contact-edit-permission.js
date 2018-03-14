@@ -78,31 +78,10 @@ export default class ContactEditPermission extends SafeComponent {
                 renderRow={this.item} />);
     }
 
-    footer() {
-        const bottomRowStyle = {
-            justifyContent: 'space-between',
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            left: 0,
-            flex: 1,
-            flexGrow: 1,
-            flexDirection: 'row',
-            paddingVertical: 1,
-            paddingLeft: vars.spacing.small.mini,
-            borderColor: vars.verySubtleGrey,
-            borderTopWidth: 1
-        };
-        return (
-            <View style={bottomRowStyle}>
-                {buttons.uppercaseBlueButtonNoPadding(tx('button_shareWithOthers'), this.props.togglePage)}
-            </View>);
-    }
-
     renderThrow() {
+        const { sharedFolderFooter } = this.props;
         const header = this.exitRow();
         const body = this.body();
-        const footer = this.footer();
         const layoutStyle = {
             backgroundColor: 'white'
         };
@@ -112,7 +91,7 @@ export default class ContactEditPermission extends SafeComponent {
                 body={body}
                 header={header}
                 noFitHeight
-                footer={footer}
+                footerAbsolute={sharedFolderFooter}
                 style={layoutStyle} />
         );
     }
@@ -122,6 +101,5 @@ ContactEditPermission.propTypes = {
     title: PropTypes.any,
     action: PropTypes.func,
     onExit: PropTypes.func,
-    sharedFolderFooter: PropTypes.bool,
-    togglePage: PropTypes.func
+    sharedFolderFooter: PropTypes.any
 };

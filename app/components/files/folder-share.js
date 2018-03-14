@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { observable, action, reaction } from 'mobx';
-import { View, Keyboard, LayoutAnimation } from 'react-native';
+import { Keyboard, LayoutAnimation } from 'react-native';
 import { observer } from 'mobx-react/native';
 import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import ContactEditPermission from '../contacts/contact-edit-permission';
 import chatState from '../messaging/chat-state';
 import fileState from './file-state';
+import SharedFolderFooter from './shared-folder-footer';
 
 @observer
 export default class FolderShare extends Component {
@@ -44,9 +45,9 @@ export default class FolderShare extends Component {
                 title="title_shareWith"
                 inputPlaceholder="title_TryUsernameOrEmail"
                 limit={chatState.LIMIT_PEOPLE_DM}
-                togglePage={this.togglePage}
                 multiselect
-                sharedFolderFooter />);
+                sharedFolderFooter={<SharedFolderFooter title="title_viewSharedWith" action={this.togglePage} />}
+            />);
     }
 
     get renderContactEdit() {
@@ -56,7 +57,7 @@ export default class FolderShare extends Component {
             action={this.unshareAction}
             title="title_sharedWith"
             togglePage={this.togglePage}
-            sharedFolderFooter
+            sharedFolderFooter={<SharedFolderFooter title="button_shareWithOthers" action={this.togglePage} icon="person-add" />}
         />);
     }
 
