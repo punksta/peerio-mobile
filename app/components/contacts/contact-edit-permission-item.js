@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { observable, action } from 'mobx';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { tx, tu } from '../utils/translator';
@@ -13,7 +13,13 @@ const avatarPadding = 16;
 
 @observer
 export default class ContactEditPermissionItem extends SafeComponent {
-    @observable showWarning = false;
+    get showWarning() {
+        return this.props.state[this.props.toDeleteProperty] === this.props.contact;
+    }
+
+    set showWarning(value) {
+        this.props.state[this.props.toDeleteProperty] = value ? this.props.contact : null;
+    }
 
     @action.bound handleShowWarningClick() { this.showWarning = true; }
 
