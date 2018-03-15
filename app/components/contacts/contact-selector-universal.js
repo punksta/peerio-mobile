@@ -20,8 +20,6 @@ import ContactCollection from './contact-collection';
 import ContactSelectorUserBoxLine from './contact-selector-userbox-line';
 import ContactSelectorSectionList from './contact-selector-sectionlist';
 import testLabel from '../helpers/test-label';
-import buttons from '../helpers/buttons';
-import ReadReceipt from '../shared/read-receipt';
 
 @observer
 export default class ContactSelectorUniversal extends SafeComponent {
@@ -261,28 +259,8 @@ export default class ContactSelectorUniversal extends SafeComponent {
         );
     }
 
-    sharedWithAvatars() {
-        const usersSharedWith = this.recipients.items;
-        if (!usersSharedWith || !usersSharedWith.length) return null;
-        const receiptRow = {
-            alignSelf: 'center',
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            marginRight: vars.spacing.medium.mini2x
-        };
-        return (
-            <View style={receiptRow}>
-                {usersSharedWith.map(r => (
-                    <View key={r.username} style={{ flex: 0, alignItems: 'flex-end' }}>
-                        <ReadReceipt username={r.username} />
-                    </View>
-                ))}
-            </View>
-        );
-    }
-
     renderThrow() {
-        const { sharedFolderFooter } = this.props;
+        const { footer } = this.props;
         const header = this.header();
         const body = this.body();
         const layoutStyle = {
@@ -300,7 +278,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
                 header={header}
                 noFitHeight
                 footer={snackbar}
-                footerAbsolute={sharedFolderFooter}
+                footerAbsolute={footer}
                 style={layoutStyle} />
         );
     }
@@ -314,5 +292,5 @@ ContactSelectorUniversal.propTypes = {
     action: PropTypes.func,
     onExit: PropTypes.func,
     multiselect: PropTypes.any,
-    sharedFolderFooter: PropTypes.any
+    footer: PropTypes.any
 };

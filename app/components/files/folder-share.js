@@ -46,7 +46,11 @@ export default class FolderShare extends Component {
                 inputPlaceholder="title_TryUsernameOrEmail"
                 limit={chatState.LIMIT_PEOPLE_DM}
                 multiselect
-                sharedFolderFooter={<SharedFolderFooter title="title_viewSharedWith" action={this.togglePage} />}
+                footer={<SharedFolderFooter
+                    title="title_viewSharedWith"
+                    action={this.togglePage}
+                    showAvatars
+                />}
             />);
     }
 
@@ -56,8 +60,11 @@ export default class FolderShare extends Component {
             onExit={this.exit}
             action={this.unshareAction}
             title="title_sharedWith"
-            togglePage={this.togglePage}
-            sharedFolderFooter={<SharedFolderFooter title="button_shareWithOthers" action={this.togglePage} icon="person-add" />}
+            footer={<SharedFolderFooter
+                title="button_shareWithOthers"
+                action={this.togglePage}
+                icon="person-add"
+            />}
         />);
     }
 

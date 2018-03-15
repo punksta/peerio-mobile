@@ -7,7 +7,6 @@ import SafeComponent from '../shared/safe-component';
 import { tx, tu } from '../utils/translator';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
-import buttons from '../helpers/buttons';
 import Layout1 from '../layout/layout1';
 import fileState from '../files/file-state';
 import contactState from './contact-state';
@@ -81,7 +80,7 @@ export default class ContactEditPermission extends SafeComponent {
     }
 
     renderThrow() {
-        const { sharedFolderFooter } = this.props;
+        const { footer } = this.props;
         const header = this.exitRow();
         const body = this.body();
         const layoutStyle = {
@@ -93,7 +92,7 @@ export default class ContactEditPermission extends SafeComponent {
                 body={body}
                 header={header}
                 noFitHeight
-                footerAbsolute={sharedFolderFooter}
+                footerAbsolute={footer}
                 style={layoutStyle} />
         );
     }
@@ -103,5 +102,5 @@ ContactEditPermission.propTypes = {
     title: PropTypes.any,
     action: PropTypes.func,
     onExit: PropTypes.func,
-    sharedFolderFooter: PropTypes.any
+    footer: PropTypes.any
 };
