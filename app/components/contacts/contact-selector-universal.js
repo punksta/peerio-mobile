@@ -6,7 +6,7 @@ import { when, observable, action, reaction, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx, tu } from '../utils/translator';
-import Layout1 from '../layout/layout1';
+import Layout3 from '../layout/layout3';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
 import ContactsPlaceholder from './contacts-placeholder';
@@ -20,8 +20,6 @@ import ContactCollection from './contact-collection';
 import ContactSelectorUserBoxLine from './contact-selector-userbox-line';
 import ContactSelectorSectionList from './contact-selector-sectionlist';
 import testLabel from '../helpers/test-label';
-import buttons from '../helpers/buttons';
-import ReadReceipt from '../shared/read-receipt';
 
 @observer
 export default class ContactSelectorUniversal extends SafeComponent {
@@ -121,9 +119,8 @@ export default class ContactSelectorUniversal extends SafeComponent {
 
     exitRow() {
         const container = {
-            flexGrow: 1,
             flexDirection: 'row',
-            paddingTop: vars.spacing.small.midi2x,
+            paddingTop: vars.spacing.small.midi2x + (this.props.hideHeader ? 0 : vars.statusBarHeight),
             paddingHorizontal: vars.spacing.small.midi2x,
             alignItems: 'center',
             height: vars.headerHeight
@@ -227,8 +224,14 @@ export default class ContactSelectorUniversal extends SafeComponent {
                 <Text style={{ color: vars.txtDate }}>{t('error_userNotFoundTryEmail', { user: this.notFound })}</Text>
             </View>
         );
+        const containerStyle = {
+            marginHorizontal: vars.spacing.medium.maxi,
+            // flex is needed here, because we contain a SectionList
+            // it calculates its height correctly only from flex parents
+            flex: 1
+        };
         return (
-            <View style={{ marginHorizontal: vars.spacing.medium.maxi }}>
+            <View style={containerStyle}>
                 {notFound}
                 {this.inviteContact}
                 {!!this.legacyContact &&
@@ -239,50 +242,23 @@ export default class ContactSelectorUniversal extends SafeComponent {
     }
 
     header() {
-        if (this.props.hideHeader) {
-            return (
-                <View style={{ flex: 0 }}>
-                    {this.props.subTitleComponent}
-                    {this.textbox()}
-                    {this.props.multiselect &&
-                        <ContactSelectorUserBoxLine
-                            contacts={this.recipients.items} onPress={this.recipients.remove} />}
-                </View>
-            );
-        }
         return (
-            <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
+            <View style={{ flex: 0 }}>
                 {this.exitRow()}
-                {this.props.subTitleComponent}
-                <View style={{ marginTop: vars.spacing.medium.mini2x }}>
-                    {this.textbox()}
-                </View>
-            </View>
-        );
-    }
-
-    sharedWithAvatars() {
-        const usersSharedWith = this.recipients.items;
-        if (!usersSharedWith || !usersSharedWith.length) return null;
-        const receiptRow = {
-            alignSelf: 'center',
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            marginRight: vars.spacing.medium.mini2x
-        };
-        return (
-            <View style={receiptRow}>
-                {usersSharedWith.map(r => (
-                    <View key={r.username} style={{ flex: 0, alignItems: 'flex-end' }}>
-                        <ReadReceipt username={r.username} />
+                {this.props.subTitleComponent ? (
+                    <View style={{ marginBottom: vars.spacing.medium.mini2x }}>
+                        {this.props.subTitleComponent}
                     </View>
-                ))}
+                ) : null}
+                {this.textbox()}
+                {this.props.multiselect &&
+                    <ContactSelectorUserBoxLine
+                        contacts={this.recipients.items} onPress={this.recipients.remove} />}
             </View>
         );
     }
 
     renderThrow() {
-        const { sharedFolderFooter } = this.props;
         const header = this.header();
         const body = this.body();
         const layoutStyle = {
@@ -294,13 +270,13 @@ export default class ContactSelectorUniversal extends SafeComponent {
             </Bottom>
         );
         return (
-            <Layout1
+            <Layout3
                 defaultBar
                 body={body}
                 header={header}
                 noFitHeight
-                footer={snackbar}
-                footerAbsolute={sharedFolderFooter}
+                footer={this.props.footer}
+                footerAbsolute={snackbar}
                 style={layoutStyle} />
         );
     }
@@ -314,5 +290,5 @@ ContactSelectorUniversal.propTypes = {
     action: PropTypes.func,
     onExit: PropTypes.func,
     multiselect: PropTypes.any,
-    sharedFolderFooter: PropTypes.any
+    footer: PropTypes.any
 };

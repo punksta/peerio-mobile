@@ -6,22 +6,41 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tu } from '../utils/translator';
 import icons from '../helpers/icons';
+import ReadReceipt from '../shared/read-receipt';
+import uiState from '../layout/ui-state';
 
 @observer
 export default class SharedFolderFooter extends SafeComponent {
+    get sharedWithAvatars() {
+        const usersSharedWith = this.props.contacts;
+        if (!usersSharedWith || !usersSharedWith.length) return null;
+        const receiptRow = {
+            alignSelf: 'center',
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            marginRight: vars.spacing.medium.mini2x
+        };
+        return (
+            <View style={receiptRow}>
+                {usersSharedWith.map(r => (
+                    <View key={r.username} style={{ flex: 0, alignItems: 'flex-end' }}>
+                        <ReadReceipt username={r.username} />
+                    </View>
+                ))}
+            </View>
+        );
+    }
+
     renderThrow() {
         const { title, action, icon } = this.props;
         const bottomRowStyle = {
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            left: 0,
             flexDirection: 'row',
             alignItems: 'center',
             paddingLeft: vars.spacing.small.mini,
             borderColor: vars.verySubtleGrey,
             borderTopWidth: 1,
-            backgroundColor: vars.white
+            backgroundColor: vars.white,
+            paddingBottom: uiState.keyboardHeight ? 0 : vars.iPhoneXBottom
         };
         const iconStyle = {
             paddingLeft: vars.spacing.medium.mini,
@@ -38,6 +57,7 @@ export default class SharedFolderFooter extends SafeComponent {
                         {tu(title)}
                     </Text>
                 </View>
+                {this.sharedWithAvatars}
             </TouchableOpacity>);
     }
 }

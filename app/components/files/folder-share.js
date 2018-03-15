@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
-import { observable, action, reaction } from 'mobx';
-import { Keyboard, LayoutAnimation } from 'react-native';
+import { observable, action } from 'mobx';
+import { Keyboard, LayoutAnimation, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import ContactEditPermission from '../contacts/contact-edit-permission';
 import chatState from '../messaging/chat-state';
 import fileState from './file-state';
+import { contactStore } from '../../lib/icebear';
 import SharedFolderFooter from './shared-folder-footer';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class FolderShare extends Component {
     @observable currentPage = 0;
-
-    componentDidMount() {
-        reaction(() => this.currentPage, () => LayoutAnimation.easeInEaseOut());
-    }
 
     @action.bound exit() { chatState.routerModal.discard(); }
 
@@ -30,11 +28,30 @@ export default class FolderShare extends Component {
 
     @action.bound togglePage() {
         Keyboard.dismiss();
+        LayoutAnimation.easeInEaseOut();
         if (this.currentPage === 0) {
             this.currentPage = 1;
         } else if (this.currentPage === 1) {
             this.currentPage = 0;
         }
+    }
+
+    get toSharedWithFooter() {
+        // mock contacts
+        const contacts = [];
+        if (contactStore.contacts.length > 3) {
+            contacts.push(contactStore.contacts[0]);
+            contacts.push(contactStore.contacts[1]);
+            contacts.push(contactStore.contacts[2]);
+        }
+
+        return (
+            <SharedFolderFooter
+                contacts={contacts}
+                title="title_viewSharedWith"
+                action={this.togglePage}
+                icon="person-add" />
+        );
     }
 
     get renderContactSelector() {
@@ -44,10 +61,13 @@ export default class FolderShare extends Component {
                 action={this.shareAction}
                 title="title_shareWith"
                 inputPlaceholder="title_TryUsernameOrEmail"
-                limit={chatState.LIMIT_PEOPLE_DM}
                 multiselect
-                sharedFolderFooter={<SharedFolderFooter title="title_viewSharedWith" action={this.togglePage} />}
+                footer={this.toSharedWithFooter}
             />);
+    }
+
+    get toShareFooter() {
+        return <SharedFolderFooter title="button_shareWithOthers" action={this.togglePage} />;
     }
 
     get renderContactEdit() {
@@ -57,13 +77,22 @@ export default class FolderShare extends Component {
             action={this.unshareAction}
             title="title_sharedWith"
             togglePage={this.togglePage}
-            sharedFolderFooter={<SharedFolderFooter title="button_shareWithOthers" action={this.togglePage} icon="person-add" />}
+            sharedFolderFooter={this.toShareFooter}
         />);
     }
 
     render() {
-        if (this.currentPage === 0) return this.renderContactSelector;
-        if (this.currentPage === 1) return this.renderContactEdit;
-        return null;
+        const page = this.currentPage === 0 ?
+            this.renderContactSelector : this.renderContactEdit;
+        // we need this container to keep non-transparent background
+        // between LayoutAnimation transitions
+        const container = {
+            flexGrow: 1, backgroundColor: vars.white
+        };
+        return (
+            <View style={container}>
+                {page}
+            </View>
+        );
     }
 }

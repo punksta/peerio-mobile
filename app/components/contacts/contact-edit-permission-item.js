@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { action } from 'mobx';
+import { View, Text, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { action, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { tx, tu } from '../utils/translator';
@@ -10,15 +10,22 @@ import { vars } from '../../styles/styles';
 import AvatarCircle from '../shared/avatar-circle';
 
 const avatarPadding = 16;
+let currentContactItem = null;
 
 @observer
 export default class ContactEditPermissionItem extends SafeComponent {
+    @observable _showWarning = false;
     get showWarning() {
-        return this.props.state[this.props.toDeleteProperty] === this.props.contact;
+        return this._showWarning;
     }
 
     set showWarning(value) {
-        this.props.state[this.props.toDeleteProperty] = value ? this.props.contact : null;
+        LayoutAnimation.easeInEaseOut();
+        if (currentContactItem) {
+            currentContactItem._showWarning = false;
+        }
+        currentContactItem = this;
+        currentContactItem._showWarning = true;
     }
 
     @action.bound handleShowWarningClick() { this.showWarning = true; }
@@ -72,7 +79,7 @@ export default class ContactEditPermissionItem extends SafeComponent {
         const { contact } = this.props;
         const { fullName } = contact;
         const containerStyle = {
-            height: vars.headerHeight,
+            height: vars.listItemHeight,
             flex: 1,
             flexGrow: 1,
             flexDirection: 'row',

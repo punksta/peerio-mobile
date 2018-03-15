@@ -104,7 +104,7 @@ export default class Files extends SafeComponent {
     };
 
     onEndReached = () => {
-        // console.log('files.js: on end reached');
+        console.log('files.js: on end reached');
         this.maxLoadedIndex += PAGE_SIZE;
     };
 

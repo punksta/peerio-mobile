@@ -1,21 +1,26 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { View, Text, ListView } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { tx, tu } from '../utils/translator';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
-import buttons from '../helpers/buttons';
-import Layout1 from '../layout/layout1';
+import Layout3 from '../layout/layout3';
 import fileState from '../files/file-state';
 import contactState from './contact-state';
 import ContactEditPermissionItem from './contact-edit-permission-item';
 
+const INITIAL_LIST_SIZE = 10;
+const PAGE_SIZE = 2;
+
 @observer
 export default class ContactEditPermission extends SafeComponent {
     @observable dataSource = [];
+
+    // to speed up render performance
+    @observable maxLoadedIndex = INITIAL_LIST_SIZE;
 
     // which contact was selected to be deleted
     // child items set this property via 'state' prop
@@ -30,9 +35,10 @@ export default class ContactEditPermission extends SafeComponent {
 
     componentDidMount() {
         this.reaction = reaction(() => [
-            this.data
+            this.data,
+            this.maxLoadedIndex
         ], () => {
-            this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
+            this.dataSource = this.dataSource.cloneWithRows(this.data.slice(0, this.maxLoadedIndex));
             this.forceUpdate();
         }, true);
     }
@@ -48,9 +54,10 @@ export default class ContactEditPermission extends SafeComponent {
     exitRow() {
         const container = {
             flexDirection: 'row',
-            paddingTop: vars.spacing.small.midi2x + (vars.statusBarHeight * 2),
+            paddingTop: vars.statusBarHeight + vars.spacing.small.midi2x,
             paddingHorizontal: vars.spacing.small.midi2x,
-            alignItems: 'center'
+            alignItems: 'center',
+            height: vars.headerHeight
         };
         const textStyle = {
             textAlign: 'center',
@@ -73,27 +80,39 @@ export default class ContactEditPermission extends SafeComponent {
         return (<ContactEditPermissionItem state={this} toDeleteProperty="contactToDelete" contact={contact} />);
     };
 
+    @action.bound onEndReached() {
+        this.maxLoadedIndex += PAGE_SIZE;
+    }
+
     body() {
         return (
             <ListView
+                initialListSize={INITIAL_LIST_SIZE}
+                pageSize={PAGE_SIZE}
+                onEndReached={this.onEndReached}
+                onEndReachedThreshold={200}
                 dataSource={this.dataSource}
                 renderRow={this.item} />);
     }
 
     renderThrow() {
         const { sharedFolderFooter } = this.props;
-        const header = this.exitRow();
+        const header = (
+            <View style={{ flex: 0 }}>
+                {this.exitRow()}
+            </View>
+        );
         const body = this.body();
         const layoutStyle = {
             backgroundColor: 'white'
         };
         return (
-            <Layout1
+            <Layout3
                 defaultBar
                 body={body}
                 header={header}
                 noFitHeight
-                footerAbsolute={sharedFolderFooter}
+                footer={sharedFolderFooter}
                 style={layoutStyle} />
         );
     }
