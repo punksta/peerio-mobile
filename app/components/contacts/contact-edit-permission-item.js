@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { action } from 'mobx';
+import { View, Text, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { action, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { tx, tu } from '../utils/translator';
@@ -10,18 +10,35 @@ import { vars } from '../../styles/styles';
 import AvatarCircle from '../shared/avatar-circle';
 
 const avatarPadding = 16;
+let currentContactItem = null;
 
 @observer
 export default class ContactEditPermissionItem extends SafeComponent {
+    @observable _showWarning = false;
+    @observable collapsed = false;
     get showWarning() {
-        return this.props.state[this.props.toDeleteProperty] === this.props.contact;
+        return this._showWarning;
     }
 
     set showWarning(value) {
-        this.props.state[this.props.toDeleteProperty] = value ? this.props.contact : null;
+        LayoutAnimation.easeInEaseOut();
+        if (currentContactItem) {
+            currentContactItem._showWarning = false;
+        }
+        currentContactItem = this;
+        currentContactItem._showWarning = true;
     }
 
     @action.bound handleShowWarningClick() { this.showWarning = true; }
+
+    @action.bound removeClick() {
+        LayoutAnimation.easeInEaseOut();
+        // this works without timeouts
+        // because parent actually doesn't update on
+        // item removal
+        this.props.onUnshare(this.props.contact);
+        this.collapsed = true;
+    }
 
     removeButton() {
         const buttonStyle = {
@@ -34,7 +51,8 @@ export default class ContactEditPermissionItem extends SafeComponent {
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={buttonStyle}>
+                style={buttonStyle}
+                onPress={this.removeClick}>
                 <Text style={{ backgroundColor: 'transparent', color: vars.white }}>
                     {tu('button_remove')}
                 </Text>
@@ -84,7 +102,10 @@ export default class ContactEditPermissionItem extends SafeComponent {
             paddingLeft: vars.spacing.medium.mini2x
         };
         return (
-            <View style={{ backgroundColor: this.showWarning ? vars.black05 : vars.white }}>
+            <View style={{
+                backgroundColor: this.showWarning ? vars.black05 : vars.white,
+                height: this.collapsed ? 0 : undefined
+            }}>
                 <View style={containerStyle}>
                     <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <AvatarCircle

@@ -1,26 +1,23 @@
 import React, { Component } from 'react';
-import { observable, action, reaction } from 'mobx';
-import { Keyboard, LayoutAnimation } from 'react-native';
+import { observable, action } from 'mobx';
+import { Keyboard, LayoutAnimation, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import ContactEditPermission from '../contacts/contact-edit-permission';
-import chatState from '../messaging/chat-state';
-import fileState from './file-state';
 import SharedFolderFooter from './shared-folder-footer';
+import { vars } from '../../styles/styles';
+import routes from '../routes/routes';
 
 @observer
 export default class FolderShare extends Component {
     @observable currentPage = 0;
 
-    componentDidMount() {
-        reaction(() => this.currentPage, () => LayoutAnimation.easeInEaseOut());
+    @action.bound exit() {
+        routes.modal.discard();
     }
 
-    @action.bound exit() { chatState.routerModal.discard(); }
-
-    // TODO: Wiring
     @action.bound shareAction(contacts) {
-        chatState.startChatAndShareFiles(contacts, fileState.currentFile);
+        routes.modal.discard(contacts);
     }
 
     // TODO: Wiring
@@ -30,6 +27,7 @@ export default class FolderShare extends Component {
 
     @action.bound togglePage() {
         Keyboard.dismiss();
+        LayoutAnimation.easeInEaseOut();
         if (this.currentPage === 0) {
             this.currentPage = 1;
         } else if (this.currentPage === 1) {
@@ -44,7 +42,6 @@ export default class FolderShare extends Component {
                 action={this.shareAction}
                 title="title_shareWith"
                 inputPlaceholder="title_TryUsernameOrEmail"
-                limit={chatState.LIMIT_PEOPLE_DM}
                 multiselect
                 footer={<SharedFolderFooter
                     title="title_viewSharedWith"
@@ -69,8 +66,17 @@ export default class FolderShare extends Component {
     }
 
     render() {
-        if (this.currentPage === 0) return this.renderContactSelector;
-        if (this.currentPage === 1) return this.renderContactEdit;
-        return null;
+        const page = this.currentPage === 0 ?
+            this.renderContactSelector : this.renderContactEdit;
+        // we need this container to keep non-transparent background
+        // between LayoutAnimation transitions
+        const container = {
+            flexGrow: 1, backgroundColor: vars.white
+        };
+        return (
+            <View style={container}>
+                {page}
+            </View>
+        );
     }
 }

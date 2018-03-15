@@ -330,6 +330,22 @@ function popupSetupVideo() {
     });
 }
 
+function popupFolderDelete(isShared, isOwner) {
+    let text = 'dialog_deleteFolderText';
+    if (isShared) {
+        text = isOwner ? 'dialog_deleteSharedFolderText' : 'dialog_deleteSharedFolderNonOwnerText';
+    }
+    return popupState.showPopupPromise(resolve => ({
+        title: textControl(tx('title_deleteFolder_mobile')),
+        contents: textControl(tx(text)),
+        type: 'systemWarning',
+        buttons: [
+            { id: 'cancel', text: tu('button_cancel'), secondary: true, action: () => resolve(false) },
+            { id: 'confirm', text: tu('button_delete'), action: () => resolve(true) }
+        ]
+    }));
+}
+
 function popupMoveToSharedFolder() {
     return new Promise((resolve) => {
         const o = observable({ value: '', checked: false });
@@ -378,6 +394,7 @@ export {
     popupSignOutAutologin,
     popupCancelConfirm,
     popupSetupVideo,
+    popupFolderDelete,
     popupMoveToSharedFolder
 };
 

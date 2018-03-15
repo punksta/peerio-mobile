@@ -42,7 +42,7 @@ const icons = {
                 name={name}
                 size={size || vars.iconSize}
                 color={color}
-                style={style}
+                style={[{ backgroundColor: 'transparent' }, style]}
                 {...testLabel(testID)} />
         );
     },

@@ -8,25 +8,26 @@ import { tu } from '../utils/translator';
 import icons from '../helpers/icons';
 import SharedWithRow from '../shared/shared-with-row';
 import { contactStore } from '../../lib/icebear';
+import uiState from '../layout/ui-state';
 
 @observer
 export default class SharedFolderFooter extends SafeComponent {
     renderThrow() {
         const { title, action, icon, showAvatars } = this.props;
         // TODO remove mock contacts and rooms when SDK is wired
-        const contacts = [
+        const mockContacts = [
             contactStore.getContact('karim94'),
             contactStore.getContact('test_karim'),
             contactStore.getContact('karim_dev'),
             contactStore.getContact('karim94'),
-            // contactStore.getContact('test_karim'),
-            // contactStore.getContact('karim_dev')
+            contactStore.getContact('test_karim'),
+            contactStore.getContact('karim_dev')
         ];
         const mockRooms = [
             1,
             2,
             3,
-            // 4
+            4
         ];
 
         const bottomRowStyle = {
@@ -35,7 +36,8 @@ export default class SharedFolderFooter extends SafeComponent {
             paddingLeft: vars.spacing.small.mini,
             borderColor: vars.verySubtleGrey,
             borderTopWidth: 1,
-            backgroundColor: vars.white
+            backgroundColor: vars.white,
+            paddingBottom: uiState.keyboardHeight ? 0 : vars.iPhoneXBottom
         };
         const iconStyle = {
             paddingLeft: vars.spacing.medium.mini,
@@ -52,7 +54,7 @@ export default class SharedFolderFooter extends SafeComponent {
                         {tu(title)}
                     </Text>
                 </View>
-                {showAvatars && <SharedWithRow contacts={contacts} rooms={mockRooms} />}
+                {showAvatars && <SharedWithRow contacts={mockContacts} rooms={mockRooms} />}
             </TouchableOpacity>);
     }
 }

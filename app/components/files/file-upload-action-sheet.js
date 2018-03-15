@@ -64,7 +64,7 @@ export default class FileUploadActionSheet extends SafeComponent {
         return {
             title: tx('title_shareFromFiles'),
             async event() {
-                chatState.shareFiles(await fileState.selectFiles());
+                chatState.shareFilesAndFolders(await fileState.selectFilesAndFolders());
             }
         };
     }

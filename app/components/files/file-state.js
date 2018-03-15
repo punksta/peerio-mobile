@@ -26,11 +26,11 @@ class FileState extends RoutedState {
     }
 
     get showSelection() {
-        return fileStore.hasSelectedFiles;
+        return fileStore.hasSelectedFilesOrFolders;
     }
 
     get selected() {
-        return fileStore.getSelectedFiles();
+        return fileStore.selectedFilesOrFolders;
     }
 
     @action delete() {
@@ -110,8 +110,10 @@ class FileState extends RoutedState {
         this.selected.forEach(f => { f.selected = false; });
     }
 
-    @action selectFiles() {
+    @action selectFilesAndFolders() {
         this.resetSelection();
+        // this.currentFile = null;
+        this.currentFolder = this.store.folders.root;
         this.isFileSelectionMode = true;
         return new Promise((resolve, reject) => {
             this.resolveFileSelection = resolve;

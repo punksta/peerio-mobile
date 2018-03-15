@@ -1,10 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { observer } from 'mobx-react/native';
+import { action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import { fileStore } from '../../lib/icebear';
+import fileState from '../files/file-state';
 import { tx } from '../utils/translator';
+import routes from '../routes/routes';
 
 const padding = 8;
 const borderWidth = 1;
@@ -18,11 +23,24 @@ const container = {
     marginRight: 22
 };
 
+@observer
 export default class FolderInlineContainer extends SafeComponent {
+    get folder() {
+        const { folderId } = this.props;
+        return fileStore.folders.getById(folderId);
+    }
+
+    @action.bound press() {
+        const { folder } = this;
+        fileState.currentFolder = folder;
+        routes.main.files();
+    }
+
     fileDetails() {
         // TODO add props
         const { folderName } = this.props;
-        const isBlocked = false;
+        const { folder } = this;
+        const { isBlocked } = folder;
         const nameStyle = {
             flexGrow: 1,
             flexShrink: 1,
@@ -50,10 +68,8 @@ export default class FolderInlineContainer extends SafeComponent {
     }
 
     render() {
-        // TODO Adjust props when folder sharing is enabled
-        // const { folder, hideMoreOptionsIcon, onFolderActionPress } = this.props;
-        // const { isBlocked } = folder;
-        const isBlocked = false;
+        const { folder } = this;
+        const { isBlocked } = folder;
         const outer = {
             padding
         };
@@ -82,7 +98,8 @@ export default class FolderInlineContainer extends SafeComponent {
             <TouchableOpacity
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={container}
-                disabled={isBlocked}>
+                disabled={isBlocked}
+                onPress={this.press}>
                 <View style={outer} {...this.props}>
                     <View style={header}>
                         {icons.darkNoPadding(
@@ -91,7 +108,7 @@ export default class FolderInlineContainer extends SafeComponent {
                             !isBlocked ? null : { opacity: 0.38 },
                             vars.iconSize)}
                         {this.fileDetails()}
-                        {optionsIcon}
+                        {/* optionsIcon */}
                     </View>
                 </View>
             </TouchableOpacity>
