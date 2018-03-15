@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
+import { fileStore } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 
 const padding = 8;
@@ -50,10 +51,9 @@ export default class FolderInlineContainer extends SafeComponent {
     }
 
     render() {
-        // TODO Adjust props when folder sharing is enabled
-        // const { folder, hideMoreOptionsIcon, onFolderActionPress } = this.props;
-        // const { isBlocked } = folder;
-        const isBlocked = false;
+        const { folderId } = this.props;
+        const folder = fileStore.folders.getById(folderId);
+        const { isBlocked } = folder;
         const outer = {
             padding
         };
