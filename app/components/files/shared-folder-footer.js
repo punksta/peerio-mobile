@@ -6,16 +6,30 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tu } from '../utils/translator';
 import icons from '../helpers/icons';
+import SharedWithRow from '../shared/shared-with-row';
+import { contactStore } from '../../lib/icebear';
 
 @observer
 export default class SharedFolderFooter extends SafeComponent {
     renderThrow() {
-        const { title, action, icon } = this.props;
+        const { title, action, icon, showAvatars } = this.props;
+        // TODO remove mock contacts and rooms when SDK is wired
+        const contacts = [
+            contactStore.getContact('karim94'),
+            contactStore.getContact('test_karim'),
+            contactStore.getContact('karim_dev'),
+            contactStore.getContact('karim94'),
+            // contactStore.getContact('test_karim'),
+            // contactStore.getContact('karim_dev')
+        ];
+        const mockRooms = [
+            1,
+            2,
+            3,
+            // 4
+        ];
+
         const bottomRowStyle = {
-            position: 'absolute',
-            bottom: 0,
-            right: 0,
-            left: 0,
             flexDirection: 'row',
             alignItems: 'center',
             paddingLeft: vars.spacing.small.mini,
@@ -38,6 +52,7 @@ export default class SharedFolderFooter extends SafeComponent {
                         {tu(title)}
                     </Text>
                 </View>
+                {showAvatars && <SharedWithRow contacts={contacts} rooms={mockRooms} />}
             </TouchableOpacity>);
     }
 }
@@ -45,5 +60,6 @@ export default class SharedFolderFooter extends SafeComponent {
 SharedFolderFooter.propTypes = {
     title: PropTypes.any,
     action: PropTypes.func,
-    icon: PropTypes.string
+    icon: PropTypes.string,
+    showAvatars: PropTypes.bool
 };
