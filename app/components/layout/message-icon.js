@@ -29,7 +29,7 @@ export default class MessageIcon extends SafeComponent {
         const dotStyle = {
             left: -4,
             top: -8,
-            backgroundColor: '#d0021b',
+            backgroundColor: vars.redWarning,
             opacity: this.unread ? 1 : 0
         };
 

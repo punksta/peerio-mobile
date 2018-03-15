@@ -26,7 +26,7 @@ export default class ContactEditPermissionItem extends SafeComponent {
     removeButton() {
         const buttonStyle = {
             paddingHorizontal: vars.spacing.small.maxi,
-            backgroundColor: '#D0021B',
+            backgroundColor: vars.redWarning,
             height: vars.removeButtonHeight,
             justifyContent: 'center'
         };
@@ -72,7 +72,7 @@ export default class ContactEditPermissionItem extends SafeComponent {
         const { contact } = this.props;
         const { fullName } = contact;
         const containerStyle = {
-            height: vars.headerHeight,
+            height: vars.listItemHeight,
             flex: 1,
             flexGrow: 1,
             flexDirection: 'row',
