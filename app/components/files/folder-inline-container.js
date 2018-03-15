@@ -22,8 +22,9 @@ const container = {
 export default class FolderInlineContainer extends SafeComponent {
     fileDetails() {
         // TODO add props
-        const { folderName } = this.props;
-        const isBlocked = false;
+        const { folderId, folderName } = this.props;
+        const folder = fileStore.folders.getById(folderId);
+        const { isBlocked } = folder;
         const nameStyle = {
             flexGrow: 1,
             flexShrink: 1,
@@ -91,7 +92,7 @@ export default class FolderInlineContainer extends SafeComponent {
                             !isBlocked ? null : { opacity: 0.38 },
                             vars.iconSize)}
                         {this.fileDetails()}
-                        {optionsIcon}
+                        {/* optionsIcon */}
                     </View>
                 </View>
             </TouchableOpacity>

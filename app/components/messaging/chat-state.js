@@ -134,10 +134,11 @@ class ChatState extends RoutedState {
             this.currentChat.sendMessage(msg).catch(sounds.destroy);
     }
 
-    @action shareFiles(files) {
+    @action shareFilesAndFolders(filesAndFolders) {
         this.selfNewMessageCounter++;
-        this.currentChat && files && files.length &&
-            this.currentChat.shareFiles(files).catch(sounds.destroy);
+        console.log(filesAndFolders);
+        this.currentChat && filesAndFolders && filesAndFolders.length &&
+            this.currentChat.shareFilesAndFolders(filesAndFolders).catch(sounds.destroy);
     }
 
     @action addVideoMessage(link) {

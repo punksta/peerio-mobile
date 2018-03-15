@@ -39,9 +39,10 @@ export default class FolderInnerItem extends SafeComponent {
 
     checkbox() {
         if (!fileState.isFileSelectionMode) return null;
-        const checked = this.props.folder && this.props.folder.selected;
+        const { folder } = this.props;
+        const checked = folder.selected;
         const v = vars;
-        const disabled = chatState.currentChat.isChannel;
+        const disabled = chatState.currentChat.isChannel || folder.isBlocked;
         const iconBgColor = 'transparent';
         let iconColor;
         if (disabled) {
@@ -51,7 +52,7 @@ export default class FolderInnerItem extends SafeComponent {
         }
         const icon = checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
-            backgroundColor: 'white',
+            backgroundColor: 'transparent',
             paddingHorizontal: vars.spacing.small.mini2x,
             flex: 0,
             width: checkBoxWidth,
@@ -170,7 +171,7 @@ export default class FolderInnerItem extends SafeComponent {
             alignItems: 'center'
         };
         const loadingStyle = null;
-        const optionsIcon = hideMoreOptionsIcon ? null : (
+        const optionsIcon = hideMoreOptionsIcon || fileState.isFileSelectionMode ? null : (
             <View style={{ flex: 0 }}>
                 {icons.dark(
                     'more-vert',

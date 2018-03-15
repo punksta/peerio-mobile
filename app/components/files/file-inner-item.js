@@ -95,7 +95,7 @@ export default class FileInnerItem extends SafeComponent {
         }
         if (icon) icon = icons.darkNoPadding(icon);
         const loadingStyle = null;
-        const optionsIcon = this.props.hideArrow ? null : (
+        const optionsIcon = this.props.hideArrow || fileState.isFileSelectionMode ? null : (
             <View style={{ flex: 0 }}>
                 {iconRight}
             </View>
