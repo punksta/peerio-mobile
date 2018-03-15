@@ -22,15 +22,20 @@ export default class ContactEditPermission extends SafeComponent {
     // to speed up render performance
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
 
-    // which contact was selected to be deleted
-    // child items set this property via 'state' prop
-    @observable contactToDelete = null;
+    @observable.shallow sharedWithContacts = [];
 
-    get data() { return contactState.store.contacts; }
+    get data() { return this.sharedWithContacts; }
 
     constructor(props) {
         super(props);
         this.dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.sharedWithContacts = contactState.store.contacts.slice();
+    }
+
+    @action.bound unshareFrom(/* contact */) {
+        // HINT: removing on layout animated listview causes side effects
+        // we just collapse it inline
+        // this.sharedWithContacts.remove(contact);
     }
 
     componentDidMount() {
@@ -77,7 +82,7 @@ export default class ContactEditPermission extends SafeComponent {
     }
 
     item = (contact) => {
-        return (<ContactEditPermissionItem state={this} toDeleteProperty="contactToDelete" contact={contact} />);
+        return (<ContactEditPermissionItem contact={contact} onUnshare={this.unshareFrom} />);
     };
 
     @action.bound onEndReached() {

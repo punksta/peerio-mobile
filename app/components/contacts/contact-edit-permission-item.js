@@ -15,6 +15,7 @@ let currentContactItem = null;
 @observer
 export default class ContactEditPermissionItem extends SafeComponent {
     @observable _showWarning = false;
+    @observable collapsed = false;
     get showWarning() {
         return this._showWarning;
     }
@@ -30,6 +31,15 @@ export default class ContactEditPermissionItem extends SafeComponent {
 
     @action.bound handleShowWarningClick() { this.showWarning = true; }
 
+    @action.bound removeClick() {
+        LayoutAnimation.easeInEaseOut();
+        // this works without timeouts
+        // because parent actually doesn't update on
+        // item removal
+        this.props.onUnshare(this.props.contact);
+        this.collapsed = true;
+    }
+
     removeButton() {
         const buttonStyle = {
             paddingHorizontal: vars.spacing.small.maxi,
@@ -41,7 +51,8 @@ export default class ContactEditPermissionItem extends SafeComponent {
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.pressRetentionOffset}
-                style={buttonStyle}>
+                style={buttonStyle}
+                onPress={this.removeClick}>
                 <Text style={{ backgroundColor: 'transparent', color: vars.white }}>
                     {tu('button_remove')}
                 </Text>
@@ -91,7 +102,10 @@ export default class ContactEditPermissionItem extends SafeComponent {
             paddingLeft: vars.spacing.medium.mini2x
         };
         return (
-            <View style={{ backgroundColor: this.showWarning ? vars.black05 : vars.white }}>
+            <View style={{
+                backgroundColor: this.showWarning ? vars.black05 : vars.white,
+                height: this.collapsed ? 0 : undefined
+            }}>
                 <View style={containerStyle}>
                     <View style={{ flex: 1, flexGrow: 1, flexDirection: 'row', alignItems: 'center' }}>
                         <AvatarCircle
