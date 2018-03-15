@@ -109,6 +109,7 @@ export default class FolderInnerItem extends SafeComponent {
     get fileDetails() {
         const { folder } = this.props;
         const infoStyle = {
+            backgroundColor: 'transparent',
             color: vars.extraSubtleText,
             fontSize: vars.font.size.smaller,
             fontWeight: vars.font.weight.regular,
@@ -153,7 +154,8 @@ export default class FolderInnerItem extends SafeComponent {
         const nameStyle = {
             color: isBlocked ? vars.extraSubtleText : vars.txtDark,
             fontSize: vars.font.size.normal,
-            fontWeight: vars.font.weight.bold
+            fontWeight: vars.font.weight.bold,
+            backgroundColor: 'transparent'
         };
         const itemContainerStyle = {
             flex: 1,

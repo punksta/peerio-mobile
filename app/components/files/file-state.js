@@ -112,6 +112,8 @@ class FileState extends RoutedState {
 
     @action selectFiles() {
         this.resetSelection();
+        // this.currentFile = null;
+        this.currentFolder = this.store.folders.root;
         this.isFileSelectionMode = true;
         return new Promise((resolve, reject) => {
             this.resolveFileSelection = resolve;
