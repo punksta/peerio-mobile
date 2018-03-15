@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SectionList, Text } from 'react-native';
+import { SectionList, Text, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Avatar from '../shared/avatar';
 import ContactInviteItem from './contact-invite-item';
@@ -40,11 +40,21 @@ export default class ContactSelectorSectionList extends Component {
 
     sectionHeader({ section: { data, key } }) {
         if (!data || !data.length || !key) return null;
-        const s = { fontWeight: 'bold', margin: vars.spacing.small.maxi };
+        const s = {
+            fontWeight: 'bold',
+            margin: vars.spacing.small.maxi
+        };
+        const container = {
+            justifyContent: 'center',
+            height: vars.listItemHeight,
+            backgroundColor: vars.white
+        };
         return (
-            <Text style={s}>
-                {tx(key, { found: data && data.length })}
-            </Text>
+            <View style={container}>
+                <Text style={s}>
+                    {tx(key, { found: data && data.length })}
+                </Text>
+            </View>
         );
     }
 
