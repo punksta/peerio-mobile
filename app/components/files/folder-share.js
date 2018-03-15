@@ -4,21 +4,21 @@ import { Keyboard, LayoutAnimation, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import ContactEditPermission from '../contacts/contact-edit-permission';
-import chatState from '../messaging/chat-state';
-import fileState from './file-state';
 import { contactStore } from '../../lib/icebear';
 import SharedFolderFooter from './shared-folder-footer';
 import { vars } from '../../styles/styles';
+import routes from '../routes/routes';
 
 @observer
 export default class FolderShare extends Component {
     @observable currentPage = 0;
 
-    @action.bound exit() { chatState.routerModal.discard(); }
+    @action.bound exit() {
+        routes.modal.discard();
+    }
 
-    // TODO: Wiring
     @action.bound shareAction(contacts) {
-        chatState.startChatAndShareFiles(contacts, fileState.currentFile);
+        routes.modal.discard(contacts);
     }
 
     // TODO: Wiring

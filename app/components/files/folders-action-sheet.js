@@ -8,8 +8,8 @@ import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import { fileState } from '../states';
 import routerModal from '../routes/router-modal';
-import { popupInput, popupYes } from '../shared/popups';
-import { fileHelpers } from '../../lib/icebear';
+import { popupInput, popupFolderDelete } from '../shared/popups';
+import { fileHelpers, volumeStore } from '../../lib/icebear';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import routerMain from '../routes/router-main';
@@ -35,9 +35,11 @@ export default class FoldersActionSheet extends SafeComponent {
     get shareFolder() {
         return {
             title: tx('button_share'),
-            action: () => {
+            action: async () => {
+                // TODO: refactor this, this is confusing and bad
                 fileState.currentFile = this.folder;
-                routerModal.shareFolderTo();
+                const contacts = await routerModal.shareFolderTo();
+                await volumeStore.shareFolder(this.folder, contacts);
             }
         };
     }
@@ -83,7 +85,13 @@ export default class FoldersActionSheet extends SafeComponent {
         return {
             title: tx('button_delete'),
             action: async () => {
-                fileState.store.folders.deleteFolder(this.folder);
+                // icebear will call this function to confirm file deletion
+                fileState.store.bulk.deleteFolderConfirmator = (folder) => {
+                    const { isOwner, isShared } = folder;
+                    return popupFolderDelete(isShared, isOwner);
+                };
+                await fileState.store.bulk.removeOne(this.folder);
+                fileState.store.bulk.deleteFolderConfirmator = null;
             }
         };
     }

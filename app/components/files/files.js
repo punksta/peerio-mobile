@@ -19,6 +19,7 @@ import icons from '../helpers/icons';
 import ButtonText from '../controls/button-text';
 import uiState from '../layout/ui-state';
 import SharedFolderRemovalNotif from './shared-folder-removal-notif';
+import { fileStore } from '../../lib/icebear';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -69,11 +70,6 @@ export default class Files extends SafeComponent {
             : fileState.currentFolder.foldersAndFilesDefaultSorting;
     }
 
-    componentWillUnmount() {
-        this.reaction && this.reaction();
-        this.reaction = null;
-    }
-
     componentDidMount() {
         this.reaction = reaction(() => [
             fileState.routerMain.route === 'files',
@@ -88,6 +84,13 @@ export default class Files extends SafeComponent {
             this.dataSource = this.dataSource.cloneWithRows(this.data.slice(0, this.maxLoadedIndex));
             this.forceUpdate();
         }, true);
+    }
+
+    componentWillUnmount() {
+        this.reaction && this.reaction();
+        this.reaction = null;
+        // remove icebear hook for deletion
+        fileStore.bulk.deleteFolderConfirmator = null;
     }
 
     onChangeFolder = folder => { fileState.currentFolder = folder; };
