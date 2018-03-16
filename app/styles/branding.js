@@ -8,7 +8,14 @@ const brandingDefines = {
         bgGradient: '#32CEC3',
         tabsBg: '#f7f7f7',
         tabsFg: '#757575',
-        logo: require('../assets/logo-with-tag.png')
+        logo: require('../assets/logo-with-tag.png'),
+        darkBlue: '#040B40',
+        darkTeal: '#004E69',
+        peerioBlue: '#408CFF',
+        peerioPurple: '#5461CC',
+        peerioTeal: '#02CEDB',
+        yellow: '#FDC700',
+        red: '#E90162'
     },
     expandoo: {
         bg: '#009dfd',
