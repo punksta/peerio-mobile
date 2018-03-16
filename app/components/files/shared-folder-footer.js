@@ -16,18 +16,18 @@ export default class SharedFolderFooter extends SafeComponent {
         const { title, action, icon, showAvatars } = this.props;
         // TODO remove mock contacts and rooms when SDK is wired
         const mockContacts = [
-            contactStore.getContact('karim94'),
-            contactStore.getContact('test_karim'),
-            contactStore.getContact('karim_dev'),
-            contactStore.getContact('karim94'),
-            contactStore.getContact('test_karim'),
-            contactStore.getContact('karim_dev')
+            // contactStore.getContact('karim94'),
+            // contactStore.getContact('test_karim'),
+            // contactStore.getContact('karim_dev'),
+            // contactStore.getContact('karim94'),
+            // contactStore.getContact('test_karim'),
+            // contactStore.getContact('karim_dev')
         ];
         const mockRooms = [
-            1,
-            2,
-            3,
-            4
+            // 1,
+            // 2,
+            // 3,
+            // 4
         ];
 
         const bottomRowStyle = {
