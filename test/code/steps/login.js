@@ -1,5 +1,5 @@
 const { defineSupportCode } = require('cucumber');
-const { confirmEmail } = require('../../../app/lib/peerio-icebear/test/e2e/code/helpers/confirmEmail.js');
+const confirmPrimaryEmail = require('../../../app/lib/peerio-icebear/test/e2e/code/helpers/confirmEmail.js');
 
 defineSupportCode(({ Given, When, Then }) => {
     const existingUsers = {
@@ -93,7 +93,7 @@ defineSupportCode(({ Given, When, Then }) => {
     });
 
     Then('my email is confirmed', async function () {
-        await confirmEmail(this.email);
+        await confirmPrimaryEmail(this.email);
     });
 
     Then('I can not login with my credentials', async function () {
