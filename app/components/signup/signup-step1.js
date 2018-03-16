@@ -9,7 +9,7 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t, tx, T } from '../utils/translator';
 import LoginWizardPage, {
-    header2, innerSmall, circleTopSmall, title2, title3, container, buttonRowStyle
+    header2, innerSmall, circleTopSmall, headingStyle2, footerText2, container, buttonRowStyle
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
@@ -60,9 +60,8 @@ const tosParser = {
     )
 };
 
-const signupTextStyle = [title3, {
-    color: vars.white,
-    fontSize: 12
+const signupTextStyle = [footerText2, {
+    fontSize: vars.font.size.smaller
 }];
 
 @observer
@@ -123,7 +122,7 @@ export default class SignupStep1 extends LoginWizardPage {
         return (
             <View style={container}>
                 <View style={header2}>
-                    <Text style={title2}>{tx('title_createAccount')}</Text>
+                    <Text style={headingStyle2}>{tx('title_createAccount')}</Text>
                 </View>
                 <View>
                     <View style={innerSmall}>

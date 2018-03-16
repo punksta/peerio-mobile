@@ -23,7 +23,7 @@ const headerWelcome = {
 
 const header2 = {
     justifyContent: 'center',
-    marginBottom: vars.spacing.small.midi2x
+    marginBottom: vars.spacing.medium.midi
 };
 
 const topCircleSize = 68;
@@ -67,34 +67,49 @@ const row = {
     height: 90
 };
 
-const title1 = {
-    color: vars.white,
+const headingStyle1 = {
+    color: vars.textWhite100,
     textAlign: 'center',
     fontSize: vars.font.size.massive,
-    fontWeight: '500',
+    fontWeight: vars.font.weight.semiBold,
     marginBottom: vars.spacing.small.maxi
 };
 
-const title1Black = [title1, {
-    color: vars.txtDark,
-    fontSize: vars.font.size.huge,
-    marginBottom: vars.spacing.medium.midi2x
-}];
-
-const title2 = {
-    color: vars.white,
+const headingStyle2 = {
+    color: vars.textWhite100,
     textAlign: 'center',
     fontSize: vars.font.size.bigger
 };
 
-const title2Black = [title2, {
-    marginHorizontal: vars.spacing.huge.midi2x,
-    marginVertical: vars.spacing.small.midi,
-    color: vars.txtDark
-}];
+const subHeadingStyle = {
+    color: vars.textWhite70,
+    textAlign: 'center',
+    fontSize: vars.font.size.bigger
+};
 
-const title3 = {
-    color: vars.white,
+const scrollHeadingStyle = {
+    color: vars.textDarkGrey,
+    fontSize: vars.font.size.huge,
+    textAlign: 'center',
+    fontWeight: vars.font.weight.semiBold,
+    marginBottom: vars.spacing.medium.midi2x
+};
+
+const scrollSubHeadingStyle = {
+    color: vars.textDarkGrey,
+    textAlign: 'center',
+    fontSize: vars.font.size.bigger,
+    marginHorizontal: vars.spacing.huge.midi2x,
+    marginVertical: vars.spacing.small.midi
+};
+
+const footerText1 = {
+    color: vars.textWhite50,
+    textAlign: 'center'
+};
+
+const footerText2 = {
+    color: vars.textWhite100,
     textAlign: 'center'
 };
 
@@ -104,8 +119,8 @@ const buttonRowStyle = {
 };
 
 export {
-    headerWelcome, header2, inner, innerSmall, title1, title1Black, title2,
-    title2Black, title3, row, circleTop, circleTopSmall,
+    headerWelcome, header2, inner, innerSmall, headingStyle1, headingStyle2, subHeadingStyle, scrollHeadingStyle,
+    scrollSubHeadingStyle, footerText1, footerText2, row, circleTop, circleTopSmall,
     container, topCircleSizeSmall, embeddedImageCircleSize,
     padding, buttonRowStyle
 };
@@ -122,6 +137,7 @@ export default class LoginWizardPage extends SafeComponent {
             alignItems: 'center'
         };
         const buttonText = {
+            color: vars.textWhite100,
             fontWeight: 'bold',
             fontSize: vars.font.size.bigger
         };
