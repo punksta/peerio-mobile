@@ -55,7 +55,8 @@ const vars = {
     textDarkGrey: '#343434',
     subtleGrey: 'rgba(0, 0, 0, .54)',
     chatItemPressedBackground: '#D7E5FA',
-    subtleBlueBackground: '#F2F2F5', // equivalent to rgba(4, 11, 64, 0.05)
+    darkBlueBackground: '#F2F2F5', // Dark Blue 5%
+    peerioBlueBackground: '#E9EDF6', // Peerio Blue 5%
     tabsBackground: 'rgba(4, 11, 64, 0.15)',
     dmInfoHeaderColor: 'rgba(4, 11, 64, 0.15)',
     unreadTextColor: '#040B40',
@@ -104,7 +105,7 @@ const vars = {
     inputBgInactiveText: 'rgba(0,0,0, .54)',
     checkboxInactive: 'rgba(0,0,0,.06)',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
-    checkboxIconActive: bg,
+    checkboxIconActive: peerioBlue,
     snackbarBg: '#4a4a4a',
     snackbarBgGreen: '#38CE86',
     snackbarHeight: 48,

@@ -94,7 +94,7 @@ export default class MemberList extends SafeComponent {
                         key={username}
                         message=""
                         hideOnline
-                        backgroundColor={vars.subtleBlueBackground} />
+                        backgroundColor={vars.darkBlueBackground} />
                 </View>
                 <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
                     {isAdmin &&

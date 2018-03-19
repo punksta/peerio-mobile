@@ -61,7 +61,7 @@ export default class Layout1 extends SafeComponent {
         const fillerStyle = {
             flexGrow: 1,
             justifyContent: 'space-between',
-            backgroundColor: vars.subtleBlueBackground
+            backgroundColor: vars.darkBlueBackground
         };
 
         return (
