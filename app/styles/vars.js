@@ -54,7 +54,10 @@ const vars = {
     textWhite50: 'rgba(255, 255, 255, .5)',
     textDarkGrey: '#343434',
     subtleGrey: 'rgba(0, 0, 0, .54)',
+    chatItemPressedBackground: '#D7E5FA',
     subtleBlueBackground: 'rgba(4, 11, 64, 0.05)',
+    tabsBackground: 'rgba(4, 11, 64, 0.15)',
+    unreadTextColor: '#040B40',
 
     circle: 10,
     circleSize: 4,

@@ -32,31 +32,32 @@ export default class ChannelInviteListItem extends SafeComponent {
         };
 
         const textStyle = {
-            fontSize: vars.fontTitleSize,
-            fontWeight: 'bold',
-            color: vars.txtDark
+            fontSize: vars.font.size.bigger,
+            fontWeight: vars.font.weight.semiBold,
+            color: vars.unreadTextColor
         };
 
         const circleStyle = {
             paddingHorizontal: 4,
             paddingVertical: 1,
             borderRadius: 5,
-            backgroundColor: vars.bgGreen,
+            backgroundColor: vars.peerioBlue,
             overflow: 'hidden',
             alignItems: 'center',
             justifyContent: 'center'
         };
 
         const textNewStyle = {
-            fontSize: vars.font.size.smallerx,
+            fontSize: vars.font.size.smaller,
             color: vars.white
         };
 
         return (
-            <View style={{ backgroundColor: vars.bg }}>
+            <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
                     onPress={this.onPress}
-                    style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
+                    style={containerStyle}
+                    pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text style={textStyle}>
                         {`# ${channelName}`}
                     </Text>

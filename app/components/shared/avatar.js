@@ -490,7 +490,7 @@ export default class Avatar extends SafeComponent {
             1 : 0.2;
         const testID = this.props.contact ? this.props.contact.username : null; // May not cover all cases
         return (
-            <View style={{ backgroundColor: vars.bgHighlight }} ref={ref => { this._ref = ref; }}>
+            <View style={{ backgroundColor: vars.chatItemPressedBackground }} ref={ref => { this._ref = ref; }}>
                 <TouchableOpacity
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={this.onPressAll}
