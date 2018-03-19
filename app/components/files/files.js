@@ -232,7 +232,7 @@ export default class Files extends SafeComponent {
     toolbar() {
         const container = {
             height: vars.listItemHeight,
-            backgroundColor: vars.white,
+            backgroundColor: vars.darkBlueBackground,
             flex: 1,
             flexGrow: 1,
             flexDirection: 'row',
@@ -296,7 +296,7 @@ export default class Files extends SafeComponent {
         return (
             <View
                 style={{ flex: 1 }}>
-                <View style={{ flex: 1, backgroundColor: vars.lightGrayBg }}>
+                <View style={{ flex: 1, backgroundColor: vars.white }}>
                     {this.searchTextbox()}
                     {upgradeForFiles()}
                     {!this.data.length && !fileState.currentFolder.isRoot ?
