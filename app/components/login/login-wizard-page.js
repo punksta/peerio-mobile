@@ -58,7 +58,7 @@ const circleTop = [helpers.circle(topCircleSize * 2), {
 
 const circleTopSmall = [circleTop, helpers.circle(topCircleSizeSmall * 2), {
     borderWidth: 1,
-    borderColor: vars.bg
+    borderColor: vars.subtleGrey
 }];
 
 const row = {

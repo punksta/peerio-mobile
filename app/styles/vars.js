@@ -53,6 +53,8 @@ const vars = {
     textWhite70: 'rgba(255, 255, 255, .7)',
     textWhite50: 'rgba(255, 255, 255, .5)',
     textDarkGrey: '#343434',
+    subtleGrey: 'rgba(0, 0, 0, .54)',
+    subtleBlueBackground: 'rgba(4, 11, 64, 0.05)',
 
     circle: 10,
     circleSize: 4,
