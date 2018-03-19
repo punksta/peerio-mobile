@@ -62,7 +62,7 @@ export default class ChatInfo extends SafeComponent {
         const body = (
             <View>
                 {chat.otherParticipants && this.lineBlock(
-                    <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
+                    <View style={{ paddingVertical: vars.spacing.small.midi2x, backgroundColor: vars.subtleBlueBackground }}>
                         {chat.otherParticipants.map(this.participant)}
                     </View>
                 )}
