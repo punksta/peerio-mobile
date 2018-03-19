@@ -55,10 +55,11 @@ const vars = {
     textDarkGrey: '#343434',
     subtleGrey: 'rgba(0, 0, 0, .54)',
     chatItemPressedBackground: '#D7E5FA',
-    subtleBlueBackground: 'rgba(4, 11, 64, 0.05)',
+    subtleBlueBackground: '#F2F2F5', // equivalent to rgba(4, 11, 64, 0.05)
     tabsBackground: 'rgba(4, 11, 64, 0.15)',
     dmInfoHeaderColor: 'rgba(4, 11, 64, 0.15)',
     unreadTextColor: '#040B40',
+    adminBadgeColor: 'rgba(0, 0, 0, 0.12)',
 
     circle: 10,
     circleSize: 4,
