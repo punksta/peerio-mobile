@@ -190,7 +190,7 @@ const icons = {
         const paddingHorizontal = vars.pinnedChatPaddingHorizontal;
         return (
             <TouchableOpacity
-                style={{ paddingHorizontal, opacity: vars.sublteGrayOpacity }}
+                style={{ paddingHorizontal, opacity: vars.opacity54 }}
                 onPress={onPress}
                 pressRetentionOffset={vars.retentionOffset}>
                 <Image style={{ width, height }} source={source} />

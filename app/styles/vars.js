@@ -57,6 +57,7 @@ const vars = {
     chatItemPressedBackground: '#D7E5FA',
     subtleBlueBackground: 'rgba(4, 11, 64, 0.05)',
     tabsBackground: 'rgba(4, 11, 64, 0.15)',
+    dmInfoHeaderColor: 'rgba(4, 11, 64, 0.15)',
     unreadTextColor: '#040B40',
 
     circle: 10,
@@ -87,7 +88,7 @@ const vars = {
     inputBg: '#fff',
     lightGrayBg: '#f0f0f0',
     mediumGrayBg: '#D0D0D0',
-    sublteGrayOpacity: 0.54,
+    opacity54: 0.54,
     pickerBg: 'rgba(255, 255, 255, .12)',
     pickerText: '#fff',
     subtleBg: '#c3dfee',

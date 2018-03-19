@@ -204,7 +204,7 @@ export default class Files extends SafeComponent {
                     fileState.findFilesText = '';
                     this.onChangeFindFilesText('');
                 },
-                vars.sublteGrayOpacity
+                vars.opacity54
             );
         }
 
