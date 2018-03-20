@@ -133,7 +133,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
             flexShrink: 1,
             fontSize: vars.font.size.big,
             fontWeight: vars.font.weight.semiBold,
-            color: vars.subtleGrey
+            color: vars.textGray54
         };
         return (
             <View style={container}>

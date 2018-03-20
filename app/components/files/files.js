@@ -176,7 +176,7 @@ export default class Files extends SafeComponent {
             paddingHorizontal: vars.spacing.small.midi2x,
             marginVertical: vars.spacing.small.midi,
             marginHorizontal: vars.spacing.medium.mini2x,
-            borderColor: vars.verySubtleGrey,
+            borderColor: vars.gray54,
             borderWidth: 1,
             height,
             borderRadius: height

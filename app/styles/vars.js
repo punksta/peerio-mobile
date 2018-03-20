@@ -53,7 +53,11 @@ const vars = {
     textWhite70: 'rgba(255, 255, 255, .7)',
     textWhite50: 'rgba(255, 255, 255, .5)',
     textDarkGrey: '#343434',
-    subtleGrey: 'rgba(0, 0, 0, .54)',
+    textGray38: 'rgba(0, 0, 0, .38)', // Text
+    textGray54: 'rgba(0, 0, 0, .54)', // Text
+    textGray87: 'rgba(0, 0, 0, .87)', // Text
+    gray38: 'rgba(0, 0, 0, .38)', // Non-text
+    gray54: 'rgba(0, 0, 0, .54)', // Non-text
     chatItemPressedBackground: '#D7E5FA',
     darkBlueBackground05: '#F2F2F5', // Dark Blue 5%
     darkBlueBackground15: '#D9DAE2', // Dark Blue 15%
@@ -97,7 +101,7 @@ const vars = {
     black03: 'rgba(0, 0, 0, 0.03)',
     black12: 'rgba(0, 0, 0, 0.12)',
     subtleText: 'rgba(0, 0, 0, .54)',
-    verySubtleGrey: 'rgba(0, 0, 0, .12)',
+    verytextGray54: 'rgba(0, 0, 0, .12)',
     extraSubtleText: 'rgba(0, 0, 0, .38)',
     subtleTextBold: 'rgba(0, 0, 0, .54)',
     lighterBlackText: 'rgba(0, 0, 0, .87)',
