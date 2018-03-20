@@ -96,7 +96,7 @@ export default class SettingsLevel1 extends SafeComponent {
                             borderRadius: 4
                         }}
                         bold
-                        textStyle={{ color: vars.bg }}
+                        textStyle={{ color: vars.peerioBlue }}
                         onPress={loginState.signOut}
                         iconName="power-settings-new"
                         testID="button_signOut"
