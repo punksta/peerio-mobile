@@ -6,7 +6,7 @@ import TextBox from '../controls/textbox';
 import ActivityOverlay from '../controls/activity-overlay';
 import loginState from './login-state';
 import LoginWizardPage, {
-    row, container, headingStyle1, subHeadingStyle, footerText1
+    row, container, headingStyle1, subHeadingStyle, footerContainer, footerText1, footerText2
 } from './login-wizard-page';
 import { vars } from '../../styles/styles';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
@@ -16,11 +16,6 @@ const inner2 = {
     backgroundColor: vars.white,
     justifyContent: 'center',
     minHeight: 300
-};
-
-const footer = {
-    justifyContent: 'flex-end',
-    alignItems: 'center'
 };
 
 const formStyle = {
@@ -72,9 +67,15 @@ export default class LoginClean extends LoginWizardPage {
                             loginState.isInProgress, !loginState.passphrase || !loginState.isValid())}
                     </View>
                 </View>
-                <View style={footer}>
+                <View style={footerContainer}>
                     <Text style={footerText1}>
-                        {tx('title_signupHere')}
+                        {tx('title_createNewAccount')}
+                    </Text>
+                    <Text style={footerText2}>
+                        {tx('title_signupLink')}
+                    </Text>
+                    <Text style={footerText1}>
+                        {tx('title_here')}
                     </Text>
                 </View>
                 <ActivityOverlay large visible={loginState.isInProgress} />

@@ -59,7 +59,7 @@ const circleTop = [helpers.circle(topCircleSize * 2), {
 
 const circleTopSmall = [circleTop, helpers.circle(topCircleSizeSmall * 2), {
     borderWidth: 1,
-    borderColor: vars.subtleGrey
+    borderColor: vars.gray54
 }];
 
 const row = {
@@ -104,14 +104,18 @@ const scrollSubHeadingStyle = {
     marginVertical: vars.spacing.small.midi
 };
 
+const footerContainer = {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'flex-end'
+};
+
 const footerText1 = {
-    color: vars.textWhite50,
-    textAlign: 'center'
+    color: vars.textWhite50
 };
 
 const footerText2 = {
-    color: vars.textWhite100,
-    textAlign: 'center'
+    color: vars.textWhite100
 };
 
 const buttonRowStyle = {
@@ -121,7 +125,7 @@ const buttonRowStyle = {
 
 export {
     headerWelcome, header2, inner, innerSmall, headingStyle1, headingStyle2, subHeadingStyle, scrollHeadingStyle,
-    scrollSubHeadingStyle, footerText1, footerText2, row, circleTop, circleTopSmall,
+    scrollSubHeadingStyle, footerContainer, footerText1, footerText2, row, circleTop, circleTopSmall,
     container, topCircleSizeSmall, embeddedImageCircleSize,
     padding, buttonRowStyle
 };

@@ -9,7 +9,7 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t, tx, T } from '../utils/translator';
 import LoginWizardPage, {
-    header2, innerSmall, circleTopSmall, headingStyle2, footerText2, container, buttonRowStyle
+    header2, innerSmall, circleTopSmall, headingStyle2, footerText1, footerText2, container, buttonRowStyle
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
@@ -54,15 +54,13 @@ const tosParser = {
     tosButton: text => (
         <Text
             onPress={popupTOS}
-            style={{ textDecorationLine: 'underline' }}>
+            style={[footerText2, { textDecorationLine: 'underline' }]}>
             {text}
         </Text>
     )
 };
 
-const signupTextStyle = [footerText2, {
-    fontSize: vars.font.size.smaller
-}];
+const signupTextStyle = [footerText1, { fontSize: vars.font.size.smaller }];
 
 @observer
 export default class SignupStep1 extends LoginWizardPage {
