@@ -257,7 +257,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
         const header = this.header();
         const body = this.body();
         const layoutStyle = {
-            backgroundColor: 'white'
+            backgroundColor: vars.darkBlueBackground05
         };
         const snackbar = (
             <Bottom>

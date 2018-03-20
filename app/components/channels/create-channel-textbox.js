@@ -14,7 +14,7 @@ const container = {
     paddingHorizontal: vars.spacing.medium.maxi,
     marginHorizontal: vars.spacing.medium.mini2x,
     marginBottom: vars.spacing.small.midi2x,
-    borderColor: vars.bg,
+    borderColor: vars.peerioBlue,
     borderWidth: 1,
     height,
     borderRadius: height
@@ -35,7 +35,7 @@ const bottomTextStyle = {
 };
 
 const titleStyle = {
-    color: vars.bg,
+    color: vars.peerioBlue,
     fontSize: vars.font.size.bigger
 };
 
