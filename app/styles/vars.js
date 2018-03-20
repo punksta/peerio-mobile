@@ -61,6 +61,7 @@ const vars = {
     dmInfoHeaderColor: 'rgba(4, 11, 64, 0.15)',
     unreadTextColor: '#040B40',
     adminBadgeColor: 'rgba(0, 0, 0, 0.12)',
+    progressBarBackground: 'rgba(0, 0, 0, .12)',
 
     circle: 10,
     circleSize: 4,
