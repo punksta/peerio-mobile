@@ -119,6 +119,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
 
     exitRow() {
         const container = {
+            backgroundColor: vars.darkBlueBackground15,
             flexGrow: 1,
             flexDirection: 'row',
             paddingTop: vars.spacing.small.midi2x,
@@ -132,7 +133,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
             flexShrink: 1,
             fontSize: vars.font.size.big,
             fontWeight: vars.font.weight.semiBold,
-            color: vars.txtDark
+            color: vars.subtleGrey
         };
         return (
             <View style={container}>
