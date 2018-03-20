@@ -10,6 +10,7 @@ import testLabel from '../helpers/test-label';
 const padding = vars.spacing.medium.midi2x;
 
 const container = {
+    backgroundColor: vars.darkBlue,
     flex: 1,
     flexGrow: 1,
     padding,
