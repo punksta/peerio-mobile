@@ -72,7 +72,6 @@ const vars = {
     bgGreen: '#38CE86',
     bgHighlight: 'rgba(50, 176, 227, 0.38)',
     semiTransparentBg: 'rgba(44, 149, 207, 0.24)',
-    yellowLine: '#f5e23e',
     disabled: '#00000020',
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',
