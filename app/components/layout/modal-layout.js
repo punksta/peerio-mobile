@@ -51,7 +51,7 @@ export default class ModalLayout extends SafeComponent {
 
     renderThrow() {
         const modalStyle = {
-            backgroundColor: vars.darkBlueBackground,
+            backgroundColor: vars.darkBlueBackground05,
             position: 'absolute',
             left: 0,
             top: 0,

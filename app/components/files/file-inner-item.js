@@ -40,7 +40,7 @@ export default class FileInnerItem extends SafeComponent {
         const iconBgColor = 'transparent';
         const icon = checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
-            backgroundColor: checked ? vars.peerioBlueBackground : vars.darkBlueBackground,
+            backgroundColor: checked ? vars.peerioBlueBackground05 : vars.darkBlueBackground05,
             padding: vars.spacing.small.mini2x,
             flex: 0,
             width: checkBoxWidth,
@@ -81,7 +81,7 @@ export default class FileInnerItem extends SafeComponent {
             justifyContent: 'space-between',
             borderBottomWidth: 1,
             borderBottomColor: 'rgba(0, 0, 0, .12)',
-            backgroundColor: checked ? vars.peerioBlueBackground : vars.darkBlueBackground,
+            backgroundColor: checked ? vars.peerioBlueBackground05 : vars.darkBlueBackground05,
             height,
             width,
             borderWidth: 0,
@@ -108,7 +108,7 @@ export default class FileInnerItem extends SafeComponent {
                 <TouchableOpacity
                     onPress={action}
                     {...testLabel(testID)}
-                    style={{ backgroundColor: vars.darkBlueBackground }}>
+                    style={{ backgroundColor: vars.darkBlueBackground05 }}>
                     <View style={[fileInfoContainerStyle, { opacity }]}>
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width }]}>

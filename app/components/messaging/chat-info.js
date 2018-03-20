@@ -53,7 +53,7 @@ export default class ChatInfo extends SafeComponent {
                 key={username || i}
                 message=""
                 hideOnline
-                backgroundColor={vars.darkBlueBackground} />
+                backgroundColor={vars.darkBlueBackground05} />
         );
     };
 

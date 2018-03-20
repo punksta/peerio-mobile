@@ -34,7 +34,7 @@ export default class ContactView extends SafeComponent {
     renderInvitedUser(contact) {
         return (
             <View style={{ flex: 1, flexGrow: 1 }}>
-                <View style={[flexRow, { backgroundColor: vars.darkBlueBackground, paddingRight: vars.spacing.small.maxi }]}>
+                <View style={[flexRow, { backgroundColor: vars.darkBlueBackground05, paddingRight: vars.spacing.small.maxi }]}>
                     <View style={{ marginHorizontal: vars.spacing.medium.mini2x }}>
                         <AvatarCircle large invited contact={contact} />
                     </View>
@@ -65,7 +65,7 @@ export default class ContactView extends SafeComponent {
         );
         const body = (
             <View style={{ flex: 1, flexGrow: 1 }}>
-                <View style={[flexRow, { backgroundColor: vars.darkBlueBackground, paddingRight: vars.spacing.small.maxi }]}>
+                <View style={[flexRow, { backgroundColor: vars.darkBlueBackground05, paddingRight: vars.spacing.small.maxi }]}>
                     <View style={{ marginHorizontal: vars.spacing.medium.mini2x }}>
                         <AvatarCircle large contact={contact} />
                     </View>

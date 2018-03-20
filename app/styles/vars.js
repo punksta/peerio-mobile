@@ -55,10 +55,10 @@ const vars = {
     textDarkGrey: '#343434',
     subtleGrey: 'rgba(0, 0, 0, .54)',
     chatItemPressedBackground: '#D7E5FA',
-    darkBlueBackground: '#F2F2F5', // Dark Blue 5%
-    peerioBlueBackground: '#E9EDF6', // Peerio Blue 5%
-    tabsBackground: 'rgba(4, 11, 64, 0.15)',
-    dmInfoHeaderColor: 'rgba(4, 11, 64, 0.15)',
+    darkBlueBackground05: '#F2F2F5', // Dark Blue 5%
+    darkBlueBackground15: '#D9DAE2', // Dark Blue 15%
+    peerioBlueBackground05: '#E9EDF6', // Peerio Blue 5%
+    peerioBlueBackground15: '#D6E2F5', // Peerio Blue 15%
     unreadTextColor: '#040B40',
     adminBadgeColor: 'rgba(0, 0, 0, 0.12)',
     progressBarBackground: 'rgba(0, 0, 0, .12)',

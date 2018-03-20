@@ -83,7 +83,7 @@ export default class ChannelInfo extends SafeComponent {
                 <TouchableOpacity
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={action}
-                    style={{ backgroundColor: vars.darkBlueBackground }}>
+                    style={{ backgroundColor: vars.darkBlueBackground05 }}>
                     <View style={containerStyle}>
                         {icon ?
                             icons.darkNoPadding(icon, action) :
