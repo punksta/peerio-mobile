@@ -23,8 +23,8 @@ class RouterApp extends Router {
 
         when(() => this.route === 'main', () => setTimeout(() => routerMain.initial(), 0));
         BackHandler.addEventListener('hardwareBackPress', () => {
-            // TODO: disable back button on blocking popups
-            if (PopupState.activePopup && PopupState.activePopup.type !== 'systemWarning') {
+            const blockingPopup = (PopupState.activePopup.type === 'systemWarning') || (PopupState.activePopup.type === 'systemUpgrade');
+            if (PopupState.activePopup && !blockingPopup) {
                 PopupState.discardPopup();
                 return true;
             }

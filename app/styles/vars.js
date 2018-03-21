@@ -26,6 +26,7 @@ function isBigScreenSize() {
 }
 
 const { bg, bgGradient, tabsBg, tabsFg } = branding;
+const { peerioBlue, yellow } = branding;
 
 const statusBarHeight = (Platform.OS === 'android' ? 0 : 10) + iPhoneXTop;
 const layoutPaddingTop = statusBarHeight * 2;
@@ -42,6 +43,8 @@ const defaultHeight = 667;
 const scaleDim = size => size; // temporary making scaleDim do nothing
 
 const vars = {
+    peerioBlue,
+    yellow,
     circle: 10,
     circleSize: 4,
     bg,

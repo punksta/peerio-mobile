@@ -7,9 +7,11 @@ import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
 import { vars } from '../../styles/styles';
-import { User } from '../../lib/icebear';
+import { fileStore, User } from '../../lib/icebear';
 import testLabel from '../helpers/test-label';
 import FilePreview from '../files/file-preview';
+import uiState from '../layout/ui-state';
+import UpdateProgressIndicator from '../controls/update-progress-indicator';
 
 function textControl(str) {
     const text = {
@@ -344,6 +346,39 @@ function popupSetupVideo() {
     });
 }
 
+function popupUpgradeNotification() {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            type: 'systemUpgrade',
+            title: textControl(tx('title_upgradeFileSystem')),
+            contents: (
+                <View>
+                    {textControl(tx('title_upgradeFileSystemDescription1'))}
+                    {textControl(tx('title_upgradeFileSystemDescription2'))}
+                    {fileStore.hasFilesShared && textControl(tx('title_upgradeFileSystemDescription3'))}
+                </View>
+            ),
+            buttons: [
+                { id: 'update', text: tu('button_update'), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
+function popupUpgradeProgress() {
+    return (
+        popupState.showPopup({
+            type: 'systemUpgrade',
+            title: textControl(tx('title_fileUpdateProgress')),
+            contents: (
+                <View>
+                    <UpdateProgressIndicator progress={uiState.fileUpdateProgress} />
+                    {textControl(tx('title_fileUpdateProgressDescription'))}
+                </View>
+            )
+        }));
+}
+
 locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
@@ -369,5 +404,7 @@ export {
     popupControl,
     popupSignOutAutologin,
     popupCancelConfirm,
-    popupSetupVideo
+    popupSetupVideo,
+    popupUpgradeNotification,
+    popupUpgradeProgress
 };

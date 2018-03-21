@@ -9,6 +9,7 @@ import RoutedState from '../routes/routed-state';
 const { height } = Dimensions.get('window');
 
 class UIState extends RoutedState {
+    @observable fileUpdateProgress = 0; // TODO remove when fileState progress is wired
     @observable isFirstLogin = false;
     @observable focusedTextBox = null;
     @observable picker = null;
@@ -31,6 +32,13 @@ class UIState extends RoutedState {
         // es: `Spanish`,
         // ru: `Russian`
     };
+
+    // TODO remove when fileState progress is wired
+    @action.bound mockUpdateProgress() {
+        console.log(this.fileUpdateProgress);
+        if (this.fileUpdateProgress === 100) this.fileUpdateProgress = 0;
+        else this.fileUpdateProgress += 1;
+    }
 
     get bottomOffset() {
         const pickerHeight = this.pickerVisible ? this.pickerHeight : 0;

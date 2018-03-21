@@ -4,42 +4,37 @@ import { tx, tu } from '../utils/translator';
 import popupState from '../layout/popup-state';
 import { textControl } from '../shared/popups';
 import { fileStore } from '../../lib/icebear';
+import UpdateProgressIndicator from '../controls/update-progress-indicator';
+import uiState from '../layout/ui-state';
 
 class popupFileSystemUpgrade {
-    shouldShowPopup() {
-        return fileStore.hasFilesShared && fileStore.fileSystemUpgradeRequired;
-    }
-
-    showFirstPopup() {
+    showUpgradeNotificationPopup() {
         return popupState.showPopupPromise(resolve => ({
-            type: 'systemWarning',
+            type: 'systemUpgrade',
             title: textControl(tx('title_upgradeFileSystem')),
             contents: (
                 <View>
                     {textControl(tx('title_upgradeFileSystemDescription1'))}
                     {textControl(tx('title_upgradeFileSystemDescription2'))}
+                    {fileStore.hasFilesShared && textControl(tx('title_upgradeFileSystemDescription3'))}
                 </View>
             ),
             buttons: [
-                { id: 'unshare', text: tu('button_unshare'), action: () => resolve(false), secondary: true },
-                { id: 'continue', text: tu('button_continue'), action: () => resolve(true) }
+                { id: 'update', text: tu('button_update'), action: () => resolve(true) }
             ]
         }));
     }
 
-    showConfirmationPopup() {
-        return popupState.showPopupPromise(resolve => ({
-            type: 'systemWarning',
-            title: textControl(tx('title_upgradeFileSystemConfirmation1')),
+    showUpgradeProgressPopup() {
+        return popupState.showPopupPromise(() => ({
+            type: 'systemUpgrade',
+            title: textControl(tx('title_fileUpdateProgress')),
             contents: (
                 <View>
-                    {textControl(tx('title_upgradeFileSystemConfirmation2'))}
+                    <UpdateProgressIndicator progress={uiState.fileUpdateProgress} />
+                    {textControl(tx('title_fileUpdateProgressDescription'))}
                 </View>
-            ),
-            buttons: [
-                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
-                { id: 'unshareAll', text: tu('button_unshareAll'), action: () => resolve(true) }
-            ]
+            )
         }));
     }
 }

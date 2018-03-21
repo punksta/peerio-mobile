@@ -1,6 +1,6 @@
 import React from 'react';
 import { LayoutAnimation, Platform } from 'react-native';
-import { observable, reaction, action } from 'mobx';
+import { observable, reaction, action, when } from 'mobx';
 import Router from './router';
 import uiState from '../layout/ui-state';
 import SettingsLevel1 from '../settings/settings-level-1';
@@ -21,10 +21,11 @@ import { fileState, mainState, ghostState, chatState, settingsState, contactStat
 // import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
 import loginState from '../login/login-state';
-import popupFileSystemUpgrade from '../shared/popup-filesystem-upgrade';
 import snackbarState from '../snackbars/snackbar-state';
 import { tx } from '../utils/translator';
+import popupState from '../layout/popup-state';
 import { fileStore } from '../../lib/icebear';
+import { popupUpgradeNotification, popupUpgradeProgress } from '../shared/popups';
 
 class RouterMain extends Router {
     // current route object
@@ -83,20 +84,20 @@ class RouterMain extends Router {
     }
 
     @action async filesystemUpgrade() {
-        if (popupFileSystemUpgrade.shouldShowPopup) {
-            const dismissPopup = await popupFileSystemUpgrade.showFirstPopup();
-            if (!dismissPopup) {
-                const shouldUnshareAllFiles = await popupFileSystemUpgrade.showConfirmationPopup();
-                if (shouldUnshareAllFiles) {
-                    fileStore.migrationUnshare();
-                    snackbarState.pushTemporary(tx('title_sharedFilesUnshared'));
-                } else {
-                    fileStore.migrationUpgrade();
-                    snackbarState.pushTemporary(tx('title_sharedFilesKept'));
-                }
-            } else {
-                fileStore.migrationUpgrade();
-                snackbarState.pushTemporary(tx('title_sharedFilesKept'));
+        // TODO remove mock update progress
+        setInterval(uiState.mockUpdateProgress, 200);
+        // TODO remove !
+        if (!fileStore.fileSystemUpgradeRequired) {
+            const updatePressed = await popupUpgradeNotification();
+            if (updatePressed) {
+                // TODO verify functions
+                // fileStore.migrationUpgrade();
+                // fileStore.migrationUnshare();
+                popupUpgradeProgress();
+                when(() => uiState.fileUpdateProgress === 100, () => {
+                    popupState.discardPopup();
+                    snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
+                });
             }
         }
     }
