@@ -66,7 +66,6 @@ export default class Layout1 extends SafeComponent {
             <MenuContext>
                 <View
                     onLayout={event => { this.height = event.nativeEvent.layout.height; }}
-                    // {...testLabel('containerComponent')}
                     style={[boxStyle, this.props.style]}>
                     {this.props.header}
                     <ScrollView

@@ -95,6 +95,10 @@ export default class PopupLayout extends SafeComponent {
             color: vars.txtDark
         };
 
+        const subTitle = {
+            color: vars.subtleText
+        };
+
         const buttonBar = {
             flex: 0,
             marginHorizontal: vars.spacing.medium.mini2x,
@@ -109,8 +113,8 @@ export default class PopupLayout extends SafeComponent {
                 <View style={wrapper}>
                     <View style={container}>
                         <View style={{ padding: vars.spacing.medium.midi2x, flexGrow: 1, flexShrink: 1 }}>
-                            {popup.title ? <Text style={title}>{popup.title}</Text> : null}
-                            {popup.subTitle}
+                            {popup.title ? <Text style={title} >{popup.title}</Text> : null}
+                            {popup.subTitle ? <Text style={subTitle} >{popup.subTitle}</Text> : null}
                             {popup.contents}
                         </View>
                         {popup.buttons && <View style={buttonBar}>
