@@ -85,19 +85,22 @@ class RouterMain extends Router {
 
     @action async filesystemUpgrade() {
         // TODO remove mock update progress
-        setInterval(uiState.mockUpdateProgress, 200);
-        // TODO remove !
-        if (!fileStore.fileSystemUpgradeRequired) {
+        setInterval(uiState.mockUpdateProgress, 1000);
+        if (fileStore.fileSystemUpgradeRequired) {
             const updatePressed = await popupUpgradeNotification();
             if (updatePressed) {
-                // TODO verify functions
-                // fileStore.migrationUpgrade();
-                // fileStore.migrationUnshare();
-                popupUpgradeProgress();
-                when(() => uiState.fileUpdateProgress === 100, () => {
-                    popupState.discardPopup();
+                if (fileStore.hasFilesShared) {
+                    popupUpgradeProgress();
+                    // TODO verify functions
+                    // fileStore.migrationUpgrade();
+                    // fileStore.migrationUnshare();
+                    when(() => uiState.fileUpdateProgress === 100, () => {
+                        popupState.discardPopup();
+                        snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
+                    });
+                } else {
                     snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
-                });
+                }
             }
         }
     }
