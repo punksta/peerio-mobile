@@ -23,8 +23,11 @@ class RouterApp extends Router {
 
         when(() => this.route === 'main', () => setTimeout(() => routerMain.initial(), 0));
         BackHandler.addEventListener('hardwareBackPress', () => {
-            const blockingPopup = (PopupState.activePopup.type === 'systemWarning') || (PopupState.activePopup.type === 'systemUpgrade');
-            if (PopupState.activePopup && !blockingPopup) {
+            let blockingPopup = true;
+            if (PopupState.activePopup) {
+                blockingPopup = (PopupState.activePopup.type === 'systemWarning') || (PopupState.activePopup.type === 'systemUpgrade');
+            }
+            if (!blockingPopup) {
                 PopupState.discardPopup();
                 return true;
             }
