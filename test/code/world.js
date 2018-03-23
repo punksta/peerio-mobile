@@ -20,8 +20,9 @@ const FileViewPage = require('./pages/files/fileViewPage');
 const AlertsPage = require('./pages/popups/alertsPage');
 
 class World {
-    constructor(opts) {
-        this.context = opts.parameters.platform === 'ios' ? iOSFactory : AndroidFactory;
+    constructor({ attach, parameters }) {
+        this.attach = attach;
+        this.context = parameters.platform === 'ios' ? iOSFactory : AndroidFactory;
     }
 
     openApp() {
@@ -62,6 +63,11 @@ class World {
         return this.app
             .removeApp(this.context.bundleId) // remove app so it doesn't influence next test
             .end(); // end server session and close webdriver
+    }
+
+    async takeScreenshot() {
+        const image = await this.app.saveScreenshot();
+        this.attach(image, 'image/png');
     }
 
     async goTo2FASetup() {
@@ -182,7 +188,7 @@ class World {
 
     async scrollToChat() {
         await this.homePage.isVisible;
-        
+
         // Wait for rooms to load, otherwise position will change
         await this.app.pause(5000);
 
