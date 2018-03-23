@@ -85,11 +85,11 @@ class RouterMain extends Router {
 
     @action async filesystemUpgrade() {
         // TODO remove mock update progress
-        setInterval(uiState.mockUpdateProgress, 1000);
-        if (fileStore.fileSystemUpgradeRequired) {
+        const intervalId = setInterval(uiState.mockUpdateProgress, 500);
+        if (!fileStore.fileSystemUpgradeRequired) {
             const updatePressed = await popupUpgradeNotification();
             if (updatePressed) {
-                if (fileStore.hasFilesShared) {
+                if (!fileStore.hasFilesShared) {
                     popupUpgradeProgress();
                     // TODO verify functions
                     // fileStore.migrationUpgrade();
@@ -97,6 +97,7 @@ class RouterMain extends Router {
                     when(() => uiState.fileUpdateProgress === 100, () => {
                         popupState.discardPopup();
                         snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
+                        clearInterval(intervalId);
                     });
                 } else {
                     snackbarState.pushTemporary(tx('title_fileUpdateComplete'));

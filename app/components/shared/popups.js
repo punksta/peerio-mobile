@@ -10,10 +10,20 @@ import { vars } from '../../styles/styles';
 import { fileStore, User } from '../../lib/icebear';
 import testLabel from '../helpers/test-label';
 import FilePreview from '../files/file-preview';
-import uiState from '../layout/ui-state';
-import UpdateProgressIndicator from '../controls/update-progress-indicator';
+import PopupMigration from '../controls/popup-migration';
 
-function textControl(str) {
+const titleStyle = {
+    color: vars.lighterBlackText,
+    fontSize: vars.font.size.huge,
+    fontWeight: vars.font.weight.regular
+};
+const textStyle = {
+    color: vars.lighterBlackText,
+    fontSize: vars.font.size.normal,
+    fontWeight: vars.font.weight.regular
+};
+
+function textControl(str, style) {
     const text = {
         color: '#000000AA',
         marginVertical: vars.spacing.small.maxi,
@@ -24,6 +34,7 @@ function textControl(str) {
     if (typeof str === 'string') {
         formatted = str.replace('\n', '\n\n');
     }
+    if (style) Object.assign(text, style);
 
     return <Text style={text}>{formatted}</Text>;
 }
@@ -350,12 +361,12 @@ function popupUpgradeNotification() {
     return new Promise((resolve) => {
         popupState.showPopup({
             type: 'systemUpgrade',
-            title: textControl(tx('title_upgradeFileSystem')),
+            title: textControl(tx('title_upgradeFileSystem'), titleStyle),
             contents: (
                 <View>
-                    {textControl(tx('title_upgradeFileSystemDescription1'))}
-                    {textControl(tx('title_upgradeFileSystemDescription2'))}
-                    {fileStore.hasFilesShared && textControl(tx('title_upgradeFileSystemDescription3'))}
+                    {textControl(tx('title_upgradeFileSystemDescription1'), textStyle)}
+                    {textControl(tx('title_upgradeFileSystemDescription2'), textStyle)}
+                    {fileStore.hasFilesShared && textControl(tx('title_upgradeFileSystemDescription3'), textStyle)}
                 </View>
             ),
             buttons: [
@@ -369,13 +380,8 @@ function popupUpgradeProgress() {
     return (
         popupState.showPopup({
             type: 'systemUpgrade',
-            title: textControl(tx('title_fileUpdateProgress')),
-            contents: (
-                <View>
-                    <UpdateProgressIndicator progress={uiState.fileUpdateProgress} />
-                    {textControl(tx('title_fileUpdateProgressDescription'))}
-                </View>
-            )
+            title: textControl(tx('title_fileUpdateProgress'), titleStyle),
+            contents: <PopupMigration />
         }));
 }
 
