@@ -1,6 +1,6 @@
 import React from 'react';
 import { action, observable } from 'mobx';
-import { Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -15,6 +15,8 @@ import chatState from './chat-state';
 import AvatarCircle from '../shared/avatar-circle';
 import ChannelUpgradeOffer from '../channels/channel-upgrade-offer';
 import ProgressOverlay from '../shared/progress-overlay';
+
+const emojiTada = require('../../assets/emoji/tada.png');
 
 const headingStyle = {
     color: vars.lighterBlackText,
@@ -40,10 +42,19 @@ const infoSection = {
     alignItems: 'center'
 };
 
-const infoStyle = {
+const infoText = {
+    flexDirection: 'row',
+    justifyContent: 'center'
+};
+
+const hostedByStyle = {
     color: vars.subtleText,
-    fontSize: vars.font.size.normal,
-    textAlign: 'center'
+    fontSize: vars.font.size.normal
+};
+
+const hostNameStyle = {
+    color: vars.black,
+    fontSize: vars.font.size.normal
 };
 
 const buttonContainer = {
@@ -82,10 +93,20 @@ export default class ChannelInvite extends SafeComponent {
 
     renderThrow() {
         const hasPaywall = User.current.channelsLeft <= 0;
+        const host = contactStore.getContact(this.invitation.username);
+
         return (
             <View style={{ flex: 1, flexGrow: 1 }}>
                 {!this.waiting && hasPaywall && <ChannelUpgradeOffer />}
                 <View style={headingSection}>
+                    <Image source={emojiTada}
+                        style={{
+                            alignSelf: 'center',
+                            width: vars.iconSizeMedium,
+                            height: vars.iconSizeMedium,
+                            marginBottom: vars.spacing.small.mini2x
+                        }}
+                        resizeMode="contain" />
                     <Text style={headingStyle}>
                         {tx('title_roomInviteHeading')}
                     </Text>
@@ -100,17 +121,21 @@ export default class ChannelInvite extends SafeComponent {
                             textColor={vars.bgGreen}
                             style={{ width: vars.roundedButtonWidth, textAlign: 'center' }}
                         />
-                        {buttons.uppercaseGreenBgButton(tx('button_accept'), this.acceptInvite, hasPaywall)}
+                        {buttons.uppercaseGreenBgButton(tx('button_accept'), this.acceptInvite, hasPaywall, null, 'accept')}
                     </View>
                 </View>
                 <View style={sectionLine} />
                 <View style={infoSection}>
-                    <Text style={infoStyle}>
-                        {tx('title_hostedBy')}
-                    </Text>
-                    <AvatarCircle
-                        contact={contactStore.getContact(this.invitation.username)}
-                    />
+                    <View style={infoText}>
+                        <Text style={hostedByStyle}>
+                            {tx('title_hostedBy')}
+                        </Text>
+                        <Text style={hostNameStyle}>
+                            &nbsp;
+                            {host.fullName}
+                        </Text>
+                    </View>
+                    <AvatarCircle contact={host} />
                 </View>
                 <ProgressOverlay enabled={this.waiting} />
             </View>);

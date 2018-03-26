@@ -51,7 +51,10 @@ export default class Files extends SafeComponent {
     }
 
     get rightIcon() {
-        return !fileState.isFileSelectionMode && <PlusBorderIcon action={() => fileUploadActionSheet.show()} />;
+        return !fileState.isFileSelectionMode &&
+            <PlusBorderIcon
+                action={() => fileUploadActionSheet.show()}
+                testID="buttonUploadFileToFiles" />;
     }
 
     get layoutTitle() {
@@ -95,11 +98,12 @@ export default class Files extends SafeComponent {
 
     onChangeFolder = folder => { fileState.currentFolder = folder; };
 
-    item = file => {
+    item = (file, sectionID, rowID) => {
         return (
             <FileItem
                 key={file.fileId || file.folderId}
                 file={file}
+                rowID={rowID}
                 onChangeFolder={this.onChangeFolder}
                 onFileActionPress={() => filesActionSheet.show(file)}
                 onFolderActionPress={() => foldersActionSheet.show(file)} />

@@ -14,6 +14,9 @@ class ChatState extends RoutedState {
     @observable selfNewMessageCounter = 0;
     LIMIT_PEOPLE_DM = 1;
 
+    // Only one list can be shown at a time
+    @observable collapseFirstChannelInfoList = false;
+
     // to be able to easily refactor, keep the name "chatStore"
     get chatStore() { return this.store; }
 

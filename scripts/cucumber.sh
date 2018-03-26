@@ -31,7 +31,6 @@ unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     
         echo "Linux..."
-        adb shell pm uninstall com.peerio.app
         ;;
     Darwin*)    
         echo "Mac..."
@@ -73,6 +72,16 @@ case "${unameOut}" in
         ;;
 esac
 
+adb shell pm uninstall com.peerio.app
+if [ `adb shell "if [ -e /sdcard/DCIM/Camera/androidTestImage.png ]; then echo 1; fi"` ]
+then
+echo "Device already has image"
+else
+echo "Pushing image to device"
+adb push test/assets/androidTestImage.png /sdcard/DCIM/Camera/androidTestImage.png
+adb reboot
+fi
+
 ./node_modules/.bin/appium > ./appium.log 2> ./appium.log &
 APPIUM_PID=$!
 
@@ -88,5 +97,10 @@ done
 
 check "appium launched"
 
-cucumberjs test/spec -r test/code -f node_modules/cucumber-pretty --world-parameters "{\"platform\": \"ios\"}"
-cucumberjs test/spec -r test/code -f node_modules/cucumber-pretty --world-parameters "{\"platform\": \"android\"}"
+rm -rf test/reports/result
+mkdir -p test/reports/result
+
+cucumberjs test/spec -r test/code -f node_modules/cucumber-pretty -f json:test/reports/result/result-ios.json --world-parameters "{\"platform\": \"ios\"}"
+cucumberjs test/spec -r test/code -f node_modules/cucumber-pretty -f json:test/reports/result/result-android.json --world-parameters "{\"platform\": \"android\"}"
+
+node test/reports/generate-report.js

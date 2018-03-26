@@ -92,6 +92,7 @@ export default class Chat extends SafeComponent {
             <ChatItem
                 key={key}
                 message={item}
+                chatId={this.chat.id}
                 {...actions}
             />
         );

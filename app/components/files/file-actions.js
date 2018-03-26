@@ -10,6 +10,7 @@ import icons from '../helpers/icons';
 import routes from '../routes/routes';
 import { vars } from '../../styles/styles';
 import routerMain from '../routes/router-main';
+import testLabel from '../helpers/test-label';
 
 const actionCellStyle = {
     flex: 1,
@@ -38,7 +39,8 @@ export default class FileActions extends SafeComponent {
             <TouchableOpacity
                 style={actionCellStyle}
                 onPress={onPress && enabled ? onPress : null}
-                pointerEvents={onPress ? null : 'none'}>
+                pointerEvents={onPress ? null : 'none'}
+                {...testLabel(`${icon}-tab`)}>
                 <View pointerEvents="none" style={{ alignItems: 'center', opacity: enabled ? 1 : 0.5 }}>
                     {onPress ? icons.plaindark(icon) : icons.plain(icon, null, 'rgba(0, 0, 0, .38)')}
                     <Text style={actionTextStyle}>{text}</Text>

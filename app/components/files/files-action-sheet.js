@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import moment from 'moment';
 import { View, Text, TouchableOpacity, Platform } from 'react-native';
@@ -62,7 +63,8 @@ export default class FilesActionSheet extends SafeComponent {
         return {
             title: tx('button_delete'),
             action: async () => {
-                fileState.deleteFile(this.file);
+                const result = await fileState.deleteFile(this.file);
+                if (result && this.props.refreshData) this.props.refreshData();
             }
         };
     }
@@ -166,3 +168,7 @@ export default class FilesActionSheet extends SafeComponent {
         );
     }
 }
+
+FilesActionSheet.propTypes = {
+    refreshData: PropTypes.func
+};

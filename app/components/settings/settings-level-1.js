@@ -13,7 +13,7 @@ import { tx, tu } from '../utils/translator';
 import { warnings, config, clientApp } from '../../lib/icebear';
 import { popupYes } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
-import uiState from '../layout/ui-state';
+import { scrollHelper } from '../helpers/test-helper';
 
 const bgStyle = {
     flexGrow: 1,
@@ -59,11 +59,11 @@ export default class SettingsLevel1 extends SafeComponent {
         clientApp.uiUserPrefs.externalContentConsented = false;
     };
 
-    @action.bound scrollViewRef(sv) {
-        this.scrollView = sv;
-        uiState.currentScrollView = sv;
-    }
-
+    /**
+     * Scroll helper is used to provide scrolling capability
+     * to the test script. Note that it overrides ref and onScroll
+     * event handlers
+     */
     renderThrow() {
         const plan = plans.topPlan();
         const upgradeItem = plan ?
@@ -71,9 +71,7 @@ export default class SettingsLevel1 extends SafeComponent {
             <SettingsItem title="button_upgrade" onPress={() => settingsState.upgrade()} />;
         return (
             <View style={bgStyle}>
-                <ScrollView
-                    contentContainerStyle={svStyle}
-                    ref={this.scrollViewRef} >
+                <ScrollView contentContainerStyle={svStyle} {...scrollHelper}>
                     <SettingsItem title="title_settingsProfile" onPress={() => settingsState.transition('profile')} />
                     <SettingsItem title="title_settingsSecurity" onPress={() => settingsState.transition('security')} />
                     <SettingsItem title="title_settingsPreferences" onPress={() => settingsState.transition('preferences')} />

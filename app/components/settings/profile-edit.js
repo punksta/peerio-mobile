@@ -10,6 +10,7 @@ import { t, tx, tu } from '../utils/translator';
 import AvatarActionSheet, { SIZE2 } from './avatar-action-sheet';
 import icons from '../helpers/icons';
 import uiState from '../layout/ui-state';
+import testLabel from '../helpers/test-label';
 
 const emailFormatValidator = validation.validators.emailFormat.action;
 
@@ -220,8 +221,19 @@ export default class ProfileEdit extends SafeComponent {
         const uri = contact.largeAvatarUrl;
         const size = SIZE2;
         return (
-            <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={() => this._actionSheet.show()}>
-                <Image source={{ uri, cache: 'force-cache' }} key={uri} style={{ borderRadius: size / 2, width: size, height: size, margin: vars.spacing.medium.mini2x }} />
+            <TouchableOpacity
+                pressRetentionOffset={vars.retentionOffset}
+                onPress={() => this._actionSheet.show()}
+                {...testLabel('currentAvatar')}>
+                <Image
+                    source={{ uri, cache: 'force-cache' }}
+                    key={uri}
+                    style={{
+                        borderRadius: size / 2,
+                        width: size,
+                        height: size,
+                        margin: vars.spacing.medium.mini2x
+                    }} />
             </TouchableOpacity>
         );
     }
@@ -240,6 +252,7 @@ export default class ProfileEdit extends SafeComponent {
                     {contact.hasAvatar ? this.avatar : this.avatarLetter}
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text
+                            {...testLabel('fullName')}
                             style={{
                                 fontWeight: 'bold',
                                 color: vars.white,
@@ -249,7 +262,7 @@ export default class ProfileEdit extends SafeComponent {
                         <Text style={{ color: vars.white }}>@{username}</Text>
                         <View style={{ position: 'absolute', right: 0, bottom: 0, flexDirection: 'row' }}>
                             {contact.hasAvatar && icons.white('delete', () => user.deleteAvatar())}
-                            {icons.white('camera-alt', () => this._actionSheet.show())}
+                            {icons.white('camera-alt', () => this._actionSheet.show(), null, null, 'uploadAvatarIcon')}
                         </View>
                     </View>
                 </View>
@@ -257,12 +270,14 @@ export default class ProfileEdit extends SafeComponent {
                     <Text style={label}>{tx('title_name')}</Text>
                     <View style={textinputContainer}>
                         <SimpleTextBox
+                            {...testLabel('inputFirstName')}
                             onBlur={this.submit}
                             onChangeText={text => { this.firstName = text; }}
                             placeholder={tx('title_firstName')} style={textinput} value={this.firstName} />
                     </View>
                     <View style={textinputContainer}>
                         <SimpleTextBox
+                            {...testLabel('inputLastName')}
                             onBlur={this.submit}
                             onChangeText={text => { this.lastName = text; }}
                             placeholder={tx('title_lastName')} style={textinput} value={this.lastName} />

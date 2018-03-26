@@ -7,6 +7,7 @@ import { vars } from '../../styles/styles';
 import { t } from '../utils/translator';
 import chatState from './chat-state';
 import routes from '../routes/routes';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class ChannelInviteListItem extends SafeComponent {
@@ -41,7 +42,7 @@ export default class ChannelInviteListItem extends SafeComponent {
             paddingHorizontal: 4,
             paddingVertical: 1,
             borderRadius: 5,
-            backgroundColor: vars.bg,
+            backgroundColor: vars.bgGreen,
             overflow: 'hidden',
             alignItems: 'center',
             justifyContent: 'center'
@@ -53,11 +54,14 @@ export default class ChannelInviteListItem extends SafeComponent {
         };
 
         return (
-            <View style={{ backgroundColor: vars.bg }}>
+            <View
+                {...testLabel(channelName)}
+                style={{ backgroundColor: vars.bg }}>
                 <TouchableOpacity
                     onPress={this.onPress}
                     style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
-                    <Text style={textStyle}>
+                    <Text
+                        style={textStyle}>
                         {`# ${channelName}`}
                     </Text>
                     <View style={circleStyle}>

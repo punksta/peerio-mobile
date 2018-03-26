@@ -10,7 +10,7 @@ import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
 import { gradient } from './controls/effects';
-import { clientApp, crypto, startSocket, config, User } from '../lib/icebear';
+import { clientApp, crypto, startSocket, config, User, TinyDb } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import { enableIdfa } from '../lib/idfa';
@@ -18,6 +18,7 @@ import consoleOverride from '../lib/console-override';
 import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
+import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
 
 const { height, width } = Dimensions.get('window');
@@ -53,7 +54,8 @@ export default class App extends SafeComponent {
     async componentWillMount() {
         if (!MockComponent) {
             let route = routerApp.routes.loading;
-            if (!await User.getLastAuthenticated()) {
+            if (!await User.getLastAuthenticated()
+                && !await TinyDb.system.getValue('apple-review-login')) {
                 route = routerApp.routes.loginStart;
             }
             route.transition();
@@ -118,7 +120,8 @@ export default class App extends SafeComponent {
             <PopupLayout key="popups" />,
             uiState.picker,
             <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>,
-            <StatusBar barStyle="light-content" hidden={false} key="statusBar" />
+            <StatusBar barStyle="light-content" hidden={false} key="statusBar" />,
+            <TestHelper key="testHelper" />
         ]);
     }
 }

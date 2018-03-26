@@ -2,16 +2,16 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { observable } from 'mobx';
-import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
-import Avatar from '../shared/avatar';
 import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { popupCancelConfirm } from '../shared/popups';
 import { tx } from '../utils/translator';
-import { User, contactStore } from '../../lib/icebear';
+import { config } from '../../lib/icebear';
+import ChannelInfoListState from '../channels/channel-info-list-state';
+import testLabel from '../helpers/test-label';
 
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
 
@@ -80,7 +80,10 @@ export default class ChannelInfo extends SafeComponent {
             height: vars.chatListItemHeight
         };
         return (
-            <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={action}>
+            <TouchableOpacity
+                {...testLabel(title)}
+                pressRetentionOffset={vars.retentionOffset}
+                onPress={action}>
                 <View style={containerStyle}>
                     {icon ?
                         icons.darkNoPadding(icon, action) :
@@ -92,66 +95,6 @@ export default class ChannelInfo extends SafeComponent {
             </TouchableOpacity>
         );
     }
-
-    invitedParticipant = (invitation, i) => {
-        // they should already be cached
-        const contact = contactStore.getContact(invitation.username);
-        return this.participant(contact, i);
-    }
-
-    participant = (contact, i) => {
-        const { chat } = this;
-        const { username } = contact;
-        const row = {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexGrow: 1
-        };
-        const isAdmin = chat.isAdmin(contact);
-        return (
-            <View key={contact.username} style={row}>
-                <View style={{ flex: 1, flexGrow: 1 }}>
-                    <Avatar
-                        noBorderBottom
-                        contact={contact}
-                        key={username || i}
-                        message=""
-                        hideOnline />
-                </View>
-                <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
-                    {isAdmin && <View style={{ backgroundColor: vars.tabsFg, borderRadius: 4, padding: vars.spacing.small.mini2x, overflow: 'hidden', marginRight: vars.spacing.small.maxi2x }}>
-                        <Text style={{ color: vars.white, fontSize: vars.font.size.small }}>
-                            {tx('title_admin')}
-                        </Text>
-                    </View>}
-                    {chat.canIAdmin && (
-                        <Menu>
-                            <MenuTrigger
-                                renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
-                                style={{ padding: vars.iconPadding }}>
-                                {icons.plaindark('more-vert')}
-                            </MenuTrigger>
-                            <MenuOptions>
-                                {contact.username !== User.current.username && <MenuOption
-                                    onSelect={() => (isAdmin ?
-                                        chat.demoteAdmin(contact) :
-                                        chat.promoteToAdmin(contact))}>
-                                    <Text>{isAdmin ?
-                                        tx('button_demoteAdmin') : tx('button_makeAdmin')}
-                                    </Text>
-                                </MenuOption>}
-                                <MenuOption
-                                    onSelect={() => chat.removeParticipant(contact)}>
-                                    <Text>{tx('button_remove')}</Text>
-                                </MenuOption>
-                            </MenuOptions>
-                        </Menu>
-                    )}
-                </View>
-            </View>
-        );
-    };
 
     get topicTextBox() {
         const chat = chatState.currentChat;
@@ -166,7 +109,8 @@ export default class ChannelInfo extends SafeComponent {
                     onBlur={update}
                     onEndEditing={update}
                     value={this.channelTopic}
-                    style={{ paddingLeft: vars.spacing.medium.midi, height: vars.inputHeight, color: vars.txtDark }} />
+                    style={{ paddingLeft: vars.spacing.medium.midi, height: vars.inputHeight, color: vars.txtDark }}
+                    maxLength={config.chat.maxChatPurposeLength} />
             </View>
         );
     }
@@ -184,7 +128,6 @@ export default class ChannelInfo extends SafeComponent {
         const { chat } = this;
         if (!chat) return null;
         const { canIAdmin, canILeave } = chat;
-        const invited = chatState.chatInviteStore.sent.get(chat.id);
         const body = (
             <View>
                 {this.lineBlock(canIAdmin ? this.topicTextBox : this.topicTextView)}
@@ -197,26 +140,7 @@ export default class ChannelInfo extends SafeComponent {
                         {this.spacer}
                     </View>)
                 }
-                {chat.allJoinedParticipants && this.lineBlock(
-                    <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x }]}>
-                                {tx('title_Members')}
-                            </Text>
-                        </View>
-                        {chat.allJoinedParticipants.map(this.participant)}
-                    </View>
-                )}
-                {invited && this.lineBlock(
-                    <View style={{ paddingVertical: vars.spacing.small.midi2x }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', flexGrow: 1 }}>
-                            <Text style={[textStyle, { marginBottom: vars.spacing.small.maxi2x }]}>
-                                {tx('title_invited')}
-                            </Text>
-                        </View>
-                        {invited.map(this.invitedParticipant)}
-                    </View>
-                )}
+                <ChannelInfoListState />
             </View>
         );
         return (<LayoutModalExit

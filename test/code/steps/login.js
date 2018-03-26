@@ -9,6 +9,18 @@ defineSupportCode(({ Given, When, Then }) => {
         room_test: {
             name: process.env.CREATE_ROOM_TEST_USER,
             passphrase: process.env.CREATE_ROOM_TEST_PASS
+        },
+        profile_test: {
+            name: process.env.PROFILE_TEST_USER,
+            passphrase: process.env.PROFILE_TEST_PASS
+        },
+        upload_to_files: {
+            name: process.env.UPLOAD_TO_FILES_USER,
+            passphrase: process.env.UPLOAD_TO_FILES_PASS
+        },
+        upload_to_chat: {
+            name: process.env.UPLOAD_TO_CHAT_USER,
+            passphrase: process.env.UPLOAD_TO_CHAT_PASS
         }
     };
 
@@ -51,14 +63,7 @@ defineSupportCode(({ Given, When, Then }) => {
     });
 
     Given('I sign out', async function () {
-        await this.homePage.settingsTab.click();
-        await this.app.touchAction([
-            { action: 'press', x: 0, y: 200 },
-            { action: 'moveTo', x: 0, y: -200 },
-            'release'
-        ]);
-        await this.settingsPage.logoutButton.click();
-        await this.settingsPage.lockButton.click();
+        await this.logout();
     });
 
     When('I sign in', async function () {

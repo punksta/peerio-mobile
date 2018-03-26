@@ -5,7 +5,7 @@ import RoutedState from '../routes/routed-state';
 import { fileStore, TinyDb, socket, fileHelpers, clientApp, chatStore } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
-import { popupInputWithPreview, popupYesCancel } from '../shared/popups';
+import { popupInputWithPreview, popupInput, popupYesCancel, popupOkCancel } from '../shared/popups';
 import { promiseWhen } from '../helpers/sugar';
 
 class FileState extends RoutedState {
@@ -46,7 +46,18 @@ class FileState extends RoutedState {
                 });
                 this.routerMain.files();
             })
-            .catch(() => null);
+            .catch((e) => console.error(e));
+    }
+
+    @action async deleteFile(file) {
+        const title = tx('dialog_confirmDeleteFile');
+        let subtitle = '';
+        if (file.shared) subtitle += `\n${tx('title_confirmRemoveSharedFiles')}`;
+        const result = await popupOkCancel(title, subtitle);
+        if (result) {
+            await file.remove();
+        }
+        return result; // Used to trigger events after deleting
     }
 
     @action.bound async deleteFile(file) {

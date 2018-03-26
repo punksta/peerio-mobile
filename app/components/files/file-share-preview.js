@@ -137,10 +137,13 @@ export default class FileSharePreview extends SafeComponent {
                         text={tx('button_cancel')}
                         onPress={this.props.onCancel}
                         secondary
+                        testID="cancel"
                     />
                     <ButtonText
                         text={tx('button_share')}
-                        onPress={this.props.onSubmit} />
+                        onPress={this.props.onSubmit}
+                        testID="share"
+                    />
                 </View>
             </View>
         );

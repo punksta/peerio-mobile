@@ -5,8 +5,12 @@ class HomePage extends Page {
         return this.getWhenVisible('~title_startSecureChat');
     }
 
-    get chatsTab() {
-        return this.checkIfVisible('~forum');
+    get filesTab() {
+        return this.getWhenVisible('~folder');
+    }
+
+    get isVisible() {
+        return this.app.waitForVisible('~forum');
     }
 
     get settingsTab() {

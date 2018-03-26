@@ -11,7 +11,9 @@ import FileSignatureError from './file-signature-error';
 @observer
 export default class FileInlineProgress extends SafeComponent {
     renderThrow() {
-        const file = fileState.store.getById(this.props.file);
+        const file = this.props.chatId ?
+            fileState.store.getByIdInChat(this.props.file, this.props.chatId) :
+            fileState.store.getById(this.props.file);
         if (!file) return <Text>{`no file ${this.props.file}`}</Text>;
         if (file.signatureError) return <FileSignatureError />;
         return (
