@@ -12,6 +12,7 @@ import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import { User } from '../../lib/icebear';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class MemberList extends SafeComponent {
@@ -83,7 +84,10 @@ export default class MemberList extends SafeComponent {
         const isCurrentUser = contact.username === User.current.username;
 
         return (
-            <View key={contact.username} style={row}>
+            <View
+                key={contact.username}
+                style={row}
+                {...testLabel(`${contact.username}-memberList`)}>
                 <View style={{ flex: 1, flexGrow: 1 }}>
                     <Avatar
                         noBorderBottom
@@ -92,7 +96,9 @@ export default class MemberList extends SafeComponent {
                         message=""
                         hideOnline />
                 </View>
-                <View style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
+                <View
+                    {...testLabel('moreButton')}
+                    style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
                     {isAdmin &&
                         <View style={{
                             backgroundColor: vars.tabsFg,
@@ -122,7 +128,7 @@ export default class MemberList extends SafeComponent {
                             </MenuOption>
                             <MenuOption
                                 onSelect={() => channel.removeParticipant(contact)}>
-                                <Text>{tx('button_remove')}</Text>
+                                <Text {...testLabel('Remove')}>{tx('button_remove')}</Text>
                             </MenuOption>
                         </MenuOptions>
                     </Menu>}
