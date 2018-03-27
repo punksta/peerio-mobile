@@ -1,7 +1,10 @@
 const { defineSupportCode, Status } = require('cucumber');
 const World = require('./world');
+const chai = require('chai');
 
+chai.should();
 const defaultTimeout = 3000000;
+
 defineSupportCode(({ setDefaultTimeout, setWorldConstructor, Before, After }) => {
     setDefaultTimeout(defaultTimeout);
 

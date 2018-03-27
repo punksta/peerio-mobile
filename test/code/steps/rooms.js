@@ -1,7 +1,4 @@
 const { defineSupportCode } = require('cucumber');
-const chai = require('chai');
-
-chai.should();
 
 defineSupportCode(({ When, Then }) => {
     When('I invite someone to join the room', async function () {

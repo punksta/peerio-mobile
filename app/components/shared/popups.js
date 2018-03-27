@@ -23,7 +23,7 @@ function textControl(str) {
         formatted = str.replace('\n', '\n\n');
     }
 
-    return <Text style={text}>{formatted}</Text>;
+    return <Text {...testLabel('textControl')} style={text}>{formatted}</Text>;
 }
 
 function checkBoxControl(str, checked, press, accessibilityLabel) {

@@ -43,5 +43,19 @@ defineSupportCode(({ When, Then }) => {
         await this.profileSettingsPage.currentAvatar.click();
         await this.fileUploadPage.uploadCropImageFromCamera();
     });
+
+    When('I go to security settings', async function () {
+        await this.homePage.settingsTab.click();
+        await this.settingsPage.securityButton.click();
+    });
+
+    When('I can see my account key', async function () {
+        await this.settingsPage.showAccountKeyButton.click();
+
+        const passphrase = await this.settingsPage.passphraseLabel.getText();
+        passphrase.should.equal(this.passphrase);
+
+        await this.settingsPage.copyButton.click();
+    });
 });
 
