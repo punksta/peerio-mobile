@@ -5,6 +5,7 @@ import ComposeMessage from '../messaging/compose-message';
 import CreateChannel from '../channels/create-channel';
 import ChannelAddPeople from '../messaging/channel-add-people';
 import FileShare from '../files/file-share';
+import FolderShare from '../files/folder-share';
 import FileMove from '../files/file-move';
 import FileChooseRecipient from '../files/file-choose-recipient';
 import ContactView from '../contacts/contact-view';
@@ -27,6 +28,7 @@ class RouterModal extends Router {
         this.add('createChannel', CreateChannel);
         this.add('channelAddPeople', ChannelAddPeople);
         this.add('shareFileTo', FileShare);
+        this.add('shareFolderTo', FolderShare);
         this.add('changeRecipient', FileChooseRecipient);
         this.add('moveFileTo', FileMove);
         this.add('contactView', ContactView);

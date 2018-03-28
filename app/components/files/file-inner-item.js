@@ -14,7 +14,7 @@ import FileProgress from './file-progress';
 import { fileHelpers } from '../../lib/icebear';
 
 const { width } = Dimensions.get('window');
-const height = 64;
+const height = vars.listItemHeight;
 const checkBoxWidth = height;
 
 const fileInfoContainerStyle = {
@@ -41,7 +41,7 @@ export default class FileInnerItem extends SafeComponent {
         const icon = checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
             backgroundColor: 'white',
-            padding: vars.spacing.small.mini2x,
+            paddingHorizontal: vars.spacing.small.mini2x,
             flex: 0,
             width: checkBoxWidth,
             justifyContent: 'center',
@@ -59,16 +59,16 @@ export default class FileInnerItem extends SafeComponent {
     renderThrow() {
         const { file } = this.props;
         if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
-        const action = () => !file.uploading && this.onPress();
+        const actionIcon = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
-            icons.dark('keyboard-arrow-right', action);
+            icons.dark('more-vert', this.props.onFileActionPress);
         const nameStyle = {
             color: vars.txtDark,
             fontSize: vars.font.size.normal,
             fontWeight: vars.font.weight.bold
         };
         const infoStyle = {
-            color: vars.subtleText,
+            color: vars.extraSubtleText,
             fontSize: vars.font.size.smaller,
             fontWeight: vars.font.weight.regular
         };
@@ -96,7 +96,7 @@ export default class FileInnerItem extends SafeComponent {
         }
         if (icon) icon = icons.darkNoPadding(icon);
         const loadingStyle = null;
-        const arrow = this.props.hideArrow ? null : (
+        const optionsIcon = this.props.hideArrow || fileState.isFileSelectionMode ? null : (
             <View style={{ flex: 0 }}>
                 {iconRight}
             </View>
@@ -105,7 +105,7 @@ export default class FileInnerItem extends SafeComponent {
         return (
             <View style={{ backgroundColor: 'white' }}>
                 <TouchableOpacity
-                    onPress={action}
+                    onPress={actionIcon}
                     {...testLabel(testID)}>
                     <View style={[fileInfoContainerStyle, { opacity }]}>
                         {this.checkbox()}
@@ -125,7 +125,7 @@ export default class FileInnerItem extends SafeComponent {
                                     {moment(file.uploadedAt).format('DD/MM/YYYY')}
                                 </Text>
                             </View>
-                            {arrow}
+                            {optionsIcon}
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -139,5 +139,6 @@ FileInnerItem.propTypes = {
     onPress: PropTypes.func,
     file: PropTypes.any.isRequired,
     checkbox: PropTypes.string,
-    hideArrow: PropTypes.bool
+    hideArrow: PropTypes.bool,
+    onFileActionPress: PropTypes.func
 };

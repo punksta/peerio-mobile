@@ -39,8 +39,8 @@ function textControl(str, style) {
     return <Text style={text}>{formatted}</Text>;
 }
 
-function checkBoxControl(str, checked, press, accessibilityLabel) {
-    return <CheckBox text={str} isChecked={checked} onChange={press} accessibilityLabel={accessibilityLabel} />;
+function checkBoxControl(str, checked, press, alignLeft, accessibilityLabel) {
+    return <CheckBox text={str} isChecked={checked} onChange={press} alignLeft accessibilityLabel={accessibilityLabel} />;
 }
 
 function inputControl(state, placeholder, props) {
@@ -295,7 +295,7 @@ function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
                 <Text style={helperTextStyle}>
                     {tx('title_2FAHelperText')}
                 </Text>
-                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; }, 'trustDevice')}
+                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; }, false, 'trustDevice')}
             </View>
         );
         popupState.showPopup({
@@ -357,6 +357,47 @@ function popupSetupVideo() {
     });
 }
 
+function popupFolderDelete(isShared, isOwner) {
+    let text = 'dialog_deleteFolderText';
+    if (isShared) {
+        text = isOwner ? 'dialog_deleteSharedFolderText' : 'dialog_deleteSharedFolderNonOwnerText';
+    }
+    return popupState.showPopupPromise(resolve => ({
+        title: textControl(tx('title_deleteFolder_mobile')),
+        contents: textControl(tx(text)),
+        type: 'systemWarning',
+        buttons: [
+            { id: 'cancel', text: tu('button_cancel'), secondary: true, action: () => resolve(false) },
+            { id: 'confirm', text: tu('button_delete'), action: () => resolve(true) }
+        ]
+    }));
+}
+
+function popupMoveToSharedFolder() {
+    return new Promise((resolve) => {
+        const o = observable({ value: '', checked: false });
+        const alignedLeft = true;
+        popupState.showPopup({
+            title: textControl(tx('title_moveToSharedFolder')),
+            contents: (
+                <View>
+                    {textControl(tx('title_moveToSharedFolderDescription'))}
+                    {checkBoxControl(
+                        tx('title_dontShowMessageAgain'),
+                        o.checked,
+                        v => { o.checked = v; },
+                        alignedLeft
+                    )}
+                </View>
+            ),
+            buttons: [
+                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
+                { id: 'move', text: tu('button_move'), action: () => resolve(o) }
+            ]
+        });
+    });
+}
+
 function popupUpgradeNotification() {
     return new Promise((resolve) => {
         popupState.showPopup({
@@ -389,7 +430,6 @@ locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
 
-
 export {
     textControl,
     addSystemWarningAction,
@@ -412,5 +452,8 @@ export {
     popupCancelConfirm,
     popupSetupVideo,
     popupUpgradeNotification,
-    popupUpgradeProgress
+    popupUpgradeProgress,
+    popupFolderDelete,
+    popupMoveToSharedFolder
 };
+

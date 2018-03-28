@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FileInnerItem from './file-inner-item';
 import FolderInnerItem from './folder-inner-item';
@@ -33,13 +33,28 @@ export default class FileItem extends SafeComponent {
         }
     }
 
+    @action.bound onFileActionPress() {
+        const { file, onFileActionPress } = this.props;
+        onFileActionPress(file);
+    }
+
+    @action.bound onFolderPress(folder) {
+        const { onChangeFolder } = this.props;
+        onChangeFolder(folder);
+    }
+
+    @action.bound onFolderActionPress() {
+        const { file, onFolderActionPress } = this.props;
+        onFolderActionPress(file);
+    }
+
     renderThrow() {
         const { file } = this.props;
         return (
-            <View style={{ backgroundColor: 'white', marginHorizontal: vars.spacing.medium.mini2x }}>
+            <View style={{ backgroundColor: 'white', marginHorizontal: vars.fileListHorizontalPadding }}>
                 {file.isFolder ?
-                    <FolderInnerItem folder={file} onLongPress={this.props.onLongPress} onPress={() => this.props.onChangeFolder(file)} /> :
-                    <FileInnerItem onPress={f => this.press(f)} file={file} rowID={this.props.rowID} />}
+                    <FolderInnerItem folder={file} onPress={this.onFolderPress} onFolderActionPress={this.onFolderActionPress} /> :
+                    <FileInnerItem file={file} onPress={f => this.press(f)} onFileActionPress={this.onFileActionPress} rowID={this.props.rowID} />}
             </View>
         );
     }
@@ -47,5 +62,7 @@ export default class FileItem extends SafeComponent {
 
 FileItem.propTypes = {
     file: PropTypes.any.isRequired,
-    onChangeFolder: PropTypes.any
+    onChangeFolder: PropTypes.any,
+    onFileActionPress: PropTypes.func,
+    onFolderActionPress: PropTypes.func
 };

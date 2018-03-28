@@ -23,12 +23,8 @@ export default class RecentFilesList extends SafeComponent {
 
     // TODO Test after new FS is implemented
     @action.bound refreshData() {
-        console.log('Old Data');
-        console.log(this.dataSource);
         const newData = this.data;
         this.dataSource = [{ data: newData.slice(), key: tx('title_recentFiles') }];
-        console.log('New Data');
-        console.log(this.dataSource);
         this.forceUpdate();
     }
 
@@ -52,7 +48,7 @@ export default class RecentFilesList extends SafeComponent {
         const isCollapsed = !chatState.collapseFirstChannelInfoList;
         if (collapsible && isCollapsed) return null;
         const fileId = item;
-        const file = fileState.store.getById(fileId);
+        const file = fileState.store.getByIdInChat(fileId, chatState.currentChat.id);
         if (!file) return null;
         // TODO: replace with getOrMake pattern
         // for event handler

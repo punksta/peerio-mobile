@@ -55,7 +55,7 @@ export default class ContactView extends SafeComponent {
     renderContact(contact) {
         const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted, isAdded, isDeleted } = contact;
         const tofuErrorControl = tofuError && (
-            <View style={{ backgroundColor: '#D0021B', flexGrow: 1, padding: vars.spacing.small.maxi }}>
+            <View style={{ backgroundColor: vars.redWarning, flexGrow: 1, padding: vars.spacing.small.maxi }}>
                 <Text style={{ color: vars.white }}>
                     This contact{'\''}s public key has changed, which means it may be compromised.
                 </Text>

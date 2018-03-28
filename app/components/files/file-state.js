@@ -26,11 +26,11 @@ class FileState extends RoutedState {
     }
 
     get showSelection() {
-        return fileStore.hasSelectedFiles;
+        return fileStore.hasSelectedFilesOrFolders;
     }
 
     get selected() {
-        return fileStore.getSelectedFiles();
+        return fileStore.selectedFilesOrFolders;
     }
 
     @action delete() {
@@ -58,6 +58,17 @@ class FileState extends RoutedState {
             await file.remove();
         }
         return result; // Used to trigger events after deleting
+    }
+
+    @action.bound async deleteFile(file) {
+        let t = tx('dialog_confirmDeleteFile');
+        if (file.shared) t += `\n${tx('title_confirmRemoveSharedFiles')}`;
+        try {
+            await rnAlertYesNo(t);
+            await file.remove();
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     async remindAboutEncryption() {
@@ -110,8 +121,10 @@ class FileState extends RoutedState {
         this.selected.forEach(f => { f.selected = false; });
     }
 
-    @action selectFiles() {
+    @action selectFilesAndFolders() {
         this.resetSelection();
+        // this.currentFile = null;
+        this.currentFolder = this.store.folders.root;
         this.isFileSelectionMode = true;
         return new Promise((resolve, reject) => {
             this.resolveFileSelection = resolve;

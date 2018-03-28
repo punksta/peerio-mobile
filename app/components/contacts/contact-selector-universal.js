@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { when, observable, action, reaction, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
-import { t, tx } from '../utils/translator';
-import Layout1 from '../layout/layout1';
+import { t, tx, tu } from '../utils/translator';
+import Layout3 from '../layout/layout3';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
 import ContactsPlaceholder from './contacts-placeholder';
@@ -119,14 +119,13 @@ export default class ContactSelectorUniversal extends SafeComponent {
 
     exitRow() {
         const container = {
-            flexGrow: 1,
             flexDirection: 'row',
-            paddingTop: vars.spacing.small.midi2x,
+            paddingTop: vars.spacing.small.midi2x + (this.props.hideHeader ? 0 : vars.statusBarHeight),
             paddingHorizontal: vars.spacing.small.midi2x,
-            alignItems: 'center'
+            alignItems: 'center',
+            height: vars.headerHeight
         };
         const textStyle = {
-            marginRight: vars.iconSize * 2,
             textAlign: 'center',
             flexGrow: 1,
             flexShrink: 1,
@@ -138,11 +137,17 @@ export default class ContactSelectorUniversal extends SafeComponent {
             <View style={container}>
                 {icons.dark('close', this.props.onExit)}
                 <Text style={textStyle}>{tx(this.props.title)}</Text>
+                {this.props.multiselect && this.shareButton}
             </View>
         );
     }
 
-    async action() {
+    get shareButton() {
+        if (this.recipients.items.length) return icons.text(tu('share'), this.action);
+        return icons.disabledText(tu('share'));
+    }
+
+    @action.bound async action() {
         const selectorAction = this.props.action;
         if (!selectorAction) return;
         this.inProgress = true;
@@ -219,8 +224,14 @@ export default class ContactSelectorUniversal extends SafeComponent {
                 <Text style={{ color: vars.txtDate }}>{t('error_userNotFoundTryEmail', { user: this.notFound })}</Text>
             </View>
         );
+        const containerStyle = {
+            marginHorizontal: vars.spacing.medium.maxi,
+            // flex is needed here, because we contain a SectionList
+            // it calculates its height correctly only from flex parents
+            flex: 1
+        };
         return (
-            <View style={{ marginHorizontal: vars.spacing.medium.maxi }}>
+            <View style={containerStyle}>
                 {notFound}
                 {this.inviteContact}
                 {!!this.legacyContact &&
@@ -231,24 +242,18 @@ export default class ContactSelectorUniversal extends SafeComponent {
     }
 
     header() {
-        if (this.props.hideHeader) {
-            return (
-                <View style={{ flex: 0 }}>
-                    {this.props.subTitleComponent}
-                    {this.textbox()}
-                    {this.props.multiselect &&
-                        <ContactSelectorUserBoxLine
-                            contacts={this.recipients.items} onPress={this.recipients.remove} />}
-                </View>
-            );
-        }
         return (
-            <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
+            <View style={{ flex: 0 }}>
                 {this.exitRow()}
-                {this.props.subTitleComponent}
-                <View style={{ marginTop: vars.spacing.medium.mini2x }}>
-                    {this.textbox()}
-                </View>
+                {this.props.subTitleComponent ? (
+                    <View style={{ marginBottom: vars.spacing.medium.mini2x }}>
+                        {this.props.subTitleComponent}
+                    </View>
+                ) : null}
+                {this.textbox()}
+                {this.props.multiselect &&
+                    <ContactSelectorUserBoxLine
+                        contacts={this.recipients.items} onPress={this.recipients.remove} />}
             </View>
         );
     }
@@ -265,11 +270,12 @@ export default class ContactSelectorUniversal extends SafeComponent {
             </Bottom>
         );
         return (
-            <Layout1
+            <Layout3
                 defaultBar
                 body={body}
                 header={header}
                 noFitHeight
+                footer={this.props.footer}
                 footerAbsolute={snackbar}
                 style={layoutStyle} />
         );
@@ -281,7 +287,8 @@ ContactSelectorUniversal.propTypes = {
     subTitleComponent: PropTypes.any,
     leftIconComponent: PropTypes.any,
     inputPlaceholder: PropTypes.any,
-    multiselect: PropTypes.any,
     action: PropTypes.func,
-    onExit: PropTypes.func
+    onExit: PropTypes.func,
+    multiselect: PropTypes.any,
+    footer: PropTypes.any
 };

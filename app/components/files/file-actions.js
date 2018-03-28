@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, Text, TouchableOpacity, Animated } from 'react-native';
 import SafeComponent from '../shared/safe-component';
@@ -8,6 +9,7 @@ import { uiState, fileState } from '../states';
 import icons from '../helpers/icons';
 import routes from '../routes/routes';
 import { vars } from '../../styles/styles';
+import routerMain from '../routes/router-main';
 import testLabel from '../helpers/test-label';
 
 const actionCellStyle = {
@@ -53,6 +55,12 @@ export default class FileActions extends SafeComponent {
             .finally(() => { uiState.externalViewer = false; });
     };
 
+    @action.bound deleteFolder() {
+        const { file } = this.props;
+        fileState.store.folders.deleteFolder(file);
+        routerMain.back();
+    }
+
     renderThrow() {
         const { file } = this.props;
         const enabled = file && file.readyForDownload || fileState.showSelection;
@@ -62,9 +70,10 @@ export default class FileActions extends SafeComponent {
         return (
             <Animated.View style={bottomRowStyle}>
                 {leftAction}
-                {this.action(t('button_share'), 'reply', () => routes.modal.shareFileTo(), file && file.canShare && enabled)}
-                {this.action(t('Move'), 'repeat', () => routes.modal.moveFileTo(), file)}
-                {this.action(t('button_delete'), 'delete', () => fileState.delete(), enabled)}
+                {this.action(t('button_share'), 'reply', routes.modal.shareFileTo, file && file.canShare && enabled)}
+                {this.action(t('button_move'), 'repeat', routes.modal.moveFileTo, file)}
+                {!file.isFolder && this.action(t('button_delete'), 'delete', fileState.delete, enabled)}
+                {file.isFolder && this.action(t('button_delete'), 'delete', this.deleteFolder, true) }
                 {/* {this.action(t('button_more'), 'more-horiz')} */}
             </Animated.View>
         );

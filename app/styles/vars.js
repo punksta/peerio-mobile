@@ -37,7 +37,7 @@ const retentionOffset = { top: r, left: r, bottom: r, right: r };
 const tabCellHeight = 56;
 
 // pixel ratio should be factored into scaleDim somehow: const pixRatio = PixelRatio.get();
-const defaultHeight = 667;
+// const defaultHeight = 667;
 // scaleDim takes a size value and returns one that is adjusted to the height of the device as it compares to an iPhone 6
 // const scaleDim = size => height / defaultHeight * size;
 const scaleDim = size => size; // temporary making scaleDim do nothing
@@ -58,6 +58,7 @@ const vars = {
     disabled: '#00000020',
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',
+    redWarning: '#D0021B',
     black: '#000',
     white: '#fff',
     whiteIcon: '#fff',
@@ -78,6 +79,7 @@ const vars = {
     pickerText: '#fff',
     subtleBg: '#c3dfee',
     black03: 'rgba(0, 0, 0, 0.03)',
+    black05: 'rgba(0, 0, 0, 0.05)',
     black12: 'rgba(0, 0, 0, 0.12)',
     subtleText: 'rgba(0, 0, 0, .54)',
     verySubtleGrey: 'rgba(0, 0, 0, .12)',
@@ -86,6 +88,7 @@ const vars = {
     lighterBlackText: 'rgba(0, 0, 0, .87)',
     inputBgInactive: 'rgba(255, 255, 255, .5)',
     inputBgInactiveText: 'rgba(0,0,0, .54)',
+    checkboxDisabled: 'rgba(0,0,0,.12)',
     checkboxInactive: 'rgba(0,0,0,.06)',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
     checkboxIconActive: bg,
@@ -96,10 +99,13 @@ const vars = {
     settingsItemHeight: 56,
     settingsBg: 'rgba(0, 0, 0, 0.06)',
     headerBorderColor: 'rgba(0,0,0,.06)',
+    folderRemoveNotifBg: 'rgba(0,0,0,.06)',
+    folderRemoveNotifHeight: 95,
     gold: '#ffd700',
     fabEnabled: '#FF7D00',
     fabDisabled: '#CFCFCF',
     buttonGreen: '#2CCF84',
+    fileUploadProgressColor: 'rgba(50, 206, 195, 0.12)',
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
@@ -119,6 +125,8 @@ const vars = {
     imagePreviewSize: 48,
     chatListItemHeight: 48,
     contactListHeaderHeight: 48,
+    removeButtonHeight: 44,
+    warningHeight: 70,
     roundedButtonWidth: 134,
     menuWidthRatio: 0.8,
     animationDuration: 200,
@@ -126,8 +134,10 @@ const vars = {
     listItemHeight: 56,
     listViewPaddingVertical: 36,
     listViewPaddingHorizontal: 8,
+    avatarDiameter: 36,
     pinnedChatIconSize: 18,
     pinnedChatPaddingHorizontal: 2,
+    fileListHorizontalPadding: scaleDim(16),
     fileInnerItemPaddingRight: 8,
     loadingScreenMarginBottom: scaleDim(170),
     loadingScreenMarginTop: scaleDim(206),
@@ -161,6 +171,8 @@ const vars = {
     signupFontSize: scaleDim(36),
     profileEditFontSize: scaleDim(60),
     readReceiptFontSize: scaleDim(9),
+    sharedWithNumberFontColor: '#F2F2F2',
+    sharedWithNumberBackground: 'grey',
     fontTitleSize: 16,
     largeInputWidth: 240,
     inputHeight: 48,
