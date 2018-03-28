@@ -7,8 +7,8 @@ import SafeComponent from '../shared/safe-component';
 import chatState from '../messaging/chat-state';
 import ChatInfoSectionHeader from '../messaging/chat-info-section-header';
 import RecentFileItem from '../files/recent-file-item';
-import fileState from '../files/file-state';
 import FilesActionSheet from '../files/files-action-sheet';
+import fileState from '../files/file-state';
 import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 25;
@@ -54,7 +54,7 @@ export default class RecentFilesList extends SafeComponent {
         // for event handler
         return (
             <RecentFileItem
-                onMenu={() => this.filesActionSheet.show(file)}
+                onMenu={() => FilesActionSheet.show(file)}
                 key={fileId}
                 file={file} />
         );
@@ -70,8 +70,6 @@ export default class RecentFilesList extends SafeComponent {
             hidden={!this.hasData} />);
     };
 
-    filesActionSheetRef = (ref) => { this.filesActionSheet = ref; };
-
     renderThrow() {
         return (
             <View>
@@ -83,9 +81,6 @@ export default class RecentFilesList extends SafeComponent {
                     renderSectionHeader={this.header}
                     style={{ marginBottom: 8 }}
                 />
-                <FilesActionSheet
-                    ref={this.filesActionSheetRef}
-                    refreshData={this.refreshData} />
             </View>
         );
     }

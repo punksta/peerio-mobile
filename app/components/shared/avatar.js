@@ -223,21 +223,22 @@ export default class Avatar extends SafeComponent {
     }
 
     get files() {
-        const { onInlineFileAction, chatId } = this.props;
+        const { onInlineFileAction, onLegacyFileAction, chatId } = this.props;
         return this.props.files ?
             this.props.files.map(file => (
                 <FileInlineProgress
                     key={file}
                     file={file}
                     onAction={onInlineFileAction}
+                    onLegacyFileAction={onLegacyFileAction}
                     chatId={chatId} />
             )) : null;
     }
 
     get inlineImage() {
-        const { inlineImage, onInlineImageAction } = this.props;
+        const { inlineImage, onInlineImageAction, onLegacyFileAction } = this.props;
         return inlineImage ?
-            <FileInlineImage key={inlineImage} image={inlineImage} onAction={onInlineImageAction} /> : null;
+            <FileInlineImage key={inlineImage} image={inlineImage} onAction={onInlineImageAction} onLegacyFileAction={onLegacyFileAction} /> : null;
     }
 
     get errorCircle() {

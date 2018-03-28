@@ -27,8 +27,6 @@ const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
 let fileUploadActionSheet = null;
-let filesActionSheet = null;
-let foldersActionSheet = null;
 
 function backFolderAction() {
     fileState.currentFolder = fileState.currentFolder.parent;
@@ -105,8 +103,8 @@ export default class Files extends SafeComponent {
                 file={file}
                 rowID={rowID}
                 onChangeFolder={this.onChangeFolder}
-                onFileActionPress={() => filesActionSheet.show(file)}
-                onFolderActionPress={() => foldersActionSheet.show(file)} />
+                onFileAction={() => FilesActionSheet.show(file)}
+                onFolderAction={() => FoldersActionSheet.show(file)} />
         );
     };
 
@@ -302,14 +300,6 @@ export default class Files extends SafeComponent {
         fileUploadActionSheet = ref;
     }
 
-    @action.bound filesActionSheetRef(ref) {
-        filesActionSheet = ref;
-    }
-
-    @action.bound foldersActionSheetRef(ref) {
-        foldersActionSheet = ref;
-    }
-
     renderThrow() {
         return (
             <View
@@ -324,8 +314,6 @@ export default class Files extends SafeComponent {
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
                 <FileUploadActionSheet createFolder ref={this.fileUploadActionSheetRef} />
-                <FilesActionSheet ref={this.filesActionSheetRef} />
-                <FoldersActionSheet ref={this.foldersActionSheetRef} />
                 {this.toolbar()}
             </View>
         );

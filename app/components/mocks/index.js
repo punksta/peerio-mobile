@@ -5,6 +5,7 @@
 // import MockPopups from './mock-popups';
 // import MockImagePreview from './mock-image-preview';
 // import MockThumbnail from './mock-thumbnail';
+// import MockActionSheet from './mock-action-sheet';
 // import MockMigration from './mock-migration';
 
 export default null;

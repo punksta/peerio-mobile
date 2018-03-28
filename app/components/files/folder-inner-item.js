@@ -141,7 +141,7 @@ export default class FolderInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { folder, onSelect, hideMoreOptionsIcon, onFolderActionPress } = this.props;
+        const { folder, onSelect, hideMoreOptionsIcon, onFolderAction } = this.props;
         const { isShared, isBlocked } = folder;
         const progressContainer = {
             backgroundColor: vars.fileUploadProgressColor,
@@ -175,7 +175,7 @@ export default class FolderInnerItem extends SafeComponent {
             <View style={{ flex: 0 }}>
                 {icons.dark(
                     'more-vert',
-                    !isBlocked ? onFolderActionPress : null,
+                    !isBlocked ? onFolderAction : null,
                     !isBlocked ? null : { opacity: 0.38 })}
             </View>);
         return (

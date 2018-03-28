@@ -336,6 +336,7 @@ export default class FileInlineImage extends SafeComponent {
                     onLayout={this.layout}
                     file={image}
                     onAction={this.props.onAction}
+                    onLegacyFileAction={this.props.onLegacyFileAction}
                     isImage
                     isOpen={this.opened}
                     extraActionIcon={!downloading && icons.darkNoPadding(

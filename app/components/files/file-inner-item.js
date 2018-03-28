@@ -61,7 +61,7 @@ export default class FileInnerItem extends SafeComponent {
         if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
         const actionIcon = () => !file.uploading && this.onPress();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
-            icons.dark('more-vert', this.props.onFileActionPress);
+            icons.dark('more-vert', (this.props.onFileAction));
         const nameStyle = {
             color: vars.txtDark,
             fontSize: vars.font.size.normal,
@@ -140,5 +140,5 @@ FileInnerItem.propTypes = {
     file: PropTypes.any.isRequired,
     checkbox: PropTypes.string,
     hideArrow: PropTypes.bool,
-    onFileActionPress: PropTypes.func
+    onFileAction: PropTypes.func
 };

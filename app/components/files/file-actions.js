@@ -70,10 +70,11 @@ export default class FileActions extends SafeComponent {
         return (
             <Animated.View style={bottomRowStyle}>
                 {leftAction}
-                {this.action(t('button_share'), 'reply', routes.modal.shareFileTo, file && file.canShare && enabled)}
-                {this.action(t('button_move'), 'repeat', routes.modal.moveFileTo, file)}
-                {!file.isFolder && this.action(t('button_delete'), 'delete', fileState.delete, enabled)}
-                {file.isFolder && this.action(t('button_delete'), 'delete', this.deleteFolder, true) }
+                {this.action(t('button_share'), 'reply', () => routes.modal.shareFileTo(), file && file.canShare && enabled && !file.isLegacy)}
+                {this.action(t('button_move'), 'repeat', () => routes.modal.moveFileTo(), file && !file.isLegacy && !file.isShared)}
+                {file.isFolder ?
+                    this.action(t('button_delete'), 'delete', this.deleteFolder, true) :
+                    this.action(t('button_delete'), 'delete', () => { fileState.delete(file); }, enabled)}
                 {/* {this.action(t('button_more'), 'more-horiz')} */}
             </Animated.View>
         );

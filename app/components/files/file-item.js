@@ -33,9 +33,9 @@ export default class FileItem extends SafeComponent {
         }
     }
 
-    @action.bound onFileActionPress() {
-        const { file, onFileActionPress } = this.props;
-        onFileActionPress(file);
+    @action.bound onFileAction() {
+        const { file, onFileAction } = this.props;
+        onFileAction(file);
     }
 
     @action.bound onFolderPress(folder) {
@@ -43,9 +43,9 @@ export default class FileItem extends SafeComponent {
         onChangeFolder(folder);
     }
 
-    @action.bound onFolderActionPress() {
-        const { file, onFolderActionPress } = this.props;
-        onFolderActionPress(file);
+    @action.bound onFolderAction() {
+        const { file, onFolderAction } = this.props;
+        onFolderAction(file);
     }
 
     renderThrow() {
@@ -53,8 +53,8 @@ export default class FileItem extends SafeComponent {
         return (
             <View style={{ backgroundColor: 'white', marginHorizontal: vars.fileListHorizontalPadding }}>
                 {file.isFolder ?
-                    <FolderInnerItem folder={file} onPress={this.onFolderPress} onFolderActionPress={this.onFolderActionPress} /> :
-                    <FileInnerItem file={file} onPress={f => this.press(f)} onFileActionPress={this.onFileActionPress} rowID={this.props.rowID} />}
+                    <FolderInnerItem folder={file} onPress={this.onFolderPress} onFolderAction={this.onFolderAction} /> :
+                    <FileInnerItem file={file} onPress={f => this.press(f)} onFileAction={this.onFileAction} rowID={this.props.rowID} />}
             </View>
         );
     }

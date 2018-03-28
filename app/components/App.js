@@ -6,6 +6,7 @@ import { observer } from 'mobx-react/native';
 import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';
 import ModalLayout from './layout/modal-layout';
+import ActionSheetLayout from './layout/action-sheet-layout';
 import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
@@ -118,6 +119,7 @@ export default class App extends SafeComponent {
             <RouteNavigator key="navigator" routes={routerApp} />,
             <ModalLayout key="modals" />,
             <PopupLayout key="popups" />,
+            <ActionSheetLayout />,
             uiState.picker,
             <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>,
             <StatusBar barStyle="light-content" hidden={false} key="statusBar" />,

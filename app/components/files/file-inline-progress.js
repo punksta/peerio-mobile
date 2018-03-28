@@ -19,7 +19,8 @@ export default class FileInlineProgress extends SafeComponent {
         return (
             <FileInlineContainer
                 file={file}
-                onAction={this.props.onAction}>
+                onAction={this.props.onAction}
+                onLegacyFileAction={this.props.onLegacyFileAction}>
                 <View style={{ flex: 0 }}>
                     {!file.uploading && this.props.transparentOnFinishUpload && <ActivityIndicator />}
                     {file.uploading && icons.darkNoPadding('close', () => fileState.cancelUpload(file))}

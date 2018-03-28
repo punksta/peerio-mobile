@@ -54,21 +54,11 @@ class FileState extends RoutedState {
         let subtitle = '';
         if (file.shared) subtitle += `\n${tx('title_confirmRemoveSharedFiles')}`;
         const result = await popupOkCancel(title, subtitle);
+        console.log(result);
         if (result) {
             await file.remove();
         }
         return result; // Used to trigger events after deleting
-    }
-
-    @action.bound async deleteFile(file) {
-        let t = tx('dialog_confirmDeleteFile');
-        if (file.shared) t += `\n${tx('title_confirmRemoveSharedFiles')}`;
-        try {
-            await rnAlertYesNo(t);
-            await file.remove();
-        } catch (e) {
-            console.error(e);
-        }
     }
 
     async remindAboutEncryption() {

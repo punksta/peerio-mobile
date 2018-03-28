@@ -9,13 +9,14 @@ import { vars } from '../../styles/styles';
 import FileProgress from './file-progress';
 import FileActions from './file-actions';
 import { fileState } from '../states';
-import { tx } from '../utils/translator';
+import { T, tx } from '../utils/translator';
 import FileTypeIcon from './file-type-icon';
 import { fileHelpers } from '../../lib/icebear';
 
 const containerStyle = {
     flexGrow: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginHorizontal: vars.spacing.small.midi
 };
 
 const firstRowStyle = {
@@ -66,6 +67,51 @@ export default class FileDetailView extends SafeComponent {
         }
     }
 
+    legacyNotification() {
+        const notificationContainer = {
+            marginTop: vars.spacing.medium.mini2x,
+            marginHorizontal: vars.spacing.small.maxi
+        };
+        const titleContainer = {
+            flexDirection: 'row',
+            backgroundColor: vars.legacyFileTitleBg,
+            borderRadius: 5,
+            marginBottom: vars.spacing.small.midi2x,
+            paddingVertical: vars.spacing.small.mini,
+            paddingHorizontal: vars.spacing.small.mini2x
+        };
+        const titleStyle = {
+            fontSize: vars.font.size.smallerx,
+            color: vars.legacyFileTitle,
+            paddingVertical: 1
+        };
+        const descriptionStyle = {
+            fontSize: vars.font.size.normal,
+            color: vars.subtleText
+        };
+        const learnMoreStyle = {
+            fontSize: vars.font.size.normal,
+            color: vars.peerioBlue,
+            fontStyle: 'italic',
+            fontWeight: vars.font.weight.semiBold,
+            marginTop: vars.spacing.medium.mini2x,
+            marginBottom: vars.spacing.small.midi
+        };
+        return (
+            <View style={notificationContainer}>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={titleContainer}>
+                        <Text style={titleStyle}>{tx('title_oldVersion')}</Text>
+                    </View>
+                </View>
+                <View>
+                    <Text style={descriptionStyle}>{tx('title_oldVersionDescription1')}</Text>
+                    <Text style={descriptionStyle}>{tx('title_oldVersionDescription2')}</Text>
+                </View>
+                <Text style={learnMoreStyle}><T k="title_learnMoreLegacyFiles" /></Text>
+            </View>);
+    }
+
     renderFileDetailView() {
         const { file } = this;
         let icon = null;
@@ -75,6 +121,7 @@ export default class FileDetailView extends SafeComponent {
         return (
             <View style={containerStyle}>
                 <View>
+                    {file.isLegacy && this.legacyNotification()}
                     <View style={firstRowStyle}>
                         <View style={iconTypeStyle}>
                             <TouchableOpacity
