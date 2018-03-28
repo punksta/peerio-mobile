@@ -141,18 +141,13 @@ export default class ActionSheetLayout extends SafeComponent {
     @action.bound handleCancel() {
         // slide-out of menu
         LayoutAnimation.easeInEaseOut();
-        if (Platform.OS === 'ios') {
-            state.animating = true;
-            setTimeout(() => {
-                // fade in of background
-                LayoutAnimation.easeInEaseOut();
-                state.visible = false;
-                state.config = null;
-            }, 10);
-        } else {
+        state.animating = true;
+        setTimeout(() => {
+            // fade in of background
+            LayoutAnimation.easeInEaseOut();
             state.visible = false;
             state.config = null;
-        }
+        }, 10);
         uiState.actionSheetShown = false;
     }
 
@@ -187,7 +182,7 @@ export default class ActionSheetLayout extends SafeComponent {
         const container = {
             paddingBottom: vars.spacing.small.midi2x,
             position: 'absolute',
-            bottom: 0
+            bottom: state.animating && Platform.OS !== 'android' ? -height : 0
         };
         return (
             <TouchableWithoutFeedback onPress={this.handleCancel}>
