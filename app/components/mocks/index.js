@@ -5,7 +5,8 @@
 // import MockPopups from './mock-popups';
 // import MockImagePreview from './mock-image-preview';
 // import MockThumbnail from './mock-thumbnail';
+// import MockMigration from './mock-migration';
 
 export default null;
-// export default MockChannel;
+// export default MockMigration;
 // export default __DEV__ ? MockChannel : null;
