@@ -4,7 +4,7 @@ import { observer } from 'mobx-react/native';
 import { Text, View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import UpdateProgressIndicator from '../controls/update-progress-indicator';
-import uiState from '../layout/ui-state';
+import { fileStore } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 
@@ -18,7 +18,7 @@ export default class PopupMigration extends SafeComponent {
         };
         return (
             <View>
-                <UpdateProgressIndicator progress={uiState.fileUpdateProgress} />
+                <UpdateProgressIndicator progress={fileStore.migrationProgress} />
                 <Text style={textStyle}>{tx('title_fileUpdateProgressDescription')}</Text>
             </View>
         );

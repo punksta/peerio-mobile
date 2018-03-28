@@ -87,25 +87,16 @@ class RouterMain extends Router {
     }
 
     @action async filesystemUpgrade() {
-        // TODO remove mock update progress
-        const intervalId = setInterval(uiState.mockUpdateProgress, 500);
-        if (!fileStore.fileSystemUpgradeRequired) {
-            const updatePressed = await popupUpgradeNotification();
-            if (updatePressed) {
-                if (!fileStore.hasFilesShared) {
-                    popupUpgradeProgress();
-                    // TODO verify functions
-                    // fileStore.migrationUpgrade();
-                    // fileStore.migrationUnshare();
-                    when(() => uiState.fileUpdateProgress === 100, () => {
-                        popupState.discardPopup();
-                        snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
-                        clearInterval(intervalId);
-                    });
-                } else {
-                    snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
-                }
+        if (fileStore.migrationPending) {
+            if (!fileStore.migrationStarted) {
+                await popupUpgradeNotification();
+                fileStore.confirmMigration();
             }
+            popupUpgradeProgress();
+            when(() => fileStore.migrationProgress >= 100 || !fileStore.migrationPending, () => {
+                popupState.discardPopup();
+                snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
+            });
         }
     }
 

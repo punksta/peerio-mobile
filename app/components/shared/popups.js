@@ -407,7 +407,7 @@ function popupUpgradeNotification() {
                 <View>
                     {textControl(tx('title_upgradeFileSystemDescription1'), textStyle)}
                     {textControl(tx('title_upgradeFileSystemDescription2'), textStyle)}
-                    {fileStore.hasFilesShared && textControl(tx('title_upgradeFileSystemDescription3'), textStyle)}
+                    {fileStore.hasLegacySharedFiles && textControl(tx('title_upgradeFileSystemDescription3'), textStyle)}
                 </View>
             ),
             buttons: [
