@@ -46,7 +46,7 @@ export default class FileActionSheetHeader extends SafeComponent {
                 <TouchableOpacity style={container} onPress={onPress} disabled={!onPress}>
                     <View style={{ flex: 1, justifyContent: 'center' }}>
                         <Text style={infoTextStyle} numberOfLines={1} ellipsizeMode="middle">
-                            {file.name} {file.isLegacy && tx('title_oldVersion2')}
+                            {file.name} {file.isLegacy && tx('title_pending2')}
                         </Text>
                         <Text style={infoTextStyle} numberOfLines={1} ellipsizeMode="middle">
                             {file.sizeFormatted} {moment(file.uploadedAt).format('DD/MM/YYYY')}

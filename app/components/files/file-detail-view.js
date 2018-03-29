@@ -101,7 +101,7 @@ export default class FileDetailView extends SafeComponent {
             <View style={notificationContainer}>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={titleContainer}>
-                        <Text style={titleStyle}>{tx('title_oldVersion')}</Text>
+                        <Text style={titleStyle}>{tx('title_pending')}</Text>
                     </View>
                 </View>
                 <View>
