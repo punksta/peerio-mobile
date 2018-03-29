@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.263.0"></a>
+# [3.263.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.262.0...v3.263.0) (2018-03-29)
+
+
+### Bug Fixes
+
+* add key to actionsheetlayout ([350e9c3](https://github.com/PeerioTechnologies/peerio-mobile/commit/350e9c3))
+
+
+### Features
+
+* add unshare mock ability to folder ([cbaaef2](https://github.com/PeerioTechnologies/peerio-mobile/commit/cbaaef2))
+
+
+
 <a name="3.262.0"></a>
 # [3.262.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.261.0...v3.262.0) (2018-03-28)
 
