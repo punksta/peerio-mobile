@@ -15,7 +15,6 @@ export default class FilesActionSheet {
             <FileActionSheetHeader
                 file={file}
                 onPress={() => {
-                    ActionSheetLayout.hide();
                     routerModal.discard();
                     routerMain.files(file);
                 }} />
@@ -26,7 +25,6 @@ export default class FilesActionSheet {
                 disabled: isLegacy,
                 action: () => {
                     fileState.currentFile = file;
-                    ActionSheetLayout.hide();
                     routerModal.shareFileTo();
                 }
             },
@@ -34,14 +32,12 @@ export default class FilesActionSheet {
                 title: 'button_move',
                 action: () => {
                     fileState.currentFile = file;
-                    ActionSheetLayout.hide();
                     routerModal.moveFileTo();
                 }
             },
             {
                 title: 'button_rename',
                 action: async () => {
-                    ActionSheetLayout.hide();
                     const newFileName = await popupInput(
                         tx('title_fileName'),
                         '',

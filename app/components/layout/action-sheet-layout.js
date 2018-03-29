@@ -74,6 +74,12 @@ const state = observable({
 
 @observer
 export default class ActionSheetLayout extends SafeComponent {
+    executeAction(button) {
+        if (button.disabled) return;
+        ActionSheetLayout.hide();
+        button.action();
+    }
+
     actionButtons() {
         const { header, actionButtons } = state.config;
         return (actionButtons.map((button, i) => {
@@ -94,7 +100,7 @@ export default class ActionSheetLayout extends SafeComponent {
                 <View style={[container, { backgroundColor: vars.lightGrayBg }]} >
                     <TouchableOpacity
                         style={container}
-                        onPress={!button.disabled ? button.action : null} >
+                        onPress={() => this.executeAction(button)} >
                         <Text style={text}>
                             {tx(button.title)}
                         </Text>
@@ -121,6 +127,7 @@ export default class ActionSheetLayout extends SafeComponent {
     }
 
     @action.bound static hide() {
+        if (!state.visible) return;
         // slide-out of menu
         LayoutAnimation.easeInEaseOut();
         if (Platform.OS === 'ios') {

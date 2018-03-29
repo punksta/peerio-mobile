@@ -18,7 +18,6 @@ export default class FoldersActionSheet extends SafeComponent {
             <FileActionSheetHeader
                 file={folder}
                 onPress={() => {
-                    ActionSheetLayout.hide();
                     routerModal.discard();
                     routerMain.files(folder);
                 }} />
@@ -31,7 +30,6 @@ export default class FoldersActionSheet extends SafeComponent {
                     // TODO add logic for folder.isOwner
                     // TODO: refactor this, this is confusing and bad
                     fileState.currentFile = folder;
-                    ActionSheetLayout.hide();
                     const contacts = await routerModal.shareFolderTo();
                     await volumeStore.shareFolder(folder, contacts);
                 }
@@ -41,20 +39,26 @@ export default class FoldersActionSheet extends SafeComponent {
                 disabled: isShared,
                 action: () => {
                     fileState.currentFile = folder;
-                    ActionSheetLayout.hide();
                     routerModal.moveFileTo();
                 }
             },
             {
                 title: tx('button_rename'),
                 action: async () => {
-                    ActionSheetLayout.hide();
                     const newFolderName = await popupInput(
                         tx('title_fileName'),
                         '',
                         fileHelpers.getFileNameWithoutExtension(folder.name)
                     );
                     if (newFolderName) { await folder.rename(`${newFolderName}`); }
+                }
+            },
+            {
+                title: tx('button_unshare'),
+                disabled: !folder.isShared,
+                action: async () => {
+                    folder.isShared = false;
+                    folder.isJustUnshared = true;
                 }
             },
             {
@@ -67,7 +71,6 @@ export default class FoldersActionSheet extends SafeComponent {
                     };
                     await fileState.store.bulk.removeOne(folder);
                     fileState.store.bulk.deleteFolderConfirmator = null;
-                    ActionSheetLayout.hide();
                 }
             }
         ];
