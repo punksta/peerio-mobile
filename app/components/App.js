@@ -119,7 +119,7 @@ export default class App extends SafeComponent {
             <RouteNavigator key="navigator" routes={routerApp} />,
             <ModalLayout key="modals" />,
             <PopupLayout key="popups" />,
-            <ActionSheetLayout />,
+            <ActionSheetLayout key="actionSheets" />,
             uiState.picker,
             <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>,
             <StatusBar barStyle="light-content" hidden={false} key="statusBar" />,
