@@ -21,7 +21,7 @@ export default class HeaderMain extends SafeComponent {
             flex: -1,
             justifyContent: 'flex-end',
             backgroundColor: vars.darkBlue
-        }
+        };
         const textStyle = {
             flex: 1,
             flexGrow: 1,

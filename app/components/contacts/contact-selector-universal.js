@@ -122,7 +122,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
             backgroundColor: vars.darkBlueBackground15,
             flexGrow: 1,
             flexDirection: 'row',
-            paddingTop: vars.spacing.small.midi2x,
+            paddingTop: vars.statusBarHeight * 2,
             paddingHorizontal: vars.spacing.small.midi2x,
             alignItems: 'center'
         };
@@ -244,7 +244,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
             );
         }
         return (
-            <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
+            <View>
                 {this.exitRow()}
                 {this.props.subTitleComponent}
                 <View style={{ marginTop: vars.spacing.medium.mini2x }}>
