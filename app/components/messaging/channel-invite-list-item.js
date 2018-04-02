@@ -38,8 +38,8 @@ export default class ChannelInviteListItem extends SafeComponent {
         };
 
         const circleStyle = {
-            paddingHorizontal: 4,
-            paddingVertical: 1,
+            width: vars.roomInviteCircleWidth,
+            height: vars.roomInviteCircleHeight,
             borderRadius: 5,
             backgroundColor: vars.peerioBlue,
             overflow: 'hidden',

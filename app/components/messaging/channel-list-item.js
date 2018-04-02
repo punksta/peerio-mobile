@@ -40,8 +40,8 @@ export default class ChannelListItem extends SafeComponent {
         };
 
         const circleStyle = {
-            width: vars.spacing.large.mini2x,
-            paddingVertical: 1,
+            width: vars.unreadCircleWidth,
+            height: vars.unreadCircleHeight,
             borderRadius: 14,
             backgroundColor: vars.peerioTeal,
             overflow: 'hidden',

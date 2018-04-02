@@ -1,6 +1,5 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { action } from 'mobx';
 import { View, ScrollView, Share, Text, Platform } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -18,7 +17,7 @@ import { scrollHelper } from '../helpers/test-helper';
 const bgStyle = {
     flexGrow: 1,
     flex: 1,
-    backgroundColor: vars.settingsBg
+    backgroundColor: vars.darkBlueBackground05
 };
 
 const svStyle = {

@@ -162,7 +162,7 @@ export default class FileInlineImage extends SafeComponent {
             color: vars.txtDark
         };
         const text = {
-            color: vars.bg,
+            color: vars.peerioBlue,
             fontStyle: 'italic',
             marginVertical: 10
         };
@@ -215,7 +215,7 @@ export default class FileInlineImage extends SafeComponent {
 
     get displayImageOffer() {
         const text = {
-            color: vars.bg,
+            color: vars.peerioBlue,
             fontStyle: 'italic',
             textAlign: 'center',
             marginVertical: 10

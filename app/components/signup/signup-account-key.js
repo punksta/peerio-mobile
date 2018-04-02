@@ -123,7 +123,7 @@ export default class SignupStep1 extends LoginWizardPage {
                 </View>
                 <Text style={textNormal}>{tx('title_accountKey2')}</Text>
                 <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: vars.spacing.large.midi2x }}>
-                    {/* buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
+                    {/* buttons.uppercasePeerioBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
                     {/* signupState.keyBackedUp && icons.plaindark('check-circle') */}
                 </View>
             </View>

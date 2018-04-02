@@ -176,7 +176,7 @@ export default class Files extends SafeComponent {
             paddingHorizontal: vars.spacing.small.midi2x,
             marginVertical: vars.spacing.small.midi,
             marginHorizontal: vars.spacing.medium.mini2x,
-            borderColor: vars.gray54,
+            borderColor: vars.black12,
             borderWidth: 1,
             height,
             borderRadius: height
@@ -194,7 +194,7 @@ export default class Files extends SafeComponent {
             fontSize
         };
 
-        const leftIcon = icons.plain('search', vars.iconSize, vars.txtDate);
+        const leftIcon = icons.plain('search', vars.iconSize, vars.black12);
 
         let rightIcon = null;
         if (fileState.findFilesText) {

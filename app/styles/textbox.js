@@ -20,7 +20,7 @@ const textbox = {
     marginLeft: vars.inputPaddingLeft,
     padding: 0,
     height: 28,
-    color: vars.textGray87,
+    color: vars.textBlack87,
     fontSize: vars.font.size.normal
 };
 
@@ -66,7 +66,7 @@ export default {
         normal: {
             container: hintContainer,
             text: {
-                color: vars.gray38,
+                color: vars.black38,
                 alignSelf: 'center',
                 fontSize: vars.font.size.normal
             }

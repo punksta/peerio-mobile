@@ -265,7 +265,7 @@ export default class Avatar extends SafeComponent {
 
     get date() {
         const unreadStyle = this.props.unread
-            ? { color: vars.bg, fontWeight: '600' }
+            ? { color: vars.peerioBlue, fontWeight: '600' }
             : null;
         const { timestampText } = this.props;
         return timestampText ?
@@ -295,7 +295,7 @@ export default class Avatar extends SafeComponent {
 
     get checkedStyle() {
         if (this.props.checkbox) return null;
-        return { backgroundColor: vars.bg };
+        return { backgroundColor: vars.peerioBlue };
     }
 
     get avatar() {

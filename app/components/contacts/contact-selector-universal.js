@@ -73,7 +73,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
             paddingHorizontal: vars.spacing.small.midi,
             marginHorizontal: vars.spacing.medium.mini2x,
             marginBottom: vars.spacing.small.midi,
-            borderColor: vars.bg,
+            borderColor: vars.peerioBlue,
             borderWidth: 1,
             height,
             borderRadius: height
@@ -88,7 +88,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
             rightIcon = icons.coloredSmall('close', () => {
                 this.findUserText = '';
                 this.onChangeFindUserText('');
-            }, vars.bg);
+            }, vars.peerioBlue);
         }
 
         if (this.inProgress || contactState.inProgress) {
@@ -133,7 +133,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
             flexShrink: 1,
             fontSize: vars.font.size.big,
             fontWeight: vars.font.weight.semiBold,
-            color: vars.textGray54
+            color: vars.textBlack54
         };
         return (
             <View style={container}>

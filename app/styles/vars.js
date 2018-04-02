@@ -25,7 +25,7 @@ function isBigScreenSize() {
     return false;
 }
 
-const { bg, bgGradient, tabsBg, tabsFg } = branding;
+const { bg, bgGradient, tabsFg } = branding;
 const { darkBlue, darkTeal, peerioBlue, peerioPurple, peerioTeal, yellow, red } = branding;
 const statusBarHeight = (Platform.OS === 'android' ? 0 : 10) + iPhoneXTop;
 const layoutPaddingTop = statusBarHeight * 2;
@@ -42,6 +42,7 @@ const defaultHeight = 667;
 const scaleDim = size => size; // temporary making scaleDim do nothing
 
 const vars = {
+    // TODO categorize vars
     darkBlue,
     darkTeal,
     peerioBlue,
@@ -53,25 +54,37 @@ const vars = {
     textWhite70: 'rgba(255, 255, 255, .7)',
     textWhite50: 'rgba(255, 255, 255, .5)',
     textDarkGrey: '#343434',
-    textGray38: 'rgba(0, 0, 0, .38)', // Text
-    textGray54: 'rgba(0, 0, 0, .54)', // Text
-    textGray87: 'rgba(0, 0, 0, .87)', // Text
-    gray38: 'rgba(0, 0, 0, .38)', // Non-text
-    gray54: 'rgba(0, 0, 0, .54)', // Non-text
+    // Text
+    textBlack38: 'rgba(0, 0, 0, .38)',
+    textBlack54: 'rgba(0, 0, 0, .54)',
+    textBlack87: 'rgba(0, 0, 0, .87)',
+    // Non-text
+    black03: 'rgba(0, 0, 0, 0.03)',
+    black12: 'rgba(0, 0, 0, 0.12)',
+    black38: 'rgba(0, 0, 0, .38)',
+    black54: 'rgba(0, 0, 0, .54)',
     chatItemPressedBackground: '#D7E5FA',
-    darkBlueBackground05: '#F2F2F5', // Dark Blue 5%
-    darkBlueBackground15: '#D9DAE2', // Dark Blue 15%
-    peerioBlueBackground05: '#E9EDF6', // Peerio Blue 5%
-    peerioBlueBackground15: '#D6E2F5', // Peerio Blue 15%
+    darkBlueBackground05: '#F2F2F5', // darkBlue 5%
+    darkBlueBackground15: '#D9DAE2', // darkBlue 15%
+    peerioBlueBackground05: '#E9EDF6', // peerioBlue 5%
+    peerioBlueBackground15: '#D6E2F5', // peerioBlue 15%
+    darkBlueTransparent30: 'rgba(4, 11, 64, 0.3)', // darkBlue 30%
+    roomInviteCircleHeight: 18,
+    roomInviteCircleWidth: 31,
+    unreadCircleHeight: 22,
+    unreadCircleWidth: 31,
     unreadTextColor: '#040B40',
     adminBadgeColor: 'rgba(0, 0, 0, 0.12)',
     progressBarBackground: 'rgba(0, 0, 0, .12)',
+    toggleActive: peerioBlue,
+    toggleInactive: '#9B9B9B',
+    toggleLineActive: '#B6D3FF',
+    toggleLineInactive: '#CFCFCF',
 
     circle: 10,
     circleSize: 4,
     bg,
     bgGradient,
-    tabsBg,
     tabsFg,
     bgGreen: '#38CE86',
     bgHighlight: 'rgba(50, 176, 227, 0.38)',
@@ -82,7 +95,6 @@ const vars = {
     black: '#000',
     white: '#fff',
     whiteIcon: '#fff',
-    notificationIcon: '#f00',
     usernameHighlight: '#32CEC3',
     darkIcon: '#00000070',
     txtLight: '#bfdfef',
@@ -98,10 +110,7 @@ const vars = {
     pickerBg: 'rgba(255, 255, 255, .12)',
     pickerText: '#fff',
     subtleBg: '#c3dfee',
-    black03: 'rgba(0, 0, 0, 0.03)',
-    black12: 'rgba(0, 0, 0, 0.12)',
     subtleText: 'rgba(0, 0, 0, .54)',
-    verytextGray54: 'rgba(0, 0, 0, .12)',
     extraSubtleText: 'rgba(0, 0, 0, .38)',
     subtleTextBold: 'rgba(0, 0, 0, .54)',
     lighterBlackText: 'rgba(0, 0, 0, .87)',
@@ -115,7 +124,6 @@ const vars = {
     snackbarHeight: 48,
     popupMinHeight: scaleDim(110),
     settingsItemHeight: 56,
-    settingsBg: 'rgba(0, 0, 0, 0.06)',
     headerBorderColor: 'rgba(0,0,0,.06)',
     gold: '#ffd700',
     fabEnabled: '#FF7D00',

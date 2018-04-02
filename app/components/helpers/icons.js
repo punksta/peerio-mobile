@@ -8,7 +8,7 @@ import testLabel from '../helpers/test-label';
 const goStyle = {
     fontSize: vars.font.size.normal,
     fontWeight: vars.font.weight.semiBold,
-    color: vars.bg
+    color: vars.peerioBlue
 };
 
 const disabledStyle = {
@@ -124,8 +124,8 @@ const icons = {
         );
     },
 
-    bubble: (text) => icons.circle(text, 14, 8, vars.notificationIcon, vars.white),
-    unreadBubble: (text) => icons.circle(text, 24, 12, vars.bg, vars.white),
+    bubble: (text) => icons.circle(text, 14, 8, vars.red, vars.white),
+    unreadBubble: (text) => icons.circle(text, 24, 12, vars.peerioBlue, vars.white),
 
     circle(text, radius, margin, bgColor, fgColor) {
         const notificationStyle = {

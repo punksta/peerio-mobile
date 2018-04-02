@@ -98,7 +98,7 @@ export default class CreateChannel extends Component {
             flexShrink: 1,
             fontSize: vars.font.size.huge,
             fontWeight: vars.font.weight.semiBold,
-            color: vars.textGray54
+            color: vars.textBlack54
         };
         return (
             <View style={container}

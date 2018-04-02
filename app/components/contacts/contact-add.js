@@ -168,7 +168,7 @@ export default class ContactAdd extends SafeComponent {
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={{ paddingRight: vars.spacing.small.maxi2x, paddingVertical: vars.spacing.small.maxi }}>
-                <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
+                <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.peerioBlue }}>
                     {tu(text)}
                 </Text>
             </TouchableOpacity>
@@ -207,7 +207,7 @@ export default class ContactAdd extends SafeComponent {
                 <ScrollView
                     onScroll={this.onScroll}
                     keyboardShouldPersistTaps="handled"
-                    style={{ backgroundColor: vars.settingsBg }}
+                    style={{ backgroundColor: vars.darkBlueBackground05 }}
                     ref={ref => { this._scrollView = ref; }}>
                     <View style={{ marginTop: vars.spacing.medium.midi2x }}>
                         {contactState.empty && <View style={{ margin: vars.spacing.small.midi2x }}>

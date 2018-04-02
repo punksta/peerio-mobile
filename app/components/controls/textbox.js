@@ -200,7 +200,7 @@ export default class TextBox extends SafeComponent {
         if (this.value || this.focused) {
             borderColorOverride = vars.peerioBlue;
         } else {
-            borderColorOverride = vars.gray38;
+            borderColorOverride = vars.black38;
         }
         return (
             <View style={textbox.outerContainer} onLayout={this.layout} ref={ref => { this._container = ref; }}>
