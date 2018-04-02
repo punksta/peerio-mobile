@@ -54,7 +54,7 @@ export default class PopupLayout extends SafeComponent {
         const contentContainerStyle = {
             flexGrow: 1,
             justifyContent: 'center',
-            backgroundColor: vars.darkBlueTransparent30,
+            backgroundColor: '#00000020',
             paddingBottom: uiState.keyboardHeight
         };
         const backgroundColor = colors[popup.type];
