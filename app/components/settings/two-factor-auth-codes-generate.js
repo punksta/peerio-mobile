@@ -57,7 +57,11 @@ export default class TwoFactorAuthCodesGenerate extends SafeComponent {
                         {tx('title_2FABackupCode')}
                     </Text>
                     <View style={buttonCenterStyle}>
-                        {buttons.uppercasePeerioBlueButton(tx('button_2FAGenerateCodes'), () => this.reissueCodes())}
+                        {buttons.uppercasePeerioBlueButton(
+                            tx('button_2FAGenerateCodes'),
+                            () => this.reissueCodes(),
+                            null,
+                            { width: vars.wideRoundedButtonWidth })}
                     </View>
                 </View>
                 <View style={{ left: paddingHorizontal + 12, bottom: paddingVertical, position: 'absolute' }}>

@@ -149,6 +149,7 @@ const vars = {
     chatListItemHeight: 48,
     contactListHeaderHeight: 48,
     roundedButtonWidth: 134,
+    wideRoundedButtonWidth: 190,
     menuWidthRatio: 0.8,
     animationDuration: 200,
     progressBarHeight: 4,
