@@ -7,6 +7,7 @@ import { vars } from '../../styles/styles';
 import { t } from '../utils/translator';
 import chatState from './chat-state';
 import routes from '../routes/routes';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class ChannelInviteListItem extends SafeComponent {
@@ -53,11 +54,12 @@ export default class ChannelInviteListItem extends SafeComponent {
         };
 
         return (
-            <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
+            <View
+                style={{ backgroundColor: vars.chatItemPressedBackground }}
+                {...testLabel(channelName)}>
                 <TouchableOpacity
                     onPress={this.onPress}
-                    style={containerStyle}
-                    pressRetentionOffset={vars.pressRetentionOffset}>
+                    style={containerStyle} pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text style={textStyle}>
                         {`# ${channelName}`}
                     </Text>

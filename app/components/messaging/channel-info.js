@@ -11,6 +11,7 @@ import { popupCancelConfirm } from '../shared/popups';
 import { tx } from '../utils/translator';
 import { config } from '../../lib/icebear';
 import ChannelInfoListState from '../channels/channel-info-list-state';
+import testLabel from '../helpers/test-label';
 
 const leaveRoomImage = require('../../assets/chat/icon-M-leave.png');
 
@@ -81,9 +82,10 @@ export default class ChannelInfo extends SafeComponent {
         return (
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
+                    style={{ backgroundColor: vars.darkBlueBackground05 }}
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={action}
-                    style={{ backgroundColor: vars.darkBlueBackground05 }}>
+                    {...testLabel(title)} >
                     <View style={containerStyle}>
                         {icon ?
                             icons.darkNoPadding(icon, action) :

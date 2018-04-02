@@ -5,6 +5,7 @@ import SafeComponent from '../shared/safe-component';
 import routerMain from '../routes/router-main';
 import { vars } from '../../styles/styles';
 import BackIcon from './back-icon';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class HeaderMain extends SafeComponent {
@@ -54,6 +55,7 @@ export default class HeaderMain extends SafeComponent {
         const iconPlaceHolderWidth = (32 + vars.iconSize);
         const paddingRight = !rightIcon && leftIcon ? iconPlaceHolderWidth : 0;
         const paddingLeft = rightIcon && !leftIcon ? iconPlaceHolderWidth : 0;
+        const title = this.props.title || routerMain.title;
         return (
             <View style={bigContainerStyle}>
                 <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
@@ -61,6 +63,7 @@ export default class HeaderMain extends SafeComponent {
                         {leftIcon}
                     </View>
                     <TouchableOpacity
+                        {...testLabel(title)}
                         style={actionContainerStyle}
                         activeOpacity={titleAction ? 0.2 : 1}
                         onPress={titleAction}
@@ -69,7 +72,7 @@ export default class HeaderMain extends SafeComponent {
                             ellipsizeMode="middle"
                             numberOfLines={1}
                             style={[textStyle, { paddingRight, paddingLeft }]}>
-                            {this.props.title || routerMain.title}
+                            {title}
                             {titleAction && <Text style={{ fontSize: vars.font.size.normal }}>
                                 {'  ▼  '}
                             </Text>}

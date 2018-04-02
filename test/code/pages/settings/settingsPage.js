@@ -24,6 +24,18 @@ class SettingsPage extends Page {
     get lockButton() {
         return this.getWhenVisible('~popupButton-yes');
     }
+
+    get showAccountKeyButton() {
+        return this.getWhenVisible('~title_showAccountKey');
+    }
+
+    get passphraseLabel() {
+        return this.getWhenVisible('~textControl');
+    }
+
+    get copyButton() {
+        return this.getWhenVisible('~popupButton-copy');
+    }
 }
 
 module.exports = SettingsPage;
