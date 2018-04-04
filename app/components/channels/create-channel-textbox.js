@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Platform } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { action } from 'mobx';
 import { vars } from '../../styles/styles';
@@ -7,6 +7,7 @@ import { tx } from '../utils/translator';
 import testLabel from '../helpers/test-label';
 
 const height = vars.inputHeight;
+const fontSize = vars.font.size.normal;
 
 const container = {
     flexDirection: 'row',
@@ -24,7 +25,7 @@ const placeholderStyle = {
     flexGrow: 1,
     height,
     marginLeft: vars.spacing.small.midi,
-    fontSize: vars.font.size.normal
+    fontSize
 };
 
 const bottomTextStyle = {
@@ -48,9 +49,10 @@ export default class CreateChannelTextBox extends Component {
     render() {
         const { labelText, placeholderText, property, bottomText, maxLength, multiline } = this.props;
         const testID = `textInput-${property}`;
-        // hack for multiline v-align
-        const paddingTop = multiline ? ((height - vars.font.size.normal) / 2 - 1) : 0;
-        const style = [placeholderStyle, { paddingTop }];
+        // hack for v-align, padding top and bottom need to be specified
+        let paddingTop = 0;
+        if (Platform.OS === 'ios' && multiline) paddingTop = ((height - fontSize) / 2 - 1);
+        const style = [placeholderStyle, { paddingTop, paddingBottom: 0, verticalAlign: 'center' }];
         return (
             <View>
                 <View style={container}>
