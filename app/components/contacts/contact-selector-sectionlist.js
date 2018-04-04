@@ -34,7 +34,8 @@ export default class ContactSelectorSectionList extends Component {
                 title2={isLegacy ? username : null}
                 height={vars.listItemHeight}
                 hideOnline
-                onPress={() => this.props.onPress(item)} />
+                onPress={() => this.props.onPress(item)}
+                backgroundColor={vars.darkBlueBackground05} />
         );
     };
 

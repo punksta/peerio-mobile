@@ -14,7 +14,7 @@ const container = {
     paddingHorizontal: vars.spacing.medium.maxi,
     marginHorizontal: vars.spacing.medium.mini2x,
     marginBottom: vars.spacing.small.midi2x,
-    borderColor: vars.bg,
+    borderColor: vars.peerioBlue,
     borderWidth: 1,
     height,
     borderRadius: height
@@ -35,7 +35,7 @@ const bottomTextStyle = {
 };
 
 const titleStyle = {
-    color: vars.bg,
+    color: vars.peerioBlue,
     fontSize: vars.font.size.bigger
 };
 
@@ -48,6 +48,9 @@ export default class CreateChannelTextBox extends Component {
     render() {
         const { labelText, placeholderText, property, bottomText, maxLength, multiline } = this.props;
         const testID = `textInput-${property}`;
+        // hack for multiline v-align
+        const paddingTop = multiline ? ((height - vars.font.size.normal) / 2 - 1) : 0;
+        const style = [placeholderStyle, { paddingTop }];
         return (
             <View>
                 <View style={container}>
@@ -61,7 +64,7 @@ export default class CreateChannelTextBox extends Component {
                         autoCapitalize="none"
                         autoCorrect={false}
                         placeholder={tx(placeholderText)}
-                        style={placeholderStyle}
+                        style={style}
                         maxLength={maxLength}
                         multiline={multiline}
                         {...testLabel(testID)} />

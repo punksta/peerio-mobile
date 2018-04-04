@@ -49,7 +49,7 @@ export default class InlineUrlPreviewConsent extends SafeComponent {
                 onPress={onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={{ paddingLeft: 40, paddingVertical: 16 }}>
-                <Text style={{ fontWeight: 'bold', color: colorIsPrimary ? vars.bg : null }}>
+                <Text style={{ fontWeight: 'bold', color: colorIsPrimary ? vars.peerioBlue : null }}>
                     {text}
                 </Text>
             </TouchableOpacity>

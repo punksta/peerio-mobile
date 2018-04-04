@@ -15,7 +15,7 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'white',
+    backgroundColor: vars.darkBlueBackground05,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, .12)',
     height,
@@ -78,29 +78,32 @@ export default class FolderInnerItem extends SafeComponent {
             </View>
         );
         return (
-            <TouchableOpacity
-                onLongPress={onLongPress}
-                onPress={hideArrow ? onSelect : onPress} style={{ backgroundColor: 'white' }}>
-                <View style={folderInfoContainerStyle}>
-                    {this.radio}
-                    <View style={itemContainerStyle}>
-                        <View style={[loadingStyle, { flex: 0 }]}>
-                            {icons.darkNoPadding('folder', null, null, vars.iconSize)}
+            <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
+                <TouchableOpacity
+                    onLongPress={onLongPress}
+                    onPress={hideArrow ? onSelect : onPress}
+                    style={{ backgroundColor: vars.darkBlueBackground05 }}>
+                    <View style={folderInfoContainerStyle}>
+                        {this.radio}
+                        <View style={itemContainerStyle}>
+                            <View style={[loadingStyle, { flex: 0 }]}>
+                                {icons.darkNoPadding('folder', null, null, vars.iconSize)}
+                            </View>
+                            <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
+                                <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
+                                <Text style={infoStyle}>
+                                    {folder.size ?
+                                        <Text>{folder.sizeFormatted}</Text> :
+                                        <Text>{tx('title_empty')}</Text>}
+                                    &nbsp;&nbsp;
+                                    {folder.createdAt && moment(folder.createdAt).format('DD/MM/YYYY')}
+                                </Text>
+                            </View>
+                            {arrow}
                         </View>
-                        <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
-                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
-                            <Text style={infoStyle}>
-                                {folder.size ?
-                                    <Text>{folder.sizeFormatted}</Text> :
-                                    <Text>{tx('title_empty')}</Text>}
-                                &nbsp;&nbsp;
-                                {folder.createdAt && moment(folder.createdAt).format('DD/MM/YYYY')}
-                            </Text>
-                        </View>
-                        {arrow}
                     </View>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
         );
     }
 }
