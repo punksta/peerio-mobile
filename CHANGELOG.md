@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.265.0"></a>
+# [3.265.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.260.0...v3.265.0) (2018-04-04)
+
+
+### Bug Fixes
+
+* add try-catch block for alerts ([5b79ff1](https://github.com/PeerioTechnologies/peerio-mobile/commit/5b79ff1))
+* android inline image upload fix [ch3876] ([26a5ffb](https://github.com/PeerioTechnologies/peerio-mobile/commit/26a5ffb))
+* display avatar for invited users [ch3878] ([0714d1d](https://github.com/PeerioTechnologies/peerio-mobile/commit/0714d1d))
+* fileUploadActionSheet ([faf6e87](https://github.com/PeerioTechnologies/peerio-mobile/commit/faf6e87))
+* rooms bugs (self entry in room info, room name character limit) ([#142](https://github.com/PeerioTechnologies/peerio-mobile/issues/142)) ([4dac29c](https://github.com/PeerioTechnologies/peerio-mobile/commit/4dac29c))
+
+
+### Features
+
+* Add file preview to files upload ([#127](https://github.com/PeerioTechnologies/peerio-mobile/issues/127)) ([1fce9c0](https://github.com/PeerioTechnologies/peerio-mobile/commit/1fce9c0))
+* add video option ([#152](https://github.com/PeerioTechnologies/peerio-mobile/issues/152)) ([15be397](https://github.com/PeerioTechnologies/peerio-mobile/commit/15be397))
+* added time to file upload date in file details view ([#147](https://github.com/PeerioTechnologies/peerio-mobile/issues/147)) ([52fd1ec](https://github.com/PeerioTechnologies/peerio-mobile/commit/52fd1ec))
+* auto capitalize file rename [branch ch4227] ([#145](https://github.com/PeerioTechnologies/peerio-mobile/issues/145)) ([556cb51](https://github.com/PeerioTechnologies/peerio-mobile/commit/556cb51))
+* e2e test for profile edit [branch ch3554] ([#144](https://github.com/PeerioTechnologies/peerio-mobile/issues/144)) ([71751c9](https://github.com/PeerioTechnologies/peerio-mobile/commit/71751c9))
+* redirect apple test user to a different server ([472c353](https://github.com/PeerioTechnologies/peerio-mobile/commit/472c353))
+
+
+
 <a name="3.264.0"></a>
 # [3.264.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.260.0...v3.264.0) (2018-04-03)
 
