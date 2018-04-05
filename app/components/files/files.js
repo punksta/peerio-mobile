@@ -239,8 +239,6 @@ export default class Files extends SafeComponent {
         const container = {
             height: vars.listItemHeight,
             backgroundColor: vars.darkBlueBackground05,
-            flex: 1,
-            flexGrow: 1,
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignItems: 'center',
