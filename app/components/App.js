@@ -118,7 +118,7 @@ export default class App extends SafeComponent {
                 {uiState.picker}
                 <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
                 <StatusBar barStyle="light-content" hidden={false} key="statusBar" />
-                <TestHelper key="testHelper" />
+                {!process.env.NO_DEV_BAR && <TestHelper key="testHelper" />}
             </View>
         );
     }
