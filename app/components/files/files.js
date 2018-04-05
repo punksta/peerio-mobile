@@ -306,7 +306,7 @@ export default class Files extends SafeComponent {
         return (
             <View
                 style={{ flex: 1 }}>
-                <View style={{ flex: 1, backgroundColor: vars.white }}>
+                <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
                     {this.searchTextbox()}
                     {upgradeForFiles()}
                     {!this.data.length && !fileState.currentFolder.isRoot ?
