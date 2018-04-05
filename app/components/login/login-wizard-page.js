@@ -9,6 +9,18 @@ import testLabel from '../helpers/test-label';
 
 const padding = vars.spacing.medium.midi2x;
 
+const innerContainer = {
+    paddingHorizontal: padding
+};
+
+const outerContainer = {
+    backgroundColor: vars.darkBlue,
+    flex: 1,
+    flexGrow: 1,
+    paddingBottom: padding,
+    paddingTop: vars.spacing.huge.minixx + vars.statusBarHeight
+};
+
 const container = {
     backgroundColor: vars.darkBlue,
     flex: 1,
@@ -126,7 +138,7 @@ const buttonRowStyle = {
 export {
     headerWelcome, header2, inner, innerSmall, headingStyle1, headingStyle2, subHeadingStyle, scrollHeadingStyle,
     scrollSubHeadingStyle, footerContainer, footerText1, footerText2, row, circleTop, circleTopSmall,
-    container, topCircleSizeSmall, embeddedImageCircleSize,
+    innerContainer, outerContainer, container, topCircleSizeSmall, embeddedImageCircleSize,
     padding, buttonRowStyle
 };
 

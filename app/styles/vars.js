@@ -68,6 +68,7 @@ const vars = {
     darkBlueBackground15: '#D9DAE2', // darkBlue 15%
     peerioBlueBackground05: '#E9EDF6', // peerioBlue 5%
     peerioBlueBackground15: '#D6E2F5', // peerioBlue 15%
+    darkBlueDivider12: '#E0E1E8', // darkBlue 12%
     darkBlueTransparent30: 'rgba(4, 11, 64, 0.3)', // darkBlue 30%
     roomInviteCircleHeight: 18,
     roomInviteCircleWidth: 31,
@@ -76,6 +77,7 @@ const vars = {
     unreadTextColor: '#040B40',
     adminBadgeColor: 'rgba(0, 0, 0, 0.12)',
     progressBarBackground: 'rgba(0, 0, 0, .12)',
+    toggleDefault: '#747474',
     toggleActive: peerioBlue,
     toggleInactive: '#9B9B9B',
     toggleLineActive: '#B6D3FF',
