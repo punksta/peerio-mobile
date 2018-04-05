@@ -5,6 +5,7 @@ import { reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { warnings, warningStates } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class SnackbarBase extends SafeComponent {
@@ -82,7 +83,9 @@ export default class SnackbarBase extends SafeComponent {
             marginRight: vars.spacing.medium.mini2x
         };
         return (
-            <TouchableWithoutFeedback onPress={() => this.tap()}>
+            <TouchableWithoutFeedback
+                {...testLabel('snackbar')}
+                onPress={() => this.tap()}>
                 <Animated.View style={s}>
                     <Text numberOfLines={2} ellipsizeMode="tail" style={textStyle}>{this.getText()}</Text>
                 </Animated.View>

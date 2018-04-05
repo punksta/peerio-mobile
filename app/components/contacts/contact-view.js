@@ -82,8 +82,8 @@ export default class ContactView extends SafeComponent {
                         <Text style={{ color: vars.txtDark }}>@{username}</Text>
                     </View>
                     {icons.dark('forum', () => this.startChat())}
-                    {isAdded ? icons.colored('star', () => this.toggleFav(), vars.yellow) :
-                        icons.dark('star-border', () => this.toggleFav())}
+                    {isAdded ? icons.colored('star', () => this.toggleFav(), vars.yellow, null, 'favoriteButton') :
+                        icons.dark('star-border', () => this.toggleFav(), null, null, 'favoriteButton')}
                 </View>
                 <View style={{ margin: vars.spacing.medium.maxi2x }}>
                     {tofuErrorControl}

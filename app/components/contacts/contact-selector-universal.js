@@ -137,7 +137,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
         };
         return (
             <View style={container}>
-                {icons.dark('close', this.props.onExit)}
+                {icons.dark('close', this.props.onExit, null, null, 'closeButton')}
                 <Text style={textStyle}>{tx(this.props.title)}</Text>
             </View>
         );

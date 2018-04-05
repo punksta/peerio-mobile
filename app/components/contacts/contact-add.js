@@ -12,6 +12,7 @@ import uiState from '../layout/ui-state';
 import contactState from './contact-state';
 import snackbarState from '../snackbars/snackbar-state';
 import buttons from '../helpers/buttons';
+import testLabel from '../helpers/test-label';
 
 const textinputContainer = {
     backgroundColor: vars.white,
@@ -165,6 +166,7 @@ export default class ContactAdd extends SafeComponent {
     renderButton1(text, onPress, disabled) {
         return (
             <TouchableOpacity
+                {...testLabel(text)}
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={{ paddingRight: vars.spacing.small.maxi2x, paddingVertical: vars.spacing.small.maxi }}>
@@ -220,8 +222,11 @@ export default class ContactAdd extends SafeComponent {
                                     autoCorrect={false}
                                     autoCapitalize="none"
                                     onChangeText={text => { this.query = text; }}
-                                    placeholder={tx('title_userSearch')} style={textinput}
-                                    value={this.query} />
+                                    placeholder={tx('title_userSearch')}
+                                    style={textinput}
+                                    value={this.query}
+                                    {...testLabel('contactSearchInput')}
+                                />
                                 {this.renderButton1('button_add', () => this.tryAdding())}
                             </View>
                             {this.inviteBlock}
