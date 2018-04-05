@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { observable, action, when } from 'mobx';
 import { observer } from 'mobx-react/native';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -100,7 +100,7 @@ export default class FilePreview extends SafeComponent {
                     </Text>
                     <TextInput
                         autoCorrect={false}
-                        autoCapitalize="none"
+                        autoCapitalize="sentences"
                         value={state.name}
                         onChangeText={text => { state.name = text; }}
                         underlineColorAndroid="transparent"

@@ -26,15 +26,18 @@ export default class ContactSelectorSectionList extends Component {
             );
         }
         return (
-            <Avatar
-                noBorderBottom
-                starred={isAdded}
-                contact={item}
-                title={<Text style={{ fontWeight: 'normal' }}>{fullName || username}</Text>}
-                title2={isLegacy ? username : null}
-                height={vars.listItemHeight}
-                hideOnline
-                onPress={() => this.props.onPress(item)} />
+            <View {...testLabel(params.index.toString())}>
+                <Avatar
+                    noBorderBottom
+                    starred={isAdded}
+                    contact={item}
+                    title={<Text style={{ fontWeight: 'normal' }}>{fullName || username}</Text>}
+                    title2={isLegacy ? username : null}
+                    height={vars.listItemHeight}
+                    hideOnline
+                    onPress={() => this.props.onPress(item)}
+                    backgroundColor={vars.darkBlueBackground05} />
+            </View>
         );
     };
 

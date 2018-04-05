@@ -36,7 +36,7 @@ function textControl(str, style) {
     }
     if (style) Object.assign(text, style);
 
-    return <Text style={text}>{formatted}</Text>;
+    return <Text {...testLabel('textControl')} style={text}>{formatted}</Text>;
 }
 
 function checkBoxControl(str, checked, press, alignLeft, accessibilityLabel) {
@@ -190,13 +190,13 @@ function popupCancelConfirm(title, subTitle, text) {
     }));
 }
 
-function popupInput(title, subTitle, value) {
+function popupInput(title, subTitle, value, textInputProps) {
     return new Promise((resolve) => {
         const o = observable({ value });
         popupState.showPopup({
             title,
             subTitle: textControl(subTitle),
-            contents: inputControl(o),
+            contents: inputControl(o, null, textInputProps),
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: () => resolve(o.value)
             }]

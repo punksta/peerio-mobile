@@ -163,11 +163,12 @@ export default class FolderInnerItem extends SafeComponent {
             flexGrow: 1,
             flexDirection: 'row',
             justifyContent: 'space-between',
+            backgroundColor: vars.darkBlueBackground05,
+            borderBottomWidth: 1,
+            borderBottomColor: 'rgba(0, 0, 0, .12)',
             height,
             width: width - vars.fileListHorizontalPadding * 2,
             paddingLeft: fileState.isFileSelectionMode ? checkBoxWidth : vars.spacing.medium.mini2x,
-            borderBottomWidth: 1,
-            borderBottomColor: 'rgba(0, 0, 0, .12)',
             alignItems: 'center'
         };
         const loadingStyle = null;
@@ -179,22 +180,24 @@ export default class FolderInnerItem extends SafeComponent {
                     !isBlocked ? null : { opacity: 0.38 })}
             </View>);
         return (
-            <View style={folderInfoContainerStyle} onLayout={this.layout}>
-                {this.checkbox()}
+            <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
                     onPress={hideMoreOptionsIcon ? onSelect : this.onPress}
-                    disabled={isBlocked}>
-                    <View style={itemContainerStyle}>
-                        <View style={progressContainer} />
+                    style={{ backgroundColor: vars.darkBlueBackground05 }}>
+                    <View style={folderInfoContainerStyle}>
                         {this.radio}
-                        <View style={[loadingStyle, { flex: 0 }]}>
-                            {icons.plaindark(isShared ? 'folder-shared' : 'folder', vars.iconSize, null)}
+                        <View style={itemContainerStyle}>
+                            <View style={progressContainer} />
+                            {this.radio}
+                            <View style={[loadingStyle, { flex: 0 }]}>
+                                {icons.plaindark(isShared ? 'folder-shared' : 'folder', vars.iconSize, null)}
+                            </View>
+                            <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
+                                <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
+                                {this.fileDetails}
+                            </View>
+                            {optionsIcon}
                         </View>
-                        <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
-                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
-                            {this.fileDetails}
-                        </View>
-                        {optionsIcon}
                     </View>
                 </TouchableOpacity>
             </View>

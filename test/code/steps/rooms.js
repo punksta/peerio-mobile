@@ -1,7 +1,4 @@
 const { defineSupportCode } = require('cucumber');
-const chai = require('chai');
-
-chai.should();
 
 defineSupportCode(({ When, Then }) => {
     When('I invite someone to join the room', async function () {
@@ -12,9 +9,9 @@ defineSupportCode(({ When, Then }) => {
         await this.chatPage.roomWithTitle(this.roomName).click();
         await this.chatPage.addMembersButton.click();
 
-        await this.contactSelectorDmPage.textInput.setValue(process.env.CHAT_RECIPIENT_USER);
-        await this.contactSelectorDmPage.hideKeyboardHelper();
-        await this.contactSelectorDmPage.recipientContact.click();
+        await this.contactSelectorPage.textInput.setValue(process.env.CHAT_RECIPIENT_USER);
+        await this.contactSelectorPage.hideKeyboardHelper();
+        await this.contactSelectorPage.recipientContact.click();
 
         await this.chatPage.buttonExitChat.click();
     });

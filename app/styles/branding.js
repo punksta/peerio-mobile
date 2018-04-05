@@ -7,10 +7,15 @@ const brandingDefines = {
         bg: '#2C95CF',
         bgGradient: '#32CEC3',
         tabsBg: '#f7f7f7',
-        tabsFg: '#757575',
         logo: require('../assets/logo-with-tag.png'),
+        darkBlue: '#040B40',
+        darkTeal: '#004E69',
         peerioBlue: '#408CFF',
-        yellow: '#FDC700'
+        peerioPurple: '#5461CC',
+        peerioTeal: '#02CEDB',
+        yellow: '#FDC700',
+        red: '#E90162',
+        tabsFg: '#757575'
     },
     expandoo: {
         bg: '#009dfd',

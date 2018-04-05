@@ -182,7 +182,7 @@ export default class Files extends SafeComponent {
             paddingHorizontal: vars.spacing.small.midi2x,
             marginVertical: vars.spacing.small.midi,
             marginHorizontal: vars.spacing.medium.mini2x,
-            borderColor: vars.verySubtleGrey,
+            borderColor: vars.black12,
             borderWidth: 1,
             height,
             borderRadius: height
@@ -200,7 +200,7 @@ export default class Files extends SafeComponent {
             fontSize
         };
 
-        const leftIcon = icons.plain('search', vars.iconSize, vars.txtDate);
+        const leftIcon = icons.plain('search', vars.iconSize, vars.black12);
 
         let rightIcon = null;
         if (fileState.findFilesText) {
@@ -210,7 +210,7 @@ export default class Files extends SafeComponent {
                     fileState.findFilesText = '';
                     this.onChangeFindFilesText('');
                 },
-                vars.sublteGrayOpacity
+                vars.opacity54
             );
         }
 
@@ -238,7 +238,9 @@ export default class Files extends SafeComponent {
     toolbar() {
         const container = {
             height: vars.listItemHeight,
-            backgroundColor: vars.white,
+            backgroundColor: vars.darkBlueBackground05,
+            flex: 1,
+            flexGrow: 1,
             flexDirection: 'row',
             justifyContent: 'flex-end',
             alignItems: 'center',
@@ -304,7 +306,7 @@ export default class Files extends SafeComponent {
         return (
             <View
                 style={{ flex: 1 }}>
-                <View style={{ flex: 1, backgroundColor: vars.lightGrayBg }}>
+                <View style={{ flex: 1, backgroundColor: vars.white }}>
                     {this.searchTextbox()}
                     {upgradeForFiles()}
                     {!this.data.length && !fileState.currentFolder.isRoot ?

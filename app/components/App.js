@@ -10,7 +10,6 @@ import ActionSheetLayout from './layout/action-sheet-layout';
 import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
-import { gradient } from './controls/effects';
 import { clientApp, crypto, startSocket, config, User, TinyDb } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
@@ -112,18 +111,17 @@ export default class App extends SafeComponent {
         if (!uiState.locale) return this._placeHolder();
         if (MockComponent) return <MockComponent />;
         const tabletHack = { top: 0, height, left: 0, right: 0 };
-        return gradient({
-            testID: 'appOuterViewBackground',
-            style: (height < 500) ? tabletHack : { flex: 1, flexGrow: 1 }
-        }, [
-            <RouteNavigator key="navigator" routes={routerApp} />,
-            <ModalLayout key="modals" />,
-            <PopupLayout key="popups" />,
-            <ActionSheetLayout key="actionSheets" />,
-            uiState.picker,
-            <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>,
-            <StatusBar barStyle="light-content" hidden={false} key="statusBar" />,
-            <TestHelper key="testHelper" />
-        ]);
+        return (
+            <View style={(height < 500) ? tabletHack : { flex: 1, flexGrow: 1 }}>
+                <RouteNavigator key="navigator" routes={routerApp} />
+                <ModalLayout key="modals" />
+                <PopupLayout key="popups" />
+                <ActionSheetLayout key="actionSheets" />
+                {uiState.picker}
+                <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
+                <StatusBar barStyle="light-content" hidden={false} key="statusBar" />
+                <TestHelper key="testHelper" />
+            </View>
+        );
     }
 }

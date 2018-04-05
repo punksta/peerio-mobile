@@ -26,7 +26,7 @@ const pbProgress = {
     marginTop: -1,
     marginBottom: -1,
     height: innerHeight,
-    backgroundColor: vars.fileUploadProgressColor,
+    backgroundColor: vars.peerioBlueBackground15,
     borderWidth: 0,
     borderColor: 'red'
 };
