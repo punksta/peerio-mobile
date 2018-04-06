@@ -88,7 +88,7 @@ class RouterMain extends Router {
 
     @action async filesystemUpgrade() {
         if (fileStore.migrationPending) {
-            if (!fileStore.migrationStarted) {
+            if (!(fileStore.migrationStarted || fileStore.migrationPerformedByAnotherClient)) {
                 await popupUpgradeNotification();
                 fileStore.confirmMigration();
             }
