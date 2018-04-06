@@ -8,7 +8,7 @@ import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 
-const height = vars.listItemHeight;
+const height = vars.filesListItemHeight;
 const itemContainerStyle = {
     flex: 1,
     flexGrow: 1,

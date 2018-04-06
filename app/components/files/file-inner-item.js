@@ -14,7 +14,7 @@ import FileProgress from './file-progress';
 import { fileHelpers } from '../../lib/icebear';
 
 const { width } = Dimensions.get('window');
-const height = 64;
+const height = vars.filesListItemHeight;
 const checkBoxWidth = height;
 
 const fileInfoContainerStyle = {
