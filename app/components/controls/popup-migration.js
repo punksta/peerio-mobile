@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View } from 'react-native';
+import { Text, View, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import UpdateProgressIndicator from '../controls/update-progress-indicator';
 import { fileStore } from '../../lib/icebear';
@@ -10,6 +10,13 @@ import { tx } from '../utils/translator';
 
 @observer
 export default class PopupMigration extends SafeComponent {
+    get indicator() {
+        return fileStore.migrationPerformedByAnotherClient ? (
+            <ActivityIndicator size="large" style={{ margin: 40 }} />
+        ) : (
+            <UpdateProgressIndicator progress={fileStore.migrationProgress} />
+        );
+    }
     renderThrow() {
         const textStyle = {
             color: vars.black,
@@ -18,7 +25,7 @@ export default class PopupMigration extends SafeComponent {
         };
         return (
             <View>
-                <UpdateProgressIndicator progress={fileStore.migrationProgress} />
+                {this.indicator}
                 <Text style={textStyle}>{tx('title_fileUpdateProgressDescription')}</Text>
             </View>
         );
