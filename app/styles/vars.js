@@ -165,6 +165,7 @@ const vars = {
     menuWidthRatio: 0.8,
     animationDuration: 200,
     progressBarHeight: 4,
+    filesListItemHeight: 64,
     listItemHeight: 56,
     listViewPaddingVertical: 36,
     listViewPaddingHorizontal: 8,

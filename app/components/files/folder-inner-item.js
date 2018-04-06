@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable, action } from 'mobx';
-import { Text, Dimensions, View, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
 import { vars, helpers } from '../../styles/styles';
@@ -11,9 +11,22 @@ import { tx } from '../utils/translator';
 import fileState from './file-state';
 import chatState from '../messaging/chat-state';
 
-const { width } = Dimensions.get('window');
-const height = vars.listItemHeight;
+const height = vars.filesListItemHeight;
 const checkBoxWidth = height;
+const itemContainerStyle = {
+    flex: 1,
+    flexGrow: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: vars.darkBlueBackground05,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0, 0, 0, .12)',
+    height,
+    borderWidth: 0,
+    borderColor: 'red',
+    paddingLeft: vars.spacing.medium.mini2x
+};
 
 const folderInfoContainerStyle = {
     flexGrow: 1,
@@ -158,18 +171,8 @@ export default class FolderInnerItem extends SafeComponent {
             fontWeight: vars.font.weight.bold,
             backgroundColor: 'transparent'
         };
-        const itemContainerStyle = {
-            flex: 1,
-            flexGrow: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            backgroundColor: vars.darkBlueBackground05,
-            borderBottomWidth: 1,
-            borderBottomColor: 'rgba(0, 0, 0, .12)',
-            height,
-            width: width - vars.fileListHorizontalPadding * 2,
-            paddingLeft: fileState.isFileSelectionMode ? checkBoxWidth : vars.spacing.medium.mini2x,
-            alignItems: 'center'
+        const checkboxPadding = {
+            paddingLeft: fileState.isFileSelectionMode ? checkBoxWidth : vars.spacing.medium.mini2x
         };
         const loadingStyle = null;
         const optionsIcon = hideMoreOptionsIcon || fileState.isFileSelectionMode ? null : (
@@ -186,7 +189,7 @@ export default class FolderInnerItem extends SafeComponent {
                     style={{ backgroundColor: vars.darkBlueBackground05 }}>
                     <View style={folderInfoContainerStyle}>
                         {this.radio}
-                        <View style={itemContainerStyle}>
+                        <View style={[itemContainerStyle, checkboxPadding]}>
                             <View style={progressContainer} />
                             {this.radio}
                             <View style={[loadingStyle, { flex: 0 }]}>
