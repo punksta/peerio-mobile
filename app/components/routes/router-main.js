@@ -55,6 +55,9 @@ class RouterMain extends Router {
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('channelInvite', [<ChannelInvite />], invitationState);
+        reaction(() => fileStore.migrationPending, migration => {
+            if (migration) this.filesystemUpgrade();
+        });
     }
 
     @action initialRoute() {
@@ -83,7 +86,6 @@ class RouterMain extends Router {
         this.loading = false;
         this.initialRoute();
         loginState.transition();
-        this.filesystemUpgrade();
     }
 
     @action async filesystemUpgrade() {
