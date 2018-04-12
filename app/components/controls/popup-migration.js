@@ -11,10 +11,10 @@ import { tx } from '../utils/translator';
 @observer
 export default class PopupMigration extends SafeComponent {
     get indicator() {
-        return fileStore.migrationPerformedByAnotherClient ? (
+        return fileStore.migration.performedByAnotherClient ? (
             <ActivityIndicator size="large" style={{ margin: 40 }} />
         ) : (
-            <UpdateProgressIndicator progress={fileStore.migrationProgress} />
+            <UpdateProgressIndicator progress={fileStore.migration.progress} />
         );
     }
     renderThrow() {

@@ -55,9 +55,9 @@ class RouterMain extends Router {
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('channelInvite', [<ChannelInvite />], invitationState);
-        reaction(() => fileStore.migrationPending, migration => {
+        reaction(() => fileStore.migration.pending, migration => {
             if (migration) this.filesystemUpgrade();
-        });
+        }, true);
     }
 
     @action initialRoute() {
@@ -89,13 +89,13 @@ class RouterMain extends Router {
     }
 
     @action async filesystemUpgrade() {
-        if (fileStore.migrationPending) {
-            if (!(fileStore.migrationStarted || fileStore.migrationPerformedByAnotherClient)) {
+        if (fileStore.migration.pending) {
+            if (!(fileStore.migration.started || fileStore.migration.performedByAnotherClient)) {
                 await popupUpgradeNotification();
-                fileStore.confirmMigration();
+                fileStore.migration.confirmMigration();
             }
             popupUpgradeProgress();
-            when(() => fileStore.migrationProgress >= 100 || !fileStore.migrationPending, () => {
+            when(() => !fileStore.migration.pending, () => {
                 popupState.discardPopup();
                 snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
             });
