@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.268.0"></a>
+# [3.268.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.267.0...v3.268.0) (2018-04-12)
+
+
+### Features
+
+* medcryptor colors ([#163](https://github.com/PeerioTechnologies/peerio-mobile/issues/163)) ([61993ff](https://github.com/PeerioTechnologies/peerio-mobile/commit/61993ff))
+
+
+
 <a name="3.267.0"></a>
 # [3.267.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.265.0...v3.267.0) (2018-04-11)
 
