@@ -14,7 +14,17 @@ const brandingDefines = {
         peerioTeal: '#02CEDB',
         yellow: '#FDC700',
         red: '#E90162',
-        tabsFg: '#757575'
+        tabsFg: '#757575',
+        badgeText: '#040B40',
+        chatItemPressedBackground: '#D7E5FA',
+        filesBg: '#F2F2F5',
+        invitedBadgeColor: '#408CFF',
+        invitedBadgeText: '#FFFFFF',
+        peerioBlueBackground15: '#D6E2F5',
+        darkBlueBackground15: '#D9DAE2',
+        usernameHighlight: '#32CEC3',
+        confirmColor: '#02CEDB',
+        snackbarBg: '#040B40'
     },
     expandoo: {
         bg: '#009dfd',
@@ -22,6 +32,29 @@ const brandingDefines = {
         tabsBg: '#f7f7f7',
         tabsFg: '#757575',
         logo: require('../assets/expandoo-logo-white.png')
+    },
+    medcryptor: {
+        bg: '#2C95CF',
+        bgGradient: '#32CEC3',
+        logo: require('../assets/logo-with-tag.png'),
+        darkBlue: '#FF8C00',
+        snackbarBg: '##444444',
+        darkTeal: '#004E69',
+        peerioBlue: '#FF8C00',
+        peerioPurple: '#FF6600',
+        peerioTeal: '#FF8C00',
+        confirmColor: '#00DF3F',
+        yellow: '#F5AB3F',
+        red: '#FF6666',
+        tabsFg: '#757575',
+        badgeText: '#FFFFFF',
+        chatItemPressedBackground: '#FFF6E1',
+        filesBg: '#FFFFFF',
+        invitedBadgeColor: '#00DF3F',
+        invitedBadgeText: '#000000',
+        peerioBlueBackground15: '#FFF6E1',
+        darkBlueBackground15: '#EDEDED',
+        usernameHighlight: '#FFB300'
     }
 };
 

@@ -9,8 +9,8 @@ import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-stora
 import { toggleConnection } from '../main/dev-menu-items';
 import plans from '../payments/payments-config';
 import { tx, tu } from '../utils/translator';
-import { warnings, config, clientApp } from '../../lib/icebear';
-import { popupYes } from '../shared/popups';
+import { warnings, clientApp } from '../../lib/icebear';
+import { popupAbout } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
 import { scrollHelper } from '../helpers/test-helper';
 
@@ -24,15 +24,6 @@ const svStyle = {
     paddingVertical: vars.listViewPaddingVertical,
     paddingHorizontal: vars.listViewPaddingHorizontal
 };
-
-const AboutContent = (
-    <Text>
-        Version: {config.appVersion}{'\n'}
-        SDK: {config.sdkVersion} {'\n'}
-        OS: {Platform.OS} {'\n'}
-        OS Version: {Platform.Version}
-    </Text>
-);
 
 @observer
 export default class SettingsLevel1 extends SafeComponent {
@@ -83,7 +74,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
                     <SettingsItem title="title_settingsAccount" onPress={() => settingsState.transition('account')} />
                     {this.spacer}
-                    <SettingsItem title="title_About" icon={null} onPress={() => popupYes('About', AboutContent)} />
+                    <SettingsItem title="title_About" icon={null} onPress={() => popupAbout()} />
                     {this.spacer}
                     <ButtonWithIcon
                         text={tu('button_logout')}
