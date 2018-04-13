@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.269.0"></a>
+# [3.269.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.268.0...v3.269.0) (2018-04-13)
+
+
+### Features
+
+* switch to automatic code signing ([84da4d7](https://github.com/PeerioTechnologies/peerio-mobile/commit/84da4d7))
+
+
+
 <a name="3.268.0"></a>
 # [3.268.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.267.0...v3.268.0) (2018-04-12)
 
