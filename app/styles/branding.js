@@ -40,7 +40,7 @@ const brandingDefines = {
         darkBlue: '#FF8C00',
         snackbarBg: '##444444',
         darkTeal: '#004E69',
-        peerioBlue: '#FF8C00',
+        peerioBlue: '#FF6600',
         peerioPurple: '#FF6600',
         peerioTeal: '#FF8C00',
         confirmColor: '#00DF3F',
