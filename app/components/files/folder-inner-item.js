@@ -19,7 +19,7 @@ const itemContainerStyle = {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: vars.darkBlueBackground05,
+    backgroundColor: vars.filesBg,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, .12)',
     height,
@@ -186,7 +186,7 @@ export default class FolderInnerItem extends SafeComponent {
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
                     onPress={hideMoreOptionsIcon ? onSelect : this.onPress}
-                    style={{ backgroundColor: vars.darkBlueBackground05 }}>
+                    style={{ backgroundColor: vars.filesBg }}>
                     <View style={folderInfoContainerStyle}>
                         {this.radio}
                         <View style={[itemContainerStyle, checkboxPadding]}>

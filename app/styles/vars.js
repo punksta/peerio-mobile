@@ -26,7 +26,10 @@ function isBigScreenSize() {
 }
 
 const { bg, bgGradient, tabsFg } = branding;
-const { darkBlue, darkTeal, peerioBlue, peerioPurple, peerioTeal, yellow, red } = branding;
+const { darkBlue, darkTeal, peerioBlue, peerioPurple, confirmColor,
+    peerioTeal, yellow, red, badgeText, filesBg, usernameHighlight,
+    chatItemPressedBackground, invitedBadgeColor, invitedBadgeText,
+    peerioBlueBackground15, darkBlueBackground15, snackbarBg } = branding;
 const statusBarHeight = (Platform.OS === 'android' ? 0 : 10) + iPhoneXTop;
 const layoutPaddingTop = statusBarHeight * 2;
 
@@ -50,6 +53,13 @@ const vars = {
     peerioTeal,
     yellow,
     red,
+    badgeText,
+    filesBg,
+    chatItemPressedBackground,
+    invitedBadgeColor,
+    invitedBadgeText,
+    confirmColor,
+    snackbarBg,
     textWhite100: '#FFF',
     textWhite70: 'rgba(255, 255, 255, .7)',
     textWhite50: 'rgba(255, 255, 255, .5)',
@@ -63,11 +73,10 @@ const vars = {
     black12: 'rgba(0, 0, 0, 0.12)',
     black38: 'rgba(0, 0, 0, .38)',
     black54: 'rgba(0, 0, 0, .54)',
-    chatItemPressedBackground: '#D7E5FA',
     darkBlueBackground05: '#F2F2F5', // darkBlue 5%
-    darkBlueBackground15: '#D9DAE2', // darkBlue 15%
+    darkBlueBackground15, // darkBlue 15%
     peerioBlueBackground05: '#E9EDF6', // peerioBlue 5%
-    peerioBlueBackground15: '#D6E2F5', // peerioBlue 15%
+    peerioBlueBackground15, // peerioBlue 15%
     darkBlueDivider12: '#E0E1E8', // darkBlue 12%
     darkBlueTransparent30: 'rgba(4, 11, 64, 0.3)', // darkBlue 30%
     roomInviteCircleHeight: 18,
@@ -98,7 +107,7 @@ const vars = {
     black: '#000',
     white: '#fff',
     whiteIcon: '#fff',
-    usernameHighlight: '#32CEC3',
+    usernameHighlight,
     darkIcon: '#00000070',
     txtLight: '#bfdfef',
     txtAlert: '#ff0000aa',
@@ -126,7 +135,6 @@ const vars = {
     checkboxInactive: 'rgba(0,0,0,.06)',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
     checkboxIconActive: peerioBlue,
-    snackbarBg: '#4a4a4a',
     snackbarBgGreen: '#38CE86',
     snackbarHeight: 48,
     popupMinHeight: scaleDim(110),
