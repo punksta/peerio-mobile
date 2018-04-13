@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.270.0"></a>
+# [3.270.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.269.0...v3.270.0) (2018-04-13)
+
+
+### Bug Fixes
+
+* badge text for unread rooms ([#164](https://github.com/PeerioTechnologies/peerio-mobile/issues/164)) ([f9a9ace](https://github.com/PeerioTechnologies/peerio-mobile/commit/f9a9ace))
+* darker color for buttons ([#165](https://github.com/PeerioTechnologies/peerio-mobile/issues/165)) ([4f5c0d6](https://github.com/PeerioTechnologies/peerio-mobile/commit/4f5c0d6))
+
+
+
 <a name="3.269.0"></a>
 # [3.269.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.268.0...v3.269.0) (2018-04-13)
 
