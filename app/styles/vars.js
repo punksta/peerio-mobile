@@ -107,7 +107,7 @@ const vars = {
     white: '#fff',
     whiteIcon: '#fff',
     usernameHighlight,
-    darkIcon: '#00000070',
+    darkIcon: '#0000008A',
     txtLight: '#bfdfef',
     txtAlert: '#ff0000aa',
     txtLightGrey: '#7B7B7B',
