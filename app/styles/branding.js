@@ -38,7 +38,7 @@ const brandingDefines = {
         bgGradient: '#32CEC3',
         logo: require('../assets/logo-with-tag.png'),
         darkBlue: '#FF8C00',
-        snackbarBg: '##444444',
+        snackbarBg: '#444444',
         darkTeal: '#004E69',
         peerioBlue: '#FF6600',
         peerioPurple: '#FF6600',
