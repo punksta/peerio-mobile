@@ -3,13 +3,19 @@ import { setUrlMap, setTagHandler } from 'peerio-translator';
 import tagHandlers from '../components/controls/tag-handlers';
 import rnFileStream from './rn-file-stream';
 import KeyValueStorage from '../store/key-value-storage';
+import stringReplacements from './string-replacements';
+
+const { setStringReplacement } = require('peerio-translator');
 
 export default (c, icebear) => {
     const cfg = c;
     cfg.ghostFrontendUrl = 'https://mail.peerio.com';
     // --- TRANSLATOR
     cfg.translator = {};
-    cfg.translator.stringReplacements = []; // white label only
+    cfg.translator.stringReplacements = stringReplacements; // white label only
+    cfg.translator.stringReplacements.forEach((replacementObject) => {
+        setStringReplacement(replacementObject.original, replacementObject.replacement);
+    });
     cfg.translator.urlMap = {
         fingerprint: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
         mpDetail: 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
