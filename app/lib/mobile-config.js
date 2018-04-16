@@ -33,13 +33,17 @@ export default (c, icebear) => {
         download: 'https://peerio.com',
         learnUrlTracking: 'https://peerio.zendesk.com/hc/en-us/articles/115005090766',
         identityVerification: 'https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-',
-        jitsiLink: 'https://jitsi.org/'
+        jitsiLink: 'https://jitsi.org/',
+        termsUrl: 'https://peerio.com/conditions.html',
+        privacyUrl: 'https://peerio.com/privacy.html'
     };
 
     setUrlMap(cfg.translator.urlMap);
     for (const name in tagHandlers) {
         setTagHandler(name, tagHandlers[name]);
     }
+
+    cfg.logRecipients = ['support@peerio.com'];
 
     cfg.download.parallelism = 2;
     cfg.download.maxDownloadChunkSize = 1024 * 1024;
