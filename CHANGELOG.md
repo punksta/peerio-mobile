@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.271.0"></a>
+# [3.271.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.270.0...v3.271.0) (2018-04-16)
+
+
+### Bug Fixes
+
+* material icon color [branch ch5729] ([#170](https://github.com/PeerioTechnologies/peerio-mobile/issues/170)) ([6cd216c](https://github.com/PeerioTechnologies/peerio-mobile/commit/6cd216c))
+
+
+### Features
+
+* add appLabel config support [ch5740] ([20e56c2](https://github.com/PeerioTechnologies/peerio-mobile/commit/20e56c2))
+
+
+
 <a name="3.270.0"></a>
 # [3.270.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.269.0...v3.270.0) (2018-04-13)
 
