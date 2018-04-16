@@ -426,6 +426,7 @@ function popupMoveToSharedFolder() {
 
 function popupUpgradeNotification() {
     return new Promise((resolve) => {
+        const resolveButtonText = fileStore.hasLegacySharedFiles ? 'update' : 'ok';
         popupState.showPopup({
             type: 'systemUpgrade',
             title: textControl(tx('title_upgradeFileSystem'), titleStyle),
@@ -437,7 +438,7 @@ function popupUpgradeNotification() {
                 </View>
             ),
             buttons: [
-                { id: 'update', text: tu('button_update'), action: () => resolve(true) }
+                { id: resolveButtonText, text: tu(`button_${resolveButtonText}`), action: () => resolve(true) }
             ]
         });
     });
