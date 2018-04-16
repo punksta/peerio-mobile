@@ -29,7 +29,8 @@ const { bg, bgGradient, tabsFg } = branding;
 const { darkBlue, darkTeal, peerioBlue, peerioPurple, confirmColor,
     peerioTeal, yellow, red, badgeText, filesBg, usernameHighlight,
     chatItemPressedBackground, invitedBadgeColor, invitedBadgeText,
-    peerioBlueBackground15, darkBlueBackground15, snackbarBg } = branding;
+    peerioBlueBackground15, darkBlueBackground15, snackbarBg, lightGrayBg,
+    darkBlueBackground05, channelInfoBg } = branding;
 const statusBarHeight = (Platform.OS === 'android' ? 0 : 10) + iPhoneXTop;
 const layoutPaddingTop = statusBarHeight * 2;
 
@@ -60,6 +61,7 @@ const vars = {
     invitedBadgeText,
     confirmColor,
     snackbarBg,
+    channelInfoBg,
     textWhite100: '#FFF',
     textWhite70: 'rgba(255, 255, 255, .7)',
     textWhite50: 'rgba(255, 255, 255, .5)',
@@ -73,7 +75,7 @@ const vars = {
     black12: 'rgba(0, 0, 0, 0.12)',
     black38: 'rgba(0, 0, 0, .38)',
     black54: 'rgba(0, 0, 0, .54)',
-    darkBlueBackground05: '#F2F2F5', // darkBlue 5%
+    darkBlueBackground05, // darkBlue 5%
     darkBlueBackground15, // darkBlue 15%
     peerioBlueBackground05: '#E9EDF6', // peerioBlue 5%
     peerioBlueBackground15, // peerioBlue 15%
@@ -115,7 +117,7 @@ const vars = {
     txtMedium: 'rgba(98, 98, 98, 1)',
     txtDate: 'rgba(0, 0, 0, .38)',
     inputBg: '#fff',
-    lightGrayBg: '#f0f0f0',
+    lightGrayBg,
     mediumGrayBg: '#D0D0D0',
     opacity54: 0.54,
     pickerBg: 'rgba(255, 255, 255, .12)',

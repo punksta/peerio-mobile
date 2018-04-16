@@ -24,7 +24,10 @@ const brandingDefines = {
         darkBlueBackground15: '#D9DAE2',
         usernameHighlight: '#32CEC3',
         confirmColor: '#02CEDB',
-        snackbarBg: '#040B40'
+        lightGrayBg: '#f0f0f0',
+        darkBlueBackground05: '#F2F2F5',
+        snackbarBg: '#040B40',
+        channelInfoBg: '#F2F2F5'
     },
     expandoo: {
         bg: '#009dfd',
@@ -40,7 +43,7 @@ const brandingDefines = {
         darkBlue: '#FF8C00',
         snackbarBg: '#444444',
         darkTeal: '#FFFFFF',
-        peerioBlue: '#FF6600',
+        peerioBlue: '#FF8C00',
         peerioPurple: '#FF6600',
         peerioTeal: '#FF8C00',
         confirmColor: '#00DF3F',
@@ -54,7 +57,10 @@ const brandingDefines = {
         invitedBadgeText: '#000000',
         peerioBlueBackground15: '#FFF6E1',
         darkBlueBackground15: '#EDEDED',
-        usernameHighlight: '#FFB300'
+        lightGrayBg: '#FFFFFF',
+        darkBlueBackground05: '#F5F5F5',
+        usernameHighlight: '#FFB300',
+        channelInfoBg: '#FFFFFF'
     }
 };
 
