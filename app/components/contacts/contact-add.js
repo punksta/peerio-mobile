@@ -142,7 +142,7 @@ export default class ContactAdd extends SafeComponent {
         });
         const title = tx('title_socialShareInvite');
         console.log(title, message);
-        Share.share({ message, title });
+        Share.share({ message, title }, { subject: title });
     }
 
     get emailButton() {
