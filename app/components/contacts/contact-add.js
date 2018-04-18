@@ -193,7 +193,7 @@ export default class ContactAdd extends SafeComponent {
             <View style={{ overflow: 'hidden', height: email ? undefined : 0, opacity: invited ? 0.5 : 1 }}>
                 <View style={inviteContainer}>
                     <Text>{email}</Text>
-                    {buttons.uppercaseBlueButton(tx('button_invite'), () => {
+                    {buttons.blueTextButton(tx('button_invite'), () => {
                         mockContact.invited = true;
                         contactStore.invite(email);
                     }, invited)}
