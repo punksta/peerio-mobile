@@ -265,6 +265,15 @@ const vars = {
         small: 32,
         medium: 48,
         large: 72
+    },
+    button: {
+        touchableHeight: 48,
+        buttonHeight: 36,
+        minWidth: 72,
+        borderRadius: 24,
+        paddingHorizontal: scaleDim(16),
+        marginVertical: scaleDim(8),
+        fontSize: scaleDim(14)
     }
 };
 
