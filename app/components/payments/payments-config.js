@@ -5,12 +5,10 @@ import { tx } from '../utils/translator';
 
 const basicPlanInfo =
 `Secure Messaging
-90 day message archives
 Portability across devices
 Secure File Storage & Sharing
 1 GB of secure Peerio Vault storage
-500M max upload file size
-3 rooms`;
+500M max upload file size`;
 
 const professionalIncludesInfo =
 `Includes features of Premium and Basic Plans`;
@@ -18,8 +16,6 @@ const professionalIncludesInfo =
 const professionalPlanInfo =
 `500 GB of secure storage
 Unlimited upload file size
-Unlimited rooms
-Unlimited message archive
 Premium support
 `;
 
