@@ -11,7 +11,7 @@ Secure File Storage & Sharing
 500M max upload file size`;
 
 const professionalIncludesInfo =
-`Includes features of Premium and Basic Plans`;
+`Includes all features of Basic plan`;
 
 const professionalPlanInfo =
 `500 GB of secure storage
