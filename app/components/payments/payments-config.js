@@ -89,12 +89,12 @@ class ProfessionalPlan extends PaidPlan {
         title: 'title_billedMonthly',
         id: professionalMonthlyID,
         serverID: 'icebear_pro_monthly',
-        price: '$12.99 USD/month'
+        price: process.env.PRO_MONTHLY_PRICE || '$12.99 USD/month'
     }, {
         title: 'title_billedAnnually',
         id: professionalYearlyID,
         serverID: 'icebear_pro_yearly',
-        price: '$9.99 USD/month'
+        price: process.env.PRO_YEARLY_PRICE || '$119.88 USD/year'
     }];
     includes = professionalIncludesInfo;
     info = professionalPlanInfo;
