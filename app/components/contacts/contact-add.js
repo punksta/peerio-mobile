@@ -118,7 +118,7 @@ export default class ContactAdd extends SafeComponent {
                 const atInd = this.query.indexOf('@');
                 const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
                 if (isEmail) {
-                    warnings.add(`User is not found on Peerio, please invite`);
+                    warnings.add(t('error_userNotFoundSendInvite'));
                     LayoutAnimation.easeInEaseOut();
                     this.toInvite = this.inviteContactDuck(this.query);
                 } else if (!isLegacy) {
