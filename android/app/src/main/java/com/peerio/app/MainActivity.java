@@ -15,8 +15,6 @@ import com.facebook.react.ReactActivityDelegate;
 import android.support.annotation.Nullable;
 
 public class MainActivity extends ReactActivity {
-    protected Uri imageUri = null;
-    protected String shareText = null;
     /**
      * Override this to prevent screenshots to be taken
      * @param savedInstanceState
@@ -24,38 +22,11 @@ public class MainActivity extends ReactActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        Intent intent = getIntent();
-        String action = intent.getAction();
-        String type = intent.getType();
-
-        if (Intent.ACTION_SEND.equals(action) && type != null) {
-            if ("text/plain".equals(type)) {
-                handleSendText(intent); // Handle text being sent
-            } else if (type.startsWith("image/")) {
-                handleSendImage(intent); // Handle single image being sent
-            }
-        }
 
         // only enable FLAG_SECURE for release builds
         if (BuildConfig.DEBUG) return;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
-    }
-
-    void handleSendText(Intent intent) {
-        String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
-        if (sharedText != null) {
-            this.shareText = sharedText;
-            // Update UI to reflect text being shared
-        }
-    }
-    void handleSendImage(Intent intent) {
-        Uri imageUri1 = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
-        if (imageUri1 != null) {
-            this.imageUri = imageUri1;
-            // Update UI to reflect image being shared
-        }
     }
 
     @Override
@@ -95,27 +66,50 @@ public class MainActivity extends ReactActivity {
     }
 
     public static class TestActivityDelegate extends ReactActivityDelegate {
-        private static final String TEST = "test";
+        private final @Nullable Activity mActivity;
         private Bundle mInitialProps = null;
-        private final
-        @Nullable
-        Activity mActivity;
+
         public TestActivityDelegate(Activity activity, String mainComponentName) {
             super(activity, mainComponentName);
             this.mActivity = activity;
         }
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
-            Bundle bundle = mActivity.getIntent().getExtras();
-            if (bundle != null) {
+            Intent intent = mActivity.getIntent();
+            if (intent.getExtras() != null) {
+                String type = intent.getType();
+
                 mInitialProps = new Bundle();
-                mInitialProps.putString(TEST, mActivity.getIntent().getStringExtra(Intent.EXTRA_TEXT));
+                if (Intent.ACTION_SEND.equals(intent.getAction()) && type != null) {
+                    if ("text/plain".equals(type)) {
+                        handleSendText(intent);
+                    } else if (type.startsWith("image/")) {
+                        handleSendFile(intent);
+                    }
+                }
             }
             super.onCreate(savedInstanceState);
         }
+
         @Override
         protected Bundle getLaunchOptions() {
             return mInitialProps;
+        }
+
+        void handleSendText(Intent intent) {
+            String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+            if (sharedText != null) {
+                mInitialProps.putString("sharedText", sharedText);
+                
+            }
+        }
+        void handleSendFile(Intent intent) {
+            Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if (imageUri != null) {
+                mInitialProps.putString("sharedFile", imageUri.toString());
+                
+            }
         }
     }
 
