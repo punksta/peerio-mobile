@@ -3,13 +3,18 @@ package com.peerio.app;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.net.Uri;
+import android.content.Intent;
 
 import com.facebook.react.*;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.ReactActivityDelegate;
+import android.support.annotation.Nullable;
 
 public class MainActivity extends ReactActivity {
+    protected Uri imageUri = null;
     /**
      * Override this to prevent screenshots to be taken
      * @param savedInstanceState
@@ -21,6 +26,9 @@ public class MainActivity extends ReactActivity {
         if (BuildConfig.DEBUG) return;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
+
+        Intent intent = getIntent();
+        this.imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
     }
 
     @Override
@@ -57,5 +65,18 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "peeriomobile";
+    }
+
+    @Override
+    protected ReactActivityDelegate createReactActivityDelegate() {
+        return new ReactActivityDelegate(this, getMainComponentName()) {
+            @Nullable
+            @Override
+            protected Bundle getLaunchOptions() {
+                Bundle initialProps = new Bundle();
+                initialProps.putString("sharedImage", imageUri);
+                return initialProps;
+            }
+        };
     }
 }
