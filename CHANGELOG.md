@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.275.0"></a>
+# [3.275.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.274.0...v3.275.0) (2018-05-02)
+
+
+### Bug Fixes
+
+* sending image to self in DM no longer causes error [branch ch4646] ([#179](https://github.com/PeerioTechnologies/peerio-mobile/issues/179)) ([c84cf4b](https://github.com/PeerioTechnologies/peerio-mobile/commit/c84cf4b))
+
+
+### Features
+
+* redesign of file view, inline file download ([#181](https://github.com/PeerioTechnologies/peerio-mobile/issues/181)) ([e5560f6](https://github.com/PeerioTechnologies/peerio-mobile/commit/e5560f6))
+
+
+
 <a name="3.274.0"></a>
 # [3.274.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.273.0...v3.274.0) (2018-04-28)
 
