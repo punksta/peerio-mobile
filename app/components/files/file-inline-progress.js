@@ -25,7 +25,8 @@ export default class FileInlineProgress extends SafeComponent {
 
     get downloadProgress() {
         if (!this.file) return 0;
-        return this.file.progress;
+        const { progress, progressMax } = this.file;
+        return Math.min(Math.ceil(progress / progressMax * 100), 100)
     }
 
     @action.bound onOpen() {
