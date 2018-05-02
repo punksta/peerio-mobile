@@ -3,9 +3,10 @@
 // import MockChatList from './mock-chat-list';
 // import MockTwoFactorAuth from './mock-two-factor-auth';
 // import MockPopups from './mock-popups';
+// import MockStyledTextInput from './mock-styled-text-input';
 // import MockImagePreview from './mock-image-preview';
 // import MockThumbnail from './mock-thumbnail';
 
 export default null;
 // export default MockChannel;
-// export default __DEV__ ? MockChannel : null;
+// export default __DEV__ ? MockStyledTextInput : null;

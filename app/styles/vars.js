@@ -129,6 +129,7 @@ const vars = {
     lighterBlackText: 'rgba(0, 0, 0, .87)',
     inputBgInactive: 'rgba(255, 255, 255, .5)',
     inputBgInactiveText: 'rgba(0,0,0, .54)',
+    inputBorderColor: 'rgba(0,0,0, .38)',
     checkboxInactive: 'rgba(0,0,0,.06)',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
     checkboxIconActive: peerioBlue,
@@ -206,9 +207,11 @@ const vars = {
     readReceiptFontSize: scaleDim(9),
     fontTitleSize: 16,
     largeInputWidth: 240,
-    inputHeight: 48,
+    inputHeight: 46,
     searchInputHeight: 32,
     inputPaddingLeft: 10,
+    inputPaddingHorizontal: 8,
+    inputMarginHorizontal: 16,
     inputPaddedHeight: 56,
     inputHeightLarge: 68,
     fabSize: 60,
@@ -220,6 +223,7 @@ const vars = {
     tabCellHeight,
     tabsHeight: tabCellHeight + iPhoneXBottom,
     spacing: {
+        one: scaleDim(1),
         small: {
             mini: scaleDim(2),
             mini2x: scaleDim(4),

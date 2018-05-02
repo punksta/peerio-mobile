@@ -3,9 +3,7 @@ import capitalize from 'capitalize';
 import { observable, action, when } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
-import { User, validation, socket, crypto } from '../../lib/icebear';
-
-const { validators, addValidation } = validation;
+import { User, socket, crypto } from '../../lib/icebear';
 
 class SignupState extends RoutedState {
     @observable username = '';
@@ -25,8 +23,6 @@ class SignupState extends RoutedState {
 
     get nextAvailable() {
         switch (this.current) {
-            // enter profile info
-            case 0: return this.isValid() && socket.connected;
             // save pin and register
             case 1: return socket.connected;
             default: return false;
@@ -55,7 +51,6 @@ class SignupState extends RoutedState {
     generatePassphrase = () => crypto.keys.getRandomAccountKeyHex();
 
     @action async next() {
-        if (!this.isValid()) return;
         if (!this.passphrase) {
             this.passphrase = await this.generatePassphrase();
         }
@@ -68,10 +63,7 @@ class SignupState extends RoutedState {
     @action prev() { (this.current > 0) ? this.current-- : this.exit(); }
 
     @action async finish() {
-        if (!this.isValid()) return Promise.resolve();
         this.isInProgress = true;
-        // this.passphrase = await this.generatePassphrase();
-        // console.log(this.passphrase);
         const user = new User();
         User.current = user;
         const { username, email, firstName, lastName, passphrase, avatarBuffers, keyBackedUp } = this;
@@ -98,11 +90,6 @@ class SignupState extends RoutedState {
 }
 
 const signupState = new SignupState();
-
-addValidation(signupState, 'firstName', validators.firstName, 0);
-addValidation(signupState, 'lastName', validators.lastName, 1);
-addValidation(signupState, 'username', validators.username, 2);
-addValidation(signupState, 'email', validators.email, 3);
 
 if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
     when(() => !process.env.PEERIO_AUTOLOGIN && signupState.isConnected && signupState.isActive, () => {
