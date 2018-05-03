@@ -6,7 +6,9 @@
 // import MockStyledTextInput from './mock-styled-text-input';
 // import MockImagePreview from './mock-image-preview';
 // import MockThumbnail from './mock-thumbnail';
+// import MockSignupContactInvite from './mock-signup-contact-import';
 
 export default null;
+// export default MockSignupContactInvite;
 // export default MockChannel;
 // export default __DEV__ ? MockStyledTextInput : null;

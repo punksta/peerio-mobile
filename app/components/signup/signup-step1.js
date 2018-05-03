@@ -191,13 +191,13 @@ export default class SignupStep1 extends LoginWizardPage {
                             false,
                             this.isNextDisabled)}
                     </View>
+                    <View style={footer}>
+                        <Text style={signupTextStyle}>
+                            <T k="title_TOSRequestText">{tosParser}</T>
+                        </Text>
+                    </View>
+                    <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
                 </View>
-                <View style={footer}>
-                    <Text style={signupTextStyle}>
-                        <T k="title_TOSRequestText">{tosParser}</T>
-                    </Text>
-                </View>
-                <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
             </View>
         );
     }

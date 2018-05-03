@@ -72,7 +72,9 @@ const vars = {
     textBlack87: 'rgba(0, 0, 0, .87)',
     // Non-text
     black03: 'rgba(0, 0, 0, 0.03)',
+    black05: 'rgba(0, 0, 0, 0.05)',
     black12: 'rgba(0, 0, 0, 0.12)',
+    black25: 'rgba(0, 0, 0, 0.25)',
     black38: 'rgba(0, 0, 0, .38)',
     black54: 'rgba(0, 0, 0, .54)',
     darkBlueBackground05, // darkBlue 5%
@@ -169,6 +171,7 @@ const vars = {
     animationDuration: 200,
     progressBarHeight: 4,
     filesListItemHeight: 64,
+    contactlistItemHeight: 56,
     listItemHeight: 56,
     listViewPaddingVertical: 36,
     listViewPaddingHorizontal: 8,

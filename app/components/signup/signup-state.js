@@ -14,8 +14,8 @@ class SignupState extends RoutedState {
     @observable _current = 0;
     get current() { return this._current; }
     set current(i) { uiState.hideAll().then(() => { this._current = i; }); }
-    // two pages of signup wizard
-    @observable count = 3;
+    // five pages of signup wizard
+    @observable count = 5;
     _prefix = 'signup';
     avatarBuffers = null;
     @observable avatarData = null;
@@ -51,18 +51,24 @@ class SignupState extends RoutedState {
     generatePassphrase = () => crypto.keys.getRandomAccountKeyHex();
 
     @action async next() {
-        if (!this.passphrase) {
-            this.passphrase = await this.generatePassphrase();
-        }
-
-        if (this.keyBackedUp && (this.current === 1) ||
-            (this.current >= this.count - 1)) await this.finish();
+        if (!this.passphrase) this.passphrase = await this.generatePassphrase();
+        if (this.keyBackedUp && (this.current === 2)) await this.finishAccountCreation();
         this.current++;
     }
 
     @action prev() { (this.current > 0) ? this.current-- : this.exit(); }
 
-    @action async finish() {
+    @action async finishSignUp() {
+        return mainState.activateAndTransition(User.current)
+            .catch((e) => {
+                console.log(e);
+                User.current = null;
+                this.reset();
+            });
+    }
+
+    // After account is created, user goes to Contact Sync rather than main route
+    @action async finishAccountCreation() {
         this.isInProgress = true;
         const user = new User();
         User.current = user;
@@ -76,12 +82,6 @@ class SignupState extends RoutedState {
         user.localeCode = localeCode;
         return user.createAccountAndLogin()
             .then(() => loginState.enableAutomaticLogin(user))
-            .then(() => mainState.activateAndTransition(user))
-            .catch((e) => {
-                console.log(e);
-                User.current = null;
-                this.reset();
-            })
             .then(() => mainState.saveUser())
             .then(() => keyBackedUp && User.current.setAccountKeyBackedUp())
             .then(() => avatarBuffers && User.current.saveAvatar(avatarBuffers))

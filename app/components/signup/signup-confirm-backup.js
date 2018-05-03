@@ -86,10 +86,9 @@ export default class SignupConfirmBackup extends LoginWizardPage {
                     </View>
                     {this.icon}
                 </View>
-                {/* TODO Wire up finish button */ }
                 <View style={[row, { justifyContent: 'space-between' }]}>
                     {this.button('button_back', () => signupState.prev())}
-                    {this.button('button_finish', () => signupState.next(), false, !signupState.keyBackedUp)}
+                    {this.button('button_next', () => signupState.next(), false, !signupState.keyBackedUp)}
                 </View>
                 <ActivityOverlay large visible={signupState.isInProgress} />
             </View>
