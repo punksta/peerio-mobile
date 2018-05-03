@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.277.0"></a>
+# [3.277.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.276.0...v3.277.0) (2018-05-03)
+
+
+### Bug Fixes
+
+* correct progress [ch6566] ([11be196](https://github.com/PeerioTechnologies/peerio-mobile/commit/11be196))
+
+
+### Features
+
+* don't display indicators if the visible area is bigger than items ([f3ea4ba](https://github.com/PeerioTechnologies/peerio-mobile/commit/f3ea4ba))
+
+
+
 <a name="3.276.0"></a>
 # [3.276.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.275.0...v3.276.0) (2018-05-02)
 
