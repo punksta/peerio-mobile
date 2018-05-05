@@ -1,7 +1,8 @@
 import React from 'react';
 import { action, observable } from 'mobx';
-import { Image, Text, View } from 'react-native';
+import { Image, View } from 'react-native';
 import { observer } from 'mobx-react/native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
@@ -110,7 +111,7 @@ export default class ChannelInvite extends SafeComponent {
                     <Text style={headingStyle}>
                         {tx('title_roomInviteHeading')}
                     </Text>
-                    <Text style={[headingStyle, { fontWeight: vars.font.weight.bold }]}>
+                    <Text bold style={headingStyle}>
                         #{this.invitation.channelName}
                     </Text>
                     <View style={buttonContainer}>

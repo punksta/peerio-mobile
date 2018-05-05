@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Animated, View, Text, Image, Easing } from 'react-native';
+import { Animated, View, Image, Easing } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, computed } from 'mobx';
+import Text from '../controls/custom-text';
 import { vars } from '../../styles/styles';
 import loginState from '../login/login-state';
 import routerApp from '../routes/router-app';
