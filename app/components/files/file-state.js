@@ -156,7 +156,7 @@ class FileState extends RoutedState {
         await promiseWhen(() => socket.authenticated);
         const chat = chatState.currentChat;
         if (!chat) throw new Error('file-state.js, uploadInline: no chat selected');
-        data.file = chat.uploadAndShareFile(data.url, data.fileName, false, null, data.message);
+        data.file = chat.uploadAndShareFile(data.url, data.fileName, false, data.message);
         await promiseWhen(() => data.file.fileId);
         // TODO: move this to icebear
         this.localFileMap.set(data.file.fileId, data.url);
