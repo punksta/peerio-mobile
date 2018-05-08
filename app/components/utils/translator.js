@@ -46,9 +46,13 @@ T.propTypes = {
 module.exports = {
     T,
     t(k, params) {
+        const r = t(k, params);
+        if (r instanceof String || typeof r === 'string') return r;
         return React.createElement(T, { k }, params);
     },
     tu(k, params) {
+        const r = t(k, params);
+        if (r.toUpperCase) return r.toUpperCase();
         return React.createElement(T, { k, uppercase: true }, params);
     },
     tx: (k, params) => t(k, params)
