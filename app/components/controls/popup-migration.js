@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import UpdateProgressIndicator from '../controls/update-progress-indicator';
+import AlternatingText from '../controls/alternating-text';
 import { fileStore } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
@@ -18,6 +19,9 @@ export default class PopupMigration extends SafeComponent {
         );
     }
     renderThrow() {
+        const randomMessageArray = [
+            // TODO waiting for copy
+        ];
         const textStyle = {
             color: vars.black,
             fontSize: vars.font.size.smaller,
@@ -26,7 +30,10 @@ export default class PopupMigration extends SafeComponent {
         return (
             <View>
                 {this.indicator}
-                <Text style={textStyle}>{tx('title_fileUpdateProgressDescription')}</Text>
+                <AlternatingText
+                    initialText={tx('title_fileUpdateProgressDescription')}
+                    textArray={randomMessageArray}
+                    textStyle={textStyle} />
             </View>
         );
     }
