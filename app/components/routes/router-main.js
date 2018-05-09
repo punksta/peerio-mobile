@@ -82,7 +82,8 @@ class RouterMain extends Router {
         const route = super.add(key, null);
         route.components = observable.ref(components);
         route.routeState = routeState;
-        this[key] = route.transition = (item, suppressTransition, index) => {
+        this[key] = route.transition = async (item, suppressTransition, index) => {
+            await uiState.hideAll();
             if (this.route !== key) {
                 !suppressTransition && LayoutAnimation.easeInEaseOut();
                 this.onTransition(this.current, false, item);
@@ -132,7 +133,8 @@ class RouterMain extends Router {
         this.current && this.current.routeState && this.current.routeState.fabAction();
     }
 
-    @action back() {
+    @action async back() {
+        await uiState.hideAll();
         if (this.currentIndex > 0) this.currentIndex--;
         this.onTransition(this.current, true);
         if (Platform.OS !== 'android') LayoutAnimation.easeInEaseOut();
