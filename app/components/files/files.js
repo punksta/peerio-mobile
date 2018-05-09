@@ -127,12 +127,7 @@ export default class Files extends SafeComponent {
         );
     }
 
-    get isZeroState() {
-        return !fileState.store.files.length &&
-            // no folders and no files
-            !fileState.store.loading
-            && fileState.currentFolder.isRoot;
-    }
+    get isZeroState() { return fileState.store.isEmpty; }
 
     get noFilesInFolder() {
         if (this.data.length || fileState.currentFolder.isRoot) return null;
