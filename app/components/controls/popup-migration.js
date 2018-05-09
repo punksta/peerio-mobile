@@ -9,6 +9,40 @@ import { fileStore } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 
+const messageArray = [
+    {
+        message: tx('title_migrationInProgressMessage1')
+    },
+    {
+        message: tx('title_migrationInProgressMessage2')
+    },
+    {
+        message: tx('title_migrationInProgressMessage3'),
+        emoji: '\uD83D\uDE38' // Grinning cat
+    },
+    {
+        message: tx('title_migrationInProgressMessage4')
+    },
+    {
+        message: tx('title_migrationInProgressMessage5a'),
+        messageB: tx('title_migrationInProgressMessage5b'),
+        emoji: '\uD83D\uDCAA' // Muscle
+    },
+    {
+        message: tx('title_migrationInProgressMessage6')
+    },
+    {
+        message: tx('title_migrationInProgressMessage7')
+    },
+    // Skip message 8 because its for desktop
+    {
+        message: tx('title_migrationInProgressMessage9')
+    },
+    {
+        message: tx('title_migrationInProgressMessage10')
+    }
+];
+
 @observer
 export default class PopupMigration extends SafeComponent {
     get indicator() {
@@ -18,10 +52,8 @@ export default class PopupMigration extends SafeComponent {
             <UpdateProgressIndicator progress={fileStore.migration.progress} />
         );
     }
+
     renderThrow() {
-        const randomMessageArray = [
-            // TODO waiting for copy
-        ];
         const textStyle = {
             color: vars.black,
             fontSize: vars.font.size.smaller,
@@ -32,7 +64,7 @@ export default class PopupMigration extends SafeComponent {
                 {this.indicator}
                 <AlternatingText
                     initialText={tx('title_fileUpdateProgressDescription')}
-                    textArray={randomMessageArray}
+                    messageArray={messageArray}
                     textStyle={textStyle} />
             </View>
         );
