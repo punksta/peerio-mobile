@@ -16,6 +16,7 @@ import Fab from '../shared/fab';
 import { common } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
+import CustomOverlay from './custom-overlay';
 
 const { height } = Dimensions.get('window');
 
@@ -74,6 +75,7 @@ export default class LayoutMain extends SafeComponent {
                     style={{ flex: 1, flexGrow: 1 }}>
                     {currentPage}
                     <Bottom>
+                        <CustomOverlay />
                         {this.snackBar}
                     </Bottom>
                 </View>

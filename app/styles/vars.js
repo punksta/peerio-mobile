@@ -96,7 +96,9 @@ const vars = {
     toggleLineActive: '#B6D3FF',
     toggleLineInactive: '#CFCFCF',
     peerioFontFamily: 'Open Sans',
-
+    chatUnreadIndicatorBg: 'rgba(255, 255, 255, 0.95)',
+    chatUnreadIndicatorWidth: 70,
+    chatUnreadIndicatorHeight: 32,
     circle: 10,
     circleSize: 4,
     bg,
