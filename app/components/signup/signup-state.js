@@ -6,6 +6,9 @@ import RoutedState from '../routes/routed-state';
 import { User, socket, crypto } from '../../lib/icebear';
 
 class SignupState extends RoutedState {
+    SAVE_PIN_SCREEN_NUMBER = 1;
+    KEY_BACKED_SCREEN = 2;
+
     @observable username = '';
     @observable email = '';
     @observable firstName = '';
@@ -25,13 +28,10 @@ class SignupState extends RoutedState {
 
     get nextAvailable() {
         switch (this.current) {
-            // save pin and register
-            case 1: return socket.connected;
+            case this.SAVE_PIN_SCREEN_NUMBER: return socket.connected;
             default: return false;
         }
     }
-
-    get isLast() { return this.current === this.count - 1; }
 
     get isFirst() { return this.current === 0; }
 
@@ -54,7 +54,7 @@ class SignupState extends RoutedState {
 
     @action async next() {
         if (!this.passphrase) this.passphrase = await this.generatePassphrase();
-        if (this.keyBackedUp && (this.current === 2)) await this.finishAccountCreation();
+        if (this.keyBackedUp && (this.current === this.KEY_BACKED_SCREEN)) await this.finishAccountCreation();
         this.current++;
     }
 
