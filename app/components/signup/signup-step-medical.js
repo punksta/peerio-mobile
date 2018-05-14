@@ -1,7 +1,7 @@
 import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import Text from '../controls/custom-text';
 import CountryPickerBox from '../controls/country-picker-box';
 import SpecialtyPickerBox from '../controls/specialty-picker-box';
@@ -10,16 +10,15 @@ import Bold from '../controls/bold';
 import { vars } from '../../styles/styles';
 import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
-import { t, tx, T } from '../utils/translator';
+import { tx, T } from '../utils/translator';
 import LoginWizardPage, {
-    header2, innerSmall, circleTopSmall, headingStyle2, footerText1, footerText2, innerContainer, outerContainer, buttonRowStyle
+    header2, innerSmall, headingStyle2, footerText1, footerText2, innerContainer, outerContainer, buttonRowStyle
 } from '../login/login-wizard-page';
 import StyledTextInput from '../shared/styled-text-input';
 import { socket, validation } from '../../lib/icebear';
 import uiState from '../layout/ui-state';
 
-const { validators } = validation;
-const { firstName, lastName, username, email } = validators;
+// const { validators } = validation;
 
 const formStyle = {
     paddingVertical: vars.spacing.small.midi2x,
@@ -44,6 +43,12 @@ const tosParser = {
 };
 
 const signupTextStyle = [footerText1, { fontSize: vars.font.size.smaller }];
+const ahpraTextStyle = {
+    fontSize: vars.font.size.smaller,
+    color: vars.black54,
+    alignSelf: 'flex-start',
+    margin: vars.spacing.medium.mini2x
+};
 
 @observer
 export default class SignupStepMedical extends LoginWizardPage {
@@ -80,6 +85,11 @@ export default class SignupStepMedical extends LoginWizardPage {
                     required
                     ref={this.medicalIdInputRef}
                     testID="medicalId" />
+                <View style={footer}>
+                    <Text style={ahpraTextStyle}>
+                        <T k="title_medicalIdDescription" />
+                    </Text>
+                </View>
             </View>
         );
     }
