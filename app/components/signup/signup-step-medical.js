@@ -3,7 +3,9 @@ import { observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
 import Text from '../controls/custom-text';
-// import LanguagePickerBox from '../controls/language-picker-box';
+import CountryPickerBox from '../controls/country-picker-box';
+import SpecialityPickerBox from '../controls/speciality-picker-box';
+import RolePickerBox from '../controls/role-picker-box';
 import Bold from '../controls/bold';
 import { vars } from '../../styles/styles';
 import signupState from './signup-state';
@@ -108,6 +110,10 @@ export default class SignupStepMedical extends LoginWizardPage {
                     onSubmitEditing={this.onSubmitUsername}
                     ref={this.usernameInputRef}
                     testID="username" />
+                <CountryPickerBox />
+                <SpecialityPickerBox />
+                <RolePickerBox />
+
                 <StyledTextInput
                     state={this.emailState}
                     validations={email}
