@@ -284,6 +284,10 @@ class UIState extends RoutedState {
         ZM: 'Zambia',
         ZW: 'Zimbabwe'
     };
+    @observable roles = {
+        doctor: 'Doctor',
+        admin: 'Admin'
+    };
 
     get bottomOffset() {
         const pickerHeight = this.pickerVisible ? this.pickerHeight : 0;
