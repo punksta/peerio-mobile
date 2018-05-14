@@ -43,6 +43,10 @@ class SignupState extends RoutedState {
         this.firstName = '';
         this.lastName = '';
         this.pin = '';
+        this.medicalId = '';
+        this.country = '';
+        this.specialty = '';
+        this.role = '';
         this.current = 0;
         this.resetValidationState();
         this.routes.app.loginStart();
