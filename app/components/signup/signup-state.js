@@ -14,8 +14,6 @@ class SignupState extends RoutedState {
     @observable _current = 0;
     get current() { return this._current; }
     set current(i) { uiState.hideAll().then(() => { this._current = i; }); }
-    // five pages of signup wizard
-    @observable count = 5;
     _prefix = 'signup';
     avatarBuffers = null;
     @observable avatarData = null;
