@@ -6,6 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import fileState from '../files/file-state';
 import { tx } from '../utils/translator';
 import routes from '../routes/routes';
+import snackbarState from '../snackbars/snackbar-state';
 
 @observer
 export default class InlineFileActionSheet extends SafeComponent {
@@ -17,7 +18,11 @@ export default class InlineFileActionSheet extends SafeComponent {
     };
 
     get fileExists() {
-        return this.file && !this.file.isPartialDownload && this.file.cached;
+        if (!this.file) return false;
+        // if we uploaded the image ourselves, it's in the localFileMap
+        // TODO: move to icebear
+        const selfTmpCachePath = fileState.localFileMap.get(this.file.fileId);
+        return !!selfTmpCachePath || this.file.cached;
     }
 
     get openItem() {
@@ -25,8 +30,18 @@ export default class InlineFileActionSheet extends SafeComponent {
         return {
             title,
             action: () => {
-                when(() => this.fileExists, this.file.launchViewer());
-                if (!this.file.cached) fileState.download(this.file);
+                when(
+                    () => this.fileExists,
+                    () => {
+                        // if we uploaded the image ourselves, it's in the localFileMap
+                        // TODO: move to icebear
+                        const selfTmpCachePath = fileState.localFileMap.get(this.file.fileId);
+                        this.file.launchViewer(selfTmpCachePath).catch(
+                            () => snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'))
+                        );
+                    }
+                );
+                if (!this.fileExists) fileState.download(this.file);
             }
         };
     }
