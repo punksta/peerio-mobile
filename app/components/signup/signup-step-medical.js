@@ -55,8 +55,7 @@ export default class SignupStepMedical extends LoginWizardPage {
         signupState.speciality = uiState.specialitySelected;
         signupState.role = uiState.roleSelected;
         signupState.medicalId = this.medicalIdState.value;
-        console.log(signupState);
-        // signupState.next();
+        signupState.next();
     }
 
     get isNextDisabled() {
