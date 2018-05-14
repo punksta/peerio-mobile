@@ -47,14 +47,15 @@ const signupTextStyle = [footerText1, { fontSize: vars.font.size.smaller }];
 
 @observer
 export default class SignupStepMedical extends LoginWizardPage {
-    emailState = observable({ value: '' });
-    @action.bound emailInputRef(ref) { this.emailInput = ref; }
+    medicalIdState = observable({ value: '' });
+    @action.bound medicalIdInputRef(ref) { this.medicalIdInput = ref; }
 
     @action.bound handleNextButton() {
         signupState.country = uiState.countrySelected;
         signupState.speciality = uiState.specialitySelected;
         signupState.role = uiState.roleSelected;
-        // signupState.medicalId = '';
+        signupState.medicalId =  this.medicalIdInput.value;
+        console.log(signupState);
         // signupState.next();
     }
 
@@ -72,15 +73,14 @@ export default class SignupStepMedical extends LoginWizardPage {
                 <SpecialityPickerBox />
                 <RolePickerBox />
                 <StyledTextInput
-                    state={this.emailState}
-                    validations={email}
-                    hint={tx('title_email')}
+                    state={this.medicalIdState}
+                    // validations={ } // TODO add validation
+                    hint={tx('title_medicalId')}
                     lowerCase
-                    keyboardType="email-address"
                     returnKeyType="go"
                     required
-                    ref={this.emailInputRef}
-                    testID="email" />
+                    ref={this.medicalIdInputRef}
+                    testID="medicalId" />
             </View>
         );
     }
