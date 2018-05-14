@@ -78,7 +78,8 @@ class SignupState extends RoutedState {
         this.isInProgress = true;
         const user = new User();
         User.current = user;
-        const { username, email, firstName, lastName, passphrase, avatarBuffers, keyBackedUp } = this;
+        const { username, email, firstName, lastName, passphrase, avatarBuffers,
+            keyBackedUp, country, specialty, role, medicalId } = this;
         const localeCode = uiState.locale;
         user.username = username;
         user.email = email;
