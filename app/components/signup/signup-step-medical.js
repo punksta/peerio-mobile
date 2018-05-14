@@ -16,6 +16,7 @@ import LoginWizardPage, {
 } from '../login/login-wizard-page';
 import StyledTextInput from '../shared/styled-text-input';
 import { socket, validation } from '../../lib/icebear';
+import uiState from '../layout/ui-state';
 
 const { validators } = validation;
 const { firstName, lastName, username, email } = validators;
@@ -46,74 +47,30 @@ const signupTextStyle = [footerText1, { fontSize: vars.font.size.smaller }];
 
 @observer
 export default class SignupStepMedical extends LoginWizardPage {
-    firstnameState = observable({ value: '' });
-    lastnameState = observable({ value: '' });
-    usernameState = observable({ value: '' });
     emailState = observable({ value: '' });
-
-    @action.bound firstNameInputRef(ref) { this.firstNameInput = ref; }
-    @action.bound lastNameInputRef(ref) { this.lastNameInput = ref; }
-    @action.bound usernameInputRef(ref) { this.usernameInput = ref; }
     @action.bound emailInputRef(ref) { this.emailInput = ref; }
 
-    @action.bound onSubmitFirstName() { this.lastNameInput.onFocus(); }
-    @action.bound onSubmitLastName() { this.usernameInput.onFocus(); }
-    @action.bound onSubmitUsername() { this.emailInput.onFocus(); }
-
     @action.bound handleNextButton() {
-        signupState.firstName = this.firstnameState.value;
-        signupState.lastName = this.lastnameState.value;
-        signupState.username = this.usernameState.value;
-        signupState.email = this.emailState.value;
-        signupState.next();
+        signupState.country = uiState.countrySelected;
+        signupState.speciality = uiState.specialitySelected;
+        signupState.role = uiState.roleSelected;
+        // signupState.medicalId = '';
+        // signupState.next();
     }
 
     get isNextDisabled() {
-        // removing "!this.firstnameState.value" causes a runtime error
-        return socket.connected && (!this.firstnameState.value || !this.firstNameInput.isValid ||
-            !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
+        // TODO add medicalId validation
+        // return socket.connected && (!this.countryState.value || !this.firstNameInput.isValid ||
+        //     !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
+        return socket.connected;
     }
 
     get body() {
         return (
             <View>
-                <StyledTextInput
-                    state={this.firstnameState}
-                    validations={firstName}
-                    hint={tx('title_firstName')}
-                    maxLength={24}
-                    required
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    onSubmitEditing={this.onSubmitFirstName}
-                    ref={this.firstNameInputRef}
-                    testID="firstName" />
-                <StyledTextInput
-                    state={this.lastnameState}
-                    validations={lastName}
-                    hint={tx('title_lastName')}
-                    maxLength={24}
-                    required
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    onSubmitEditing={this.onSubmitLastName}
-                    ref={this.lastNameInputRef}
-                    testID="lastName" />
-                <StyledTextInput
-                    state={this.usernameState}
-                    validations={username}
-                    hint={tx('title_username')}
-                    lowerCase
-                    required
-                    keyboardType="email-address"
-                    returnKeyType="next"
-                    onSubmitEditing={this.onSubmitUsername}
-                    ref={this.usernameInputRef}
-                    testID="username" />
                 <CountryPickerBox />
                 <SpecialityPickerBox />
                 <RolePickerBox />
-
                 <StyledTextInput
                     state={this.emailState}
                     validations={email}
@@ -124,8 +81,6 @@ export default class SignupStepMedical extends LoginWizardPage {
                     required
                     ref={this.emailInputRef}
                     testID="email" />
-                {/* <LanguagePickerBox /> */}
-                <View style={[{ flexGrow: 1 }]} />
             </View>
         );
     }

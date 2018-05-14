@@ -20,6 +20,10 @@ class SignupState extends RoutedState {
     avatarBuffers = null;
     @observable avatarData = null;
     @observable keyBackedUp = false;
+    @observable country = '';
+    @observable speciality = '';
+    @observable role = '';
+    @observable medicalId = '';
 
     get nextAvailable() {
         switch (this.current) {
