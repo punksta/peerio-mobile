@@ -290,7 +290,7 @@ class UIState extends RoutedState {
         admin: 'Admin'
     };
     @observable roleSelected = 'doctor';
-    @observable specialities = {
+    @observable specialties = {
         'Addiction Medicine': 'Addiction Medicine',
         'Aged Care / Geriatric Medicine': 'Aged Care / Geriatric Medicine',
         'Allergy Medicine': 'Allergy Medicine',
@@ -341,7 +341,7 @@ class UIState extends RoutedState {
         Urology: 'Urology',
         'Vascular Surgery': 'Vascular Surgery'
     };
-    @observable specialitySelected = 'Addiction Medicine';
+    @observable specialtySelected = 'Addiction Medicine';
 
     get bottomOffset() {
         const pickerHeight = this.pickerVisible ? this.pickerHeight : 0;

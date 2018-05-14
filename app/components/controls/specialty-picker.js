@@ -9,7 +9,7 @@ import uiState from '../layout/ui-state';
 export default class SpecialityPicker extends SafeComponent {
     constructor(props) {
         super(props);
-        this.data = uiState.specialities;
+        this.data = uiState.specialties;
     }
 
     componentWillUpdate() {

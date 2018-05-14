@@ -4,7 +4,7 @@ import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
 import Text from '../controls/custom-text';
 import CountryPickerBox from '../controls/country-picker-box';
-import SpecialityPickerBox from '../controls/speciality-picker-box';
+import SpecialtyPickerBox from '../controls/specialty-picker-box';
 import RolePickerBox from '../controls/role-picker-box';
 import Bold from '../controls/bold';
 import { vars } from '../../styles/styles';
@@ -52,7 +52,7 @@ export default class SignupStepMedical extends LoginWizardPage {
 
     @action.bound handleNextButton() {
         signupState.country = uiState.countrySelected;
-        signupState.speciality = uiState.specialitySelected;
+        signupState.specialty = uiState.specialtySelected;
         signupState.role = uiState.roleSelected;
         signupState.medicalId = this.medicalIdState.value;
         signupState.next();
@@ -69,7 +69,7 @@ export default class SignupStepMedical extends LoginWizardPage {
         return (
             <View>
                 <CountryPickerBox />
-                <SpecialityPickerBox />
+                <SpecialtyPickerBox />
                 <RolePickerBox />
                 <StyledTextInput
                     state={this.medicalIdState}

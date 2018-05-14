@@ -22,7 +22,7 @@ class SignupState extends RoutedState {
     @observable avatarData = null;
     @observable keyBackedUp = false;
     @observable country = '';
-    @observable speciality = '';
+    @observable specialty = '';
     @observable role = '';
     @observable medicalId = '';
 
