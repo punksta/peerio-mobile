@@ -54,16 +54,16 @@ export default class SignupStepMedical extends LoginWizardPage {
         signupState.country = uiState.countrySelected;
         signupState.speciality = uiState.specialitySelected;
         signupState.role = uiState.roleSelected;
-        signupState.medicalId =  this.medicalIdInput.value;
+        signupState.medicalId = this.medicalIdState.value;
         console.log(signupState);
         // signupState.next();
     }
 
     get isNextDisabled() {
-        // TODO add medicalId validation
+        // TODO add medicalId validation: this.medicalIdInput.isValid
         // return socket.connected && (!this.countryState.value || !this.firstNameInput.isValid ||
         //     !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
-        return socket.connected;
+        return !socket.connected;
     }
 
     get body() {
