@@ -5,6 +5,7 @@ import PickerBox from './picker-box';
 import SpecialityPicker from './specialty-picker';
 import uiState from '../layout/ui-state';
 import { pickerBox } from '../../styles/styles';
+import { tx } from '../utils/translator';
 
 @observer
 export default class SpecialtyPickerBox extends SafeComponent {
@@ -21,7 +22,7 @@ export default class SpecialtyPickerBox extends SafeComponent {
                 data={uiState.specialties}
                 style={pickerBox}
                 value={uiState.specialtySelected}
-                hint=""
+                hint={tx('title_specialty')}
             />
         );
     }

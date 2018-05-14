@@ -5,6 +5,7 @@ import PickerBox from './picker-box';
 import CountryPicker from './country-picker';
 import uiState from '../layout/ui-state';
 import { pickerBox } from '../../styles/styles';
+import { tx } from '../utils/translator';
 
 @observer
 export default class CountryPickerBox extends SafeComponent {
@@ -21,7 +22,7 @@ export default class CountryPickerBox extends SafeComponent {
                 data={uiState.countries}
                 style={pickerBox}
                 value={uiState.countrySelected}
-                hint=""
+                hint={tx('title_countryOfPractice')}
             />
         );
     }

@@ -5,6 +5,7 @@ import PickerBox from './picker-box';
 import RolePicker from './role-picker';
 import uiState from '../layout/ui-state';
 import { pickerBox } from '../../styles/styles';
+import { tx } from '../utils/translator';
 
 @observer
 export default class RolePickerBox extends SafeComponent {
@@ -21,7 +22,7 @@ export default class RolePickerBox extends SafeComponent {
                 data={uiState.roles}
                 style={pickerBox}
                 value={uiState.roleSelected}
-                hint=""
+                hint={tx('title_yourRole')}
             />
         );
     }

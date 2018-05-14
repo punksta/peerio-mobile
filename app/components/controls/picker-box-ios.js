@@ -27,6 +27,7 @@ export default class PickerBoxIos extends SafeComponent {
         const focused = uiState.pickerVisible && uiState.picker === this.picker;
         const { shadow, background, textview, container, iconContainer, icon } =
             focused ? this.props.style.active : this.props.style.normal;
+        const value = this.props.value ? this.props.data[this.props.value] : this.props.hint;
         return (
             <View style={shadow}>
                 <View
@@ -36,7 +37,7 @@ export default class PickerBoxIos extends SafeComponent {
                             pointerEvents="none"
                             style={container}>
                             <Text style={textview}>
-                                {this.props.data[this.props.value]}
+                                {value}
                             </Text>
                         </View>
                     </TouchableOpacity>
