@@ -43,9 +43,7 @@ export default class PickerBoxIos extends SafeComponent {
                     <View
                         pointerEvents="none"
                         style={iconContainer}>
-                        {focused ?
-                            icons.dark('arrow-drop-down', () => { }, icon) :
-                            icons.white('arrow-drop-down', () => { }, icon)}
+                        {icons.dark('arrow-drop-down', () => { }, icon)}
                     </View>
                 </View>
             </View>
