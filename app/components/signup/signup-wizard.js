@@ -13,9 +13,10 @@ import SignupContactInvite from './signup-contact-invite';
 import signupState from './signup-state';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
+import SignupStepMedical from './signup-step-medical';
 
 export default class SignupWizard extends Wizard {
-    pages = ['signupStep1', 'signupAccountKey', 'signupConfirmBackup',
+    pages = ['signupStep1', 'signupMedical', 'signupAccountKey', 'signupConfirmBackup',
         'signupContactSyncStart', 'signupContactAdd', 'signupContactInvite'];
 
     get index() { return signupState.current; }
@@ -27,6 +28,7 @@ export default class SignupWizard extends Wizard {
     signupContactSyncStart = () => <SignupContactSyncStart />;
     signupContactAdd = () => <SignupContactAdd />;
     signupContactInvite = () => <SignupContactInvite />;
+    signupMedical = () => <SignupStepMedical />;
 
     renderThrow() {
         const style = wizard;
