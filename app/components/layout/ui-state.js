@@ -24,6 +24,7 @@ class UIState extends RoutedState {
     @observable externalViewer = false;
     @observable currentScrollView = null;
     @observable currentScrollViewPosition = 0;
+    @observable customOverlayComponent = null;
     @observable trustDevice2FA = false;
     @observable languages = {
         en: `English`
