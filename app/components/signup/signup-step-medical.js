@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable, action } from 'mobx';
+import { observable, action, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import Text from '../controls/custom-text';
@@ -70,26 +70,32 @@ export default class SignupStepMedical extends LoginWizardPage {
         return !socket.connected;
     }
 
+    @computed get selectedAU() {
+        return uiState.countrySelected === 'AU';
+    }
+
     get body() {
         return (
             <View>
                 <CountryPickerBox />
-                <SpecialtyPickerBox />
+                {this.selectedAU && <SpecialtyPickerBox />}
                 <RolePickerBox />
-                <StyledTextInput
-                    state={this.medicalIdState}
-                    // validations={ } // TODO add validation
-                    hint={tx('title_medicalId')}
-                    lowerCase
-                    returnKeyType="go"
-                    required
-                    ref={this.medicalIdInputRef}
-                    testID="medicalId" />
-                <View style={footer}>
-                    <Text style={ahpraTextStyle}>
-                        <T k="title_medicalIdDescription" />
-                    </Text>
-                </View>
+                {this.selectedAU && <View>
+                    <StyledTextInput
+                        state={this.medicalIdState}
+                        // validations={ } // TODO add validation
+                        hint={tx('title_medicalId')}
+                        lowerCase
+                        returnKeyType="go"
+                        required
+                        ref={this.medicalIdInputRef}
+                        testID="medicalId" />
+                    <View style={footer}>
+                        <Text style={ahpraTextStyle}>
+                            <T k="title_medicalIdDescription" />
+                        </Text>
+                    </View>
+                </View>}
             </View>
         );
     }
