@@ -6,7 +6,7 @@ import PickerPopup from './picker-popup';
 import uiState from '../layout/ui-state';
 
 @observer
-export default class SpecialityPicker extends SafeComponent {
+export default class SpecialtyPicker extends SafeComponent {
     constructor(props) {
         super(props);
         this.data = uiState.specialties;
@@ -19,7 +19,7 @@ export default class SpecialityPicker extends SafeComponent {
     renderThrow() {
         return (
             <PickerPopup
-                name="specialitySelected"
+                name="specialtySelected"
                 onValueChange={this.onValueChange}
                 data={this.data}
                 state={uiState} />
