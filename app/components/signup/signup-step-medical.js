@@ -99,7 +99,7 @@ export default class SignupStepMedical extends LoginWizardPage {
                         </View>
                     </View>
                     <View style={[buttonRowStyle, { justifyContent: 'space-between' }]}>
-                        {this.button('button_back', () => signupState.routes.app.loginStart())}
+                        {this.button('button_back', () => signupState.prev())}
                         {this.button('button_next',
                             () => this.handleNextButton(),
                             false,

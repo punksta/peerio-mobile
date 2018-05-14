@@ -23,12 +23,12 @@ export default class SignupWizard extends Wizard {
     set index(i) { signupState.current = i; }
 
     signupStep1 = () => <SignupStep1 />;
+    signupMedical = () => <SignupStepMedical />;
     signupAccountKey = () => <SignupAccountKey />;
     signupConfirmBackup = () => <SignupConfirmBackup />;
     signupContactSyncStart = () => <SignupContactSyncStart />;
     signupContactAdd = () => <SignupContactAdd />;
     signupContactInvite = () => <SignupContactInvite />;
-    signupMedical = () => <SignupStepMedical />;
 
     renderThrow() {
         const style = wizard;
