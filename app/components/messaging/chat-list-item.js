@@ -1,21 +1,42 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import Avatar from '../shared/avatar';
 import chatState from './chat-state';
-import { User, contactStore, systemMessages } from '../../lib/icebear';
+import { User, contactStore } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 
 @observer
 export default class ChatListItem extends SafeComponent {
-    get rightIcon() {
-        const { chat } = this.props;
-        if (chat.unreadCount === 0) return null;
+    renderNewBadge() {
+        const circleStyle = {
+            width: vars.roomInviteCircleWidth,
+            height: vars.roomInviteCircleHeight,
+            borderRadius: 5,
+            backgroundColor: vars.invitedBadgeColor,
+            overflow: 'hidden',
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+        const textNewStyle = {
+            fontSize: vars.font.size.smaller,
+            color: vars.unreadTextColor
+        };
+        return (
+            <View style={circleStyle}>
+                <Text semibold style={textNewStyle}>
+                    {tx('title_new')}
+                </Text>
+            </View>);
+    }
 
+    renderUnreadCountBadge() {
+        const { chat } = this.props;
         const circleStyle = {
             width: vars.spacing.large.mini2x,
             paddingVertical: 1,
@@ -30,7 +51,6 @@ export default class ChatListItem extends SafeComponent {
             fontSize: vars.font.size.normal,
             color: vars.badgeText
         };
-
         return (
             <View style={circleStyle}>
                 <Text semibold style={circleTextStyle}>
@@ -40,24 +60,36 @@ export default class ChatListItem extends SafeComponent {
         );
     }
 
-    renderMostRecentMessage(c) {
-        const m = c.mostRecentMessage;
-        if (!m) return null;
-        if (m.systemData) {
-            return <Text italic numberOfLines={1} ellipsizeMode="tail">{systemMessages.getSystemMessageText(m)}</Text>;
-        }
-        let { username } = m.sender;
-        if (username === User.current.username) username = tx('title_you');
-        return (
-            <Text numberOfLines={1} ellipsizeMode="tail">
-                <Text bold>{username}{`: `}</Text>
-                <Text style={{ color: vars.txtMedium }}>
-                    {m.files && m.files.length
-                        ? tx('title_filesShared', { count: m.files.length })
-                        : m.text}
-                </Text>
-            </Text>
-        );
+    get rightIcon() {
+        const { chat } = this.props;
+        if (chat.isInvite) return this.renderNewBadge();
+        if (chat.unreadCount === 0) return null;
+        return this.renderUnreadCountBadge();
+    }
+
+    // --- Feature disabled ---
+    // renderMostRecentMessage(c) {
+    //     const m = c.mostRecentMessage;
+    //     if (!m) return null;
+    //     if (m.systemData) {
+    //         return <Text italic numberOfLines={1} ellipsizeMode="tail">{systemMessages.getSystemMessageText(m)}</Text>;
+    //     }
+    //     let { username } = m.sender;
+    //     if (username === User.current.username) username = tx('title_you');
+    //     return (
+    //         <Text numberOfLines={1} ellipsizeMode="tail">
+    //             <Text bold>{username}{`: `}</Text>
+    //             <Text style={{ color: vars.txtMedium }}>
+    //                 {m.files && m.files.length
+    //                     ? tx('title_filesShared', { count: m.files.length })
+    //                     : m.text}
+    //             </Text>
+    //         </Text>
+    //     );
+    // }
+
+    @action.bound onPress() {
+        chatState.routerMain.chats(this.props.chat);
     }
 
     renderThrow() {
@@ -78,7 +110,6 @@ export default class ChatListItem extends SafeComponent {
         }
 
         const key = chat.id;
-        const onPress = () => chatState.routerMain.chats(chat);
         const unread = chat.unreadCount > 0;
         return (
             <Avatar
@@ -95,8 +126,8 @@ export default class ChatListItem extends SafeComponent {
                 hideOnline
                 isDeleted={isDeleted}
                 key={key}
-                onPress={onPress}
-                onPressAvatar={onPress}
+                onPress={this.onPress}
+                onPressAvatar={this.onPress}
             />
         );
     }
