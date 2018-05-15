@@ -87,6 +87,13 @@ class SignupState extends RoutedState {
         user.firstName = firstName;
         user.lastName = lastName;
         user.localeCode = localeCode;
+        if (process.env.APP_LABEL === 'medcryptor') {
+            user.props = {
+                country,
+                specialty,
+                role
+            };
+        }
         return user.createAccountAndLogin()
             .then(() => loginState.enableAutomaticLogin(user))
             .then(() => mainState.saveUser())
