@@ -15,7 +15,6 @@ const shadowNormal = {
     margin: vars.spacing.medium.mini2x,
     marginTop: vars.spacing.small.midi,
     marginBottom: vars.spacing.small.midi,
-    // backgroundColor: vars.inputBg,
     paddingHorizontal: vars.inputPaddingHorizontal,
     borderColor: vars.inputBorderColor,
     borderWidth: 1,
@@ -24,7 +23,6 @@ const shadowNormal = {
 };
 
 const shadowActive = {
-    // shadowColor: '#000000',
     shadowOpacity: 0.4,
     shadowRadius: 5,
     shadowOffset: {
@@ -68,13 +66,7 @@ export default {
         background: {
             backgroundColor: 'transparent'
         },
-        container: [inputContainer
-        //     {
-        //     backgroundColor: vars.pickerBg,
-        //     borderRadius: 2,
-        //     overflow: 'hidden'
-        // }
-        ],
+        container: inputContainer,
         iconContainer,
         icon
     },
@@ -87,9 +79,6 @@ export default {
         }],
         background: {
             backgroundColor: 'transparent'
-            // backgroundColor: vars.inputBg,
-            // borderRadius: 2,
-            // overflow: 'hidden'
         },
         container: [inputContainer, {
             backgroundColor: 'transparent'
