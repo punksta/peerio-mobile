@@ -6,7 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import uiState from '../layout/ui-state';
 import icons from '../helpers/icons';
 import Text from '../controls/custom-text';
-import { vars, styledTextInput } from '../../styles/styles';
+import { vars } from '../../styles/styles';
 
 @observer
 export default class PickerBoxIos extends SafeComponent {
@@ -14,7 +14,6 @@ export default class PickerBoxIos extends SafeComponent {
         super(props);
         this.focus = this.focus.bind(this);
         this.picker = this.props.picker;
-        this.opened = false;
     }
 
     focus() {
@@ -24,22 +23,6 @@ export default class PickerBoxIos extends SafeComponent {
             return;
         }
         uiState.showPicker(this.picker);
-    }
-
-
-    get errorSpacer() {
-        const marginBottom = styledTextInput.errorStyle.height;
-        return (<View style={this.props.style.errorStyle} />);
-    }
-
-    get errorMessage() {
-        if (!this.props.value && this.opened) {
-            return (
-                <Text style={this.props.style.errorStyle}>
-                    {this.props.errorMessage}
-                </Text>);
-        }
-        return this.errorSpacer;
     }
 
     renderThrow() {
@@ -68,7 +51,6 @@ export default class PickerBoxIos extends SafeComponent {
                         </View>
                     </View>
                 </View>
-                {this.errorMessage}
             </View>
         );
     }
