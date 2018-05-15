@@ -4,11 +4,9 @@ import { observable, action, when } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
 import { User, socket, crypto } from '../../lib/icebear';
+import WhiteLabel from '../whitelabel/white-label-components';
 
 class SignupState extends RoutedState {
-    SAVE_PIN_SCREEN_NUMBER = 1;
-    KEY_BACKED_SCREEN = 2;
-
     @observable username = '';
     @observable email = '';
     @observable firstName = '';
@@ -28,7 +26,7 @@ class SignupState extends RoutedState {
 
     get nextAvailable() {
         switch (this.current) {
-            case this.SAVE_PIN_SCREEN_NUMBER: return socket.connected;
+            case WhiteLabel.SAVE_PIN_SCREEN_NUMBER: return socket.connected;
             default: return false;
         }
     }
@@ -58,7 +56,7 @@ class SignupState extends RoutedState {
 
     @action async next() {
         if (!this.passphrase) this.passphrase = await this.generatePassphrase();
-        if (this.keyBackedUp && (this.current === this.KEY_BACKED_SCREEN)) await this.finishAccountCreation();
+        if (this.keyBackedUp && (this.current === WhiteLabel.KEY_BACKED_SCREEN_NUMBER)) await this.finishAccountCreation();
         this.current++;
     }
 

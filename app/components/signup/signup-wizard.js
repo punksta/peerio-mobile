@@ -14,10 +14,10 @@ import signupState from './signup-state';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
 import SignupStepMedical from './signup-step-medical';
+import WhiteLabel from '../whitelabel/white-label-components';
 
 export default class SignupWizard extends Wizard {
-    pages = ['signupStep1', 'signupMedical', 'signupAccountKey', 'signupConfirmBackup',
-        'signupContactSyncStart', 'signupContactAdd', 'signupContactInvite'];
+    pages = WhiteLabel.PAGES;
 
     get index() { return signupState.current; }
     set index(i) { signupState.current = i; }

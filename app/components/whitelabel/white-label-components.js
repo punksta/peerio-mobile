@@ -6,4 +6,6 @@ const whiteLabels = {
     peerio
 };
 
-export default whiteLabels[process.env.APP_LABEL];
+const WhiteLabel = whiteLabels[process.env.APP_LABEL].default;
+
+export default WhiteLabel;
