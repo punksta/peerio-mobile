@@ -8,7 +8,7 @@ import chatState from '../messaging/chat-state';
 import ChatInfoSectionHeader from '../messaging/chat-info-section-header';
 import RecentFileItem from '../files/recent-file-item';
 import fileState from '../files/file-state';
-import FilesActionSheet from '../files/files-action-sheet';
+import FileActionSheet from '../files/file-action-sheet';
 import { tx } from '../utils/translator';
 
 const INITIAL_LIST_SIZE = 25;
@@ -21,14 +21,9 @@ export default class RecentFilesList extends SafeComponent {
 
     get hasData() { return this.dataSource[0] && this.dataSource[0].data.length; }
 
-    // TODO Test after new FS is implemented
     @action.bound refreshData() {
-        console.log('Old Data');
-        console.log(this.dataSource);
         const newData = this.data;
         this.dataSource = [{ data: newData.slice(), key: tx('title_recentFiles') }];
-        console.log('New Data');
-        console.log(this.dataSource);
         this.forceUpdate();
     }
 
@@ -58,8 +53,7 @@ export default class RecentFilesList extends SafeComponent {
         // for event handler
         return (
             <RecentFileItem
-                onMenu={() => this.filesActionSheet.show(file)}
-                key={fileId}
+                onMenu={() => FileActionSheet.show(file, false)}
                 file={file} />
         );
     };
@@ -74,7 +68,7 @@ export default class RecentFilesList extends SafeComponent {
             hidden={!this.hasData} />);
     };
 
-    filesActionSheetRef = (ref) => { this.filesActionSheet = ref; };
+    filesListActionSheet = (ref) => { this.filesListActionSheet = ref; };
 
     renderThrow() {
         return (
@@ -87,9 +81,6 @@ export default class RecentFilesList extends SafeComponent {
                     renderSectionHeader={this.header}
                     style={{ marginBottom: 8 }}
                 />
-                <FilesActionSheet
-                    ref={this.filesActionSheetRef}
-                    refreshData={this.refreshData} />
             </View>
         );
     }

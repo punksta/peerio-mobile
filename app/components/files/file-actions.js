@@ -61,7 +61,7 @@ export default class FileActions extends SafeComponent {
     renderThrow() {
         const { file } = this.props;
         const enabled = file && file.readyForDownload || fileState.showSelection;
-        const leftAction = file && !file.isPartialDownload && file.cached ?
+        const leftAction = file && !file.downloading && file.cached ?
             this.action(t('button_open'), 'open-in-new', this.onViewFile, enabled) :
             this.action(t('title_download'), 'file-download', () => fileState.download(), enabled);
         return (

@@ -180,17 +180,19 @@ export default class FileInlineImage extends SafeComponent {
 
     get displayCutOffImageOffer() {
         const outer = {
-            padding: this.outerPadding
+            padding: this.outerPadding,
+            height: vars.imageInnerContainerHeight,
+            justifyContent: 'center'
         };
         const text0 = {
             color: vars.txtDark
         };
         return (
-            <View style={outer}>
+            <TouchableOpacity style={outer} onPress={this.imageAction} pressRetentionOffset={vars.pressRetentionOffset}>
                 <Text style={text0}>
                     {tx('title_imageTooBigCutoff', { size: util.formatBytes(config.chat.inlineImageSizeLimitCutoff) })}
                 </Text>
-            </View>
+            </TouchableOpacity>
         );
     }
 
@@ -312,6 +314,14 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
+    // Opens the image using exists, else attempts to download it
+    @action.bound imageAction() {
+        const { image } = this.props;
+        if (image && image.cached) config.FileStream.launchViewer(image.cachePath);
+        else if (image && image.tmpCached) config.FileStream.launchViewer(image.tmpCachePath);
+        else fileState.download(image);
+    }
+
     renderThrow() {
         const { image } = this.props;
         const { fileId, downloading } = image;
@@ -324,16 +334,16 @@ export default class FileInlineImage extends SafeComponent {
 
         const inner = {
             backgroundColor: loaded ? vars.white : vars.lightGrayBg,
-            minHeight: loaded ? undefined : 140,
+            minHeight: loaded ? undefined : vars.imageInnerContainerHeight,
             justifyContent: 'center'
         };
-
         return (
             <View>
                 <FileInlineContainer
                     onLayout={this.layout}
                     file={image}
-                    onAction={this.props.onAction}
+                    onActionSheet={this.props.onActionSheet}
+                    onAction={this.imageAction}
                     isImage
                     isOpen={this.opened}
                     extraActionIcon={!downloading && icons.darkNoPadding(
@@ -344,14 +354,16 @@ export default class FileInlineImage extends SafeComponent {
                     {this.opened &&
                         <View style={inner}>
                             {!downloading && this.loadImage && width && height ?
-                                <Image
-                                    onProgress={this.handleProgress}
-                                    onLoadEnd={this.handleLoadEnd}
-                                    onLoad={this.onLoad}
-                                    onError={this.onErrorLoadingImage}
-                                    source={{ uri: source.uri, width, height }}
-                                    style={{ width, height }}
-                                /> : null }
+                                <TouchableOpacity onPress={this.imageAction} >
+                                    <Image
+                                        onProgress={this.handleProgress}
+                                        onLoadEnd={this.handleLoadEnd}
+                                        onLoad={this.onLoad}
+                                        onError={this.onErrorLoadingImage}
+                                        source={{ uri: source.uri, width, height }}
+                                        style={{ width, height }} />
+                                </TouchableOpacity>
+                                : null }
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
                             {!this.loadImage && this.oversizeCutoff && this.displayCutOffImageOffer}
@@ -373,5 +385,5 @@ export default class FileInlineImage extends SafeComponent {
 
 FileInlineImage.propTypes = {
     image: PropTypes.any,
-    onAction: PropTypes.any
+    onActionSheet: PropTypes.any
 };

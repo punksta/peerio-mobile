@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { action } from 'mobx';
+import { action, when } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, ActivityIndicator, TouchableOpacity } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import { T, tx } from '../utils/translator';
+import { tx } from '../utils/translator';
 import fileState from '../files/file-state';
 import icons from '../helpers/icons';
 import FileInlineContainer from './file-inline-container';
@@ -15,14 +15,12 @@ import snackbarState from '../snackbars/snackbar-state';
 
 @observer
 export default class FileInlineProgress extends SafeComponent {
-    filePreviouslyDownloaded = this.fileExists;
+    get filePreviouslyDownloaded() {
+        return !!this.file && this.file.cached;
+    }
 
     get file() {
         return fileState.store.getById(this.props.file);
-    }
-
-    get fileExists() {
-        return !!this.file && !this.file.isPartialDownload && this.file.cached;
     }
 
     get downloadProgress() {
@@ -31,14 +29,15 @@ export default class FileInlineProgress extends SafeComponent {
         return Math.min(Math.ceil(progress / progressMax * 100), 100);
     }
 
-    @action.bound onOpen() {
-        if (this.fileExists && !this.file.downloading) {
+    // If file is cached, open in viewer
+    // If file is NOT cached, download and then when download is complete open in viewer
+    @action.bound fileAction() {
+        when(() => this.file.hasFileAvailableForPreview, () => {
             this.file.launchViewer().catch(() => {
                 snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'));
             });
-        } else {
-            fileState.download(this.file);
-        }
+        });
+        if (this.file.hasFileAvailableForPreview) fileState.download(this.file);
     }
 
     @action.bound onCancel() {
@@ -47,46 +46,42 @@ export default class FileInlineProgress extends SafeComponent {
 
     renderThrow() {
         const file = fileState.store.getById(this.props.file);
-
+        if (!file) return null;
+        const downloadStatusContainer = {
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: 48,
+            marginTop: vars.spacing.small.midi2x,
+            marginBottom: file.downloading ? vars.spacing.small.midi2x : 0,
+            backgroundColor: vars.darkBlueBackground05,
+            borderRadius: 4
+        };
+        const textStyle = {
+            color: vars.peerioBlue,
+            fontStyle: 'italic'
+        };
+        const onPress = file.downloading ? this.onCancel : this.fileAction;
         if (!file) return <Text>{`no file ${this.props.file}`}</Text>;
         if (file.signatureError) return <FileSignatureError />;
         return (
             <FileInlineContainer
                 file={file}
-                onAction={this.props.onAction}>
-                {this.filePreviouslyDownloaded
-                    ? null
-                    : <TouchableOpacity
-                        style={{
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            height: 48,
-                            marginTop: vars.spacing.small.midi2x,
-                            marginBottom: file.downloading ? vars.spacing.small.midi2x : 0,
-                            backgroundColor: vars.darkBlueBackground05,
-                            borderRadius: 4
-                        }}
-                        onPress={file.downloading
-                            ? this.onCancel
-                            : this.onOpen
-                        }
-                    >
-                        <Text semibold style={{
-                            color: vars.peerioBlue,
-                            fontStyle: 'italic'
-                        }}>
-                            {file.downloading && !this.fileExists &&
-                                <Text><T k="button_cancelDownload" /> ({this.downloadProgress}%)</Text>
-                            }
-                            {!file.downloading && !this.fileExists &&
-                                <Text><T k="button_downloadToView" /> ({file.sizeFormatted})</Text>
-                            }
-                            {!file.downloading && this.fileExists &&
-                                <Text><T k="button_openFile" /></Text>
-                            }
+                onActionSheet={this.props.onActionSheet}
+                onAction={this.fileAction}>
+                {!this.filePreviouslyDownloaded &&
+                    <TouchableOpacity
+                        pressRetentionOffset={vars.pressRetentionOffset}
+                        style={downloadStatusContainer}
+                        onPress={onPress}>
+                        <Text semibold style={textStyle}>
+                            {file.downloading && !this.file.cached &&
+                                <Text>{tx('button_cancelDownload')} ({this.downloadProgress}%)</Text>}
+                            {!file.downloading && !this.file.cached &&
+                                <Text>{tx('button_downloadToView')} ({file.sizeFormatted})</Text>}
+                            {!file.downloading && this.file.cached &&
+                                <Text>{tx('button_openFile')}</Text>}
                         </Text>
-                    </TouchableOpacity>
-                }
+                    </TouchableOpacity>}
                 <View style={{ flex: 0 }}>
                     {!file.uploading && this.props.transparentOnFinishUpload && <ActivityIndicator />}
                     {file.uploading && icons.darkNoPadding('close', () => fileState.cancelUpload(file))}
@@ -99,5 +94,5 @@ export default class FileInlineProgress extends SafeComponent {
 FileInlineProgress.propTypes = {
     file: PropTypes.any,
     transparentOnFinishUpload: PropTypes.bool,
-    onAction: PropTypes.any
+    onActionSheet: PropTypes.any
 };
