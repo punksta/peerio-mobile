@@ -11,6 +11,8 @@ import snackbarState from '../snackbars/snackbar-state';
 @observer
 export default class InlineFileActionSheet extends SafeComponent {
     @observable file;
+    @observable _actionSheet = null;
+    @observable key = 0;
 
     sharefile = () => {
         fileState.currentFile = this.file;
@@ -18,7 +20,7 @@ export default class InlineFileActionSheet extends SafeComponent {
     };
 
     get openItem() {
-        const title = this.fileExists ? tx('button_open') : tx('button_download');
+        const title = this.file.hasFileAvailableForPreview ? tx('button_open') : tx('button_download');
         return {
             title,
             action: () => {
@@ -30,7 +32,7 @@ export default class InlineFileActionSheet extends SafeComponent {
                         );
                     }
                 );
-                if (!this.fileExists) fileState.download(this.file);
+                if (!this.file.hasFileAvailableForPreview) fileState.download(this.file);
             }
         };
     }
@@ -39,6 +41,7 @@ export default class InlineFileActionSheet extends SafeComponent {
         fileState.currentFile = this.file;
         routes.modal.moveFileTo();
     };
+
     get moveItem() {
         return {
             title: tx('button_move'),
@@ -48,8 +51,9 @@ export default class InlineFileActionSheet extends SafeComponent {
 
     deleteFile = () => {
         fileState.currentFile = this.file;
-        fileState.delete();
+        fileState.delete(true);
     };
+
     get deleteItem() {
         return {
             title: tx('button_delete'),
@@ -60,9 +64,9 @@ export default class InlineFileActionSheet extends SafeComponent {
     get items() {
         const array = [];
         array.push(this.openItem);
-        if (this.fileExists) { array.push(this.moveItem); }
+        array.push(this.moveItem);
         array.push({ title: tx('button_share'), action: this.sharefile });
-        if (this.fileExists) { array.push(this.deleteItem); }
+        array.push(this.deleteItem);
         array.push({ title: tx('button_cancel') });
         return array;
     }
@@ -73,16 +77,21 @@ export default class InlineFileActionSheet extends SafeComponent {
     };
 
     show = (file) => {
+        this._actionSheet = null;
         this.file = file;
-        this._actionSheet.show();
+        this.key++;
+        when(() => this._actionSheet, () => this._actionSheet.show());
     };
 
     renderThrow() {
+        if (!this.file) return null;
         return (
             <ActionSheet
+                key={this.key}
                 ref={sheet => { this._actionSheet = sheet; }}
                 options={this.items.map(i => i.title)}
                 cancelButtonIndex={this.items.length - 1}
+                destructiveButtonIndex={this.items.length - 2}
                 onPress={this.onPress}
             />
         );

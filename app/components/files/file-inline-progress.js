@@ -6,11 +6,12 @@ import { View, ActivityIndicator, TouchableOpacity } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import { T } from '../utils/translator';
+import { T, tx } from '../utils/translator';
 import fileState from '../files/file-state';
 import icons from '../helpers/icons';
 import FileInlineContainer from './file-inline-container';
 import FileSignatureError from './file-signature-error';
+import snackbarState from '../snackbars/snackbar-state';
 
 @observer
 export default class FileInlineProgress extends SafeComponent {
@@ -32,7 +33,9 @@ export default class FileInlineProgress extends SafeComponent {
 
     @action.bound onOpen() {
         if (this.fileExists && !this.file.downloading) {
-            this.file.launchViewer();
+            this.file.launchViewer().catch(() => {
+                snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'));
+            });
         } else {
             fileState.download(this.file);
         }

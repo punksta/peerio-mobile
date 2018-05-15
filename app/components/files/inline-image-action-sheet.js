@@ -11,32 +11,38 @@ import snackbarState from '../snackbars/snackbar-state';
 @observer
 export default class InlineImageActionSheet extends SafeComponent {
     @observable image;
+    @observable _actionSheet = null;
+    @observable key = 0;
 
     shareImage = () => {
         fileState.currentFile = this.image;
         routerModal.shareFileTo();
     };
 
-    get openItem() {
+    get actionItem() {
+        const title = this.image.hasFileAvailableForPreview ? tx('button_open') : tx('button_download');
         return {
-            title: tx('button_open'),
+            title,
             action: () => {
                 const { image } = this;
                 when(() => image.hasFileAvailableForPreview,
                     () => image.launchViewer().catch(() => {
                         snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'));
                     }));
-                if (!image.hasFileAvailableForPreview) image.tryToCacheTemporarily(true);
+                if (!image.hasFileAvailableForPreview) {
+                    image.isOversizeCutoff ? fileState.download(this.image) : image.tryToCacheTemporarily(true);
+                }
             }
         };
     }
 
     get items() {
-        return [
-            this.openItem,
+        const itemsArray = [
+            this.actionItem,
             { title: tx('button_share'), action: this.shareImage },
             { title: tx('button_cancel') }
         ];
+        return itemsArray;
     }
 
     onPress = index => {
@@ -45,13 +51,17 @@ export default class InlineImageActionSheet extends SafeComponent {
     };
 
     show = (image) => {
+        this._actionSheet = null;
         this.image = image;
-        this._actionSheet.show();
+        this.key++;
+        when(() => this._actionSheet, () => this._actionSheet.show());
     };
 
     renderThrow() {
+        if (!this.image) return null;
         return (
             <ActionSheet
+                key={this.key}
                 ref={sheet => { this._actionSheet = sheet; }}
                 options={this.items.map(i => i.title)}
                 cancelButtonIndex={this.items.length - 1}

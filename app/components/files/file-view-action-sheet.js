@@ -6,6 +6,7 @@ import SafeComponent from '../shared/safe-component';
 import fileState from '../files/file-state';
 import { tx } from '../utils/translator';
 import routes from '../routes/routes';
+import snackbarState from '../snackbars/snackbar-state';
 
 @observer
 export default class FileViewActionSheet extends SafeComponent {
@@ -20,7 +21,12 @@ export default class FileViewActionSheet extends SafeComponent {
         return {
             title,
             action: () => {
-                when(() => this.fileExists, file.launchViewer());
+                when(() => this.fileExists,
+                    () => {
+                        file.launchViewer().catch(() => {
+                            snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'));
+                        });
+                    });
                 if (!file.cached) fileState.download(file);
             }
         };

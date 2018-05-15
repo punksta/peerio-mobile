@@ -354,7 +354,7 @@ export default class FileInlineImage extends SafeComponent {
                                 /> : null }
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
-                            {this.oversizeCutoff && this.displayCutOffImageOffer}
+                            {!this.loadImage && this.oversizeCutoff && this.displayCutOffImageOffer}
                             {!this.loaded && cachingFailed && this.downloadErrorMessage}
                             {!this.loaded && !cachingFailed && this.downloadSlow && this.downloadSlowMessage}
                             {this.errorDisplayingImage && this.displayErrorMessage}

@@ -11,7 +11,8 @@ import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
 import ChatActionSheet from './chat-action-sheet';
 import ChatUnreadMessageIndicator from './chat-unread-message-indicator';
-import InlineImageActionSheet from '../files/inline-image-action-sheet';
+// TODO: remove inline image action sheet ?
+// import InlineImageActionSheet from '../files/inline-image-action-sheet';
 import InlineFileActionSheet from '../files/inline-file-action-sheet';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
@@ -87,7 +88,7 @@ export default class Chat extends SafeComponent {
         const actions = getOrMake(
             key, this._itemActionMap, () => ({
                 ref: ref => { this._refs[key] = ref; },
-                onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
+                onInlineImageAction: image => this._inlineFileActionSheet.show(image, item, this.chat),
                 onInlineFileAction: file => this._inlineFileActionSheet.show(file, item, this.chat),
                 onRetryCancel: () => this._actionSheet.show(item, this.chat)
             }));
@@ -388,7 +389,6 @@ export default class Chat extends SafeComponent {
                 </View>
                 <ProgressOverlay enabled={/* chatState.loading || */ !this.initialScrollDone} />
                 <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
-                <InlineImageActionSheet ref={sheet => { this._inlineImageActionSheet = sheet; }} />
                 <InlineFileActionSheet ref={sheet => { this._inlineFileActionSheet = sheet; }} />
             </View>
         );
