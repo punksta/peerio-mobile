@@ -99,9 +99,10 @@ export default class Files extends SafeComponent {
     onChangeFolder = folder => { fileState.currentFolder = folder; };
 
     item = (file, sectionID, rowID) => {
+        // fileId for file, id for folder
         return (
             <FileItem
-                key={file.fileId || file.folderId}
+                key={file.fileId || file.id}
                 file={file}
                 rowID={rowID}
                 onChangeFolder={this.onChangeFolder}

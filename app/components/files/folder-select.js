@@ -81,7 +81,7 @@ export default class FolderSelect extends SafeComponent {
         return (
             <FolderInnerItem
                 radio
-                key={folder.folderId}
+                key={folder.id}
                 folder={folder}
                 hideMoreOptionsIcon={!folder.hasNested || folder.isRoot}
                 onSelect={selectFolder}

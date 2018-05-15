@@ -21,7 +21,7 @@ class FileState extends RoutedState {
     selectedFile = null;
 
     @action async init() {
-        this.currentFolder = fileStore.folders.root;
+        this.currentFolder = fileStore.folderStore.root;
         return new Promise(resolve => when(() => !this.store.loading, resolve));
     }
 
@@ -169,7 +169,7 @@ class FileState extends RoutedState {
         const { shouldUpload, newFileName } = await this.preprocess(data);
         let file;
         if (shouldUpload) {
-            file = fileStore.upload(data.url, newFileName, folder.isRoot ? null : folder.folderId);
+            file = fileStore.upload(data.url, newFileName, folder.isRoot ? null : folder.id);
             if (folder && !folder.isRoot) {
                 await promiseWhen(() => file.fileId);
                 folder.moveInto(file);
@@ -194,7 +194,7 @@ class FileState extends RoutedState {
     }
 
     goToRoot() {
-        this.currentFolder = fileStore.folders.root;
+        this.currentFolder = fileStore.folderStore.root;
     }
 
     get title() {
