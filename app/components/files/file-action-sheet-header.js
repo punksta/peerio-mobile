@@ -2,11 +2,12 @@ import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Dimensions } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
+import Text from '../controls/custom-text';
 
 const { width } = Dimensions.get('window');
 

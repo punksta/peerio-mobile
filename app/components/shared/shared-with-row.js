@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import ReadReceipt from './read-receipt';
 import { tx } from '../utils/translator';
+import Text from '../controls/custom-text';
 
 const rowContainer = {
     flex: 1,
@@ -29,7 +30,6 @@ const numberSharedWithContainer = {
 };
 const numberSharedWithText = {
     fontSize: vars.font.size.smaller,
-    fontWeight: vars.font.weight.semiBold,
     color: vars.sharedWithNumberFontColor,
     textAlign: 'right'
 };
@@ -58,7 +58,7 @@ export default class SharedWithRow extends SafeComponent {
                     <ReadReceipt key={contact.username} username={contact.username} avatarSize={20} />
                 </View>
                 <View style={[numberSharedWithContainer, { width: 70 }]} >
-                    <Text style={numberSharedWithText}>
+                    <Text semibold style={numberSharedWithText}>
                         {tx('title_plusRoomSharedWith')}
                     </Text>
                 </View>

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -12,6 +12,7 @@ import { tx } from '../utils/translator';
 import routes from '../routes/routes';
 import FoldersActionSheet from './folders-action-sheet';
 import buttons from '../helpers/buttons';
+import Text from '../controls/custom-text';
 
 const padding = 8;
 const borderWidth = 1;
@@ -34,9 +35,7 @@ const header = {
 
 const infoStyle = {
     color: vars.extraSubtleText,
-    fontSize: vars.font.size.smaller,
-    fontWeight: vars.font.weight.regular,
-    fontStyle: 'italic'
+    fontSize: vars.font.size.smaller
 };
 
 @observer
@@ -62,14 +61,13 @@ export default class FolderInlineContainer extends SafeComponent {
             flexShrink: 1,
             color: isBlocked ? vars.extraSubtleText : vars.txtDark,
             fontSize: vars.font.size.normal,
-            fontWeight: vars.font.weight.bold,
             marginLeft: isBlocked ? 0 : vars.spacing.small.midi2x
         };
         if (isBlocked) {
             return (
                 <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.small.midi2x }}>
-                    <Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{folderName}</Text>
-                    <Text style={infoStyle}>
+                    <Text bold numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{folderName}</Text>
+                    <Text italic style={infoStyle}>
                         {tx('title_locked')}
                     </Text>
                 </View>);

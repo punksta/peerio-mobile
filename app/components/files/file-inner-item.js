@@ -73,8 +73,7 @@ export default class FileInnerItem extends SafeComponent {
         };
         const infoStyle = {
             color: vars.extraSubtleText,
-            fontSize: vars.font.size.smaller,
-            fontWeight: vars.font.weight.regular
+            fontSize: vars.font.size.smaller
         };
         const itemContainerStyle = {
             flex: 1,

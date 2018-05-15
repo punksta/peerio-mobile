@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import buttons from '../helpers/buttons';
 import branding from '../../styles/branding';
 import { t } from '../utils/translator';
+import Text from '../controls/custom-text';
 
 const { bgGradient } = branding;
 

@@ -127,7 +127,7 @@ const vars = {
     legacyImageErrorBg: 'rgba(196, 196, 196, 0.12)',
     legacyFileTitle: '#ECECEC',
     legacyFileTitleBg: 'rgba(0, 0, 0, 0.54)',
-    lightGrayBg: '#f0f0f0',
+    lightGrayBg,
     mediumGrayBg: '#D0D0D0',
     opacity54: 0.54,
     pickerBg: 'rgba(255, 255, 255, .12)',
@@ -139,11 +139,8 @@ const vars = {
     lighterBlackText: 'rgba(0, 0, 0, .87)',
     inputBgInactive: 'rgba(255, 255, 255, .5)',
     inputBgInactiveText: 'rgba(0,0,0, .54)',
-<<<<<<< HEAD
     checkboxDisabled: 'rgba(0,0,0,.12)',
-=======
     inputBorderColor: 'rgba(0,0,0, .38)',
->>>>>>> dev
     checkboxInactive: 'rgba(0,0,0,.06)',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
     checkboxIconActive: peerioBlue,

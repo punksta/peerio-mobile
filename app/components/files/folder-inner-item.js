@@ -125,14 +125,12 @@ export default class FolderInnerItem extends SafeComponent {
         const infoStyle = {
             backgroundColor: 'transparent',
             color: vars.extraSubtleText,
-            fontSize: vars.font.size.smaller,
-            fontWeight: vars.font.weight.regular,
-            fontStyle: 'italic'
+            fontSize: vars.font.size.smaller
         };
         const { progressPercentage, progressText, progressMax } = folder;
         if (progressMax) {
             return (
-                <Text style={infoStyle}>
+                <Text italic style={infoStyle}>
                     <Text>{tx(progressText)}{`(${progressPercentage}%)`}</Text>
                 </Text>
             );
@@ -168,7 +166,6 @@ export default class FolderInnerItem extends SafeComponent {
         const nameStyle = {
             color: isBlocked ? vars.extraSubtleText : vars.txtDark,
             fontSize: vars.font.size.normal,
-            fontWeight: vars.font.weight.bold,
             backgroundColor: 'transparent'
         };
         const checkboxPadding = {

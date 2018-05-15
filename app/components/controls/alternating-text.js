@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { Text, View, Image } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
+import Text from '../controls/custom-text';
 
 @observer
 export default class AlternatingText extends SafeComponent {

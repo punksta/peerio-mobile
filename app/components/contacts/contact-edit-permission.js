@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text, ListView } from 'react-native';
+import { View, ListView } from 'react-native';
 import { observable, reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
@@ -11,6 +11,7 @@ import Layout3 from '../layout/layout3';
 import fileState from '../files/file-state';
 import contactState from './contact-state';
 import ContactEditPermissionItem from './contact-edit-permission-item';
+import Text from '../controls/custom-text';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -69,13 +70,12 @@ export default class ContactEditPermission extends SafeComponent {
             flexGrow: 1,
             flexShrink: 1,
             fontSize: vars.font.size.big,
-            fontWeight: vars.font.weight.semiBold,
             color: vars.txtDark
         };
         return (
             <View style={container}>
                 {icons.dark('close', this.props.onExit, { paddingRight: 20 })}
-                <Text style={textStyle}>{tx(this.props.title)}</Text>
+                <Text semibold style={textStyle}>{tx(this.props.title)}</Text>
                 {this.unshareButton}
             </View>
         );

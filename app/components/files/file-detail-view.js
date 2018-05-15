@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { action } from 'mobx';
 import moment from 'moment';
 import SafeComponent from '../shared/safe-component';
@@ -12,6 +12,7 @@ import { fileState } from '../states';
 import { T, tx } from '../utils/translator';
 import FileTypeIcon from './file-type-icon';
 import { fileHelpers } from '../../lib/icebear';
+import Text from '../controls/custom-text';
 
 const containerStyle = {
     flexGrow: 1,
@@ -92,8 +93,6 @@ export default class FileDetailView extends SafeComponent {
         const learnMoreStyle = {
             fontSize: vars.font.size.normal,
             color: vars.peerioBlue,
-            fontStyle: 'italic',
-            fontWeight: vars.font.weight.semiBold,
             marginTop: vars.spacing.medium.mini2x,
             marginBottom: vars.spacing.small.midi
         };
@@ -108,7 +107,7 @@ export default class FileDetailView extends SafeComponent {
                     <Text style={descriptionStyle}>{tx('title_oldVersionDescription1')}</Text>
                     <Text style={descriptionStyle}>{tx('title_oldVersionDescription2')}</Text>
                 </View>
-                <Text style={learnMoreStyle}><T k="title_learnMoreLegacyFiles" /></Text>
+                <Text semibold italic style={learnMoreStyle}><T k="title_learnMoreLegacyFiles" /></Text>
             </View>);
     }
 

@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Dimensions, LayoutAnimation, Platform } from 'react-native';
+import { View, TouchableOpacity, TouchableWithoutFeedback, Dimensions, LayoutAnimation, Platform } from 'react-native';
 import { action, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import { uiState } from '../states';
+import Text from '../controls/custom-text';
 
 const { width, height } = Dimensions.get('window');
 const borderRadius = 16;

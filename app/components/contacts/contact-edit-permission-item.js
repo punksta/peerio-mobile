@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { View, TouchableOpacity, LayoutAnimation } from 'react-native';
 import { action, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
@@ -8,6 +8,7 @@ import { tx, tu } from '../utils/translator';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import AvatarCircle from '../shared/avatar-circle';
+import Text from '../controls/custom-text';
 
 const avatarPadding = 16;
 let currentContactItem = null;
@@ -74,12 +75,11 @@ export default class ContactEditPermissionItem extends SafeComponent {
         };
         const textStyle = {
             color: vars.subtleText,
-            fontWeight: vars.font.weight.semiBold,
             paddingRight: vars.spacing.medium.mini2x
         };
         return (
             <View style={containerStyle}>
-                <Text style={textStyle}>
+                <Text semibold style={textStyle}>
                     {tx('title_filesSharedRemoved', { firstName })}
                 </Text>
             </View>

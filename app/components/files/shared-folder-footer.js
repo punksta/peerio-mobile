@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tu } from '../utils/translator';
 import icons from '../helpers/icons';
 import SharedWithRow from '../shared/shared-with-row';
-import { contactStore } from '../../lib/icebear';
 import uiState from '../layout/ui-state';
+import Text from '../controls/custom-text';
 
 @observer
 export default class SharedFolderFooter extends SafeComponent {

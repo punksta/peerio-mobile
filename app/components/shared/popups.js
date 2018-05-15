@@ -15,13 +15,11 @@ import PopupMigration from '../controls/popup-migration';
 
 const titleStyle = {
     color: vars.lighterBlackText,
-    fontSize: vars.font.size.huge,
-    fontWeight: vars.font.weight.regular
+    fontSize: vars.font.size.huge
 };
 const textStyle = {
     color: vars.lighterBlackText,
-    fontSize: vars.font.size.normal,
-    fontWeight: vars.font.weight.regular
+    fontSize: vars.font.size.normal
 };
 
 function textControl(str, style) {

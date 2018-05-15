@@ -53,13 +53,12 @@ export default class FileInlineContainer extends SafeComponent {
         };
         const learnMoreStyle = {
             fontSize: vars.font.size.smaller,
-            color: vars.peerioBlue,
-            fontWeight: vars.font.weight.semiBold
+            color: vars.peerioBlue
         };
         return (
             this.props.isOpen && <View style={errorContainer}>
                 <Text style={errorStyle}> {tx('title_newfsUpgradeImageError')} </Text>
-                <Text style={learnMoreStyle}> {tx('title_learnMoreLegacyFiles')} </Text>
+                <Text semibold style={learnMoreStyle}> {tx('title_learnMoreLegacyFiles')} </Text>
             </View>);
     }
 
