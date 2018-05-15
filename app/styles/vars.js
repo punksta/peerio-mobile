@@ -124,14 +124,10 @@ const vars = {
     txtMedium: 'rgba(98, 98, 98, 1)',
     txtDate: 'rgba(0, 0, 0, .38)',
     inputBg: '#fff',
-<<<<<<< HEAD
     legacyImageErrorBg: 'rgba(196, 196, 196, 0.12)',
     legacyFileTitle: '#ECECEC',
     legacyFileTitleBg: 'rgba(0, 0, 0, 0.54)',
     lightGrayBg: '#f0f0f0',
-=======
-    lightGrayBg,
->>>>>>> dev
     mediumGrayBg: '#D0D0D0',
     opacity54: 0.54,
     pickerBg: 'rgba(255, 255, 255, .12)',

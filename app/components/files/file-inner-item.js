@@ -26,7 +26,7 @@ const fileInfoContainerStyle = {
     borderColor: 'green'
 };
 
-// let actionSheet = null;
+let actionSheet = null;
 
 @observer
 export default class FileInnerItem extends SafeComponent {
