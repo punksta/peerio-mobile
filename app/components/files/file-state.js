@@ -114,7 +114,7 @@ class FileState extends RoutedState {
     @action selectFilesAndFolders() {
         this.resetSelection();
         // this.currentFile = null;
-        this.currentFolder = this.store.folders.root;
+        this.currentFolder = this.store.folderStore.root;
         this.isFileSelectionMode = true;
         return new Promise((resolve, reject) => {
             this.resolveFileSelection = resolve;
@@ -172,7 +172,7 @@ class FileState extends RoutedState {
             file = fileStore.upload(data.url, newFileName, folder.isRoot ? null : folder.id);
             if (folder && !folder.isRoot) {
                 await promiseWhen(() => file.fileId);
-                folder.moveInto(file);
+                folder.attach(file);
             }
         }
         return file;

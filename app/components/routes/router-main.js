@@ -64,7 +64,7 @@ class RouterMain extends Router {
     @action initialRoute() {
         this[this._initialRoute](null, true);
         // mock shared folder views
-        // fileState.currentFile = fileState.store.folders.root.folders[0];
+        // fileState.currentFile = fileState.store.folderStore.root.folders[0];
         // routes.modal.shareFolderTo();
     }
 

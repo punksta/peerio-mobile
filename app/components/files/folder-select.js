@@ -19,7 +19,7 @@ const PAGE_SIZE = 2;
 
 @observer
 export default class FolderSelect extends SafeComponent {
-    @observable currentFolder = fileState.store.folders.root;
+    @observable currentFolder = fileState.store.folderStore.root;
 
     constructor(props) {
         super(props);
@@ -34,7 +34,7 @@ export default class FolderSelect extends SafeComponent {
     @computed get data() {
         const { currentFolder } = this;
         const folders = currentFolder.foldersSortedByName.slice();
-        currentFolder.isRoot && folders.unshift(fileState.store.folders.root);
+        currentFolder.isRoot && folders.unshift(fileState.store.folderStore.root);
         return folders;
     }
 
@@ -62,17 +62,17 @@ export default class FolderSelect extends SafeComponent {
             if (!file) return;
             if (folder.isShared) {
                 if (!preferenceStore.showMoveSharedFolderPopup) {
-                    folder.moveInto(file);
+                    folder.attach(file);
                 } else {
                     const result = await popupMoveToSharedFolder();
                     if (result) {
                         if (result.checked) {
                             preferenceStore.showMoveSharedFolderPopup = false;
                         }
-                        folder.moveInto(file);
+                        folder.attach(file);
                     }
                 }
-            } else folder.moveInto(file);
+            } else folder.attach(file);
             routes.modal.discard();
         };
         const changeFolder = () => {
