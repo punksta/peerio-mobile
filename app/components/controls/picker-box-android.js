@@ -13,11 +13,6 @@ export default class PickerBoxAndroid extends SafeComponent {
     constructor(props) {
         super(props);
         this.onValueChange = this.onValueChange.bind(this);
-        this.onPress = this.onPress.bind(this);
-    }
-
-    onPress() {
-        this.opened = true;
     }
 
     onValueChange(lang) {
@@ -35,7 +30,7 @@ export default class PickerBoxAndroid extends SafeComponent {
 
         return (
             <View style={shadow}>
-                <TouchableOpacity onPress={this.onPress}>
+                <TouchableOpacity>
                     <Picker
                         onLayout={this.layout}
                         selectedValue={(this.props.value || this.props.hint)}
@@ -49,6 +44,7 @@ export default class PickerBoxAndroid extends SafeComponent {
                         {icons.dark('arrow-drop-down', () => { }, icon)}
                     </View>
                 </TouchableOpacity>
+                <View style={this.props.style.errorStyle} />
             </View>
         );
     }
