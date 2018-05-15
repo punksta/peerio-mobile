@@ -63,15 +63,28 @@ export default class SignupStepMedical extends LoginWizardPage {
         signupState.next();
     }
 
-    get isNextDisabled() {
-        // TODO add medicalId validation: this.medicalIdInput.isValid
-        // return socket.connected && (!this.countryState.value || !this.firstNameInput.isValid ||
-        //     !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
-        return !socket.connected;
-    }
-
     @computed get selectedAU() {
         return uiState.countrySelected === 'AU';
+    }
+
+    get isValidForAU() {
+        // TODO add medicalId validation: this.medicalIdInput.isValid
+        return uiState.countrySelected &&
+            uiState.specialtySelected &&
+            uiState.roleSelected &&
+            this.medicalIdState.value;
+    }
+
+    get isValidForNonAU() {
+        return uiState.countrySelected &&
+            uiState.roleSelected;
+    }
+
+    get isNextDisabled() {
+        if (this.selectedAU) {
+            return !(socket.connected && this.isValidForAU);
+        }
+        return !(socket.connected && this.isValidForNonAU);
     }
 
     get body() {

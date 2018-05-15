@@ -89,7 +89,8 @@ class SignupState extends RoutedState {
             user.props = {
                 country,
                 specialty,
-                role
+                role,
+                medicalId
             };
         }
         return user.createAccountAndLogin()
