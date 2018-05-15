@@ -3,9 +3,10 @@ import { observer } from 'mobx-react/native';
 import { observable, when } from 'mobx';
 import ActionSheet from 'react-native-actionsheet';
 import SafeComponent from '../shared/safe-component';
-import routerModal from '../routes/router-modal';
 import fileState from '../files/file-state';
 import { tx } from '../utils/translator';
+import routes from '../routes/routes';
+import snackbarState from '../snackbars/snackbar-state';
 
 @observer
 export default class InlineFileActionSheet extends SafeComponent {
@@ -13,27 +14,57 @@ export default class InlineFileActionSheet extends SafeComponent {
 
     sharefile = () => {
         fileState.currentFile = this.file;
-        routerModal.shareFileTo();
+        routes.modal.shareFileTo();
     };
 
     get openItem() {
-        const exists = this.file && !this.file.isPartialDownload && this.file.cached;
-        const title = exists ? tx('button_open') : tx('button_download');
+        const title = this.fileExists ? tx('button_open') : tx('button_download');
         return {
             title,
             action: () => {
-                when(() => exists, this.file.launchViewer());
-                if (!this.file.cached) fileState.download(this.file);
+                when(
+                    () => this.file.hasFileAvailableForPreview,
+                    () => {
+                        this.file.launchViewer().catch(
+                            () => snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'))
+                        );
+                    }
+                );
+                if (!this.fileExists) fileState.download(this.file);
             }
         };
     }
 
+    moveFile = () => {
+        fileState.currentFile = this.file;
+        routes.modal.moveFileTo();
+    };
+    get moveItem() {
+        return {
+            title: tx('button_move'),
+            action: () => this.moveFile()
+        };
+    }
+
+    deleteFile = () => {
+        fileState.currentFile = this.file;
+        fileState.delete();
+    };
+    get deleteItem() {
+        return {
+            title: tx('button_delete'),
+            action: () => this.deleteFile()
+        };
+    }
+
     get items() {
-        return [
-            this.openItem,
-            { title: tx('button_share'), action: this.sharefile },
-            { title: tx('button_cancel') }
-        ];
+        const array = [];
+        array.push(this.openItem);
+        if (this.fileExists) { array.push(this.moveItem); }
+        array.push({ title: tx('button_share'), action: this.sharefile });
+        if (this.fileExists) { array.push(this.deleteItem); }
+        array.push({ title: tx('button_cancel') });
+        return array;
     }
 
     onPress = index => {

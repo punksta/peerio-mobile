@@ -1,19 +1,12 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Text from '../controls/custom-text';
 import { vars } from '../../styles/styles';
 import { T } from '../utils/translator';
 
 export default class IdentityVerificationNotice extends Component {
-    idVerificationContainer = {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginTop: vars.spacing.small.midi,
-        marginBottom: vars.spacing.small.midi
-    };
-
     securityIcon = {
         margin: vars.spacing.small.mini,
         marginRight: vars.spacing.small.midi
@@ -31,8 +24,17 @@ export default class IdentityVerificationNotice extends Component {
     };
 
     render() {
+        const idVerificationContainer = {
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginTop: vars.spacing.small.midi,
+            marginBottom: vars.spacing.small.midi,
+            width: this.props.fullWidth ? null : vars.verificationMessageWidth
+        };
         return (
-            <View style={this.idVerificationContainer} >
+            <View style={idVerificationContainer} >
                 <Icon style={this.securityIcon}
                     name="security"
                     size={vars.iconSize}
@@ -45,3 +47,7 @@ export default class IdentityVerificationNotice extends Component {
         );
     }
 }
+
+IdentityVerificationNotice.propTypes = {
+    fullWidth: PropTypes.bool
+};

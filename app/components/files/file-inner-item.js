@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, Dimensions, View, TouchableOpacity } from 'react-native';
+import { Dimensions, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -12,6 +13,7 @@ import FileTypeIcon from './file-type-icon';
 import testLabel from '../helpers/test-label';
 import FileProgress from './file-progress';
 import { fileHelpers } from '../../lib/icebear';
+import FileViewActionSheet from './file-view-action-sheet';
 
 const { width } = Dimensions.get('window');
 const height = vars.filesListItemHeight;
@@ -23,6 +25,8 @@ const fileInfoContainerStyle = {
     borderWidth: 0,
     borderColor: 'green'
 };
+
+// let actionSheet = null;
 
 @observer
 export default class FileInnerItem extends SafeComponent {
@@ -65,8 +69,7 @@ export default class FileInnerItem extends SafeComponent {
         const checked = this.props.file && this.props.file.selected;
         const nameStyle = {
             color: vars.txtDark,
-            fontSize: vars.font.size.normal,
-            fontWeight: vars.font.weight.bold
+            fontSize: vars.font.size.normal
         };
         const infoStyle = {
             color: vars.extraSubtleText,
@@ -120,7 +123,7 @@ export default class FileInnerItem extends SafeComponent {
                                     />}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
-                                <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
+                                <Text bold style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                 <Text style={infoStyle}>
                                     {file.size && <Text>{file.sizeFormatted}</Text>}
                                     &nbsp;&nbsp;
@@ -132,6 +135,7 @@ export default class FileInnerItem extends SafeComponent {
                     </View>
                 </TouchableOpacity>
                 <FileProgress file={file} />
+                <FileViewActionSheet ref={ref => { actionSheet = ref; }} />
             </View>
         );
     }

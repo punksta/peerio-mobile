@@ -2,8 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable, action } from 'mobx';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -13,18 +14,17 @@ import chatState from '../messaging/chat-state';
 
 const height = vars.filesListItemHeight;
 const checkBoxWidth = height;
+const width = vars.listItemHeight;
 const itemContainerStyle = {
     flex: 1,
     flexGrow: 1,
     flexDirection: 'row',
+    height,
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: vars.filesBg,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, .12)',
-    height,
-    borderWidth: 0,
-    borderColor: 'red',
     paddingLeft: vars.spacing.medium.mini2x
 };
 
@@ -97,8 +97,8 @@ export default class FolderInnerItem extends SafeComponent {
     get radio() {
         if (!this.props.radio) return null;
         const outer = {
-            width: vars.listItemHeight,
-            height: vars.listItemHeight,
+            width,
+            height,
             alignItems: 'center',
             justifyContent: 'center',
             borderBottomWidth: 1,
@@ -196,7 +196,7 @@ export default class FolderInnerItem extends SafeComponent {
                                 {icons.plaindark(isShared ? 'folder-shared' : 'folder', vars.iconSize, null)}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
-                                <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
+                                <Text bold style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
                                 {this.fileDetails}
                             </View>
                             {optionsIcon}

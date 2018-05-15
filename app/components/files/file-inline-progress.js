@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, ActivityIndicator, Text } from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import fileState from '../files/file-state';
 import icons from '../helpers/icons';
@@ -10,6 +12,34 @@ import FileSignatureError from './file-signature-error';
 
 @observer
 export default class FileInlineProgress extends SafeComponent {
+    filePreviouslyDownloaded = this.fileExists;
+
+    get file() {
+        return fileState.store.getById(this.props.file);
+    }
+
+    get fileExists() {
+        return !!this.file && !this.file.isPartialDownload && this.file.cached;
+    }
+
+    get downloadProgress() {
+        if (!this.file) return 0;
+        const { progress, progressMax } = this.file;
+        return Math.min(Math.ceil(progress / progressMax * 100), 100);
+    }
+
+    @action.bound onOpen() {
+        if (this.fileExists && !this.file.downloading) {
+            this.file.launchViewer();
+        } else {
+            fileState.download(this.file);
+        }
+    }
+
+    @action.bound onCancel() {
+        fileState.cancelDownload(this.file);
+    }
+
     renderThrow() {
         const file = this.props.chatId ?
             fileState.store.getByIdInChat(this.props.file, this.props.chatId) :

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, PanResponder,
+import { View, PanResponder,
     AppState, ActivityIndicator, NativeModules,
     Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -20,9 +20,9 @@ import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
 import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
+import Text from './controls/custom-text';
 
 const { height, width } = Dimensions.get('window');
-
 @observer
 export default class App extends SafeComponent {
     constructor(props) {

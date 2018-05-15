@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text, WebView, Image, View, Platform } from 'react-native';
+import { WebView, Image, View, Platform } from 'react-native';
 import { observable } from 'mobx';
+import Text from '../controls/custom-text';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
@@ -106,7 +107,7 @@ function popupAbout() {
     const contents = (
         <View>
             {textControl(text)}
-            {showPoweredBy && <Image source={image} resizeMode="contain" style={{ width: '80%' }} />}
+            {showPoweredBy && <Image source={image} resizeMode="contain" style={{ marginTop: 10, width: '60%' }} />}
         </View>
     );
     return new Promise((resolve) => {
@@ -267,6 +268,20 @@ function popupInputCancel(title, placeholder, cancelable) {
     });
 }
 
+function popupContactPermission(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title,
+            subTitle: textControl(subTitle),
+            contents: text ? textControl(text) : null,
+            buttons: [
+                { id: 'deny', text: tu('button_deny'), action: () => resolve(false), secondary: true },
+                { id: 'ok', text: tu('button_grantAccess'), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
 let tos = '';
 
 function popupTOS() {
@@ -303,7 +318,6 @@ function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
     const helperTextStyle = {
         color: vars.subtleText,
         fontSize: vars.font.size.smaller,
-        fontWeight: vars.font.weight.regular,
         paddingVertical: vars.spacing.small.midi
     };
     return new Promise((resolve) => {
@@ -466,6 +480,7 @@ export {
     popupYesSkip,
     popupInput,
     popupInputWithPreview,
+    popupContactPermission,
     popupTOS,
     popupKeychainError,
     popup2FA,
