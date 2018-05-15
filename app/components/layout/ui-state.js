@@ -9,6 +9,8 @@ import RoutedState from '../routes/routed-state';
 const { height } = Dimensions.get('window');
 
 class UIState extends RoutedState {
+    defaultCountrySelected = 'AU';
+
     @observable isFirstLogin = false;
     @observable focusedTextBox = null;
     @observable picker = null;
@@ -32,7 +34,7 @@ class UIState extends RoutedState {
         // es: `Spanish`,
         // ru: `Russian`
     };
-    @observable countrySelected = 'AU';
+    @observable countrySelected = this.defaultCountrySelected;
     @observable countries = {
         AD: 'Andorra',
         AE: 'United Arab Emirates',

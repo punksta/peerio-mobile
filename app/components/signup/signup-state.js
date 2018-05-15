@@ -46,6 +46,9 @@ class SignupState extends RoutedState {
         this.specialty = '';
         this.role = '';
         this.current = 0;
+        uiState.countrySelected = uiState.defaultCountrySelected;
+        uiState.specialtySelected = '';
+        uiState.roleSelected = '';
         this.resetValidationState();
         this.routes.app.loginStart();
     };
