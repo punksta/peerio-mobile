@@ -19,6 +19,7 @@ PickerBox.propTypes = {
     picker: PropTypes.any.isRequired,
     data: PropTypes.any.isRequired,
     style: PropTypes.any.isRequired,
-    hint: PropTypes.any.isRequired
+    hint: PropTypes.any.isRequired,
+    errorMessage: PropTypes.any.isRequired
 };
 

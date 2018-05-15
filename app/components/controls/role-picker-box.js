@@ -23,6 +23,7 @@ export default class RolePickerBox extends SafeComponent {
                 style={pickerBox}
                 value={uiState.roleSelected}
                 hint={tx('title_yourRole')}
+                errorMessage={tx('title_selectYourRole')}
             />
         );
     }

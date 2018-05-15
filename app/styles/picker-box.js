@@ -14,6 +14,7 @@ const shadowNormal = {
     height: vars.inputHeight,
     margin: vars.spacing.medium.mini2x,
     marginTop: vars.spacing.small.midi,
+    marginBottom: vars.spacing.small.midi,
     // backgroundColor: vars.inputBg,
     paddingHorizontal: vars.inputPaddingHorizontal,
     borderColor: vars.inputBorderColor,
@@ -44,6 +45,15 @@ const inputContainer = {
     height: vars.inputHeight,
     opacity: 1,
     marginTop: -2
+};
+
+const errorStyle = {
+    fontSize: vars.font.size.smaller,
+    color: vars.red,
+    margin: vars.spacing.medium.mini2x,
+    marginTop: -4,
+    marginBottom: vars.spacing.small.mini2x,
+    height: vars.spacing.medium.mini2x
 };
 
 export default {
@@ -86,5 +96,6 @@ export default {
         }],
         iconContainer,
         icon
-    }
+    },
+    errorStyle
 };

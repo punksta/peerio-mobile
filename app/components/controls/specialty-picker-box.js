@@ -23,6 +23,7 @@ export default class SpecialtyPickerBox extends SafeComponent {
                 style={pickerBox}
                 value={uiState.specialtySelected}
                 hint={tx('title_specialty')}
+                errorMessage={tx('title_selectYourSpecialty')}
             />
         );
     }
