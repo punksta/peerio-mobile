@@ -17,26 +17,15 @@ export default class InlineFileActionSheet extends SafeComponent {
         routes.modal.shareFileTo();
     };
 
-    get fileExists() {
-        if (!this.file) return false;
-        // if we uploaded the image ourselves, it's in the localFileMap
-        // TODO: move to icebear
-        const selfTmpCachePath = fileState.localFileMap.get(this.file.fileId);
-        return !!selfTmpCachePath || this.file.cached;
-    }
-
     get openItem() {
         const title = this.fileExists ? tx('button_open') : tx('button_download');
         return {
             title,
             action: () => {
                 when(
-                    () => this.fileExists,
+                    () => this.file.hasFileAvailableForPreview,
                     () => {
-                        // if we uploaded the image ourselves, it's in the localFileMap
-                        // TODO: move to icebear
-                        const selfTmpCachePath = fileState.localFileMap.get(this.file.fileId);
-                        this.file.launchViewer(selfTmpCachePath).catch(
+                        this.file.launchViewer().catch(
                             () => snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'))
                         );
                     }
