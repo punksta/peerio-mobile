@@ -1,4 +1,6 @@
 import React from 'react';
+import RNFS from 'react-native-fs';
+import FileOpener from 'react-native-file-opener';
 import { WebView, Image, View, Platform } from 'react-native';
 import { observable } from 'mobx';
 import Text from '../controls/custom-text';
@@ -20,6 +22,10 @@ const titleStyle = {
 const textStyle = {
     color: vars.lighterBlackText,
     fontSize: vars.font.size.normal
+};
+const textDownloadStyle = {
+    textDecorationLine: 'underline',
+    color: vars.linkColor
 };
 
 function textControl(str, style) {
@@ -438,6 +444,14 @@ function popupMoveToSharedFolder() {
 
 function popupUpgradeNotification() {
     return new Promise((resolve) => {
+        const viewFileMigrationList = async () => {
+            const directory = (Platform.OS === 'ios') ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
+            const path = `${directory}/${User.current.username}-Peerio-shared-files-list.txt`;
+            const content = await fileStore.migration.getLegacySharedFilesText();
+            RNFS.writeFile(path, content, 'utf8')
+                .then(() => FileOpener.open(path, 'text/*', path))
+                .catch((err) => console.log(err.message));
+        };
         const resolveButtonText = fileStore.hasLegacySharedFiles ? 'update' : 'ok';
         popupState.showPopup({
             type: 'systemUpgrade',
@@ -446,7 +460,14 @@ function popupUpgradeNotification() {
                 <View>
                     {textControl(tx('title_upgradeFileSystemDescription1'), textStyle)}
                     {textControl(tx('title_upgradeFileSystemDescription2'), textStyle)}
-                    {fileStore.hasLegacySharedFiles && textControl(tx('title_upgradeFileSystemDescription3'), textStyle)}
+                    {fileStore.hasLegacySharedFiles ?
+                        <Text>
+                            {textControl(tx('title_upgradeFileSystemDescription3a'), textStyle)}
+                            <Text style={textDownloadStyle} onPress={viewFileMigrationList} pressRetentionOffset={vars.pressRetentionOffset}>
+                                {tx('title_upgradeFileSystemLink')}
+                            </Text>
+                            {textControl(tx('title_upgradeFileSystemDescription3b'), textStyle)}
+                        </Text> : null}
                 </View>
             ),
             buttons: [
