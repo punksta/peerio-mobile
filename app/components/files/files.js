@@ -251,8 +251,9 @@ export default class Files extends SafeComponent {
         // TODO: add any missed conditions for when to NOT show this
         if (!fileState.currentFolder.isRoot) return null;
         // TODO: map them from a list of notifications from SDK
-        const folder = { folderName: 'test-folder-name' }; // folder can be replaced with folderId
-        return <SharedFolderRemovalNotif folder={folder} />;
+        // const folder = { folderName: 'test-folder-name' }; // folder can be replaced with folderId
+        // return <SharedFolderRemovalNotif folder={folder} />;
+        return null;
     }
 
     body() {

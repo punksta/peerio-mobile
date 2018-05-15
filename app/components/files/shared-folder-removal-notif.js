@@ -43,7 +43,7 @@ export default class SharedFolderRemovalNotif extends SafeComponent {
                     <Text style={textStyle}>
                         {t('title_removedFromFolder', { folderName: folder.folderName })}
                     </Text>
-                    {buttons.uppercaseBlueButtonNoPadding('button_dismiss', this.dismiss)}
+                    {buttons.blueTextButton('button_dismiss', this.dismiss)}
                 </View>
             </View>
         );
