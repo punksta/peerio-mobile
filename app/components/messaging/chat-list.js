@@ -86,7 +86,7 @@ export default class ChatList extends SafeComponent {
         ], () => {
             LayoutAnimation.easeInEaseOut();
         }, true);
-        // this.scrollView.scrollToOffset({ offset: 0 });
+        // this is needed to reset viewable items indicator at initial render
         this.scrollView.scrollToLocation({
             itemIndex: 0,
             sectionIndex: 0,
