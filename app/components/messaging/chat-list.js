@@ -86,12 +86,6 @@ export default class ChatList extends SafeComponent {
         ], () => {
             LayoutAnimation.easeInEaseOut();
         }, true);
-        // this is needed to reset viewable items indicator at initial render
-        this.scrollView.scrollToLocation({
-            itemIndex: 0,
-            sectionIndex: 0,
-            viewPosition: 0
-        });
     }
 
     componentWillUnmount() {
@@ -142,6 +136,14 @@ export default class ChatList extends SafeComponent {
     @action.bound scrollViewRef(sv) {
         this.scrollView = sv;
         uiState.currentScrollView = sv;
+        if (sv) {
+            // this is needed to reset viewable items indicator at initial render
+            sv.scrollToLocation({
+                itemIndex: 0,
+                sectionIndex: 0,
+                viewPosition: 0
+            });
+        }
     }
 
     actionSheetRef = (ref) => { actionSheet = ref; };
