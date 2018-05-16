@@ -317,9 +317,11 @@ export default class FileInlineImage extends SafeComponent {
     // Opens the image using exists, else attempts to download it
     @action.bound imageAction() {
         const { image } = this.props;
-        if (image && image.cached) config.FileStream.launchViewer(image.cachePath);
-        else if (image && image.tmpCached) config.FileStream.launchViewer(image.tmpCachePath);
-        else fileState.download(image);
+        if (image.hasFileAvailableForPreview) {
+            image.launchViewer();
+        } else {
+            fileState.download(image);
+        }
     }
 
     renderThrow() {
