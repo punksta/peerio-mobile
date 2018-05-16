@@ -10,10 +10,8 @@ import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 import fileState from './file-state';
-import chatState from '../messaging/chat-state';
 
 const height = vars.filesListItemHeight;
-const checkBoxWidth = height;
 const width = vars.listItemHeight;
 const itemContainerStyle = {
     flex: 1,
@@ -30,8 +28,7 @@ const itemContainerStyle = {
 
 const folderInfoContainerStyle = {
     flexGrow: 1,
-    flexDirection: 'row',
-    backgroundColor: 'white'
+    flexDirection: 'row'
 };
 
 @observer
@@ -41,46 +38,6 @@ export default class FolderInnerItem extends SafeComponent {
     @action.bound onPress() {
         const { folder, onPress } = this.props;
         onPress && onPress(folder);
-    }
-
-    @action.bound onCheckBoxPressed() {
-        const { folder } = this.props;
-        if (!chatState.currentChat.isChannel) {
-            folder.selected = !folder.selected;
-        }
-    }
-
-    checkbox() {
-        if (!fileState.isFileSelectionMode) return null;
-        const { folder } = this.props;
-        const checked = folder.selected;
-        const v = vars;
-        const disabled = chatState.currentChat.isChannel || folder.isBlocked;
-        const iconBgColor = 'transparent';
-        let iconColor;
-        if (disabled) {
-            iconColor = v.checkboxDisabled;
-        } else {
-            iconColor = checked ? v.checkboxIconActive : v.checkboxIconInactive;
-        }
-        const icon = checked ? 'check-box' : 'check-box-outline-blank';
-        const outer = {
-            backgroundColor: 'transparent',
-            paddingHorizontal: vars.spacing.small.mini2x,
-            flex: 0,
-            width: checkBoxWidth,
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'absolute',
-            top: vars.spacing.small.mini2x,
-            left: 0,
-            zIndex: 1
-        };
-        return (
-            <View style={outer}>
-                {icons.colored(icon, this.onCheckBoxPressed, iconColor, iconBgColor)}
-            </View>
-        );
     }
 
     get currentProgress() {
@@ -127,17 +84,11 @@ export default class FolderInnerItem extends SafeComponent {
             color: vars.extraSubtleText,
             fontSize: vars.font.size.smaller
         };
-        const { progressPercentage, progressText, progressMax } = folder;
+        const { progressPercentage, progressMax } = folder;
         if (progressMax) {
             return (
                 <Text italic style={infoStyle}>
-                    <Text>{tx(progressText)}{`(${progressPercentage}%)`}</Text>
-                </Text>
-            );
-        } else if (folder.isBlocked) {
-            return (
-                <Text style={infoStyle}>
-                    {tx('title_locked')}
+                    <Text>{tx('title_sharingFolderPercent', { progressPercent: progressPercentage })}</Text>
                 </Text>
             );
         }
@@ -152,8 +103,8 @@ export default class FolderInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { folder, onSelect, hideMoreOptionsIcon, onFolderAction } = this.props;
-        const { isShared, isBlocked } = folder;
+        const { folder, onSelect, hideOptionsIcon, onFolderAction } = this.props;
+        const { isShared } = folder;
         const progressContainer = {
             backgroundColor: vars.fileUploadProgressColor,
             width: this.currentProgress,
@@ -164,31 +115,24 @@ export default class FolderInnerItem extends SafeComponent {
             left: 0
         };
         const nameStyle = {
-            color: isBlocked ? vars.extraSubtleText : vars.txtDark,
+            color: vars.darkBlue,
             fontSize: vars.font.size.normal,
             backgroundColor: 'transparent'
         };
-        const checkboxPadding = {
-            paddingLeft: fileState.isFileSelectionMode ? checkBoxWidth : vars.spacing.medium.mini2x
-        };
         const loadingStyle = null;
-        const optionsIcon = hideMoreOptionsIcon || fileState.isFileSelectionMode ? null : (
+        const optionsIcon = hideOptionsIcon || fileState.isFileSelectionMode ? null : (
             <View style={{ flex: 0 }}>
-                {icons.dark(
-                    'more-vert',
-                    !isBlocked ? onFolderAction : null,
-                    !isBlocked ? null : { opacity: 0.38 })}
+                {icons.dark('more-vert', onFolderAction)}
             </View>);
         return (
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
-                    onPress={hideMoreOptionsIcon ? onSelect : this.onPress}
+                    onPress={hideOptionsIcon ? onSelect : this.onPress}
                     style={{ backgroundColor: vars.filesBg }}>
                     <View style={folderInfoContainerStyle}>
                         {this.radio}
-                        <View style={[itemContainerStyle, checkboxPadding]}>
+                        <View style={itemContainerStyle} onLayout={this.layout}>
                             <View style={progressContainer} />
-                            {this.radio}
                             <View style={[loadingStyle, { flex: 0 }]}>
                                 {icons.plaindark(isShared ? 'folder-shared' : 'folder', vars.iconSize, null)}
                             </View>
@@ -209,7 +153,7 @@ FolderInnerItem.propTypes = {
     onPress: PropTypes.func,
     onSelect: PropTypes.func,
     folder: PropTypes.any.isRequired,
-    hideMoreOptionsIcon: PropTypes.bool,
+    hideOptionsIcon: PropTypes.bool,
     radio: PropTypes.bool,
-    onFolderActionPress: PropTypes.func
+    onFolderAction: PropTypes.func
 };

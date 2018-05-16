@@ -63,6 +63,6 @@ export default class FileItem extends SafeComponent {
 FileItem.propTypes = {
     file: PropTypes.any.isRequired,
     onChangeFolder: PropTypes.any,
-    onFileActionPress: PropTypes.func,
-    onFolderActionPress: PropTypes.func
+    onFileAction: PropTypes.func,
+    onFolderAction: PropTypes.func
 };
