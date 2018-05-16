@@ -1,6 +1,7 @@
 import React from 'react';
 import { LayoutAnimation, Platform } from 'react-native';
 import { observable, reaction, action, when } from 'mobx';
+import RNKeepAwake from 'react-native-keep-awake';
 import Router from './router';
 import uiState from '../layout/ui-state';
 import SettingsLevel1 from '../settings/settings-level-1';
@@ -99,7 +100,9 @@ class RouterMain extends Router {
             when(() => !fileStore.migration.pending, () => {
                 popupState.discardPopup();
                 snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
+                RNKeepAwake.deactivate();
             });
+            RNKeepAwake.activate();
         }
     }
 

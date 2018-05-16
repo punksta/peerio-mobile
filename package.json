@@ -75,6 +75,7 @@
     "react-native-image-crop-picker": "github:PeerioTechnologies/react-native-image-crop-picker",
     "react-native-image-picker": "github:PeerioTechnologies/react-native-image-picker",
     "react-native-in-app-utils": "github:chirag04/react-native-in-app-utils",
+    "react-native-keep-awake": "3.0.1",
     "react-native-linear-gradient": "2.0.0",
     "react-native-mail": "3.0.1",
     "react-native-menu": "0.21.0",
