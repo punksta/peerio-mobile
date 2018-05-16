@@ -37,7 +37,7 @@ export default class FileInlineProgress extends SafeComponent {
                 snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'));
             });
         });
-        if (this.file.hasFileAvailableForPreview) fileState.download(this.file);
+        if (!this.file.hasFileAvailableForPreview) fileState.download(this.file);
     }
 
     @action.bound onCancel() {
