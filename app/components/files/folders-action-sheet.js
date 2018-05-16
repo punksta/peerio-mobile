@@ -13,7 +13,8 @@ import ActionSheetLayout from '../layout/action-sheet-layout';
 @observer
 export default class FoldersActionSheet extends SafeComponent {
     static show(folder) {
-        const { hasLegacyFiles, isShared, isOwner } = folder;
+        const { hasLegacyFiles, convertingToVolume, isShared, isOwner } = folder;
+        console.log(convertingToVolume);
         const header = (
             <FileActionSheetHeader
                 file={folder}
@@ -25,7 +26,7 @@ export default class FoldersActionSheet extends SafeComponent {
         const actionButtons = [
             {
                 title: 'button_share',
-                disabled: hasLegacyFiles,
+                disabled: hasLegacyFiles || convertingToVolume,
                 action: async () => {
                     // TODO add logic for folder.isOwner
                     // TODO: refactor this, this is confusing and bad
@@ -63,6 +64,7 @@ export default class FoldersActionSheet extends SafeComponent {
             },
             {
                 title: 'button_delete',
+                disabled: convertingToVolume,
                 isDestructive: true,
                 action: async () => {
                     // icebear will call this function to confirm file deletion
