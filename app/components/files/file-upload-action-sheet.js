@@ -10,6 +10,7 @@ import { tx } from '../utils/translator';
 import { popupInputCancel } from '../shared/popups';
 import imagepicker from '../helpers/imagepicker';
 import FileSharePreview from './file-share-preview';
+import { fileStore } from '../../lib/icebear';
 
 @observer
 export default class FileUploadActionSheet extends SafeComponent {

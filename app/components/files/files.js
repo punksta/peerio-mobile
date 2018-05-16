@@ -46,7 +46,7 @@ export default class Files extends SafeComponent {
     }
 
     get leftIcon() {
-        if (fileStore.folderStore.currentFolder.isRoot) return null;
+        if (!fileStore.folderStore.currentFolder.parent) return null;
         return <BackIcon action={backFolderAction} />;
     }
 

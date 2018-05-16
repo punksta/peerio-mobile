@@ -193,7 +193,7 @@ export default class FolderInnerItem extends SafeComponent {
                                 {icons.plaindark(isShared ? 'folder-shared' : 'folder', vars.iconSize, null)}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
-                                <Text bold style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
+                                <Text bold style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.parent ? folder.name : tx('title_files')}</Text>
                                 {this.fileDetails}
                             </View>
                             {optionsIcon}
