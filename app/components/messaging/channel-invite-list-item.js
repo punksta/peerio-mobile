@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { observable, computed, when } from 'mobx';
+import { observable, when } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity, LayoutAnimation } from 'react-native';
 import Text from '../controls/custom-text';
@@ -31,7 +31,7 @@ export default class ChannelInviteListItem extends SafeComponent {
         });
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(/* nextProps */) {
         this.animating = false;
         this.declinedStyle = false;
     }
