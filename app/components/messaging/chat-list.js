@@ -31,12 +31,6 @@ let actionSheet = null;
 
 @observer
 export default class ChatList extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.dataSource = [];
-    }
-
-    dataSource = null;
     @observable reverseRoomSorting = false;
     @observable minSectionIndex = null;
     @observable minItemIndex = null;

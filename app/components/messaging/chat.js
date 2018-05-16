@@ -376,7 +376,7 @@ export default class Chat extends SafeComponent {
     }
 
     renderThrow() {
-        if (this.chat.isInvite) return <DmContactInvite />;
+        if (this.chat && this.chat.isInvite) return <DmContactInvite />;
         return (
             <View
                 style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
