@@ -31,7 +31,7 @@ const PAGE_SIZE = 2;
 let fileUploadActionSheet = null;
 
 function backFolderAction() {
-    fileState.currentFolder = fileState.currentFolder.parent;
+    fileStore.folderStore.currentFolder = fileStore.folderStore.currentFolder.parent;
 }
 
 @observer
@@ -46,7 +46,7 @@ export default class Files extends SafeComponent {
     }
 
     get leftIcon() {
-        if (fileState.currentFolder.isRoot) return null;
+        if (fileStore.folderStore.currentFolder.isRoot) return null;
         return <BackIcon action={backFolderAction} />;
     }
 
@@ -58,8 +58,8 @@ export default class Files extends SafeComponent {
     }
 
     get layoutTitle() {
-        if (fileState.currentFolder.isRoot) return null;
-        return fileState.currentFolder.name;
+        if (fileStore.folderStore.currentFolder.isRoot) return null;
+        return fileStore.folderStore.currentFolder.name;
     }
 
     @observable dataSource = null;
@@ -70,14 +70,13 @@ export default class Files extends SafeComponent {
     get data() {
         return fileState.store.currentFilter ?
             fileState.store.visibleFilesAndFolders
-            : fileState.currentFolder.foldersAndFilesDefaultSorting;
+            : fileStore.folderStore.currentFolder.foldersAndFilesDefaultSorting;
     }
 
     componentDidMount() {
         this.reaction = reaction(() => [
             fileState.routerMain.route === 'files',
             fileState.routerMain.currentIndex === 0,
-            this.currentFolder,
             this.data,
             this.data.length,
             this.maxLoadedIndex,
@@ -96,7 +95,7 @@ export default class Files extends SafeComponent {
         fileStore.bulk.deleteFolderConfirmator = null;
     }
 
-    onChangeFolder = folder => { fileState.currentFolder = folder; };
+    onChangeFolder = folder => { fileStore.folderStore.currentFolder = folder; };
 
     item = (file, sectionID, rowID) => {
         // fileId for file, id for folder
@@ -137,7 +136,7 @@ export default class Files extends SafeComponent {
     get isZeroState() { return fileState.store.isEmpty; }
 
     get noFilesInFolder() {
-        if (this.data.length || fileState.currentFolder.isRoot) return null;
+        if (this.data.length || fileStore.folderStore.currentFolder.isRoot) return null;
         const s = {
             color: vars.txtMedium,
             textAlign: 'center',
@@ -249,7 +248,7 @@ export default class Files extends SafeComponent {
 
     sharedFolderRemovalNotifs() {
         // TODO: add any missed conditions for when to NOT show this
-        if (!fileState.currentFolder.isRoot) return null;
+        if (!fileStore.folderStore.currentFolder.isRoot) return null;
         // TODO: map them from a list of notifications from SDK
         // const folder = { folderName: 'test-folder-name' }; // folder can be replaced with folderId
         // return <SharedFolderRemovalNotif folder={folder} />;
@@ -257,7 +256,7 @@ export default class Files extends SafeComponent {
     }
 
     body() {
-        if (this.data.length || !fileState.currentFolder.isRoot) return this.listView();
+        if (this.data.length || !fileStore.folderStore.currentFolder.isRoot) return this.listView();
         if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
             return (
                 <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
@@ -277,7 +276,7 @@ export default class Files extends SafeComponent {
                 <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
                     {!this.isZeroState && this.searchTextbox()}
                     {upgradeForFiles()}
-                    {!this.data.length && !fileState.currentFolder.isRoot ?
+                    {!this.data.length && !fileStore.folderStore.currentFolder.isRoot ?
                         this.noFilesInFolder : null}
                     {this.sharedFolderRemovalNotifs()}
                     {this.body()}

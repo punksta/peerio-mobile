@@ -47,7 +47,7 @@ export default class FolderInlineContainer extends SafeComponent {
 
     @action.bound press() {
         const { folder } = this;
-        fileState.currentFolder = folder;
+        fileStore.folderStore.currentFolder = folder;
         routes.main.files();
     }
 

@@ -75,7 +75,7 @@ export default class FileUploadActionSheet extends SafeComponent {
                 tx('title_createFolder'), tx('title_createFolderPlaceholder'), true);
             if (!result) return;
             requestAnimationFrame(() => {
-                fileState.currentFolder.createFolder(result.value);
+                fileStore.folderStore.currentFolder.createFolder(result.value);
             });
         };
         return { title: tx('title_createFolder'), event };

@@ -10,7 +10,6 @@ import { promiseWhen } from '../helpers/sugar';
 
 class FileState extends RoutedState {
     @observable currentFile = null;
-    @observable currentFolder = null;
     @observable previewFile = null;
     @observable isFileSelectionMode = null;
     @observable findFilesText;
@@ -21,7 +20,7 @@ class FileState extends RoutedState {
     selectedFile = null;
 
     @action async init() {
-        this.currentFolder = fileStore.folderStore.root;
+        fileStore.folderStore.currentFolder = fileStore.folderStore.root;
         return new Promise(resolve => when(() => !this.store.loading, resolve));
     }
 
@@ -114,7 +113,7 @@ class FileState extends RoutedState {
     @action selectFilesAndFolders() {
         this.resetSelection();
         // this.currentFile = null;
-        this.currentFolder = this.store.folderStore.root;
+        fileStore.folderStore.currentFolder = this.store.folderStore.root;
         this.isFileSelectionMode = true;
         return new Promise((resolve, reject) => {
             this.resolveFileSelection = resolve;
@@ -165,7 +164,7 @@ class FileState extends RoutedState {
 
     uploadInFiles = async (data) => {
         await promiseWhen(() => socket.authenticated);
-        const folder = this.currentFolder;
+        const folder = fileStore.folderStore.currentFolder;
         const { shouldUpload, newFileName } = await this.preprocess(data);
         let file;
         if (shouldUpload) {
@@ -194,7 +193,7 @@ class FileState extends RoutedState {
     }
 
     goToRoot() {
-        this.currentFolder = fileStore.folderStore.root;
+        fileStore.folderStore.currentFolder = fileStore.folderStore.root;
     }
 
     get title() {

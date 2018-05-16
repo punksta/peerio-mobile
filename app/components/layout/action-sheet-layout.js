@@ -98,7 +98,7 @@ export default class ActionSheetLayout extends SafeComponent {
                 text = disabledButtonTextStyle;
             } else text = buttonTextStyle;
             return (
-                <View style={[container, { backgroundColor: vars.lightGrayBg }]} >
+                <View key={i} style={[container, { backgroundColor: vars.lightGrayBg }]} >
                     <TouchableOpacity
                         style={container}
                         onPress={() => this.executeAction(button)} >
