@@ -60,8 +60,7 @@ export default class ChatList extends SafeComponent {
     }
 
     @computed get firstSectionItems() {
-        const allChannels = chatInviteStore.received.concat(
-            chatStore.channels);
+        const allChannels = chatStore.allRooms;
         allChannels.sort((a, b) => {
             const first = (a.name || a.channelName).toLocaleLowerCase();
             const second = (b.name || b.channelName).toLocaleLowerCase();

@@ -62,6 +62,7 @@ const vars = {
     confirmColor,
     snackbarBg,
     channelInfoBg,
+    chatFadingOutBg: 'rgb(237,237,238)',
     textWhite100: '#FFF',
     textWhite70: 'rgba(255, 255, 255, .7)',
     textWhite50: 'rgba(255, 255, 255, .5)',
