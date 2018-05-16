@@ -54,10 +54,10 @@ export default class ChatList extends SafeComponent {
     }
 
     @computed get firstSectionItems() {
-        const allChannels = chatStore.allRooms;
+        const allChannels = chatStore.allRooms || [];
         allChannels.sort((a, b) => {
-            const first = (a.name || a.channelName).toLocaleLowerCase();
-            const second = (b.name || b.channelName).toLocaleLowerCase();
+            const first = (a.name || a.channelName || '').toLocaleLowerCase();
+            const second = (b.name || b.channelName || '').toLocaleLowerCase();
             const result = first.localeCompare(second);
             return this.reverseRoomSorting ? !result : result;
         });
