@@ -176,7 +176,7 @@ class RouterMain extends Router {
 
     @action androidBackHandler() {
         if (this.route === 'files') {
-            if (!fileStore.folderStore.currentFolder.isRoot) {
+            if (fileStore.folderStore.currentFolder.parent) {
                 fileStore.folderStore.currentFolder = fileStore.folderStore.currentFolder.parent;
                 return true;
             }
