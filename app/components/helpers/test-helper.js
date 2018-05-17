@@ -13,7 +13,7 @@ let currentScrollPosition = 0;
  * to the test script. Note that it overrides ref and onScroll
  * event handlers
  */
-const scrollHelper = {
+const scrollHelper = __DEV__ ? {
     ref: ref => {
         currentScrollPosition = 0;
         currentScrollView = ref;
@@ -21,7 +21,7 @@ const scrollHelper = {
     onScroll: e => {
         currentScrollPosition = e.nativeEvent.contentOffset.y;
     }
-};
+} : null;
 
 export { scrollHelper };
 

@@ -33,7 +33,7 @@ class FileState extends RoutedState {
         return fileStore.getSelectedFiles();
     }
 
-    @action delete() {
+    @action delete(noTransition) {
         const f = this.currentFile ? [this.currentFile] : this.selected;
         const count = f.length;
         const shared = !!f.filter(i => !!i.shared).length;
@@ -44,7 +44,7 @@ class FileState extends RoutedState {
                 f.forEach(item => {
                     item.remove();
                 });
-                this.routerMain.files();
+                if (!noTransition) this.routerMain.files();
             })
             .catch((e) => console.error(e));
     }

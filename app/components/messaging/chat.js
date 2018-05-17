@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { ScrollView, View, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
+import { ScrollView, Image, View, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
 import { observable, action, when, reaction, computed } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
@@ -11,8 +11,7 @@ import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
 import ChatActionSheet from './chat-action-sheet';
 import ChatUnreadMessageIndicator from './chat-unread-message-indicator';
-import InlineImageActionSheet from '../files/inline-image-action-sheet';
-import InlineFileActionSheet from '../files/inline-file-action-sheet';
+import FileActionSheet from '../files/file-action-sheet';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
@@ -20,6 +19,7 @@ import chatState from '../messaging/chat-state';
 import uiState from '../layout/ui-state';
 import VideoIcon from '../layout/video-icon';
 import IdentityVerificationNotice from './identity-verification-notice';
+import DmContactInvite from './dm-contact-invite';
 import { clientApp } from '../../lib/icebear';
 
 const { width } = Dimensions.get('window');
@@ -75,7 +75,7 @@ export default class Chat extends SafeComponent {
     }
 
     get showInput() {
-        return !!chatState.currentChat && !chatState.loading;
+        return !!chatState.currentChat && !chatState.loading && !this.chat.isInvite;
     }
 
     _refs = {};
@@ -86,8 +86,7 @@ export default class Chat extends SafeComponent {
         const actions = getOrMake(
             key, this._itemActionMap, () => ({
                 ref: ref => { this._refs[key] = ref; },
-                onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
-                onInlineFileAction: file => this._inlineFileActionSheet.show(file, item, this.chat),
+                onFileAction: file => FileActionSheet.show(file, true),
                 onRetryCancel: () => this._actionSheet.show(item, this.chat)
             }));
         return (
@@ -288,6 +287,12 @@ export default class Chat extends SafeComponent {
     }
 
     @computed get zeroStateItem() {
+        const { chat } = this;
+        if (chat.isChatCreatedFromPendingDM) return this.zeroStateChatInvite;
+        return this.zeroStateChat;
+    }
+
+    get zeroStateChat() {
         const zsContainer = {
             borderBottomWidth: 0,
             borderBottomColor: '#CFCFCF',
@@ -324,12 +329,54 @@ export default class Chat extends SafeComponent {
                 }}>
                     {tx('title_chatBeginning', { chatName: chat.name })}
                 </Text>
-                <IdentityVerificationNotice />
+                <IdentityVerificationNotice fullWidth />
             </View>
         );
     }
 
+    get zeroStateChatInvite() {
+        const { chat } = this;
+        const participant = chat.otherParticipants[0];
+        const emojiTada = require('../../assets/emoji/tada.png');
+        const container = {
+            flex: 1,
+            flexGrow: 1,
+            paddingTop: vars.dmInvitePaddingTop,
+            alignItems: 'center',
+            marginBottom: vars.spacing.small.midi
+        };
+        const emojiStyle = {
+            alignSelf: 'center',
+            width: vars.iconSizeMedium,
+            height: vars.iconSizeMedium,
+            marginBottom: vars.spacing.small.mini2x
+        };
+        const headingStyle = {
+            color: vars.lighterBlackText,
+            textAlign: 'center',
+            fontSize: vars.font.size.bigger,
+            lineHeight: 22,
+            marginBottom: vars.spacing.medium.maxi
+        };
+        const headingCopy = chat.isNewUserFromInvite ? 'title_newUserDmInviteHeading' : 'title_dmInviteHeading';
+        return (
+            <View style={container}>
+                <Image source={emojiTada} style={emojiStyle} resizeMode="contain" />
+                <Text style={headingStyle}>
+                    {tx(headingCopy, { contactName: participant.fullName })}
+                </Text>
+                <View style={{ alignItems: 'center' }}>
+                    <AvatarCircle contact={participant} medium />
+                </View>
+                <Text style={{ textAlign: 'center', marginBottom: vars.spacing.medium.maxi2x }}>
+                    {participant.usernameTag}
+                </Text>
+                <IdentityVerificationNotice />
+            </View>);
+    }
+
     renderThrow() {
+        if (this.chat && this.chat.isInvite) return <DmContactInvite />;
         return (
             <View
                 style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
@@ -339,14 +386,11 @@ export default class Chat extends SafeComponent {
                 </View>
                 <ProgressOverlay enabled={/* chatState.loading || */ !this.initialScrollDone} />
                 <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
-                <InlineImageActionSheet ref={sheet => { this._inlineImageActionSheet = sheet; }} />
-                <InlineFileActionSheet ref={sheet => { this._inlineFileActionSheet = sheet; }} />
             </View>
         );
     }
 }
 
 Chat.propTypes = {
-    hideInput: PropTypes.bool,
-    archiveNotice: PropTypes.bool
+    hideInput: PropTypes.bool
 };

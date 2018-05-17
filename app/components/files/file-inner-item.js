@@ -13,7 +13,7 @@ import FileTypeIcon from './file-type-icon';
 import testLabel from '../helpers/test-label';
 import FileProgress from './file-progress';
 import { fileHelpers } from '../../lib/icebear';
-import FileViewActionSheet from './file-view-action-sheet';
+import FileActionSheet from './file-action-sheet';
 
 const { width } = Dimensions.get('window');
 const height = vars.filesListItemHeight;
@@ -25,8 +25,6 @@ const fileInfoContainerStyle = {
     borderWidth: 0,
     borderColor: 'green'
 };
-
-let actionSheet = null;
 
 @observer
 export default class FileInnerItem extends SafeComponent {
@@ -64,10 +62,7 @@ export default class FileInnerItem extends SafeComponent {
         const { file } = this.props;
         if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
         const action = () => !file.uploading && this.onPress();
-        const menuAction = () => {
-            fileState.currentFile = file;
-            actionSheet.show();
-        };
+        const menuAction = () => FileActionSheet.show(file, false);
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
             icons.dark('more-vert', menuAction);
         const checked = this.props.file && this.props.file.selected;
@@ -138,7 +133,6 @@ export default class FileInnerItem extends SafeComponent {
                     </View>
                 </TouchableOpacity>
                 <FileProgress file={file} />
-                <FileViewActionSheet ref={ref => { actionSheet = ref; }} />
             </View>
         );
     }

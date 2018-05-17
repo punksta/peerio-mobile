@@ -53,7 +53,7 @@ export default class ChatUnreadMessageIndicator extends SafeComponent {
                 </View>
                 {chat.unreadCount ?
                     (<View style={countContainer}>
-                        <Text semiBold style={textStyle}>{chat.unreadCount}</Text>
+                        <Text semibold style={textStyle}>{chat.unreadCount}</Text>
                     </View>) : null}
             </TouchableOpacity>
         );
