@@ -55,14 +55,6 @@ const boldButtonTextStyle = [buttonTextStyle, {
     fontWeight: 'bold'
 }];
 
-const redButtonTextStyle = [buttonTextStyle, {
-    color: vars.desctructiveButtonFontColor
-}];
-
-const disabledButtonTextStyle = [buttonTextStyle, {
-    color: vars.disabledButtonFontColor
-}];
-
 const lineStyle = {
     height: 1,
     width: width - vars.spacing.small.midi2x * 2,
@@ -101,18 +93,15 @@ export default class ActionSheetLayout extends SafeComponent {
             else if (!topButton && !bottomButton) container = buttonContainer;
             else if (topButton) container = topButtonContainer;
             else if (bottomButton) container = bottomButtonContainer;
-            let text;
-            if (button.isDestructive) {
-                text = redButtonTextStyle;
-            } else if (button.disabled) {
-                text = disabledButtonTextStyle;
-            } else text = buttonTextStyle;
+            const destructiveTextstyle = button.isDestructive ? { color: vars.destructiveButtonFontColor } : null;
+            const disabledTextStyle = button.disabled ? { color: vars.disabledButtonFontColor } : null;
             return (
                 <View key={button.title}>
                     {this.borderTop(i)}
                     <View style={container}>
                         <TouchableOpacity style={container} onPress={() => this.executeAction(button)} >
-                            <Text style={text}>
+                            {/* Style order is important for color override priority */}
+                            <Text style={[buttonTextStyle, destructiveTextstyle, disabledTextStyle]}>
                                 {tx(button.title)}
                             </Text>
                         </TouchableOpacity>

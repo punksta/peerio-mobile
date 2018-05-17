@@ -183,7 +183,7 @@ const vars = {
     listViewPaddingHorizontal: 8,
     actionSheetOptionHeight: 56,
     actionSheetFontColor: '#0076FF',
-    desctructiveButtonFontColor: '#D0021B',
+    destructiveButtonFontColor: '#D0021B',
     actionSheetButtonColor: '#f6f6f8',
     actionSheetButtonBorderColor: '#dbdbe2',
     pinnedChatIconSize: 18,
