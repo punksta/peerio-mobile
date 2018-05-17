@@ -53,7 +53,10 @@ export default class PickerBoxIos extends SafeComponent {
                 <View style={shadow}>
                     <View
                         style={background}>
-                        <TouchableOpacity testID="pickerBox" onPress={this.focus}>
+                        <TouchableOpacity
+                            testID="pickerBox"
+                            onPress={this.focus}
+                            pressRetentionOffset={vars.pressRetentionOffset}>
                             <View
                                 pointerEvents="none"
                                 style={container}>
