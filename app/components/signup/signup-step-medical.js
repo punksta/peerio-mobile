@@ -16,7 +16,7 @@ import LoginWizardPage, {
 } from '../login/login-wizard-page';
 import StyledTextInput from '../shared/styled-text-input';
 import { socket, validation } from '../../lib/icebear';
-import uiState from '../layout/ui-state';
+import whiteLabelUiState from '../layout/white-label-ui-state';
 
 // const { validators } = validation;
 
@@ -56,28 +56,28 @@ export default class SignupStepMedical extends LoginWizardPage {
     @action.bound medicalIdInputRef(ref) { this.medicalIdInput = ref; }
 
     @action.bound handleNextButton() {
-        signupState.country = uiState.countrySelected;
-        signupState.specialty = uiState.specialtySelected;
-        signupState.role = uiState.roleSelected;
+        signupState.country = whiteLabelUiState.countrySelected;
+        signupState.specialty = whiteLabelUiState.specialtySelected;
+        signupState.role = whiteLabelUiState.roleSelected;
         signupState.medicalId = this.medicalIdState.value;
         signupState.next();
     }
 
     get selectedAU() {
-        return uiState.countrySelected === 'AU';
+        return whiteLabelUiState.countrySelected === 'AU';
     }
 
     get isValidForAU() {
         // TODO add medicalId validation: this.medicalIdInput.isValid
-        return uiState.countrySelected &&
-            uiState.specialtySelected &&
-            uiState.roleSelected &&
+        return whiteLabelUiState.countrySelected &&
+            whiteLabelUiState.specialtySelected &&
+            whiteLabelUiState.roleSelected &&
             this.medicalIdState.value;
     }
 
     get isValidForNonAU() {
-        return uiState.countrySelected &&
-            uiState.roleSelected;
+        return whiteLabelUiState.countrySelected &&
+            whiteLabelUiState.roleSelected;
     }
 
     get isNextDisabled() {

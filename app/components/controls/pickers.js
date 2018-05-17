@@ -3,7 +3,7 @@ import { observer } from 'mobx-react/native';
 import { LayoutAnimation } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import PickerPopup from './picker-popup';
-import uiState from '../layout/ui-state';
+import whiteLabelUiState from '../layout/white-label-ui-state';
 
 @observer
 class GenericPicker extends SafeComponent {
@@ -22,7 +22,7 @@ class GenericPicker extends SafeComponent {
             <PickerPopup
                 name={this.name}
                 data={this.data}
-                state={uiState} />
+                state={whiteLabelUiState} />
         );
     }
 }
@@ -30,21 +30,21 @@ class GenericPicker extends SafeComponent {
 @observer
 class RolePicker extends GenericPicker {
     constructor(props) {
-        super(props, uiState.roles, 'roleSelected');
+        super(props, whiteLabelUiState.roles, 'roleSelected');
     }
 }
 
 @observer
 class CountryPicker extends GenericPicker {
     constructor(props) {
-        super(props, uiState.countries, 'countrySelected');
+        super(props, whiteLabelUiState.countries, 'countrySelected');
     }
 }
 
 @observer
 class SpecialtyPicker extends GenericPicker {
     constructor(props) {
-        super(props, uiState.specialties, 'specialtySelected');
+        super(props, whiteLabelUiState.specialties, 'specialtySelected');
     }
 }
 

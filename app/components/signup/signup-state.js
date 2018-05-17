@@ -1,7 +1,7 @@
 import randomWords from 'random-words';
 import capitalize from 'capitalize';
 import { observable, action, when } from 'mobx';
-import { mainState, uiState, loginState } from '../states';
+import { mainState, uiState, whiteLabelUiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
 import { User, socket, crypto } from '../../lib/icebear';
 import WhiteLabel from '../whitelabel/white-label-components';
@@ -23,7 +23,7 @@ class SignupState extends RoutedState {
     @observable specialty = '';
     @observable role = '';
     @observable medicalId = '';
-    
+
     SAVE_PIN_SCREEN_NUMBER = WhiteLabel.PAGES.indexOf('signupAccountKey');
     KEY_BACKED_SCREEN_NUMBER = WhiteLabel.PAGES.indexOf('signupConfirmBackup');
 
@@ -49,9 +49,9 @@ class SignupState extends RoutedState {
         this.specialty = '';
         this.role = '';
         this.current = 0;
-        uiState.countrySelected = uiState.defaultCountrySelected;
-        uiState.specialtySelected = '';
-        uiState.roleSelected = '';
+        whiteLabelUiState.countrySelected = whiteLabelUiState.defaultCountrySelected;
+        whiteLabelUiState.specialtySelected = '';
+        whiteLabelUiState.roleSelected = '';
         this.resetValidationState();
         this.routes.app.loginStart();
     };
