@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { View, TextInput, Platform } from 'react-native';
 import { vars } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 const height = vars.searchInputHeight;
 const fontSize = vars.font.size.bigger;
@@ -33,7 +34,7 @@ const placeholderStyle = {
 
 export default class SearchBar extends Component {
     render() {
-        const { textValue, placeholderText, onChangeText, onSubmit, leftIcon, rightIcon, ref } = this.props;
+        const { textValue, placeholderText, onChangeText, onSubmit, leftIcon, rightIcon, ref, testId } = this.props;
         return (
             <View>
                 <View style={container}>
@@ -48,7 +49,9 @@ export default class SearchBar extends Component {
                         autoCorrect={false}
                         placeholder={placeholderText}
                         ref={ref}
-                        style={placeholderStyle} />
+                        style={placeholderStyle}
+                        {...testLabel(testId)}
+                    />
                     {rightIcon}
                 </View>
             </View>
@@ -63,5 +66,6 @@ SearchBar.propTypes = {
     onSubmit: PropTypes.any,
     leftIcon: PropTypes.any,
     rightIcon: PropTypes.any,
-    ref: PropTypes.any
+    ref: PropTypes.any,
+    testId: PropTypes.any
 };

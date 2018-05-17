@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, TextInput, ActivityIndicator, LayoutAnimation } from 'react-native';
+import { View, ActivityIndicator, LayoutAnimation } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { when, observable, action, reaction, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
@@ -19,8 +19,8 @@ import ContactInviteItem from './contact-invite-item';
 import ContactCollection from './contact-collection';
 import ContactSelectorUserBoxLine from './contact-selector-userbox-line';
 import ContactSelectorSectionList from './contact-selector-sectionlist';
-import testLabel from '../helpers/test-label';
 import Text from '../controls/custom-text';
+import SearchBar from '../controls/search-bar';
 
 @observer
 export default class ContactSelectorUniversal extends SafeComponent {
@@ -65,26 +65,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
         this.searchUserTimeout(text);
     }
 
-    textbox() {
-        const height = 48;
-        const container = {
-            flexGrow: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: vars.spacing.small.midi,
-            marginHorizontal: vars.spacing.medium.mini2x,
-            marginBottom: vars.spacing.small.midi,
-            borderColor: vars.peerioBlue,
-            borderWidth: 1,
-            height,
-            borderRadius: height
-        };
-        const style = {
-            flexGrow: 1,
-            height,
-            fontSize: vars.font.size.normal,
-            fontFamily: vars.peerioFontFamily
-        };
+    searchBar() {
         let rightIcon = null;
         if (this.findUserText) {
             rightIcon = icons.coloredSmall('close', () => {
@@ -97,26 +78,19 @@ export default class ContactSelectorUniversal extends SafeComponent {
             rightIcon = <ActivityIndicator style={{ marginRight: vars.spacing.small.midi2x }} />;
         }
 
-        const leftIcon = this.props.leftIconComponent || icons.dark('search');
+        const leftIcon = this.props.leftIconComponent || icons.plain('search', vars.iconSize, vars.black12);
 
         return (
-            <View style={container}>
-                {leftIcon}
-                <TextInput
-                    underlineColorAndroid="transparent"
-                    value={this.findUserText}
-                    returnKeyType="done"
-                    blurOnSubmit
-                    onChangeText={this.onChangeFindUserText}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    placeholder={tx(this.props.inputPlaceholder)}
-                    ref={ti => { this.textInput = ti; }}
-                    style={style}
-                    {...testLabel('textInputContactSearch')} />
-                {rightIcon}
-            </View>
-        );
+            <SearchBar
+                textValue={this.findUserText}
+                placeholderText={tx(this.props.inputPlaceholder)}
+                onChangeText={this.onChangeFindUserText}
+                onSubmit={this.onSubmit}
+                leftIcon={leftIcon}
+                rightIcon={rightIcon}
+                ref={ti => { this.textInput = ti; }}
+                testId="textInputContactSearch"
+            />);
     }
 
     exitRow() {
@@ -198,7 +172,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
     @computed get dataSource() {
         const filteredContacts = contactState.getFiltered(this.findUserText).slice();
         const result = [
-            { data: filteredContacts, key: 'title_allYourContacts' }
+            { data: filteredContacts, key: 'title_contactsNumber' }
         ];
         if (this.foundContact) {
             result.unshift({ data: [this.foundContact], key: null });
@@ -228,18 +202,23 @@ export default class ContactSelectorUniversal extends SafeComponent {
             </View>
         );
         const containerStyle = {
-            marginHorizontal: vars.spacing.medium.maxi,
-            // flex is needed here, because we contain a SectionList
-            // it calculates its height correctly only from flex parents
-            flex: 1
+            marginHorizontal: vars.spacing.small.midi2x
         };
         return (
-            <View style={containerStyle}>
-                {notFound}
-                {this.inviteContact}
-                {!!this.legacyContact &&
-                    <ContactLegacyItem noBorderBottom contact={this.legacyContact} />}
-                <ContactSelectorSectionList dataSource={this.dataSource} onPress={this.onContactPress} />
+            // flex is needed here, because we contain a SectionList
+            // it calculates its height correctly only from flex parents
+            <View style={{ flex: 1 }}>
+                {this.searchBar()}
+                {this.props.multiselect &&
+                    <ContactSelectorUserBoxLine
+                        contacts={this.recipients.items} onPress={this.recipients.remove} />}
+                <View style={containerStyle}>
+                    {notFound}
+                    {this.inviteContact}
+                    {!!this.legacyContact &&
+                        <ContactLegacyItem noBorderBottom contact={this.legacyContact} />}
+                    <ContactSelectorSectionList dataSource={this.dataSource} onPress={this.onContactPress} />
+                </View>
             </View>
         );
     }
@@ -253,16 +232,12 @@ export default class ContactSelectorUniversal extends SafeComponent {
                         {this.props.subTitleComponent}
                     </View>
                 ) : null}
-                {this.textbox()}
-                {this.props.multiselect &&
-                    <ContactSelectorUserBoxLine
-                        contacts={this.recipients.items} onPress={this.recipients.remove} />}
             </View>
         );
     }
 
     renderThrow() {
-        const header = this.header();
+        const header = !this.props.hideHeader ? this.header() : null;
         const body = this.body();
         const layoutStyle = {
             backgroundColor: vars.darkBlueBackground05
@@ -293,5 +268,6 @@ ContactSelectorUniversal.propTypes = {
     action: PropTypes.func,
     onExit: PropTypes.func,
     multiselect: PropTypes.any,
-    footer: PropTypes.any
+    footer: PropTypes.any,
+    hideHeader: PropTypes.any
 };

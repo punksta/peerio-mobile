@@ -72,13 +72,23 @@ export default class CreateChannel extends Component {
     }
 
     nextIcon() {
-        if (this.step === 1) return icons.text(tu('button_go'), () => this.next(), { color: vars.peerioBlue }, 'buttonGo');
-        return icons.text(tu('button_next'), () => this.next(), { color: vars.peerioBlue }, 'buttonNext');
+        if (this.step === 1) {
+            return icons.text(
+                tu('button_go'),
+                () => this.next(),
+                { color: vars.peerioBlue, marginHorizontal: vars.iconPadding },
+                'buttonGo');
+        }
+        return icons.text(
+            tu('button_next'),
+            () => this.next(),
+            { color: vars.peerioBlue, marginHorizontal: vars.iconPadding },
+            'buttonNext');
     }
 
     nextIconDisabled() {
-        if (this.step === 1) return icons.disabledText(tu('button_go'));
-        return icons.disabledText(tu('button_next'));
+        if (this.step === 1) return icons.disabledText(tu('button_go'), { marginHorizontal: vars.iconPadding });
+        return icons.disabledText(tu('button_next'), { marginHorizontal: vars.iconPadding });
     }
 
     exitRow(testId) {
@@ -90,7 +100,7 @@ export default class CreateChannel extends Component {
             padding: vars.spacing.small.mini2x,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0,
-            marginBottom: vars.spacing.medium.mini2x,
+            marginBottom: vars.spacing.small.midi2x,
             height: vars.headerHeight
         };
         const textStyle = {

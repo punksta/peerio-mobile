@@ -41,7 +41,7 @@ export default class FolderShare extends Component {
                 onExit={this.exit}
                 action={this.shareAction}
                 title="title_shareWith"
-                inputPlaceholder="title_TryUsernameOrEmail"
+                inputPlaceholder="title_searchByUsernameOrEmail"
                 multiselect
                 footer={<SharedFolderFooter
                     title="title_viewSharedWith"
@@ -71,7 +71,7 @@ export default class FolderShare extends Component {
         // we need this container to keep non-transparent background
         // between LayoutAnimation transitions
         const container = {
-            flexGrow: 1, backgroundColor: vars.white
+            flexGrow: 1, backgroundColor: vars.darkBlueBackground05
         };
         return (
             <View style={container}>

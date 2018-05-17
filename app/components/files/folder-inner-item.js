@@ -13,6 +13,7 @@ import fileState from './file-state';
 
 const height = vars.filesListItemHeight;
 const width = vars.listItemHeight;
+
 const itemContainerStyle = {
     flex: 1,
     flexGrow: 1,
@@ -29,6 +30,18 @@ const itemContainerStyle = {
 const folderInfoContainerStyle = {
     flexGrow: 1,
     flexDirection: 'row'
+};
+
+const folderInfoStyle = {
+    backgroundColor: 'transparent',
+    color: vars.extraSubtleText,
+    fontSize: vars.font.size.smaller
+};
+
+const nameStyle = {
+    color: vars.darkBlue,
+    fontSize: vars.font.size.normal,
+    backgroundColor: 'transparent'
 };
 
 @observer
@@ -79,21 +92,16 @@ export default class FolderInnerItem extends SafeComponent {
 
     get fileDetails() {
         const { folder } = this.props;
-        const infoStyle = {
-            backgroundColor: 'transparent',
-            color: vars.extraSubtleText,
-            fontSize: vars.font.size.smaller
-        };
         const { progressPercentage, progressMax } = folder;
         if (progressMax) {
             return (
-                <Text italic style={infoStyle}>
-                    <Text>{tx('title_sharingFolderPercent', { progressPercent: progressPercentage })}</Text>
+                <Text italic style={folderInfoStyle}>
+                    {tx('title_sharingFolderPercent', { progressPercent: progressPercentage })}
                 </Text>
             );
         }
         return (
-            <Text style={infoStyle}>
+            <Text style={folderInfoStyle}>
                 {folder.size ?
                     <Text>{folder.sizeFormatted}</Text> :
                     <Text>{tx('title_empty')}</Text>}
@@ -114,12 +122,6 @@ export default class FolderInnerItem extends SafeComponent {
             right: 0,
             left: 0
         };
-        const nameStyle = {
-            color: vars.darkBlue,
-            fontSize: vars.font.size.normal,
-            backgroundColor: 'transparent'
-        };
-        const loadingStyle = null;
         const optionsIcon = hideOptionsIcon || fileState.isFileSelectionMode ? null : (
             <View style={{ flex: 0 }}>
                 {icons.dark('more-vert', onFolderAction)}
@@ -133,7 +135,7 @@ export default class FolderInnerItem extends SafeComponent {
                         {this.radio}
                         <View style={itemContainerStyle} onLayout={this.layout}>
                             <View style={progressContainer} />
-                            <View style={[loadingStyle, { flex: 0 }]}>
+                            <View style={{ flex: 0 }}>
                                 {icons.plaindark(isShared ? 'folder-shared' : 'folder', vars.iconSize, null)}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
