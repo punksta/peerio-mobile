@@ -21,7 +21,6 @@ class GenericPicker extends SafeComponent {
         return (
             <PickerPopup
                 name={this.name}
-                onValueChange={this.onValueChange}
                 data={this.data}
                 state={uiState} />
         );
