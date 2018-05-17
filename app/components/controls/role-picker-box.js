@@ -9,21 +9,16 @@ import { tx } from '../utils/translator';
 
 @observer
 export default class RolePickerBox extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.picker = <RolePicker />;
-    }
-
     renderThrow() {
         return (
             <PickerBox
                 name="roleSelected"
-                picker={this.picker}
+                picker={<RolePicker />}
                 data={uiState.roles}
-                style={pickerBox}
                 value={uiState.roleSelected}
                 hint={tx('title_yourRole')}
                 errorMessage={tx('title_selectYourRole')}
+                style={pickerBox}
             />
         );
     }
