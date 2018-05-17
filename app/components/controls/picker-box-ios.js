@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
+import { observable } from 'mobx';
 import { View, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import uiState from '../layout/ui-state';
@@ -10,11 +11,12 @@ import { vars } from '../../styles/styles';
 
 @observer
 export default class PickerBoxIos extends SafeComponent {
+    @observable opened = false;
+
     constructor(props) {
         super(props);
         this.focus = this.focus.bind(this);
         this.picker = this.props.picker;
-        this.opened = false;
     }
 
     focus() {
