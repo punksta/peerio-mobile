@@ -58,7 +58,7 @@ export default class Files extends SafeComponent {
     }
 
     get layoutTitle() {
-        if (fileStore.folderStore.currentFolder.isRoot) return null;
+        if (!fileStore.folderStore.currentFolder.parent) return null;
         return fileStore.folderStore.currentFolder.name;
     }
 
