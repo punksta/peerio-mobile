@@ -23,10 +23,13 @@ class SignupState extends RoutedState {
     @observable specialty = '';
     @observable role = '';
     @observable medicalId = '';
+    
+    SAVE_PIN_SCREEN_NUMBER = WhiteLabel.PAGES.indexOf('signupAccountKey');
+    KEY_BACKED_SCREEN_NUMBER = WhiteLabel.PAGES.indexOf('signupConfirmBackup');
 
     get nextAvailable() {
         switch (this.current) {
-            case WhiteLabel.SAVE_PIN_SCREEN_NUMBER: return socket.connected;
+            case this.SAVE_PIN_SCREEN_NUMBER: return socket.connected;
             default: return false;
         }
     }
@@ -59,7 +62,7 @@ class SignupState extends RoutedState {
 
     @action async next() {
         if (!this.passphrase) this.passphrase = await this.generatePassphrase();
-        if (this.keyBackedUp && (this.current === WhiteLabel.KEY_BACKED_SCREEN_NUMBER)) await this.finishAccountCreation();
+        if (this.keyBackedUp && (this.current === this.KEY_BACKED_SCREEN_NUMBER)) await this.finishAccountCreation();
         this.current++;
     }
 
