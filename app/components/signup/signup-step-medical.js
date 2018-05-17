@@ -63,7 +63,7 @@ export default class SignupStepMedical extends LoginWizardPage {
         signupState.next();
     }
 
-    @computed get selectedAU() {
+    get selectedAU() {
         return uiState.countrySelected === 'AU';
     }
 
