@@ -35,7 +35,7 @@ export default class PickerBoxAndroid extends SafeComponent {
                         onLayout={this.layout}
                         selectedValue={(this.props.value || this.props.hint)}
                         onValueChange={this.onValueChange}
-                        style={[{ backgroundColor: vars.pickerBg, color: vars.textBlack38 }, (this.props.value && { color: vars.textBlack87 })]}>
+                        style={[{ backgroundColor: vars.pickerBg }, (this.props.value ? { color: vars.textBlack87 } : { color: vars.textBlack38 })]}>
                         {items}
                     </Picker>
                     <View

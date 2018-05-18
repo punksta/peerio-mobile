@@ -60,7 +60,7 @@ export default class PickerBoxIos extends SafeComponent {
                             <View
                                 pointerEvents="none"
                                 style={container}>
-                                <Text style={[textview, (this.props.value && { color: vars.textBlack87 })]}>
+                                <Text style={[textview, (this.props.value ? { color: vars.textBlack87 } : { color: vars.textBlack38 })]}>
                                     {value}
                                 </Text>
                             </View>
