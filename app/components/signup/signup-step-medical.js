@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import Text from '../controls/custom-text';
@@ -15,10 +15,8 @@ import LoginWizardPage, {
     header2, innerSmall, headingStyle2, footerText1, footerText2, innerContainer, outerContainer, buttonRowStyle
 } from '../login/login-wizard-page';
 import StyledTextInput from '../shared/styled-text-input';
-import { socket, validation } from '../../lib/icebear';
+import { socket } from '../../lib/icebear';
 import whiteLabelUiState from '../layout/white-label-ui-state';
-
-// const { validators } = validation;
 
 const formStyle = {
     paddingVertical: vars.spacing.small.midi2x,
