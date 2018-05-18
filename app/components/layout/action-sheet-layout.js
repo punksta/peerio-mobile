@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 /* eslint-disable */
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Dimensions, LayoutAnimation, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Dimensions, LayoutAnimation, Platform, Animated } from 'react-native';
 /* eslint-enable */
 import { action, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -63,7 +63,6 @@ const lineStyle = {
 
 const state = observable({
     visible: false,
-    animating: false,
     config: null
 });
 
@@ -110,56 +109,30 @@ export default class ActionSheetLayout extends SafeComponent {
         }));
     }
 
-    @action static async show(config) {
-        // Temporary hack for android animation bug
-        // fade in of background
-        LayoutAnimation.easeInEaseOut();
-        if (Platform.OS === 'ios') {
-            state.animating = true;
-            await new Promise(resolve => setTimeout(() => {
-                // slide-in of menu
-                LayoutAnimation.easeInEaseOut();
-                state.animating = false;
-                resolve();
-            }, 10));
-        }
+    @action static show(config) {
+        uiState.animatedActionsheetHeight = new Animated.Value(-height);
         state.config = config;
         state.visible = true;
         uiState.actionSheetShown = true;
+        Animated.timing(uiState.animatedActionsheetHeight, {
+            toValue: 0,
+            duration: 300
+        }).start();
     }
 
-    @action static async hide() {
+    @action static hide() {
         if (!state.visible) return;
-        // slide-out of menu
-        LayoutAnimation.easeInEaseOut();
-        if (Platform.OS === 'ios') {
-            state.animating = true;
-            await new Promise(resolve => setTimeout(() => {
-                // fade in of background
-                LayoutAnimation.easeInEaseOut();
-                state.visible = false;
-                state.config = null;
-                resolve();
-            }, 10));
-        } else {
+        Animated.timing(uiState.animatedActionsheetHeight, {
+            toValue: -height,
+            duration: 300
+        }).start(() => { // callback when animation is done
             state.visible = false;
             state.config = null;
-        }
-        uiState.actionSheetShown = false;
+            uiState.actionSheetShown = false;
+        });
     }
 
-    @action.bound handleCancel() {
-        // slide-out of menu
-        LayoutAnimation.easeInEaseOut();
-        state.animating = true;
-        setTimeout(() => {
-            // fade in of background
-            LayoutAnimation.easeInEaseOut();
-            state.visible = false;
-            state.config = null;
-        }, 10);
-        uiState.actionSheetShown = false;
-    }
+    @action.bound handleCancel() { ActionSheetLayout.hide(); }
 
     cancelOption() {
         return (
@@ -192,16 +165,16 @@ export default class ActionSheetLayout extends SafeComponent {
         const container = {
             paddingBottom: vars.spacing.small.midi2x,
             position: 'absolute',
-            bottom: state.animating && Platform.OS !== 'android' ? -height : 0
+            bottom: uiState.animatedActionsheetHeight
         };
         return (
             <TouchableWithoutFeedback onPress={this.handleCancel}>
                 <View style={wrapper}>
-                    <View style={container}>
+                    <Animated.View style={container}>
                         {header}
                         {actionButtons && this.actionButtons()}
                         {hasCancelButton && this.cancelOption()}
-                    </View>
+                    </Animated.View>
                 </View>
             </TouchableWithoutFeedback>
         );
