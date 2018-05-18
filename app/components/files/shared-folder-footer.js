@@ -34,7 +34,7 @@ export default class SharedFolderFooter extends SafeComponent {
             flexDirection: 'row',
             alignItems: 'center',
             paddingLeft: vars.spacing.small.mini,
-            borderColor: vars.verySubtleGrey,
+            borderColor: vars.black12,
             borderTopWidth: 1,
             backgroundColor: vars.white,
             paddingBottom: uiState.keyboardHeight ? 0 : vars.iPhoneXBottom
