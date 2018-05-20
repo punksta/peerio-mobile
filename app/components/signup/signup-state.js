@@ -1,6 +1,4 @@
-import randomWords from 'random-words';
-import capitalize from 'capitalize';
-import { observable, action, when } from 'mobx';
+import { observable, action } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
 import { User, socket, crypto } from '../../lib/icebear';
@@ -90,17 +88,4 @@ class SignupState extends RoutedState {
 }
 
 const signupState = new SignupState();
-
-if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
-    when(() => !process.env.PEERIO_AUTOLOGIN && signupState.isConnected && signupState.isActive, () => {
-        const s = signupState;
-        const rnd = new Date().getTime();
-        s.username = randomWords({ min: 2, max: 2, join: 'o' }).substring(0, 16);
-        s.email = `seavan+${rnd}@gmail.com`;
-        s.firstName = capitalize(randomWords());
-        s.lastName = capitalize(randomWords());
-        s.keyBackedUp = true;
-    });
-}
-
 export default signupState;

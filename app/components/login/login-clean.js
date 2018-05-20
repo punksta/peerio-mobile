@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { observable, action } from 'mobx';
+import { observable, action, when } from 'mobx';
 import Text from '../controls/custom-text';
 import { t, tx } from '../utils/translator';
 import ActivityOverlay from '../controls/activity-overlay';
@@ -42,7 +42,17 @@ export default class LoginClean extends LoginWizardPage {
     @action.bound usernameInputRef(ref) { this.usernameInput = ref; }
     @action.bound passwordInputRef(ref) { this.passwordInput = ref; }
 
-    @action.bound submit () {
+    componentDidMount() {
+        if (__DEV__ && process.env.PEERIO_USERNAME && process.env.PEERIO_PASSPHRASE) {
+            when(() => loginState.isConnected, () => {
+                this.usernameInput.onChangeText(process.env.PEERIO_USERNAME);
+                this.passwordInput.onChangeText(process.env.PEERIO_PASSPHRASE);
+                process.env.PEERIO_AUTOLOGIN && this.submit();
+            });
+        }
+    }
+
+    @action.bound submit() {
         loginState.username = this.usernameState.value;
         loginState.passphrase = this.passwordState.value;
         uiState.hideAll()
