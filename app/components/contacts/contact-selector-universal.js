@@ -202,16 +202,20 @@ export default class ContactSelectorUniversal extends SafeComponent {
             </View>
         );
         const containerStyle = {
-            marginHorizontal: vars.spacing.small.midi2x
+            marginHorizontal: vars.spacing.small.midi2x,
+            flex: 1,
+            flexGrow: 1
         };
         return (
             // flex is needed here, because we contain a SectionList
             // it calculates its height correctly only from flex parents
-            <View style={{ flex: 1 }}>
-                {this.searchBar()}
-                {this.props.multiselect &&
-                    <ContactSelectorUserBoxLine
-                        contacts={this.recipients.items} onPress={this.recipients.remove} />}
+            <View style={{ flex: 1, flexGrow: 1 }}>
+                <View style={{ flex: 0 }}>
+                    {this.searchBar()}
+                    {this.props.multiselect &&
+                        <ContactSelectorUserBoxLine
+                            contacts={this.recipients.items} onPress={this.recipients.remove} />}
+                </View>
                 <View style={containerStyle}>
                     {notFound}
                     {this.inviteContact}
