@@ -9,7 +9,7 @@ import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileUploadActionSheet from './file-upload-action-sheet';
 import FileActionSheet from '../files/file-action-sheet';
-import FoldersActionSheet from '../files/folders-action-sheet';
+import FoldersActionSheet from '../files/folder-action-sheet';
 import fileState from './file-state';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import { upgradeForFiles } from '../payments/payments';

@@ -9,7 +9,7 @@ import icons from '../helpers/icons';
 import { fileStore } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import routes from '../routes/routes';
-import FoldersActionSheet from './folders-action-sheet';
+import FoldersActionSheet from './folder-action-sheet';
 import buttons from '../helpers/buttons';
 import Text from '../controls/custom-text';
 

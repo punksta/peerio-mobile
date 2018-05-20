@@ -1,6 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react/native';
-import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import { fileState } from '../states';
 import routerModal from '../routes/router-modal';
@@ -10,11 +8,9 @@ import routerMain from '../routes/router-main';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import ActionSheetLayout from '../layout/action-sheet-layout';
 
-@observer
-export default class FoldersActionSheet extends SafeComponent {
+export default class FoldersActionSheet {
     static show(folder) {
         const { hasLegacyFiles, convertingToVolume, isShared, isOwner } = folder;
-        console.log(convertingToVolume);
         const header = (
             <FileActionSheetHeader
                 file={folder}
