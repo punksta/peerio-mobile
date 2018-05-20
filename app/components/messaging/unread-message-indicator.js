@@ -46,7 +46,7 @@ export default class UnreadMessageIndicator extends SafeComponent {
                 style={[container, alignmentStyle]}
                 onPress={action}>
                 <View style={[marginTopStyle, { flexDirection: 'row' }]}>
-                    <Text semiBold style={text}>{tu('title_unreadMessages')}</Text>
+                    <Text semibold style={text}>{tu('title_unreadMessages')}</Text>
                     {icons.plainWhite(iconName, vars.iconSize)}
                 </View>
             </TouchableOpacity>

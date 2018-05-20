@@ -2,6 +2,78 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.284.0"></a>
+# [3.284.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.283.0...v3.284.0) (2018-05-16)
+
+
+### Bug Fixes
+
+* add more nullref checks ([6f51f42](https://github.com/PeerioTechnologies/peerio-mobile/commit/6f51f42))
+
+
+
+<a name="3.283.0"></a>
+# [3.283.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.282.0...v3.283.0) (2018-05-16)
+
+
+### Bug Fixes
+
+* tap on inline image should open the file properly ([8fe8792](https://github.com/PeerioTechnologies/peerio-mobile/commit/8fe8792))
+
+
+
+<a name="3.282.0"></a>
+# [3.282.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.281.0...v3.282.0) (2018-05-16)
+
+
+### Bug Fixes
+
+* exception thrown on chat and chat-list render ([9d57143](https://github.com/PeerioTechnologies/peerio-mobile/commit/9d57143))
+
+
+
+<a name="3.281.0"></a>
+# [3.281.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.280.0...v3.281.0) (2018-05-16)
+
+
+### Bug Fixes
+
+* typo for [ch7213] ([8e856f7](https://github.com/PeerioTechnologies/peerio-mobile/commit/8e856f7))
+
+
+
+<a name="3.280.0"></a>
+# [3.280.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.279.0...v3.280.0) (2018-05-16)
+
+
+### Bug Fixes
+
+* ref to scrollview should check null [ch7202] ([fa60270](https://github.com/PeerioTechnologies/peerio-mobile/commit/fa60270))
+
+
+
+<a name="3.279.0"></a>
+# [3.279.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.278.0...v3.279.0) (2018-05-15)
+
+
+### Bug Fixes
+
+* add more keyboard hide waits ([b5ea33a](https://github.com/PeerioTechnologies/peerio-mobile/commit/b5ea33a))
+* blurOnSubmit android on samsung phones [ch6766] ([2e7029a](https://github.com/PeerioTechnologies/peerio-mobile/commit/2e7029a))
+* file open viewer rework ([cfdda1e](https://github.com/PeerioTechnologies/peerio-mobile/commit/cfdda1e))
+* fix unread indicator ([88b4af5](https://github.com/PeerioTechnologies/peerio-mobile/commit/88b4af5))
+* fixed search bar disappearing [branch ch6224] ([#183](https://github.com/PeerioTechnologies/peerio-mobile/issues/183)) ([6566739](https://github.com/PeerioTechnologies/peerio-mobile/commit/6566739))
+* unread indicators were not semibold ([#192](https://github.com/PeerioTechnologies/peerio-mobile/issues/192)) ([fc3c1d1](https://github.com/PeerioTechnologies/peerio-mobile/commit/fc3c1d1))
+* updated chat and file zero state UI ([#185](https://github.com/PeerioTechnologies/peerio-mobile/issues/185)) ([8ff00ff](https://github.com/PeerioTechnologies/peerio-mobile/commit/8ff00ff))
+
+
+### Features
+
+* chat unread message indicator [branch ch4849] ([#190](https://github.com/PeerioTechnologies/peerio-mobile/issues/190)) ([0e61922](https://github.com/PeerioTechnologies/peerio-mobile/commit/0e61922))
+* user better launch viewer paradigm ([156421b](https://github.com/PeerioTechnologies/peerio-mobile/commit/156421b))
+
+
+
 <a name="3.278.0"></a>
 # [3.278.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.277.0...v3.278.0) (2018-05-08)
 

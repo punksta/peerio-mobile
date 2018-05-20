@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -62,9 +62,31 @@ export default class FileInlineContainer extends SafeComponent {
             </View>);
     }
 
+    get fileTypeIcon() {
+        const { file, onAction } = this.props;
+        return (
+            <TouchableOpacity
+                onPress={onAction}
+                pressRetentionOffset={vars.pressRetentionOffset}>
+                <FileTypeIcon type={fileHelpers.getFileIconType(file.ext)} size="smaller" />
+            </TouchableOpacity>);
+    }
+
+    get fileName() {
+        const { file, isImage, onAction } = this.props;
+        const name = isImage ? file.name : `${file.name} (${file.sizeFormatted})`;
+        return (!!name &&
+            <TouchableOpacity
+                style={{ flexDirection: 'row', alignItems: 'center', flexGrow: 1, flexShrink: 1 }}
+                onPress={onAction}
+                pressRetentionOffset={vars.pressRetentionOffset}>
+                <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>
+            </TouchableOpacity>);
+    }
+
     render() {
         const { file, isImage, isOpen, extraActionIcon } = this.props;
-        const { title, description, fileId, downloading, name } = file;
+        const { title, description, fileId, downloading } = file;
         const isLocal = !!fileId;
         const spacingDifference = padding - vars.progressBarHeight;
         let containerHeight = isLocal ? 30 : 0;
@@ -88,13 +110,13 @@ export default class FileInlineContainer extends SafeComponent {
                         {!!description && <Text style={descText}>{description}</Text>}
                     </View>
                     <View style={header}>
-                        {isLocal && <FileTypeIcon type={fileHelpers.getFileIconType(file.ext)} size="smaller" />}
-                        {!!name && <Text semibold numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
+                        {isLocal && this.fileTypeIcon}
+                        {this.fileName}
                         {isLocal && <View style={{ flexDirection: 'row' }}>
                             {extraActionIcon}
                             {icons.darkNoPadding(
                                 'more-vert',
-                                () => !file.isLegacy ? this.props.onAction(file) : this.props.onLegacyFileAction(file),
+                                () => !file.isLegacy ? this.props.onActionSheet(file) : this.props.onLegacyFileAction(file),
                                 { marginHorizontal: vars.spacing.small.midi2x },
                                 downloading ? true : null
                             )}
@@ -114,6 +136,7 @@ FileInlineContainer.propTypes = {
     file: PropTypes.any,
     onLayout: PropTypes.any,
     extraActionIcon: PropTypes.any,
+    onActionSheet: PropTypes.any,
     onAction: PropTypes.any,
     isImage: PropTypes.bool,
     isOpen: PropTypes.bool

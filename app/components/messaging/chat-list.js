@@ -31,12 +31,6 @@ let actionSheet = null;
 
 @observer
 export default class ChatList extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.dataSource = [];
-    }
-
-    dataSource = null;
     @observable reverseRoomSorting = false;
     @observable minSectionIndex = null;
     @observable minItemIndex = null;
@@ -60,11 +54,10 @@ export default class ChatList extends SafeComponent {
     }
 
     @computed get firstSectionItems() {
-        const allChannels = chatInviteStore.received.concat(
-            chatStore.channels);
+        const allChannels = chatStore.allRooms || [];
         allChannels.sort((a, b) => {
-            const first = (a.name || a.channelName).toLocaleLowerCase();
-            const second = (b.name || b.channelName).toLocaleLowerCase();
+            const first = (a.name || a.channelName || '').toLocaleLowerCase();
+            const second = (b.name || b.channelName || '').toLocaleLowerCase();
             const result = first.localeCompare(second);
             return this.reverseRoomSorting ? !result : result;
         });

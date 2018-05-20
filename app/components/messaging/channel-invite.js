@@ -16,6 +16,7 @@ import chatState from './chat-state';
 import AvatarCircle from '../shared/avatar-circle';
 import ChannelUpgradeOffer from '../channels/channel-upgrade-offer';
 import ProgressOverlay from '../shared/progress-overlay';
+import uiState from '../layout/ui-state';
 
 const emojiTada = require('../../assets/emoji/tada.png');
 
@@ -86,7 +87,7 @@ export default class ChannelInvite extends SafeComponent {
     }
 
     @action.bound declineInvite() {
-        chatInviteStore.rejectInvite(this.invitation.id);
+        uiState.declinedChannelId = this.invitation.id;
         routes.main.chats();
     }
 

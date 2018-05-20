@@ -11,9 +11,7 @@ import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
 import ChatActionSheet from './chat-action-sheet';
 import ChatUnreadMessageIndicator from './chat-unread-message-indicator';
-import InlineImageActionSheet from '../files/inline-image-action-sheet';
-import InlineFileActionSheet from '../files/inline-file-action-sheet';
-import FilesActionSheet from '../files/files-action-sheet';
+import FileActionSheet from '../files/file-action-sheet';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
@@ -91,7 +89,8 @@ export default class Chat extends SafeComponent {
                 ref: ref => { this._refs[key] = ref; },
                 onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
                 onInlineFileAction: file => this._inlineFileActionSheet.show(file, item, this.chat),
-                onLegacyFileAction: file => FilesActionSheet.show(file),
+                onLegacyFileAction: file => FileActionSheet.show(file),
+                onFileAction: file => FileActionSheet.show(file, true),
                 onRetryCancel: () => this._actionSheet.show(item, this.chat)
             }));
         return (
@@ -382,7 +381,7 @@ export default class Chat extends SafeComponent {
     }
 
     renderThrow() {
-        if (this.chat.isInvite) return <DmContactInvite />;
+        if (this.chat && this.chat.isInvite) return <DmContactInvite />;
         return (
             <View
                 style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
@@ -392,8 +391,6 @@ export default class Chat extends SafeComponent {
                 </View>
                 <ProgressOverlay enabled={/* chatState.loading || */ !this.initialScrollDone} />
                 <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
-                <InlineImageActionSheet ref={sheet => { this._inlineImageActionSheet = sheet; }} />
-                <InlineFileActionSheet ref={sheet => { this._inlineFileActionSheet = sheet; }} />
             </View>
         );
     }

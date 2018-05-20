@@ -7,7 +7,6 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { fileStore } from '../../lib/icebear';
-import fileState from '../files/file-state';
 import { tx } from '../utils/translator';
 import routes from '../routes/routes';
 import FoldersActionSheet from './folders-action-sheet';

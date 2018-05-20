@@ -1,12 +1,13 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity, TouchableWithoutFeedback, Dimensions, LayoutAnimation, Platform } from 'react-native';
+/* eslint-disable */
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Dimensions, LayoutAnimation, Platform, Animated } from 'react-native';
+/* eslint-enable */
 import { action, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import { uiState } from '../states';
-import Text from '../controls/custom-text';
 
 const { width, height } = Dimensions.get('window');
 const borderRadius = 16;
@@ -21,12 +22,7 @@ const buttonContainer = {
 
 const topButtonContainer = [buttonContainer, {
     borderTopLeftRadius: borderRadius,
-    borderTopRightRadius: borderRadius,
-    marginBottom: 1
-}];
-
-const centerButtonContainer = [buttonContainer, {
-    marginBottom: 1
+    borderTopRightRadius: borderRadius
 }];
 
 const bottomButtonContainer = [buttonContainer, {
@@ -59,25 +55,30 @@ const boldButtonTextStyle = [buttonTextStyle, {
     fontWeight: 'bold'
 }];
 
-const redButtonTextStyle = [buttonTextStyle, {
-    color: vars.desctructiveButtonFontColor
-}];
-
-const disabledButtonTextStyle = [buttonTextStyle, {
-    color: vars.disabledButtonFontColor
-}];
+const lineStyle = {
+    height: 1,
+    width: width - vars.spacing.small.midi2x * 2,
+    backgroundColor: vars.actionSheetButtonBorderColor
+};
 
 const state = observable({
     visible: false,
-    animating: false,
     config: null
 });
 
 @observer
 export default class ActionSheetLayout extends SafeComponent {
-    executeAction(button) {
+    // Android border color does not work with border radius
+    // Border top will be added to all action buttons except the first one
+    borderTop (buttonPosition) {
+        const line = <View style={lineStyle} />;
+        if (buttonPosition !== 0) return line;
+        return null;
+    }
+
+    async executeAction(button) {
         if (button.disabled) return;
-        ActionSheetLayout.hide();
+        await ActionSheetLayout.hide();
         button.action();
     }
 
@@ -88,76 +89,50 @@ export default class ActionSheetLayout extends SafeComponent {
             const bottomButton = (i === actionButtons.length - 1);
             let container;
             if (topButton && bottomButton) container = lonelyButtonContainer;
-            else if (!topButton && !bottomButton) container = centerButtonContainer;
+            else if (!topButton && !bottomButton) container = buttonContainer;
             else if (topButton) container = topButtonContainer;
             else if (bottomButton) container = bottomButtonContainer;
-            let text;
-            if (button.isDestructive) {
-                text = redButtonTextStyle;
-            } else if (button.disabled) {
-                text = disabledButtonTextStyle;
-            } else text = buttonTextStyle;
+            const destructiveTextstyle = button.isDestructive ? { color: vars.destructiveButtonFontColor } : null;
+            const disabledTextStyle = button.disabled ? { color: vars.disabledButtonFontColor } : null;
             return (
-                <View key={i} style={[container, { backgroundColor: vars.lightGrayBg }]} >
-                    <TouchableOpacity
-                        style={container}
-                        onPress={() => this.executeAction(button)} >
-                        <Text style={text}>
-                            {tx(button.title)}
-                        </Text>
-                    </TouchableOpacity>
+                <View key={button.title}>
+                    {this.borderTop(i)}
+                    <View style={container}>
+                        <TouchableOpacity style={container} onPress={() => this.executeAction(button)} >
+                            {/* Style order is important for color override priority */}
+                            <Text style={[buttonTextStyle, destructiveTextstyle, disabledTextStyle]}>
+                                {tx(button.title)}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>);
         }));
     }
 
     @action static show(config) {
-        // Temporary hack for android animation bug
-        // fade in of background
-        LayoutAnimation.easeInEaseOut();
-        if (Platform.OS === 'ios') {
-            state.animating = true;
-            setTimeout(() => {
-                // slide-in of menu
-                LayoutAnimation.easeInEaseOut();
-                state.animating = false;
-            }, 10);
-        }
-        state.visible = true;
+        uiState.animatedActionsheetHeight = new Animated.Value(-height);
         state.config = config;
+        state.visible = true;
         uiState.actionSheetShown = true;
+        Animated.timing(uiState.animatedActionsheetHeight, {
+            toValue: 0,
+            duration: 300
+        }).start();
     }
 
-    @action.bound static hide() {
+    @action static hide() {
         if (!state.visible) return;
-        // slide-out of menu
-        LayoutAnimation.easeInEaseOut();
-        if (Platform.OS === 'ios') {
-            state.animating = true;
-            setTimeout(() => {
-                // fade in of background
-                LayoutAnimation.easeInEaseOut();
-                state.visible = false;
-                state.config = null;
-            }, 10);
-        } else {
+        Animated.timing(uiState.animatedActionsheetHeight, {
+            toValue: -height,
+            duration: 300
+        }).start(() => { // callback when animation is done
             state.visible = false;
             state.config = null;
-        }
-        uiState.actionSheetShown = false;
+            uiState.actionSheetShown = false;
+        });
     }
 
-    @action.bound handleCancel() {
-        // slide-out of menu
-        LayoutAnimation.easeInEaseOut();
-        state.animating = true;
-        setTimeout(() => {
-            // fade in of background
-            LayoutAnimation.easeInEaseOut();
-            state.visible = false;
-            state.config = null;
-        }, 10);
-        uiState.actionSheetShown = false;
-    }
+    @action.bound handleCancel() { ActionSheetLayout.hide(); }
 
     cancelOption() {
         return (
@@ -190,16 +165,16 @@ export default class ActionSheetLayout extends SafeComponent {
         const container = {
             paddingBottom: vars.spacing.small.midi2x,
             position: 'absolute',
-            bottom: state.animating && Platform.OS !== 'android' ? -height : 0
+            bottom: uiState.animatedActionsheetHeight
         };
         return (
             <TouchableWithoutFeedback onPress={this.handleCancel}>
                 <View style={wrapper}>
-                    <View style={container}>
+                    <Animated.View style={container}>
                         {header}
                         {actionButtons && this.actionButtons()}
                         {hasCancelButton && this.cancelOption()}
-                    </View>
+                    </Animated.View>
                 </View>
             </TouchableWithoutFeedback>
         );

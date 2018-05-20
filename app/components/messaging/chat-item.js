@@ -78,6 +78,7 @@ export default class ChatItem extends SafeComponent {
                     onInlineImageAction={this.props.onInlineImageAction}
                     onInlineFileAction={this.props.onInlineFileAction}
                     onLegacyFileAction={this.props.onLegacyFileAction}
+                    onFileAction={this.props.onFileAction}
                     noBorderBottom
                     collapsed={!!i.groupWithPrevious}
                     extraPaddingTop={8}

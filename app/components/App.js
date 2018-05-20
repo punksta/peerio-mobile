@@ -6,7 +6,6 @@ import { observer } from 'mobx-react/native';
 import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';
 import ModalLayout from './layout/modal-layout';
-import ActionSheetLayout from './layout/action-sheet-layout';
 import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
@@ -20,6 +19,7 @@ import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
 import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
+import ActionSheetLayout from './layout/action-sheet-layout';
 import Text from './controls/custom-text';
 
 const { height, width } = Dimensions.get('window');

@@ -8,7 +8,7 @@ import FilesPlaceholder from './files-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileUploadActionSheet from './file-upload-action-sheet';
-import FilesActionSheet from '../files/files-action-sheet';
+import FileActionSheet from '../files/file-action-sheet';
 import FoldersActionSheet from '../files/folders-action-sheet';
 import fileState from './file-state';
 import PlusBorderIcon from '../layout/plus-border-icon';
@@ -19,7 +19,7 @@ import { tx } from '../utils/translator';
 import icons from '../helpers/icons';
 import ButtonText from '../controls/button-text';
 import uiState from '../layout/ui-state';
-import SharedFolderRemovalNotif from './shared-folder-removal-notif';
+// import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import { fileStore } from '../../lib/icebear';
 import SearchBar from '../controls/search-bar';
 
@@ -105,7 +105,7 @@ export default class Files extends SafeComponent {
                 file={file}
                 rowID={rowID}
                 onChangeFolder={this.onChangeFolder}
-                onFileAction={() => FilesActionSheet.show(file)}
+                onFileAction={() => FileActionSheet.show(file)}
                 onFolderAction={() => FoldersActionSheet.show(file)} />
         );
     };

@@ -5,13 +5,14 @@ import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity, Animated } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
-import { t } from '../utils/translator';
+import { t, tx } from '../utils/translator';
 import { uiState, fileState } from '../states';
 import icons from '../helpers/icons';
 import routes from '../routes/routes';
 import { vars } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 import testLabel from '../helpers/test-label';
+import snackbarState from '../snackbars/snackbar-state';
 
 const actionCellStyle = {
     flex: 1,
@@ -52,8 +53,11 @@ export default class FileActions extends SafeComponent {
 
     onViewFile = () => {
         return Promise.resolve()
-            .then(() => this.props.file.launchViewer())
-            .finally(() => { uiState.externalViewer = false; });
+            .then(() => {
+                this.props.file.launchViewer().catch(() => {
+                    snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'));
+                });
+            }).finally(() => { uiState.externalViewer = false; });
     };
 
     @action.bound deleteFolder() {
@@ -65,7 +69,7 @@ export default class FileActions extends SafeComponent {
     renderThrow() {
         const { file } = this.props;
         const enabled = file && file.readyForDownload || fileState.showSelection;
-        const leftAction = file && !file.isPartialDownload && file.cached ?
+        const leftAction = file && !file.downloading && file.cached ?
             this.action(t('button_open'), 'open-in-new', this.onViewFile, enabled) :
             this.action(t('title_download'), 'file-download', () => fileState.download(), enabled);
         return (
