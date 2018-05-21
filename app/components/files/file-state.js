@@ -168,11 +168,7 @@ class FileState extends RoutedState {
         const { shouldUpload, newFileName } = await this.preprocess(data);
         let file;
         if (shouldUpload) {
-            file = fileStore.upload(data.url, newFileName, folder.isRoot ? null : folder.id);
-            if (folder && !folder.isRoot) {
-                await promiseWhen(() => file.fileId);
-                folder.attach(file);
-            }
+            file = fileStore.upload(data.url, newFileName, folder);
         }
         return file;
     };
