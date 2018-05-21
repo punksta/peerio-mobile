@@ -136,7 +136,9 @@ export default class Files extends SafeComponent {
     get isZeroState() { return fileState.store.isEmpty; }
 
     get noFilesInFolder() {
-        if (this.data.length || fileStore.folderStore.currentFolder.isRoot) return null;
+        const folder = fileStore.folderStore.currentFolder;
+        if (this.data.length
+            || (!folder.isShared && folder.isRoot)) return null;
         const s = {
             color: vars.txtMedium,
             textAlign: 'center',
@@ -276,8 +278,7 @@ export default class Files extends SafeComponent {
                 <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
                     {!this.isZeroState && this.searchTextbox()}
                     {upgradeForFiles()}
-                    {!this.data.length && !fileStore.folderStore.currentFolder.isRoot ?
-                        this.noFilesInFolder : null}
+                    {this.noFilesInFolder}
                     {this.sharedFolderRemovalNotifs()}
                     {this.body()}
                 </View>
