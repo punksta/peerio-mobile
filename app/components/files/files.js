@@ -25,7 +25,7 @@ import SearchBar from '../controls/search-bar';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
-const INITIAL_LIST_SIZE = 10;
+const INITIAL_LIST_SIZE = 20;
 const PAGE_SIZE = 20;
 
 function backFolderAction() {
@@ -35,6 +35,7 @@ function backFolderAction() {
 @observer
 export default class Files extends SafeComponent {
     @observable findFilesText;
+    @observable refresh = 0;
 
     get leftIcon() {
         if (!fileStore.folderStore.currentFolder.parent) return null;
@@ -65,13 +66,18 @@ export default class Files extends SafeComponent {
     }
 
     componentDidMount() {
+        this.reactionNavigation = reaction(() => fileStore.folderStore.currentFolder,
+            action(() => {
+                this.maxLoadedIndex = INITIAL_LIST_SIZE;
+                this.refresh++;
+            }));
         this.reaction = reaction(() => [
             fileState.routerMain.route === 'files',
             fileState.routerMain.currentIndex === 0,
             this.data,
             this.data.length,
-            this.maxLoadedIndex,
-            fileState.store.currentFilter
+            fileState.store.currentFilter,
+            this.maxLoadedIndex
         ], () => {
             console.debug(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
             this.dataSource = this.data.slice(0, Math.min(this.data.length, this.maxLoadedIndex));
@@ -81,6 +87,8 @@ export default class Files extends SafeComponent {
     componentWillUnmount() {
         this.reaction && this.reaction();
         this.reaction = null;
+        this.reactionNavigation && this.reactionNavigation();
+        this.reactionNavigation = null;
         // remove icebear hook for deletion
         fileStore.bulk.deleteFolderConfirmator = null;
     }
@@ -103,7 +111,6 @@ export default class Files extends SafeComponent {
     onEndReached = () => {
         console.debug('files.js: on end reached');
         this.maxLoadedIndex += PAGE_SIZE;
-        this.maxLoadedIndex = Math.min(this.data.length, this.maxLoadedIndex);
     };
 
     flatListRef = (ref) => { uiState.currentScrollView = ref; };
@@ -114,6 +121,7 @@ export default class Files extends SafeComponent {
                 initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
                 data={this.dataSource}
+                extraData={this.refresh}
                 renderItem={this.item}
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={0.5}
