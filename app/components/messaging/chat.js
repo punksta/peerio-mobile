@@ -91,7 +91,7 @@ export default class Chat extends SafeComponent {
                 onInlineFileAction: file => this._inlineFileActionSheet.show(file, item, this.chat),
                 onLegacyFileAction: file => FileActionSheet.show(file),
                 onFileAction: file => FileActionSheet.show(file, true),
-                onRetryCancel: () => this._actionSheet.show(item, this.chat)
+                onRetryCancel: () => ChatActionSheet.show(item, this.chat)
             }));
         return (
             <ChatItem
@@ -390,7 +390,6 @@ export default class Chat extends SafeComponent {
                     {this.data ? this.listView() : !chatState.loading && <ChatZeroStatePlaceholder />}
                 </View>
                 <ProgressOverlay enabled={/* chatState.loading || */ !this.initialScrollDone} />
-                <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
             </View>
         );
     }
