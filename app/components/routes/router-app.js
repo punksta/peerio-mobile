@@ -10,7 +10,6 @@ import PopupState from '../layout/popup-state';
 import routerMain from './router-main';
 import routes from './routes';
 import ActionSheetLayout from '../layout/action-sheet-layout';
-import { uiState } from '../states';
 
 class RouterApp extends Router {
     constructor() {
@@ -25,7 +24,7 @@ class RouterApp extends Router {
 
         when(() => this.route === 'main', () => setTimeout(() => routerMain.initial(), 0));
         BackHandler.addEventListener('hardwareBackPress', () => {
-            if (uiState.actionSheetShown) {
+            if (ActionSheetLayout.visible) {
                 ActionSheetLayout.hide();
                 return true;
             }
