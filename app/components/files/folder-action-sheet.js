@@ -28,6 +28,7 @@ export default class FoldersActionSheet {
                     // TODO: refactor this, this is confusing and bad
                     fileState.currentFile = folder;
                     const contacts = await routerModal.shareFolderTo();
+                    if (!contacts) return;
                     await volumeStore.shareFolder(folder, contacts);
                 }
             },
