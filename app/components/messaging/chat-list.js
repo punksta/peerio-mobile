@@ -26,9 +26,6 @@ const viewabilityConfig = {
     viewAreaCoveragePercentThreshold: 100
 };
 
-// action sheet is outside of component scope for a reason.
-let actionSheet = null;
-
 @observer
 export default class ChatList extends SafeComponent {
     @observable reverseRoomSorting = false;
@@ -39,7 +36,7 @@ export default class ChatList extends SafeComponent {
 
     get rightIcon() {
         return (<PlusBorderIcon
-            action={() => actionSheet.show()}
+            action={CreateActionSheet.show}
             testID="buttonCreateNewChat" />);
     }
 
@@ -138,8 +135,6 @@ export default class ChatList extends SafeComponent {
             });
         }
     }
-
-    actionSheetRef = (ref) => { actionSheet = ref; };
 
     @computed get firstUnreadItemPosition() {
         for (const { data, index } of this.dataSource) {
@@ -276,7 +271,6 @@ export default class ChatList extends SafeComponent {
                 </View>
                 {this.topIndicatorVisible && <UnreadMessageIndicator isAlignedTop action={this.scrollUpToUnread} />}
                 {this.bottomIndicatorVisible && <UnreadMessageIndicator action={this.scrollDownToUnread} />}
-                <CreateActionSheet ref={this.actionSheetRef} />
                 <ProgressOverlay enabled={chatState.store.loading} />
             </View>
         );
