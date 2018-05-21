@@ -142,7 +142,7 @@ export default class SignupStep1 extends LoginWizardPage {
                             </View>
                         </View>
                         <TouchableOpacity
-                            onPress={() => this._actionSheet.show()}
+                            onPress={() => SignupAvatarActionSheet.show()}
                             pressRetentionOffset={vars.pressRetentionOffset}
                             style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]}>
                             {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}
@@ -153,7 +153,6 @@ export default class SignupStep1 extends LoginWizardPage {
                     {this.button('button_back', () => signupState.prev())}
                     {this.button('button_next', () => signupState.next(), false, !signupState.nextAvailable)}
                 </View>
-                <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
                 <ActivityOverlay large visible={signupState.isInProgress} />
             </View>
         );
