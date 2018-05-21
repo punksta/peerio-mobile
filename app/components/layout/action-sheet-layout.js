@@ -7,7 +7,6 @@ import { action, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
-import { uiState } from '../states';
 
 const { width, height } = Dimensions.get('window');
 const borderRadius = 16;
@@ -66,6 +65,8 @@ const state = observable({
     config: null
 });
 
+const animatedActionsheetHeight = new Animated.Value(0);
+
 @observer
 export default class ActionSheetLayout extends SafeComponent {
     // Android border color does not work with border radius
@@ -98,7 +99,10 @@ export default class ActionSheetLayout extends SafeComponent {
                 <View key={button.title}>
                     {this.borderTop(i)}
                     <View style={container}>
-                        <TouchableOpacity style={container} onPress={() => this.executeAction(button)} >
+                        <TouchableOpacity
+                            pressRetentionOffset={vars.pressRetentionOffset}
+                            style={container}
+                            onPress={() => this.executeAction(button)}>
                             {/* Style order is important for color override priority */}
                             <Text style={[buttonTextStyle, destructiveTextstyle, disabledTextStyle]}>
                                 {tx(button.title)}
@@ -110,26 +114,31 @@ export default class ActionSheetLayout extends SafeComponent {
     }
 
     @action static show(config) {
-        uiState.animatedActionsheetHeight = new Animated.Value(-height);
+        animatedActionsheetHeight.setValue(-height);
         state.config = config;
         state.visible = true;
-        uiState.actionSheetShown = true;
-        Animated.timing(uiState.animatedActionsheetHeight, {
+        Animated.timing(animatedActionsheetHeight, {
             toValue: 0,
             duration: 300
         }).start();
     }
 
-    @action static hide() {
+    @action static async hide() {
         if (!state.visible) return;
-        Animated.timing(uiState.animatedActionsheetHeight, {
-            toValue: -height,
-            duration: 300
-        }).start(() => { // callback when animation is done
-            state.visible = false;
-            state.config = null;
-            uiState.actionSheetShown = false;
-        });
+        await new Promise(resolve =>
+            Animated.timing(animatedActionsheetHeight, {
+                toValue: -height,
+                duration: 300
+            }).start(() => { // callback when animation is done
+                state.visible = false;
+                state.config = null;
+                resolve();
+            })
+        );
+    }
+
+    static get visible() {
+        return state.visible;
     }
 
     @action.bound handleCancel() { ActionSheetLayout.hide(); }
@@ -165,7 +174,7 @@ export default class ActionSheetLayout extends SafeComponent {
         const container = {
             paddingBottom: vars.spacing.small.midi2x,
             position: 'absolute',
-            bottom: uiState.animatedActionsheetHeight
+            bottom: animatedActionsheetHeight
         };
         return (
             <TouchableWithoutFeedback onPress={this.handleCancel}>
