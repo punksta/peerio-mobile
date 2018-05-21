@@ -2,6 +2,147 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.285.0"></a>
+# [3.285.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.284.0...v3.285.0) (2018-05-21)
+
+
+### Bug Fixes
+
+* action sheet disabled style now has priority over destructive [b… ([#194](https://github.com/PeerioTechnologies/peerio-mobile/issues/194)) ([2bdafb5](https://github.com/PeerioTechnologies/peerio-mobile/commit/2bdafb5))
+* android back button when inside a volume [branch ch7318] ([921b7b9](https://github.com/PeerioTechnologies/peerio-mobile/commit/921b7b9))
+* contact selector UI fix [ch7218] ([f6794df](https://github.com/PeerioTechnologies/peerio-mobile/commit/f6794df))
+* disable delete and share actions while folder is being shared ([c1ce214](https://github.com/PeerioTechnologies/peerio-mobile/commit/c1ce214))
+* files view title when in a volume [ch7334] ([7d8698c](https://github.com/PeerioTechnologies/peerio-mobile/commit/7d8698c))
+* folder inner item code style and UI ([a6e9a44](https://github.com/PeerioTechnologies/peerio-mobile/commit/a6e9a44))
+* if user presses cancel, do not share the folder ([80e6a7b](https://github.com/PeerioTechnologies/peerio-mobile/commit/80e6a7b))
+* migration dialog now says 'ok' if user has no shared files [branch ch5749] ([53a2d1e](https://github.com/PeerioTechnologies/peerio-mobile/commit/53a2d1e))
+* no files in shared folder displayed properly ([7407a19](https://github.com/PeerioTechnologies/peerio-mobile/commit/7407a19))
+* ref to scrollview should check null [ch7202] ([089140e](https://github.com/PeerioTechnologies/peerio-mobile/commit/089140e))
+* refactor action sheet layout animation ([cf207fd](https://github.com/PeerioTechnologies/peerio-mobile/commit/cf207fd))
+* scrollview fill flex ([41b7303](https://github.com/PeerioTechnologies/peerio-mobile/commit/41b7303))
+* sharedFolderFooter border color ([81b56f9](https://github.com/PeerioTechnologies/peerio-mobile/commit/81b56f9))
+* uploading to shared folders is fixed ([9d2e1ea](https://github.com/PeerioTechnologies/peerio-mobile/commit/9d2e1ea))
+
+
+### Features
+
+* action sheet slide in/out animation [branch ch7168] ([#195](https://github.com/PeerioTechnologies/peerio-mobile/issues/195)) ([7e34446](https://github.com/PeerioTechnologies/peerio-mobile/commit/7e34446))
+* add keep awake module for migration [ch5387] ([d924341](https://github.com/PeerioTechnologies/peerio-mobile/commit/d924341))
+* added random messages during migration popup ([af4de57](https://github.com/PeerioTechnologies/peerio-mobile/commit/af4de57))
+* legacy file review in mirgation popup ([9664a33](https://github.com/PeerioTechnologies/peerio-mobile/commit/9664a33))
+* refactor createactionsheet ([859868b](https://github.com/PeerioTechnologies/peerio-mobile/commit/859868b))
+* refactor FileUploadActionSheet ([306022c](https://github.com/PeerioTechnologies/peerio-mobile/commit/306022c))
+* refactor to use FlatList instead of ListView ([4eb6db1](https://github.com/PeerioTechnologies/peerio-mobile/commit/4eb6db1))
+* return QUICK_SIGNUP and PEERIO_USERNAME flags to action ([83fff4d](https://github.com/PeerioTechnologies/peerio-mobile/commit/83fff4d))
+* return QUICK_SIGNUP and PEERIO_USERNAME flags to action ([527ecf9](https://github.com/PeerioTechnologies/peerio-mobile/commit/527ecf9))
+
+
+
+<a name="3.266.0"></a>
+# [3.266.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.265.0...v3.266.0) (2018-04-10)
+
+
+### Bug Fixes
+
+* changed background color in files list ([5543a4c](https://github.com/PeerioTechnologies/peerio-mobile/commit/5543a4c))
+* show migration upgrade even after login ([00c7cbf](https://github.com/PeerioTechnologies/peerio-mobile/commit/00c7cbf))
+* toolbar in file share was taking up too much height ([977646e](https://github.com/PeerioTechnologies/peerio-mobile/commit/977646e))
+
+
+### Features
+
+* check if migration is active on another client ([ef5b1dd](https://github.com/PeerioTechnologies/peerio-mobile/commit/ef5b1dd))
+* NO_DEV_BAR to hide dev bar ([978d184](https://github.com/PeerioTechnologies/peerio-mobile/commit/978d184))
+* support displaying information about migration from another client ([28ae877](https://github.com/PeerioTechnologies/peerio-mobile/commit/28ae877))
+
+
+
+<a name="3.263.0"></a>
+# [3.263.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.262.0...v3.263.0) (2018-03-29)
+
+
+### Bug Fixes
+
+* add key to actionsheetlayout ([350e9c3](https://github.com/PeerioTechnologies/peerio-mobile/commit/350e9c3))
+
+
+### Features
+
+* add unshare mock ability to folder ([cbaaef2](https://github.com/PeerioTechnologies/peerio-mobile/commit/cbaaef2))
+
+
+
+<a name="3.262.0"></a>
+# [3.262.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.261.0...v3.262.0) (2018-03-28)
+
+
+### Bug Fixes
+
+* dialog popup conditions and logic ([825bdd7](https://github.com/PeerioTechnologies/peerio-mobile/commit/825bdd7))
+* ios transparenct for text on progress folder ([3843d26](https://github.com/PeerioTechnologies/peerio-mobile/commit/3843d26))
+* migration popup condition ([b93bcd0](https://github.com/PeerioTechnologies/peerio-mobile/commit/b93bcd0))
+* progress percentage fixes ([23551f8](https://github.com/PeerioTechnologies/peerio-mobile/commit/23551f8))
+* removed 'chats' from tiny avatar number in some cases ([a212c41](https://github.com/PeerioTechnologies/peerio-mobile/commit/a212c41))
+* share toolbar overlapping filedetails in files ([c3e3190](https://github.com/PeerioTechnologies/peerio-mobile/commit/c3e3190))
+* toggle remove contact ([d00e797](https://github.com/PeerioTechnologies/peerio-mobile/commit/d00e797))
+* ui padding fixes in contact edit permission item ([4f1335d](https://github.com/PeerioTechnologies/peerio-mobile/commit/4f1335d))
+* undo changes unrelated to task ([1aa2540](https://github.com/PeerioTechnologies/peerio-mobile/commit/1aa2540))
+* white background for all contacts section header ([12228a7](https://github.com/PeerioTechnologies/peerio-mobile/commit/12228a7))
+
+
+### Features
+
+* added 'shared with' avatars and number of chats in folder share ([38599f9](https://github.com/PeerioTechnologies/peerio-mobile/commit/38599f9))
+* animation for unsharing ([621c05d](https://github.com/PeerioTechnologies/peerio-mobile/commit/621c05d))
+* delete folder/volume popups ([8f45048](https://github.com/PeerioTechnologies/peerio-mobile/commit/8f45048))
+* file action sheet ([cce4145](https://github.com/PeerioTechnologies/peerio-mobile/commit/cce4145))
+* inline folders wired to sdk ([e96d908](https://github.com/PeerioTechnologies/peerio-mobile/commit/e96d908))
+* navigate shared folders in chat ([d96ebcd](https://github.com/PeerioTechnologies/peerio-mobile/commit/d96ebcd))
+* refactor views ([89d47df](https://github.com/PeerioTechnologies/peerio-mobile/commit/89d47df))
+* wire migration UI ([61090d0](https://github.com/PeerioTechnologies/peerio-mobile/commit/61090d0))
+
+
+
+<a name="3.261.0"></a>
+# [3.261.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.260.0...v3.261.0) (2018-03-13)
+
+
+### Bug Fixes
+
+* files and folder action sheet title UI fix ([18719c5](https://github.com/PeerioTechnologies/peerio-mobile/commit/18719c5))
+* fixed style when folder is not blocked ([c07468a](https://github.com/PeerioTechnologies/peerio-mobile/commit/c07468a))
+* folders action sheet crashing ([0f0517d](https://github.com/PeerioTechnologies/peerio-mobile/commit/0f0517d))
+* logic error ([a084898](https://github.com/PeerioTechnologies/peerio-mobile/commit/a084898))
+* more options icon wasnt showing for folders ([14b3d1d](https://github.com/PeerioTechnologies/peerio-mobile/commit/14b3d1d))
+* re-render action sheets on file/folder change ([77467c6](https://github.com/PeerioTechnologies/peerio-mobile/commit/77467c6))
+* removed icon from files and folders action sheets ([0497893](https://github.com/PeerioTechnologies/peerio-mobile/commit/0497893))
+* removed move option for shared folders ([aeeb8af](https://github.com/PeerioTechnologies/peerio-mobile/commit/aeeb8af))
+* undo commit to wrong branch ([9552c11](https://github.com/PeerioTechnologies/peerio-mobile/commit/9552c11))
+
+
+### Features
+
+* [ch4399] switch to newfs and update dependencies ([d7e2b3e](https://github.com/PeerioTechnologies/peerio-mobile/commit/d7e2b3e))
+* [ch4399] use getByIdInChat ([04b4bbe](https://github.com/PeerioTechnologies/peerio-mobile/commit/04b4bbe))
+* added icon for android only ([b2b813b](https://github.com/PeerioTechnologies/peerio-mobile/commit/b2b813b))
+* added time to file upload date in file details view ([72e5696](https://github.com/PeerioTechnologies/peerio-mobile/commit/72e5696))
+* auto capitalize when naming and renaming files [branch ch4227] ([16bc6b0](https://github.com/PeerioTechnologies/peerio-mobile/commit/16bc6b0))
+* disable shared folder move [branch ch3312] ([d557fc0](https://github.com/PeerioTechnologies/peerio-mobile/commit/d557fc0))
+* disabled inline shared folder in chat ([58bbc26](https://github.com/PeerioTechnologies/peerio-mobile/commit/58bbc26))
+* file action trigger button [ch3002] ([ff1839b](https://github.com/PeerioTechnologies/peerio-mobile/commit/ff1839b))
+* file and folder action trigger button ([3a05b58](https://github.com/PeerioTechnologies/peerio-mobile/commit/3a05b58))
+* filesystem migration dialog [branch ch3580] ([3c29afd](https://github.com/PeerioTechnologies/peerio-mobile/commit/3c29afd))
+* folder blocked while sharing ([4625a5b](https://github.com/PeerioTechnologies/peerio-mobile/commit/4625a5b))
+* folder checkboxes when sharing ([8a6dbb1](https://github.com/PeerioTechnologies/peerio-mobile/commit/8a6dbb1))
+* folder locked in files list ([415c8c5](https://github.com/PeerioTechnologies/peerio-mobile/commit/415c8c5))
+* move to shared folder popup ([309440c](https://github.com/PeerioTechnologies/peerio-mobile/commit/309440c))
+* remove user from shared folder ([8796af7](https://github.com/PeerioTechnologies/peerio-mobile/commit/8796af7))
+* shared folder progress bar and some UI changes to match mocks ([6269c21](https://github.com/PeerioTechnologies/peerio-mobile/commit/6269c21))
+* shared folder removal notification ([ab0cb74](https://github.com/PeerioTechnologies/peerio-mobile/commit/ab0cb74))
+* shared folder upload indicator ([c474986](https://github.com/PeerioTechnologies/peerio-mobile/commit/c474986))
+
+
+
 <a name="3.284.0"></a>
 # [3.284.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.283.0...v3.284.0) (2018-05-16)
 
