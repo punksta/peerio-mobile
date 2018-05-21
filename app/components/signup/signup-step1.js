@@ -193,7 +193,7 @@ export default class SignupStep1 extends LoginWizardPage {
                         </View>
                         <TouchableOpacity
                             style={circleTopSmall}
-                            onPress={() => this._actionSheet.show()}
+                            onPress={() => SignupAvatarActionSheet.show()}
                             pressRetentionOffset={vars.pressRetentionOffset}>
                             {signupState.avatarData ? this.avatar : this.avatarSelector}
                         </TouchableOpacity>
@@ -210,7 +210,6 @@ export default class SignupStep1 extends LoginWizardPage {
                             <T k="title_TOSRequestText">{tosParser}</T>
                         </Text>
                     </View>
-                    <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
                 </View>
             </View>
         );

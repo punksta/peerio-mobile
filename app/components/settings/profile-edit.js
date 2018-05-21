@@ -224,7 +224,7 @@ export default class ProfileEdit extends SafeComponent {
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
-                onPress={() => this._actionSheet.show()}
+                onPress={this.selectAvatar}
                 {...testLabel('currentAvatar')}>
                 <Image
                     source={{ uri, cache: 'force-cache' }}
@@ -237,6 +237,10 @@ export default class ProfileEdit extends SafeComponent {
                     }} />
             </TouchableOpacity>
         );
+    }
+
+    selectAvatar() {
+        AvatarActionSheet.show(({ buffers }) => User.current.saveAvatar(buffers));
     }
 
     renderThrow() {
@@ -262,7 +266,7 @@ export default class ProfileEdit extends SafeComponent {
                         <Text style={{ color: vars.white }}>@{username}</Text>
                         <View style={{ position: 'absolute', right: 0, bottom: 0, flexDirection: 'row' }}>
                             {contact.hasAvatar && icons.white('delete', () => user.deleteAvatar())}
-                            {icons.white('camera-alt', () => this._actionSheet.show(), null, null, 'uploadAvatarIcon')}
+                            {icons.white('camera-alt', this.selectAvatar, null, null, 'uploadAvatarIcon')}
                         </View>
                     </View>
                 </View>
@@ -313,7 +317,6 @@ export default class ProfileEdit extends SafeComponent {
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>
-                <AvatarActionSheet onSave={buffers => User.current.saveAvatar(buffers)} ref={sheet => { this._actionSheet = sheet; }} />
             </ScrollView>
         );
     }
