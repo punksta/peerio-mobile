@@ -33,6 +33,8 @@ export default class TabItem extends SafeComponent {
             }
             if (uiState.currentScrollView.scrollTo) {
                 uiState.currentScrollView.scrollTo(0);
+            } else if (uiState.currentScrollView.scrollToIndex) {
+                uiState.currentScrollView.scrollToIndex({ index: 0 });
             } else {
                 uiState.currentScrollView.scrollToLocation(
                     {

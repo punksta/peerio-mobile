@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Animated } from 'react-native';
+import { View, Animated, FlatList } from 'react-native';
 import { observable, reaction, action } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
@@ -26,7 +26,7 @@ import SearchBar from '../controls/search-bar';
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
 const INITIAL_LIST_SIZE = 10;
-const PAGE_SIZE = 2;
+const PAGE_SIZE = 20;
 
 let fileUploadActionSheet = null;
 
@@ -37,13 +37,6 @@ function backFolderAction() {
 @observer
 export default class Files extends SafeComponent {
     @observable findFilesText;
-
-    constructor(props) {
-        super(props);
-        this.dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-    }
 
     get leftIcon() {
         if (!fileStore.folderStore.currentFolder.parent) return null;
@@ -62,7 +55,7 @@ export default class Files extends SafeComponent {
         return fileStore.folderStore.currentFolder.name;
     }
 
-    @observable dataSource = null;
+    @observable dataSource = [];
     @observable refreshing = false;
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
     actionsHeight = new Animated.Value(0);
@@ -82,9 +75,8 @@ export default class Files extends SafeComponent {
             this.maxLoadedIndex,
             fileState.store.currentFilter
         ], () => {
-            // console.log(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
-            this.dataSource = this.dataSource.cloneWithRows(this.data.slice(0, this.maxLoadedIndex));
-            this.forceUpdate();
+            console.debug(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
+            this.dataSource = this.data.slice(0, Math.min(this.data.length, this.maxLoadedIndex));
         }, true);
     }
 
@@ -97,38 +89,37 @@ export default class Files extends SafeComponent {
 
     onChangeFolder = folder => { fileStore.folderStore.currentFolder = folder; };
 
-    item = (file, sectionID, rowID) => {
+    item = ({ item, index }) => {
         // fileId for file, id for folder
         return (
             <FileItem
-                key={file.fileId || file.id}
-                file={file}
-                rowID={rowID}
+                key={item.fileId || item.id}
+                file={item}
+                rowID={index}
                 onChangeFolder={this.onChangeFolder}
-                onFileAction={() => FileActionSheet.show(file)}
-                onFolderAction={() => FoldersActionSheet.show(file)} />
+                onFileAction={() => FileActionSheet.show(item)}
+                onFolderAction={() => FoldersActionSheet.show(item)} />
         );
     };
 
     onEndReached = () => {
-        console.log('files.js: on end reached');
+        console.debug('files.js: on end reached');
         this.maxLoadedIndex += PAGE_SIZE;
+        this.maxLoadedIndex = Math.min(this.data.length, this.maxLoadedIndex);
     };
+
+    flatListRef = (ref) => { uiState.currentScrollView = ref; };
 
     listView() {
         return (
-            <ListView
-                initialListSize={INITIAL_LIST_SIZE}
+            <FlatList
+                initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
-                dataSource={this.dataSource}
-                renderRow={this.item}
+                data={this.dataSource}
+                renderItem={this.item}
                 onEndReached={this.onEndReached}
-                onEndReachedThreshold={20}
-                enableEmptySections
-                ref={sv => {
-                    this.scrollView = sv;
-                    uiState.currentScrollView = sv;
-                }}
+                onEndReachedThreshold={0.5}
+                ref={this.flatListRef}
             />
         );
     }
