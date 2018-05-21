@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.286.0"></a>
+# [3.286.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.285.0...v3.286.0) (2018-05-21)
+
+
+### Bug Fixes
+
+* when navigating file list don't optmize away everything ([011e7f4](https://github.com/PeerioTechnologies/peerio-mobile/commit/011e7f4))
+
+
+### Features
+
+* refactor AvatarActionSheet ([20ff16c](https://github.com/PeerioTechnologies/peerio-mobile/commit/20ff16c))
+* refactor chat-action-sheet ([20b7c3a](https://github.com/PeerioTechnologies/peerio-mobile/commit/20b7c3a))
+
+
+
 <a name="3.285.0"></a>
 # [3.285.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.284.0...v3.285.0) (2018-05-21)
 
