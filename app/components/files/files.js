@@ -28,8 +28,6 @@ const iconClear = require('../../assets/file_icons/ic_close.png');
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 20;
 
-let fileUploadActionSheet = null;
-
 function backFolderAction() {
     fileStore.folderStore.currentFolder = fileStore.folderStore.currentFolder.parent;
 }
@@ -46,7 +44,7 @@ export default class Files extends SafeComponent {
     get rightIcon() {
         return !fileState.isFileSelectionMode &&
             <PlusBorderIcon
-                action={() => fileUploadActionSheet.show()}
+                action={() => FileUploadActionSheet.show(false, true)}
                 testID="buttonUploadFileToFiles" />;
     }
 
@@ -260,8 +258,6 @@ export default class Files extends SafeComponent {
         return this.isZeroState && <FilesPlaceholder />;
     }
 
-    @action.bound fileUploadActionSheetRef(ref) { fileUploadActionSheet = ref; }
-
     renderThrow() {
         return (
             <View
@@ -274,7 +270,6 @@ export default class Files extends SafeComponent {
                     {this.body()}
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
-                <FileUploadActionSheet createFolder ref={this.fileUploadActionSheetRef} />
                 {this.toolbar()}
             </View>
         );
