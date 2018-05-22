@@ -61,14 +61,11 @@ export default class FolderSelect extends SafeComponent {
             const file = fileState.currentFile;
             if (!file) return;
             if (folder.isShared) {
-                if (!preferenceStore.showMoveSharedFolderPopup) {
-                    folder.attach(file);
-                } else {
+                if (!preferenceStore.prefs.showMoveSharedFolderPopup) folder.attach(file);
+                else {
                     const result = await popupMoveToSharedFolder();
                     if (result) {
-                        if (result.checked) {
-                            preferenceStore.showMoveSharedFolderPopup = false;
-                        }
+                        preferenceStore.prefs.showMoveSharedFolderPopup = !result.checked;
                         folder.attach(file);
                     }
                 }
