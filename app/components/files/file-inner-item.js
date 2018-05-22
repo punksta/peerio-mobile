@@ -59,12 +59,11 @@ export default class FileInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { file } = this.props;
+        const { file, onFileAction } = this.props;
         if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
-        // TODO: onFileAction ? @seavan
-        const actionIcon = () => !file.uploading && this.onPress();
+        const actionIcon = () => onFileAction();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
-            icons.dark('keyboard-arrow-right', actionIcon);
+            icons.dark('more-vert', actionIcon);
         const checked = this.props.file && this.props.file.selected;
         const nameStyle = {
             color: vars.txtDark,
@@ -107,7 +106,7 @@ export default class FileInnerItem extends SafeComponent {
         return (
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
-                    onPress={actionIcon}
+                    onPress={this.onPress()}
                     {...testLabel(testID)}
                     style={{ backgroundColor: vars.filesBg }}>
                     <View style={[fileInfoContainerStyle, { opacity }]}>
