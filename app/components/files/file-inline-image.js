@@ -344,7 +344,7 @@ export default class FileInlineImage extends SafeComponent {
                 <FileInlineContainer
                     onLayout={this.layout}
                     file={image}
-                    onActionSheet={this.props.onActionSheet}
+                    onActionSheet={this.props.onAction}
                     onAction={this.imageAction}
                     onLegacyFileAction={this.props.onLegacyFileAction}
                     isImage

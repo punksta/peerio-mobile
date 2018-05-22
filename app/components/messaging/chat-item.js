@@ -76,7 +76,6 @@ export default class ChatItem extends SafeComponent {
                     onLayout={this.props.onLayout}
                     onRetryCancel={this.props.onRetryCancel}
                     onInlineImageAction={this.props.onInlineImageAction}
-                    onInlineFileAction={this.props.onInlineFileAction}
                     onLegacyFileAction={this.props.onLegacyFileAction}
                     onFileAction={this.props.onFileAction}
                     noBorderBottom

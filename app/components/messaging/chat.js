@@ -87,8 +87,7 @@ export default class Chat extends SafeComponent {
         const actions = getOrMake(
             key, this._itemActionMap, () => ({
                 ref: ref => { this._refs[key] = ref; },
-                onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
-                onInlineFileAction: file => this._inlineFileActionSheet.show(file, item, this.chat),
+                onInlineImageAction: image => FileActionSheet.show(image),
                 onLegacyFileAction: file => FileActionSheet.show(file),
                 onFileAction: file => FileActionSheet.show(file, true),
                 onRetryCancel: () => ChatActionSheet.show(item, this.chat)
