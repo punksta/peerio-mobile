@@ -19,7 +19,7 @@ import { tx } from '../utils/translator';
 import icons from '../helpers/icons';
 import ButtonText from '../controls/button-text';
 import uiState from '../layout/ui-state';
-// import SharedFolderRemovalNotif from './shared-folder-removal-notif';
+import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import { fileStore } from '../../lib/icebear';
 import SearchBar from '../controls/search-bar';
 
@@ -249,9 +249,13 @@ export default class Files extends SafeComponent {
         // TODO: add any missed conditions for when to NOT show this
         if (!fileStore.folderStore.currentFolder.isRoot) return null;
         // TODO: map them from a list of notifications from SDK
-        // const folder = { folderName: 'test-folder-name' }; // folder can be replaced with folderId
-        // return <SharedFolderRemovalNotif folder={folder} />;
-        return null;
+        const folderNames = [
+            'test-folder-name-1',
+            'test-folder-name-2',
+            'test-folder-name-3',
+            'test-folder-name-4'
+        ];
+        return <SharedFolderRemovalNotif folderNames={folderNames} />;
     }
 
     body() {

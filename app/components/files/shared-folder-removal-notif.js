@@ -1,15 +1,39 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View } from 'react-native';
+import { View, FlatList } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
-import buttons from '../helpers/buttons';
+import icons from '../helpers/icons';
 import branding from '../../styles/branding';
-import { t } from '../utils/translator';
+import { tx } from '../utils/translator';
 import Text from '../controls/custom-text';
 
 const { bgGradient } = branding;
+
+const container = {
+    backgroundColor: vars.folderRemoveNotifBg,
+    paddingVertical: vars.spacing.small.midi2x,
+    paddingHorizontal: vars.spacing.medium.mini2x
+
+};
+const greenWarningLine = {
+    height: 4,
+    backgroundColor: bgGradient
+};
+const topTextStyle = {
+    flex: 1,
+    color: vars.subtleText,
+    fontSize: vars.font.size.normal
+};
+const listTextStyle = {
+    flex: 0.5,
+    fontSize: vars.font.size.normal
+};
+const bottomTextStyle = {
+    color: vars.subtleText,
+    fontSize: vars.font.size.normal
+};
 
 @observer
 export default class SharedFolderRemovalNotif extends SafeComponent {
@@ -18,32 +42,48 @@ export default class SharedFolderRemovalNotif extends SafeComponent {
         console.log('Dismissed');
     }
 
+    keyExtractor(item, index) { return `${item}-${index}`; }
+
+    folderNameListItem = ({ item }) => {
+        return (
+            <Text semibold style={listTextStyle}>
+                {`\u2022 ${item}`}
+            </Text>);
+    };
+
+    get folderList() {
+        const { folderNames } = this.props;
+        return (
+            <FlatList
+                style={{ paddingVertical: vars.spacing.small.midi2x }}
+                numColumns={2}
+                data={folderNames}
+                renderItem={this.folderNameListItem}
+                keyExtractor={this.keyExtractor} />
+        );
+    }
+
     renderThrow() {
-        const { folder } = this.props; // can be replaced with folderId
-        const greenWarningLine = {
-            height: 4,
-            backgroundColor: bgGradient
-        };
-        const textContainer = {
-            height: vars.folderRemoveNotifHeight,
-            backgroundColor: vars.folderRemoveNotifBg,
-            flexDirection: 'row',
-            alignItems: 'center'
-        };
-        const textStyle = {
-            color: vars.subtleText,
-            fontSize: vars.font.size.normal,
-            width: vars.largeInputWidth,
-            padding: vars.spacing.small.midi2x
-        };
+        const { folderNames } = this.props;
+        if (!folderNames || folderNames.length === 0) return null;
         return (
             <View style={{ marginHorizontal: vars.spacing.medium.mini2x }}>
                 <View style={greenWarningLine} />
-                <View style={textContainer} >
-                    <Text style={textStyle}>
-                        {t('title_removedFromFolder', { folderName: folder.folderName })}
+                <View style={container}>
+                    <View style={{ flexDirection: 'row', alignItems: 'flex-start' }}>
+                        <Text style={topTextStyle}>
+                            {folderNames.length === 1
+                                ? tx('title_sharedFolderRemovalNotif', { folderName: folderNames[0] })
+                                : tx('title_sharedFoldersRemovalNotif', { number: folderNames.length })}
+                        </Text>
+                        {icons.darkNoPadding('close', this.dismiss)}
+                    </View>
+                    {(folderNames.length > 1) && this.folderList}
+                    <Text style={bottomTextStyle}>
+                        {folderNames.length === 1
+                            ? tx('title_sharedFolderRemovalNotifDesc')
+                            : tx('title_sharedFoldersRemovalNotifDesc')}
                     </Text>
-                    {buttons.blueTextButton('button_dismiss', this.dismiss)}
                 </View>
             </View>
         );
@@ -51,5 +91,5 @@ export default class SharedFolderRemovalNotif extends SafeComponent {
 }
 
 SharedFolderRemovalNotif.propTypes = {
-    folder: PropTypes.any.isRequired // can be replaced with folderId
+    folderNames: PropTypes.any.isRequired
 };
