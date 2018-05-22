@@ -118,6 +118,7 @@ export default class FileInlineContainer extends SafeComponent {
                                 'more-vert',
                                 () => !file.isLegacy ? this.props.onActionSheet(file) : this.props.onLegacyFileAction(file),
                                 { marginHorizontal: vars.spacing.small.midi2x },
+                                vars.iconSize,
                                 downloading ? true : null
                             )}
                         </View>}
