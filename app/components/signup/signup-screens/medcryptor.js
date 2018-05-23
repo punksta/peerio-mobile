@@ -1,6 +1,6 @@
 const PAGES = [
     'signupStep1',
-    'signupMedical',
+    'SignupStepMedcryptor',
     'signupAccountKey',
     'signupConfirmBackup',
     'signupContactSyncStart',

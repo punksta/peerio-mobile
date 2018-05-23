@@ -1,5 +1,5 @@
 import uiState from './layout/ui-state';
-import whiteLabelUiState from './layout/white-label-ui-state';
+import whiteLabelUiState from './layout/medcryptor-ui-state';
 import fileState from './files/file-state';
 import chatState from './messaging/chat-state';
 import settingsState from './settings/settings-state';

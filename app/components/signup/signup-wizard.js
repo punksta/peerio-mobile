@@ -13,7 +13,7 @@ import SignupContactInvite from './signup-contact-invite';
 import signupState from './signup-state';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
-import SignupStepMedical from './signup-step-medical';
+import SignupStepMedcryptor from './signup-step-medcryptor';
 import WhiteLabel from '../whitelabel/white-label-components';
 
 export default class SignupWizard extends Wizard {
@@ -23,7 +23,7 @@ export default class SignupWizard extends Wizard {
     set index(i) { signupState.current = i; }
 
     signupStep1 = () => <SignupStep1 />;
-    signupMedical = () => <SignupStepMedical />;
+    SignupStepMedcryptor = () => <SignupStepMedcryptor />;
     signupAccountKey = () => <SignupAccountKey />;
     signupConfirmBackup = () => <SignupConfirmBackup />;
     signupContactSyncStart = () => <SignupContactSyncStart />;

@@ -16,7 +16,7 @@ import LoginWizardPage, {
 } from '../login/login-wizard-page';
 import StyledTextInput from '../shared/styled-text-input';
 import { socket } from '../../lib/icebear';
-import whiteLabelUiState from '../layout/white-label-ui-state';
+import whiteLabelUiState from '../layout/medcryptor-ui-state';
 
 const formStyle = {
     paddingVertical: vars.spacing.small.midi2x,
@@ -49,7 +49,7 @@ const ahpraTextStyle = {
 };
 
 @observer
-export default class SignupStepMedical extends LoginWizardPage {
+export default class SignupStepMedcryptor extends LoginWizardPage {
     medicalIdState = observable({ value: '' });
     @action.bound medicalIdInputRef(ref) { this.medicalIdInput = ref; }
 

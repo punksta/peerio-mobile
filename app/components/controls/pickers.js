@@ -3,7 +3,7 @@ import { observer } from 'mobx-react/native';
 import { LayoutAnimation } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import PickerPopup from './picker-popup';
-import whiteLabelUiState from '../layout/white-label-ui-state';
+import whiteLabelUiState from '../layout/medcryptor-ui-state';
 
 @observer
 class GenericPicker extends SafeComponent {
