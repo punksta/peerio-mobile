@@ -69,7 +69,7 @@ export default class UpdateProgressIndicator extends SafeComponent {
                 <View style={progressContainer}>
                     <View style={progressFiller} />
                 </View>
-                <Text style={textStyle}>{tx('title_fileUpdateProgressPercent', { progress })}</Text>
+                {(progress !== 0) && <Text style={textStyle}>{tx('title_fileUpdateProgressPercent', { progress })}</Text>}
             </View>
         );
     }
