@@ -15,7 +15,8 @@ export default class IdentityVerificationNotice extends Component {
     idVerificationText = {
         flex: 1,
         color: vars.txtMedium,
-        flexGrow: 1
+        flexGrow: 1,
+        fontSize: vars.font.size.smaller
     };
 
     hyperlink = {
