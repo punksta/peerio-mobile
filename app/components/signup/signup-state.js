@@ -92,11 +92,15 @@ class SignupState extends RoutedState {
         user.lastName = lastName;
         user.localeCode = localeCode;
         if (process.env.APP_LABEL === 'medcryptor') {
+            let medicalRole = role;
+            if (role === 'admin' && country === 'AU') {
+                medicalRole = `${role}:${medicalId}`;
+            }
             user.props = {
-                country,
-                specialty,
-                role,
-                medicalId
+                mcrCountry: country,
+                mcrSpecialty: specialty,
+                mcrRoles: [medicalRole],
+                mcrAHPRA: medicalId
             };
         }
         return user.createAccountAndLogin()
