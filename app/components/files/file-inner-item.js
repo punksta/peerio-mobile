@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { Dimensions, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
@@ -28,9 +29,9 @@ const fileInfoContainerStyle = {
 
 @observer
 export default class FileInnerItem extends SafeComponent {
-    onPress() {
+    @action.bound onPress() {
         const { file } = this.props;
-        this.props.onPress && !fileState.isFileSelectionMode ? this.props.onPress(this.props.file)
+        this.props.onPress && !fileState.isFileSelectionMode ? this.props.onPress(file)
             : (file.selected = !file.selected);
     }
 
@@ -106,7 +107,7 @@ export default class FileInnerItem extends SafeComponent {
         return (
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
-                    onPress={this.onPress()}
+                    onPress={this.onPress}
                     {...testLabel(testID)}
                     style={{ backgroundColor: vars.filesBg }}>
                     <View style={[fileInfoContainerStyle, { opacity }]}>
