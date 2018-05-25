@@ -13,7 +13,7 @@ import FileSignatureError from './file-signature-error';
 import FileTypeIcon from './file-type-icon';
 import testLabel from '../helpers/test-label';
 import FileProgress from './file-progress';
-import { fileHelpers } from '../../lib/icebear';
+import { fileHelpers, contactStore, User } from '../../lib/icebear';
 // import FileActionSheet from './file-action-sheet';
 
 const { width } = Dimensions.get('window');
@@ -104,6 +104,8 @@ export default class FileInnerItem extends SafeComponent {
             </View>
         );
         const testID = `file${this.props.rowID}`;
+        const owner = file.fileOwner === User.current.username
+            ? `` : `${contactStore.getContact(file.fileOwner).fullName} `;
         return (
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
@@ -123,6 +125,7 @@ export default class FileInnerItem extends SafeComponent {
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
                                 <Text bold style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                 <Text style={infoStyle}>
+                                    <Text>{owner}</Text>
                                     {file.size && <Text>{file.sizeFormatted}</Text>}
                                     &nbsp;&nbsp;
                                     {moment(file.uploadedAt).format('DD/MM/YYYY')}

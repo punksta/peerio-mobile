@@ -10,6 +10,7 @@ import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 import fileState from './file-state';
+import { User, contactStore } from '../../lib/icebear';
 
 const height = vars.filesListItemHeight;
 const width = vars.listItemHeight;
@@ -100,13 +101,16 @@ export default class FolderInnerItem extends SafeComponent {
                 </Text>
             );
         }
+        const owner = folder.owner === User.current.username
+            ? `` : `${contactStore.getContact(folder.owner).fullName} `;
         return (
             <Text style={folderInfoStyle}>
+                <Text>{owner}</Text>
                 {folder.size ?
                     <Text>{folder.sizeFormatted}</Text> :
                     <Text>{tx('title_empty')}</Text>}
                 &nbsp;&nbsp;
-                {folder.createdAt && moment(folder.createdAt).format('DD/MM/YYYY')}
+                {folder.createdAt ? moment(folder.createdAt).format('DD/MM/YYYY') : null}
             </Text>);
     }
 

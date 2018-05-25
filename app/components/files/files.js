@@ -278,7 +278,7 @@ export default class Files extends SafeComponent {
                     {!this.isZeroState && this.searchTextbox()}
                     {upgradeForFiles()}
                     {this.noFilesInFolder}
-                    {this.sharedFolderRemovalNotifs()}
+                    {/* this.sharedFolderRemovalNotifs() */}
                     {this.body()}
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
