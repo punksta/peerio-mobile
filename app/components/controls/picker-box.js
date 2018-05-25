@@ -13,13 +13,4 @@ export default class PickerBox extends SafeComponent {
     }
 }
 
-PickerBox.propTypes = {
-    value: PropTypes.any.isRequired,
-    name: PropTypes.string.isRequired,
-    picker: PropTypes.any.isRequired,
-    data: PropTypes.any.isRequired,
-    style: PropTypes.any.isRequired,
-    hint: PropTypes.any.isRequired,
-    errorMessage: PropTypes.any.isRequired
-};
 

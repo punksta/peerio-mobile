@@ -30,7 +30,7 @@ export default class PickerBoxIos extends SafeComponent {
 
 
     get errorSpacer() {
-        return (<View style={this.props.style.errorStyle} />);
+        return (<View style={{ height: vars.spacing.medium.mini2x }} />);
     }
 
     get errorMessage() {
