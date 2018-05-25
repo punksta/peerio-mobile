@@ -96,6 +96,7 @@ const usernameTextStyle = {
 };
 
 const dateTextStyle = {
+    fontSize: vars.font.size.smaller,
     color: vars.txtDate,
     marginLeft: vars.spacing.small.midi2x
 };

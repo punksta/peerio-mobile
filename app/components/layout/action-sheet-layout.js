@@ -1,13 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 /* eslint-disable */
-import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Dimensions, LayoutAnimation, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, TouchableWithoutFeedback, Dimensions, LayoutAnimation, Platform, Animated } from 'react-native';
 /* eslint-enable */
 import { action, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
-import { uiState } from '../states';
 
 const { width, height } = Dimensions.get('window');
 const borderRadius = 16;
@@ -63,9 +62,10 @@ const lineStyle = {
 
 const state = observable({
     visible: false,
-    animating: false,
     config: null
 });
+
+const animatedActionsheetHeight = new Animated.Value(0);
 
 @observer
 export default class ActionSheetLayout extends SafeComponent {
@@ -99,7 +99,10 @@ export default class ActionSheetLayout extends SafeComponent {
                 <View key={button.title}>
                     {this.borderTop(i)}
                     <View style={container}>
-                        <TouchableOpacity style={container} onPress={() => this.executeAction(button)} >
+                        <TouchableOpacity
+                            pressRetentionOffset={vars.pressRetentionOffset}
+                            style={container}
+                            onPress={() => this.executeAction(button)}>
                             {/* Style order is important for color override priority */}
                             <Text style={[buttonTextStyle, destructiveTextstyle, disabledTextStyle]}>
                                 {tx(button.title)}
@@ -110,56 +113,35 @@ export default class ActionSheetLayout extends SafeComponent {
         }));
     }
 
-    @action static async show(config) {
-        // Temporary hack for android animation bug
-        // fade in of background
-        LayoutAnimation.easeInEaseOut();
-        if (Platform.OS === 'ios') {
-            state.animating = true;
-            await new Promise(resolve => setTimeout(() => {
-                // slide-in of menu
-                LayoutAnimation.easeInEaseOut();
-                state.animating = false;
-                resolve();
-            }, 10));
-        }
+    @action static show(config) {
+        animatedActionsheetHeight.setValue(-height);
         state.config = config;
         state.visible = true;
-        uiState.actionSheetShown = true;
+        Animated.timing(animatedActionsheetHeight, {
+            toValue: 0,
+            duration: 300
+        }).start();
     }
 
     @action static async hide() {
         if (!state.visible) return;
-        // slide-out of menu
-        LayoutAnimation.easeInEaseOut();
-        if (Platform.OS === 'ios') {
-            state.animating = true;
-            await new Promise(resolve => setTimeout(() => {
-                // fade in of background
-                LayoutAnimation.easeInEaseOut();
+        await new Promise(resolve =>
+            Animated.timing(animatedActionsheetHeight, {
+                toValue: -height,
+                duration: 300
+            }).start(() => { // callback when animation is done
                 state.visible = false;
                 state.config = null;
                 resolve();
-            }, 10));
-        } else {
-            state.visible = false;
-            state.config = null;
-        }
-        uiState.actionSheetShown = false;
+            })
+        );
     }
 
-    @action.bound handleCancel() {
-        // slide-out of menu
-        LayoutAnimation.easeInEaseOut();
-        state.animating = true;
-        setTimeout(() => {
-            // fade in of background
-            LayoutAnimation.easeInEaseOut();
-            state.visible = false;
-            state.config = null;
-        }, 10);
-        uiState.actionSheetShown = false;
+    static get visible() {
+        return state.visible;
     }
+
+    @action.bound handleCancel() { ActionSheetLayout.hide(); }
 
     cancelOption() {
         return (
@@ -192,16 +174,16 @@ export default class ActionSheetLayout extends SafeComponent {
         const container = {
             paddingBottom: vars.spacing.small.midi2x,
             position: 'absolute',
-            bottom: state.animating && Platform.OS !== 'android' ? -height : 0
+            bottom: animatedActionsheetHeight
         };
         return (
             <TouchableWithoutFeedback onPress={this.handleCancel}>
                 <View style={wrapper}>
-                    <View style={container}>
+                    <Animated.View style={container}>
                         {header}
                         {actionButtons && this.actionButtons()}
                         {hasCancelButton && this.cancelOption()}
-                    </View>
+                    </Animated.View>
                 </View>
             </TouchableWithoutFeedback>
         );

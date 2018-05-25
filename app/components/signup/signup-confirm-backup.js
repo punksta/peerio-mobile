@@ -56,6 +56,12 @@ export default class SignupConfirmBackup extends LoginWizardPage {
 
     componentDidMount() {
         when(() => this.isOk, () => { signupState.keyBackedUp = true; });
+        // QUICK SIGNUP DEV FLAG
+        if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
+            this.isOk = true;
+            signupState.keyBackedUp = true;
+            signupState.next();
+        }
     }
 
     get checkIcon() { return icons.colored('check', null, vars.peerioTeal); }

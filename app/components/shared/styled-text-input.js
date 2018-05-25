@@ -123,6 +123,8 @@ export default class StyledTextInput extends SafeComponent {
     }
 
     @action.bound async onChangeText(text) {
+        // even if not focused, move the hint to the top
+        if (text) this.setHintToTop();
         this.props.state.value = text;
         this.validate();
     }
@@ -149,27 +151,37 @@ export default class StyledTextInput extends SafeComponent {
         this.focused = true;
         if (this.props.onFocus) this.props.onFocus();
         this.textInput.focus();
-        this.focusAnimation();
+        this.setHintToTop();
     }
 
-    focusAnimation() {
+    /**
+     * Move the hint to the top
+     */
+    setHintToTop = () => {
         Animated.timing(
             this.focusedAnim,
             {
                 toValue: 1,
                 duration: 300
             }).start();
-    }
+    };
+
+    /**
+     * Move the hint to the bottom
+     */
+    setHintToBottom = () => {
+        Animated.timing(
+            this.focusedAnim,
+            {
+                toValue: 0,
+                duration: 300
+            }).start();
+    };
 
     blurAnimation() {
         const { state } = this.props;
         if (!(state.value && state.value.length)) {
-            Animated.timing(
-                this.focusedAnim,
-                {
-                    toValue: 0,
-                    duration: 300
-                }).start();
+            this.setHintToBottom();
         }
     }
 

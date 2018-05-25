@@ -26,9 +26,6 @@ const viewabilityConfig = {
     viewAreaCoveragePercentThreshold: 100
 };
 
-// action sheet is outside of component scope for a reason.
-let actionSheet = null;
-
 @observer
 export default class ChatList extends SafeComponent {
     @observable reverseRoomSorting = false;
@@ -36,10 +33,11 @@ export default class ChatList extends SafeComponent {
     @observable minItemIndex = null;
     @observable maxSectionIndex = null;
     @observable maxItemIndex = null;
+    @observable enableIndicators = false;
 
     get rightIcon() {
         return (<PlusBorderIcon
-            action={() => actionSheet.show()}
+            action={CreateActionSheet.show}
             testID="buttonCreateNewChat" />);
     }
 
@@ -131,15 +129,14 @@ export default class ChatList extends SafeComponent {
         uiState.currentScrollView = sv;
         if (sv) {
             // this is needed to reset viewable items indicator at initial render
-            sv.scrollToLocation({
-                itemIndex: 0,
+            setTimeout(() => sv.scrollToLocation({
+                itemIndex: -1,
                 sectionIndex: 0,
                 viewPosition: 0
-            });
+            }), 500);
+            setTimeout(() => { this.enableIndicators = true; }, 1000);
         }
     }
-
-    actionSheetRef = (ref) => { actionSheet = ref; };
 
     @computed get firstUnreadItemPosition() {
         for (const { data, index } of this.dataSource) {
@@ -160,6 +157,7 @@ export default class ChatList extends SafeComponent {
     }
 
     @computed get topIndicatorVisible() {
+        if (!this.enableIndicators) return false;
         // if view hasn't been updated with viewable range
         if (this.minSectionIndex === null) return false;
         const pos = this.firstUnreadItemPosition;
@@ -170,6 +168,7 @@ export default class ChatList extends SafeComponent {
     }
 
     @computed get bottomIndicatorVisible() {
+        if (!this.enableIndicators) return false;
         // if view hasn't been updated with viewable range
         if (this.maxSectionIndex === null) return false;
         const pos = this.lastUnreadItemPosition;
@@ -276,7 +275,6 @@ export default class ChatList extends SafeComponent {
                 </View>
                 {this.topIndicatorVisible && <UnreadMessageIndicator isAlignedTop action={this.scrollUpToUnread} />}
                 {this.bottomIndicatorVisible && <UnreadMessageIndicator action={this.scrollDownToUnread} />}
-                <CreateActionSheet ref={this.actionSheetRef} />
                 <ProgressOverlay enabled={chatState.store.loading} />
             </View>
         );

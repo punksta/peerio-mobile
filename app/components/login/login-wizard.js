@@ -35,16 +35,6 @@ export default class LoginWizard extends Wizard {
     ];
 
     componentDidMount() {
-        // const load = __DEV__ && process.env.PEERIO_SKIPLOGINLOAD ? Promise.resolve(true) : loginState.load();
-        // load.then(() => {
-        if (__DEV__) {
-            when(() => loginState.isConnected, () => {
-                loginState.username = process.env.PEERIO_USERNAME || loginState.username;
-                loginState.passphrase = process.env.PEERIO_PASSPHRASE || loginState.passphrase;
-                process.env.PEERIO_AUTOLOGIN && loginState.login();
-            });
-        }
-        // });
         when(() => socket.connected, () => { this.switchServerValue = config.socketServerUrl; });
     }
 

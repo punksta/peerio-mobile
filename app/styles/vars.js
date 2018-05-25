@@ -186,7 +186,7 @@ const vars = {
     destructiveButtonFontColor: '#D0021B',
     actionSheetButtonColor: '#f6f6f8',
     actionSheetButtonBorderColor: '#dbdbe2',
-    pinnedChatIconSize: 18,
+    pinnedChatIconSize: 16,
     pinnedChatPaddingHorizontal: 2,
     fileInnerItemPaddingRight: 8,
     loadingScreenMarginBottom: scaleDim(170),

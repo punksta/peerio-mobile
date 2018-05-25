@@ -109,6 +109,7 @@ export default class ContactAdd extends SafeComponent {
         this.query = this.query.toLocaleLowerCase().trim();
         if (!this.query) return;
         if (this.waiting) return;
+        uiState.hideKeyboard();
         this.waiting = true;
         this.toInvite = null;
         this.notFound = false;
@@ -197,6 +198,9 @@ export default class ContactAdd extends SafeComponent {
                     <Text>{email}</Text>
                     {buttons.blueTextButton(tx('button_invite'), () => {
                         mockContact.invited = true;
+                        LayoutAnimation.easeInEaseOut();
+                        this.query = '';
+                        uiState.hideKeyboard();
                         contactStore.invite(email);
                     }, invited)}
                 </View>
