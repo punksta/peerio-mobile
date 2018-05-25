@@ -104,7 +104,7 @@ export default class FileInnerItem extends SafeComponent {
             </View>
         );
         const testID = `file${this.props.rowID}`;
-        const owner = file.fileOwner === User.current.username
+        const owner = !file.fileOwner || file.fileOwner === User.current.username
             ? `` : `${contactStore.getContact(file.fileOwner).fullName} `;
         return (
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>

@@ -101,7 +101,7 @@ export default class FolderInnerItem extends SafeComponent {
                 </Text>
             );
         }
-        const owner = folder.owner === User.current.username
+        const owner = !folder.owner || folder.owner === User.current.username
             ? `` : `${contactStore.getContact(folder.owner).fullName} `;
         return (
             <Text style={folderInfoStyle}>
