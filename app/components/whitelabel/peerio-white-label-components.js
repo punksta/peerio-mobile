@@ -1,7 +1,9 @@
 import {
-    PAGES
+    PAGE_NAMES,
+    PAGE_COMPONENTS
 } from '../signup/signup-screens/peerio';
 
 export default {
-    PAGES
+    PAGE_NAMES,
+    PAGE_COMPONENTS
 };

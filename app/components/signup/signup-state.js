@@ -24,8 +24,8 @@ class SignupState extends RoutedState {
     @observable role = '';
     @observable medicalId = '';
 
-    SAVE_PIN_SCREEN_NUMBER = WhiteLabel.PAGES.indexOf('signupAccountKey');
-    KEY_BACKED_SCREEN_NUMBER = WhiteLabel.PAGES.indexOf('signupConfirmBackup');
+    SAVE_PIN_SCREEN_NUMBER = WhiteLabel.PAGE_NAMES.indexOf('signupAccountKey');
+    KEY_BACKED_SCREEN_NUMBER = WhiteLabel.PAGE_NAMES.indexOf('signupConfirmBackup');
 
     get nextAvailable() {
         switch (this.current) {

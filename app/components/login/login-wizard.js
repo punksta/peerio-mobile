@@ -29,6 +29,11 @@ export default class LoginWizard extends Wizard {
 
     loginClean() { return <LoginClean />; }
 
+    pageComponents = [
+        this.loginStart,
+        this.loginClean
+    ];
+
     componentDidMount() {
         // const load = __DEV__ && process.env.PEERIO_SKIPLOGINLOAD ? Promise.resolve(true) : loginState.load();
         // load.then(() => {
