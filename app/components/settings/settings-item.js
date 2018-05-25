@@ -41,7 +41,7 @@ export default class SettingsItem extends SafeComponent {
     renderThrow() {
         const titleStyle = {
             color: this.props.disabled ? vars.txtLightGrey : vars.txtDark,
-            fontSize: vars.font.size.bigger
+            fontSize: vars.font.size.normal
         };
         const offset = vars.retentionOffset;
         return (

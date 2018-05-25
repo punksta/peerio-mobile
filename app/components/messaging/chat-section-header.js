@@ -23,7 +23,7 @@ export default class ChatSectionHeader extends SafeComponent {
         };
 
         const textStyle = {
-            fontSize: 16,
+            fontSize: vars.font.size.big,
             color: vars.txtMedium
         };
 
