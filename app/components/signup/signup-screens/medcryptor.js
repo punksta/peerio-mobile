@@ -15,7 +15,7 @@ const signupContactSyncStart = () => <SignupContactSyncStart />;
 const signupContactAdd = () => <SignupContactAdd />;
 const signupContactInvite = () => <SignupContactInvite />;
 
-const PAGE_COMPONENTS = [
+const PAGES = {
     signupStep1,
     signupStepMedcryptor,
     signupAccountKey,
@@ -23,8 +23,9 @@ const PAGE_COMPONENTS = [
     signupContactSyncStart,
     signupContactAdd,
     signupContactInvite
-];
+};
 
-const PAGE_NAMES = Object.keys(PAGE_COMPONENTS);
+const PAGE_NAMES = Object.keys(PAGES);
+const PAGE_COMPONENTS = Object.values(PAGES);
 
 module.exports = { PAGE_NAMES, PAGE_COMPONENTS };

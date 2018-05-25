@@ -9,12 +9,12 @@ import uiState from '../layout/ui-state';
 export default class Wizard extends SafeComponent {
     @observable _index = 0;
     @observable pages = [];
-    pageComponents = [];
+    @observable pageComponents = [];
     direction = 1;
 
     @computed get currentPage() {
         const { index, pages } = this;
-        return index < pages.length ? this.pageComponents[pages[index]]() : null;
+        return index < pages.length ? this.pageComponents[index]() : null;
     }
 
     get index() { return this._index; }

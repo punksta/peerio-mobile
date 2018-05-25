@@ -23,11 +23,11 @@ export default class LoginWizard extends Wizard {
     get index() { return loginState.current; }
     set index(i) { loginState.current = i; }
 
-    loginStart() {
+    loginStart = () => {
         return <LoginStart login={() => this.changeIndex(1)} />;
     }
 
-    loginClean() { return <LoginClean />; }
+    loginClean = () => { return <LoginClean />; }
 
     pageComponents = [
         this.loginStart,
