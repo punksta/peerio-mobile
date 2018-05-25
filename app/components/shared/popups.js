@@ -460,7 +460,7 @@ function popupUpgradeNotification() {
                 <View>
                     {textControl(tx('title_upgradeFileSystemDescription1'), textStyle)}
                     {textControl(tx('title_upgradeFileSystemDescription2'), textStyle)}
-                    {fileStore.hasLegacySharedFiles ?
+                    {fileStore.migration.hasLegacySharedFiles ?
                         <Text>
                             {textControl(tx('title_upgradeFileSystemDescription3a'), textStyle)}
                             <Text style={textDownloadStyle} onPress={viewFileMigrationList} pressRetentionOffset={vars.pressRetentionOffset}>
