@@ -44,7 +44,9 @@ export default class Chat extends SafeComponent {
 
     componentDidMount() {
         this.selfMessageReaction = reaction(() => chatState.selfNewMessageCounter,
-            () => this.scrollToBottom()
+            () => {
+                this.isAtBottom = true;
+            }
         );
         this.chatReaction = reaction(() => chatState.store.activeChat, this.resetScrolling);
     }
@@ -111,6 +113,8 @@ export default class Chat extends SafeComponent {
         // console.log(`chat.js: content size changed ${contentWidth}, ${contentHeight}`);
         if (!this.scrollView || !this.chat) return;
 
+        const wasAtBottom = this.isAtBottom;
+
         // set current content heigth
         if (contentHeight) this.contentHeight = contentHeight;
 
@@ -130,10 +134,11 @@ export default class Chat extends SafeComponent {
                 const y = this.contentHeight - this.scrollViewHeight;
                 this.scrollEnabled = y - indicatorSpacing > 0;
                 console.debug(`in timeout refreshing: ${this.refreshing}, disableNextScroll: ${this.disableNextScroll}`);
-                if (!this.refreshing && !this.disableNextScroll) {
+                if (!this.refreshing) {
                     if (!this.initialScrollDone ||
-                        this.isAtBottom) {
+                        wasAtBottom) {
                         console.log('chat.js: auto scrolling');
+                        this.isAtBottom = wasAtBottom;
                         this.scrollView.scrollTo({ y, animated: !this.waitForScrollToEnd });
                         requestAnimationFrame(() => { this.initialScrollDone = true; });
                     }
@@ -142,7 +147,6 @@ export default class Chat extends SafeComponent {
                 if (this.waitForScrollToEnd) {
                     this.waitForScrollToEnd = false;
                 }
-                this.disableNextScroll = false;
             } else {
                 setTimeout(() => this.contentSizeChanged(), 1000);
             }
@@ -217,17 +221,28 @@ export default class Chat extends SafeComponent {
         }), 100);
     }
 
-    isAtBottom = false;
+    isAtBottom = true;
+
+    unreadMessageIndicatorTimeout = null;
 
     onScroll = (event) => {
         const { nativeEvent } = event;
         const { y } = nativeEvent.contentOffset;
         const maxY = this.contentHeight - this.scrollViewHeight;
-        this.isAtBottom = Math.abs(y - maxY) < 4;
+        this.isAtBottom = Math.abs(y - maxY) < 2;
+        console.log(`onscroll: ${y} - ${this.contentHeight} - ${this.scrollViewHeight}, ${y - maxY}`);
         clientApp.isReadingNewestMessages = this.isAtBottom;
+
+        if (this.unreadMessageIndicatorTimeout) {
+            clearTimeout(this.unreadMessageIndicatorTimeout);
+            this.unreadMessageIndicatorTimeout = null;
+        }
+
         if (!this.isAtBottom && !chatState.loading) {
-            uiState.customOverlayComponent =
-                <ChatUnreadMessageIndicator onPress={this.scrollToBottom} />;
+            this.unreadMessageIndicatorTimeout = setTimeout(() => {
+                uiState.customOverlayComponent =
+                    <ChatUnreadMessageIndicator onPress={this.scrollToBottom} />;
+            }, 1000);
         } else {
             uiState.customOverlayComponent = null;
         }
