@@ -17,14 +17,6 @@ export default class SignupWizard extends Wizard {
     get index() { return signupState.current; }
     set index(i) { signupState.current = i; }
 
-    // signupStep1 = () => <SignupStep1 />;
-    // SignupStepMedcryptor = () => <SignupStepMedcryptor />;
-    // signupAccountKey = () => <SignupAccountKey />;
-    // signupConfirmBackup = () => <SignupConfirmBackup />;
-    // signupContactSyncStart = () => <SignupContactSyncStart />;
-    // signupContactAdd = () => <SignupContactAdd />;
-    // signupContactInvite = () => <SignupContactInvite />;
-
     renderThrow() {
         const style = wizard;
         const component = this.currentPage.type.prototype;
