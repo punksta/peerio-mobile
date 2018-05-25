@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.287.0"></a>
+# [3.287.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.286.0...v3.287.0) (2018-05-25)
+
+
+### Bug Fixes
+
+* add owner display to folders and files [ch123] ([1e14ddc](https://github.com/PeerioTechnologies/peerio-mobile/commit/1e14ddc))
+* chat unread indicator and auto scroll margins [ch7369] ([3c10ab1](https://github.com/PeerioTechnologies/peerio-mobile/commit/3c10ab1))
+* error inline icon in chat ([e1669ba](https://github.com/PeerioTechnologies/peerio-mobile/commit/e1669ba))
+* file details view bug ([c6fb8e1](https://github.com/PeerioTechnologies/peerio-mobile/commit/c6fb8e1))
+* hide 0% progress from migration ([fc4b0ed](https://github.com/PeerioTechnologies/peerio-mobile/commit/fc4b0ed))
+* hide keyboard when pressing add. clear search form when pressing invite [ch6152, ch6151] ([ea74c46](https://github.com/PeerioTechnologies/peerio-mobile/commit/ea74c46))
+* if owner is null, relax ([6521f6c](https://github.com/PeerioTechnologies/peerio-mobile/commit/6521f6c))
+* inline action sheets [ch7526] ([13dbcd2](https://github.com/PeerioTechnologies/peerio-mobile/commit/13dbcd2))
+* popup when moving file to shared folder ([33446db](https://github.com/PeerioTechnologies/peerio-mobile/commit/33446db))
+* rename migration files [ch4737] ([feeb467](https://github.com/PeerioTechnologies/peerio-mobile/commit/feeb467))
+* shared folder removal UI ([45b6e5f](https://github.com/PeerioTechnologies/peerio-mobile/commit/45b6e5f))
+* unread message indicator in chat list [ch7340] ([ef777ee](https://github.com/PeerioTechnologies/peerio-mobile/commit/ef777ee))
+* unread message indicator in chat list [ch7340] ([9856d61](https://github.com/PeerioTechnologies/peerio-mobile/commit/9856d61))
+
+
+### Features
+
+* refactor AvatarActionSheet ([4c9ee2f](https://github.com/PeerioTechnologies/peerio-mobile/commit/4c9ee2f))
+* refactor chat-action-sheet ([910c5f5](https://github.com/PeerioTechnologies/peerio-mobile/commit/910c5f5))
+* refactor createactionsheet ([31cf010](https://github.com/PeerioTechnologies/peerio-mobile/commit/31cf010))
+
+
+
 <a name="3.286.0"></a>
 # [3.286.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.285.0...v3.286.0) (2018-05-21)
 
