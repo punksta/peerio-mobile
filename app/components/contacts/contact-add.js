@@ -14,6 +14,8 @@ import snackbarState from '../snackbars/snackbar-state';
 import buttons from '../helpers/buttons';
 import testLabel from '../helpers/test-label';
 import Text from '../controls/custom-text';
+import routerMain from '../routes/router-main';
+import BackIcon from '../layout/back-icon';
 
 const textinputContainer = {
     backgroundColor: vars.white,
@@ -95,6 +97,11 @@ export default class ContactAdd extends SafeComponent {
     onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
         uiState.currentScrollViewPosition = y;
     };
+
+    get leftIcon() {
+        if (contactState.empty) return null;
+        return <BackIcon action={routerMain.contacts} />;
+    }
 
     inviteContactDuck(toInvite) {
         if (!toInvite) return null;
