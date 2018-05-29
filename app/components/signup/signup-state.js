@@ -25,7 +25,7 @@ class SignupState extends RoutedState {
 
     transition = () => this.routes.app.signupStep1();
 
-    exit = () => {
+    @action.bound exit() {
         this.username = '';
         this.email = '';
         this.firstName = '';
@@ -40,7 +40,7 @@ class SignupState extends RoutedState {
 
         // hook for whitelabel signup state to reset itself
         if (this.onExitHandler) this.onExitHandler();
-    };
+    }
 
     @action reset() { this.current = 0; }
 

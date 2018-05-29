@@ -1,6 +1,6 @@
 import { observable } from 'mobx';
 import RoutedState from '../../routes/routed-state';
-// import signupState from '../../signup/signup-state';
+import signupState from '../../signup/signup-state';
 
 class MedCryptorUIState extends RoutedState {
     defaultCountrySelected = 'AU';
@@ -326,6 +326,6 @@ class MedCryptorUIState extends RoutedState {
 
 const medcryptorUiState = new MedCryptorUIState();
 
-// signupState.onExitHandler = medcryptorUiState.onExitHandler;
+signupState.onExitHandler = medcryptorUiState.onExitHandler;
 
 export default medcryptorUiState;
