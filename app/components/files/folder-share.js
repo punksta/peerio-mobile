@@ -6,6 +6,7 @@ import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import ContactEditPermission from '../contacts/contact-edit-permission';
 import SharedFolderFooter from './shared-folder-footer';
 import { vars } from '../../styles/styles';
+import { fileState } from '../states';
 import routes from '../routes/routes';
 
 @observer
@@ -36,6 +37,13 @@ export default class FolderShare extends Component {
     }
 
     get renderContactSelector() {
+        const footer = fileState.currentFile && fileState.currentFile.isShared ? (
+            <SharedFolderFooter
+                title="title_viewSharedWith"
+                action={this.togglePage}
+                showAvatars
+            />
+        ) : null;
         return (
             <ContactSelectorUniversal
                 onExit={this.exit}
@@ -43,11 +51,7 @@ export default class FolderShare extends Component {
                 title="title_shareWith"
                 inputPlaceholder="title_searchByUsernameOrEmail"
                 multiselect
-                footer={<SharedFolderFooter
-                    title="title_viewSharedWith"
-                    action={this.togglePage}
-                    showAvatars
-                />}
+                footer={footer}
             />);
     }
 

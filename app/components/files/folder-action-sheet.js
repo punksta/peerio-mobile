@@ -51,6 +51,9 @@ export default class FoldersActionSheet {
                     if (newFolderName) { await folder.rename(`${newFolderName}`); }
                 }
             },
+            /* unshare is hidden right now */
+            /* TODO: add unshare folder */
+            /*
             {
                 title: tx('button_unshare'),
                 disabled: !folder.isShared,
@@ -58,7 +61,7 @@ export default class FoldersActionSheet {
                     folder.isShared = false;
                     folder.isJustUnshared = true;
                 }
-            },
+            }, */
             {
                 title: 'button_delete',
                 disabled: convertingToVolume,
