@@ -1,25 +1,30 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity, SectionList } from 'react-native';
-import { reaction } from 'mobx';
-import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
+import { SectionList } from 'react-native';
+import { computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import chatState from '../messaging/chat-state';
 import ChatInfoSectionHeader from '../messaging/chat-info-section-header';
-import Avatar from '../shared/avatar';
-import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
-import { vars } from '../../styles/styles';
-import { User } from '../../lib/icebear';
-import testLabel from '../helpers/test-label';
-import Text from '../controls/custom-text';
+import MemberListItem from './member-list-item';
 
 @observer
 export default class MemberList extends SafeComponent {
-    dataSource = [];
-    channelMembers = [];
-    channelInvites = [];
+    get dataSource() {
+        return [
+            { data: this.channelMembers, key: tx('title_Members') },
+            { data: this.channelInvites, key: tx('title_invited') }
+        ];
+    }
+
+    @computed get channelMembers() {
+        return this.data.allJoinedParticipants || [];
+    }
+
+    @computed get channelInvites() {
+        return chatState.chatInviteStore.sent.get(this.data.id) || [];
+    }
 
     get data() { return chatState.currentChat; }
 
@@ -32,22 +37,6 @@ export default class MemberList extends SafeComponent {
     componentWillUnmount() {
         this.reaction && this.reaction();
         this.reaction = null;
-    }
-
-    componentDidMount() {
-        this.reaction = reaction(() => [
-            this.data,
-            this.data.length
-        ], () => {
-            const channel = this.data;
-            this.channelMembers = channel.allJoinedParticipants || [];
-            this.channelInvites = chatState.chatInviteStore.sent.get(channel.id) || [];
-            this.dataSource = [
-                { data: this.channelMembers, key: tx('title_Members') },
-                { data: this.channelInvites, key: tx('title_invited') }
-            ];
-            this.forceUpdate();
-        }, true);
     }
 
     headers = ({ section: { key } }) => {
@@ -69,78 +58,24 @@ export default class MemberList extends SafeComponent {
         />);
     };
 
-    participant = ({ item }) => {
-        if (chatState.collapseFirstChannelInfoList) return null;
-        const contact = item; // readability
-        const channel = this.data;
-        const { username } = contact;
-        const row = {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexGrow: 1
-        };
-        const adminTextStyle = {
-            color: vars.subtleText,
-            fontSize: vars.font.size.smallerx
-        };
-        const isAdmin = channel.isAdmin(contact);
-        const isCurrentUser = contact.username === User.current.username;
-        return (
-            <View
-                key={contact.username}
-                style={row}
-                {...testLabel(`${contact.username}-memberList`)}>
-                <View style={{ flex: 1, flexGrow: 1 }}>
-                    <Avatar
-                        noBorderBottom
-                        contact={contact}
-                        key={username}
-                        message=""
-                        hideOnline
-                        backgroundColor={vars.channelInfoBg} />
-                </View>
-                <View
-                    {...testLabel('moreButton')}
-                    style={{ flex: 0, flexDirection: 'row', alignItems: 'center' }}>
-                    {isAdmin &&
-                        <View style={{
-                            backgroundColor: vars.adminBadgeColor,
-                            borderRadius: 4,
-                            padding: vars.spacing.small.mini2x,
-                            overflow: 'hidden',
-                            marginRight: isCurrentUser ? vars.spacing.huge.midi : vars.spacing.small.maxi2x
-                        }}>
-                            <Text semibold style={adminTextStyle}>
-                                {tx('title_admin')}
-                            </Text>
-                        </View>}
-                    {channel.canIAdmin && !isCurrentUser && <Menu>
-                        <MenuTrigger
-                            renderTouchable={() => <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} />}
-                            style={{ padding: vars.iconPadding }}>
-                            {icons.plaindark('more-vert')}
-                        </MenuTrigger>
-                        <MenuOptions>
-                            <MenuOption
-                                onSelect={() => (isAdmin ?
-                                    channel.demoteAdmin(contact) :
-                                    channel.promoteToAdmin(contact))}>
-                                <Text>{isAdmin ?
-                                    tx('button_demoteAdmin') : tx('button_makeAdmin')}
-                                </Text>
-                            </MenuOption>
-                            <MenuOption
-                                onSelect={() => channel.removeParticipant(contact)}>
-                                <Text {...testLabel('Remove')}>{tx('button_remove')}</Text>
-                            </MenuOption>
-                        </MenuOptions>
-                    </Menu>}
-                </View>
-            </View>
-        );
+    onRemove = async (contact) => {
+        if (contact.signingPublicKey) {
+            await this.data.removeParticipant(contact);
+        } else {
+            await chatState.chatInviteStore.revokeInvite(this.data.id, contact.username);
+        }
+        this.forceUpdate();
     };
 
+    participant = ({ item, section }) => {
+        return (
+            <MemberListItem
+                contact={item}
+                section={section}
+                channel={this.data}
+                onRemove={this.onRemove} />
+        );
+    };
 
     renderThrow() {
         if (!this.hasData) return null;
