@@ -3,7 +3,6 @@ import { tx } from '../utils/translator';
 import { fileState } from '../states';
 import { popupInput, popupFolderDelete } from '../shared/popups';
 import { fileHelpers, volumeStore } from '../../lib/icebear';
-import routes from '../routes/routes';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import ActionSheetLayout from '../layout/action-sheet-layout';
 
@@ -11,12 +10,7 @@ export default class FoldersActionSheet {
     static show(folder) {
         const { hasLegacyFiles, convertingToVolume, isShared, isOwner } = folder;
         const header = (
-            <FileActionSheetHeader
-                file={folder}
-                onPress={() => {
-                    routes.modal.discard();
-                    routes.main.files(folder);
-                }} />
+            <FileActionSheetHeader file={folder} />
         );
         const actionButtons = [
             {
