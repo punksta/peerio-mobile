@@ -2,21 +2,21 @@ import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
-import Text from '../controls/custom-text';
-import CountryPickerBox from '../controls/country-picker-box';
-import SpecialtyPickerBox from '../controls/specialty-picker-box';
-import RolePickerBox from '../controls/role-picker-box';
-import Bold from '../controls/bold';
-import { vars } from '../../styles/styles';
-import signupState from './signup-state';
-import { popupTOS } from '../shared/popups';
-import { tx, T } from '../utils/translator';
+import Text from '../../controls/custom-text';
+import MedcryptorCountryPickerBox from './medcryptor-country-picker-box';
+import MedcryptorSpecialtyPickerBox from './medcryptor-specialty-picker-box';
+import MedcryptorRolePickerBox from './medcryptor-role-picker-box';
+import Bold from '../../controls/bold';
+import { vars } from '../../../styles/styles';
+import signupState from '../../signup/signup-state';
+import { popupTOS } from '../../shared/popups';
+import { tx, T } from '../../utils/translator';
 import LoginWizardPage, {
     header2, innerSmall, headingStyle2, footerText1, footerText2, innerContainer, outerContainer, buttonRowStyle
-} from '../login/login-wizard-page';
-import StyledTextInput from '../shared/styled-text-input';
-import { socket } from '../../lib/icebear';
-import whiteLabelUiState from '../layout/medcryptor-ui-state';
+} from '../../login/login-wizard-page';
+import StyledTextInput from '../../shared/styled-text-input';
+import { socket } from '../../../lib/icebear';
+import medcryptorUiState from './medcryptor-ui-state';
 
 const formStyle = {
     paddingVertical: vars.spacing.small.midi2x,
@@ -54,28 +54,28 @@ export default class SignupStepMedcryptor extends LoginWizardPage {
     @action.bound medicalIdInputRef(ref) { this.medicalIdInput = ref; }
 
     @action.bound handleNextButton() {
-        signupState.country = whiteLabelUiState.countrySelected;
-        signupState.specialty = whiteLabelUiState.specialtySelected;
-        signupState.role = whiteLabelUiState.roleSelected;
+        signupState.country = medcryptorUiState.countrySelected;
+        signupState.specialty = medcryptorUiState.specialtySelected;
+        signupState.role = medcryptorUiState.roleSelected;
         signupState.medicalId = this.medicalIdState.value;
         signupState.next();
     }
 
     get selectedAU() {
-        return whiteLabelUiState.countrySelected === 'AU';
+        return medcryptorUiState.countrySelected === 'AU';
     }
 
     get isValidForAU() {
         // TODO add medicalId validation: this.medicalIdInput.isValid
-        return whiteLabelUiState.countrySelected &&
-            whiteLabelUiState.specialtySelected &&
-            whiteLabelUiState.roleSelected &&
+        return medcryptorUiState.countrySelected &&
+            medcryptorUiState.specialtySelected &&
+            medcryptorUiState.roleSelected &&
             this.medicalIdState.value;
     }
 
     get isValidForNonAU() {
-        return whiteLabelUiState.countrySelected &&
-            whiteLabelUiState.roleSelected;
+        return medcryptorUiState.countrySelected &&
+            medcryptorUiState.roleSelected;
     }
 
     get isNextDisabled() {
@@ -88,9 +88,9 @@ export default class SignupStepMedcryptor extends LoginWizardPage {
     get body() {
         return (
             <View>
-                <CountryPickerBox />
-                {this.selectedAU && <SpecialtyPickerBox />}
-                <RolePickerBox />
+                <MedcryptorCountryPickerBox />
+                {this.selectedAU && <MedcryptorSpecialtyPickerBox />}
+                <MedcryptorRolePickerBox />
                 {this.selectedAU && <View>
                     <StyledTextInput
                         state={this.medicalIdState}

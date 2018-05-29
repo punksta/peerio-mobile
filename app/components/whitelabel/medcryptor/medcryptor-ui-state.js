@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
-import RoutedState from '../routes/routed-state';
+import RoutedState from '../../routes/routed-state';
 
-class WhiteLabelUIState extends RoutedState {
+class MedCryptorUIState extends RoutedState {
     defaultCountrySelected = 'AU';
     @observable countrySelected = this.defaultCountrySelected;
     countries = {
@@ -317,5 +317,5 @@ class WhiteLabelUIState extends RoutedState {
     };
 }
 
-const whiteLabelUiState = new WhiteLabelUIState();
-export default whiteLabelUiState;
+const medcryptorUiState = new MedCryptorUIState();
+export default medcryptorUiState;

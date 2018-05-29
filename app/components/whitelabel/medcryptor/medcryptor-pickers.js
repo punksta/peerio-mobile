@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { LayoutAnimation } from 'react-native';
-import SafeComponent from '../shared/safe-component';
-import PickerPopup from './picker-popup';
-import whiteLabelUiState from '../layout/medcryptor-ui-state';
+import SafeComponent from '../../shared/safe-component';
+import PickerPopup from '../../controls/picker-popup';
+import medcryptorUiState from './medcryptor-ui-state';
 
 @observer
 class GenericPicker extends SafeComponent {
@@ -22,7 +22,7 @@ class GenericPicker extends SafeComponent {
             <PickerPopup
                 name={this.name}
                 data={this.data}
-                state={whiteLabelUiState} />
+                state={medcryptorUiState} />
         );
     }
 }
@@ -30,21 +30,21 @@ class GenericPicker extends SafeComponent {
 @observer
 class RolePicker extends GenericPicker {
     constructor(props) {
-        super(props, whiteLabelUiState.roles, 'roleSelected');
+        super(props, medcryptorUiState.roles, 'roleSelected');
     }
 }
 
 @observer
 class CountryPicker extends GenericPicker {
     constructor(props) {
-        super(props, whiteLabelUiState.countries, 'countrySelected');
+        super(props, medcryptorUiState.countries, 'countrySelected');
     }
 }
 
 @observer
 class SpecialtyPicker extends GenericPicker {
     constructor(props) {
-        super(props, whiteLabelUiState.specialties, 'specialtySelected');
+        super(props, medcryptorUiState.specialties, 'specialtySelected');
     }
 }
 

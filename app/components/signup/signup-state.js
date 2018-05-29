@@ -1,5 +1,5 @@
 import { observable, action } from 'mobx';
-import { mainState, uiState, whiteLabelUiState, loginState } from '../states';
+import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
 import { User, socket, crypto } from '../../lib/icebear';
 import WhiteLabel from '../whitelabel/white-label-components';
@@ -47,9 +47,9 @@ class SignupState extends RoutedState {
         this.specialty = '';
         this.role = '';
         this.current = 0;
-        whiteLabelUiState.countrySelected = whiteLabelUiState.defaultCountrySelected;
+        /* whiteLabelUiState.countrySelected = whiteLabelUiState.defaultCountrySelected;
         whiteLabelUiState.specialtySelected = '';
-        whiteLabelUiState.roleSelected = '';
+        whiteLabelUiState.roleSelected = ''; */
         this.resetValidationState();
         this.routes.app.loginStart();
     };
