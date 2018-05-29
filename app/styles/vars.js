@@ -189,6 +189,7 @@ const vars = {
     menuWidthRatio: 0.8,
     animationDuration: 200,
     progressBarHeight: 4,
+    inlineFolderContainerHeight: 48,
     filesListItemHeight: 64,
     contactlistItemHeight: 56,
     listItemHeight: 56,

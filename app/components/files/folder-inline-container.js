@@ -21,14 +21,15 @@ const container = {
     flexGrow: 1,
     borderColor: vars.lightGrayBg,
     borderWidth,
-    borderRadius: 2
+    borderRadius: 2,
+    marginVertical: 4
 };
 
 const header = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 38
+    height: vars.inlineFolderContainerHeight
 };
 
 const infoStyle = {
@@ -73,23 +74,13 @@ export default class FolderInlineContainer extends SafeComponent {
     }
 
     get normalBody() {
-        const { folder } = this;
-        const { isBlocked } = folder;
-
         const optionsIcon = (
             <View style={{ flex: 0 }}>
-                {icons.dark(
-                    'more-vert',
-                    this.onAction,
-                    !isBlocked ? null : { opacity: 0.38 })}
+                {icons.dark('more-vert', this.onAction)}
             </View>);
         return (
             <View style={header}>
-                {icons.darkNoPadding(
-                    'folder-shared',
-                    null,
-                    !isBlocked ? null : { opacity: 0.38 },
-                    vars.iconSize)}
+                {icons.darkNoPadding('folder-shared')}
                 {this.fileDetails}
                 {optionsIcon}
             </View>
@@ -97,15 +88,9 @@ export default class FolderInlineContainer extends SafeComponent {
     }
 
     get reshareBody() {
-        const { folder } = this;
-        const { isBlocked } = folder;
         return (
             <View style={header}>
-                {icons.darkNoPadding(
-                    'folder',
-                    null,
-                    !isBlocked ? null : { opacity: 0.38 },
-                    vars.iconSize)}
+                {icons.darkNoPadding('folder')}
                 <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <View style={{ marginLeft: vars.spacing.small.midi2x }}>
                         <Text style={infoStyle}>
@@ -126,7 +111,7 @@ export default class FolderInlineContainer extends SafeComponent {
         const outer = {
             flex: 1,
             flexGrow: 1,
-            padding
+            paddingHorizontal: padding
         };
 
         return (
