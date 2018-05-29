@@ -6,7 +6,7 @@ import { observable } from 'mobx';
 import Text from '../controls/custom-text';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
-import { config, getFirstLetterUpperCase } from '../../lib/icebear';
+import { config, getFirstLetterUpperCase, socket } from '../../lib/icebear';
 import signupState from './signup-state';
 import { t, tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
@@ -151,7 +151,7 @@ export default class SignupStep1 extends LoginWizardPage {
                 </ViewShot>
                 <View style={buttonRowStyle}>
                     {this.button('button_back', () => signupState.prev())}
-                    {this.button('button_next', () => signupState.next(), false, !signupState.nextAvailable)}
+                    {this.button('button_next', () => signupState.next(), false, !socket.connected)}
                 </View>
                 <ActivityOverlay large visible={signupState.isInProgress} />
             </View>
