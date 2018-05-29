@@ -1,10 +1,9 @@
 import React from 'react';
 import { tx } from '../utils/translator';
 import { fileState } from '../states';
-import routerModal from '../routes/router-modal';
 import { popupInput, popupFolderDelete } from '../shared/popups';
 import { fileHelpers, volumeStore } from '../../lib/icebear';
-import routerMain from '../routes/router-main';
+import routes from '../routes/routes';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import ActionSheetLayout from '../layout/action-sheet-layout';
 
@@ -15,8 +14,8 @@ export default class FoldersActionSheet {
             <FileActionSheetHeader
                 file={folder}
                 onPress={() => {
-                    routerModal.discard();
-                    routerMain.files(folder);
+                    routes.modal.discard();
+                    routes.main.files(folder);
                 }} />
         );
         const actionButtons = [
@@ -27,7 +26,7 @@ export default class FoldersActionSheet {
                     // TODO add logic for folder.isOwner
                     // TODO: refactor this, this is confusing and bad
                     fileState.currentFile = folder;
-                    const contacts = await routerModal.shareFolderTo();
+                    const contacts = await routes.modal.shareFolderTo();
                     if (!contacts) return;
                     await volumeStore.shareFolder(folder, contacts);
                 }
@@ -37,7 +36,7 @@ export default class FoldersActionSheet {
                 disabled: isShared,
                 action: () => {
                     fileState.currentFile = folder;
-                    routerModal.moveFileTo();
+                    routes.modal.moveFileTo();
                 }
             },
             {

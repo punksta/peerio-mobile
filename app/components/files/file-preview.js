@@ -8,9 +8,8 @@ import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import FileTypeIcon from '../files/file-type-icon';
 import SafeComponent from '../shared/safe-component';
-import { fileHelpers, config } from '../../lib/icebear';
+import { fileHelpers, config, warnings } from '../../lib/icebear';
 import Thumbnail from '../shared/thumbnail';
-import snackbarState from '../snackbars/snackbar-state';
 
 const nameContainer = {
     backgroundColor: 'rgba(0, 0, 0, 0.05)',
@@ -75,7 +74,7 @@ export default class FilePreview extends SafeComponent {
     @action.bound launchPreviewViewer() {
         config.FileStream.launchViewer(this.props.state.path, this.props.state.fileName)
             .catch(() => {
-                snackbarState.pushTemporary(tx('snackbar_couldntOpenFile'));
+                warnings.add('snackbar_couldntOpenFile');
             });
     }
 

@@ -14,7 +14,7 @@ import snackbarState from '../snackbars/snackbar-state';
 import buttons from '../helpers/buttons';
 import testLabel from '../helpers/test-label';
 import Text from '../controls/custom-text';
-import routerMain from '../routes/router-main';
+import routes from '../routes/routes';
 import BackIcon from '../layout/back-icon';
 
 const textinputContainer = {
@@ -100,7 +100,7 @@ export default class ContactAdd extends SafeComponent {
 
     get leftIcon() {
         if (contactState.empty) return null;
-        return <BackIcon action={routerMain.contacts} />;
+        return <BackIcon action={routes.main.contacts} />;
     }
 
     inviteContactDuck(toInvite) {

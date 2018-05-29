@@ -1,5 +1,6 @@
 import { observable } from 'mobx';
 import RoutedState from '../../routes/routed-state';
+// import signupState from '../../signup/signup-state';
 
 class MedCryptorUIState extends RoutedState {
     defaultCountrySelected = 'AU';
@@ -315,7 +316,16 @@ class MedCryptorUIState extends RoutedState {
         doctor: 'Doctor',
         admin: 'Admin'
     };
+
+    onExitHandler = () => {
+        this.countrySelected = this.defaultCountrySelected;
+        this.specialtySelected = '';
+        this.roleSelected = '';
+    };
 }
 
 const medcryptorUiState = new MedCryptorUIState();
+
+// signupState.onExitHandler = medcryptorUiState.onExitHandler;
+
 export default medcryptorUiState;

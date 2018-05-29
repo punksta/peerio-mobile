@@ -47,11 +47,11 @@ class SignupState extends RoutedState {
         this.specialty = '';
         this.role = '';
         this.current = 0;
-        /* whiteLabelUiState.countrySelected = whiteLabelUiState.defaultCountrySelected;
-        whiteLabelUiState.specialtySelected = '';
-        whiteLabelUiState.roleSelected = ''; */
         this.resetValidationState();
         this.routes.app.loginStart();
+
+        // hook for whitelabel signup state to reset itself
+        if (this.onExitHandler) this.onExitHandler();
     };
 
     @action reset() { this.current = 0; }
