@@ -25,9 +25,9 @@ export default class LoginWizard extends Wizard {
 
     loginStart = () => {
         return <LoginStart login={() => this.changeIndex(1)} />;
-    }
+    };
 
-    loginClean = () => { return <LoginClean />; }
+    loginClean = () => { return <LoginClean />; };
 
     pageComponents = [
         this.loginStart,
