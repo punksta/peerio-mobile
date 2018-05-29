@@ -1,22 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, Image } from 'react-native';
+import { View, Image } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { contactStore } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
-
-const circleDiameter = 18;
-
-const circleStyle = {
-    width: circleDiameter,
-    height: circleDiameter,
-    borderRadius: circleDiameter / 2,
-    margin: circleDiameter / 16,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center'
-};
 
 @observer
 export default class ReadReceipt extends SafeComponent {
@@ -26,7 +15,18 @@ export default class ReadReceipt extends SafeComponent {
     }
 
     renderThrow() {
+        const { avatarSize } = this.props;
         const { color, letter, mediumAvatarUrl } = this.contact;
+        const circleDiameter = avatarSize || 18;
+        const circleStyle = {
+            width: circleDiameter,
+            height: circleDiameter,
+            borderRadius: circleDiameter / 2,
+            margin: circleDiameter / 16,
+            overflow: 'hidden',
+            justifyContent: 'center',
+            alignItems: 'center'
+        };
         const circleOnline = {
             backgroundColor: color || '#ccc'
         };
@@ -42,5 +42,6 @@ export default class ReadReceipt extends SafeComponent {
 }
 
 ReadReceipt.propTypes = {
-    username: PropTypes.string
+    username: PropTypes.string,
+    avatarSize: PropTypes.number
 };

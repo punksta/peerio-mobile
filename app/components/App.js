@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, PanResponder,
+import { View, PanResponder,
     AppState, ActivityIndicator, NativeModules,
     Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -9,8 +9,7 @@ import ModalLayout from './layout/modal-layout';
 import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
-import { gradient } from './controls/effects';
-import { clientApp, crypto, startSocket, config, User } from '../lib/icebear';
+import { clientApp, crypto, startSocket, config, User, TinyDb } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import { enableIdfa } from '../lib/idfa';
@@ -18,10 +17,12 @@ import consoleOverride from '../lib/console-override';
 import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
+import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
+import ActionSheetLayout from './layout/action-sheet-layout';
+import Text from './controls/custom-text';
 
 const { height, width } = Dimensions.get('window');
-
 @observer
 export default class App extends SafeComponent {
     constructor(props) {
@@ -53,7 +54,8 @@ export default class App extends SafeComponent {
     async componentWillMount() {
         if (!MockComponent) {
             let route = routerApp.routes.loading;
-            if (!await User.getLastAuthenticated()) {
+            if (!await User.getLastAuthenticated()
+                && !await TinyDb.system.getValue('apple-review-login')) {
                 route = routerApp.routes.loginStart;
             }
             route.transition();
@@ -109,16 +111,17 @@ export default class App extends SafeComponent {
         if (!uiState.locale) return this._placeHolder();
         if (MockComponent) return <MockComponent />;
         const tabletHack = { top: 0, height, left: 0, right: 0 };
-        return gradient({
-            testID: 'appOuterViewBackground',
-            style: (height < 500) ? tabletHack : { flex: 1, flexGrow: 1 }
-        }, [
-            <RouteNavigator key="navigator" routes={routerApp} />,
-            <ModalLayout key="modals" />,
-            <PopupLayout key="popups" />,
-            uiState.picker,
-            <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>,
-            <StatusBar barStyle="light-content" hidden={false} key="statusBar" />
-        ]);
+        return (
+            <View style={(height < 500) ? tabletHack : { flex: 1, flexGrow: 1 }}>
+                <RouteNavigator key="navigator" routes={routerApp} />
+                <ModalLayout key="modals" />
+                <PopupLayout key="popups" />
+                <ActionSheetLayout key="actionSheets" />
+                {uiState.picker}
+                <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
+                <StatusBar barStyle="light-content" hidden={false} key="statusBar" />
+                {!process.env.NO_DEV_BAR && <TestHelper key="testHelper" />}
+            </View>
+        );
     }
 }

@@ -29,7 +29,7 @@ export default class FileUploadProgress extends SafeComponent {
 
     renderThrow() {
         const { file } = this.props;
-        if (!file) return null;
+        if (!file || !file.progressMax) return null;
         return (
             <ProgressWide
                 title={file.name}

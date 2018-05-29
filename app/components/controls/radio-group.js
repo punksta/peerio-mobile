@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import RadioButton from './radio-button';
 import { tx } from '../utils/translator';
+import { vars } from '../../styles/styles';
 
 const radioText = {
     flex: 1,
@@ -37,7 +39,7 @@ export default class RadioGroup extends SafeComponent {
                 isSelected={index === targetIndex}
             >
                 <View style={radioText} >
-                    <Text>{tx(text)}</Text>
+                    <Text style={{ color: vars.textBlack87 }}>{tx(text)}</Text>
                 </View>
             </RadioButton>
             ),

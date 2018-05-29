@@ -1,26 +1,30 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { observable, action } from 'mobx';
+import { View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars, helpers } from '../../styles/styles';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
+import fileState from './file-state';
+import { User, contactStore } from '../../lib/icebear';
 
-const height = vars.listItemHeight;
+const height = vars.filesListItemHeight;
+const width = vars.listItemHeight;
+
 const itemContainerStyle = {
     flex: 1,
     flexGrow: 1,
     flexDirection: 'row',
+    height,
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'white',
+    backgroundColor: vars.filesBg,
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(0, 0, 0, .12)',
-    height,
-    borderWidth: 0,
-    borderColor: 'red',
     paddingLeft: vars.spacing.medium.mini2x
 };
 
@@ -29,15 +33,43 @@ const folderInfoContainerStyle = {
     flexDirection: 'row'
 };
 
+const folderInfoStyle = {
+    backgroundColor: 'transparent',
+    color: vars.extraSubtleText,
+    fontSize: vars.font.size.smaller
+};
+
+const nameStyle = {
+    color: vars.darkBlue,
+    fontSize: vars.font.size.normal,
+    backgroundColor: 'transparent'
+};
+
 @observer
 export default class FolderInnerItem extends SafeComponent {
-    onPress = () => this.props.onPress && this.props.onPress(this.props.folder);
+    @observable progressWidth = 0;
+
+    @action.bound onPress() {
+        const { folder, onPress } = this.props;
+        onPress && onPress(folder);
+    }
+
+    get currentProgress() {
+        const { folder } = this.props;
+        const { progressWidth } = this;
+        if (!progressWidth) return 0;
+        return progressWidth * folder.progressPercentage / 100;
+    }
+
+    @action.bound layout(evt) {
+        this.progressWidth = evt.nativeEvent.layout.width;
+    }
 
     get radio() {
         if (!this.props.radio) return null;
         const outer = {
-            width: vars.listItemHeight,
-            height: vars.listItemHeight,
+            width,
+            height,
             alignItems: 'center',
             justifyContent: 'center',
             borderBottomWidth: 1,
@@ -59,48 +91,66 @@ export default class FolderInnerItem extends SafeComponent {
         );
     }
 
-    renderThrow() {
-        const { folder, onPress, onLongPress, onSelect, hideArrow } = this.props;
-        const nameStyle = {
-            color: vars.txtDark,
-            fontSize: vars.font.size.normal,
-            fontWeight: vars.font.weight.bold
-        };
-        const infoStyle = {
-            color: vars.subtleText,
-            fontSize: vars.font.size.smaller,
-            fontWeight: vars.font.weight.regular
-        };
-        const loadingStyle = null;
-        const arrow = hideArrow ? null : (
-            <View style={{ flex: 0 }}>
-                {icons.dark('keyboard-arrow-right', this.onPress)}
-            </View>
-        );
+    get fileDetails() {
+        const { folder } = this.props;
+        const { progressPercentage, progressMax } = folder;
+        if (progressMax) {
+            return (
+                <Text italic style={folderInfoStyle}>
+                    {tx('title_sharingFolderPercent', { progressPercent: progressPercentage })}
+                </Text>
+            );
+        }
+        const owner = !folder.owner || folder.owner === User.current.username
+            ? `` : `${contactStore.getContact(folder.owner).fullName} `;
         return (
-            <TouchableOpacity
-                onLongPress={onLongPress}
-                onPress={hideArrow ? onSelect : onPress} style={{ backgroundColor: 'white' }}>
-                <View style={folderInfoContainerStyle}>
-                    {this.radio}
-                    <View style={itemContainerStyle}>
-                        <View style={[loadingStyle, { flex: 0 }]}>
-                            {icons.darkNoPadding('folder', null, null, vars.iconSize)}
+            <Text style={folderInfoStyle}>
+                <Text>{owner}</Text>
+                {folder.size ?
+                    <Text>{folder.sizeFormatted}</Text> :
+                    <Text>{tx('title_empty')}</Text>}
+                &nbsp;&nbsp;
+                {folder.createdAt ? moment(folder.createdAt).format('DD/MM/YYYY') : null}
+            </Text>);
+    }
+
+    renderThrow() {
+        const { folder, onSelect, hideOptionsIcon, onFolderAction } = this.props;
+        const { isShared } = folder;
+        const progressContainer = {
+            backgroundColor: vars.fileUploadProgressColor,
+            width: this.currentProgress,
+            position: 'absolute',
+            top: 0,
+            bottom: 0,
+            right: 0,
+            left: 0
+        };
+        const optionsIcon = hideOptionsIcon || fileState.isFileSelectionMode ? null : (
+            <View style={{ flex: 0 }}>
+                {icons.dark('more-vert', onFolderAction)}
+            </View>);
+        return (
+            <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
+                <TouchableOpacity
+                    onPress={hideOptionsIcon ? onSelect : this.onPress}
+                    style={{ backgroundColor: vars.filesBg }}>
+                    <View style={folderInfoContainerStyle}>
+                        {this.radio}
+                        <View style={itemContainerStyle} onLayout={this.layout}>
+                            <View style={progressContainer} />
+                            <View style={{ flex: 0 }}>
+                                {icons.plaindark(isShared ? 'folder-shared' : 'folder', vars.iconSize, null)}
+                            </View>
+                            <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
+                                <Text bold style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.parent ? folder.name : tx('title_files')}</Text>
+                                {this.fileDetails}
+                            </View>
+                            {optionsIcon}
                         </View>
-                        <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.maxi2x }}>
-                            <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{folder.isRoot ? tx('title_files') : folder.name}</Text>
-                            <Text style={infoStyle}>
-                                {folder.size ?
-                                    <Text>{folder.sizeFormatted}</Text> :
-                                    <Text>{tx('title_empty')}</Text>}
-                                &nbsp;&nbsp;
-                                {folder.createdAt && moment(folder.createdAt).format('DD/MM/YYYY')}
-                            </Text>
-                        </View>
-                        {arrow}
                     </View>
-                </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+            </View>
         );
     }
 }
@@ -109,6 +159,7 @@ FolderInnerItem.propTypes = {
     onPress: PropTypes.func,
     onSelect: PropTypes.func,
     folder: PropTypes.any.isRequired,
-    hideArrow: PropTypes.bool,
-    radio: PropTypes.bool
+    hideOptionsIcon: PropTypes.bool,
+    radio: PropTypes.bool,
+    onFolderAction: PropTypes.func
 };

@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, TextInput, Platform } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { action } from 'mobx';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import testLabel from '../helpers/test-label';
+import Text from '../controls/custom-text';
 
 const height = vars.inputHeight;
+const fontSize = vars.font.size.normal;
 
 const container = {
     flexDirection: 'row',
@@ -14,7 +16,7 @@ const container = {
     paddingHorizontal: vars.spacing.medium.maxi,
     marginHorizontal: vars.spacing.medium.mini2x,
     marginBottom: vars.spacing.small.midi2x,
-    borderColor: vars.bg,
+    borderColor: vars.peerioBlue,
     borderWidth: 1,
     height,
     borderRadius: height
@@ -24,7 +26,8 @@ const placeholderStyle = {
     flexGrow: 1,
     height,
     marginLeft: vars.spacing.small.midi,
-    fontSize: vars.font.size.normal
+    fontSize,
+    fontFamily: vars.peerioFontFamily
 };
 
 const bottomTextStyle = {
@@ -35,7 +38,7 @@ const bottomTextStyle = {
 };
 
 const titleStyle = {
-    color: vars.bg,
+    color: vars.peerioBlue,
     fontSize: vars.font.size.bigger
 };
 
@@ -46,9 +49,12 @@ export default class CreateChannelTextBox extends Component {
     }
 
     render() {
-        const { labelText, placeholderText, property,
-            bottomText, maxLength } = this.props;
+        const { labelText, placeholderText, property, bottomText, maxLength, multiline } = this.props;
         const testID = `textInput-${property}`;
+        // hack for v-align, padding top and bottom need to be specified
+        let paddingTop = 0;
+        if (Platform.OS === 'ios' && multiline) paddingTop = ((height - fontSize) / 2 - 1);
+        const style = [placeholderStyle, { paddingTop, paddingBottom: 0 }];
         return (
             <View>
                 <View style={container}>
@@ -62,8 +68,9 @@ export default class CreateChannelTextBox extends Component {
                         autoCapitalize="none"
                         autoCorrect={false}
                         placeholder={tx(placeholderText)}
-                        style={placeholderStyle}
+                        style={style}
                         maxLength={maxLength}
+                        multiline={multiline}
                         {...testLabel(testID)} />
                 </View>
                 <Text style={bottomTextStyle}>{tx(bottomText)}</Text>

@@ -16,7 +16,7 @@ import TabItem from './tab-item';
 const bottomRowStyle = {
     flex: 0,
     flexDirection: 'row',
-    backgroundColor: vars.tabsBg,
+    backgroundColor: vars.darkBlueBackground15,
     height: vars.tabsHeight,
     padding: 0,
     paddingBottom: vars.iPhoneXBottom
@@ -44,7 +44,8 @@ export default class TabContainer extends SafeComponent {
                 <TabItem
                     text={t('title_contacts')}
                     route={contactState.empty ? 'contactAdd' : 'contacts'}
-                    icon="people" />
+                    icon="people"
+                    highlightList={['contactAdd', 'contactInvite']} />
                 <TabItem
                     text={t('title_settings')}
                     route="settings"

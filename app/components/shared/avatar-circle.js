@@ -1,22 +1,21 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, ActivityIndicator, View, Image } from 'react-native';
+import { ActivityIndicator, View, Image } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import ErrorCircle from './error-circle';
 import { vars } from '../../styles/styles';
-
-const avatarDiameter = 36;
 
 @observer
 export default class AvatarCircle extends SafeComponent {
     renderThrow() {
         const { large, medium, contact, loading, invited } = this.props;
         let ratio = 1;
-        if (large) ratio = 3;
+        if (large) ratio = 2 + (2 / 3);
         if (medium) ratio = 2;
-        const width = avatarDiameter * ratio;
+        const width = vars.avatarDiameter * ratio;
         const height = width;
         const avatarStyle = {
             width,

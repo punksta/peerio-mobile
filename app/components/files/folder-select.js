@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Text } from 'react-native';
+import { View, ListView } from 'react-native';
 import { observable, reaction, computed } from 'mobx';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import FolderInnerItem from './folder-inner-item';
 import fileState from './file-state';
@@ -9,14 +10,16 @@ import { vars } from '../../styles/styles';
 import Center from '../controls/center';
 import icons from '../helpers/icons';
 import routes from '../routes/routes';
+import { popupMoveToSharedFolder } from '../shared/popups';
 import { tx } from '../utils/translator';
+import preferenceStore from '../settings/preference-store';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
 
 @observer
 export default class FolderSelect extends SafeComponent {
-    @observable currentFolder = fileState.store.folders.root;
+    @observable currentFolder = fileState.store.folderStore.root;
 
     constructor(props) {
         super(props);
@@ -31,7 +34,7 @@ export default class FolderSelect extends SafeComponent {
     @computed get data() {
         const { currentFolder } = this;
         const folders = currentFolder.foldersSortedByName.slice();
-        currentFolder.isRoot && folders.unshift(fileState.store.folders.root);
+        currentFolder.isRoot && folders.unshift(fileState.store.folderStore.root);
         return folders;
     }
 
@@ -54,10 +57,19 @@ export default class FolderSelect extends SafeComponent {
     }
 
     item = folder => {
-        const selectFolder = () => {
+        const selectFolder = async () => {
             const file = fileState.currentFile;
             if (!file) return;
-            folder.moveInto(file);
+            if (folder.isShared) {
+                if (!preferenceStore.prefs.showMoveSharedFolderPopup) folder.attach(file);
+                else {
+                    const result = await popupMoveToSharedFolder();
+                    if (result) {
+                        preferenceStore.prefs.showMoveSharedFolderPopup = !result.checked;
+                        folder.attach(file);
+                    }
+                }
+            } else folder.attach(file);
             routes.modal.discard();
         };
         const changeFolder = () => {
@@ -66,9 +78,9 @@ export default class FolderSelect extends SafeComponent {
         return (
             <FolderInnerItem
                 radio
-                key={folder.folderId}
+                key={folder.id}
                 folder={folder}
-                hideArrow={!folder.hasNested || folder.isRoot}
+                hideOptionsIcon={!folder.hasNested || folder.isRoot}
                 onSelect={selectFolder}
                 onPress={folder.hasNested ? changeFolder : selectFolder} />
         );
@@ -115,7 +127,6 @@ export default class FolderSelect extends SafeComponent {
         };
         const textStyle = {
             fontSize: vars.font.size.normal,
-            fontWeight: vars.font.weight.semiBold,
             color: vars.txtMedium
         };
         const leftIcon = this.currentFolder.isRoot ?
@@ -124,7 +135,7 @@ export default class FolderSelect extends SafeComponent {
         return (
             <View style={container}>
                 {leftIcon}
-                <Center style={style}><Text style={textStyle}>Move file to...</Text></Center>
+                <Center style={style}><Text semibold style={textStyle}>Move file to...</Text></Center>
                 {icons.placeholder()}
             </View>
         );

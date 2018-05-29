@@ -1,6 +1,14 @@
 const Page = require('../page');
 
 class SettingsPage extends Page {
+    get publicProfileButton() {
+        return this.getWhenVisible('~title_settingsProfile');
+    }
+
+    get uploadAvatarIcon() {
+        return this.getWhenVisible('~uploadAvatar');
+    }
+
     get logoutButton() {
         return this.getWhenPresent('~button_logout');
     }
@@ -15,6 +23,18 @@ class SettingsPage extends Page {
 
     get lockButton() {
         return this.getWhenVisible('~popupButton-yes');
+    }
+
+    get showAccountKeyButton() {
+        return this.getWhenVisible('~title_showAccountKey');
+    }
+
+    get passphraseLabel() {
+        return this.getWhenVisible('~textControl');
+    }
+
+    get copyButton() {
+        return this.getWhenVisible('~popupButton-copy');
     }
 }
 

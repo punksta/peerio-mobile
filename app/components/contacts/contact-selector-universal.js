@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text, TextInput, ActivityIndicator, LayoutAnimation } from 'react-native';
+import { View, ActivityIndicator, LayoutAnimation } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { when, observable, action, reaction, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
-import { t, tx } from '../utils/translator';
-import Layout1 from '../layout/layout1';
+import { t, tx, tu } from '../utils/translator';
+import Layout3 from '../layout/layout3';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
-import ContactsPlaceholder from './contacts-placeholder';
 import ContactInviteItemPrompt from './contact-invite-item-prompt';
 import ContactLegacyItem from './contact-legacy-item';
 import icons from '../helpers/icons';
@@ -19,7 +18,8 @@ import ContactInviteItem from './contact-invite-item';
 import ContactCollection from './contact-collection';
 import ContactSelectorUserBoxLine from './contact-selector-userbox-line';
 import ContactSelectorSectionList from './contact-selector-sectionlist';
-import testLabel from '../helpers/test-label';
+import Text from '../controls/custom-text';
+import SearchBar from '../controls/search-bar';
 
 @observer
 export default class ContactSelectorUniversal extends SafeComponent {
@@ -64,85 +64,66 @@ export default class ContactSelectorUniversal extends SafeComponent {
         this.searchUserTimeout(text);
     }
 
-    textbox() {
-        const height = 48;
-        const container = {
-            flexGrow: 1,
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingHorizontal: vars.spacing.small.midi,
-            marginHorizontal: vars.spacing.medium.mini2x,
-            marginBottom: vars.spacing.small.midi,
-            borderColor: vars.bg,
-            borderWidth: 1,
-            height,
-            borderRadius: height
-        };
-        const style = {
-            flexGrow: 1,
-            height,
-            fontSize: vars.font.size.normal
-        };
+    searchBar() {
         let rightIcon = null;
         if (this.findUserText) {
             rightIcon = icons.coloredSmall('close', () => {
                 this.findUserText = '';
                 this.onChangeFindUserText('');
-            }, vars.bg);
+            }, vars.peerioBlue);
         }
 
         if (this.inProgress || contactState.inProgress) {
             rightIcon = <ActivityIndicator style={{ marginRight: vars.spacing.small.midi2x }} />;
         }
 
-        const leftIcon = this.props.leftIconComponent || icons.dark('search');
+        const leftIcon = this.props.leftIconComponent || icons.plain('search', vars.iconSize, vars.black12);
 
         return (
-            <View style={container}>
-                {leftIcon}
-                <TextInput
-                    underlineColorAndroid="transparent"
-                    value={this.findUserText}
-                    returnKeyType="done"
-                    blurOnSubmit
-                    onChangeText={this.onChangeFindUserText}
-                    autoCapitalize="none"
-                    autoCorrect={false}
-                    placeholder={tx(this.props.inputPlaceholder)}
-                    ref={ti => { this.textInput = ti; }}
-                    style={style}
-                    {...testLabel('textInputContactSearch')} />
-                {rightIcon}
-            </View>
-        );
+            <SearchBar
+                textValue={this.findUserText}
+                placeholderText={tx(this.props.inputPlaceholder)}
+                onChangeText={this.onChangeFindUserText}
+                onSubmit={this.onSubmit}
+                leftIcon={leftIcon}
+                rightIcon={rightIcon}
+                ref={ti => { this.textInput = ti; }}
+                testId="textInputContactSearch"
+            />);
     }
 
     exitRow() {
         const container = {
+            backgroundColor: vars.darkBlueBackground15,
             flexGrow: 1,
             flexDirection: 'row',
-            paddingTop: vars.spacing.small.midi2x,
+            paddingTop: vars.statusBarHeight * 2,
             paddingHorizontal: vars.spacing.small.midi2x,
-            alignItems: 'center'
+            alignItems: 'center',
+            height: vars.headerHeight
         };
         const textStyle = {
-            marginRight: vars.iconSize * 2,
             textAlign: 'center',
             flexGrow: 1,
             flexShrink: 1,
             fontSize: vars.font.size.big,
-            fontWeight: vars.font.weight.semiBold,
-            color: vars.txtDark
+            color: vars.textBlack54
         };
         return (
             <View style={container}>
-                {icons.dark('close', this.props.onExit)}
-                <Text style={textStyle}>{tx(this.props.title)}</Text>
+                {icons.dark('close', this.props.onExit, null, null, 'closeButton')}
+                <Text semibold style={textStyle}>{tx(this.props.title)}</Text>
+                {this.props.multiselect && this.shareButton}
             </View>
         );
     }
 
-    async action() {
+    get shareButton() {
+        if (this.recipients.items.length) return icons.text(tu('share'), this.action);
+        return icons.disabledText(tu('share'));
+    }
+
+    @action.bound async action() {
         const selectorAction = this.props.action;
         if (!selectorAction) return;
         this.inProgress = true;
@@ -190,7 +171,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
     @computed get dataSource() {
         const filteredContacts = contactState.getFiltered(this.findUserText).slice();
         const result = [
-            { data: filteredContacts, key: 'title_allYourContacts' }
+            { data: filteredContacts, key: 'title_contactsNumber' }
         ];
         if (this.foundContact) {
             result.unshift({ data: [this.foundContact], key: null });
@@ -212,52 +193,56 @@ export default class ContactSelectorUniversal extends SafeComponent {
     }
 
     body() {
-        if (contactState.empty && this.clean) return <ContactsPlaceholder />;
         const notFound = !this.inProgress && !!this.notFound && (
             <View style={{ flexDirection: 'row', marginHorizontal: vars.spacing.large.midi2x, marginVertical: vars.spacing.small.maxi }}>
                 <Icon name="help-outline" size={24} color={vars.txtDate} style={{ marginRight: vars.spacing.small.midi2x }} />
                 <Text style={{ color: vars.txtDate }}>{t('error_userNotFoundTryEmail', { user: this.notFound })}</Text>
             </View>
         );
+        const containerStyle = {
+            marginHorizontal: vars.spacing.small.midi2x,
+            flex: 1,
+            flexGrow: 1
+        };
         return (
-            <View style={{ marginHorizontal: vars.spacing.medium.maxi }}>
-                {notFound}
-                {this.inviteContact}
-                {!!this.legacyContact &&
-                    <ContactLegacyItem noBorderBottom contact={this.legacyContact} />}
-                <ContactSelectorSectionList dataSource={this.dataSource} onPress={this.onContactPress} />
+            // flex is needed here, because we contain a SectionList
+            // it calculates its height correctly only from flex parents
+            <View style={{ flex: 1, flexGrow: 1 }}>
+                <View style={{ flex: 0 }}>
+                    {this.searchBar()}
+                    {this.props.multiselect &&
+                        <ContactSelectorUserBoxLine
+                            contacts={this.recipients.items} onPress={this.recipients.remove} />}
+                </View>
+                <View style={containerStyle}>
+                    {notFound}
+                    {this.inviteContact}
+                    {!!this.legacyContact &&
+                        <ContactLegacyItem noBorderBottom contact={this.legacyContact} />}
+                    <ContactSelectorSectionList dataSource={this.dataSource} onPress={this.onContactPress} />
+                </View>
             </View>
         );
     }
 
     header() {
-        if (this.props.hideHeader) {
-            return (
-                <View style={{ flex: 0 }}>
-                    {this.props.subTitleComponent}
-                    {this.textbox()}
-                    {this.props.multiselect &&
-                        <ContactSelectorUserBoxLine
-                            contacts={this.recipients.items} onPress={this.recipients.remove} />}
-                </View>
-            );
-        }
         return (
-            <View style={{ paddingTop: vars.statusBarHeight * 2 }}>
+            <View>
                 {this.exitRow()}
-                {this.props.subTitleComponent}
-                <View style={{ marginTop: vars.spacing.medium.mini2x }}>
-                    {this.textbox()}
-                </View>
+                {this.props.subTitleComponent ? (
+                    <View style={{ marginBottom: vars.spacing.medium.mini2x }}>
+                        {this.props.subTitleComponent}
+                    </View>
+                ) : null}
             </View>
         );
     }
 
     renderThrow() {
-        const header = this.header();
+        const header = !this.props.hideHeader ? this.header() : null;
         const body = this.body();
         const layoutStyle = {
-            backgroundColor: 'white'
+            backgroundColor: vars.darkBlueBackground05
         };
         const snackbar = (
             <Bottom>
@@ -265,11 +250,12 @@ export default class ContactSelectorUniversal extends SafeComponent {
             </Bottom>
         );
         return (
-            <Layout1
+            <Layout3
                 defaultBar
                 body={body}
                 header={header}
                 noFitHeight
+                footer={this.props.footer}
                 footerAbsolute={snackbar}
                 style={layoutStyle} />
         );
@@ -281,7 +267,9 @@ ContactSelectorUniversal.propTypes = {
     subTitleComponent: PropTypes.any,
     leftIconComponent: PropTypes.any,
     inputPlaceholder: PropTypes.any,
-    multiselect: PropTypes.any,
     action: PropTypes.func,
-    onExit: PropTypes.func
+    onExit: PropTypes.func,
+    multiselect: PropTypes.any,
+    footer: PropTypes.any,
+    hideHeader: PropTypes.any
 };

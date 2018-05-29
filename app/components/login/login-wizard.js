@@ -27,22 +27,9 @@ export default class LoginWizard extends Wizard {
         return <LoginStart login={() => this.changeIndex(1)} />;
     }
 
-    loginClean() {
-        const submit = () => uiState.hideAll().then(() => loginState.login()).catch(e => console.log(e));
-        return <LoginClean submit={submit} />;
-    }
+    loginClean() { return <LoginClean />; }
 
     componentDidMount() {
-        // const load = __DEV__ && process.env.PEERIO_SKIPLOGINLOAD ? Promise.resolve(true) : loginState.load();
-        // load.then(() => {
-        if (__DEV__) {
-            when(() => loginState.isConnected, () => {
-                loginState.username = process.env.PEERIO_USERNAME || loginState.username;
-                loginState.passphrase = process.env.PEERIO_PASSPHRASE || loginState.passphrase;
-                process.env.PEERIO_AUTOLOGIN && loginState.login();
-            });
-        }
-        // });
         when(() => socket.connected, () => { this.switchServerValue = config.socketServerUrl; });
     }
 
@@ -65,6 +52,18 @@ export default class LoginWizard extends Wizard {
                 this.delayDebugMenu = false;
             }, 1000);
         }
+        const debugContainer = {
+            backgroundColor: vars.darkBlue,
+            height: this.debugMenuHeight,
+            opacity: this.delayDebugMenu ? 0.5 : 1,
+            marginTop: vars.spacing.small.maxi2x
+        };
+        const buttonContainer = {
+            flexDirection: 'row',
+            flexGrow: 1,
+            justifyContent: 'space-between',
+            paddingHorizontal: vars.loginWizard_debugMenu_paddingH
+        };
         const s = [wizard.footer.button.base, {
             padding: vars.spacing.small.mini2x,
             justifyContent: 'center',
@@ -77,18 +76,24 @@ export default class LoginWizard extends Wizard {
             marginHorizontal: vars.spacing.medium.maxi2x,
             height: 40,
             backgroundColor: '#FFFFFF90',
-            marginTop: vars.spacing.small.maxi2x
+            marginTop: vars.spacing.small.maxi2x,
+            fontFamily: vars.peerioFontFamily
         };
         return (
-            <View
-                style={{ height: this.debugMenuHeight, opacity: this.delayDebugMenu ? 0.5 : 1, marginTop: vars.spacing.small.maxi2x }}
-                pointerEvents={this.delayDebugMenu ? 'none' : 'auto'}>
-                <View style={{ flexDirection: 'row', flexGrow: 1, justifyContent: 'space-between', paddingHorizontal: vars.loginWizard_debugMenu_paddingH }}>
-                    <Button style={s} onPress={() => { this.showDebugLogs = !this.showDebugLogs; }} text="Show logs" />
-                    <Button style={s}
+            <View style={debugContainer} pointerEvents={this.delayDebugMenu ? 'none' : 'auto'}>
+                <View style={buttonContainer}>
+                    <Button
+                        style={s}
+                        onPress={() => { this.showDebugLogs = !this.showDebugLogs; }}
+                        text="Show logs" />
+                    <Button
+                        style={s}
                         onPress={() => { consoleOverride.verbose = !consoleOverride.verbose; }}
                         text={consoleOverride.verbose ? 'Verbose On' : 'Verbose Off'} />
-                    <Button style={s} onPress={() => this.debugServer(this.switchServerValue)} text="Override server" />
+                    <Button
+                        style={s}
+                        onPress={() => this.debugServer(this.switchServerValue)}
+                        text="Override server" />
                     <Button style={s} onPress={() => this.debugServer(null)} text="Reset" />
                 </View>
                 <View style={{ flex: 0 }}>

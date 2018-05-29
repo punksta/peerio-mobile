@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, TextInput, TouchableOpacity } from 'react-native';
 import { observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
@@ -11,6 +11,7 @@ import ghostState from './ghost-state';
 import { mailStore } from '../../lib/icebear';
 import fileState from '../files/file-state';
 import { vars } from '../../styles/styles';
+import Text from '../controls/custom-text';
 
 const row = {
     flexDirection: 'row',
@@ -28,14 +29,16 @@ const textboxInput = {
     flexShrink: 1,
     fontSize: vars.font.size.bigger,
     color: vars.txtDark,
-    marginLeft: vars.spacing.small.midi2x
+    marginLeft: vars.spacing.small.midi2x,
+    fontFamily: vars.peerioFontFamily
 };
 
 const textArea = {
     fontSize: vars.font.size.normal,
     marginHorizontal: vars.spacing.small.maxi,
     color: vars.txtDark,
-    height: vars.inputHeight
+    height: vars.inputHeight,
+    fontFamily: vars.peerioFontFamily
 };
 
 const shadow = {
@@ -153,7 +156,7 @@ export default class ComposeMessage extends SafeComponent {
 
     recipient(r) {
         const bubble = {
-            backgroundColor: vars.bg,
+            backgroundColor: vars.peerioBlue,
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 8,
@@ -263,7 +266,7 @@ export default class ComposeMessage extends SafeComponent {
     attachment(f) {
         const container = {
             flex: 0,
-            backgroundColor: vars.bg,
+            backgroundColor: vars.peerioBlue,
             borderRadius: 4,
             padding: vars.spacing.small.mini2x,
             margin: vars.spacing.small.mini2x

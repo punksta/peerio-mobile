@@ -5,6 +5,7 @@ import ComposeMessage from '../messaging/compose-message';
 import CreateChannel from '../channels/create-channel';
 import ChannelAddPeople from '../messaging/channel-add-people';
 import FileShare from '../files/file-share';
+import FolderShare from '../files/folder-share';
 import FileMove from '../files/file-move';
 import FileChooseRecipient from '../files/file-choose-recipient';
 import ContactView from '../contacts/contact-view';
@@ -15,6 +16,7 @@ import AccountUpgradeSwiper from '../settings/account-upgrade-swiper';
 import popupState from '../layout/popup-state';
 import routes from './routes';
 import { vars } from '../../styles/styles';
+import { uiState } from '../states';
 
 class RouterModal extends Router {
     @observable animating = false;
@@ -27,6 +29,7 @@ class RouterModal extends Router {
         this.add('createChannel', CreateChannel);
         this.add('channelAddPeople', ChannelAddPeople);
         this.add('shareFileTo', FileShare);
+        this.add('shareFolderTo', FolderShare);
         this.add('changeRecipient', FileChooseRecipient);
         this.add('moveFileTo', FileMove);
         this.add('contactView', ContactView);
@@ -39,7 +42,8 @@ class RouterModal extends Router {
     add(route, component, isWhite) {
         const r = super.add(route, component);
         r.isWhite = isWhite;
-        this[route] = () => {
+        this[route] = async () => {
+            await uiState.hideAll();
             popupState.discardAllPopups();
             this.flushResolver();
             r.transition();
@@ -59,7 +63,8 @@ class RouterModal extends Router {
         }
     }
 
-    discard(value) {
+    async discard(value) {
+        await uiState.hideAll();
         this.flushResolver(value);
         this.route = null;
     }

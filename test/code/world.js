@@ -1,22 +1,29 @@
 const webDriver = require('webdriverio');
 const CreateAccountPage = require('./pages/login/createAccountPage');
 const ChatListPage = require('./pages/messaging/chatListPage');
-const ContactSelectorDmPage = require('./pages/messaging/contactSelectorDmPage');
+const ContactSelectorPage = require('./pages/messaging/contactSelectorPage');
 const ChatPage = require('./pages/messaging/chatPage');
 const RoomCreationPage = require('./pages/messaging/roomCreationPage');
+const RoomInvitePage = require('./pages/messaging/roomInvitePage');
+const FilesListPage = require('./pages/files/filesListPage');
 const iOSFactory = require('./helpers/iOSFactory');
 const AndroidFactory = require('./helpers/AndroidFactory');
 const StartPage = require('./pages/start/startPage');
-const LoginPage = require('./pages/login/loginCredentialsPage');
+const LoginPage = require('./pages/login/loginPage');
 const HomePage = require('./pages/start/homePage');
 const TwoStepVerificationPage = require('./pages/settings/twoStepVerificationPage');
 const TwoFactorAuthPrompt = require('./pages/popups/twoFactorAuthPrompt');
 const SettingsPage = require('./pages/settings/settingsPage');
+const ProfileSettingsPage = require('./pages/settings/profileSettingsPage');
 const otplib = require('otplib');
+const FileViewPage = require('./pages/files/fileViewPage');
+const AlertsPage = require('./pages/popups/alertsPage');
+const ContactsPage = require('./pages/contacts/contactsPage');
 
 class World {
-    constructor(opts) {
-        this.context = opts.parameters.platform === 'ios' ? iOSFactory : AndroidFactory;
+    constructor({ attach, parameters }) {
+        this.attach = attach;
+        this.context = parameters.platform === 'ios' ? iOSFactory : AndroidFactory;
     }
 
     openApp() {
@@ -34,23 +41,36 @@ class World {
         this.loginPage = new LoginPage(this.app);
         this.createAccountPage = new CreateAccountPage(this.app);
         this.homePage = new HomePage(this.app);
-        this.alertsPage = this.context.alertsPage(this.app);
+        this.alertsPage = new AlertsPage(this.app);
 
         this.chatListPage = new ChatListPage(this.app);
-        this.contactSelectorDmPage = new ContactSelectorDmPage(this.app);
+        this.contactSelectorPage = new ContactSelectorPage(this.app);
         this.roomCreationPage = new RoomCreationPage(this.app);
+        this.roomInvitePage = new RoomInvitePage(this.app);
         this.chatPage = new ChatPage(this.app);
         this.chatActionSheetPage = this.context.chatActionSheetPage(this.app);
+
+        this.filesListPage = new FilesListPage(this.app);
+        this.fileViewPage = new FileViewPage(this.app);
+        this.fileUploadPage = this.context.fileUploadPage(this.app);
+
+        this.contactsPage = new ContactsPage(this.app);
 
         this.settingsPage = new SettingsPage(this.app);
         this.twoStepVerificationPage = new TwoStepVerificationPage(this.app);
         this.twoFactorAuthPrompt = new TwoFactorAuthPrompt(this.app);
+        this.profileSettingsPage = new ProfileSettingsPage(this.app);
     }
 
     closeApp() {
         return this.app
             .removeApp(this.context.bundleId) // remove app so it doesn't influence next test
             .end(); // end server session and close webdriver
+    }
+
+    async takeScreenshot() {
+        const image = await this.app.saveScreenshot();
+        this.attach(image, 'image/png');
     }
 
     async goTo2FASetup() {
@@ -65,11 +85,9 @@ class World {
 
     async tryEnterTokenInSettings() {
         const token = otplib.authenticator.generate(this.secretKey);
-        await this.twoStepVerificationPage.confirmationCode
-            .setValue(token)
-            .hideDeviceKeyboard();
+        await this.twoStepVerificationPage.confirmationCode.setValue(token);
+        await this.twoStepVerificationPage.hideKeyboardHelper();
         await this.twoStepVerificationPage.confirmButton.click();
-        await this.twoStepVerificationPage.confirmButton.click(); // TODO: have to tap 2x
     }
 
     async enterTokenInSettings() {
@@ -82,6 +100,7 @@ class World {
     async tryEnterTokenInPrompt() {
         const token = otplib.authenticator.generate(this.secretKey);
         await this.twoFactorAuthPrompt.tokenInput.setValue(token);
+        await this.twoFactorAuthPrompt.hideKeyboardHelper();
         await this.twoFactorAuthPrompt.submitButton.click();
         await this.twoFactorAuthPrompt.submitButton.click(); // TODO tap twice
     }
@@ -102,10 +121,14 @@ class World {
         this.username = new Date().getTime();
         console.log('Creating account with username', this.username);
 
-        await this.createAccountPage.firstName.setValue('test-first-name').hideDeviceKeyboard();
-        await this.createAccountPage.lastName.setValue('test-last-name').hideDeviceKeyboard();
-        await this.createAccountPage.username.setValue(this.username).hideDeviceKeyboard();
-        await this.createAccountPage.email.setValue('test@email.io').hideDeviceKeyboard();
+        await this.createAccountPage.firstName.setValue('test-first-name');
+        await this.createAccountPage.hideKeyboardHelper();
+        await this.createAccountPage.lastName.setValue('test-last-name');
+        await this.createAccountPage.hideKeyboardHelper();
+        await this.createAccountPage.username.setValue(this.username);
+        await this.createAccountPage.hideKeyboardHelper();
+        await this.createAccountPage.email.setValue(`${this.username}@test.lan`);
+        await this.createAccountPage.hideKeyboardHelper();
         await this.createAccountPage.nextButton.click();
     }
 
@@ -118,12 +141,13 @@ class World {
     }
 
     async confirmSavingPasscode() {
-        await this.createAccountPage.confirmInput.setValue('I have saved my account key').hideDeviceKeyboard();
+        await this.createAccountPage.confirmInput.setValue('I have saved my account key');
+        await this.createAccountPage.hideKeyboardHelper();
         await this.createAccountPage.finishButton.click();
     }
 
     async seeWelcomeScreen() {
-        await this.homePage.chatsTab;
+        await this.homePage.isVisible;
     }
 
     async dismissEmailConfirmationPopup() {
@@ -135,15 +159,13 @@ class World {
     async loginExistingAccount(username, passphrase) {
         await this.alertsPage.dismissNotificationsAlert();
         await this.startPage.loginButton.click();
-        await this.loginPage.username.setValue(username).hideDeviceKeyboard();
-        await this.loginPage.passphrase.setValue(passphrase).hideDeviceKeyboard();
 
-        // iOS taps on 'Done' button when hides device keyboard
-        // Android taps outside
-        // 'tapOutside' strategy passed to hideDeviceKeyboard still taps on 'Done' button
-        if (this.context.platform.desiredCapabilities.platformName === 'Android') {
-            await this.loginPage.submitButton.click();
-        }
+        await this.loginPage.username.setValue(username);
+        await this.loginPage.hideKeyboardHelper();
+        await this.loginPage.passphrase.setValue(passphrase);
+        await this.loginPage.hideKeyboardHelper();
+        await this.loginPage.submitButton.click();
+
         await this.seeWelcomeScreen();
         await this.dismissEmailConfirmationPopup();
     }
@@ -155,6 +177,61 @@ class World {
         await this.confirmSavingPasscode();
         await this.seeWelcomeScreen();
         await this.dismissEmailConfirmationPopup();
+    }
+
+    async logout() {
+        await this.homePage.settingsTab.click();
+        await this.homePage.scrollDownHelper();
+        await this.settingsPage.logoutButton.click();
+        await this.settingsPage.lockButton.click();
+
+        await this.app.closeApp();
+        await this.app.launch();
+    }
+
+    async scrollToChat() {
+        await this.homePage.isVisible;
+
+        // Wait for rooms to load, otherwise position will change
+        await this.app.pause(5000);
+
+        while (!(await this.chatListPage.roomWithTitleVisible(this.roomName))) { // eslint-disable-line
+            await this.chatListPage.scrollDownHelper();  // eslint-disable-line
+        }
+    }
+
+    async openContactsPickerForDM() {
+        await this.homePage.chatTab.click();
+        await this.chatListPage.buttonCreateNewChat.click();
+        await this.chatActionSheetPage.newDmOption.click();
+    }
+
+    async searchForRecipient() {
+        await this.contactSelectorPage.textInput.setValue(process.env.CHAT_RECIPIENT_USER);
+        await this.contactSelectorPage.hideKeyboardHelper();
+    }
+
+    async scrollToContact() {
+        await this.homePage.contactsTab.click();
+        while (!(await this.contactsPage.contactVisible)) { // eslint-disable-line
+            await this.contactsPage.scrollDownHelper();  // eslint-disable-line
+        }
+    }
+
+    async favoriteContact() {
+        await this.scrollToContact();
+        await this.contactsPage.contactFound.click();
+        await this.contactsPage.favoriteButton.click();
+        await this.contactsPage.backButton.click();
+    }
+
+    async addContactWithName(name) {
+        await this.contactsPage.searchContactInput.setValue(name);
+        await this.contactsPage.hideKeyboardHelper();
+        await this.contactsPage.searchContactButton.click();
+
+        const snackbarMessage = await this.contactsPage.snackbar.getText();
+        snackbarMessage.should.match(/has been added/);
     }
 }
 

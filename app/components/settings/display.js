@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import Text from '../controls/custom-text';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
@@ -14,7 +15,7 @@ const bgStyle = {
     flex: 1,
     paddingVertical: vars.listViewPaddingVertical / 2,
     paddingHorizontal: vars.listViewPaddingHorizontal,
-    backgroundColor: vars.settingsBg
+    backgroundColor: vars.darkBlueBackground05
 };
 
 const spacer = {

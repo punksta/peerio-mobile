@@ -31,6 +31,7 @@
 		0248F0721E5A59BF00C437A9 /* terms.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0248F0711E5A59BF00C437A9 /* terms.txt */; };
 		025373851EB3751800752E61 /* libsodium.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 025373841EB3751800752E61 /* libsodium.a */; };
 		0253784B1EC4E1A000752E61 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0253781E1EC4E14700752E61 /* libBVLinearGradient.a */; };
+		0253BCEE20ACDE5C001A16B5 /* libKCKeepAwake.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0253BCED20ACDD5A001A16B5 /* libKCKeepAwake.a */; };
 		025935601E809AAF00FAEE7E /* libInAppUtils.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0259355D1E809AA400FAEE7E /* libInAppUtils.a */; };
 		0268189B1F746B8900A42812 /* libRNViewShot.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026818911F7423DE00A42812 /* libRNViewShot.a */; };
 		0268189C1F746B9400A42812 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 026818981F742B9100A42812 /* libRCTCameraRoll.a */; };
@@ -48,6 +49,12 @@
 		02A076271E6D8876008974C5 /* maincert.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = 02A075FF1E6D880E008974C5 /* maincert.com.cer */; };
 		02A5EE7C1ECA9ECC00ED05C1 /* RNKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A5EE7B1ECA9ECC00ED05C1 /* RNKeychain.m */; };
 		02ADBC5E1EDDA0D600D304BE /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ADBC361EDDA0C100D304BE /* libRCTContacts.a */; };
+		02AF5ADD20842C18005056CF /* OpenSansSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02AF5AD720842C18005056CF /* OpenSansSemiBold.ttf */; };
+		02AF5ADE20842C18005056CF /* OpenSansItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02AF5AD820842C18005056CF /* OpenSansItalic.ttf */; };
+		02AF5ADF20842C18005056CF /* OpenSansSemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02AF5AD920842C18005056CF /* OpenSansSemiBoldItalic.ttf */; };
+		02AF5AE020842C18005056CF /* OpenSansBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02AF5ADA20842C18005056CF /* OpenSansBoldItalic.ttf */; };
+		02AF5AE120842C18005056CF /* OpenSans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02AF5ADB20842C18005056CF /* OpenSans.ttf */; };
+		02AF5AE220842C18005056CF /* OpenSansBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02AF5ADC20842C18005056CF /* OpenSansBold.ttf */; };
 		02BCD7291DFDE9AF000B8FCF /* libRNFileOpener.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD7281DFDE9A2000B8FCF /* libRNFileOpener.a */; };
 		02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02BCD72C1DFE1606000B8FCF /* QuickLook.framework */; };
 		02D764D31D9B13B300E7E57C /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02D763F21D9918E800E7E57C /* libRNVectorIcons.a */; };
@@ -242,6 +249,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3D3CD9181DE5FBD800167DC4;
 			remoteInfo = "jschelpers-tvOS";
+		};
+		0253BCEC20ACDD5A001A16B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = ECF8C2AA68654A7593180257 /* KCKeepAwake.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = KCKeepAwake;
 		};
 		0259355C1E809AA400FAEE7E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -482,6 +496,12 @@
 		02A075FF1E6D880E008974C5 /* maincert.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = maincert.com.cer; path = ../app/assets/maincert.com.cer; sourceTree = "<group>"; };
 		02A5EE7A1ECA9EC400ED05C1 /* RNKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNKeychain.h; sourceTree = "<group>"; };
 		02A5EE7B1ECA9ECC00ED05C1 /* RNKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNKeychain.m; sourceTree = "<group>"; };
+		02AF5AD720842C18005056CF /* OpenSansSemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OpenSansSemiBold.ttf; path = ../app/assets/fonts/OpenSansSemiBold.ttf; sourceTree = "<group>"; };
+		02AF5AD820842C18005056CF /* OpenSansItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OpenSansItalic.ttf; path = ../app/assets/fonts/OpenSansItalic.ttf; sourceTree = "<group>"; };
+		02AF5AD920842C18005056CF /* OpenSansSemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OpenSansSemiBoldItalic.ttf; path = ../app/assets/fonts/OpenSansSemiBoldItalic.ttf; sourceTree = "<group>"; };
+		02AF5ADA20842C18005056CF /* OpenSansBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OpenSansBoldItalic.ttf; path = ../app/assets/fonts/OpenSansBoldItalic.ttf; sourceTree = "<group>"; };
+		02AF5ADB20842C18005056CF /* OpenSans.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OpenSans.ttf; path = ../app/assets/fonts/OpenSans.ttf; sourceTree = "<group>"; };
+		02AF5ADC20842C18005056CF /* OpenSansBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OpenSansBold.ttf; path = ../app/assets/fonts/OpenSansBold.ttf; sourceTree = "<group>"; };
 		02BCD7231DFDE9A2000B8FCF /* RNFileOpener.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFileOpener.xcodeproj; path = "../node_modules/react-native-file-opener/ios/RNFileOpener.xcodeproj"; sourceTree = "<group>"; };
 		02BCD72C1DFE1606000B8FCF /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		02D764581D9AAF4D00E7E57C /* peeriomobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = peeriomobile.entitlements; path = peeriomobile/peeriomobile.entitlements; sourceTree = "<group>"; };
@@ -516,9 +536,11 @@
 		A0F64612EAF249BC98CB3DE2 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		A7DDFAC6A6F74107A3D45471 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		B836295CD1B344EBB035E1B6 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
+		D9AE8E217E044D3CBF892547 /* libKCKeepAwake.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libKCKeepAwake.a; sourceTree = "<group>"; };
 		DE216B2DFB25438F8922A621 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		E324EB0D0FAE4F96A2D57F34 /* RCTPrivacySnapshot.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTPrivacySnapshot.xcodeproj; path = "../node_modules/react-native-privacy-snapshot/RCTPrivacySnapshot.xcodeproj"; sourceTree = "<group>"; };
 		EBD14F572C0F4C24BF45471F /* RCTContacts.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTContacts.xcodeproj; path = "../node_modules/react-native-contacts/ios/RCTContacts.xcodeproj"; sourceTree = "<group>"; };
+		ECF8C2AA68654A7593180257 /* KCKeepAwake.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = KCKeepAwake.xcodeproj; path = "../node_modules/react-native-keep-awake/ios/KCKeepAwake.xcodeproj"; sourceTree = "<group>"; };
 		ED79A42A8D3144739CE4C04B /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -565,6 +587,7 @@
 				021C85931F70C0580046FFF4 /* libGoogleConversionTracking.a in Frameworks */,
 				0268189B1F746B8900A42812 /* libRNViewShot.a in Frameworks */,
 				0268189C1F746B9400A42812 /* libRCTCameraRoll.a in Frameworks */,
+				0253BCEE20ACDE5C001A16B5 /* libKCKeepAwake.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,6 +698,22 @@
 			isa = PBXGroup;
 			children = (
 				0253781E1EC4E14700752E61 /* libBVLinearGradient.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0253BCB720ACDD59001A16B5 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				D9AE8E217E044D3CBF892547 /* libKCKeepAwake.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		0253BCE920ACDD5A001A16B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0253BCED20ACDD5A001A16B5 /* libKCKeepAwake.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -898,6 +937,7 @@
 				EBD14F572C0F4C24BF45471F /* RCTContacts.xcodeproj */,
 				2E792C39C6774D5F9DDB3025 /* imageCropPicker.xcodeproj */,
 				06978AC5F624491ABD988984 /* RNViewShot.xcodeproj */,
+				ECF8C2AA68654A7593180257 /* KCKeepAwake.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -921,6 +961,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				EE3B3AB15A814B41A0267C44 /* Resources */,
 				02BCD72B1DFE1606000B8FCF /* Frameworks */,
+				0253BCB720ACDD59001A16B5 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -937,6 +978,12 @@
 		EE3B3AB15A814B41A0267C44 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				02AF5ADB20842C18005056CF /* OpenSans.ttf */,
+				02AF5ADC20842C18005056CF /* OpenSansBold.ttf */,
+				02AF5ADA20842C18005056CF /* OpenSansBoldItalic.ttf */,
+				02AF5AD820842C18005056CF /* OpenSansItalic.ttf */,
+				02AF5AD720842C18005056CF /* OpenSansSemiBold.ttf */,
+				02AF5AD920842C18005056CF /* OpenSansSemiBoldItalic.ttf */,
 				02A075FF1E6D880E008974C5 /* maincert.com.cer */,
 				02210A831E0191BA006D7AC0 /* sounds */,
 				02E096DB1DAE50E100641B85 /* dict */,
@@ -990,7 +1037,7 @@
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = 7L45B96YPK;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
 								enabled = 1;
@@ -1028,6 +1075,10 @@
 				{
 					ProductGroup = 025935581E809AA300FAEE7E /* Products */;
 					ProjectRef = 025935571E809AA300FAEE7E /* InAppUtils.xcodeproj */;
+				},
+				{
+					ProductGroup = 0253BCE920ACDD5A001A16B5 /* Products */;
+					ProjectRef = ECF8C2AA68654A7593180257 /* KCKeepAwake.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -1311,6 +1362,13 @@
 			remoteRef = 0253B8381E6868F300554265 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		0253BCED20ACDD5A001A16B5 /* libKCKeepAwake.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libKCKeepAwake.a;
+			remoteRef = 0253BCEC20ACDD5A001A16B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		0259355D1E809AA400FAEE7E /* libInAppUtils.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1507,6 +1565,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02AF5AE020842C18005056CF /* OpenSansBoldItalic.ttf in Resources */,
 				02210A841E0191BA006D7AC0 /* sounds in Resources */,
 				02321C5D1D80558E00282EB1 /* main.jsbundle in Resources */,
 				0248F0721E5A59BF00C437A9 /* terms.txt in Resources */,
@@ -1518,12 +1577,17 @@
 				51CAD96E068B4E2EAA239290 /* FontAwesome.ttf in Resources */,
 				B73DC4B1F0BD4E63BE1B4BD5 /* Foundation.ttf in Resources */,
 				021C855E1F70C02C0046FFF4 /* include in Resources */,
+				02AF5ADE20842C18005056CF /* OpenSansItalic.ttf in Resources */,
+				02AF5ADF20842C18005056CF /* OpenSansSemiBoldItalic.ttf in Resources */,
 				02E096DC1DAE50E100641B85 /* dict in Resources */,
 				8390076B9DE5486982F0EBE9 /* Ionicons.ttf in Resources */,
 				02DB41591DCD1B1C00E04176 /* Images.xcassets in Resources */,
 				1467A9A8E0304BE0953E715B /* Octicons.ttf in Resources */,
+				02AF5AE220842C18005056CF /* OpenSansBold.ttf in Resources */,
+				02AF5AE120842C18005056CF /* OpenSans.ttf in Resources */,
 				17093292DCFB4EFBB929257F /* Zocial.ttf in Resources */,
 				E19FDAE0C2454345A5CE2523 /* MaterialCommunityIcons.ttf in Resources */,
+				02AF5ADD20842C18005056CF /* OpenSansSemiBold.ttf in Resources */,
 				02726F581EB33C7A00D82BF5 /* libsodium-ios in Resources */,
 				026A54881F9A5F8600D26E34 /* Launch Screen.storyboard in Resources */,
 				8560D839D75A4E9590C8B1F5 /* SimpleLineIcons.ttf in Resources */,
@@ -1580,9 +1644,11 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Samvel Avanesov (7TA58ZPZB5)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 306;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 7L45B96YPK;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1613,6 +1679,7 @@
 					"$(SRCROOT)/../node_modules/react-native-print/ios/RNPrint",
 					"$(SRCROOT)/../node_modules/react-native-html-to-pdf/ios/RNHTMLtoPDF/**",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
+					"$(SRCROOT)/../node_modules/react-native-keep-awake/ios",
 				);
 				INFOPLIST_FILE = peeriomobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1637,6 +1704,7 @@
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
+					"\"$(SRCROOT)/peeriomobile\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1645,8 +1713,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
-				PROVISIONING_PROFILE = "ae40e780-662f-4a4a-9295-ac33e0990548";
-				PROVISIONING_PROFILE_SPECIFIER = com.peerio.dev;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -1657,8 +1725,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = peeriomobile/peeriomobile.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 306;
-				DEVELOPMENT_TEAM = 7L45B96YPK;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1689,6 +1759,7 @@
 					"$(SRCROOT)/../node_modules/react-native-print/ios/RNPrint",
 					"$(SRCROOT)/../node_modules/react-native-html-to-pdf/ios/RNHTMLtoPDF/**",
 					"$(SRCROOT)/../node_modules/react-native-view-shot/ios",
+					"$(SRCROOT)/../node_modules/react-native-keep-awake/ios",
 				);
 				INFOPLIST_FILE = peeriomobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1713,6 +1784,7 @@
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
 					"\"$(SRCROOT)/peeriomobile\"",
+					"\"$(SRCROOT)/peeriomobile\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1721,7 +1793,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.peerio;
 				PRODUCT_NAME = peeriomobile;
-				PROVISIONING_PROFILE = "1f70bad6-eabe-4771-adb8-bb46b73b0b2e";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

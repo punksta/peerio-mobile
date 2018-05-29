@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import Text from '../controls/custom-text';
 import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import chatState from './chat-state';
 import { tx } from '../utils/translator';
@@ -11,11 +12,11 @@ export default class ComposeMessage extends Component {
 
     get roomRedirectText() {
         return (
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ marginTop: vars.spacing.small.midi2x, flexDirection: 'row', justifyContent: 'center' }}>
                 <Text style={{ fontSize: vars.font.size.normal, color: vars.subtleText }}>
                     {tx('title_chatWithGroup')}
                 </Text>
-                <Text style={{ fontSize: vars.font.size.normal, color: vars.bg }}>
+                <Text style={{ fontSize: vars.font.size.normal, color: vars.peerioBlue }}>
                     {tx('title_createRoom')}
                 </Text>
             </View>);

@@ -2,9 +2,11 @@ import { Platform, NativeModules } from 'react-native';
 import RNFS from 'react-native-fs';
 import FileOpener from 'react-native-file-opener';
 import pathUtils from 'path';
+import mime from 'mime-types';
 
 const icebear = require('./peerio-icebear');
 
+const { fileHelpers } = icebear;
 const { bytesToB64, b64ToBytes } = icebear.crypto.cryptoUtil;
 
 const ROOT = Platform.OS === 'ios' ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
@@ -84,7 +86,9 @@ export default (fileStream) => {
          */
         static launchViewer(path, title) {
             console.debug(`rn-file-stream.js: opening viewer for ${path}`);
-            return FileOpener.open(path, 'image/jpeg', title || path);
+            const extension = fileHelpers.getFileExtension(path);
+            const mimeType = extension ? mime.types[extension] : 'image/jpeg';
+            return FileOpener.open(path, mimeType, title || path);
         }
 
         static getStat(path) {

@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import FileTypeIcon from './file-type-icon';
 import FileProgress from './file-progress';
 import { fileHelpers } from '../../lib/icebear';
+import { tx } from '../utils/translator';
 
 const padding = 8;
 const borderWidth = 1;
@@ -19,7 +21,7 @@ const container = {
 };
 
 const titleText = {
-    color: vars.bg,
+    color: vars.peerioBlue,
     marginVertical: 2,
     ellipsizeMode: 'tail'
 };
@@ -33,12 +35,55 @@ const text = {
     flexGrow: 1,
     flexShrink: 1,
     fontSize: vars.font.size.normal,
-    fontWeight: vars.font.weight.semiBold,
     color: vars.txtMedium,
     paddingLeft: padding
 };
 
 export default class FileInlineContainer extends SafeComponent {
+    legacyNotification() {
+        const errorContainer = {
+            backgroundColor: vars.legacyImageErrorBg,
+            padding: vars.spacing.small.midi2x,
+            borderRadius: 4
+        };
+        const errorStyle = {
+            fontSize: vars.font.size.smaller,
+            color: vars.lighterBlackText,
+            fontStyle: 'italic'
+        };
+        const learnMoreStyle = {
+            fontSize: vars.font.size.smaller,
+            color: vars.peerioBlue
+        };
+        return (
+            this.props.isOpen && <View style={errorContainer}>
+                <Text style={errorStyle}> {tx('title_newfsUpgradeImageError')} </Text>
+                <Text semibold style={learnMoreStyle}> {tx('title_learnMoreLegacyFiles')} </Text>
+            </View>);
+    }
+
+    get fileTypeIcon() {
+        const { file, onAction } = this.props;
+        return (
+            <TouchableOpacity
+                onPress={onAction}
+                pressRetentionOffset={vars.pressRetentionOffset}>
+                <FileTypeIcon type={fileHelpers.getFileIconType(file.ext)} size="smaller" />
+            </TouchableOpacity>);
+    }
+
+    get fileName() {
+        const { file, isImage, onAction } = this.props;
+        const name = isImage ? file.name : `${file.name} (${file.sizeFormatted})`;
+        return (!!name &&
+            <TouchableOpacity
+                style={{ flexDirection: 'row', alignItems: 'center', flexGrow: 1, flexShrink: 1 }}
+                onPress={onAction}
+                pressRetentionOffset={vars.pressRetentionOffset}>
+                <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>
+            </TouchableOpacity>);
+    }
+
     render() {
         const { file, isImage, isOpen, extraActionIcon } = this.props;
         const { title, description, fileId, downloading } = file;
@@ -57,7 +102,6 @@ export default class FileInlineContainer extends SafeComponent {
             paddingBottom: (isLocal && isOpen) ? (padding + borderWidth) : 0,
             height: containerHeight
         };
-        const name = isImage ? file.name : `${file.name} (${file.sizeFormatted})`;
         return (
             <View style={container}>
                 <View style={outer} {...this.props}>
@@ -65,19 +109,23 @@ export default class FileInlineContainer extends SafeComponent {
                         {!!title && <Text style={titleText}>{title}</Text>}
                         {!!description && <Text style={descText}>{description}</Text>}
                     </View>
-                    <View style={[header, { marginBottom: downloading && !isImage ? spacingDifference : 0 }]}>
-                        {isLocal && <FileTypeIcon type={fileHelpers.getFileIconType(file.ext)} size="smaller" />}
-                        {!!name && <Text numberOfLines={1} ellipsizeMode="tail" style={text}>{name}</Text>}
+                    <View style={header}>
+                        {isLocal && this.fileTypeIcon}
+                        {this.fileName}
                         {isLocal && <View style={{ flexDirection: 'row' }}>
                             {extraActionIcon}
-                            {!downloading && icons.darkNoPadding(
+                            {icons.darkNoPadding(
                                 'more-vert',
-                                () => this.props.onAction(file),
-                                { marginHorizontal: vars.spacing.small.midi2x }
+                                () => !file.isLegacy ? this.props.onActionSheet(file) : this.props.onLegacyFileAction(file),
+                                { marginHorizontal: vars.spacing.small.midi2x },
+                                vars.iconSize,
+                                downloading ? true : null
                             )}
                         </View>}
                     </View>
-                    {this.props.children}
+                    {file.isLegacy ?
+                        this.legacyNotification() :
+                        this.props.children}
                 </View>
                 {!isImage && <FileProgress file={file} />}
             </View>
@@ -89,6 +137,7 @@ FileInlineContainer.propTypes = {
     file: PropTypes.any,
     onLayout: PropTypes.any,
     extraActionIcon: PropTypes.any,
+    onActionSheet: PropTypes.any,
     onAction: PropTypes.any,
     isImage: PropTypes.bool,
     isOpen: PropTypes.bool

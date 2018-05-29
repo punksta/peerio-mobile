@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -40,7 +41,7 @@ export default class SettingsItem extends SafeComponent {
     renderThrow() {
         const titleStyle = {
             color: this.props.disabled ? vars.txtLightGrey : vars.txtDark,
-            fontSize: vars.font.size.bigger
+            fontSize: vars.font.size.normal
         };
         const offset = vars.retentionOffset;
         return (

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Dimensions, LayoutAnimation, Keyboard } from 'react-native';
+import { View, ScrollView, Dimensions, LayoutAnimation, Keyboard } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { observable, reaction, action } from 'mobx';
 import ContactSelectorUniversal from '../contacts/contact-selector-universal';
@@ -13,19 +13,20 @@ import chatState from '../messaging/chat-state';
 import { User, config, socket } from '../../lib/icebear';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import testLabel from '../helpers/test-label';
+import Text from '../controls/custom-text';
 
-const fillView = { flex: 1, flexGrow: 1, backgroundColor: vars.white };
+const fillView = { flex: 1, flexGrow: 1, backgroundColor: vars.darkBlueBackground05 };
 
 const { width } = Dimensions.get('window');
 
 const card = {
     width,
-    backgroundColor: vars.white,
+    backgroundColor: vars.darkBlueBackground05,
     flexGrow: 1
 };
 
 const titleStyle = {
-    color: vars.bg,
+    color: vars.peerioBlue,
     fontSize: vars.font.size.bigger,
     marginLeft: vars.spacing.small.maxi
 };
@@ -71,24 +72,35 @@ export default class CreateChannel extends Component {
     }
 
     nextIcon() {
-        if (this.step === 1) return icons.text(tu('button_go'), () => this.next(), null, 'buttonGo');
-        return icons.text(tu('button_next'), () => this.next(), null, 'buttonNext');
+        if (this.step === 1) {
+            return icons.text(
+                tu('button_go'),
+                () => this.next(),
+                { color: vars.peerioBlue, marginHorizontal: vars.iconPadding },
+                'buttonGo');
+        }
+        return icons.text(
+            tu('button_next'),
+            () => this.next(),
+            { color: vars.peerioBlue, marginHorizontal: vars.iconPadding },
+            'buttonNext');
     }
 
     nextIconDisabled() {
-        if (this.step === 1) return icons.disabledText(tu('button_go'));
-        return icons.disabledText(tu('button_next'));
+        if (this.step === 1) return icons.disabledText(tu('button_go'), { marginHorizontal: vars.iconPadding });
+        return icons.disabledText(tu('button_next'), { marginHorizontal: vars.iconPadding });
     }
 
     exitRow(testId) {
         const container = {
+            backgroundColor: vars.darkBlueBackground15,
             flex: 0,
             flexDirection: 'row',
             alignItems: 'center',
             padding: vars.spacing.small.mini2x,
             paddingTop: vars.statusBarHeight * 2,
             paddingBottom: 0,
-            marginBottom: vars.spacing.medium.mini2x,
+            marginBottom: vars.spacing.small.midi2x,
             height: vars.headerHeight
         };
         const textStyle = {
@@ -96,15 +108,14 @@ export default class CreateChannel extends Component {
             flexGrow: 1,
             flexShrink: 1,
             fontSize: vars.font.size.huge,
-            fontWeight: vars.font.weight.semiBold,
-            color: vars.txtDark
+            color: vars.textBlack54
         };
         return (
             <View style={container}
                 {...testLabel(testId)}
                 accessible={false}>
                 {icons.dark('close', () => chatState.routerModal.discard())}
-                <Text style={textStyle}>{tx('button_createChannel')}</Text>
+                <Text semibold style={textStyle}>{tx('button_createChannel')}</Text>
                 {this.isValid ? this.nextIcon() : this.nextIconDisabled()}
             </View>
         );
@@ -120,13 +131,16 @@ export default class CreateChannel extends Component {
                     property="channelName"
                     state={this}
                     bottomText={tx('title_channelNameLimit',
-                        { maxChatNameLength: config.chat.maxChatNameLength })} />
+                        { maxChatNameLength: config.chat.maxChatNameLength })}
+                    maxLength={config.chat.maxChatNameLength} />
                 <CreateChannelTextBox
                     labelText="title_roomPurpose"
                     placeholderText="title_channelTopicPlaceholder"
                     property="channelPurpose"
                     state={this}
-                    bottomText="title_channelTopicOptional" />
+                    bottomText="title_channelTopicOptional"
+                    maxLength={config.chat.maxChatPurposeLength}
+                    multiline />
             </View>
         );
     }

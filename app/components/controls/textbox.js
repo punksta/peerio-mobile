@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, TextInput, LayoutAnimation, TouchableOpacity, Platform } from 'react-native';
+import { View, TextInput, LayoutAnimation, TouchableOpacity, Platform } from 'react-native';
 import { observable, reaction } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { t } from '../utils/translator';
@@ -9,6 +9,7 @@ import uiState from '../layout/ui-state';
 import { vars, textbox } from '../../styles/styles';
 import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
+import Text from '../controls/custom-text';
 
 @observer
 export default class TextBox extends SafeComponent {
@@ -137,7 +138,7 @@ export default class TextBox extends SafeComponent {
             <Text
                 style={{
                     height: 14,
-                    color: vars.txtDark,
+                    color: vars.red,
                     fontSize: vars.font.size.smaller,
                     backgroundColor: 'transparent'
                 }}>{t(this.validationMessage)}</Text>
@@ -150,16 +151,16 @@ export default class TextBox extends SafeComponent {
         const { customIcon } = this.props;
         return customIcon ?
             <View style={textbox.iconContainer}>
-                {icons.colored(customIcon, null, vars.buttonGreen)}
+                {icons.colored(customIcon, null, vars.confirmColor)}
             </View> : null;
     }
 
     get secretIcon() {
         return !this.props.secureTextEntry ? null : (
             <View style={textbox.iconContainer}>
-                {icons.dark(
-                    this.showSecret ? 'visibility-off' : 'visibility',
-                    this.toggleSecret, { backgroundColor: 'transparent' })}
+                {this.showSecret ?
+                    icons.colored('visibility', this.toggleSecret, vars.peerioTeal, 'transparent') :
+                    icons.dark('visibility', this.toggleSecret, { backgroundColor: 'transparent' })}
             </View>
         );
     }
@@ -184,7 +185,6 @@ export default class TextBox extends SafeComponent {
             this.offsetHeight = frameHeight;
         });
     };
-
     renderThrow() {
         // console.log('re-render');
         const returnKeyType = this.props.returnKeyType || 'default';
@@ -196,17 +196,24 @@ export default class TextBox extends SafeComponent {
             fontSize = Math.floor(fontSize * astl / this.value.length);
         }
         const { secretIcon, customIcon, start, end } = this;
+        // temporary hack until textbox component is replaced with new one
+        let borderColorOverride;
+        if (this.value || this.focused) {
+            borderColorOverride = vars.peerioBlue;
+        } else {
+            borderColorOverride = vars.black38;
+        }
         return (
             <View style={textbox.outerContainer} onLayout={this.layout} ref={ref => { this._container = ref; }}>
                 <View style={[style.outer]}>
                     <View
-                        style={[style.radius]}>
+                        style={[style.radius, { borderColor: borderColorOverride }]}>
                         {this.hint}
                         <View
                             style={[textbox.inputContainer, icAlert]}>
                             <TextInput
                                 keyboardType={this.props.keyboardType}
-                                style={[style.textbox, { fontSize },
+                                style={[style.textbox, { fontSize, fontFamily: vars.peerioFontFamily },
                                     { height: vars.inputPaddedHeight, top: 0, marginRight: this.secretIcon ? 42 : 0 }]}
                                 ref={ref => { this.textinput = ref; }}
                                 underlineColorAndroid="transparent"

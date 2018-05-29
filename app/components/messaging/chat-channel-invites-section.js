@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 
@@ -16,23 +17,22 @@ export default class ChatChannelInvitesSection extends SafeComponent {
             marginTop: 10,
             marginBottom: 6,
             borderRadius: 5,
-            borderColor: vars.bg,
+            borderColor: vars.peerioBlue,
             borderWidth: 1,
             alignItems: 'center',
             justifyContent: 'center'
         };
 
         const textStyle = {
-            color: vars.bg,
+            color: vars.peerioBlue,
             paddingVertical: 9,
-            fontSize: vars.font.size.bigger,
-            fontWeight: '500'
+            fontSize: vars.font.size.bigger
         };
 
         return (
             <View >
                 <TouchableOpacity disabled={!onPress} onPress={onPress} style={container} pressRetentionOffset={vars.pressRetentionOffset}>
-                    <Text style={textStyle}>{title}</Text>
+                    <Text semibold style={textStyle}>{title}</Text>
                 </TouchableOpacity>
             </View>
         );

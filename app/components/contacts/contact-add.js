@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ScrollView, Text, TouchableOpacity, LayoutAnimation, Share } from 'react-native';
+import { View, ScrollView, TouchableOpacity, LayoutAnimation, Share } from 'react-native';
 import { observable, reaction, when } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import SafeComponent from '../shared/safe-component';
@@ -12,26 +12,28 @@ import uiState from '../layout/ui-state';
 import contactState from './contact-state';
 import snackbarState from '../snackbars/snackbar-state';
 import buttons from '../helpers/buttons';
+import testLabel from '../helpers/test-label';
+import Text from '../controls/custom-text';
+import icons from '../helpers/icons';
+import routerMain from '../routes/router-main';
+import BackIcon from '../layout/back-icon';
 
 const textinputContainer = {
     backgroundColor: vars.white,
-    marginBottom: vars.spacing.small.midi2x,
     flexDirection: 'row',
-    alignItems: 'center',
-    overflow: 'hidden'
-};
-
-const inviteContainer = {
-    marginBottom: vars.spacing.small.midi2x,
-    height: vars.inputHeight,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     overflow: 'hidden',
-    paddingLeft: vars.inputPaddingLeft
+    paddingLeft: vars.spacing.medium.mini,
+    paddingRight: vars.spacing.medium.maxi
+};
+
+const textStyle = {
+    fontSize: vars.font.size.smaller,
+    color: vars.textBlack54
 };
 
 const buttonRow = {
+    paddingRight: vars.spacing.medium.maxi,
     marginBottom: vars.spacing.small.midi2x,
     flexDirection: 'row',
     alignItems: 'center',
@@ -43,9 +45,9 @@ const textinput = {
     fontSize: vars.font.size.normal,
     height: vars.inputHeight,
     color: vars.txtDark,
-    marginLeft: vars.inputPaddingLeft,
     flex: 1,
-    flexGrow: 1
+    flexGrow: 1,
+    fontFamily: vars.peerioFontFamily
 };
 
 const textStatic = {
@@ -60,7 +62,7 @@ const textStatic = {
 const label = {
     color: vars.txtDate,
     marginVertical: vars.spacing.small.mini2x,
-    marginLeft: vars.spacing.small.maxi
+    paddingLeft: vars.spacing.medium.midi
 };
 
 const labelDark = [label, { color: vars.txtDark }];
@@ -76,11 +78,9 @@ export default class ContactAdd extends SafeComponent {
     componentDidMount() {
         uiState.currentScrollView = this._scrollView;
         reaction(() => this.query, () => {
+            LayoutAnimation.easeInEaseOut();
             this.toInvite = null;
-            if (this.showValidationError) {
-                LayoutAnimation.easeInEaseOut();
-                this.showValidationError = false;
-            }
+            if (this.showValidationError) this.showValidationError = false;
         });
     }
 
@@ -92,6 +92,11 @@ export default class ContactAdd extends SafeComponent {
     onScroll = ({ nativeEvent: { contentOffset: { y } } }) => {
         uiState.currentScrollViewPosition = y;
     };
+
+    get leftIcon() {
+        if (contactState.empty) return null;
+        return <BackIcon action={routerMain.contacts} />;
+    }
 
     inviteContactDuck(toInvite) {
         if (!toInvite) return null;
@@ -106,6 +111,7 @@ export default class ContactAdd extends SafeComponent {
         this.query = this.query.toLocaleLowerCase().trim();
         if (!this.query) return;
         if (this.waiting) return;
+        uiState.hideKeyboard();
         this.waiting = true;
         this.toInvite = null;
         this.notFound = false;
@@ -117,7 +123,6 @@ export default class ContactAdd extends SafeComponent {
                 const atInd = this.query.indexOf('@');
                 const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
                 if (isEmail) {
-                    warnings.add(`User is not found on Peerio, please invite`);
                     LayoutAnimation.easeInEaseOut();
                     this.toInvite = this.inviteContactDuck(this.query);
                 } else if (!isLegacy) {
@@ -140,9 +145,8 @@ export default class ContactAdd extends SafeComponent {
             username: User.current.username
         });
         const title = tx('title_socialShareInvite');
-        // const url = 'https://www.peerio.com';
         console.log(title, message);
-        Share.share({ message, title });
+        Share.share({ message, title }, { subject: title });
     }
 
     get emailButton() {
@@ -165,10 +169,11 @@ export default class ContactAdd extends SafeComponent {
     renderButton1(text, onPress, disabled) {
         return (
             <TouchableOpacity
+                {...testLabel(text)}
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={{ paddingRight: vars.spacing.small.maxi2x, paddingVertical: vars.spacing.small.maxi }}>
-                <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
+                <Text bold style={{ color: disabled ? vars.txtMedium : vars.peerioBlue }}>
                     {tu(text)}
                 </Text>
             </TouchableOpacity>
@@ -188,15 +193,31 @@ export default class ContactAdd extends SafeComponent {
     get inviteBlock() {
         const mockContact = this.toInvite || {};
         const { email, invited } = mockContact;
+        if (!email) return null;
+        const inviteBlockStyle = {
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexDirection: 'row',
+            overflow: 'hidden',
+            height: email ? vars.contactInviteSuggestionHeight : 0,
+            backgroundColor: vars.contactInviteSuggestionBg,
+            borderTopColor: vars.confirmColor,
+            borderTopWidth: 2,
+            marginBottom: vars.spacing.small.midi2x,
+            paddingRight: vars.spacing.medium.maxi,
+            paddingLeft: vars.spacing.medium.midi
+        };
         return (
-            <View style={{ overflow: 'hidden', height: email ? undefined : 0, opacity: invited ? 0.5 : 1 }}>
-                <View style={inviteContainer}>
-                    <Text>{email}</Text>
-                    {buttons.uppercaseBlueButton(tx('button_invite'), () => {
-                        mockContact.invited = true;
-                        contactStore.invite(email);
-                    }, invited)}
+            <View style={inviteBlockStyle}>
+                {icons.plaindark('email', vars.iconSize)}
+                <View style={{ flex: 1, marginLeft: vars.spacing.medium.mini2x }}>
+                    <Text style={textStyle}>{tx('title_couldntLocateContact1')}</Text>
+                    <Text style={textStyle}>{tx('title_couldntLocateContact2')}</Text>
                 </View>
+                {buttons.blueTextButton(tx('button_invite'), () => {
+                    mockContact.invited = true;
+                    contactStore.invite(email);
+                }, invited)}
             </View >
         );
     }
@@ -207,35 +228,40 @@ export default class ContactAdd extends SafeComponent {
                 <ScrollView
                     onScroll={this.onScroll}
                     keyboardShouldPersistTaps="handled"
-                    style={{ backgroundColor: vars.settingsBg }}
+                    style={{ backgroundColor: vars.darkBlueBackground05 }}
                     ref={ref => { this._scrollView = ref; }}>
                     <View style={{ marginTop: vars.spacing.medium.midi2x }}>
                         {contactState.empty && <View style={{ margin: vars.spacing.small.midi2x }}>
                             <Text style={labelDark}>{tx('title_contactZeroState')}</Text>
                         </View>}
-                        <View style={{ margin: vars.spacing.small.midi2x }}>
+                        <View style={{ marginVertical: vars.spacing.small.midi2x }}>
                             <Text style={label}>{tx('button_addAContact')}</Text>
                             <View style={textinputContainer}>
                                 <SimpleTextBox
                                     autoCorrect={false}
                                     autoCapitalize="none"
                                     onChangeText={text => { this.query = text; }}
-                                    placeholder={tx('title_userSearch')} style={textinput}
-                                    value={this.query} />
-                                {this.renderButton1('button_add', () => this.tryAdding())}
+                                    placeholder={tx('title_userSearch')}
+                                    style={textinput}
+                                    value={this.query}
+                                    {...testLabel('contactSearchInput')}
+                                />
+                                {(this.toInvite || this.showValidationError)
+                                    ? icons.dark('close', () => { this.query = null; })
+                                    : this.renderButton1('button_add', () => this.tryAdding(), !this.query)}
                             </View>
                             {this.inviteBlock}
                             {this.validationError}
                         </View>
-                        <View style={{ margin: vars.spacing.small.midi2x }}>
+                        <View style={{ marginVertical: vars.spacing.small.midi2x }}>
                             <View style={buttonRow}>
-                                <Text style={labelDark}>{tx('title_findContacts')}</Text>
+                                <Text semibold style={labelDark}>{tx('title_findContacts')}</Text>
                                 {this.renderButton1('title_importContacts', () => contactState.testImport())}
                             </View>
                         </View>
-                        <View style={{ margin: vars.spacing.small.midi2x }}>
+                        <View style={{ marginVertical: vars.spacing.small.midi2x }}>
                             <View style={buttonRow}>
-                                <Text style={labelDark}>{tx('title_shareSocial')}</Text>
+                                <Text semibold style={labelDark}>{tx('title_shareSocial')}</Text>
                                 {this.renderButton1('button_share', () => this.share())}
                             </View>
                         </View>

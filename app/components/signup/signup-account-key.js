@@ -1,8 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, Clipboard, CameraRoll, TouchableOpacity, Platform } from 'react-native';
+import { View, Clipboard, CameraRoll, TouchableOpacity, Platform } from 'react-native';
 import ViewShot from 'react-native-view-shot';
 import { observable } from 'mobx';
+import Text from '../controls/custom-text';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
 import { config, getFirstLetterUpperCase } from '../../lib/icebear';
@@ -10,7 +11,7 @@ import signupState from './signup-state';
 import { t, tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import LoginWizardPage, {
-    header2, innerSmall, circleTopSmall, title2, buttonRowStyle, container
+    header2, innerSmall, circleTopSmall, headingStyle2, buttonRowStyle, container
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
@@ -30,20 +31,17 @@ const addPhotoText = {
 
 const addPhotoPlus = [addPhotoText, {
     fontSize: vars.signupFontSize,
-    fontWeight: 'bold',
     color: vars.white
 }];
 
 const textNormal = {
-    color: vars.txtDark,
+    color: vars.lighterBlackText,
     fontSize: vars.font.size.bigger,
     lineHeight: 24
 };
 
 const accountKeyText = {
-    color: vars.txtDark,
-    fontFamily: 'Verdana',
-    fontWeight: 'bold',
+    color: vars.lighterBlackText,
     fontSize: vars.font.size.big,
     width: 224
 };
@@ -56,7 +54,7 @@ const accountKeyRow = {
 const smallText = {
     fontSize: vars.font.size.smaller,
     marginVertical: vars.spacing.small.midi2x,
-    color: vars.txtDark
+    color: vars.lighterBlackText
 };
 
 const accountKeyView = {
@@ -100,7 +98,7 @@ export default class SignupStep1 extends LoginWizardPage {
         const letter = getFirstLetterUpperCase(signupState.firstName || signupState.username);
         return (
             <View>
-                <Text style={addPhotoPlus}>{letter}</Text>
+                <Text bold style={addPhotoPlus}>{letter}</Text>
             </View>
         );
     }
@@ -115,15 +113,15 @@ export default class SignupStep1 extends LoginWizardPage {
                 <View style={accountKeyView}>
                     <Text style={smallText}>{tx('title_yourAccountKey')}</Text>
                     <View style={accountKeyRow}>
-                        <Text {...testLabel('passphrase')} style={accountKeyText} selectable>
+                        <Text bold {...testLabel('passphrase')} style={accountKeyText} selectable>
                             {signupState.passphrase}
                         </Text>
-                        {buttons.uppercaseBlueButton(tx('button_copy'), this.copyAccountKey, false, savingScreenshot)}
+                        {buttons.blueTextButton(tx('button_copy'), this.copyAccountKey, false, savingScreenshot)}
                     </View>
                 </View>
                 <Text style={textNormal}>{tx('title_accountKey2')}</Text>
                 <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: vars.spacing.large.midi2x }}>
-                    {/* buttons.uppercaseBlueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
+                    {/* buttons.blueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
                     {/* signupState.keyBackedUp && icons.plaindark('check-circle') */}
                 </View>
             </View>
@@ -135,7 +133,7 @@ export default class SignupStep1 extends LoginWizardPage {
             <View style={container} onLayout={this._layout}>
                 <ViewShot ref={ref => { this._viewShot = ref; }}>
                     <View style={header2}>
-                        <Text style={title2}>{tx('title_AccountKey')}</Text>
+                        <Text style={headingStyle2}>{tx('title_AccountKey')}</Text>
                     </View>
                     <View>
                         <View style={innerSmall}>
@@ -144,7 +142,7 @@ export default class SignupStep1 extends LoginWizardPage {
                             </View>
                         </View>
                         <TouchableOpacity
-                            onPress={() => this._actionSheet.show()}
+                            onPress={() => SignupAvatarActionSheet.show()}
                             pressRetentionOffset={vars.pressRetentionOffset}
                             style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]}>
                             {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}
@@ -153,9 +151,8 @@ export default class SignupStep1 extends LoginWizardPage {
                 </ViewShot>
                 <View style={buttonRowStyle}>
                     {this.button('button_back', () => signupState.prev())}
-                    {this.button(signupState.keyBackedUp ? 'button_finish' : 'button_next', () => signupState.next(), false, !signupState.nextAvailable)}
+                    {this.button('button_next', () => signupState.next(), false, !signupState.nextAvailable)}
                 </View>
-                <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
                 <ActivityOverlay large visible={signupState.isInProgress} />
             </View>
         );

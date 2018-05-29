@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { SectionList, Text } from 'react-native';
+import { SectionList, View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import Avatar from '../shared/avatar';
 import ContactInviteItem from './contact-invite-item';
 import testLabel from '../helpers/test-label';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
+import Text from '../controls/custom-text';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -26,25 +27,35 @@ export default class ContactSelectorSectionList extends Component {
             );
         }
         return (
-            <Avatar
-                noBorderBottom
-                starred={isAdded}
-                contact={item}
-                title={<Text style={{ fontWeight: 'normal' }}>{fullName || username}</Text>}
-                title2={isLegacy ? username : null}
-                height={vars.listItemHeight}
-                hideOnline
-                onPress={() => this.props.onPress(item)} />
+            <View {...testLabel(params.index.toString())}>
+                <Avatar
+                    noBorderBottom
+                    starred={isAdded}
+                    contact={item}
+                    title={<Text style={{ fontWeight: 'normal' }}>{fullName || username}</Text>}
+                    title2={isLegacy ? username : null}
+                    height={vars.listItemHeight}
+                    hideOnline
+                    onPress={() => this.props.onPress(item)}
+                    backgroundColor={vars.darkBlueBackground05} />
+            </View>
         );
     };
 
     sectionHeader({ section: { data, key } }) {
         if (!data || !data.length || !key) return null;
-        const s = { fontWeight: 'bold', margin: vars.spacing.small.maxi };
+        const container = {
+            marginLeft: vars.spacing.small.midi2x,
+            justifyContent: 'center',
+            height: vars.contactListHeaderHeight,
+            backgroundColor: vars.darkBlueBackground05
+        };
         return (
-            <Text style={s}>
-                {tx(key, { found: data && data.length })}
-            </Text>
+            <View style={container}>
+                <Text bold>
+                    {tx(key, { found: data && data.length })}
+                </Text>
+            </View>
         );
     }
 

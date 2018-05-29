@@ -16,7 +16,8 @@ const android = {
         platformName: 'Android',
         platformVersion: process.env.PEERIO_ANDROID_VERSION,
         deviceName: process.env.PEERIO_ANDROID_DEVICE,
-        app: androidBuildPath
+        app: androidBuildPath,
+        autoGrantPermissions: true
     }
 };
 

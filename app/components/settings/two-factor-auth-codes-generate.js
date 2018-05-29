@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
@@ -18,12 +19,11 @@ const bgStyle = {
     flex: 1,
     paddingVertical,
     paddingHorizontal,
-    backgroundColor: vars.settingsBg
+    backgroundColor: vars.darkBlueBackground05
 };
 
 const headerStyle = {
     color: vars.txtDark,
-    fontWeight: 'bold',
     fontSize: vars.font.size.bigger,
     marginLeft: vars.spacing.small.midi2x
 };
@@ -52,16 +52,20 @@ export default class TwoFactorAuthCodesGenerate extends SafeComponent {
         return (
             <View style={bgStyle}>
                 <View>
-                    <Text style={headerStyle}>
+                    <Text bold style={headerStyle}>
                         {tx('title_2FAEnabled')}
                         {tx('title_2FABackupCode')}
                     </Text>
                     <View style={buttonCenterStyle}>
-                        {buttons.uppercaseBlueBgButton(tx('button_2FAGenerateCodes'), () => this.reissueCodes())}
+                        {buttons.roundBlueBgButton(
+                            tx('button_2FAGenerateCodes'),
+                            () => this.reissueCodes(),
+                            null,
+                            { width: vars.wideRoundedButtonWidth })}
                     </View>
                 </View>
                 <View style={{ left: paddingHorizontal + 12, bottom: paddingVertical, position: 'absolute' }}>
-                    {buttons.uppercaseRedButton('button_2FADeactivate', this.disable2fa)}
+                    {buttons.redTextButton('button_2FADeactivate', this.disable2fa)}
                 </View>
             </View>
         );

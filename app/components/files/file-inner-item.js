@@ -1,19 +1,23 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { Text, Dimensions, View, TouchableOpacity } from 'react-native';
+import { Dimensions, View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import fileState from './file-state';
 import FileSignatureError from './file-signature-error';
 import FileTypeIcon from './file-type-icon';
+import testLabel from '../helpers/test-label';
 import FileProgress from './file-progress';
-import { fileHelpers } from '../../lib/icebear';
+import { fileHelpers, contactStore, User } from '../../lib/icebear';
+// import FileActionSheet from './file-action-sheet';
 
 const { width } = Dimensions.get('window');
-const height = 64;
+const height = vars.filesListItemHeight;
 const checkBoxWidth = height;
 
 const fileInfoContainerStyle = {
@@ -25,9 +29,9 @@ const fileInfoContainerStyle = {
 
 @observer
 export default class FileInnerItem extends SafeComponent {
-    onPress() {
+    @action.bound onPress() {
         const { file } = this.props;
-        this.props.onPress && !fileState.isFileSelectionMode ? this.props.onPress(this.props.file)
+        this.props.onPress && !fileState.isFileSelectionMode ? this.props.onPress(file)
             : (file.selected = !file.selected);
     }
 
@@ -39,7 +43,7 @@ export default class FileInnerItem extends SafeComponent {
         const iconBgColor = 'transparent';
         const icon = checked ? 'check-box' : 'check-box-outline-blank';
         const outer = {
-            backgroundColor: 'white',
+            backgroundColor: checked ? vars.peerioBlueBackground05 : vars.filesBg,
             padding: vars.spacing.small.mini2x,
             flex: 0,
             width: checkBoxWidth,
@@ -56,20 +60,19 @@ export default class FileInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { file } = this.props;
+        const { file, onFileAction } = this.props;
         if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
-        const action = () => !file.uploading && this.onPress();
+        const actionIcon = () => onFileAction();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
-            icons.dark('keyboard-arrow-right', action);
+            icons.dark('more-vert', actionIcon);
+        const checked = this.props.file && this.props.file.selected;
         const nameStyle = {
             color: vars.txtDark,
-            fontSize: vars.font.size.normal,
-            fontWeight: vars.font.weight.bold
+            fontSize: vars.font.size.normal
         };
         const infoStyle = {
-            color: vars.subtleText,
-            fontSize: vars.font.size.smaller,
-            fontWeight: vars.font.weight.regular
+            color: vars.extraSubtleText,
+            fontSize: vars.font.size.smaller
         };
         const itemContainerStyle = {
             flex: 1,
@@ -79,7 +82,7 @@ export default class FileInnerItem extends SafeComponent {
             justifyContent: 'space-between',
             borderBottomWidth: 1,
             borderBottomColor: 'rgba(0, 0, 0, .12)',
-            backgroundColor: 'white',
+            backgroundColor: checked ? vars.peerioBlueBackground05 : vars.filesBg,
             height,
             width,
             borderWidth: 0,
@@ -95,14 +98,20 @@ export default class FileInnerItem extends SafeComponent {
         }
         if (icon) icon = icons.darkNoPadding(icon);
         const loadingStyle = null;
-        const arrow = this.props.hideArrow ? null : (
+        const optionsIcon = this.props.hideArrow || fileState.isFileSelectionMode ? null : (
             <View style={{ flex: 0 }}>
                 {iconRight}
             </View>
         );
+        const testID = `file${this.props.rowID}`;
+        const owner = !file.fileOwner || file.fileOwner === User.current.username
+            ? `` : `${contactStore.getContact(file.fileOwner).fullName} `;
         return (
-            <View style={{ backgroundColor: 'white' }}>
-                <TouchableOpacity onPress={action}>
+            <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
+                <TouchableOpacity
+                    onPress={this.onPress}
+                    {...testLabel(testID)}
+                    style={{ backgroundColor: vars.filesBg }}>
                     <View style={[fileInfoContainerStyle, { opacity }]}>
                         {this.checkbox()}
                         <View style={[itemContainerStyle, { width }]}>
@@ -114,14 +123,15 @@ export default class FileInnerItem extends SafeComponent {
                                     />}
                             </View>
                             <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.medium.mini2x }}>
-                                <Text style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
+                                <Text bold style={nameStyle} numberOfLines={1} ellipsizeMode="tail">{file.name}</Text>
                                 <Text style={infoStyle}>
+                                    <Text>{owner}</Text>
                                     {file.size && <Text>{file.sizeFormatted}</Text>}
                                     &nbsp;&nbsp;
                                     {moment(file.uploadedAt).format('DD/MM/YYYY')}
                                 </Text>
                             </View>
-                            {arrow}
+                            {optionsIcon}
                         </View>
                     </View>
                 </TouchableOpacity>
@@ -135,5 +145,6 @@ FileInnerItem.propTypes = {
     onPress: PropTypes.func,
     file: PropTypes.any.isRequired,
     checkbox: PropTypes.string,
-    hideArrow: PropTypes.bool
+    hideArrow: PropTypes.bool,
+    onFileAction: PropTypes.func
 };

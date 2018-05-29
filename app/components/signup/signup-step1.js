@@ -1,7 +1,10 @@
 import React from 'react';
+import { observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { Text, View, TouchableOpacity } from 'react-native';
-import TextBox from '../controls/textbox';
+import { View, TouchableOpacity } from 'react-native';
+import randomWords from 'random-words';
+import capitalize from 'capitalize';
+import Text from '../controls/custom-text';
 // import LanguagePickerBox from '../controls/language-picker-box';
 import Bold from '../controls/bold';
 import { vars } from '../../styles/styles';
@@ -9,14 +12,18 @@ import signupState from './signup-state';
 import { popupTOS } from '../shared/popups';
 import { t, tx, T } from '../utils/translator';
 import LoginWizardPage, {
-    header2, innerSmall, circleTopSmall, title2, title3, container, buttonRowStyle
+    header2, innerSmall, circleTopSmall, headingStyle2, footerText1, footerText2, innerContainer, outerContainer, buttonRowStyle
 } from '../login/login-wizard-page';
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
+import StyledTextInput from '../shared/styled-text-input';
+import { socket, validation } from '../../lib/icebear';
+
+const { validators } = validation;
+const { firstName, lastName, username, email } = validators;
 
 const formStyle = {
     paddingVertical: vars.spacing.small.midi2x,
-    paddingHorizontal: vars.spacing.medium.midi2x,
     justifyContent: 'space-between'
 };
 
@@ -54,19 +61,55 @@ const tosParser = {
     tosButton: text => (
         <Text
             onPress={popupTOS}
-            style={{ textDecorationLine: 'underline' }}>
+            style={[footerText2, { textDecorationLine: 'underline' }]}>
             {text}
         </Text>
     )
 };
 
-const signupTextStyle = [title3, {
-    color: vars.white,
-    fontSize: 12
-}];
+const signupTextStyle = [footerText1, { fontSize: vars.font.size.smaller }];
 
 @observer
 export default class SignupStep1 extends LoginWizardPage {
+    firstnameState = observable({ value: '' });
+    lastnameState = observable({ value: '' });
+    usernameState = observable({ value: '' });
+    emailState = observable({ value: '' });
+
+    @action.bound firstNameInputRef(ref) { this.firstNameInput = ref; }
+    @action.bound lastNameInputRef(ref) { this.lastNameInput = ref; }
+    @action.bound usernameInputRef(ref) { this.usernameInput = ref; }
+    @action.bound emailInputRef(ref) { this.emailInput = ref; }
+
+    @action.bound onSubmitFirstName() { this.lastNameInput.onFocus(); }
+    @action.bound onSubmitLastName() { this.usernameInput.onFocus(); }
+    @action.bound onSubmitUsername() { this.emailInput.onFocus(); }
+
+    componentDidMount() {
+        // QUICK SIGNUP DEV FLAG
+        if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
+            const rnd = new Date().getTime() % 100000;
+            this.usernameInput.onChangeText(randomWords({ min: 2, max: 2, join: 'o' }).substring(0, 16));
+            this.emailInput.onChangeText(`${rnd}@test`);
+            this.firstNameInput.onChangeText(capitalize(randomWords()));
+            this.lastNameInput.onChangeText(capitalize(randomWords()));
+        }
+    }
+
+    @action.bound handleNextButton() {
+        signupState.firstName = this.firstnameState.value;
+        signupState.lastName = this.lastnameState.value;
+        signupState.username = this.usernameState.value;
+        signupState.email = this.emailState.value;
+        signupState.next();
+    }
+
+    get isNextDisabled() {
+        // removing "!this.firstnameState.value" causes a runtime error
+        return socket.connected && (!this.firstnameState.value || !this.firstNameInput.isValid ||
+            !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
+    }
+
     get avatar() {
         return (
             <SignupAvatar />
@@ -86,33 +129,49 @@ export default class SignupStep1 extends LoginWizardPage {
     get body() {
         return (
             <View>
-                <TextBox
-                    returnKeyType="next"
-                    state={signupState}
+                <StyledTextInput
+                    state={this.firstnameState}
+                    validations={firstName}
+                    hint={tx('title_firstName')}
                     maxLength={24}
-                    name="firstName"
-                    hint={t('title_firstName')} />
-                <TextBox
+                    required
                     returnKeyType="next"
-                    onSubmit={() => signupState.next()}
-                    state={signupState}
+                    blurOnSubmit={false}
+                    onSubmitEditing={this.onSubmitFirstName}
+                    ref={this.firstNameInputRef}
+                    testID="firstName" />
+                <StyledTextInput
+                    state={this.lastnameState}
+                    validations={lastName}
+                    hint={tx('title_lastName')}
                     maxLength={24}
-                    name="lastName"
-                    hint={t('title_lastName')} />
-                <TextBox
+                    required
                     returnKeyType="next"
+                    blurOnSubmit={false}
+                    onSubmitEditing={this.onSubmitLastName}
+                    ref={this.lastNameInputRef}
+                    testID="lastName" />
+                <StyledTextInput
+                    state={this.usernameState}
+                    validations={username}
+                    hint={tx('title_username')}
                     lowerCase
-                    state={signupState}
+                    required
                     keyboardType="email-address"
-                    name="username"
-                    hint={t('title_username')} />
-                <TextBox
+                    returnKeyType="next"
+                    onSubmitEditing={this.onSubmitUsername}
+                    ref={this.usernameInputRef}
+                    testID="username" />
+                <StyledTextInput
+                    state={this.emailState}
+                    validations={email}
+                    hint={tx('title_email')}
+                    lowerCase
+                    keyboardType="email-address"
                     returnKeyType="go"
-                    keyboardType="email-address"
-                    lowerCase
-                    state={signupState}
-                    name="email"
-                    hint={t('title_email')} />
+                    required
+                    ref={this.emailInputRef}
+                    testID="email" />
                 {/* <LanguagePickerBox /> */}
                 <View style={[{ flexGrow: 1 }]} />
             </View>
@@ -121,33 +180,37 @@ export default class SignupStep1 extends LoginWizardPage {
 
     render() {
         return (
-            <View style={container}>
-                <View style={header2}>
-                    <Text style={title2}>{tx('title_createAccount')}</Text>
-                </View>
-                <View>
-                    <View style={innerSmall}>
-                        <View style={formStyle}>
-                            {this.body}
-                        </View>
+            <View style={outerContainer}>
+                <View style={innerContainer}>
+                    <View style={header2}>
+                        <Text style={headingStyle2}>{tx('title_createAccount')}</Text>
                     </View>
-                    <TouchableOpacity
-                        style={circleTopSmall}
-                        onPress={() => this._actionSheet.show()}
-                        pressRetentionOffset={vars.pressRetentionOffset}>
-                        {signupState.avatarData ? this.avatar : this.avatarSelector}
-                    </TouchableOpacity>
+                    <View>
+                        <View style={innerSmall}>
+                            <View style={formStyle}>
+                                {this.body}
+                            </View>
+                        </View>
+                        <TouchableOpacity
+                            style={circleTopSmall}
+                            onPress={() => SignupAvatarActionSheet.show()}
+                            pressRetentionOffset={vars.pressRetentionOffset}>
+                            {signupState.avatarData ? this.avatar : this.avatarSelector}
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[buttonRowStyle, { justifyContent: 'space-between' }]}>
+                        {this.button('button_back', () => signupState.routes.app.loginStart())}
+                        {this.button('button_next',
+                            () => this.handleNextButton(),
+                            false,
+                            this.isNextDisabled)}
+                    </View>
+                    <View style={footer}>
+                        <Text style={signupTextStyle}>
+                            <T k="title_TOSRequestText">{tosParser}</T>
+                        </Text>
+                    </View>
                 </View>
-                <View style={[buttonRowStyle, { justifyContent: 'space-between' }]}>
-                    {this.button('button_back', () => signupState.routes.app.loginStart())}
-                    {this.button('button_next', () => signupState.next(), false, !signupState.nextAvailable)}
-                </View>
-                <View style={footer}>
-                    <Text style={signupTextStyle}>
-                        <T k="title_TOSRequestText">{tosParser}</T>
-                    </Text>
-                </View>
-                <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
             </View>
         );
     }

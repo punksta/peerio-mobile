@@ -1,29 +1,29 @@
 import React from 'react';
-import { TouchableOpacity, View, Text, Image } from 'react-native';
+import { TouchableOpacity, View, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Jumpy from '../shared/jumpy';
 import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
+import Text from '../controls/custom-text';
 
 const goStyle = {
     fontSize: vars.font.size.normal,
-    fontWeight: vars.font.weight.semiBold,
-    color: vars.bg
+    color: vars.peerioBlue
 };
 
 const disabledStyle = {
     fontSize: vars.font.size.normal,
-    fontWeight: vars.font.weight.semiBold,
     color: vars.disabled
 };
 
 const icons = {
-    basic(name, color, onPress, style, size, noPadding, testID) {
+    basic(name, color, onPress, style, size, noPadding, testID, disabled) {
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={onPress}
                 style={{ justifyContent: 'center' }}
+                disabled={disabled}
                 {...testLabel(testID)}>
                 <View style={{ padding: noPadding ? 0 : vars.iconPadding }}>
                     <Icon
@@ -42,7 +42,7 @@ const icons = {
                 name={name}
                 size={size || vars.iconSize}
                 color={color}
-                style={style}
+                style={[{ backgroundColor: 'transparent' }, style]}
                 {...testLabel(testID)} />
         );
     },
@@ -63,20 +63,21 @@ const icons = {
         return icons.basic(name, vars.whiteIcon, onPress, style, size, undefined, testID);
     },
 
-    dark(name, onPress, style, size) {
-        return icons.basic(name, vars.darkIcon, onPress, style, size);
+    dark(name, onPress, style, size, testID) {
+        return icons.basic(name, vars.darkIcon, onPress, style, size, undefined, testID);
     },
 
     gold(name, onPress, style, size) {
         return icons.basic(name, vars.gold, onPress, style, size);
     },
 
-    darkNoPadding(name, onPress, style, size) {
-        return icons.basic(name, vars.darkIcon, onPress, style, size, true);
+    darkNoPadding(name, onPress, style, size, disabled) {
+        const iconStyle = disabled ? vars.disabledIcon : vars.darkIcon;
+        return icons.basic(name, iconStyle, onPress, style, size, true, undefined, disabled);
     },
 
-    colored(name, onPress, colorFg, backgroundColor) {
-        return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {});
+    colored(name, onPress, colorFg, backgroundColor, testId) {
+        return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {}, null, null, testId);
     },
 
     coloredSmall(name, onPress, colorFg, backgroundColor) {
@@ -98,34 +99,34 @@ const icons = {
         );
     },
 
-    text(text, onPress, style, testID) {
+    text(text, onPress, style, testID, extraWidth) {
         const size = vars.iconPadding * 2 + vars.iconSize;
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={onPress}
                 {...testLabel(testID)}>
-                <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={[goStyle, style]}>{text}</Text>
+                <View style={{ height: size, width: size + extraWidth, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text semibold style={[goStyle, style]}>{text}</Text>
                 </View>
             </TouchableOpacity>
         );
     },
 
-    disabledText(text, style) {
+    disabledText(text, style, extraWidth) {
         const size = vars.iconPadding * 2 + vars.iconSize;
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset} >
-                <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={[disabledStyle, style]}>{text}</Text>
+                <View style={{ height: size, width: size + extraWidth, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text semibold style={[disabledStyle, style]}>{text}</Text>
                 </View>
             </TouchableOpacity>
         );
     },
 
-    bubble: (text) => icons.circle(text, 14, 8, vars.notificationIcon, vars.white),
-    unreadBubble: (text) => icons.circle(text, 24, 12, vars.bg, vars.white),
+    bubble: (text) => icons.circle(text, 14, 8, vars.red, vars.white),
+    unreadBubble: (text) => icons.circle(text, 24, 12, vars.peerioBlue, vars.white),
 
     circle(text, radius, margin, bgColor, fgColor) {
         const notificationStyle = {
@@ -141,12 +142,11 @@ const icons = {
         const textStyle = {
             color: fgColor,
             fontSize: vars.font.size.normal,
-            fontWeight: vars.font.weight.bold,
             textAlign: 'center'
         };
         return (
             <View style={notificationStyle}>
-                <Text style={textStyle}>{`${text}`} </Text>
+                <Text bold style={textStyle}>{`${text}`} </Text>
             </View>
         );
     },
@@ -187,10 +187,9 @@ const icons = {
     iconPinnedChat(source, onPress) {
         const width = vars.pinnedChatIconSize;
         const height = width;
-        const paddingHorizontal = vars.pinnedChatPaddingHorizontal;
         return (
             <TouchableOpacity
-                style={{ paddingHorizontal, opacity: vars.sublteGrayOpacity }}
+                style={{ position: 'absolute', left: 8, top: 0 }}
                 onPress={onPress}
                 pressRetentionOffset={vars.retentionOffset}>
                 <Image style={{ width, height }} source={source} />

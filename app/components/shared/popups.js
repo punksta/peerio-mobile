@@ -1,17 +1,34 @@
 import React from 'react';
-import { Text, WebView, View } from 'react-native';
+import RNFS from 'react-native-fs';
+import FileOpener from 'react-native-file-opener';
+import { WebView, Image, View, Platform } from 'react-native';
 import { observable } from 'mobx';
+import Text from '../controls/custom-text';
 import { t, tu, tx } from '../utils/translator';
 import TextInputStateful from '../controls/text-input-stateful';
 import popupState from '../layout/popup-state';
 import locales from '../../lib/locales';
 import CheckBox from './checkbox';
 import { vars } from '../../styles/styles';
-import { User } from '../../lib/icebear';
+import { fileStore, User, config } from '../../lib/icebear';
 import testLabel from '../helpers/test-label';
 import FilePreview from '../files/file-preview';
+import PopupMigration from '../controls/popup-migration';
 
-function textControl(str) {
+const titleStyle = {
+    color: vars.lighterBlackText,
+    fontSize: vars.font.size.huge
+};
+const textStyle = {
+    color: vars.lighterBlackText,
+    fontSize: vars.font.size.normal
+};
+const textDownloadStyle = {
+    textDecorationLine: 'underline',
+    color: vars.linkColor
+};
+
+function textControl(str, style) {
     const text = {
         color: '#000000AA',
         marginVertical: vars.spacing.small.maxi,
@@ -22,12 +39,13 @@ function textControl(str) {
     if (typeof str === 'string') {
         formatted = str.replace('\n', '\n\n');
     }
+    if (style) Object.assign(text, style);
 
-    return <Text style={text}>{formatted}</Text>;
+    return <Text {...testLabel('textControl')} style={text}>{formatted}</Text>;
 }
 
-function checkBoxControl(str, checked, press, accessibilityLabel) {
-    return <CheckBox text={str} isChecked={checked} onChange={press} accessibilityLabel={accessibilityLabel} />;
+function checkBoxControl(str, checked, press, alignLeft, accessibilityLabel) {
+    return <CheckBox text={str} isChecked={checked} onChange={press} alignLeft accessibilityLabel={accessibilityLabel} />;
 }
 
 function inputControl(state, placeholder, props) {
@@ -81,6 +99,32 @@ function popupYes(title, subTitle, text) {
     });
 }
 
+function popupAbout() {
+    const showPoweredBy = process.env.EXECUTABLE_NAME === 'medcryptor';
+    const image = require('../../assets/poweredByPeerio_colour.png');
+    const text = (<Text>
+        Version: {config.appVersion}{'\n'}
+        SDK: {config.sdkVersion} {'\n'}
+        OS: {Platform.OS} {'\n'}
+        OS Version: {Platform.Version}
+    </Text>);
+    const contents = (
+        <View>
+            {textControl(text)}
+            {showPoweredBy && <Image source={image} resizeMode="contain" style={{ marginTop: 10, width: '60%' }} />}
+        </View>
+    );
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title: 'About',
+            contents,
+            buttons: [{
+                id: 'ok', text: tu('button_ok'), action: resolve
+            }]
+        });
+    });
+}
+
 function popupUpgrade(title, subTitle, text) {
     // TODO: add upgrade button
     return popupYes(title, subTitle, text);
@@ -95,6 +139,20 @@ function popupYesCancel(title, subTitle, text) {
             buttons: [
                 { id: 'no', text: t('button_no'), action: () => resolve(false), secondary: true },
                 { id: 'yes', text: t('button_yes'), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
+function popupOkCancel(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title,
+            subTitle: textControl(subTitle),
+            contents: text ? textControl(text) : null,
+            buttons: [
+                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
+                { id: 'ok', text: tu('button_ok'), action: () => resolve(true) }
             ]
         });
     });
@@ -163,13 +221,13 @@ function popupCancelConfirm(title, subTitle, text) {
     }));
 }
 
-function popupInput(title, subTitle, value) {
+function popupInput(title, subTitle, value, textInputProps) {
     return new Promise((resolve) => {
         const o = observable({ value });
         popupState.showPopup({
             title,
             subTitle: textControl(subTitle),
-            contents: inputControl(o),
+            contents: inputControl(o, null, textInputProps),
             buttons: [{
                 id: 'ok', text: tu('button_ok'), action: () => resolve(o.value)
             }]
@@ -214,6 +272,20 @@ function popupInputCancel(title, placeholder, cancelable) {
     });
 }
 
+function popupContactPermission(title, subTitle, text) {
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            title,
+            subTitle: textControl(subTitle),
+            contents: text ? textControl(text) : null,
+            buttons: [
+                { id: 'deny', text: tu('button_deny'), action: () => resolve(false), secondary: true },
+                { id: 'ok', text: tu('button_grantAccess'), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
 let tos = '';
 
 function popupTOS() {
@@ -250,7 +322,6 @@ function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
     const helperTextStyle = {
         color: vars.subtleText,
         fontSize: vars.font.size.smaller,
-        fontWeight: vars.font.weight.regular,
         paddingVertical: vars.spacing.small.midi
     };
     return new Promise((resolve) => {
@@ -268,7 +339,7 @@ function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
                 <Text style={helperTextStyle}>
                     {tx('title_2FAHelperText')}
                 </Text>
-                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; }, 'trustDevice')}
+                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; }, false, 'trustDevice')}
             </View>
         );
         popupState.showPopup({
@@ -330,19 +401,105 @@ function popupSetupVideo() {
     });
 }
 
+function popupFolderDelete(isShared, isOwner) {
+    let text = 'dialog_deleteFolderText';
+    if (isShared) {
+        text = isOwner ? 'dialog_deleteSharedFolderText' : 'dialog_deleteSharedFolderNonOwnerText';
+    }
+    return popupState.showPopupPromise(resolve => ({
+        title: textControl(tx('title_deleteFolder_mobile')),
+        contents: textControl(tx(text)),
+        type: 'systemWarning',
+        buttons: [
+            { id: 'cancel', text: tu('button_cancel'), secondary: true, action: () => resolve(false) },
+            { id: 'confirm', text: tu('button_delete'), action: () => resolve(true) }
+        ]
+    }));
+}
+
+function popupMoveToSharedFolder() {
+    return new Promise((resolve) => {
+        const o = observable({ value: '', checked: false });
+        const alignedLeft = true;
+        popupState.showPopup({
+            title: textControl(tx('title_moveToSharedFolder')),
+            contents: (
+                <View>
+                    {textControl(tx('title_moveToSharedFolderDescription'))}
+                    {checkBoxControl(
+                        tx('title_dontShowMessageAgain'),
+                        o.checked,
+                        v => { o.checked = v; },
+                        alignedLeft
+                    )}
+                </View>
+            ),
+            buttons: [
+                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
+                { id: 'move', text: tu('button_move'), action: () => resolve(o) }
+            ]
+        });
+    });
+}
+
+function popupUpgradeNotification() {
+    return new Promise((resolve) => {
+        const viewFileMigrationList = async () => {
+            const directory = (Platform.OS === 'ios') ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
+            const path = `${directory}/${User.current.username}-Peerio-shared-files-list.txt`;
+            const content = await fileStore.migration.getLegacySharedFilesText();
+            RNFS.writeFile(path, content, 'utf8')
+                .then(() => FileOpener.open(path, 'text/*', path))
+                .catch((err) => console.log(err.message));
+        };
+        const resolveButtonText = fileStore.hasLegacySharedFiles ? 'update' : 'ok';
+        popupState.showPopup({
+            type: 'systemUpgrade',
+            title: textControl(tx('title_upgradeFileSystem'), titleStyle),
+            contents: (
+                <View>
+                    {textControl(tx('title_upgradeFileSystemDescription1'), textStyle)}
+                    {textControl(tx('title_upgradeFileSystemDescription2'), textStyle)}
+                    {fileStore.migration.hasLegacySharedFiles ?
+                        <Text>
+                            {textControl(tx('title_upgradeFileSystemDescription3a'), textStyle)}
+                            <Text style={textDownloadStyle} onPress={viewFileMigrationList} pressRetentionOffset={vars.pressRetentionOffset}>
+                                {tx('title_upgradeFileSystemLink')}
+                            </Text>
+                            {textControl(tx('title_upgradeFileSystemDescription3b'), textStyle)}
+                        </Text> : null}
+                </View>
+            ),
+            buttons: [
+                { id: resolveButtonText, text: tu(`button_${resolveButtonText}`), action: () => resolve(true) }
+            ]
+        });
+    });
+}
+
+function popupUpgradeProgress() {
+    return (
+        popupState.showPopup({
+            type: 'systemUpgrade',
+            title: textControl(tx('title_fileUpdateProgress'), titleStyle),
+            contents: <PopupMigration />
+        }));
+}
 
 locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
 
-
 export {
+    textControl,
     addSystemWarningAction,
     popupYes,
     popupYesCancel,
+    popupOkCancel,
     popupYesSkip,
     popupInput,
     popupInputWithPreview,
+    popupContactPermission,
     popupTOS,
     popupKeychainError,
     popup2FA,
@@ -354,5 +511,11 @@ export {
     popupControl,
     popupSignOutAutologin,
     popupCancelConfirm,
-    popupSetupVideo
+    popupSetupVideo,
+    popupUpgradeNotification,
+    popupUpgradeProgress,
+    popupFolderDelete,
+    popupMoveToSharedFolder,
+    popupAbout
 };
+

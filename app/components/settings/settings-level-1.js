@@ -1,7 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { action } from 'mobx';
-import { View, ScrollView, Share, Text, Platform } from 'react-native';
+import { View, ScrollView, Share } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import SettingsItem from './settings-item';
@@ -10,30 +9,21 @@ import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-stora
 import { toggleConnection } from '../main/dev-menu-items';
 import plans from '../payments/payments-config';
 import { tx, tu } from '../utils/translator';
-import { warnings, config, clientApp } from '../../lib/icebear';
-import { popupYes } from '../shared/popups';
+import { warnings, clientApp } from '../../lib/icebear';
+import { popupAbout } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
-import uiState from '../layout/ui-state';
+import { scrollHelper } from '../helpers/test-helper';
 
 const bgStyle = {
     flexGrow: 1,
     flex: 1,
-    backgroundColor: vars.settingsBg
+    backgroundColor: vars.darkBlueBackground05
 };
 
 const svStyle = {
     paddingVertical: vars.listViewPaddingVertical,
     paddingHorizontal: vars.listViewPaddingHorizontal
 };
-
-const AboutContent = (
-    <Text>
-        Version: {config.appVersion}{'\n'}
-        SDK: {config.sdkVersion} {'\n'}
-        OS: {Platform.OS} {'\n'}
-        OS Version: {Platform.Version}
-    </Text>
-);
 
 @observer
 export default class SettingsLevel1 extends SafeComponent {
@@ -42,9 +32,9 @@ export default class SettingsLevel1 extends SafeComponent {
     }
 
     testShare() {
-        const message = 'chat and share files securely using Peerio. https://www.peerio.com';
+        const message = 'chat and share files securely using Peerio. https://www.testurl.com';
         const title = 'peerio';
-        const url = 'https://www.peerio.com';
+        const url = 'https://www.testurl.com';
         Share.share({ message, title, url });
     }
 
@@ -59,11 +49,11 @@ export default class SettingsLevel1 extends SafeComponent {
         clientApp.uiUserPrefs.externalContentConsented = false;
     };
 
-    @action.bound scrollViewRef(sv) {
-        this.scrollView = sv;
-        uiState.currentScrollView = sv;
-    }
-
+    /**
+     * Scroll helper is used to provide scrolling capability
+     * to the test script. Note that it overrides ref and onScroll
+     * event handlers
+     */
     renderThrow() {
         const plan = plans.topPlan();
         const upgradeItem = plan ?
@@ -71,9 +61,7 @@ export default class SettingsLevel1 extends SafeComponent {
             <SettingsItem title="button_upgrade" onPress={() => settingsState.upgrade()} />;
         return (
             <View style={bgStyle}>
-                <ScrollView
-                    contentContainerStyle={svStyle}
-                    ref={this.scrollViewRef} >
+                <ScrollView contentContainerStyle={svStyle} {...scrollHelper}>
                     <SettingsItem title="title_settingsProfile" onPress={() => settingsState.transition('profile')} />
                     <SettingsItem title="title_settingsSecurity" onPress={() => settingsState.transition('security')} />
                     <SettingsItem title="title_settingsPreferences" onPress={() => settingsState.transition('preferences')} />
@@ -86,7 +74,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
                     <SettingsItem title="title_settingsAccount" onPress={() => settingsState.transition('account')} />
                     {this.spacer}
-                    <SettingsItem title="title_About" icon={null} onPress={() => popupYes('About', AboutContent)} />
+                    <SettingsItem title="title_About" icon={null} onPress={() => popupAbout()} />
                     {this.spacer}
                     <ButtonWithIcon
                         text={tu('button_logout')}
@@ -98,7 +86,7 @@ export default class SettingsLevel1 extends SafeComponent {
                             borderRadius: 4
                         }}
                         bold
-                        textStyle={{ color: vars.bg }}
+                        textStyle={{ color: vars.peerioBlue }}
                         onPress={loginState.signOut}
                         iconName="power-settings-new"
                         testID="button_signOut"

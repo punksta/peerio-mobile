@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Image, View, ScrollView, Text, TouchableOpacity, LayoutAnimation } from 'react-native';
+import { Image, View, ScrollView, TouchableOpacity, LayoutAnimation } from 'react-native';
 import { observable, reaction } from 'mobx';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
 import { vars } from '../../styles/styles';
@@ -10,6 +11,7 @@ import { t, tx, tu } from '../utils/translator';
 import AvatarActionSheet, { SIZE2 } from './avatar-action-sheet';
 import icons from '../helpers/icons';
 import uiState from '../layout/ui-state';
+import testLabel from '../helpers/test-label';
 
 const emailFormatValidator = validation.validators.emailFormat.action;
 
@@ -27,7 +29,8 @@ const textinput = {
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
     flex: 1,
-    flexGrow: 1
+    flexGrow: 1,
+    fontFamily: vars.peerioFontFamily
 };
 
 const textStatic = {
@@ -155,7 +158,7 @@ export default class ProfileEdit extends SafeComponent {
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={{ paddingRight: vars.spacing.small.maxi2x, paddingVertical: vars.spacing.small.maxi }}>
-                <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.bg }}>
+                <Text bold style={{ color: disabled ? vars.txtMedium : vars.peerioBlue }}>
                     {tu(text)}
                 </Text>
             </TouchableOpacity>
@@ -189,7 +192,7 @@ export default class ProfileEdit extends SafeComponent {
                 {emailIcon}
                 <View style={{ height: vars.inputHeight, flex: 1, flexGrow: 1, paddingTop: vars.spacing.small.mini2x }}>
                     {this.renderText(address)}
-                    {confirmed && primary ? this.renderText(tx('title_primaryEmail'), { color: vars.bg, marginTop: -8 }) : null}
+                    {confirmed && primary ? this.renderText(tx('title_primaryEmail'), { color: vars.peerioBlue, marginTop: -8 }) : null}
                     {!confirmed ? this.renderText(tx('error_unconfirmedEmail'), { color: vars.txtAlert, marginTop: -8 }) : null}
                 </View>
                 {confirmed && !primary ? primaryLink : null}
@@ -203,13 +206,12 @@ export default class ProfileEdit extends SafeComponent {
         const contact = contactStore.getContact(User.current.username);
         const style = {
             color: vars.white,
-            fontWeight: 'bold',
             fontSize: vars.profileEditFontSize,
             marginHorizontal: vars.spacing.medium.maxi2x,
             marginVertical: vars.spacing.medium.mini2x
         };
         return (
-            <Text style={style}>
+            <Text bold style={style}>
                 {contact.letter}
             </Text >
         );
@@ -220,10 +222,25 @@ export default class ProfileEdit extends SafeComponent {
         const uri = contact.largeAvatarUrl;
         const size = SIZE2;
         return (
-            <TouchableOpacity pressRetentionOffset={vars.retentionOffset} onPress={() => this._actionSheet.show()}>
-                <Image source={{ uri, cache: 'force-cache' }} key={uri} style={{ borderRadius: size / 2, width: size, height: size, margin: vars.spacing.medium.mini2x }} />
+            <TouchableOpacity
+                pressRetentionOffset={vars.retentionOffset}
+                onPress={this.selectAvatar}
+                {...testLabel('currentAvatar')}>
+                <Image
+                    source={{ uri, cache: 'force-cache' }}
+                    key={uri}
+                    style={{
+                        borderRadius: size / 2,
+                        width: size,
+                        height: size,
+                        margin: vars.spacing.medium.mini2x
+                    }} />
             </TouchableOpacity>
         );
+    }
+
+    selectAvatar() {
+        AvatarActionSheet.show(({ buffers }) => User.current.saveAvatar(buffers));
     }
 
     renderThrow() {
@@ -234,14 +251,14 @@ export default class ProfileEdit extends SafeComponent {
             <ScrollView
                 onScroll={this.onScroll}
                 keyboardShouldPersistTaps="handled"
-                style={{ backgroundColor: vars.settingsBg }}
+                style={{ backgroundColor: vars.darkBlueBackground05 }}
                 ref={ref => { this._scrollView = ref; }}>
                 <View style={[flexRow, { backgroundColor: contact.hasAvatar ? vars.txtDate : contact.color }]}>
                     {contact.hasAvatar ? this.avatar : this.avatarLetter}
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
-                        <Text
+                        <Text bold
+                            {...testLabel('fullName')}
                             style={{
-                                fontWeight: 'bold',
                                 color: vars.white,
                                 fontSize: vars.font.size.bigger,
                                 marginVertical: vars.spacing.small.mini2x
@@ -249,7 +266,7 @@ export default class ProfileEdit extends SafeComponent {
                         <Text style={{ color: vars.white }}>@{username}</Text>
                         <View style={{ position: 'absolute', right: 0, bottom: 0, flexDirection: 'row' }}>
                             {contact.hasAvatar && icons.white('delete', () => user.deleteAvatar())}
-                            {icons.white('camera-alt', () => this._actionSheet.show())}
+                            {icons.white('camera-alt', this.selectAvatar, null, null, 'uploadAvatarIcon')}
                         </View>
                     </View>
                 </View>
@@ -257,12 +274,14 @@ export default class ProfileEdit extends SafeComponent {
                     <Text style={label}>{tx('title_name')}</Text>
                     <View style={textinputContainer}>
                         <SimpleTextBox
+                            {...testLabel('inputFirstName')}
                             onBlur={this.submit}
                             onChangeText={text => { this.firstName = text; }}
                             placeholder={tx('title_firstName')} style={textinput} value={this.firstName} />
                     </View>
                     <View style={textinputContainer}>
                         <SimpleTextBox
+                            {...testLabel('inputLastName')}
                             onBlur={this.submit}
                             onChangeText={text => { this.lastName = text; }}
                             placeholder={tx('title_lastName')} style={textinput} value={this.lastName} />
@@ -298,7 +317,6 @@ export default class ProfileEdit extends SafeComponent {
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>
-                <AvatarActionSheet onSave={buffers => User.current.saveAvatar(buffers)} ref={sheet => { this._actionSheet = sheet; }} />
             </ScrollView>
         );
     }

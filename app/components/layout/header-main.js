@@ -1,11 +1,12 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
-import { gradient } from '../controls/effects';
 import routerMain from '../routes/router-main';
 import { vars } from '../../styles/styles';
 import BackIcon from './back-icon';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class HeaderMain extends SafeComponent {
@@ -15,13 +16,19 @@ export default class HeaderMain extends SafeComponent {
         if (routerMain.isBackVisible) {
             leftIcon = <BackIcon testID="buttonChatBack" />;
         }
+        const bigContainerStyle = {
+            paddingTop: vars.statusBarHeight,
+            height: vars.headerHeight,
+            flex: -1,
+            justifyContent: 'flex-end',
+            backgroundColor: vars.darkBlue
+        };
         const textStyle = {
             flex: 1,
             flexGrow: 1,
             flexShrink: 1,
             color: vars.white,
-            fontSize: vars.font.size.big,
-            fontWeight: 'bold',
+            fontSize: vars.font.size.huge,
             textAlign: 'center',
             alignItems: 'center',
             justifyContent: 'center',
@@ -48,22 +55,24 @@ export default class HeaderMain extends SafeComponent {
         const iconPlaceHolderWidth = (32 + vars.iconSize);
         const paddingRight = !rightIcon && leftIcon ? iconPlaceHolderWidth : 0;
         const paddingLeft = rightIcon && !leftIcon ? iconPlaceHolderWidth : 0;
-        const header = (
-            <View>
+        const title = this.props.title || routerMain.title;
+        return (
+            <View style={bigContainerStyle}>
                 <View key={`header_${routerMain.route}_${routerMain.currentIndex}`} style={containerStyle}>
                     <View style={{ flex: 0 }}>
                         {leftIcon}
                     </View>
                     <TouchableOpacity
+                        {...testLabel(title)}
                         style={actionContainerStyle}
                         activeOpacity={titleAction ? 0.2 : 1}
                         onPress={titleAction}
                         pressRetentionOffset={vars.retentionOffset}>
-                        <Text
+                        <Text semibold
                             ellipsizeMode="middle"
                             numberOfLines={1}
                             style={[textStyle, { paddingRight, paddingLeft }]}>
-                            {this.props.title || routerMain.title}
+                            {title}
                             {titleAction && <Text style={{ fontSize: vars.font.size.normal }}>
                                 {'  ▼  '}
                             </Text>}
@@ -75,13 +84,6 @@ export default class HeaderMain extends SafeComponent {
                 </View>
             </View>
         );
-        return gradient({
-            paddingTop: vars.statusBarHeight,
-            height: vars.headerHeight,
-            flex: -1,
-            justifyContent: 'flex-end',
-            backgroundColor: vars.bg
-        }, header);
     }
 }
 
