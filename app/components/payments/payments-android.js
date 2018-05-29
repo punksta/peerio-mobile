@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 import InAppBilling from 'react-native-billing';
 import PaymentsBase from './payments-base';
 import { socket } from '../../lib/icebear';
-import whitelabel from '../../lib/whitelabel-config';
+import whitelabel from '../../components/whitelabel/white-label-config';
 
 class PaymentsAndroid extends PaymentsBase {
     premiumYearlyID = 'com.peerio.app.messenger.premium.20.yearly';

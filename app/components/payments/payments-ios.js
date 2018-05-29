@@ -1,7 +1,7 @@
 import { NativeModules, AlertIOS } from 'react-native';
 import PaymentsBase from './payments-base';
 import { socket } from '../../lib/icebear';
-import whitelabel from '../../lib/whitelabel-config';
+import whitelabel from '../../components/whitelabel/white-label-config';
 
 const { InAppUtils } = NativeModules;
 

@@ -1,11 +1,11 @@
-import * as medcryptor from './medcryptor-white-label-components';
-import * as peerio from './peerio-white-label-components';
+import medcryptor from './medcryptor/medcryptor-white-label-components';
+import peerio from './peerio/peerio-white-label-components';
 
 const whiteLabels = {
     medcryptor,
     peerio
 };
 
-const WhiteLabel = whiteLabels[process.env.APP_LABEL].default;
+const whiteLabel = whiteLabels[process.env.APP_LABEL];
 
-export default WhiteLabel;
+export default whiteLabel;
