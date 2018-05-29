@@ -28,24 +28,24 @@ class GenericPicker extends SafeComponent {
 }
 
 @observer
-class RolePicker extends GenericPicker {
+class MedcryptorRolePicker extends GenericPicker {
     constructor(props) {
         super(props, medcryptorUiState.roles, 'roleSelected');
     }
 }
 
 @observer
-class CountryPicker extends GenericPicker {
+class MedcryptorCountryPicker extends GenericPicker {
     constructor(props) {
         super(props, medcryptorUiState.countries, 'countrySelected');
     }
 }
 
 @observer
-class SpecialtyPicker extends GenericPicker {
+class MedcryptorSpecialtyPicker extends GenericPicker {
     constructor(props) {
         super(props, medcryptorUiState.specialties, 'specialtySelected');
     }
 }
 
-module.exports = { RolePicker, CountryPicker, SpecialtyPicker };
+module.exports = { MedcryptorRolePicker, MedcryptorCountryPicker, MedcryptorSpecialtyPicker };
