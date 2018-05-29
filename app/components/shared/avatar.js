@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity, Dimensions, LayoutAnimation, Linking } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
@@ -15,6 +15,7 @@ import DeletedCircle from './deleted-circle';
 import OnlineCircle from './online-circle';
 import ReadReceipt from './read-receipt';
 import CorruptedMessage from './corrupted-message';
+import ChatActionSheet from '../messaging/chat-action-sheet';
 import tagify from './tagify';
 import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
@@ -161,16 +162,17 @@ export default class Avatar extends SafeComponent {
         );
     }
 
-    onPressAll = () => {
+    @action.bound onPressAll() {
         if (this.props.error) {
             this.showError = !this.showError;
             return null;
         }
-        if (this.props.sendError && this.props.onRetryCancel) {
-            return this.props.onRetryCancel();
+        if (this.props.sendError) {
+            ChatActionSheet.show(this.props.messageObject, this.props.chat);
+            return null;
         }
         return this.props.onPress && this.props.onPress();
-    };
+    }
 
     get message() {
         const { ellipsize } = this.props;
@@ -218,7 +220,7 @@ export default class Avatar extends SafeComponent {
     }
 
     get files() {
-        const { onFileAction, onLegacyFileAction, chatId } = this.props;
+        const { onFileAction, onLegacyFileAction, chat } = this.props;
         return this.props.files ?
             this.props.files.map(file => (
                 <FileInlineProgress
@@ -226,7 +228,7 @@ export default class Avatar extends SafeComponent {
                     file={file}
                     onActionSheet={onFileAction}
                     onLegacyFileAction={onLegacyFileAction}
-                    chatId={chatId} />
+                    chatId={chat.id} />
             )) : null;
     }
 
@@ -512,7 +514,6 @@ export default class Avatar extends SafeComponent {
 Avatar.propTypes = {
     onPress: PropTypes.func,
     onPressAvatar: PropTypes.func,
-    onRetryCancel: PropTypes.func,
     contact: PropTypes.any,
     timestamp: PropTypes.any,
     timestampText: PropTypes.any,

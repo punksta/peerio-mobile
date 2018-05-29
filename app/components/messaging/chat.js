@@ -9,7 +9,6 @@ import ProgressOverlay from '../shared/progress-overlay';
 import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
-import ChatActionSheet from './chat-action-sheet';
 import ChatUnreadMessageIndicator from './chat-unread-message-indicator';
 import FileActionSheet from '../files/file-action-sheet';
 import contactState from '../contacts/contact-state';
@@ -91,14 +90,13 @@ export default class Chat extends SafeComponent {
                 ref: ref => { this._refs[key] = ref; },
                 onInlineImageAction: image => FileActionSheet.show(image),
                 onLegacyFileAction: file => FileActionSheet.show(file),
-                onFileAction: file => FileActionSheet.show(file, true),
-                onRetryCancel: () => ChatActionSheet.show(item, this.chat)
+                onFileAction: file => FileActionSheet.show(file, true)
             }));
         return (
             <ChatItem
                 key={key}
                 message={item}
-                chatId={this.chat.id}
+                chat={this.chat}
                 {...actions}
             />
         );
