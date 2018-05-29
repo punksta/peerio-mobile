@@ -25,10 +25,10 @@ export default class ContactEditPermission extends SafeComponent {
             fileState.currentFile.otherParticipants : [];
     }
 
-    @action.bound unshareFrom(/* contact */) {
+    @action.bound unshareFrom(contact) {
         // HINT: removing on layout animated listview causes side effects
         // we just collapse it inline
-        // this.sharedWithContacts.remove(contact);
+        fileState.currentFile.removeParticipant(contact);
     }
 
     componentDidMount() {
