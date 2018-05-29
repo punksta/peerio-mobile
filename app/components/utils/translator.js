@@ -4,6 +4,24 @@ import { t, has } from 'peerio-translator';
 import { reaction } from 'mobx';
 import Text from '../controls/custom-text';
 import uiState from '../layout/ui-state';
+import whiteLabelConfig from '../whitelabel/white-label-config';
+
+function findPrefixedName(k) {
+    const prefix = whiteLabelConfig.LOCALE_PREFIX;
+    let name = k;
+    if (name.startsWith('title_seeWhoYouAlreadyKnow')) {
+        console.log('here');
+    }
+    const mobileName = `${name}_mobile`;
+    if (has(mobileName)) {
+        name = mobileName;
+    }
+    if (prefix) {
+        const whitelabelName = `${prefix}${name}`;
+        if (has(whitelabelName)) name = whitelabelName;
+    }
+    return name;
+}
 
 class T extends Component {
     componentDidMount() {
@@ -19,9 +37,10 @@ class T extends Component {
     }
 
     render() {
-        let name = `${this.props.k}_mobile`;
-        name = has(name) ? name : this.props.k;
-
+        const name = findPrefixedName(this.props.k);
+        if (!has(name)) {
+            console.error(`${name} not found`);
+        }
         let translated = t(name, this.props.children);
         if (Array.isArray(translated)) {
             return (
@@ -46,14 +65,14 @@ T.propTypes = {
 module.exports = {
     T,
     t(k, params) {
-        const r = t(k, params);
+        const r = t(findPrefixedName(k), params);
         if (r instanceof String || typeof r === 'string') return r;
         return React.createElement(T, { k }, params);
     },
     tu(k, params) {
-        const r = t(k, params);
+        const r = t(findPrefixedName(k), params);
         if (r.toUpperCase) return r.toUpperCase();
         return React.createElement(T, { k, uppercase: true }, params);
     },
-    tx: (k, params) => t(k, params)
+    tx: (k, params) => t(findPrefixedName(k), params)
 };
