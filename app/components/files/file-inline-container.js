@@ -8,6 +8,7 @@ import icons from '../helpers/icons';
 import FileTypeIcon from './file-type-icon';
 import FileProgress from './file-progress';
 import { fileHelpers } from '../../lib/icebear';
+import { tx } from '../utils/translator';
 
 const padding = 8;
 const borderWidth = 1;
@@ -39,6 +40,28 @@ const text = {
 };
 
 export default class FileInlineContainer extends SafeComponent {
+    legacyNotification() {
+        const errorContainer = {
+            backgroundColor: vars.legacyImageErrorBg,
+            padding: vars.spacing.small.midi2x,
+            borderRadius: 4
+        };
+        const errorStyle = {
+            fontSize: vars.font.size.smaller,
+            color: vars.lighterBlackText,
+            fontStyle: 'italic'
+        };
+        const learnMoreStyle = {
+            fontSize: vars.font.size.smaller,
+            color: vars.peerioBlue
+        };
+        return (
+            this.props.isOpen && <View style={errorContainer}>
+                <Text style={errorStyle}> {tx('title_newfsUpgradeImageError')} </Text>
+                <Text semibold style={learnMoreStyle}> {tx('title_learnMoreLegacyFiles')} </Text>
+            </View>);
+    }
+
     get fileTypeIcon() {
         const { file, onAction } = this.props;
         return (
@@ -93,14 +116,16 @@ export default class FileInlineContainer extends SafeComponent {
                             {extraActionIcon}
                             {icons.darkNoPadding(
                                 'more-vert',
-                                () => this.props.onActionSheet(file),
+                                () => !file.isLegacy ? this.props.onActionSheet(file) : this.props.onLegacyFileAction(file),
                                 { marginHorizontal: vars.spacing.small.midi2x },
-                                null,
+                                vars.iconSize,
                                 downloading ? true : null
                             )}
                         </View>}
                     </View>
-                    {this.props.children}
+                    {file.isLegacy ?
+                        this.legacyNotification() :
+                        this.props.children}
                 </View>
                 {!isImage && <FileProgress file={file} />}
             </View>

@@ -28,7 +28,11 @@ class RouterApp extends Router {
                 ActionSheetLayout.hide();
                 return true;
             }
+            let blockingPopup = true;
             if (PopupState.activePopup) {
+                blockingPopup = (PopupState.activePopup.type === 'systemWarning') || (PopupState.activePopup.type === 'systemUpgrade');
+            }
+            if (!blockingPopup) {
                 PopupState.discardPopup();
                 return true;
             }

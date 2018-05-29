@@ -6,6 +6,7 @@ const brandingDefines = {
     peeriomobile: {
         bg: '#2C95CF',
         bgGradient: '#32CEC3',
+        tabsBg: '#f7f7f7',
         logo: require('../assets/logo-with-tag.png'),
         darkBlue: '#040B40',
         darkTeal: '#004E69',

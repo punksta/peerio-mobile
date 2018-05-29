@@ -47,13 +47,14 @@ export default class RecentFilesList extends SafeComponent {
         const isCollapsed = !chatState.collapseFirstChannelInfoList;
         if (collapsible && isCollapsed) return null;
         const fileId = item;
-        const file = fileState.store.getById(fileId);
+        const file = fileState.store.getByIdInChat(fileId, chatState.currentChat.id);
         if (!file) return null;
         // TODO: replace with getOrMake pattern
         // for event handler
         return (
             <RecentFileItem
                 onMenu={() => FileActionSheet.show(file, false)}
+                key={fileId}
                 file={file} />
         );
     };

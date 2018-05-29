@@ -10,7 +10,8 @@ import { vars } from '../../styles/styles';
 import uiState from './ui-state';
 
 const colors = {
-    systemWarning: vars.yellow
+    systemWarning: vars.yellow,
+    systemUpgrade: vars.peerioBlue
 };
 
 @observer
@@ -46,7 +47,8 @@ export default class PopupLayout extends SafeComponent {
             left: 0,
             top: 0,
             bottom: 0,
-            right: 0
+            right: 0,
+            zIndex: 16
         };
 
         const popupNonAnimatedStyle = [modalStyle, {
@@ -71,7 +73,7 @@ export default class PopupLayout extends SafeComponent {
             marginBottom: (Platform.OS === 'android' ? 0 : uiState.keyboardHeight) + margin
         };
 
-        const showYellowLine = (popup.type === 'systemWarning');
+        const showWarningLine = popup.type;
         const container = {
             flexGrow: 1,
             shadowColor: '#000000',
@@ -81,8 +83,8 @@ export default class PopupLayout extends SafeComponent {
                 height: 1,
                 width: 1
             },
-            marginTop: showYellowLine ? 8 : 0,
-            borderRadius: !showYellowLine ? 8 : 0,
+            marginTop: showWarningLine ? 8 : 0,
+            borderRadius: !showWarningLine ? 8 : 0,
             borderBottomLeftRadius: 8,
             borderBottomRightRadius: 8,
             backgroundColor: vars.white,

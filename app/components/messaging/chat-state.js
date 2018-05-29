@@ -110,13 +110,11 @@ class ChatState extends RoutedState {
 
     @action async startChat(recipients, isChannel = false, name, purpose) {
         try {
-            const chat = this.store.startChat(recipients, isChannel, name, purpose);
             this.loading = true;
-            return new Promise(resolve => when(() => !chat.loadingMeta, () => {
-                this.loading = false;
-                this.routerMain.chats(chat, true);
-                resolve(chat);
-            }));
+            const chat = await this.store.startChat(recipients, isChannel, name, purpose);
+            this.loading = false;
+            this.routerMain.chats(chat, true);
+            return chat;
         } catch (e) {
             this.loading = false;
             warnings.add(e.message);
@@ -137,10 +135,11 @@ class ChatState extends RoutedState {
             this.currentChat.sendMessage(msg).catch(sounds.destroy);
     }
 
-    @action shareFiles(files) {
+    @action shareFilesAndFolders(filesAndFolders) {
         this.selfNewMessageCounter++;
-        this.currentChat && files && files.length &&
-            this.currentChat.shareFiles(files).catch(sounds.destroy);
+        console.log(filesAndFolders);
+        this.currentChat && filesAndFolders && filesAndFolders.length &&
+            this.currentChat.shareFilesAndFolders(filesAndFolders).catch(sounds.destroy);
     }
 
     @action addVideoMessage(link) {

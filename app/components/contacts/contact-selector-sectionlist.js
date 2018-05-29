@@ -44,11 +44,18 @@ export default class ContactSelectorSectionList extends Component {
 
     sectionHeader({ section: { data, key } }) {
         if (!data || !data.length || !key) return null;
-        const s = { margin: vars.spacing.small.maxi };
+        const container = {
+            marginLeft: vars.spacing.small.midi2x,
+            justifyContent: 'center',
+            height: vars.contactListHeaderHeight,
+            backgroundColor: vars.darkBlueBackground05
+        };
         return (
-            <Text bold style={s}>
-                {tx(key, { found: data && data.length })}
-            </Text>
+            <View style={container}>
+                <Text bold>
+                    {tx(key, { found: data && data.length })}
+                </Text>
+            </View>
         );
     }
 

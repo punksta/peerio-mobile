@@ -20,7 +20,9 @@ export default class FileInlineProgress extends SafeComponent {
     }
 
     get file() {
-        return fileState.store.getById(this.props.file);
+        return this.props.chatId ?
+            fileState.store.getByIdInChat(this.props.file, this.props.chatId) :
+            fileState.store.getById(this.props.file);
     }
 
     get downloadProgress() {
@@ -45,8 +47,9 @@ export default class FileInlineProgress extends SafeComponent {
     }
 
     renderThrow() {
-        const file = fileState.store.getById(this.props.file);
+        const { file } = this;
         if (!file) return null;
+
         const downloadStatusContainer = {
             alignItems: 'center',
             justifyContent: 'center',
@@ -61,24 +64,24 @@ export default class FileInlineProgress extends SafeComponent {
             fontStyle: 'italic'
         };
         const onPress = file.downloading ? this.onCancel : this.fileAction;
-        if (!file) return <Text>{`no file ${this.props.file}`}</Text>;
         if (file.signatureError) return <FileSignatureError />;
         return (
             <FileInlineContainer
                 file={file}
                 onActionSheet={this.props.onActionSheet}
-                onAction={this.fileAction}>
+                onAction={this.fileAction}
+                onLegacyFileAction={this.props.onLegacyFileAction}>
                 {!this.filePreviouslyDownloaded &&
                     <TouchableOpacity
                         pressRetentionOffset={vars.pressRetentionOffset}
                         style={downloadStatusContainer}
                         onPress={onPress}>
                         <Text semibold style={textStyle}>
-                            {file.downloading && !this.file.cached &&
+                            {file.downloading && !file.cached &&
                                 <Text>{tx('button_cancelDownload')} ({this.downloadProgress}%)</Text>}
-                            {!file.downloading && !this.file.cached &&
+                            {!file.downloading && !file.cached &&
                                 <Text>{tx('button_downloadToView')} ({file.sizeFormatted})</Text>}
-                            {!file.downloading && this.file.cached &&
+                            {!file.downloading && file.cached &&
                                 <Text>{tx('button_openFile')}</Text>}
                         </Text>
                     </TouchableOpacity>}

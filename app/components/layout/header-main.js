@@ -28,7 +28,7 @@ export default class HeaderMain extends SafeComponent {
             flexGrow: 1,
             flexShrink: 1,
             color: vars.white,
-            fontSize: vars.font.size.big,
+            fontSize: vars.font.size.huge,
             textAlign: 'center',
             alignItems: 'center',
             justifyContent: 'center',
@@ -68,7 +68,7 @@ export default class HeaderMain extends SafeComponent {
                         activeOpacity={titleAction ? 0.2 : 1}
                         onPress={titleAction}
                         pressRetentionOffset={vars.retentionOffset}>
-                        <Text bold
+                        <Text semibold
                             ellipsizeMode="middle"
                             numberOfLines={1}
                             style={[textStyle, { paddingRight, paddingLeft }]}>

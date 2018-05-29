@@ -35,7 +35,7 @@ const centered = {
 };
 
 @observer
-export default class FileView extends SafeComponent {
+export default class FileDetailView extends SafeComponent {
     get file() { return fileState.currentFile || {}; }
 
     get rightIcon() { return (<MenuIcon action={() => FileActionSheet.show(this.file, false, 'files')} />); }

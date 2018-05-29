@@ -44,7 +44,8 @@ export default class TabContainer extends SafeComponent {
                 <TabItem
                     text={t('title_contacts')}
                     route={contactState.empty ? 'contactAdd' : 'contacts'}
-                    icon="people" />
+                    icon="people"
+                    highlightList={['contactAdd', 'contactInvite']} />
                 <TabItem
                     text={t('title_settings')}
                     route="settings"

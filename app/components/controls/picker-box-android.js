@@ -6,6 +6,7 @@ import _ from 'lodash';
 import SafeComponent from '../shared/safe-component';
 import uiState from '../layout/ui-state';
 import { vars } from '../../styles/styles';
+import icons from '../helpers/icons';
 
 @observer
 export default class PickerBoxAndroid extends SafeComponent {
@@ -23,22 +24,27 @@ export default class PickerBoxAndroid extends SafeComponent {
     }
 
     renderThrow() {
-        // const s = this.props.style.normal;
-        const { shadow } =
-            this.props.style.normal;
+        const { shadow, iconContainer, icon } = this.props.style.normal;
         const items = _.values(_.mapValues(this.props.data, (value, key) =>
             <Picker.Item label={value} value={key} key={key} />));
+
         return (
             <View style={shadow}>
                 <TouchableOpacity>
                     <Picker
                         onLayout={this.layout}
-                        selectedValue={this.props.value}
+                        selectedValue={(this.props.value || this.props.hint)}
                         onValueChange={this.onValueChange}
-                        style={{ color: 'white', backgroundColor: vars.pickerBg }}>
+                        style={[{ backgroundColor: vars.pickerBg }, (this.props.value ? { color: vars.textBlack87 } : { color: vars.textBlack38 })]}>
                         {items}
                     </Picker>
+                    <View
+                        pointerEvents="none"
+                        style={iconContainer}>
+                        {icons.dark('arrow-drop-down', () => { }, icon)}
+                    </View>
                 </TouchableOpacity>
+                <View style={this.props.style.errorStyle} />
             </View>
         );
     }

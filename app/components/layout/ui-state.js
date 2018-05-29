@@ -9,6 +9,8 @@ import RoutedState from '../routes/routed-state';
 const { height } = Dimensions.get('window');
 
 class UIState extends RoutedState {
+    @observable actionSheetShown = false;
+    @observable fileUpdateProgress = 0; // TODO remove when fileState progress is wired
     @observable isFirstLogin = false;
     @observable focusedTextBox = null;
     @observable picker = null;

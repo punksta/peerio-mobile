@@ -96,6 +96,7 @@ const usernameTextStyle = {
 };
 
 const dateTextStyle = {
+    fontSize: vars.font.size.smaller,
     color: vars.txtDate,
     marginLeft: vars.spacing.small.midi2x
 };
@@ -217,17 +218,22 @@ export default class Avatar extends SafeComponent {
     }
 
     get files() {
-        const { onFileAction } = this.props;
+        const { onFileAction, onLegacyFileAction, chatId } = this.props;
         return this.props.files ?
-            this.props.files.map(file =>
-                <FileInlineProgress key={file} file={file} onActionSheet={onFileAction} />
-            ) : null;
+            this.props.files.map(file => (
+                <FileInlineProgress
+                    key={file}
+                    file={file}
+                    onActionSheet={onFileAction}
+                    onLegacyFileAction={onLegacyFileAction}
+                    chatId={chatId} />
+            )) : null;
     }
 
     get inlineImage() {
-        const { inlineImage, onFileAction } = this.props;
+        const { inlineImage, onInlineImageAction, onLegacyFileAction } = this.props;
         return inlineImage ?
-            <FileInlineImage key={inlineImage} image={inlineImage} onActionSheet={onFileAction} /> : null;
+            <FileInlineImage key={inlineImage} image={inlineImage} onAction={onInlineImageAction} onLegacyFileAction={onLegacyFileAction} /> : null;
     }
 
     get errorCircle() {

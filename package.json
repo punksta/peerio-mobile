@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.284.0",
+  "version": "3.287.0",
   "private": true,
   "scripts": {
     "postinstall": "./scripts/setup-env.sh && npm run icebear:compile && ./scripts/setup-rn-debugging.sh && ./scripts/copy-android-resources.sh && ./scripts/android-switch-to-rn-fork.sh && node scripts/test-deps.js",
@@ -54,7 +54,7 @@
     "path": "0.12.7",
     "pbkdf2": "github:PeerioTechnologies/pbkdf2",
     "peerio-copy": "github:PeerioTechnologies/peerio-copy#icebear",
-    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#dev",
+    "peerio-icebear": "github:PeerioTechnologies/peerio-icebear#medcryptor-base",
     "peerio-translator": "github:PeerioTechnologies/peerio-translator#v1.0.0",
     "process": "0.11.9",
     "prop-types": "15.5.10",
@@ -76,6 +76,7 @@
     "react-native-image-crop-picker": "github:PeerioTechnologies/react-native-image-crop-picker",
     "react-native-image-picker": "github:PeerioTechnologies/react-native-image-picker",
     "react-native-in-app-utils": "github:chirag04/react-native-in-app-utils",
+    "react-native-keep-awake": "3.0.1",
     "react-native-linear-gradient": "2.0.0",
     "react-native-mail": "3.0.1",
     "react-native-menu": "0.21.0",

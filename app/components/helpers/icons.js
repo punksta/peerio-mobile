@@ -42,7 +42,7 @@ const icons = {
                 name={name}
                 size={size || vars.iconSize}
                 color={color}
-                style={style}
+                style={[{ backgroundColor: 'transparent' }, style]}
                 {...testLabel(testID)} />
         );
     },
@@ -99,26 +99,26 @@ const icons = {
         );
     },
 
-    text(text, onPress, style, testID) {
+    text(text, onPress, style, testID, extraWidth) {
         const size = vars.iconPadding * 2 + vars.iconSize;
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={onPress}
                 {...testLabel(testID)}>
-                <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ height: size, width: size + extraWidth, alignItems: 'center', justifyContent: 'center' }}>
                     <Text semibold style={[goStyle, style]}>{text}</Text>
                 </View>
             </TouchableOpacity>
         );
     },
 
-    disabledText(text, style) {
+    disabledText(text, style, extraWidth) {
         const size = vars.iconPadding * 2 + vars.iconSize;
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset} >
-                <View style={{ height: size, width: size, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ height: size, width: size + extraWidth, alignItems: 'center', justifyContent: 'center' }}>
                     <Text semibold style={[disabledStyle, style]}>{text}</Text>
                 </View>
             </TouchableOpacity>
@@ -187,10 +187,9 @@ const icons = {
     iconPinnedChat(source, onPress) {
         const width = vars.pinnedChatIconSize;
         const height = width;
-        const paddingHorizontal = vars.pinnedChatPaddingHorizontal;
         return (
             <TouchableOpacity
-                style={{ paddingHorizontal, opacity: vars.opacity54 }}
+                style={{ position: 'absolute', left: 8, top: 0 }}
                 onPress={onPress}
                 pressRetentionOffset={vars.retentionOffset}>
                 <Image style={{ width, height }} source={source} />

@@ -1,14 +1,15 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView, Animated } from 'react-native';
+import { View, Animated, FlatList } from 'react-native';
 import { observable, reaction, action } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import FilesPlaceholder from './files-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
-import FolderActionSheet from './folder-action-sheet';
 import FileUploadActionSheet from './file-upload-action-sheet';
+import FileActionSheet from '../files/file-action-sheet';
+import FoldersActionSheet from '../files/folder-action-sheet';
 import fileState from './file-state';
 import PlusBorderIcon from '../layout/plus-border-icon';
 import { upgradeForFiles } from '../payments/payments';
@@ -18,48 +19,42 @@ import { tx } from '../utils/translator';
 import icons from '../helpers/icons';
 import ButtonText from '../controls/button-text';
 import uiState from '../layout/ui-state';
+import SharedFolderRemovalNotif from './shared-folder-removal-notif';
+import { fileStore } from '../../lib/icebear';
 import SearchBar from '../controls/search-bar';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
-const INITIAL_LIST_SIZE = 10;
-const PAGE_SIZE = 2;
-
-let fileUploadActionSheet = null;
+const INITIAL_LIST_SIZE = 20;
+const PAGE_SIZE = 20;
 
 function backFolderAction() {
-    fileState.currentFolder = fileState.currentFolder.parent;
+    fileStore.folderStore.currentFolder = fileStore.folderStore.currentFolder.parent;
 }
 
 @observer
 export default class Files extends SafeComponent {
     @observable findFilesText;
-
-    constructor(props) {
-        super(props);
-        this.dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-    }
+    @observable refresh = 0;
 
     get leftIcon() {
-        if (fileState.currentFolder.isRoot) return null;
+        if (!fileStore.folderStore.currentFolder.parent) return null;
         return <BackIcon action={backFolderAction} />;
     }
 
     get rightIcon() {
         return !fileState.isFileSelectionMode &&
             <PlusBorderIcon
-                action={() => fileUploadActionSheet.show()}
+                action={() => FileUploadActionSheet.show(false, true)}
                 testID="buttonUploadFileToFiles" />;
     }
 
     get layoutTitle() {
-        if (fileState.currentFolder.isRoot) return null;
-        return fileState.currentFolder.name;
+        if (!fileStore.folderStore.currentFolder.parent) return null;
+        return fileStore.folderStore.currentFolder.name;
     }
 
-    @observable dataSource = null;
+    @observable dataSource = [];
     @observable refreshing = false;
     @observable maxLoadedIndex = INITIAL_LIST_SIZE;
     actionsHeight = new Animated.Value(0);
@@ -67,62 +62,70 @@ export default class Files extends SafeComponent {
     get data() {
         return fileState.store.currentFilter ?
             fileState.store.visibleFilesAndFolders
-            : fileState.currentFolder.foldersAndFilesDefaultSorting;
+            : fileStore.folderStore.currentFolder.foldersAndFilesDefaultSorting;
+    }
+
+    componentDidMount() {
+        this.reactionNavigation = reaction(() => fileStore.folderStore.currentFolder,
+            action(() => {
+                this.maxLoadedIndex = INITIAL_LIST_SIZE;
+                this.refresh++;
+            }));
+        this.reaction = reaction(() => [
+            fileState.routerMain.route === 'files',
+            fileState.routerMain.currentIndex === 0,
+            this.data,
+            this.data.length,
+            fileState.store.currentFilter,
+            this.maxLoadedIndex
+        ], () => {
+            console.debug(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
+            this.dataSource = this.data.slice(0, Math.min(this.data.length, this.maxLoadedIndex));
+        }, true);
     }
 
     componentWillUnmount() {
         this.reaction && this.reaction();
         this.reaction = null;
+        this.reactionNavigation && this.reactionNavigation();
+        this.reactionNavigation = null;
+        // remove icebear hook for deletion
+        fileStore.bulk.deleteFolderConfirmator = null;
     }
 
-    componentDidMount() {
-        this.reaction = reaction(() => [
-            fileState.routerMain.route === 'files',
-            fileState.routerMain.currentIndex === 0,
-            this.currentFolder,
-            this.data,
-            this.data.length,
-            this.maxLoadedIndex,
-            fileState.store.currentFilter
-        ], () => {
-            // console.log(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
-            this.dataSource = this.dataSource.cloneWithRows(this.data.slice(0, this.maxLoadedIndex));
-            this.forceUpdate();
-        }, true);
-    }
+    onChangeFolder = folder => { fileStore.folderStore.currentFolder = folder; };
 
-    onChangeFolder = folder => { fileState.currentFolder = folder; };
-
-    item = (file, sectionID, rowID) => {
+    item = ({ item, index }) => {
+        // fileId for file, id for folder
         return (
             <FileItem
-                key={file.fileId || file.folderId}
-                file={file}
+                key={item.fileId || item.id}
+                file={item}
+                rowID={index}
                 onChangeFolder={this.onChangeFolder}
-                onLongPress={() => this._folderActionSheet.show(file)}
-                rowID={rowID} />
+                onFileAction={() => FileActionSheet.show(item)}
+                onFolderAction={() => FoldersActionSheet.show(item)} />
         );
     };
 
     onEndReached = () => {
-        // console.log('files.js: on end reached');
+        console.debug('files.js: on end reached');
         this.maxLoadedIndex += PAGE_SIZE;
     };
 
+    flatListRef = (ref) => { uiState.currentScrollView = ref; };
+
     listView() {
         return (
-            <ListView
-                initialListSize={INITIAL_LIST_SIZE}
+            <FlatList
+                initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
-                dataSource={this.dataSource}
-                renderRow={this.item}
+                data={this.dataSource}
+                extraData={this.refresh}
+                renderItem={this.item}
                 onEndReached={this.onEndReached}
-                onEndReachedThreshold={20}
-                enableEmptySections
-                ref={sv => {
-                    this.scrollView = sv;
-                    uiState.currentScrollView = sv;
-                }}
+                onEndReachedThreshold={0.5}
+                ref={this.flatListRef}
             />
         );
     }
@@ -130,7 +133,9 @@ export default class Files extends SafeComponent {
     get isZeroState() { return fileState.store.isEmpty; }
 
     get noFilesInFolder() {
-        if (this.data.length || fileState.currentFolder.isRoot) return null;
+        const folder = fileStore.folderStore.currentFolder;
+        if (this.data.length
+            || (!folder.isShared && folder.isRoot)) return null;
         const s = {
             color: vars.txtMedium,
             textAlign: 'center',
@@ -240,8 +245,21 @@ export default class Files extends SafeComponent {
         fileState.submitSelectedFiles();
     }
 
+    sharedFolderRemovalNotifs() {
+        // TODO: add any missed conditions for when to NOT show this
+        if (!fileStore.folderStore.currentFolder.isRoot) return null;
+        // TODO: map them from a list of notifications from SDK
+        const folderNames = [
+            'test-folder-name-1',
+            'test-folder-name-2',
+            'test-folder-name-3',
+            'test-folder-name-4'
+        ];
+        return <SharedFolderRemovalNotif folderNames={folderNames} />;
+    }
+
     body() {
-        if (this.data.length || !fileState.currentFolder.isRoot) return this.listView();
+        if (this.data.length || !fileStore.folderStore.currentFolder.isRoot) return this.listView();
         if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
             return (
                 <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
@@ -252,22 +270,18 @@ export default class Files extends SafeComponent {
         return this.isZeroState && <FilesPlaceholder />;
     }
 
-    @action.bound fileUploadActionSheetRef(ref) { fileUploadActionSheet = ref; }
-
     renderThrow() {
         return (
             <View
                 style={{ flex: 1 }}>
-                <View style={{ flex: 1, backgroundColor: vars.white }}>
+                <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
                     {!this.isZeroState && this.searchTextbox()}
                     {upgradeForFiles()}
-                    {!this.data.length && !fileState.currentFolder.isRoot ?
-                        this.noFilesInFolder : null}
+                    {this.noFilesInFolder}
+                    {/* this.sharedFolderRemovalNotifs() */}
                     {this.body()}
                 </View>
                 <ProgressOverlay enabled={fileState.store.loading} />
-                <FolderActionSheet ref={ref => { this._folderActionSheet = ref; }} />
-                <FileUploadActionSheet createFolder ref={this.fileUploadActionSheetRef} />
                 {this.toolbar()}
             </View>
         );

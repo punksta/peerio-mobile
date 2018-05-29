@@ -3,6 +3,7 @@ import moment from 'moment';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity, Dimensions } from 'react-native';
+import { tx } from '../utils/translator';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -50,11 +51,11 @@ export default class FileActionSheetHeader extends SafeComponent {
         const { file, onPress } = this.props;
         if (!file) return null;
         return (
-            <View style={container}>
+            <View style={[container, { backgroundColor: vars.lightGrayBg }]} >
                 <TouchableOpacity style={container} onPress={onPress} disabled={!onPress} pressRetentionOffset={vars.pressRetentionOffset}>
                     <View style={{ flex: 1, justifyContent: 'center' }}>
                         <Text style={infoTextStyle} numberOfLines={1} ellipsizeMode="middle">
-                            {file.name}
+                            {file.name} {file.isLegacy && tx('title_pending2')}
                         </Text>
                         <Text style={infoTextStyle} numberOfLines={1} ellipsizeMode="middle">
                             {file.sizeFormatted} {moment(file.uploadedAt).format('DD/MM/YYYY')}
