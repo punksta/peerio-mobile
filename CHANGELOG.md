@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.290.0"></a>
+# [3.290.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.289.0...v3.290.0) (2018-05-29)
+
+
+### Features
+
+* wire up inline folders in DM ([45dda0e](https://github.com/PeerioTechnologies/peerio-mobile/commit/45dda0e))
+
+
+
 <a name="3.289.0"></a>
 # [3.289.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.287.0...v3.289.0) (2018-05-29)
 
