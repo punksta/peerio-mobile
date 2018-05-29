@@ -2,8 +2,8 @@ import vars from './vars';
 
 const iconContainer = {
     position: 'absolute',
-    right: 2,
-    top: 2
+    right: 0,
+    top: 0
 };
 
 const icon = {
@@ -12,42 +12,52 @@ const icon = {
 
 const shadowNormal = {
     height: vars.inputHeight,
-    margin: 2,
-    marginBottom: 36,
-    marginTop: 6,
-    backgroundColor: vars.inputBg
+    margin: vars.spacing.medium.mini2x,
+    marginTop: vars.spacing.small.midi,
+    marginBottom: vars.spacing.small.midi,
+    paddingHorizontal: vars.inputPaddingHorizontal,
+    borderColor: vars.inputBorderColor,
+    borderWidth: 1,
+    borderRadius: 4,
+    overflow: 'hidden'
 };
 
 const shadowActive = {
-    shadowColor: '#000000',
     shadowOpacity: 0.4,
     shadowRadius: 5,
     shadowOffset: {
         height: 1,
         width: 1
-    }
+    },
+    paddingHorizontal: vars.inputPaddingHorizontal
 };
 
 const inputActive = {
     flexGrow: 1,
-    marginLeft: 10,
-    height: 28,
-    backgroundColor: 'transparent',
-    borderColor: 'yellow',
-    borderWidth: 0,
-    fontSize: 14,
-    color: vars.txtDark
+    height: vars.inputHeight,
+    fontSize: vars.font.size.normal,
+    color: vars.textBlack38
 };
 
 const inputContainer = {
     height: vars.inputHeight,
-    opacity: 1
+    opacity: 1,
+    marginTop: -2
+};
+
+const errorStyle = {
+    fontSize: vars.font.size.smaller,
+    color: vars.red,
+    margin: vars.spacing.medium.mini2x,
+    marginTop: -4,
+    marginBottom: vars.spacing.small.mini2x,
+    height: vars.spacing.medium.mini2x
 };
 
 export default {
     normal: {
         textview: [inputActive, {
-            color: vars.pickerText,
+            color: vars.textBlack38,
             top: 16
         }],
         shadow: [shadowNormal, {
@@ -56,11 +66,7 @@ export default {
         background: {
             backgroundColor: 'transparent'
         },
-        container: [inputContainer, {
-            backgroundColor: vars.pickerBg,
-            borderRadius: 2,
-            overflow: 'hidden'
-        }],
+        container: inputContainer,
         iconContainer,
         icon
     },
@@ -72,14 +78,13 @@ export default {
             backgroundColor: 'transparent'
         }],
         background: {
-            backgroundColor: vars.inputBg,
-            borderRadius: 2,
-            overflow: 'hidden'
+            backgroundColor: 'transparent'
         },
         container: [inputContainer, {
             backgroundColor: 'transparent'
         }],
         iconContainer,
         icon
-    }
+    },
+    errorStyle
 };
