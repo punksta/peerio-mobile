@@ -102,6 +102,8 @@ const vars = {
     chatUnreadIndicatorBg: 'rgba(255, 255, 255, 0.95)',
     chatUnreadIndicatorWidth: 70,
     chatUnreadIndicatorHeight: 32,
+    contactInviteSuggestionBg: '#D2EDF1',
+    contactInviteSuggestionHeight: 64,
 
     circle: 10,
     circleSize: 4,
