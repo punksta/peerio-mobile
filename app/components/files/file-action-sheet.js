@@ -8,6 +8,8 @@ import { fileHelpers } from '../../lib/icebear';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import { popupInput } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
+import routerMain from '../routes/router-main';
+import routerModal from '../routes/router-modal';
 
 export default class FileActionSheet {
     static show(file, fileAutoOpen, routeAfterDelete) {
@@ -16,7 +18,14 @@ export default class FileActionSheet {
             return;
         }
         const { isLegacy } = file;
-        const header = <FileActionSheetHeader file={file} />;
+        const header = (<FileActionSheetHeader
+            file={file}
+            onPress={() => {
+                routerModal.discard();
+                routerMain.files(file);
+                ActionSheetLayout.hide();
+            }}
+        />);
 
         // Files that exist can be opened right away
         // Files that dont exist need to be downloaded firs

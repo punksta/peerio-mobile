@@ -4,7 +4,6 @@ import { fileState } from '../states';
 import routerModal from '../routes/router-modal';
 import { popupInput, popupFolderDelete } from '../shared/popups';
 import { fileHelpers, volumeStore } from '../../lib/icebear';
-import routerMain from '../routes/router-main';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import ActionSheetLayout from '../layout/action-sheet-layout';
 
@@ -12,12 +11,7 @@ export default class FoldersActionSheet {
     static show(folder) {
         const { hasLegacyFiles, convertingToVolume, isShared, isOwner } = folder;
         const header = (
-            <FileActionSheetHeader
-                file={folder}
-                onPress={() => {
-                    routerModal.discard();
-                    routerMain.files(folder);
-                }} />
+            <FileActionSheetHeader file={folder} />
         );
         const actionButtons = [
             {
