@@ -256,7 +256,7 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
-    tryAgain() {
+    @action.bound tryAgain() {
         const { image } = this.props;
         const { url } = image;
         // Set var to initial conditions
@@ -277,7 +277,7 @@ export default class FileInlineImage extends SafeComponent {
                     {tx('title_poorConnectionExternalURL')}
                 </Text>
                 <View style={{ position: 'absolute', bottom: 0, right: 0 }}>
-                    {buttons.uppercaseBlueButton(tx('button_retry'), this.tryAgain)}
+                    {buttons.blueTextButton(tx('button_retry'), this.tryAgain)}
                 </View>
             </View>
         );
@@ -388,8 +388,7 @@ export default class FileInlineImage extends SafeComponent {
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
                             {!this.loadImage && this.oversizeCutoff && this.displayCutOffImageOffer}
-                            {!this.loaded && cachingFailed && this.downloadErrorMessage}
-                            {!this.loaded && !cachingFailed && this.downloadSlow && this.downloadSlowMessage}
+                            {!this.loaded && (cachingFailed || this.downloadSlow) && this.downloadSlowMessage}
                             {this.errorDisplayingImage && this.displayErrorMessage}
                             {(acquiringSize || downloading)
                                 && !this.downloadSlow
