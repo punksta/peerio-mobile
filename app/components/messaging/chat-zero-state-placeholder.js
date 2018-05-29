@@ -86,12 +86,10 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
     }
 
     contactUI() {
-        const isMedcryptor = process.env.EXECUTABLE_NAME === 'medcryptor';
         return (
             <View style={{ alignItems: 'center' }}>
                 <Text style={contactDescriptionStyle}>
-                    {!isMedcryptor && tx('title_seeWhoYouAlreadyKnow')}
-                    {isMedcryptor && tx('mcr_title_zero_screen')}
+                    {tx('title_seeWhoYouAlreadyKnow')}
                 </Text>
                 {buttons.roundBlueBgButton('title_findContactsZeroState', () => routerMain.contactAdd())}
             </View>);
