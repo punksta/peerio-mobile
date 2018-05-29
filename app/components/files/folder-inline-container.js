@@ -17,12 +17,11 @@ const padding = 8;
 const borderWidth = 1;
 
 const container = {
+    flex: 1,
+    flexGrow: 1,
     borderColor: vars.lightGrayBg,
     borderWidth,
-    marginVertical: 4,
-    borderRadius: 2,
-    marginLeft: 68,
-    marginRight: 22
+    borderRadius: 2
 };
 
 const header = {
@@ -41,7 +40,7 @@ const infoStyle = {
 export default class FolderInlineContainer extends SafeComponent {
     get folder() {
         const { folderId } = this.props;
-        return fileStore.folders.getById(folderId);
+        return fileStore.folderStore.getById(folderId);
     }
 
     @action.bound press() {
@@ -50,28 +49,17 @@ export default class FolderInlineContainer extends SafeComponent {
         routes.main.files();
     }
 
-    fileDetails() {
-        // TODO add props
-        const { folderName } = this.props;
+    get fileDetails() {
         const { folder } = this;
-        const { isBlocked } = folder;
+        const { name } = folder;
         const nameStyle = {
             flexGrow: 1,
             flexShrink: 1,
-            color: isBlocked ? vars.extraSubtleText : vars.txtDark,
+            color: vars.txtDark,
             fontSize: vars.font.size.normal,
-            marginLeft: isBlocked ? 0 : vars.spacing.small.midi2x
+            marginLeft: vars.spacing.small.midi2x
         };
-        if (isBlocked) {
-            return (
-                <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.small.midi2x }}>
-                    <Text bold numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{folderName}</Text>
-                    <Text italic style={infoStyle}>
-                        {tx('title_locked')}
-                    </Text>
-                </View>);
-        }
-        return (<Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{folderName}</Text>);
+        return (<Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{name}</Text>);
     }
 
     @action.bound onAction() {
@@ -102,7 +90,7 @@ export default class FolderInlineContainer extends SafeComponent {
                     null,
                     !isBlocked ? null : { opacity: 0.38 },
                     vars.iconSize)}
-                {this.fileDetails()}
+                {this.fileDetails}
                 {optionsIcon}
             </View>
         );
@@ -134,8 +122,10 @@ export default class FolderInlineContainer extends SafeComponent {
 
     render() {
         const { folder } = this;
-        const { isBlocked } = folder;
+        if (!folder) return null;
         const outer = {
+            flex: 1,
+            flexGrow: 1,
             padding
         };
 
@@ -143,7 +133,6 @@ export default class FolderInlineContainer extends SafeComponent {
             <TouchableOpacity
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={container}
-                disabled={isBlocked}
                 onPress={this.press}>
                 <View style={outer} {...this.props}>
                     {folder.isJustUnshared ? this.reshareBody : this.normalBody}

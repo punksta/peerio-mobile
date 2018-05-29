@@ -9,6 +9,7 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileInlineProgress from '../files/file-inline-progress';
 import FileInlineImage from '../files/file-inline-image';
+import FolderInlineContainer from '../files/folder-inline-container';
 import AvatarCircle from './avatar-circle';
 import ErrorCircle from './error-circle';
 import DeletedCircle from './deleted-circle';
@@ -219,6 +220,17 @@ export default class Avatar extends SafeComponent {
         );
     }
 
+    get folders() {
+        const { folders, chat } = this.props;
+        return folders ?
+            folders.map(folderId => (
+                <FolderInlineContainer
+                    key={folderId}
+                    folderId={folderId}
+                    chat={chat} />
+            )) : null;
+    }
+
     get files() {
         const { onFileAction, onLegacyFileAction, chat } = this.props;
         return this.props.files ?
@@ -418,9 +430,9 @@ export default class Avatar extends SafeComponent {
     }
 
     renderCollapsed() {
-        const { inlineImage, files } = this;
+        const { inlineImage, files, folders } = this;
         const shrinkStrategy = { flexShrink: 1 };
-        if (inlineImage || files) shrinkStrategy.flexGrow = 1;
+        if (inlineImage || files || folders) shrinkStrategy.flexGrow = 1;
         const backgroundColor = {
             backgroundColor: this.props.backgroundColor ? this.props.backgroundColor : vars.white
         };
@@ -432,6 +444,7 @@ export default class Avatar extends SafeComponent {
                         style={[this.itemContainerStyle, { paddingLeft: 68, marginRight: 22 }, shrinkStrategy]}>
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
+                            {folders}
                             {files}
                             {inlineImage}
                             {this.message}
@@ -462,6 +475,7 @@ export default class Avatar extends SafeComponent {
                         {this.avatar}
                         <View style={[nameMessageContainerStyle]}>
                             {this.props.isChat ? this.name : this.title}
+                            {this.folders}
                             {this.files}
                             {this.inlineImage}
                             {this.message}
