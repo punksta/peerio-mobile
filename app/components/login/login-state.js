@@ -61,7 +61,6 @@ class LoginState extends RoutedState {
         this.username = '';
         this.passphrase = '';
         this.isInProgress = false;
-        this.resetValidationState();
     }
 
     @action saved = () => {

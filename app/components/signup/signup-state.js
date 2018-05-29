@@ -36,7 +36,6 @@ class SignupState extends RoutedState {
         this.specialty = '';
         this.role = '';
         this.current = 0;
-        this.resetValidationState();
         this.routes.app.loginStart();
 
         // hook for whitelabel signup state to reset itself
