@@ -9,7 +9,6 @@ import { t, tx, tu } from '../utils/translator';
 import Layout3 from '../layout/layout3';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
-import ContactsPlaceholder from './contacts-placeholder';
 import ContactInviteItemPrompt from './contact-invite-item-prompt';
 import ContactLegacyItem from './contact-legacy-item';
 import icons from '../helpers/icons';
