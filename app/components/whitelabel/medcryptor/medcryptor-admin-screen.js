@@ -2,7 +2,7 @@ import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
 import { t, tu } from 'peerio-translator';
-import { View, TouchableOpacity, Linking } from 'react-native';
+import { ScrollView, View, TouchableOpacity, Linking } from 'react-native';
 import Text from '../../controls/custom-text';
 import SafeComponent from '../../shared/safe-component';
 import { vars } from '../../../styles/styles';
@@ -14,9 +14,7 @@ import { contactStore } from '../../../lib/icebear';
 
 const container = {
     flex: 1,
-    flexGrow: 1,
-    flexDirection: 'row',
-    justifyContent: 'center'
+    flexGrow: 1
 };
 
 const wrapper = {
@@ -67,7 +65,8 @@ const featureIcon = {
 const contactDescriptionStyle = {
     color: vars.textBlack54,
     fontSize: vars.font.size.normal,
-    margin: vars.spacing.medium.mini
+    margin: vars.spacing.medium.mini,
+    textAlign: 'center'
 };
 
 const buttonContainerStyle = {
@@ -80,14 +79,17 @@ const buttonStyle = {
 
 @observer
 export default class MedcryptorAdminScreen extends SafeComponent {
+    constructor(props) {
+        super(props);
+        this.helpAccount = contactStore.getContact(this.helpAccountUsername);
+    }
+
     helpAccountUsername = 'team_medcryptor';
     buyAccountUrl = 'https://medcryptor.com/shop/product/practice-membership-1';
     features = ['mcr_title_patientInvites', 'mcr_title_consultationRooms', 'mcr_title_discussionRooms'];
 
     contactMedcryptor = async () => {
-        const helpAccount = await contactStore.getContactAndSave(this.helpAccountUsername);
-        await helpAccount.ensureLoaded();
-        await chatState.startChat([helpAccount]);
+        return chatState.startChat([this.helpAccount]);
     };
 
     skipScreen = () => routes.main.chats();
@@ -109,7 +111,7 @@ export default class MedcryptorAdminScreen extends SafeComponent {
 
     renderThrow() {
         return (
-            <View style={container}>
+            <ScrollView style={container}>
                 <View style={wrapper}>
                     <View style={welcomeContainerStyle}>
                         {icons.coloredAsText('check-circle', vars.confirmColor, 60)}
@@ -140,7 +142,7 @@ export default class MedcryptorAdminScreen extends SafeComponent {
                         </Text>
                     </TouchableOpacity>
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }
