@@ -35,7 +35,6 @@ const shadowActive = {
 const inputActive = {
     flexGrow: 1,
     height: vars.inputHeight,
-    fontSize: vars.font.size.normal,
     color: vars.textBlack38
 };
 

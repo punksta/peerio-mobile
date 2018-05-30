@@ -14,6 +14,7 @@ export default class MedcryptorCountryPickerBox extends SafeComponent {
             <PickerBox
                 name="countrySelected"
                 picker={<MedcryptorCountryPicker />}
+                state={medcryptorUiState}
                 data={medcryptorUiState.countries}
                 value={medcryptorUiState.countrySelected}
                 hint={tx('title_countryOfPractice')}
