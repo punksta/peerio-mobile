@@ -28,6 +28,7 @@ import popupState from '../layout/popup-state';
 import { fileStore } from '../../lib/icebear';
 import { popupUpgradeNotification, popupUpgradeProgress } from '../shared/popups';
 import preferenceStore from '../settings/preference-store';
+import whiteLabelComponents from '../../components/whitelabel/white-label-components';
 
 class RouterMain extends Router {
     // current route object
@@ -57,6 +58,9 @@ class RouterMain extends Router {
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('channelInvite', [<ChannelInvite />], invitationState);
+
+        if (whiteLabelComponents.extendRoutes) whiteLabelComponents.extendRoutes(this);
+
         reaction(() => fileStore.migration.pending, migration => {
             if (migration) this.filesystemUpgrade();
         }, true);
