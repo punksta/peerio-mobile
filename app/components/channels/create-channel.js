@@ -12,8 +12,8 @@ import CreateChannelTextBox from './create-channel-textbox';
 import chatState from '../messaging/chat-state';
 import { User, config, socket } from '../../lib/icebear';
 import SnackBarConnection from '../snackbars/snackbar-connection';
-import testLabel from '../helpers/test-label';
 import Text from '../controls/custom-text';
+import ModalHeader from '../shared/modal-header';
 
 const fillView = { flex: 1, flexGrow: 1, backgroundColor: vars.darkBlueBackground05 };
 
@@ -76,49 +76,26 @@ export default class CreateChannel extends Component {
             return icons.text(
                 tu('button_go'),
                 () => this.next(),
-                { color: vars.peerioBlue, marginHorizontal: vars.iconPadding },
+                { color: vars.peerioBlue },
                 'buttonGo');
         }
         return icons.text(
             tu('button_next'),
             () => this.next(),
-            { color: vars.peerioBlue, marginHorizontal: vars.iconPadding },
+            { color: vars.peerioBlue },
             'buttonNext');
     }
 
     nextIconDisabled() {
-        if (this.step === 1) return icons.disabledText(tu('button_go'), { marginHorizontal: vars.iconPadding });
-        return icons.disabledText(tu('button_next'), { marginHorizontal: vars.iconPadding });
+        if (this.step === 1) return icons.disabledText(tu('button_go'));
+        return icons.disabledText(tu('button_next'));
     }
 
-    exitRow(testId) {
-        const container = {
-            backgroundColor: vars.darkBlueBackground15,
-            flex: 0,
-            flexDirection: 'row',
-            alignItems: 'center',
-            padding: vars.spacing.small.mini2x,
-            paddingTop: vars.statusBarHeight * 2,
-            paddingBottom: 0,
-            marginBottom: vars.spacing.small.midi2x,
-            height: vars.headerHeight
-        };
-        const textStyle = {
-            textAlign: 'center',
-            flexGrow: 1,
-            flexShrink: 1,
-            fontSize: vars.font.size.huge,
-            color: vars.textBlack54
-        };
-        return (
-            <View style={container}
-                {...testLabel(testId)}
-                accessible={false}>
-                {icons.dark('close', () => chatState.routerModal.discard())}
-                <Text semibold style={textStyle}>{tx('button_createChannel')}</Text>
-                {this.isValid ? this.nextIcon() : this.nextIconDisabled()}
-            </View>
-        );
+    exitRow(testID) {
+        const leftIcon = icons.dark('close', () => chatState.routerModal.discard());
+        const rightIcon = this.isValid ? this.nextIcon() : this.nextIconDisabled();
+        const title = 'button_createChannel';
+        return <ModalHeader {...{ leftIcon, rightIcon, title, testID }} />;
     }
 
     get firstPage() {

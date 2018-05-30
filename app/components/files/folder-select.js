@@ -7,12 +7,12 @@ import SafeComponent from '../shared/safe-component';
 import FolderInnerItem from './folder-inner-item';
 import fileState from './file-state';
 import { vars } from '../../styles/styles';
-import Center from '../controls/center';
 import icons from '../helpers/icons';
 import routes from '../routes/routes';
 import { popupMoveToSharedFolder } from '../shared/popups';
 import { tx } from '../utils/translator';
 import preferenceStore from '../settings/preference-store';
+import ModalHeader from '../shared/modal-header';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -111,34 +111,13 @@ export default class FolderSelect extends SafeComponent {
     }
 
     exitRow() {
-        const container = {
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: vars.spacing.small.mini2x,
-            paddingTop: vars.statusBarHeight,
-            paddingBottom: 0,
-            height: vars.headerHeight,
-            borderBottomWidth: 1,
-            borderBottomColor: '#EFEFEF'
-        };
-        const style = {
-            flexGrow: 1
-        };
-        const textStyle = {
-            fontSize: vars.font.size.normal,
-            color: vars.txtMedium
-        };
         const leftIcon = this.currentFolder.isRoot ?
             icons.dark('close', () => routes.modal.discard()) :
             icons.dark('arrow-back', () => { this.currentFolder = this.currentFolder.parent; });
-        return (
-            <View style={container}>
-                {leftIcon}
-                <Center style={style}><Text semibold style={textStyle}>Move file to...</Text></Center>
-                {icons.placeholder()}
-            </View>
-        );
+        const fontSize = vars.font.size.normal;
+        const title = 'title_moveFileTo';
+        const outerStyle = { marginBottom: 0 };
+        return <ModalHeader {...{ leftIcon, title, fontSize, outerStyle }} />;
     }
 
     renderThrow() {
