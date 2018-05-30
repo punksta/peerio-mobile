@@ -231,7 +231,8 @@ export default class Chat extends SafeComponent {
         const { nativeEvent } = event;
         const { y } = nativeEvent.contentOffset;
         const maxY = this.contentHeight - this.scrollViewHeight;
-        this.isAtBottom = Math.abs(y - maxY) < 2;
+        // values here may be float therefore the magic "2" number
+        this.isAtBottom = (maxY - y) < 2;
         console.log(`onscroll: ${y} - ${this.contentHeight} - ${this.scrollViewHeight}, ${y - maxY}`);
         clientApp.isReadingNewestMessages = this.isAtBottom;
 
