@@ -125,7 +125,7 @@ export default class MedcryptorAdminScreen extends SafeComponent {
                         </Text>
                         {this.features.map(f => this.renderFeature(f))}
                     </View>
-                    {buttons.roundBlueBgButton('mcr_title_getAccount', () => Linking.openURL(this.buyAccountUrl))}
+                    {buttons.roundBlueBgButton('button_learnMore', () => Linking.openURL(this.buyAccountUrl))}
                     <TouchableOpacity
                         pressRetentionOffset={vars.pressRetentionOffset}
                         onPress={this.contactMedcryptor}>
