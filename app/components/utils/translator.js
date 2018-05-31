@@ -7,6 +7,7 @@ import uiState from '../layout/ui-state';
 import whiteLabelConfig from '../whitelabel/white-label-config';
 
 function findPrefixedName(k) {
+    if (!k) return null;
     const prefix = whiteLabelConfig.LOCALE_PREFIX;
     let name = k;
     if (name.startsWith('title_seeWhoYouAlreadyKnow')) {
@@ -38,6 +39,7 @@ class T extends Component {
 
     render() {
         const name = findPrefixedName(this.props.k);
+        if (!name) return null;
         if (!has(name)) {
             console.error(`${name} not found`);
         }
