@@ -53,8 +53,8 @@ export default class HeaderMain extends SafeComponent {
             </TouchableOpacity>
         );
         // this is for animation purposes so that object gets completely redrawn on transition
-        const key = `header_${routerMain.route}_${routerMain.currentIndex}`;
-        return <CommonHeader {...{ key, titleComponent, leftIcon, rightIcon, outerStyle }} />;
+        const unique = `header_${routerMain.route}_${routerMain.currentIndex}`;
+        return <CommonHeader {...{ unique, titleComponent, leftIcon, rightIcon, outerStyle }} />;
     }
 }
 

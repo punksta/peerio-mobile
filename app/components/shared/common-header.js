@@ -18,7 +18,7 @@ export default class CommonHeader extends Component {
         };
         return (
             <View style={bgContainerStyle} {...testLabel(this.props.testID)}>
-                <View style={containerStyle}>
+                <View style={containerStyle} key={this.props.unique}>
                     {this.props.titleComponent}
                     <View style={{ position: 'absolute', left: 0 }}>
                         {this.props.leftIcon}
