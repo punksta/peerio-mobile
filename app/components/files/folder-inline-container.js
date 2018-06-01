@@ -87,6 +87,23 @@ export default class FolderInlineContainer extends SafeComponent {
         );
     }
 
+    get unsharedBody() {
+        const text = this.folder ?
+            tx('title_folderNameUnshared', { folderName: this.folder.name }) : tx('title_folderUnshared');
+        return (
+            <View style={header}>
+                {icons.darkNoPadding('folder')}
+                <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <View style={{ marginLeft: vars.spacing.small.midi2x }}>
+                        <Text style={infoStyle}>
+                            {text}
+                        </Text>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
     get reshareBody() {
         return (
             <View style={header}>
@@ -107,7 +124,7 @@ export default class FolderInlineContainer extends SafeComponent {
 
     render() {
         const { folder } = this;
-        if (!folder) return null;
+        if (!folder) return this.unsharedBody;
         const outer = {
             flex: 1,
             flexGrow: 1,
@@ -120,7 +137,7 @@ export default class FolderInlineContainer extends SafeComponent {
                 style={container}
                 onPress={this.press}>
                 <View style={outer} {...this.props}>
-                    {folder.isJustUnshared ? this.reshareBody : this.normalBody}
+                    {folder.isShared ? this.normalBody : this.unsharedBody}
                 </View>
             </TouchableOpacity>
         );

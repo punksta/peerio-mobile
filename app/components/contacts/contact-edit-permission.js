@@ -40,6 +40,10 @@ export default class ContactEditPermission extends SafeComponent {
         }, true);
     }
 
+    componentWillUnmount() {
+        this.reaction();
+    }
+
     get unshareButton() {
         const extraWidth = 20;
         if (fileState.currentFile.isFolder && fileState.currentFile.isShared) {
