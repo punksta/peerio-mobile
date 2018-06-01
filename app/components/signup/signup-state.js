@@ -48,7 +48,7 @@ class SignupState extends RoutedState {
 
     @action async next() {
         if (!this.passphrase) this.passphrase = await this.generatePassphrase();
-        if (this.keyBackedUp) await this.finishAccountCreation();
+        if (this.keyBackedUp && (this.current === this.keyBackedUpIndex)) await this.finishAccountCreation();
         this.current++;
     }
 
