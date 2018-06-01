@@ -1,8 +1,9 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
-import { t, tu } from 'peerio-translator';
 import { ScrollView, View, TouchableOpacity, Linking } from 'react-native';
+import { t, tu } from 'peerio-translator';
+import { T } from '../../utils/translator';
 import Text from '../../controls/custom-text';
 import SafeComponent from '../../shared/safe-component';
 import { vars } from '../../../styles/styles';
@@ -77,6 +78,20 @@ const buttonStyle = {
     color: vars.textBlack38
 };
 
+const chatWithUs = {
+    textDecorationLine: 'underline',
+    color: vars.darkBlue
+};
+
+const mcrHelp = text => (
+    <Text
+        style={chatWithUs}>
+        {text}
+    </Text>
+);
+
+const mcrHelpParser = { mcrHelp };
+
 @observer
 export default class MedcryptorAdminScreen extends SafeComponent {
     constructor(props) {
@@ -85,7 +100,7 @@ export default class MedcryptorAdminScreen extends SafeComponent {
     }
 
     helpAccountUsername = 'team_medcryptor';
-    buyAccountUrl = 'https://medcryptor.com/shop/product/practice-membership-1';
+    buyAccountUrl = 'https://medcryptor.com/';
     features = ['mcr_title_patientInvites', 'mcr_title_consultationRooms', 'mcr_title_discussionRooms'];
 
     contactMedcryptor = async () => {
@@ -125,12 +140,12 @@ export default class MedcryptorAdminScreen extends SafeComponent {
                         </Text>
                         {this.features.map(f => this.renderFeature(f))}
                     </View>
-                    {buttons.roundBlueBgButton('button_learnMore', () => Linking.openURL(this.buyAccountUrl))}
+                    {buttons.roundBlueBgButton('mcr_title_getAccount', () => Linking.openURL(this.buyAccountUrl))}
                     <TouchableOpacity
                         pressRetentionOffset={vars.pressRetentionOffset}
                         onPress={this.contactMedcryptor}>
                         <Text style={contactDescriptionStyle}>
-                            {t('mcr_title_needHelp', { username: `@${this.helpAccountUsername}` })}
+                            <T k="mcr_title_needHelp">{mcrHelpParser}</T>
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
