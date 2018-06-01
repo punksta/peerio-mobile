@@ -245,9 +245,12 @@ export default class Avatar extends SafeComponent {
     }
 
     get inlineImage() {
-        const { inlineImage, onInlineImageAction, onLegacyFileAction } = this.props;
-        return inlineImage ?
-            <FileInlineImage key={inlineImage} image={inlineImage} onAction={onInlineImageAction} onLegacyFileAction={onLegacyFileAction} /> : null;
+        const { inlineImages, onInlineImageAction, onLegacyFileAction } = this.props;
+        if (!inlineImages || !inlineImages.length) return null;
+        return inlineImages.map(image => {
+            const key = image.fileId || image.url;
+            return <FileInlineImage {...{ key, image, onLegacyFileAction }} onAction={onInlineImageAction} />;
+        });
     }
 
     get errorCircle() {

@@ -34,9 +34,8 @@ export default class ChatItem extends SafeComponent {
         ).filter(f => f) || [];
         const images = files.filter(f => f.isImage) || [];
         const normalFiles = files.filter(f => !f.isImage) || [];
-        let firstImage = images.length ? images[0] : null;
         if (i.hasUrls && i.externalImages.length) {
-            firstImage = i.externalImages[0];
+            images.push(...i.externalImages);
         }
         const hasDeletedFile = i.files && !i.files.find(
             id => fileState.store.getByIdInChat(id, chat.id)
@@ -53,7 +52,7 @@ export default class ChatItem extends SafeComponent {
                     isDeleted={i.sender ? i.sender.isDeleted : false}
                     files={normalFiles.map(f => f.fileId)}
                     folders={i.folders}
-                    inlineImage={firstImage}
+                    inlineImages={images}
                     receipts={i.receipts}
                     hideOnline
                     firstOfTheDay={i.firstOfTheDay}
