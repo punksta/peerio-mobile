@@ -146,7 +146,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
         this.inProgress = false;
         const u = username.trim();
         if (!u) return;
-        const c = contactState.store.getContact(u);
+        const c = contactState.store.whitelabel.getContact(u);
         if (!this.findUserText) return;
         this.inProgress = true;
         when(() => !c.loading, () => {

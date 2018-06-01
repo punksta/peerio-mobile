@@ -44,7 +44,9 @@ class ContactState extends RoutedState {
     }
 
     getFiltered(findUserText, exclude = {}) {
-        const result = this.store.filter(findUserText || '')
+        // TODO: it is actually debatable if we need to filter
+        // contacts which are already in our contact list
+        const result = this.store.whitelabel.filter(findUserText || '')
             .filter(c => c.username !== User.current.username && !exclude[c.username]);
         return result.length ? result : this.found.filter(
             c => !c.loading && !c.notFound
@@ -227,7 +229,7 @@ class ContactState extends RoutedState {
     async resolveAndCache(usernameOrEmail) {
         if (this._resolveCache[usernameOrEmail]) return this._resolveCache[usernameOrEmail];
         return new Promise(resolve => {
-            const contact = this.store.getContact(usernameOrEmail);
+            const contact = this.store.whitelabel.getContact(usernameOrEmail);
             this._resolveCache[usernameOrEmail] = contact;
             when(() => !contact.loading, () => resolve(contact));
         });

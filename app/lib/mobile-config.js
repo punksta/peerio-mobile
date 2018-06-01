@@ -80,6 +80,7 @@ export default (c, icebear) => {
 
     cfg.platform = Platform.OS;
     cfg.appLabel = process.env.APP_LABEL;
+    cfg.whiteLabel = { name: process.env.APP_LABEL };
     cfg.appleTestUser = 'applereview2607';
     cfg.appleTestPass = 'icebear';
     cfg.appleTestServer = 'wss://treetrunks.peerio.com';
