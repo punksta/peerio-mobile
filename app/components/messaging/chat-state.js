@@ -137,7 +137,6 @@ class ChatState extends RoutedState {
 
     @action shareFilesAndFolders(filesAndFolders) {
         this.selfNewMessageCounter++;
-        console.log(filesAndFolders);
         this.currentChat && filesAndFolders && filesAndFolders.length &&
             this.currentChat.shareFilesAndFolders(filesAndFolders).catch(sounds.destroy);
     }
