@@ -18,7 +18,6 @@ export default class SignupWizard extends Wizard {
     set index(i) { signupState.current = i; }
 
     renderThrow() {
-        signupState.keyBackedUpIndex = WhiteLabel.PAGE_NAMES.indexOf('signupConfirmBackup');
         const style = wizard;
         const component = this.currentPage.type.prototype;
         const body = (
