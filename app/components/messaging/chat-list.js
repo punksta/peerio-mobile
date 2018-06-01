@@ -84,6 +84,7 @@ export default class ChatList extends SafeComponent {
         this.reaction = null;
         this.indicatorReaction && this.indicatorReaction();
         this.indicatorReaction = null;
+        uiState.currentScrollView = null;
     }
 
     sectionHeader = (item) => {
@@ -127,15 +128,13 @@ export default class ChatList extends SafeComponent {
     @action.bound scrollViewRef(sv) {
         this.scrollView = sv;
         uiState.currentScrollView = sv;
-        if (sv) {
-            // this is needed to reset viewable items indicator at initial render
-            setTimeout(() => sv.scrollToLocation({
-                itemIndex: -1,
-                sectionIndex: 0,
-                viewPosition: 0
-            }), 500);
-            setTimeout(() => { this.enableIndicators = true; }, 1000);
-        }
+        // this is needed to reset viewable items indicator at initial render
+        setTimeout(() => this.scrollView && this.scrollView.scrollToLocation({
+            itemIndex: -1,
+            sectionIndex: 0,
+            viewPosition: 0
+        }), 500);
+        setTimeout(() => { this.enableIndicators = true; }, 1000);
     }
 
     @computed get firstUnreadItemPosition() {
