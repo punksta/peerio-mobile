@@ -63,6 +63,11 @@ const icons = {
         return icons.basic(name, vars.whiteIcon, onPress, style, size, undefined, testID);
     },
 
+    whiteNoPadding(name, onPress, style, size, disabled) {
+        const iconStyle = disabled ? vars.disabledIcon : vars.whiteIcon;
+        return icons.basic(name, iconStyle, onPress, style, size, true, undefined, disabled);
+    },
+
     dark(name, onPress, style, size, testID) {
         return icons.basic(name, vars.darkIcon, onPress, style, size, undefined, testID);
     },
@@ -101,12 +106,19 @@ const icons = {
 
     text(text, onPress, style, testID, extraWidth) {
         const size = vars.iconPadding * 2 + vars.iconSize;
+        const containerStyle = {
+            marginHorizontal: vars.iconPadding,
+            height: size,
+            width: size + extraWidth,
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={onPress}
                 {...testLabel(testID)}>
-                <View style={{ height: size, width: size + extraWidth, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={containerStyle}>
                     <Text semibold style={[goStyle, style]}>{text}</Text>
                 </View>
             </TouchableOpacity>
@@ -115,10 +127,17 @@ const icons = {
 
     disabledText(text, style, extraWidth) {
         const size = vars.iconPadding * 2 + vars.iconSize;
+        const containerStyle = {
+            marginHorizontal: vars.iconPadding,
+            height: size,
+            width: size + extraWidth,
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset} >
-                <View style={{ height: size, width: size + extraWidth, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={containerStyle}>
                     <Text semibold style={[disabledStyle, style]}>{text}</Text>
                 </View>
             </TouchableOpacity>

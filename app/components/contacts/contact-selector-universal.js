@@ -20,6 +20,7 @@ import ContactSelectorUserBoxLine from './contact-selector-userbox-line';
 import ContactSelectorSectionList from './contact-selector-sectionlist';
 import Text from '../controls/custom-text';
 import SearchBar from '../controls/search-bar';
+import ModalHeader from '../shared/modal-header';
 
 @observer
 export default class ContactSelectorUniversal extends SafeComponent {
@@ -93,29 +94,11 @@ export default class ContactSelectorUniversal extends SafeComponent {
     }
 
     exitRow() {
-        const container = {
-            backgroundColor: vars.darkBlueBackground15,
-            flexGrow: 1,
-            flexDirection: 'row',
-            paddingTop: vars.statusBarHeight * 2,
-            paddingHorizontal: vars.spacing.small.midi2x,
-            alignItems: 'center',
-            height: vars.headerHeight
-        };
-        const textStyle = {
-            textAlign: 'center',
-            flexGrow: 1,
-            flexShrink: 1,
-            fontSize: vars.font.size.big,
-            color: vars.textBlack54
-        };
-        return (
-            <View style={container}>
-                {icons.dark('close', this.props.onExit, null, null, 'closeButton')}
-                <Text semibold style={textStyle}>{tx(this.props.title)}</Text>
-                {this.props.multiselect && this.shareButton}
-            </View>
-        );
+        const { title, onExit } = this.props;
+        const leftIcon = icons.dark('close', onExit, null, null, 'closeButton');
+        const rightIcon = this.props.multiselect ? this.shareButton : null;
+        const fontSize = vars.font.size.big;
+        return <ModalHeader {...{ leftIcon, rightIcon, title, fontSize }} />;
     }
 
     get shareButton() {

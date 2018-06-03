@@ -2,6 +2,55 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.290.0"></a>
+# [3.290.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.289.0...v3.290.0) (2018-05-29)
+
+
+### Features
+
+* wire up inline folders in DM ([45dda0e](https://github.com/PeerioTechnologies/peerio-mobile/commit/45dda0e))
+
+
+
+<a name="3.289.0"></a>
+# [3.289.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.287.0...v3.289.0) (2018-05-29)
+
+
+### Bug Fixes
+
+* channel info actions fixed (make admin, remove participant, remove invite) ([#198](https://github.com/PeerioTechnologies/peerio-mobile/issues/198)) ([e55e355](https://github.com/PeerioTechnologies/peerio-mobile/commit/e55e355))
+* contact add page UI bugs [branch ch6932] ([#203](https://github.com/PeerioTechnologies/peerio-mobile/issues/203)) ([2b856c0](https://github.com/PeerioTechnologies/peerio-mobile/commit/2b856c0))
+* eslint ([9bc11e0](https://github.com/PeerioTechnologies/peerio-mobile/commit/9bc11e0))
+* retry cancel in chat [ch3886] ([6ddff57](https://github.com/PeerioTechnologies/peerio-mobile/commit/6ddff57))
+
+
+### Features
+
+* improved invite contact ui [branch ch6150] ([#196](https://github.com/PeerioTechnologies/peerio-mobile/issues/196)) ([26690f1](https://github.com/PeerioTechnologies/peerio-mobile/commit/26690f1))
+* no zero state for contact selector ([090be28](https://github.com/PeerioTechnologies/peerio-mobile/commit/090be28))
+* remove participant from volume ([bc01685](https://github.com/PeerioTechnologies/peerio-mobile/commit/bc01685))
+
+
+
+<a name="3.288.0"></a>
+# [3.288.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.287.0...v3.288.0) (2018-05-29)
+
+
+### Bug Fixes
+
+* contact add page UI bugs [branch ch6932] ([#203](https://github.com/PeerioTechnologies/peerio-mobile/issues/203)) ([2b856c0](https://github.com/PeerioTechnologies/peerio-mobile/commit/2b856c0))
+* eslint ([9bc11e0](https://github.com/PeerioTechnologies/peerio-mobile/commit/9bc11e0))
+* retry cancel in chat [ch3886] ([6ddff57](https://github.com/PeerioTechnologies/peerio-mobile/commit/6ddff57))
+
+
+### Features
+
+* improved invite contact ui [branch ch6150] ([#196](https://github.com/PeerioTechnologies/peerio-mobile/issues/196)) ([26690f1](https://github.com/PeerioTechnologies/peerio-mobile/commit/26690f1))
+* no zero state for contact selector ([090be28](https://github.com/PeerioTechnologies/peerio-mobile/commit/090be28))
+* remove participant from volume ([bc01685](https://github.com/PeerioTechnologies/peerio-mobile/commit/bc01685))
+
+
+
 <a name="3.287.0"></a>
 # [3.287.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.286.0...v3.287.0) (2018-05-25)
 

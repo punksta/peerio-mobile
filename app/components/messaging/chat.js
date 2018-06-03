@@ -9,7 +9,6 @@ import ProgressOverlay from '../shared/progress-overlay';
 import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
-import ChatActionSheet from './chat-action-sheet';
 import ChatUnreadMessageIndicator from './chat-unread-message-indicator';
 import FileActionSheet from '../files/file-action-sheet';
 import contactState from '../contacts/contact-state';
@@ -58,9 +57,13 @@ export default class Chat extends SafeComponent {
     };
 
     componentWillUnmount() {
+        if (this.unreadMessageIndicatorTimeout) {
+            clearTimeout(this.unreadMessageIndicatorTimeout);
+            this.unreadMessageIndicatorTimeout = null;
+        }
+        uiState.customOverlayComponent = null;
         this.selfMessageReaction();
         this.chatReaction();
-        uiState.customOverlayComponent = null;
     }
 
     get rightIcon() {
@@ -91,14 +94,13 @@ export default class Chat extends SafeComponent {
                 ref: ref => { this._refs[key] = ref; },
                 onInlineImageAction: image => FileActionSheet.show(image),
                 onLegacyFileAction: file => FileActionSheet.show(file),
-                onFileAction: file => FileActionSheet.show(file, true),
-                onRetryCancel: () => ChatActionSheet.show(item, this.chat)
+                onFileAction: file => FileActionSheet.show(file, true)
             }));
         return (
             <ChatItem
                 key={key}
                 message={item}
-                chatId={this.chat.id}
+                chat={this.chat}
                 {...actions}
             />
         );
@@ -139,7 +141,7 @@ export default class Chat extends SafeComponent {
                         wasAtBottom) {
                         console.log('chat.js: auto scrolling');
                         this.isAtBottom = wasAtBottom;
-                        this.scrollView.scrollTo({ y, animated: !this.waitForScrollToEnd });
+                        this.scrollView.scrollTo({ y, animated: false });
                         requestAnimationFrame(() => { this.initialScrollDone = true; });
                     }
                 }
@@ -148,7 +150,7 @@ export default class Chat extends SafeComponent {
                     this.waitForScrollToEnd = false;
                 }
             } else {
-                setTimeout(() => this.contentSizeChanged(), 1000);
+                this._contentSizeChanged = setTimeout(() => this.contentSizeChanged(), 1000);
             }
         }, 300);
     };
@@ -229,7 +231,8 @@ export default class Chat extends SafeComponent {
         const { nativeEvent } = event;
         const { y } = nativeEvent.contentOffset;
         const maxY = this.contentHeight - this.scrollViewHeight;
-        this.isAtBottom = Math.abs(y - maxY) < 2;
+        // values here may be float therefore the magic "2" number
+        this.isAtBottom = (maxY - y) < 2;
         console.log(`onscroll: ${y} - ${this.contentHeight} - ${this.scrollViewHeight}, ${y - maxY}`);
         clientApp.isReadingNewestMessages = this.isAtBottom;
 
@@ -240,6 +243,7 @@ export default class Chat extends SafeComponent {
 
         if (!this.isAtBottom && !chatState.loading) {
             this.unreadMessageIndicatorTimeout = setTimeout(() => {
+                if (this.isAtBottom || chatState.loading) return;
                 uiState.customOverlayComponent =
                     <ChatUnreadMessageIndicator onPress={this.scrollToBottom} />;
             }, 1000);

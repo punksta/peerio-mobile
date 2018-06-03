@@ -63,6 +63,7 @@ class UIState extends RoutedState {
     @action.bound hideAll() {
         this.hideKeyboard();
         this.hidePicker();
+        this.customOverlayComponent = null;
         return new Promise(resolve => when(() => this.keyboardHeight === 0, resolve));
     }
 

@@ -12,9 +12,8 @@ function isIphoneX() {
     );
 }
 
-const iPhoneStatusBar = (Platform.OS === 'ios' ? 20 : 0);
-const iPhoneXTop = isIphoneX() ? 16 : 0;
-const iPhoneXBottom = iPhoneXTop;
+const iPhoneStatusBar = (Platform.OS === 'ios' ? 40 : 0);
+const iPhoneXBottom = isIphoneX() ? 16 : 0;
 
 const isDeviceScreenBig = isBigScreenSize();
 const isDeviceScreenSmall = !isDeviceScreenBig;
@@ -31,7 +30,7 @@ const { darkBlue, darkTeal, peerioBlue, peerioPurple, confirmColor,
     chatItemPressedBackground, invitedBadgeColor, invitedBadgeText,
     peerioBlueBackground15, darkBlueBackground15, snackbarBg, lightGrayBg,
     darkBlueBackground05, channelInfoBg } = branding;
-const statusBarHeight = (Platform.OS === 'android' ? 0 : 10) + iPhoneXTop;
+const statusBarHeight = iPhoneStatusBar;
 const layoutPaddingTop = statusBarHeight * 2;
 
 const r = 40;
@@ -102,6 +101,8 @@ const vars = {
     chatUnreadIndicatorBg: 'rgba(255, 255, 255, 0.95)',
     chatUnreadIndicatorWidth: 70,
     chatUnreadIndicatorHeight: 32,
+    contactInviteSuggestionBg: '#D2EDF1',
+    contactInviteSuggestionHeight: 64,
 
     circle: 10,
     circleSize: 4,
@@ -163,7 +164,7 @@ const vars = {
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
-    headerHeight: 56 + iPhoneStatusBar + iPhoneXTop,
+    headerHeight: 56,
     headerSpacing: 56 + layoutPaddingTop,
     iconSize: 24,
     iconSizeSmall: 16,
@@ -187,6 +188,7 @@ const vars = {
     menuWidthRatio: 0.8,
     animationDuration: 200,
     progressBarHeight: 4,
+    inlineFolderContainerHeight: 48,
     filesListItemHeight: 64,
     contactlistItemHeight: 56,
     listItemHeight: 56,
@@ -248,7 +250,6 @@ const vars = {
     fabBottom: 32,
     retentionOffset,
     iPhoneXBottom,
-    iPhoneXTop,
     tabCellHeight,
     tabsHeight: tabCellHeight + iPhoneXBottom,
     spacing: {

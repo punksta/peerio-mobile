@@ -7,13 +7,13 @@ import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 
 const defaultTextStyle = {
-    backgroundColor: 'transparent',
-    paddingTop: vars.spacing.small.mini
+    backgroundColor: 'transparent'
 };
 
 const containerStyle = {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
 };
 
 export default class ButtonWithIcon extends Component {

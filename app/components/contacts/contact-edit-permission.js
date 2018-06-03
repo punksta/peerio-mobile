@@ -4,13 +4,13 @@ import { View, ListView } from 'react-native';
 import { observable, reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
-import { tx, tu } from '../utils/translator';
+import { tu } from '../utils/translator';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import Layout3 from '../layout/layout3';
 import fileState from '../files/file-state';
 import ContactEditPermissionItem from './contact-edit-permission-item';
-import Text from '../controls/custom-text';
+import ModalHeader from '../shared/modal-header';
 
 const INITIAL_LIST_SIZE = 10;
 const PAGE_SIZE = 2;
@@ -49,30 +49,13 @@ export default class ContactEditPermission extends SafeComponent {
     }
 
     exitRow() {
-        const container = {
-            flexDirection: 'row',
-            paddingTop: vars.statusBarHeight + vars.spacing.small.midi2x,
-            paddingHorizontal: vars.spacing.small.midi2x,
-            alignItems: 'center',
-            height: vars.headerHeight
-        };
-        const textStyle = {
-            textAlign: 'center',
-            flexGrow: 1,
-            flexShrink: 1,
-            fontSize: vars.font.size.big,
-            color: vars.txtDark
-        };
-        return (
-            <View style={container}>
-                {icons.dark('close', this.props.onExit, { paddingRight: 20 })}
-                <Text semibold style={textStyle}>{tx(this.props.title)}</Text>
-                {/* TODO: show unshare button */}
-                <View style={{ opacity: 0 }}>
-                    {this.unshareButton}
-                </View>
-            </View>
-        );
+        const { title, onExit } = this.props;
+        const leftIcon = icons.dark('close', onExit);
+        /* TODO: show unshare button */
+        const rightIcon = null; // this.unshareButton
+        const fontSize = vars.font.size.big;
+        const outerStyle = { backgroundColor: 'transparent' };
+        return <ModalHeader {...{ leftIcon, rightIcon, title, fontSize, outerStyle }} />;
     }
 
     item = (contact) => {

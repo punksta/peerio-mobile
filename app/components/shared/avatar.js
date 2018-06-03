@@ -2,19 +2,21 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity, Dimensions, LayoutAnimation, Linking } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { observable, reaction, action } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import FileInlineProgress from '../files/file-inline-progress';
 import FileInlineImage from '../files/file-inline-image';
+import FolderInlineContainer from '../files/folder-inline-container';
 import AvatarCircle from './avatar-circle';
 import ErrorCircle from './error-circle';
 import DeletedCircle from './deleted-circle';
 import OnlineCircle from './online-circle';
 import ReadReceipt from './read-receipt';
 import CorruptedMessage from './corrupted-message';
+import ChatActionSheet from '../messaging/chat-action-sheet';
 import tagify from './tagify';
 import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
@@ -161,16 +163,17 @@ export default class Avatar extends SafeComponent {
         );
     }
 
-    onPressAll = () => {
+    @action.bound onPressAll() {
         if (this.props.error) {
             this.showError = !this.showError;
             return null;
         }
-        if (this.props.sendError && this.props.onRetryCancel) {
-            return this.props.onRetryCancel();
+        if (this.props.sendError) {
+            ChatActionSheet.show(this.props.messageObject, this.props.chat);
+            return null;
         }
         return this.props.onPress && this.props.onPress();
-    };
+    }
 
     get message() {
         const { ellipsize } = this.props;
@@ -217,8 +220,19 @@ export default class Avatar extends SafeComponent {
         );
     }
 
+    get folders() {
+        const { folders, chat } = this.props;
+        return folders ?
+            folders.map(folderId => (
+                <FolderInlineContainer
+                    key={folderId}
+                    folderId={folderId}
+                    chat={chat} />
+            )) : null;
+    }
+
     get files() {
-        const { onFileAction, onLegacyFileAction, chatId } = this.props;
+        const { onFileAction, onLegacyFileAction, chat } = this.props;
         return this.props.files ?
             this.props.files.map(file => (
                 <FileInlineProgress
@@ -226,7 +240,7 @@ export default class Avatar extends SafeComponent {
                     file={file}
                     onActionSheet={onFileAction}
                     onLegacyFileAction={onLegacyFileAction}
-                    chatId={chatId} />
+                    chatId={chat.id} />
             )) : null;
     }
 
@@ -416,9 +430,9 @@ export default class Avatar extends SafeComponent {
     }
 
     renderCollapsed() {
-        const { inlineImage, files } = this;
+        const { inlineImage, files, folders } = this;
         const shrinkStrategy = { flexShrink: 1 };
-        if (inlineImage || files) shrinkStrategy.flexGrow = 1;
+        if (inlineImage || files || folders) shrinkStrategy.flexGrow = 1;
         const backgroundColor = {
             backgroundColor: this.props.backgroundColor ? this.props.backgroundColor : vars.white
         };
@@ -430,6 +444,7 @@ export default class Avatar extends SafeComponent {
                         style={[this.itemContainerStyle, { paddingLeft: 68, marginRight: 22 }, shrinkStrategy]}>
                         <View style={{ flex: 1, flexGrow: 1 }}>
                             {this.corruptedMessage}
+                            {folders}
                             {files}
                             {inlineImage}
                             {this.message}
@@ -460,6 +475,7 @@ export default class Avatar extends SafeComponent {
                         {this.avatar}
                         <View style={[nameMessageContainerStyle]}>
                             {this.props.isChat ? this.name : this.title}
+                            {this.folders}
                             {this.files}
                             {this.inlineImage}
                             {this.message}
@@ -512,7 +528,6 @@ export default class Avatar extends SafeComponent {
 Avatar.propTypes = {
     onPress: PropTypes.func,
     onPressAvatar: PropTypes.func,
-    onRetryCancel: PropTypes.func,
     contact: PropTypes.any,
     timestamp: PropTypes.any,
     timestampText: PropTypes.any,

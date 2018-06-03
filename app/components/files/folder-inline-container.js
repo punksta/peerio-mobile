@@ -17,19 +17,19 @@ const padding = 8;
 const borderWidth = 1;
 
 const container = {
+    flex: 1,
+    flexGrow: 1,
     borderColor: vars.lightGrayBg,
     borderWidth,
-    marginVertical: 4,
     borderRadius: 2,
-    marginLeft: 68,
-    marginRight: 22
+    marginVertical: 4
 };
 
 const header = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 38
+    height: vars.inlineFolderContainerHeight
 };
 
 const infoStyle = {
@@ -41,7 +41,7 @@ const infoStyle = {
 export default class FolderInlineContainer extends SafeComponent {
     get folder() {
         const { folderId } = this.props;
-        return fileStore.folders.getById(folderId);
+        return fileStore.folderStore.getById(folderId);
     }
 
     @action.bound press() {
@@ -50,28 +50,17 @@ export default class FolderInlineContainer extends SafeComponent {
         routes.main.files();
     }
 
-    fileDetails() {
-        // TODO add props
-        const { folderName } = this.props;
+    get fileDetails() {
         const { folder } = this;
-        const { isBlocked } = folder;
+        const { name } = folder;
         const nameStyle = {
             flexGrow: 1,
             flexShrink: 1,
-            color: isBlocked ? vars.extraSubtleText : vars.txtDark,
+            color: vars.txtDark,
             fontSize: vars.font.size.normal,
-            marginLeft: isBlocked ? 0 : vars.spacing.small.midi2x
+            marginLeft: vars.spacing.small.midi2x
         };
-        if (isBlocked) {
-            return (
-                <View style={{ flexGrow: 1, flexShrink: 1, marginLeft: vars.spacing.small.midi2x }}>
-                    <Text bold numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{folderName}</Text>
-                    <Text italic style={infoStyle}>
-                        {tx('title_locked')}
-                    </Text>
-                </View>);
-        }
-        return (<Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{folderName}</Text>);
+        return (<Text numberOfLines={1} ellipsizeMode="tail" style={nameStyle}>{name}</Text>);
     }
 
     @action.bound onAction() {
@@ -85,39 +74,23 @@ export default class FolderInlineContainer extends SafeComponent {
     }
 
     get normalBody() {
-        const { folder } = this;
-        const { isBlocked } = folder;
-
         const optionsIcon = (
             <View style={{ flex: 0 }}>
-                {icons.dark(
-                    'more-vert',
-                    this.onAction,
-                    !isBlocked ? null : { opacity: 0.38 })}
+                {icons.dark('more-vert', this.onAction)}
             </View>);
         return (
             <View style={header}>
-                {icons.darkNoPadding(
-                    'folder-shared',
-                    null,
-                    !isBlocked ? null : { opacity: 0.38 },
-                    vars.iconSize)}
-                {this.fileDetails()}
+                {icons.darkNoPadding('folder-shared')}
+                {this.fileDetails}
                 {optionsIcon}
             </View>
         );
     }
 
     get reshareBody() {
-        const { folder } = this;
-        const { isBlocked } = folder;
         return (
             <View style={header}>
-                {icons.darkNoPadding(
-                    'folder',
-                    null,
-                    !isBlocked ? null : { opacity: 0.38 },
-                    vars.iconSize)}
+                {icons.darkNoPadding('folder')}
                 <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <View style={{ marginLeft: vars.spacing.small.midi2x }}>
                         <Text style={infoStyle}>
@@ -134,16 +107,17 @@ export default class FolderInlineContainer extends SafeComponent {
 
     render() {
         const { folder } = this;
-        const { isBlocked } = folder;
+        if (!folder) return null;
         const outer = {
-            padding
+            flex: 1,
+            flexGrow: 1,
+            paddingHorizontal: padding
         };
 
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={container}
-                disabled={isBlocked}
                 onPress={this.press}>
                 <View style={outer} {...this.props}>
                     {folder.isJustUnshared ? this.reshareBody : this.normalBody}

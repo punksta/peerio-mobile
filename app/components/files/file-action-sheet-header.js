@@ -61,7 +61,7 @@ export default class FileActionSheetHeader extends SafeComponent {
                             {file.sizeFormatted} {moment(file.uploadedAt).format('DD/MM/YYYY')}
                         </Text>
                     </View>
-                    {icons.plaindark('info', vars.iconSize, infoIconStyle)}
+                    {onPress && icons.plaindark('info', vars.iconSize, infoIconStyle)}
                 </TouchableOpacity>
                 {this.borderBottom}
             </View>
