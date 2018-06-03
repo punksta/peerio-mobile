@@ -59,8 +59,6 @@ class RouterMain extends Router {
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
         this.add('channelInvite', [<ChannelInvite />], invitationState);
 
-        if (whiteLabelComponents.extendRoutes) whiteLabelComponents.extendRoutes(this);
-
         reaction(() => fileStore.migration.pending, migration => {
             if (migration) this.filesystemUpgrade();
         }, true);
@@ -90,6 +88,8 @@ class RouterMain extends Router {
         await contactState.init();
         this.contactStateLoaded = true;
         this.loading = false;
+        // wait for User object to be loaded
+        if (whiteLabelComponents.extendRoutes) whiteLabelComponents.extendRoutes(this);
         this.initialRoute();
         loginState.transition();
     }
