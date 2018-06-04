@@ -10,7 +10,7 @@ import icons from '../helpers/icons';
 @observer
 export default class PickerBoxAndroid extends SafeComponent {
     get value() {
-        return this.props.state[this.props.name] || this.props.hint;
+        return this.props.state[this.props.name];
     }
 
     set value(v) {
@@ -18,11 +18,12 @@ export default class PickerBoxAndroid extends SafeComponent {
     }
 
     onValueChange = (v) => {
-        this.value = v;
+        if (v) this.value = v;
     };
 
     renderThrow() {
         const { shadow, iconContainer, icon } = this.props.style.normal;
+        const defaultOption = [(<Picker.Item label={`- ${this.props.hint} -`} value={null} key={null} />)];
         const items = _.values(_.mapValues(this.props.data, (value, key) =>
             <Picker.Item label={value} value={key} key={key} />));
 
@@ -32,7 +33,7 @@ export default class PickerBoxAndroid extends SafeComponent {
                     selectedValue={this.value}
                     onValueChange={this.onValueChange}
                     style={[{ backgroundColor: vars.pickerBg }, (this.props.value ? { color: vars.textBlack87 } : { color: vars.textBlack38 })]}>
-                    {items}
+                    {defaultOption.concat(items)}
                 </Picker>
                 <View
                     pointerEvents="none"
