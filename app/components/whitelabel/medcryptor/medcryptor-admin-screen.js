@@ -1,13 +1,12 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
-import { ScrollView, View, TouchableOpacity, Linking } from 'react-native';
+import { ScrollView, View, TouchableOpacity } from 'react-native';
 import { t, tu } from 'peerio-translator';
 import { T } from '../../utils/translator';
 import Text from '../../controls/custom-text';
 import SafeComponent from '../../shared/safe-component';
 import { vars } from '../../../styles/styles';
-import buttons from '../../helpers/buttons';
 import routes from '../../routes/routes';
 import icons from '../../helpers/icons';
 import chatState from '../../messaging/chat-state';
@@ -140,7 +139,6 @@ export default class MedcryptorAdminScreen extends SafeComponent {
                         </Text>
                         {this.features.map(f => this.renderFeature(f))}
                     </View>
-                    {buttons.roundBlueBgButton('mcr_title_getAccount', () => Linking.openURL(this.buyAccountUrl))}
                     <TouchableOpacity
                         pressRetentionOffset={vars.pressRetentionOffset}
                         onPress={this.contactMedcryptor}>
