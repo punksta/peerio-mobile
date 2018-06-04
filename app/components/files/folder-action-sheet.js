@@ -2,7 +2,7 @@ import React from 'react';
 import { tx } from '../utils/translator';
 import { fileState } from '../states';
 import { popupInput, popupFolderDelete } from '../shared/popups';
-import { fileHelpers, volumeStore } from '../../lib/icebear';
+import { fileHelpers, volumeStore, config } from '../../lib/icebear';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import ActionSheetLayout from '../layout/action-sheet-layout';
 
@@ -12,19 +12,19 @@ export default class FoldersActionSheet {
         const header = (
             <FileActionSheetHeader file={folder} />
         );
+        const folderShareAction = {
+            title: 'button_share',
+            disabled: hasLegacyFiles || convertingToVolume,
+            action: async () => {
+                // TODO add logic for folder.isOwner
+                // TODO: refactor this, this is confusing and bad
+                fileState.currentFile = folder;
+                const contacts = await routerModal.shareFolderTo();
+                if (!contacts) return;
+                await volumeStore.shareFolder(folder, contacts);
+            }
+        };
         const actionButtons = [
-            {
-                title: 'button_share',
-                disabled: hasLegacyFiles || convertingToVolume,
-                action: async () => {
-                    // TODO add logic for folder.isOwner
-                    // TODO: refactor this, this is confusing and bad
-                    fileState.currentFile = folder;
-                    const contacts = await routes.modal.shareFolderTo();
-                    if (!contacts) return;
-                    await volumeStore.shareFolder(folder, contacts);
-                }
-            },
             {
                 title: 'button_move',
                 disabled: isShared,
@@ -69,6 +69,7 @@ export default class FoldersActionSheet {
                 }
             }
         ];
+        if (config.enableSharedFolders) actionButtons.unshift(folderShareAction);
         ActionSheetLayout.show({
             header,
             hasCancelButton: true,
