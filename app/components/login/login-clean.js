@@ -58,8 +58,11 @@ export default class LoginClean extends LoginWizardPage {
         uiState.hideAll()
             .then(() => loginState.login())
             .catch(e => {
-                console.log(e);
-                this.passwordInput.setCustomError(tx('error_wrongAK'));
+                let errorMessage = 'error_wrongAK';
+                if (e.deleted || e.blacklisted) {
+                    errorMessage = 'error_accountSuspendedTitle';
+                }
+                this.passwordInput.setCustomError(tx(errorMessage));
             });
     }
 
