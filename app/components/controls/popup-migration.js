@@ -3,11 +3,12 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ActivityIndicator } from 'react-native';
 import SafeComponent from '../shared/safe-component';
-import UpdateProgressIndicator from '../controls/update-progress-indicator';
 import AlternatingText from '../controls/alternating-text';
 import { fileStore } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
+import Text from '../controls/custom-text';
+import Progress from '../shared/progress';
 
 const messageArray = [
     {
@@ -43,18 +44,33 @@ const messageArray = [
     }
 ];
 
+const container = {
+    justifyContent: 'center',
+    marginTop: vars.spacing.huge.mini,
+    marginBottom: vars.spacing.large.mini2x
+};
+
+const textStyle = {
+    color: vars.lighterBlackText,
+    textAlign: 'center',
+    marginTop: vars.spacing.small.midi2x
+};
+
 @observer
 export default class PopupMigration extends SafeComponent {
     get indicator() {
         return fileStore.migration.performedByAnotherClient ? (
             <ActivityIndicator size="large" style={{ margin: 40 }} />
         ) : (
-            <UpdateProgressIndicator progress={fileStore.migration.progress} />
+            <View style={container}>
+                <Progress max={100} value={fileStore.migration.progress} />
+                {(fileStore.migration.progress !== 0) && <Text style={textStyle}>{tx('title_fileUpdateProgressPercent', { progress: fileStore.migration.progress })}</Text>}
+            </View>
         );
     }
 
     renderThrow() {
-        const textStyle = {
+        const alternatingTextStyle = {
             color: vars.black,
             fontSize: vars.font.size.smaller,
             textAlign: 'center'
@@ -65,7 +81,7 @@ export default class PopupMigration extends SafeComponent {
                 <AlternatingText
                     initialText={tx('title_fileUpdateProgressDescription')}
                     messageArray={messageArray}
-                    textStyle={textStyle} />
+                    textStyle={alternatingTextStyle} />
             </View>
         );
     }
