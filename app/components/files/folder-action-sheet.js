@@ -69,7 +69,7 @@ export default class FoldersActionSheet {
                 }
             }
         ];
-        if (config.enableSharedFolders) actionButtons.unshift(folderShareAction);
+        if (config.enableVolumes) actionButtons.unshift(folderShareAction);
         ActionSheetLayout.show({
             header,
             hasCancelButton: true,

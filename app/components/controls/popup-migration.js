@@ -2,45 +2,51 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ActivityIndicator } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import AlternatingText from '../controls/alternating-text';
-import { fileStore } from '../../lib/icebear';
+import { fileStore, config } from '../../lib/icebear';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
-import Text from '../controls/custom-text';
 import Progress from '../shared/progress';
 
 const messageArray = [
     {
         message: tx('title_migrationInProgressMessage1')
     },
-    {
-        message: tx('title_migrationInProgressMessage2')
-    },
-    {
-        message: tx('title_migrationInProgressMessage3'),
+    config.enableVolumes && {
+        message: tx('title_migrationInProgressMessage2'),
         emoji: '\uD83D\uDE38' // Grinning cat
     },
     {
-        message: tx('title_migrationInProgressMessage4')
+        message: tx('title_migrationInProgressMessage3')
     },
     {
-        message: tx('title_migrationInProgressMessage5a'),
-        messageB: tx('title_migrationInProgressMessage5b'),
+        message: tx('title_migrationInProgressMessage4a'),
+        messageB: tx('title_migrationInProgressMessage4b'),
         emoji: '\uD83D\uDCAA' // Muscle
+    },
+    {
+        message: tx('title_migrationInProgressMessage5')
     },
     {
         message: tx('title_migrationInProgressMessage6')
     },
+    // Skip message 7 because its for desktop
     {
-        message: tx('title_migrationInProgressMessage7')
+        message: tx('title_migrationInProgressMessage8')
     },
-    // Skip message 8 because its for desktop
     {
         message: tx('title_migrationInProgressMessage9')
     },
     {
         message: tx('title_migrationInProgressMessage10')
+    },
+    {
+        message: tx('title_migrationInProgressMessage11')
+    },
+    {
+        message: tx('title_migrationInProgressMessage12')
     }
 ];
 

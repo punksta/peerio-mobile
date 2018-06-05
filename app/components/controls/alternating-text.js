@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react/native';
+import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import Text from '../controls/custom-text';
@@ -32,11 +33,17 @@ export default class AlternatingText extends SafeComponent {
     }
 
     renderThrow() {
-        const { textStyle } = this.props;
+        const { initialText, textStyle } = this.props;
         return (
-            <Text style={textStyle}>
-                {tx(this.textA)} {this.emoji} {tx(this.textB)}
-            </Text>
+            <View>
+                {(this.textA !== initialText) &&
+                <Text style={textStyle}>
+                    {tx('title_migrationInProgressStaticMessage')}
+                </Text>}
+                <Text style={textStyle}>
+                    {tx(this.textA)} {this.emoji} {tx(this.textB)}
+                </Text>
+            </View>
         );
     }
 }
