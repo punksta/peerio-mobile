@@ -14,7 +14,7 @@ const messageArray = [
     {
         message: tx('title_migrationInProgressMessage1')
     },
-    config.enableSharedFolders && {
+    config.enableVolumes && {
         message: tx('title_migrationInProgressMessage2'),
         emoji: '\uD83D\uDE38' // Grinning cat
     },

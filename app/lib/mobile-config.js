@@ -81,7 +81,7 @@ export default (c, icebear) => {
     cfg.appleTestUser = 'applereview2607';
     cfg.appleTestPass = 'icebear';
     cfg.appleTestServer = 'wss://treetrunks.peerio.com';
-    cfg.enableSharedFolders = process.env.SHARED_FOLDERS_ENABLED;
+    cfg.enableVolumes = process.env.SHARED_FOLDERS_ENABLED;
     Object.assign(cfg.chat, {
         maxInitialChats: 15,
         initialPageSize: 20, // amount of messages to load to a newly opened chat
