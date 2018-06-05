@@ -7,6 +7,7 @@ import { action, observable } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
+import { uiState } from '../states';
 
 const { width, height } = Dimensions.get('window');
 const borderRadius = 16;
@@ -117,6 +118,7 @@ export default class ActionSheetLayout extends SafeComponent {
         animatedActionsheetHeight.setValue(-height);
         state.config = config;
         state.visible = true;
+        uiState.hideKeyboard();
         Animated.timing(animatedActionsheetHeight, {
             toValue: 0,
             duration: 300
