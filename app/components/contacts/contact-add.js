@@ -16,7 +16,6 @@ import testLabel from '../helpers/test-label';
 import Text from '../controls/custom-text';
 import routes from '../routes/routes';
 import icons from '../helpers/icons';
-import routerMain from '../routes/router-main';
 import BackIcon from '../layout/back-icon';
 
 const textinputContainer = {
