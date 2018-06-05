@@ -15,8 +15,11 @@ import LoginWizardPage, {
     header2, innerSmall, headingStyle2, footerText1, footerText2, innerContainer, outerContainer, buttonRowStyle
 } from '../../login/login-wizard-page';
 import StyledTextInput from '../../shared/styled-text-input';
-import { socket } from '../../../lib/icebear';
+import { socket, validation } from '../../../lib/icebear';
 import medcryptorUiState from './medcryptor-ui-state';
+
+const { validators } = validation;
+const { mcrAhpraAvailability } = validators;
 
 const formStyle = {
     paddingVertical: vars.spacing.small.midi2x,
@@ -66,11 +69,11 @@ export default class SignupStepMedcryptor extends LoginWizardPage {
     }
 
     get isValidForAU() {
-        // TODO add medicalId validation: this.medicalIdInput.isValid
         return medcryptorUiState.countrySelected &&
             medcryptorUiState.specialtySelected &&
             medcryptorUiState.roleSelected &&
-            this.medicalIdState.value;
+            this.medicalIdState.value &&
+            this.medicalIdInput.isValid;
     }
 
     get isValidForNonAU() {
@@ -94,7 +97,7 @@ export default class SignupStepMedcryptor extends LoginWizardPage {
                 {this.selectedAU && <View>
                     <StyledTextInput
                         state={this.medicalIdState}
-                        // validations={ } // TODO add validation
+                        validations={[mcrAhpraAvailability]}
                         hint={tx('title_medicalId')}
                         lowerCase
                         returnKeyType="go"
