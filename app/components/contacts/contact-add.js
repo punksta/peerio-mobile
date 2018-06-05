@@ -118,7 +118,7 @@ export default class ContactAdd extends SafeComponent {
         const contact = contactStore.whitelabel.getContact(this.query);
         when(() => !contact.loading, () => {
             const { isLegacy, fullNameAndUsername: name } = contact;
-            if (contact.notFound) {
+            if (contact.notFound || contact.isHidden) {
                 this.notFound = true;
                 const atInd = this.query.indexOf('@');
                 const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');

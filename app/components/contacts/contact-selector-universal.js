@@ -135,7 +135,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
         when(() => !c.loading, () => {
             this.inProgress = false;
             if (!this.findUserText) return;
-            if (c.notFound) {
+            if (c.notFound || c.isHidden) {
                 if (c.isLegacy) {
                     this.legacyContact = c;
                     return;
