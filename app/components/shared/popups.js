@@ -452,6 +452,11 @@ function popupUpgradeNotification() {
                 .then(() => FileOpener.open(path, 'text/*', path))
                 .catch((err) => console.log(err.message));
         };
+        const download = (text) => {
+            return (<Text style={textDownloadStyle} onPress={viewFileMigrationList} pressRetentionOffset={vars.pressRetentionOffset}>
+                {text}
+            </Text>);
+        };
         const resolveButtonText = fileStore.hasLegacySharedFiles ? 'update' : 'ok';
         popupState.showPopup({
             type: 'systemUpgrade',
@@ -461,13 +466,8 @@ function popupUpgradeNotification() {
                     {textControl(tx('title_upgradeFileSystemDescription1'), textStyle)}
                     {textControl(tx('title_upgradeFileSystemDescription2'), textStyle)}
                     {fileStore.migration.hasLegacySharedFiles ?
-                        <Text>
-                            {textControl(tx('title_upgradeFileSystemDescription3a'), textStyle)}
-                            <Text style={textDownloadStyle} onPress={viewFileMigrationList} pressRetentionOffset={vars.pressRetentionOffset}>
-                                {tx('title_upgradeFileSystemLink')}
-                            </Text>
-                            {textControl(tx('title_upgradeFileSystemDescription3b'), textStyle)}
-                        </Text> : null}
+                        textControl(tx('title_upgradeFileSystemDescription3', { download }), textStyle)
+                        : null}
                 </View>
             ),
             buttons: [
