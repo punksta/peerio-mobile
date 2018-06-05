@@ -74,6 +74,7 @@ export default class FileActionSheet {
         // Move
         actionButtons.push({
             title: tx('button_move'),
+            disabled: isLegacy,
             action: () => {
                 fileState.currentFile = file;
                 routes.modal.moveFileTo();
@@ -83,6 +84,7 @@ export default class FileActionSheet {
         // Rename
         actionButtons.push({
             title: tx('button_rename'),
+            disabled: isLegacy,
             action: async () => {
                 const newFileName = await popupInput(
                     tx('title_fileName'),
