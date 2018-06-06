@@ -25,6 +25,22 @@ icebear.startSocket = async function() {
     if (serverOverride) {
         console.log('icebear.js: Overriding server name');
         config.socketServerUrl = serverOverride;
+    } else {
+        // we check current prod server and if it is not yet released, fallback to secondary
+        try {
+            const result = await fetch(config.socketServerUrl.replace('wss:', 'https:'));
+            const text = await result.text();
+            console.log(`Server info: ${text}`);
+            if (config.preferredServerVersion && !text.includes(config.preferredServerVersion)) {
+                console.log(`Server does not match preferred version: ${config.preferredServerVersion}`);
+                console.log(`Switching to: ${config.appleTestServer}`);
+                config.socketServerUrl = config.appleTestServer;
+            } else {
+                console.log(`Server matches preferred version: ${config.preferredServerVersion}`);
+            }
+        } catch(e) {
+            console.error(e);
+        }
     }
     console.log(`icebear.js: Starting connection to ${config.socketServerUrl}`);
     socket.start();
