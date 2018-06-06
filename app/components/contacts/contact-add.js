@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, ScrollView, TouchableOpacity, LayoutAnimation, Share } from 'react-native';
-import { observable, reaction, when } from 'mobx';
+import { observable, reaction } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
@@ -107,7 +107,7 @@ export default class ContactAdd extends SafeComponent {
         return observable({ fullName, username, invited, email });
     }
 
-    tryAdding() {
+    async tryAdding() {
         this.query = this.query.toLocaleLowerCase().trim();
         if (!this.query) return;
         if (this.waiting) return;
@@ -115,28 +115,26 @@ export default class ContactAdd extends SafeComponent {
         this.waiting = true;
         this.toInvite = null;
         this.notFound = false;
-        const contact = contactStore.whitelabel.getContact(this.query);
-        when(() => !contact.loading, () => {
-            const { isLegacy, fullNameAndUsername: name } = contact;
-            if (contact.notFound || contact.isHidden) {
-                this.notFound = true;
-                const atInd = this.query.indexOf('@');
-                const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
-                if (isEmail) {
-                    LayoutAnimation.easeInEaseOut();
-                    this.toInvite = this.inviteContactDuck(this.query);
-                } else if (!isLegacy) {
-                    this.showValidationError = true;
-                    LayoutAnimation.easeInEaseOut();
-                }
-                isLegacy && snackbarState.pushTemporary(t('title_inviteLegacy'));
-            } else {
-                contactStore.getContactAndSave(this.query);
-                this.query = '';
-                warnings.add(t('title_contactAdded', { name }));
+        const contact = await contactStore.whitelabel.getContact(this.query);
+        const { isLegacy, fullNameAndUsername: name } = contact;
+        if (contact.notFound || contact.isHidden) {
+            this.notFound = true;
+            const atInd = this.query.indexOf('@');
+            const isEmail = atInd > -1 && atInd === this.query.lastIndexOf('@');
+            if (isEmail) {
+                LayoutAnimation.easeInEaseOut();
+                this.toInvite = this.inviteContactDuck(this.query);
+            } else if (!isLegacy) {
+                this.showValidationError = true;
+                LayoutAnimation.easeInEaseOut();
             }
-            this.waiting = false;
-        });
+            isLegacy && snackbarState.pushTemporary(t('title_inviteLegacy'));
+        } else {
+            contactStore.getContactAndSave(this.query);
+            this.query = '';
+            warnings.add(t('title_contactAdded', { name }));
+        }
+        this.waiting = false;
     }
 
     share() {

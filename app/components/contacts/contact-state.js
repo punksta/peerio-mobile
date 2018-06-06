@@ -228,11 +228,9 @@ class ContactState extends RoutedState {
 
     async resolveAndCache(usernameOrEmail) {
         if (this._resolveCache[usernameOrEmail]) return this._resolveCache[usernameOrEmail];
-        return new Promise(resolve => {
-            const contact = this.store.whitelabel.getContact(usernameOrEmail);
-            this._resolveCache[usernameOrEmail] = contact;
-            when(() => !contact.loading, () => resolve(contact));
-        });
+        const contact = await this.store.whitelabel.getContact(usernameOrEmail);
+        this._resolveCache[usernameOrEmail] = contact;
+        return contact;
     }
 
     // TODO replace with bulk
