@@ -19,7 +19,7 @@ import { socket, validation } from '../../../lib/icebear';
 import medcryptorUiState from './medcryptor-ui-state';
 
 const { validators } = validation;
-const { mcrAhpraAvailability } = validators;
+const { mcrDoctorAhpraAvailability, mcrAdminAhpraAvailability } = validators;
 
 const formStyle = {
     paddingVertical: vars.spacing.small.midi2x,
@@ -53,6 +53,18 @@ const ahpraTextStyle = {
 
 @observer
 export default class SignupStepMedcryptor extends LoginWizardPage {
+    validations = {
+        doctor: mcrDoctorAhpraAvailability,
+        admin: mcrAdminAhpraAvailability
+    };
+
+    get ahpraValidator() {
+        if (medcryptorUiState.roleSelected) {
+            return this.validations[medcryptorUiState.roleSelected];
+        }
+        return this.validations.doctor;
+    }
+
     medicalIdState = observable({ value: '' });
     @action.bound medicalIdInputRef(ref) { this.medicalIdInput = ref; }
 
@@ -97,7 +109,7 @@ export default class SignupStepMedcryptor extends LoginWizardPage {
                 {this.selectedAU && <View>
                     <StyledTextInput
                         state={this.medicalIdState}
-                        validations={[mcrAhpraAvailability]}
+                        validations={[this.ahpraValidator]}
                         hint={tx('title_medicalId')}
                         lowerCase
                         returnKeyType="go"

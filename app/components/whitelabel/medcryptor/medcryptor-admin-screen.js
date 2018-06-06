@@ -3,7 +3,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observer } from 'mobx-react/native';
 import { ScrollView, View, TouchableOpacity } from 'react-native';
 import { t, tu } from 'peerio-translator';
-import { T } from '../../utils/translator';
 import Text from '../../controls/custom-text';
 import SafeComponent from '../../shared/safe-component';
 import { vars } from '../../../styles/styles';
@@ -11,6 +10,7 @@ import routes from '../../routes/routes';
 import icons from '../../helpers/icons';
 import chatState from '../../messaging/chat-state';
 import { contactStore } from '../../../lib/icebear';
+import buttons from '../../helpers/buttons';
 
 const container = {
     flex: 1,
@@ -62,13 +62,6 @@ const featureIcon = {
     marginRight: vars.spacing.small.maxi2x
 };
 
-const contactDescriptionStyle = {
-    color: vars.textBlack54,
-    fontSize: vars.font.size.normal,
-    margin: vars.spacing.medium.mini,
-    textAlign: 'center'
-};
-
 const buttonContainerStyle = {
     paddingVertical: vars.spacing.medium.midi
 };
@@ -77,19 +70,6 @@ const buttonStyle = {
     color: vars.textBlack38
 };
 
-const chatWithUs = {
-    textDecorationLine: 'underline',
-    color: vars.darkBlue
-};
-
-const mcrHelp = text => (
-    <Text
-        style={chatWithUs}>
-        {text}
-    </Text>
-);
-
-const mcrHelpParser = { mcrHelp };
 
 @observer
 export default class MedcryptorAdminScreen extends SafeComponent {
@@ -139,13 +119,7 @@ export default class MedcryptorAdminScreen extends SafeComponent {
                         </Text>
                         {this.features.map(f => this.renderFeature(f))}
                     </View>
-                    <TouchableOpacity
-                        pressRetentionOffset={vars.pressRetentionOffset}
-                        onPress={this.contactMedcryptor}>
-                        <Text style={contactDescriptionStyle}>
-                            <T k="mcr_title_needHelp">{mcrHelpParser}</T>
-                        </Text>
-                    </TouchableOpacity>
+                    {buttons.roundBlueBgButton('mcr_title_getAccount', this.contactMedcryptor)}
                     <TouchableOpacity
                         pressRetentionOffset={vars.pressRetentionOffset}
                         onPress={this.skipScreen}
