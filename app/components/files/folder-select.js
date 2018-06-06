@@ -80,7 +80,7 @@ export default class FolderSelect extends SafeComponent {
                 radio
                 key={folder.id}
                 folder={folder}
-                hideOptionsIcon={!folder.hasNested || folder.isRoot}
+                hideOptionsIcon
                 onSelect={selectFolder}
                 onPress={folder.hasNested ? changeFolder : selectFolder} />
         );
