@@ -216,6 +216,7 @@ export default class ContactAdd extends SafeComponent {
                 {buttons.blueTextButton(tx('button_invite'), () => {
                     mockContact.invited = true;
                     contactStore.invite(email);
+                    this.query = '';
                 }, invited)}
             </View >
         );
