@@ -29,8 +29,7 @@ const headerContainer = {
     flexShrink: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: vars.statusBarHeight,
-    height: vars.headerHeight,
+    minHeight: vars.headerHeight,
     backgroundColor: vars.darkBlue
 };
 

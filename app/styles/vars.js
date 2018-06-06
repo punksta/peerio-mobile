@@ -31,7 +31,7 @@ const { darkBlue, darkTeal, peerioBlue, peerioPurple, confirmColor,
     peerioBlueBackground15, darkBlueBackground15, snackbarBg, lightGrayBg,
     darkBlueBackground05, channelInfoBg } = branding;
 const statusBarHeight = iPhoneStatusBar;
-const layoutPaddingTop = statusBarHeight * 2;
+const layoutPaddingTop = iPhoneStatusBar;
 
 const r = 40;
 const retentionOffset = { top: r, left: r, bottom: r, right: r };
