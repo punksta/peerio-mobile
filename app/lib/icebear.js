@@ -38,7 +38,7 @@ icebear.startSocket = async function() {
             } else {
                 console.log(`Server matches preferred version: ${config.preferredServerVersion}`);
             }
-        } catch(e) {
+        } catch (e) {
             console.error(e);
         }
     }
