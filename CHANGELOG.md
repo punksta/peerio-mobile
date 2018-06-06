@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.294.0"></a>
+# [3.294.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.293.0...v3.294.0) (2018-06-06)
+
+
+### Bug Fixes
+
+* clear email after invite [ch6152] ([240363e](https://github.com/PeerioTechnologies/peerio-mobile/commit/240363e))
+* **medcryptor:** update copy and add validators ([#231](https://github.com/PeerioTechnologies/peerio-mobile/issues/231)) ([e34d45e](https://github.com/PeerioTechnologies/peerio-mobile/commit/e34d45e))
+
+
+
 <a name="3.293.0"></a>
 # [3.293.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.292.0...v3.293.0) (2018-06-06)
 
