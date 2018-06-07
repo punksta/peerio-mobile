@@ -4,7 +4,7 @@ import { tx } from '../utils/translator';
 import { fileState } from '../states';
 import routes from '../routes/routes';
 import ActionSheetLayout from '../layout/action-sheet-layout';
-import { fileHelpers } from '../../lib/icebear';
+import { fileHelpers, config } from '../../lib/icebear';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import { popupInput } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
@@ -12,7 +12,17 @@ import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
 
 export default class FileActionSheet {
-    static show(file, fileAutoOpen, routeAfterDelete) {
+    static async show(file, fileAutoOpen, routeAfterDelete) {
+        // TODO: remove when SDK is ready and/or move to SDK
+        try {
+            if (await config.FileStream.exists(file.tmpCachePath)) {
+                file.tmpCached = true;
+            } else if (await config.FileStream.exists(file.cachePath)) {
+                file.cached = true;
+            }
+        } catch (e) {
+            console.log(e);
+        }
         if (!file) {
             snackbarState.pushTemporary(tx('snackbar_fileNotFound'));
             return;
