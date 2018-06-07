@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.296.0"></a>
+# [3.296.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.290.0...v3.296.0) (2018-06-07)
+
+
+### Bug Fixes
+
+* alternating text ([f4ac86a](https://github.com/PeerioTechnologies/peerio-mobile/commit/f4ac86a))
+* changed header main icon and refactor layout [branch ch5788] ([#212](https://github.com/PeerioTechnologies/peerio-mobile/issues/212)) ([b51b327](https://github.com/PeerioTechnologies/peerio-mobile/commit/b51b327))
+* deleted user login error ([#200](https://github.com/PeerioTechnologies/peerio-mobile/issues/200)) ([42331ab](https://github.com/PeerioTechnologies/peerio-mobile/commit/42331ab))
+* don't log file when sharing. correctly process mount ref for SectionList ([1138f0c](https://github.com/PeerioTechnologies/peerio-mobile/commit/1138f0c))
+* enable multiple images in one message [ch8200] ([cb0d1c1](https://github.com/PeerioTechnologies/peerio-mobile/commit/cb0d1c1))
+* hide keyboard when action sheet opens [branch ch8635] ([#227](https://github.com/PeerioTechnologies/peerio-mobile/issues/227)) ([be7c264](https://github.com/PeerioTechnologies/peerio-mobile/commit/be7c264))
+* hide options button in folder move [branch ch8631] ([#225](https://github.com/PeerioTechnologies/peerio-mobile/issues/225)) ([7e60e0c](https://github.com/PeerioTechnologies/peerio-mobile/commit/7e60e0c))
+* if you drag scrollview up after the limit, don't show unread undicator ([58480ba](https://github.com/PeerioTechnologies/peerio-mobile/commit/58480ba))
+* magical key animation bug ([c392cdd](https://github.com/PeerioTechnologies/peerio-mobile/commit/c392cdd))
+* remove move and rename options for legacy files [branch ch4734] ([#226](https://github.com/PeerioTechnologies/peerio-mobile/issues/226)) ([3d3673b](https://github.com/PeerioTechnologies/peerio-mobile/commit/3d3673b))
+* replace progress circle with progress bar [branch ch4739] ([#219](https://github.com/PeerioTechnologies/peerio-mobile/issues/219)) ([b16b87f](https://github.com/PeerioTechnologies/peerio-mobile/commit/b16b87f))
+* scrolling and unread indicator problems [ch8176][ch8162] ([c0b01bd](https://github.com/PeerioTechnologies/peerio-mobile/commit/c0b01bd))
+* sign out button text alignment [branch ch5777] ([#207](https://github.com/PeerioTechnologies/peerio-mobile/issues/207)) ([d36d0a8](https://github.com/PeerioTechnologies/peerio-mobile/commit/d36d0a8))
+
+
+### Features
+
+* Medcryptor mobile ([#228](https://github.com/PeerioTechnologies/peerio-mobile/issues/228)) ([2b14c1b](https://github.com/PeerioTechnologies/peerio-mobile/commit/2b14c1b)), closes [#205](https://github.com/PeerioTechnologies/peerio-mobile/issues/205) [#210](https://github.com/PeerioTechnologies/peerio-mobile/issues/210) [#211](https://github.com/PeerioTechnologies/peerio-mobile/issues/211) [#206](https://github.com/PeerioTechnologies/peerio-mobile/issues/206) [#215](https://github.com/PeerioTechnologies/peerio-mobile/issues/215) [#216](https://github.com/PeerioTechnologies/peerio-mobile/issues/216) [#196](https://github.com/PeerioTechnologies/peerio-mobile/issues/196) [#198](https://github.com/PeerioTechnologies/peerio-mobile/issues/198) [#207](https://github.com/PeerioTechnologies/peerio-mobile/issues/207) [#209](https://github.com/PeerioTechnologies/peerio-mobile/issues/209) [#212](https://github.com/PeerioTechnologies/peerio-mobile/issues/212) [#196](https://github.com/PeerioTechnologies/peerio-mobile/issues/196) [#209](https://github.com/PeerioTechnologies/peerio-mobile/issues/209) [#217](https://github.com/PeerioTechnologies/peerio-mobile/issues/217) [#200](https://github.com/PeerioTechnologies/peerio-mobile/issues/200) [#219](https://github.com/PeerioTechnologies/peerio-mobile/issues/219) [#223](https://github.com/PeerioTechnologies/peerio-mobile/issues/223) [#214](https://github.com/PeerioTechnologies/peerio-mobile/issues/214) [#231](https://github.com/PeerioTechnologies/peerio-mobile/issues/231)
+* show information about folders unshared in the chat ([bd1b51b](https://github.com/PeerioTechnologies/peerio-mobile/commit/bd1b51b))
+* use commonheader in layoutmodalexit ([7f9a781](https://github.com/PeerioTechnologies/peerio-mobile/commit/7f9a781))
+
+
+
 <a name="3.295.0"></a>
 # [3.295.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.294.0...v3.295.0) (2018-06-07)
 
