@@ -99,6 +99,8 @@ export default class FileInlineContainer extends SafeComponent {
     render() {
         const { file, isImage, isOpen, extraActionIcon } = this.props;
         const { title, description, fileId, downloading } = file;
+        // TODO: maybe a placeholder instead
+        if (!file.loaded) return null;
         if (file.deleted) return this.fileUnavailable;
         const isLocal = !!fileId;
         const spacingDifference = padding - vars.progressBarHeight;
