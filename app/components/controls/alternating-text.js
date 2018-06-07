@@ -20,11 +20,15 @@ export default class AlternatingText extends SafeComponent {
         let index = Math.floor((Math.random() * messageArray.length)); // random number from messageArray
         this.textA = initialText;
         this.timer = setInterval(() => {
-            if (index === messageArray.length - 1) index = 0;
+            if (index >= messageArray.length - 1) index = 0;
             else index++;
-            this.textA = messageArray[index].message;
-            this.textB = messageArray[index].messageB;
-            this.emoji = messageArray[index].emoji;
+            const currentMessage = messageArray[index];
+            if (currentMessage) {
+                const { message, messageB, emoji } = currentMessage;
+                this.textA = message;
+                this.textB = messageB;
+                this.emoji = emoji;
+            }
         }, 10000);
     }
 

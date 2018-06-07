@@ -14,10 +14,6 @@ const messageArray = [
     {
         message: tx('title_migrationInProgressMessage1')
     },
-    config.enableVolumes && {
-        message: tx('title_migrationInProgressMessage2'),
-        emoji: '\uD83D\uDE38' // Grinning cat
-    },
     {
         message: tx('title_migrationInProgressMessage3')
     },
@@ -49,6 +45,13 @@ const messageArray = [
         message: tx('title_migrationInProgressMessage12')
     }
 ];
+
+if (config.enableVolumes) {
+    messageArray.push({
+        message: tx('title_migrationInProgressMessage2'),
+        emoji: '\uD83D\uDE38' // Grinning cat
+    });
+}
 
 const container = {
     justifyContent: 'center',
