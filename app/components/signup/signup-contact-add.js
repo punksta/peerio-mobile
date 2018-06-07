@@ -49,7 +49,7 @@ export default class SignupContactAdd extends LoginWizardPage {
             promises.push((async () => {
                 try {
                     const contact = await contactState.resolveAndCache(c.email);
-                    if (!contact.notFound) {
+                    if (!contact.notFound && !contact.isHidden) {
                         this.contactList.push(new ListItem(contact, c.fullName, true));
                         this.refreshList();
                     }

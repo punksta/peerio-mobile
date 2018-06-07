@@ -199,7 +199,7 @@ export default class SignupStep1 extends LoginWizardPage {
                         </TouchableOpacity>
                     </View>
                     <View style={[buttonRowStyle, { justifyContent: 'space-between' }]}>
-                        {this.button('button_back', () => signupState.routes.app.loginStart())}
+                        {this.button('button_back', signupState.exit)}
                         {this.button('button_next',
                             () => this.handleNextButton(),
                             false,

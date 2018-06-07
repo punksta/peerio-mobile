@@ -2,7 +2,7 @@ import { observable } from 'mobx';
 import paymentsNative from '../payments/payments-native';
 import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
-import whitelabel from '../../lib/whitelabel-config';
+import whitelabel from '../../components/whitelabel/white-label-config';
 
 const basicPlanInfo =
 `Secure Messaging

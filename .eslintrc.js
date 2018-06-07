@@ -28,6 +28,7 @@ module.exports = {
         }] }]
     },
     globals: {
+        'fetch': false,
         'requestAnimationFrame': false,
         '__DEV__': false,
         '__PROD__': false

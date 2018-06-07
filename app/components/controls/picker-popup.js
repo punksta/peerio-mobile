@@ -33,6 +33,10 @@ export default class PickerPopup extends SafeComponent {
     }
 
     close() {
+        if (!this.value) {
+            const options = Object.keys(this.props.data);
+            this.value = options[0];
+        }
         uiState.pickerVisible = false;
     }
 

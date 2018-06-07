@@ -1,11 +1,12 @@
 import React from 'react';
 import { tx } from '../utils/translator';
 import { fileState } from '../states';
-import routerModal from '../routes/router-modal';
 import { popupInput, popupFolderDelete } from '../shared/popups';
 import { fileHelpers, volumeStore, config } from '../../lib/icebear';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import ActionSheetLayout from '../layout/action-sheet-layout';
+import routerModal from '../routes/router-modal';
+import routes from '../routes/routes';
 
 export default class FoldersActionSheet {
     static show(folder) {
@@ -31,7 +32,7 @@ export default class FoldersActionSheet {
                 disabled: isShared,
                 action: () => {
                     fileState.currentFile = folder;
-                    routerModal.moveFileTo();
+                    routes.modal.moveFileTo();
                 }
             },
             {

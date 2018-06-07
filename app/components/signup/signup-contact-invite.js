@@ -68,7 +68,7 @@ export default class SignupContactInvite extends LoginWizardPage {
             promises.push((async () => {
                 try {
                     const contact = await contactState.resolveAndCache(c.email);
-                    if (contact.notFound) {
+                    if (contact.notFound || contact.isHidden) {
                         const listItem = new ListItem(contact, c.fullName, true);
                         listItem.visible = true;
                         this.contactList.push(listItem);

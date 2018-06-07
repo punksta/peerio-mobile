@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { View, ActivityIndicator, LayoutAnimation } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { when, observable, action, reaction, computed } from 'mobx';
+import { observable, action, reaction, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { t, tx, tu } from '../utils/translator';
@@ -125,30 +125,28 @@ export default class ContactSelectorUniversal extends SafeComponent {
         this._searchTimeout = setTimeout(() => this.searchUser(username), 500);
     }
 
-    searchUser(username) {
+    async searchUser(username) {
         this.inProgress = false;
         const u = username.trim();
         if (!u) return;
-        const c = contactState.store.getContact(u);
         if (!this.findUserText) return;
         this.inProgress = true;
-        when(() => !c.loading, () => {
-            this.inProgress = false;
-            if (!this.findUserText) return;
-            if (c.notFound) {
-                if (c.isLegacy) {
-                    this.legacyContact = c;
-                    return;
-                }
-                if (username.indexOf('@') !== -1) {
-                    this.toInvite = username;
-                } else {
-                    this.notFound = username;
-                }
-            } else {
-                this.foundContact = c;
+        const c = await contactState.store.whitelabel.getContact(u);
+        this.inProgress = false;
+        if (!this.findUserText) return;
+        if (c.notFound || c.isHidden) {
+            if (c.isLegacy) {
+                this.legacyContact = c;
+                return;
             }
-        });
+            if (username.indexOf('@') !== -1) {
+                this.toInvite = username;
+            } else {
+                this.notFound = username;
+            }
+        } else {
+            this.foundContact = c;
+        }
     }
 
     @computed get dataSource() {

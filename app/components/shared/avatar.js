@@ -273,13 +273,6 @@ export default class Avatar extends SafeComponent {
             </View> : null;
     }
 
-    get fileUnavailable() {
-        return this.props.hasDeletedFile ?
-            <Text italic>
-                {tx('error_fileDeleted')}
-            </Text> : null;
-    }
-
     get date() {
         const unreadStyle = this.props.unread
             ? { color: vars.peerioBlue }
@@ -453,7 +446,6 @@ export default class Avatar extends SafeComponent {
                             {this.message}
                             {this.systemMessage}
                             {this.retryCancel}
-                            {this.fileUnavailable}
                         </View>
                     </View>
                     {this.errorCircle}
@@ -484,7 +476,6 @@ export default class Avatar extends SafeComponent {
                             {this.message}
                             {this.systemMessage}
                             {this.retryCancel}
-                            {this.fileUnavailable}
                         </View>
                         {this.props.rightIcon}
                         <OnlineCircle visible={!this.props.hideOnline} online={this.props.online} />

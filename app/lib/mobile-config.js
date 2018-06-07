@@ -3,7 +3,7 @@ import { setUrlMap, setTagHandler } from 'peerio-translator';
 import tagHandlers from '../components/controls/tag-handlers';
 import rnFileStream from './rn-file-stream';
 import KeyValueStorage from '../store/key-value-storage';
-import whitelabel from './whitelabel-config';
+import whitelabel from '../components/whitelabel/white-label-config';
 
 const { setStringReplacement } = require('peerio-translator');
 
@@ -12,10 +12,12 @@ export default (c, icebear) => {
     cfg.ghostFrontendUrl = 'https://mail.peerio.com';
     // --- TRANSLATOR
     cfg.translator = {};
-    cfg.translator.stringReplacements = whitelabel.stringReplacements; // white label only
-    cfg.translator.stringReplacements.forEach((replacementObject) => {
-        setStringReplacement(replacementObject.original, replacementObject.replacement);
-    });
+    if (whitelabel.stringReplacements) {
+        cfg.translator.stringReplacements = whitelabel.stringReplacements; // white label only
+        cfg.translator.stringReplacements.forEach((replacementObject) => {
+            setStringReplacement(replacementObject.original, replacementObject.replacement);
+        });
+    }
     cfg.translator.urlMap = {
         fingerprint: whitelabel.FINGERPRINT || 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
         mpDetail: whitelabel.MP_DETAIL || 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
@@ -78,10 +80,12 @@ export default (c, icebear) => {
 
     cfg.platform = Platform.OS;
     cfg.appLabel = process.env.APP_LABEL;
-    cfg.appleTestUser = 'applereview2607';
+    cfg.whiteLabel = { name: process.env.APP_LABEL };
+    cfg.appleTestUser = whitelabel.APPLE_REVIEW_ACCOUNT || 'applereview2607';
     cfg.appleTestPass = 'icebear';
     cfg.appleTestServer = 'wss://treetrunks.peerio.com';
     cfg.enableVolumes = process.env.SHARED_FOLDERS_ENABLED;
+    cfg.preferredServerVersion = '7.0.0';
     Object.assign(cfg.chat, {
         maxInitialChats: 15,
         initialPageSize: 20, // amount of messages to load to a newly opened chat

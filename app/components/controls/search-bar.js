@@ -34,7 +34,7 @@ const placeholderStyle = {
 
 export default class SearchBar extends Component {
     render() {
-        const { textValue, placeholderText, onChangeText, onSubmit, leftIcon, rightIcon, ref, testId } = this.props;
+        const { textValue, placeholderText, onChangeText, onSubmit, leftIcon, rightIcon, testId } = this.props;
         return (
             <View>
                 <View style={container}>
@@ -48,7 +48,6 @@ export default class SearchBar extends Component {
                         autoCapitalize="none"
                         autoCorrect={false}
                         placeholder={placeholderText}
-                        ref={ref}
                         style={placeholderStyle}
                         {...testLabel(testId)}
                     />

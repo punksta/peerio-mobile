@@ -7,7 +7,7 @@ import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import BackIcon from '../layout/back-icon';
-import routerMain from '../routes/router-main';
+import routes from '../routes/routes';
 import chatState from '../messaging/chat-state';
 import AvatarCircle from '../shared/avatar-circle';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -50,16 +50,16 @@ export default class DmContactInvite extends SafeComponent {
 
     get chat() { return chatState.currentChat; }
 
-    get leftIcon() { return <BackIcon action={routerMain.chats} />; }
+    get leftIcon() { return <BackIcon action={routes.main.chats} />; }
 
     @action.bound async decline() {
         this.chat.dismiss();
-        routerMain.chats();
+        routes.main.chats();
     }
 
     @action.bound async accept() {
         this.chat.start();
-        routerMain.chats(this.chat);
+        routes.main.chats(this.chat);
     }
 
     renderThrow() {

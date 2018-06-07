@@ -7,7 +7,7 @@ import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 import buttons from '../helpers/buttons';
-import routerMain from '../routes/router-main';
+import routes from '../routes/routes';
 
 const redArrowSrc = require('../../assets/zero_chat_state/arrow-red.png');
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
@@ -91,7 +91,7 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
                 <Text style={contactDescriptionStyle}>
                     {tx('title_seeWhoYouAlreadyKnow')}
                 </Text>
-                {buttons.roundBlueBgButton('title_findContactsZeroState', () => routerMain.contactAdd())}
+                {buttons.roundBlueBgButton('title_findContactsZeroState', () => routes.main.contactAdd())}
             </View>);
     }
 

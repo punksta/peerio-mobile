@@ -4,29 +4,18 @@ import Layout1 from '../layout/layout1';
 import Layout2 from '../layout/layout2';
 import { wizard } from '../../styles/styles';
 import Wizard from '../wizard/wizard';
-import SignupStep1 from './signup-step1';
-import SignupAccountKey from './signup-account-key';
-import SignupConfirmBackup from './signup-confirm-backup';
-import SignupContactSyncStart from './signup-contact-sync-start';
-import SignupContactAdd from './signup-contact-add';
-import SignupContactInvite from './signup-contact-invite';
+
 import signupState from './signup-state';
 import Bottom from '../controls/bottom';
 import SnackBar from '../snackbars/snackbar';
+import WhiteLabel from '../whitelabel/white-label-components';
 
 export default class SignupWizard extends Wizard {
-    pages = ['signupStep1', 'signupAccountKey', 'signupConfirmBackup',
-        'signupContactSyncStart', 'signupContactAdd', 'signupContactInvite'];
+    pages = WhiteLabel.PAGE_NAMES;
+    pageComponents = WhiteLabel.PAGE_COMPONENTS;
 
     get index() { return signupState.current; }
     set index(i) { signupState.current = i; }
-
-    signupStep1 = () => <SignupStep1 />;
-    signupAccountKey = () => <SignupAccountKey />;
-    signupConfirmBackup = () => <SignupConfirmBackup />;
-    signupContactSyncStart = () => <SignupContactSyncStart />;
-    signupContactAdd = () => <SignupContactAdd />;
-    signupContactInvite = () => <SignupContactInvite />;
 
     renderThrow() {
         const style = wizard;

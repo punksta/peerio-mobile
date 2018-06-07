@@ -1,44 +1,45 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity, Picker } from 'react-native';
+import { View, Picker } from 'react-native';
 import _ from 'lodash';
 import SafeComponent from '../shared/safe-component';
-import uiState from '../layout/ui-state';
 import { vars } from '../../styles/styles';
+import icons from '../helpers/icons';
 
 @observer
 export default class PickerBoxAndroid extends SafeComponent {
-    constructor(props) {
-        super(props);
-        this.onValueChange = this.onValueChange.bind(this);
+    get value() {
+        return this.props.state[this.props.name];
     }
 
-    onValueChange(lang) {
-        uiState[this.props.name] = lang;
+    set value(v) {
+        this.props.state[this.props.name] = v;
     }
 
-    layout(e) {
-        console.log(e.nativeEvent.layout.height);
-    }
+    onValueChange = (v) => {
+        if (v) this.value = v;
+    };
 
     renderThrow() {
-        // const s = this.props.style.normal;
-        const { shadow } =
-            this.props.style.normal;
+        const { shadow, iconContainer, icon } = this.props.style.normal;
+        const defaultOption = [(<Picker.Item label={`- ${this.props.hint} -`} value={null} key={null} />)];
         const items = _.values(_.mapValues(this.props.data, (value, key) =>
             <Picker.Item label={value} value={key} key={key} />));
+
         return (
             <View style={shadow}>
-                <TouchableOpacity>
-                    <Picker
-                        onLayout={this.layout}
-                        selectedValue={this.props.value}
-                        onValueChange={this.onValueChange}
-                        style={{ color: 'white', backgroundColor: vars.pickerBg }}>
-                        {items}
-                    </Picker>
-                </TouchableOpacity>
+                <Picker
+                    selectedValue={this.value}
+                    onValueChange={this.onValueChange}
+                    style={[{ backgroundColor: vars.pickerBg }, (this.props.value ? { color: vars.textBlack87 } : { color: vars.textBlack38 })]}>
+                    {defaultOption.concat(items)}
+                </Picker>
+                <View
+                    pointerEvents="none"
+                    style={iconContainer}>
+                    {icons.dark('arrow-drop-down', () => { }, icon)}
+                </View>
             </View>
         );
     }
