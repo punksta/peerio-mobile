@@ -60,9 +60,11 @@ export default class Files extends SafeComponent {
     actionsHeight = new Animated.Value(0);
 
     get data() {
-        return fileState.store.currentFilter ?
+        let data = fileState.store.currentFilter ?
             fileState.store.visibleFilesAndFolders
             : fileStore.folderStore.currentFolder.foldersAndFilesDefaultSorting;
+        if (fileState.isFileSelectionMode) data = data.filter(item => !item.isLegacy);
+        return data;
     }
 
     componentDidMount() {
