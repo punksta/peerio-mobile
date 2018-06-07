@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.295.0"></a>
+# [3.295.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.294.0...v3.295.0) (2018-06-07)
+
+
+### Bug Fixes
+
+* check if file has been already downloaded on action sheet [ch6567] ([28e1484](https://github.com/PeerioTechnologies/peerio-mobile/commit/28e1484))
+* do not render file until it's fully loaded ([ceaaba9](https://github.com/PeerioTechnologies/peerio-mobile/commit/ceaaba9))
+* don't show legacy files in file selection mode [ch8774] ([127bb43](https://github.com/PeerioTechnologies/peerio-mobile/commit/127bb43))
+* paddingTop on iOS on signup import [ch8724] ([64ef868](https://github.com/PeerioTechnologies/peerio-mobile/commit/64ef868))
+
+
+### Features
+
+* show file unshared for unshared files [ch8777] ([702e77a](https://github.com/PeerioTechnologies/peerio-mobile/commit/702e77a))
+
+
+
 <a name="3.294.0"></a>
 # [3.294.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.293.0...v3.294.0) (2018-06-06)
 
