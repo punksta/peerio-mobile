@@ -360,6 +360,7 @@ export default class Chat extends SafeComponent {
     get zeroStateChatInvite() {
         const { chat } = this;
         const participant = chat.otherParticipants[0];
+        const { firstName, fullName, addresses } = participant;
         const emojiTada = require('../../assets/emoji/tada.png');
         const container = {
             flex: 1,
@@ -378,17 +379,26 @@ export default class Chat extends SafeComponent {
             color: vars.lighterBlackText,
             textAlign: 'center',
             fontSize: vars.font.size.bigger,
-            lineHeight: 22,
-            marginBottom: vars.spacing.medium.maxi
+            lineHeight: 22
+        };
+        const inviteMethodStyle = {
+            marginTop: vars.spacing.medium.mini2x,
+            fontSize: vars.font.size.smaller,
+            color: vars.textBlack54
         };
         const headingCopy = chat.isNewUserFromInvite ? 'title_newUserDmInviteHeading' : 'title_dmInviteHeading';
+        const invteMethodCopy = chat.isAutoAdded ? 'title_userInAddressBook' : 'title_invitedUserViaEmail';
         return (
             <View style={container}>
                 <Image source={emojiTada} style={emojiStyle} resizeMode="contain" />
                 <Text style={headingStyle}>
-                    {tx(headingCopy, { contactName: participant.fullName })}
+                    {tx(headingCopy, { contactName: fullName })}
                 </Text>
-                <View style={{ alignItems: 'center' }}>
+                {!chat.isReceived &&
+                <Text semibold style={inviteMethodStyle}>
+                    {tx(invteMethodCopy, { firstName, email: addresses[0] })}
+                </Text>}
+                <View style={{ marginTop: vars.spacing.medium.maxi, alignItems: 'center' }}>
                     <AvatarCircle contact={participant} medium />
                 </View>
                 <Text style={{ textAlign: 'center', marginBottom: vars.spacing.medium.maxi2x }}>
