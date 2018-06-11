@@ -72,7 +72,7 @@ export default class DmContactInvite extends SafeComponent {
         const inviter = chat.otherParticipants[0];
         const { firstName, fullName, usernameTag, addresses } = inviter;
         const headingCopy = chat.isReceived ? 'title_newUserDmInviteHeading' : 'title_dmInviteHeading';
-        const invteMethodCopy = chat.isAutoAdded ? 'title_userInAddressBook' : 'title_invitedUserViaEmail';
+        const invteMethodCopy = chat.isAutoImport ? 'title_userInAddressBook' : 'title_invitedUserViaEmail';
         return (
             <View style={container}>
                 <Image source={emojiTada} style={emojiStyle} resizeMode="contain" />

@@ -387,7 +387,7 @@ export default class Chat extends SafeComponent {
             color: vars.textBlack54
         };
         const headingCopy = chat.isNewUserFromInvite ? 'title_newUserDmInviteHeading' : 'title_dmInviteHeading';
-        const invteMethodCopy = chat.isAutoAdded ? 'title_userInAddressBook' : 'title_invitedUserViaEmail';
+        const inviteMethodCopy = chat.isAutoImport ? 'title_userInAddressBook' : 'title_invitedUserViaEmail';
         return (
             <View style={container}>
                 <Image source={emojiTada} style={emojiStyle} resizeMode="contain" />
@@ -396,7 +396,7 @@ export default class Chat extends SafeComponent {
                 </Text>
                 {!chat.isReceived &&
                 <Text semibold style={inviteMethodStyle}>
-                    {tx(invteMethodCopy, { firstName, email: addresses[0] })}
+                    {tx(inviteMethodCopy, { firstName, email: addresses[0] })}
                 </Text>}
                 <View style={{ marginTop: vars.spacing.medium.maxi, alignItems: 'center' }}>
                     <AvatarCircle contact={participant} medium />
