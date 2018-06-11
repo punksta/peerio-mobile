@@ -65,6 +65,7 @@
     "react-dom": "16.0.0-alpha.6",
     "react-native": "github:PeerioTechnologies/react-native#0.45",
     "react-native-actionsheet": "2.3.0",
+    "react-native-android-badge": "0.4.3",
     "react-native-animatable": "1.1.0",
     "react-native-billing": "2.3.0",
     "react-native-cli": "2.0.1",

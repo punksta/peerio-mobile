@@ -25,7 +25,7 @@
 	<key>ITSEncryptionExportComplianceCode</key>
 	<string>50fca128-07a4-40a7-8a57-e48418e296ec</string>
 	<key>LSApplicationCategoryType</key>
-	<string></string>
+	<string/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

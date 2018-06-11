@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import me.jhen.react.BadgePackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 import com.filepicker.FilePickerPackage;
@@ -49,6 +50,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
+                    new BadgePackage(),
                     new KCKeepAwakePackage(),
                     new RNViewShotPackage(),
                     new FilePickerPackage(),
