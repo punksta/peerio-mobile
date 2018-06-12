@@ -117,7 +117,7 @@ export default class Files extends SafeComponent {
 
     flatListRef = (ref) => { uiState.currentScrollView = ref; };
 
-    listView() {
+    list() {
         return (
             <FlatList
                 initialNumToRender={INITIAL_LIST_SIZE}
@@ -261,7 +261,7 @@ export default class Files extends SafeComponent {
     }
 
     body() {
-        if (this.data.length || !fileStore.folderStore.currentFolder.isRoot) return this.listView();
+        if (this.data.length || !fileStore.folderStore.currentFolder.isRoot) return this.list();
         if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
             return (
                 <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>

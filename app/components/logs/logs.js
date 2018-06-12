@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, NativeModules, Alert, ListView } from 'react-native';
+import { View, TouchableOpacity, NativeModules, Alert, FlatList } from 'react-native';
 import stringify from 'json-stringify-safe';
 import moment from 'moment';
 import Text from '../controls/custom-text';
@@ -16,17 +16,6 @@ const mapFormat = ({ time, msg }) => ({
 const mapGlue = ({ msg, time }) => `${time}: ${msg}`;
 
 export default class Logs extends Component {
-    constructor(props) {
-        super(props);
-        this.dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-    }
-
-    get data() {
-        return console.stack.map(mapFormat).map(({ time, msg }, k) => ({ time, msg, k }));
-    }
-
     sendLogs() {
         const subject = `Support // logs from ${User.current ? User.current.username : 'n/a'}`;
         const recipients = config.logRecipients;
@@ -54,7 +43,7 @@ export default class Logs extends Component {
             <View style={outer}>
                 <TouchableOpacity
                     pressRetentionOffset={vars.retentionOffset}
-                    onPress={() => this.sendLogs()}>
+                    onPress={this.sendLogs}>
                     <View style={s}>
                         <Text style={{ color: 'white' }}>
                             {`Send Logs`}
@@ -65,25 +54,22 @@ export default class Logs extends Component {
         );
     }
 
-    componentDidMount() {
-        this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
-        this.forceUpdate();
-    }
+    flatListRef = (sv) => { this.scrollView = sv; };
 
-    listView() {
+    list() {
+        const dataSource = console.stack.map(mapFormat).map(({ time, msg }, k) => ({ time, msg, k })).slice();
         return (
-            <ListView
+            <FlatList
                 initialListSize={2}
                 pageSize={2}
-                dataSource={this.dataSource}
-                renderRow={this.item}
-                enableEmptySections
-                ref={sv => { this.scrollView = sv; }}
+                data={dataSource}
+                renderItem={this.item}
+                ref={this.flatListRef}
             />
         );
     }
 
-    item(item) {
+    item({ item }) {
         const { time, msg, k } = item;
         return (
             <Text key={`${time}${k}`}>
@@ -97,7 +83,7 @@ export default class Logs extends Component {
     render() {
         return (
             <View style={{ flexGrow: 1 }}>
-                {this.listView()}
+                {this.list()}
                 {this.sendButton()}
             </View>
         );

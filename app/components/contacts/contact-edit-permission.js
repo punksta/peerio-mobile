@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, ListView } from 'react-native';
-import { observable, reaction, action } from 'mobx';
+import { View, FlatList } from 'react-native';
+import { reaction, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { tu } from '../utils/translator';
@@ -17,8 +17,6 @@ const PAGE_SIZE = 2;
 
 @observer
 export default class ContactEditPermission extends SafeComponent {
-    @observable dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-
     get data() {
         // currentFile is a folder
         return fileState.currentFile && fileState.currentFile.isShared ?
@@ -35,13 +33,13 @@ export default class ContactEditPermission extends SafeComponent {
         this.reaction = reaction(() => [
             this.data
         ], () => {
-            this.dataSource = this.dataSource.cloneWithRows(this.data);
             this.forceUpdate();
         }, true);
     }
 
     componentWillUnmount() {
-        this.reaction();
+        this.reaction && this.reaction();
+        this.reaction = null;
     }
 
     get unshareButton() {
@@ -62,17 +60,19 @@ export default class ContactEditPermission extends SafeComponent {
         return <ModalHeader {...{ leftIcon, rightIcon, title, fontSize, outerStyle }} />;
     }
 
-    item = (contact) => {
-        return (<ContactEditPermissionItem contact={contact} onUnshare={this.unshareFrom} />);
+    item = ({ item }) => {
+        return (<ContactEditPermissionItem
+            contact={item}
+            onUnshare={this.unshareFrom} />);
     };
 
     body() {
         return (
-            <ListView
-                initialListSize={INITIAL_LIST_SIZE}
+            <FlatList
+                initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
-                dataSource={this.dataSource}
-                renderRow={this.item} />);
+                data={this.data}
+                renderItem={this.item} />);
     }
 
     renderThrow() {

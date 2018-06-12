@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ListView } from 'react-native';
-import { observable, reaction, computed } from 'mobx';
+import { View, FlatList } from 'react-native';
+import { observable, computed } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import FolderInnerItem from './folder-inner-item';
@@ -21,16 +21,6 @@ const PAGE_SIZE = 2;
 export default class FolderSelect extends SafeComponent {
     @observable currentFolder = fileState.store.folderStore.root;
 
-    constructor(props) {
-        super(props);
-        this.dataSource = new ListView.DataSource({
-            rowHasChanged: (r1, r2) => r1 !== r2
-        });
-    }
-
-    @observable dataSource = null;
-    @observable refreshing = false;
-
     @computed get data() {
         const { currentFolder } = this;
         const folders = currentFolder.foldersSortedByName.slice();
@@ -43,20 +33,8 @@ export default class FolderSelect extends SafeComponent {
         this.reaction = null;
     }
 
-    componentDidMount() {
-        this.reaction = reaction(() => [
-            fileState.routerMain.route === 'files',
-            fileState.routerMain.currentIndex === 0,
-            this.currentFolder,
-            this.data,
-            this.data.length
-        ], () => {
-            this.dataSource = this.dataSource.cloneWithRows(this.data.slice());
-            this.forceUpdate();
-        }, true);
-    }
-
-    item = folder => {
+    item = ({ item }) => {
+        const folder = item;
         const selectFolder = async () => {
             const file = fileState.currentFile;
             if (!file) return;
@@ -87,16 +65,15 @@ export default class FolderSelect extends SafeComponent {
         );
     };
 
-    listView() {
+    list() {
         return (
-            <ListView
+            <FlatList
                 initialListSize={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
-                dataSource={this.dataSource}
-                renderRow={this.item}
+                data={this.data}
+                renderItem={this.item}
                 onEndReached={this.onEndReached}
                 onEndReachedThreshold={20}
-                enableEmptySections
             />
         );
     }
@@ -127,7 +104,7 @@ export default class FolderSelect extends SafeComponent {
                 {this.exitRow()}
                 {!this.data.length && !this.currentFolder.isRoot ?
                     this.noFilesInFolder : null}
-                {this.listView()}
+                {this.list()}
             </View>
         );
     }
