@@ -81,7 +81,7 @@ export default class StyledTextInput extends SafeComponent {
      * @prop {String} validation.message - The error to show if validation fails at action
      */
     @action.bound async validate() {
-        const { validations, alwaysDirty, state, testID } = this.props;
+        const { validations, alwaysDirty, state } = this.props;
         this.handleEmptyField();
         // If no validation prop is passed, then no validation is needed and it is always valid
         if (!validations) {
@@ -117,15 +117,21 @@ export default class StyledTextInput extends SafeComponent {
                 }
             });
         });
-        // Append the end of the chain with a catch in order to break the chain
-        // when one of the validations is INVALID
-        promise = promise.catch(() => console.log(`Text Input ${testID}: Invalid input`));
+        // We need this catch in order to break the chain when one of the validations is INVALID
+        promise = promise.catch(() => {
+            // Do nothing
+        });
     }
 
     @action.bound async onChangeText(text) {
         // even if not focused, move the hint to the top
         if (text) this.setHintToTop();
-        this.props.state.value = text;
+        let inputText = text;
+        const { Version, OS } = Platform;
+        if (OS !== 'android' || Version > 22) {
+            inputText = this.props.lowerCase ? text.toLowerCase() : text;
+        }
+        this.props.state.value = inputText;
         this.validate();
     }
 
@@ -324,5 +330,6 @@ StyledTextInput.propTypes = {
     required: PropTypes.bool,
     maxLength: PropTypes.number,
     onBlur: PropTypes.any,
-    onFocus: PropTypes.any
+    onFocus: PropTypes.any,
+    lowerCase: PropTypes.bool
 };

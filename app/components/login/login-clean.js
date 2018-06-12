@@ -92,6 +92,7 @@ export default class LoginClean extends LoginWizardPage {
                                 validations={usernameLogin}
                                 hint={tx('title_username')}
                                 ref={this.usernameInputRef}
+                                lowerCase
                                 testID="usernameLogin"
                             />
                             <StyledTextInput
