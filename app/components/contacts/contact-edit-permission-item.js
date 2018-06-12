@@ -32,12 +32,16 @@ export default class ContactEditPermissionItem extends SafeComponent {
 
     @action.bound handleShowWarningClick() { this.showWarning = true; }
 
+    // To prevent animation bug caused by how react native updates lists
+    // We hide the item, then do "unshare" logic after hide animation ends
+    // Finally reset the UI state of the list item
     @action.bound removeClick() {
-        LayoutAnimation.easeInEaseOut();
-        // this works without timeouts
-        // because parent actually doesn't update on
-        // item removal
-        this.props.onUnshare(this.props.contact);
+        LayoutAnimation.easeInEaseOut(() => {
+            this.props.onUnshare(this.props.contact);
+            this.collapsed = false;
+            currentContactItem._showWarning = false;
+            currentContactItem = null;
+        });
         this.collapsed = true;
     }
 
@@ -48,7 +52,6 @@ export default class ContactEditPermissionItem extends SafeComponent {
             height: vars.removeButtonHeight,
             justifyContent: 'center'
         };
-        // TODO wire up TouchableOpacity onPress
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.pressRetentionOffset}
