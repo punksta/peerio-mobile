@@ -17,7 +17,7 @@ import LoginWizardPage, {
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 import StyledTextInput from '../shared/styled-text-input';
-import { socket, validation } from '../../lib/icebear';
+import { validation } from '../../lib/icebear';
 
 const { validators } = validation;
 const { firstName, lastName, username, email } = validators;
