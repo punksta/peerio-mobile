@@ -66,7 +66,8 @@ export default class FolderInnerItem extends SafeComponent {
     }
 
     get radio() {
-        if (!this.props.radio) return null;
+        const { radio, disabled } = this.props;
+        if (!radio) return null;
         const outer = {
             width,
             height,
@@ -82,6 +83,8 @@ export default class FolderInnerItem extends SafeComponent {
         }];
         return (
             <TouchableOpacity
+                disabled={disabled}
+                style={{ opacity: disabled ? vars.opacity54 : null }}
                 onPress={this.props.onSelect}
                 pressRetentionOffset={vars.pressRetentionOffset}>
                 <View style={outer}>
@@ -115,7 +118,7 @@ export default class FolderInnerItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { folder, onSelect, hideOptionsIcon, onFolderAction } = this.props;
+        const { folder, onSelect, hideOptionsIcon, onFolderAction, disabled } = this.props;
         const { isShared } = folder;
         const progressContainer = {
             backgroundColor: vars.fileUploadProgressColor,
@@ -131,10 +134,14 @@ export default class FolderInnerItem extends SafeComponent {
                 {icons.dark('more-vert', onFolderAction)}
             </View>);
         return (
-            <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
+            <View
+                style={{ backgroundColor: vars.chatItemPressedBackground,
+                    opacity: disabled ? vars.opacity54 : null }}>
                 <TouchableOpacity
+                    disabled={disabled}
                     onPress={hideOptionsIcon ? onSelect : this.onPress}
-                    style={{ backgroundColor: vars.filesBg }}>
+                    style={{ backgroundColor: vars.filesBg }}
+                    pressRetentionOffset={vars.pressRetentionOffset}>
                     <View style={folderInfoContainerStyle}>
                         {this.radio}
                         <View style={itemContainerStyle} onLayout={this.layout}>
@@ -161,5 +168,6 @@ FolderInnerItem.propTypes = {
     folder: PropTypes.any.isRequired,
     hideOptionsIcon: PropTypes.bool,
     radio: PropTypes.bool,
-    onFolderAction: PropTypes.func
+    onFolderAction: PropTypes.func,
+    disabled: PropTypes.bool
 };

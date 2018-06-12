@@ -82,6 +82,7 @@ export default class FolderSelect extends SafeComponent {
                 folder={folder}
                 hideOptionsIcon
                 onSelect={selectFolder}
+                disabled={fileState.hasLegacyObjectsInSelection}
                 onPress={folder.hasNested ? changeFolder : selectFolder} />
         );
     };
