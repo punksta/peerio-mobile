@@ -105,9 +105,8 @@ export default class SignupStep1 extends LoginWizardPage {
     }
 
     get isNextDisabled() {
-        // removing "!this.firstnameState.value" causes a runtime error
-        return socket.connected && (!this.firstnameState.value || !this.firstNameInput.isValid ||
-            !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
+        return !this.firstnameState.value || !this.firstNameInput.isValid ||
+            !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid;
     }
 
     get avatar() {
