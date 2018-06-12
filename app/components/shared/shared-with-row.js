@@ -116,7 +116,8 @@ export default class SharedWithRow extends SafeComponent {
     }
 }
 
+// Having props be required is better than bloating code with conditions to check for null
 SharedWithRow.propTypes = {
-    contacts: PropTypes.any,
-    rooms: PropTypes.any
+    contacts: PropTypes.any.isRequired,
+    rooms: PropTypes.any.isRequired
 };

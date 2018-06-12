@@ -41,6 +41,7 @@ export default class FolderShare extends Component {
             <SharedFolderFooter
                 title="title_viewSharedWith"
                 action={this.togglePage}
+                volume={fileState.currentFile}
                 showAvatars
             />
         ) : null;

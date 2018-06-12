@@ -13,22 +13,7 @@ import Text from '../controls/custom-text';
 @observer
 export default class SharedFolderFooter extends SafeComponent {
     renderThrow() {
-        const { title, action, icon, showAvatars } = this.props;
-        // TODO remove mock contacts and rooms when SDK is wired
-        const mockContacts = [
-            // contactStore.getContact('karim94'),
-            // contactStore.getContact('test_karim'),
-            // contactStore.getContact('karim_dev'),
-            // contactStore.getContact('karim94'),
-            // contactStore.getContact('test_karim'),
-            // contactStore.getContact('karim_dev')
-        ];
-        const mockRooms = [
-            // 1,
-            // 2,
-            // 3,
-            // 4
-        ];
+        const { title, action, icon, showAvatars, volume } = this.props;
 
         const bottomRowStyle = {
             flexDirection: 'row',
@@ -54,7 +39,7 @@ export default class SharedFolderFooter extends SafeComponent {
                         {tu(title)}
                     </Text>
                 </View>
-                {showAvatars && <SharedWithRow contacts={mockContacts} rooms={mockRooms} />}
+                {showAvatars && <SharedWithRow contacts={volume.otherParticipants} rooms={[]} />}
             </TouchableOpacity>);
     }
 }
@@ -63,5 +48,6 @@ SharedFolderFooter.propTypes = {
     title: PropTypes.any,
     action: PropTypes.func,
     icon: PropTypes.string,
-    showAvatars: PropTypes.bool
+    showAvatars: PropTypes.bool,
+    volume: PropTypes.any
 };
