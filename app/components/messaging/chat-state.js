@@ -40,7 +40,6 @@ class ChatState extends RoutedState {
 
     @action async init() {
         const { store } = this;
-        store.loadAllChats();
         await promiseWhen(() => store.loaded);
         await promiseWhen(
             () => store.chats.filter(c => c.headLoaded).length === store.chats.length,
