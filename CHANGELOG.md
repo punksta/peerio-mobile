@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.298.0"></a>
+# [3.298.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.297.0...v3.298.0) (2018-06-13)
+
+
+### Bug Fixes
+
+* disable shared folders as a move destination for legacy files [b… ([#235](https://github.com/PeerioTechnologies/peerio-mobile/issues/235)) ([5fc583a](https://github.com/PeerioTechnologies/peerio-mobile/commit/5fc583a))
+* re-validate on reconnect during sign up [branch ch8165] ([#222](https://github.com/PeerioTechnologies/peerio-mobile/issues/222)) ([8b3b413](https://github.com/PeerioTechnologies/peerio-mobile/commit/8b3b413))
+* remove user from volume animation [branch ch8625] ([#229](https://github.com/PeerioTechnologies/peerio-mobile/issues/229)) ([12efb7c](https://github.com/PeerioTechnologies/peerio-mobile/commit/12efb7c))
+* show shared with tiny avatars [branch ch8628] ([#230](https://github.com/PeerioTechnologies/peerio-mobile/issues/230)) ([80c6a56](https://github.com/PeerioTechnologies/peerio-mobile/commit/80c6a56))
+* username, email and account key fields are now lowercase [branch ch8851] ([70eacf9](https://github.com/PeerioTechnologies/peerio-mobile/commit/70eacf9))
+
+
+
 <a name="3.297.0"></a>
 # [3.297.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.296.0...v3.297.0) (2018-06-07)
 
