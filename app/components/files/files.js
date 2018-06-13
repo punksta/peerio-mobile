@@ -60,9 +60,9 @@ export default class Files extends SafeComponent {
     actionsHeight = new Animated.Value(0);
 
     get data() {
-        let data = fileState.store.currentFilter ?
-            fileState.store.visibleFilesAndFolders
-            : fileStore.folderStore.currentFolder.foldersAndFilesDefaultSorting;
+        let data = fileState.store.searchQuery ?
+            fileState.store.filesAndFoldersSearchResult
+            : fileStore.folderStore.currentFolder.filesAndFoldersDefaultSorting;
         if (fileState.isFileSelectionMode) data = data.filter(item => !item.isLegacy);
         return data;
     }
@@ -78,7 +78,7 @@ export default class Files extends SafeComponent {
             fileState.routerMain.currentIndex === 0,
             this.data,
             this.data.length,
-            fileState.store.currentFilter,
+            fileState.store.searchQuery,
             this.maxLoadedIndex
         ], () => {
             console.debug(`files.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
@@ -163,18 +163,14 @@ export default class Files extends SafeComponent {
             this._searchTimeout = null;
         }
         if (!filename) {
-            fileState.store.clearFilter();
+            fileState.store.searchQuery = '';
             return;
         }
         this._searchTimeout = setTimeout(() => this.searchFile(filename), 500);
     }
 
     searchFile = val => {
-        if (val === '' || val === null) {
-            fileState.store.clearFilter();
-            return;
-        }
-        fileState.store.filterByName(val);
+        fileState.store.searchQuery = val;
     };
 
     @action.bound onChangeText(text) {
