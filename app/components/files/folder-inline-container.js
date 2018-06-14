@@ -6,12 +6,13 @@ import { action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
-import { fileStore } from '../../lib/icebear';
+import { fileStore, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import routes from '../routes/routes';
 import FoldersActionSheet from './folder-action-sheet';
 import buttons from '../helpers/buttons';
 import Text from '../controls/custom-text';
+import chatState from '../messaging/chat-state';
 
 const padding = 8;
 const borderWidth = 1;
@@ -28,12 +29,11 @@ const container = {
 const header = {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    height: vars.inlineFolderContainerHeight
+    alignItems: 'center'
 };
 
 const infoStyle = {
-    color: vars.extraSubtleText,
+    color: vars.textBlack54,
     fontSize: vars.font.size.smaller
 };
 
@@ -64,7 +64,7 @@ export default class FolderInlineContainer extends SafeComponent {
     }
 
     @action.bound onAction() {
-        FoldersActionSheet.show(this.folder);
+        FoldersActionSheet.show(this.folder, true);
     }
 
     @action.bound reshare() {
@@ -79,7 +79,7 @@ export default class FolderInlineContainer extends SafeComponent {
                 {icons.dark('more-vert', this.onAction)}
             </View>);
         return (
-            <View style={header}>
+            <View style={[header, { height: vars.inlineFolderContainerHeight }]}>
                 {icons.darkNoPadding('folder-shared')}
                 {this.fileDetails}
                 {optionsIcon}
@@ -91,13 +91,15 @@ export default class FolderInlineContainer extends SafeComponent {
         const text = this.folder ?
             tx('title_folderNameUnshared', { folderName: this.folder.name }) : tx('title_folderUnshared');
         return (
-            <View style={header}>
-                {icons.darkNoPadding('folder')}
-                <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <View style={{ marginLeft: vars.spacing.small.midi2x }}>
-                        <Text style={infoStyle}>
-                            {text}
-                        </Text>
+            <View style={container}>
+                <View style={[header, { padding }]}>
+                    {icons.darkNoPadding('folder', null, null, null, true)}
+                    <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <View style={{ marginLeft: vars.spacing.small.midi2x }}>
+                            <Text italic style={infoStyle}>
+                                {text}
+                            </Text>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -106,16 +108,18 @@ export default class FolderInlineContainer extends SafeComponent {
 
     get reshareBody() {
         return (
-            <View style={header}>
-                {icons.darkNoPadding('folder')}
-                <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <View style={{ marginLeft: vars.spacing.small.midi2x }}>
-                        <Text style={infoStyle}>
-                            {tx('title_folderUnshared')}
-                        </Text>
-                    </View>
-                    <View>
-                        {buttons.uppercaseBlueButton(tx('button_reshare'), this.reshare)}
+            <View style={container}>
+                <View style={[header, { padding }]}>
+                    {icons.darkNoPadding('folder')}
+                    <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <View style={{ marginLeft: vars.spacing.small.midi2x }}>
+                            <Text style={infoStyle}>
+                                {tx('title_folderUnshared')}
+                            </Text>
+                        </View>
+                        <View>
+                            {buttons.uppercaseBlueButton(tx('button_reshare'), this.reshare)}
+                        </View>
                     </View>
                 </View>
             </View>
@@ -124,7 +128,15 @@ export default class FolderInlineContainer extends SafeComponent {
 
     render() {
         const { folder } = this;
-        if (!folder) return this.unsharedBody;
+        const dmRecipient = chatState.currentChat.otherParticipants[0];
+
+        // TODO temporary solution until SDK supports "owner, editor, viewer" logic
+        // If the folder has been unshared, we need to show appropriate UX feedback
+        // Check that either the User or Recipient have lost access to the folder
+        const showUnshareBody = !folder || folder.allParticipants.filter(c => c.username === dmRecipient.username).length === 0 ||
+        folder.allParticipants.filter(c => c.username === User.current.username).length === 0;
+        if (showUnshareBody) return this.unsharedBody;
+
         const outer = {
             flex: 1,
             flexGrow: 1,
@@ -137,7 +149,7 @@ export default class FolderInlineContainer extends SafeComponent {
                 style={container}
                 onPress={this.press}>
                 <View style={outer} {...this.props}>
-                    {folder.isShared ? this.normalBody : this.unsharedBody}
+                    {!showUnshareBody ? this.normalBody : this.unsharedBody}
                 </View>
             </TouchableOpacity>
         );
