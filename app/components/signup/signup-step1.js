@@ -17,7 +17,7 @@ import LoginWizardPage, {
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 import StyledTextInput from '../shared/styled-text-input';
-import { validation } from '../../lib/icebear';
+import { socket, validation } from '../../lib/icebear';
 
 const { validators } = validation;
 const { firstName, lastName, username, email } = validators;
@@ -105,8 +105,9 @@ export default class SignupStep1 extends LoginWizardPage {
     }
 
     get isNextDisabled() {
-        return !this.firstnameState.value || !this.firstNameInput.isValid ||
-            !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid;
+        // removing "!this.firstnameState.value" causes a runtime error
+        return socket.connected && (!this.firstnameState.value || !this.firstNameInput.isValid ||
+        !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
     }
 
     get avatar() {

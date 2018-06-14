@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { observable, action, reaction } from 'mobx';
+import { observable, action } from 'mobx';
 import { TextInput, View, Platform, Animated } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
@@ -10,7 +10,6 @@ import { vars, styledTextInput } from '../../styles/styles';
 import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
 import { tx } from '../utils/translator';
-import { socket } from '../../lib/icebear';
 
 // Because JS has no enums
 const VALID = true;
@@ -37,18 +36,10 @@ export default class StyledTextInput extends SafeComponent {
         this.focusedAnim = new Animated.Value(0);
     }
 
-    componentDidMount() {
-        this.reaction = reaction(() => socket.connected, () => {
-            this.validate();
-        }, true);
-    }
-
     componentWillUnmount() {
         if (uiState.focusedTextBox === this.textInput) {
             uiState.focusedTextBox = null;
         }
-        this.reaction && this.reaction();
-        this.reaction = null;
     }
 
     get isValid() { return this.valid; }
