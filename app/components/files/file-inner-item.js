@@ -22,9 +22,7 @@ const checkBoxWidth = height;
 
 const fileInfoContainerStyle = {
     flexGrow: 1,
-    flexDirection: 'row',
-    borderWidth: 0,
-    borderColor: 'green'
+    flexDirection: 'row'
 };
 
 @observer
@@ -109,6 +107,7 @@ export default class FileInnerItem extends SafeComponent {
         return (
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
                 <TouchableOpacity
+                    pressRetentionOffset={vars.pressRetentionOffset}
                     onPress={this.onPress}
                     {...testLabel(testID)}
                     style={{ backgroundColor: vars.filesBg }}>

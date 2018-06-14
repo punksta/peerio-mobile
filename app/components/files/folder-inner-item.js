@@ -14,19 +14,7 @@ import { User, contactStore } from '../../lib/icebear';
 
 const height = vars.filesListItemHeight;
 const width = vars.listItemHeight;
-
-const itemContainerStyle = {
-    flex: 1,
-    flexGrow: 1,
-    flexDirection: 'row',
-    height,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: vars.filesBg,
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(0, 0, 0, .12)',
-    paddingLeft: vars.spacing.medium.mini2x
-};
+const checkBoxWidth = height;
 
 const folderInfoContainerStyle = {
     flexGrow: 1,
@@ -54,6 +42,11 @@ export default class FolderInnerItem extends SafeComponent {
         onPress && onPress(folder);
     }
 
+    @action.bound toggleSelected() {
+        const { folder } = this.props;
+        folder.selected = !folder.selected;
+    }
+
     get currentProgress() {
         const { folder } = this.props;
         const { progressWidth } = this;
@@ -63,6 +56,38 @@ export default class FolderInnerItem extends SafeComponent {
 
     @action.bound layout(evt) {
         this.progressWidth = evt.nativeEvent.layout.width;
+    }
+
+    get checkbox() {
+        if (!fileState.isFileSelectionMode) return null;
+        const { folder } = this.props;
+        const { isShared } = folder;
+        const checked = folder && folder.selected;
+        const v = vars;
+        let iconColor = checked ? v.checkboxIconActive : v.checkboxIconInactive;
+        iconColor = isShared ? iconColor : vars.checkboxDisabled;
+        const iconBgColor = 'transparent';
+        const icon = checked ? 'check-box' : 'check-box-outline-blank';
+        const outer = {
+            backgroundColor: checked ? vars.peerioBlueBackground05 : vars.filesBg,
+            padding: vars.spacing.small.mini2x,
+            flex: 0,
+            width: checkBoxWidth,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderBottomWidth: 1,
+            borderBottomColor: 'rgba(0, 0, 0, .12)'
+        };
+        return (
+            <TouchableOpacity
+                style={outer}
+                pointerEvents="none"
+                onPress={this.toggleSelected}
+                disabled={!isShared}
+                pressRetentionOffset={vars.pressRetentionOffset}>
+                {icons.colored(icon, this.toggleSelected, iconColor, iconBgColor, !isShared)}
+            </TouchableOpacity>
+        );
     }
 
     get radio() {
@@ -120,6 +145,7 @@ export default class FolderInnerItem extends SafeComponent {
     renderThrow() {
         const { folder, onSelect, hideOptionsIcon, onFolderAction, disabled } = this.props;
         const { isShared } = folder;
+        const checked = folder && folder.selected;
         const progressContainer = {
             backgroundColor: vars.fileUploadProgressColor,
             width: this.currentProgress,
@@ -128,6 +154,18 @@ export default class FolderInnerItem extends SafeComponent {
             bottom: 0,
             right: 0,
             left: 0
+        };
+        const itemContainerStyle = {
+            flex: 1,
+            flexGrow: 1,
+            flexDirection: 'row',
+            height,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            backgroundColor: checked ? vars.peerioBlueBackground05 : vars.filesBg,
+            borderBottomWidth: 1,
+            borderBottomColor: 'rgba(0, 0, 0, .12)',
+            paddingLeft: fileState.isFileSelectionMode ? 0 : vars.spacing.medium.mini2x
         };
         const optionsIcon = hideOptionsIcon || fileState.isFileSelectionMode ? null : (
             <View style={{ flex: 0 }}>
@@ -144,6 +182,7 @@ export default class FolderInnerItem extends SafeComponent {
                     pressRetentionOffset={vars.pressRetentionOffset}>
                     <View style={folderInfoContainerStyle}>
                         {this.radio}
+                        {this.checkbox}
                         <View style={itemContainerStyle} onLayout={this.layout}>
                             <View style={progressContainer} />
                             <View style={{ flex: 0 }}>
