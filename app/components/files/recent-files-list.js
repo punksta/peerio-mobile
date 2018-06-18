@@ -46,16 +46,14 @@ export default class RecentFilesList extends SafeComponent {
         const collapsible = chatState.currentChat.isChannel;
         const isCollapsed = !chatState.collapseFirstChannelInfoList;
         if (collapsible && isCollapsed) return null;
-        const fileId = item;
-        const file = fileState.store.getByIdInChat(fileId, chatState.currentChat.id);
-        if (!file) return null;
+        if (!item) return null;
         // TODO: replace with getOrMake pattern
         // for event handler
         return (
             <RecentFileItem
-                onMenu={() => FileActionSheet.show(file, false)}
-                key={fileId}
-                file={file} />
+                onMenu={() => FileActionSheet.show(item, false)}
+                key={item.fileId}
+                file={item} />
         );
     };
 
@@ -77,7 +75,7 @@ export default class RecentFilesList extends SafeComponent {
                 <SectionList
                     initialNumToRender={INITIAL_LIST_SIZE}
                     sections={this.dataSource}
-                    keyExtractor={fileId => fileId}
+                    keyExtractor={file => file.fileId}
                     renderItem={this.item}
                     renderSectionHeader={this.header}
                     style={{ marginBottom: 8 }}
