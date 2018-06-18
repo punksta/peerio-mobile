@@ -7,7 +7,6 @@ import SafeComponent from '../shared/safe-component';
 import chatState from '../messaging/chat-state';
 import ChatInfoSectionHeader from '../messaging/chat-info-section-header';
 import RecentFileItem from '../files/recent-file-item';
-import fileState from '../files/file-state';
 import FileActionSheet from '../files/file-action-sheet';
 import { tx } from '../utils/translator';
 
