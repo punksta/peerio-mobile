@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.300.0"></a>
+# [3.300.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.298.0...v3.300.0) (2018-06-18)
+
+
+### Bug Fixes
+
+* search ([657b91e](https://github.com/PeerioTechnologies/peerio-mobile/commit/657b91e))
+* validation at start [branch ch8165] ([#240](https://github.com/PeerioTechnologies/peerio-mobile/issues/240)) ([811ce99](https://github.com/PeerioTechnologies/peerio-mobile/commit/811ce99))
+
+
+### Features
+
+* add multiselect for shared folders in chats, multiselect is dis… ([#213](https://github.com/PeerioTechnologies/peerio-mobile/issues/213)) ([879dd6d](https://github.com/PeerioTechnologies/peerio-mobile/commit/879dd6d))
+* unshare volume from dm [branch ch3313] ([#239](https://github.com/PeerioTechnologies/peerio-mobile/issues/239)) ([ef966e5](https://github.com/PeerioTechnologies/peerio-mobile/commit/ef966e5))
+
+
+
 <a name="3.299.0"></a>
 # [3.299.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.298.0...v3.299.0) (2018-06-14)
 
