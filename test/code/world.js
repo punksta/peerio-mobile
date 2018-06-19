@@ -117,17 +117,19 @@ class World {
         await this.startPage.createAccountButton.click();
     }
 
-    async typePersonalInfo() {
-        this.username = new Date().getTime();
+    async typePersonalInfo(username) {
+        if (!username) this.username = new Date().getTime();
+        else this.username = username;
+        const email = `${this.username}@test.lan`;
         console.log('Creating account with username', this.username);
 
-        await this.createAccountPage.firstName.setValue('test-first-name');
+        await this.createAccountPage.firstName.setValue('first');
         await this.createAccountPage.hideKeyboardHelper();
-        await this.createAccountPage.lastName.setValue('test-last-name');
+        await this.createAccountPage.lastName.setValue('last');
         await this.createAccountPage.hideKeyboardHelper();
         await this.createAccountPage.username.setValue(this.username);
         await this.createAccountPage.hideKeyboardHelper();
-        await this.createAccountPage.email.setValue(`${this.username}@test.lan`);
+        await this.createAccountPage.email.setValue(email);
         await this.createAccountPage.hideKeyboardHelper();
         await this.createAccountPage.nextButton.click();
     }
@@ -143,7 +145,11 @@ class World {
     async confirmSavingPasscode() {
         await this.createAccountPage.confirmInput.setValue('I have saved my account key');
         await this.createAccountPage.hideKeyboardHelper();
-        await this.createAccountPage.finishButton.click();
+        await this.createAccountPage.nextButton.click();
+    }
+
+    async skipContactSync() {
+        await this.createAccountPage.skipButton.click();
     }
 
     async seeWelcomeScreen() {
@@ -170,11 +176,13 @@ class World {
         await this.dismissEmailConfirmationPopup();
     }
 
-    async createNewAccount() {
+    // username is optional
+    async createNewAccount(username) {
         await this.selectCreateAccount();
-        await this.typePersonalInfo();
+        await this.typePersonalInfo(username);
         await this.savePasscode();
         await this.confirmSavingPasscode();
+        await this.skipContactSync();
         await this.seeWelcomeScreen();
         await this.dismissEmailConfirmationPopup();
     }
@@ -195,7 +203,7 @@ class World {
         // Wait for rooms to load, otherwise position will change
         await this.app.pause(5000);
 
-        while (!(await this.chatListPage.roomWithTitleVisible(this.roomName))) { // eslint-disable-line
+        while (!(await this.chatListPage.chatWithTitleVisible(this.roomName))) { // eslint-disable-line
             await this.chatListPage.scrollDownHelper();  // eslint-disable-line
         }
     }
@@ -232,6 +240,13 @@ class World {
 
         const snackbarMessage = await this.contactsPage.snackbar.getText();
         snackbarMessage.should.match(/has been added/);
+    }
+
+    async inviteContactWithEmail(email) {
+        await this.contactsPage.searchContactInput.setValue(email);
+        await this.contactsPage.hideKeyboardHelper();
+        await this.contactsPage.searchContactButton.click();
+        await this.contactsPage.inviteContactButton.click();
     }
 }
 

@@ -3,10 +3,10 @@ const { defineSupportCode } = require('cucumber');
 defineSupportCode(({ When, Then }) => {
     When('I invite someone to join the room', async function () {
         await this.scrollToChat();
-        await this.chatListPage.roomWithTitle(this.roomName).click();
+        await this.chatListPage.chatWithTitle(this.roomName).click();
 
         await this.app.pause(1000); // clicks on the same element twice if no pause
-        await this.chatPage.roomWithTitle(this.roomName).click();
+        await this.chatPage.chatWithTitle(this.roomName).click();
         await this.chatPage.addMembersButton.click();
 
         await this.contactSelectorPage.textInput.setValue(process.env.CHAT_RECIPIENT_USER);
@@ -22,7 +22,7 @@ defineSupportCode(({ When, Then }) => {
 
     Then('they accept the room invite', async function () {
         await this.scrollToChat();
-        await this.chatListPage.roomWithTitle(this.roomName).click();
+        await this.chatListPage.chatWithTitle(this.roomName).click();
 
         await this.roomInvitePage.acceptButton.click();
 
@@ -31,17 +31,17 @@ defineSupportCode(({ When, Then }) => {
 
     Then('they decline the room invite', async function () {
         await this.scrollToChat();
-        await this.chatListPage.roomWithTitle(this.roomName).click();
+        await this.chatListPage.chatWithTitle(this.roomName).click();
 
         await this.roomInvitePage.declineButton.click();
     });
 
     When('I cancel the invite', async function () {
         await this.scrollToChat();
-        await this.chatListPage.roomWithTitle(this.roomName).click();
+        await this.chatListPage.chatWithTitle(this.roomName).click();
 
         await this.app.pause(5000); // android needs a pause
-        await this.chatPage.roomWithTitle(this.roomName).click();
+        await this.chatPage.chatWithTitle(this.roomName).click();
         await this.chatPage.invitedContactMore.click();
         await this.chatPage.removeInvitedButton.click();
 
@@ -54,12 +54,12 @@ defineSupportCode(({ When, Then }) => {
     Then('they do not have any room invites', async function () {
         await this.scrollToChat();
 
-        const roomExists = await this.chatListPage.roomWithTitleExists(this.roomName);
+        const roomExists = await this.chatListPage.chatWithTitleExists(this.roomName);
         roomExists.should.be.false; // eslint-disable-line
     });
 
     Then('they leave the room', async function () {
-        await this.chatPage.roomWithTitle(this.roomName).click();
+        await this.chatPage.chatWithTitle(this.roomName).click();
         await this.app.pause(1000);
         await this.chatPage.leaveRoomButton.click();
         await this.chatPage.confirmLeaveRoomButton.click();

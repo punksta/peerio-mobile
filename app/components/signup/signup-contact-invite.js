@@ -132,7 +132,7 @@ export default class SignupContactInvite extends LoginWizardPage {
                         {tx('title_inviteContacts')}
                     </Text>
                     <View style={skipButtonStyle}>
-                        {buttons.whiteTextButton(tx('button_skip'), () => this.skip())}
+                        {buttons.whiteTextButton(tx('button_skip'), () => this.skip(), null, tx('button_skip'))}
                     </View>
                 </View>
                 <SearchBar

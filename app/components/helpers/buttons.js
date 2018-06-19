@@ -6,7 +6,7 @@ import { tu } from '../utils/translator';
 import testLabel from '../helpers/test-label';
 
 export default {
-    whiteTextButton(text, onPress, disabled) {
+    whiteTextButton(text, onPress, disabled, accessibilityId) {
         const buttonStyle = {
             padding: vars.spacing.medium.mini,
             marginTop: vars.spacing.small.mini2x,
@@ -14,6 +14,7 @@ export default {
         };
         return (
             <TouchableOpacity
+                {...testLabel(accessibilityId)}
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={buttonStyle}>

@@ -217,7 +217,7 @@ export default class ContactAdd extends SafeComponent {
                     mockContact.invited = true;
                     contactStore.invite(email);
                     this.query = '';
-                }, invited)}
+                }, invited, null, 'button_invite')}
             </View >
         );
     }

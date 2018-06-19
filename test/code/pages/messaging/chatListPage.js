@@ -5,15 +5,15 @@ class ChatListPage extends Page {
         return this.getWhenVisible('~buttonCreateNewChat');
     }
 
-    roomWithTitle(selector) {
-        return this.getWhenVisible(`~${selector}`);
+    chatWithTitle(selector) {
+        return this.getWhenPresent(`~${selector}`);
     }
 
-    roomWithTitleVisible(selector) {
+    chatWithTitleVisible(selector) {
         return this.checkIfVisible(`~${selector}`);
     }
 
-    roomWithTitleExists(selector) {
+    chatWithTitleExists(selector) {
         return this.checkIfPresent(`~${selector}`, 25000);
     }
 }

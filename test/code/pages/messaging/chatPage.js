@@ -41,8 +41,16 @@ class ChatPage extends Page {
         return this.app.waitForVisible('~test_recipient-memberList', 5000, true);
     }
 
-    roomWithTitle(selector) {
+    chatWithTitle(selector) {
         return this.getWhenVisible(`~${selector}`);
+    }
+
+    get messageDmPlaceholder() {
+        return this.getWhenVisible('~button_message');
+    }
+
+    get dismissDmPlaceholder() {
+        return this.getWhenVisible('~button_dismiss');
     }
 }
 

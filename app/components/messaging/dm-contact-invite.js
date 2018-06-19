@@ -81,10 +81,10 @@ export default class DmContactInvite extends SafeComponent {
                 <IdentityVerificationNotice />
                 <View style={buttonContainer}>
                     <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'center', paddingRight: vars.spacing.medium.maxi2x }}>
-                        {buttons.blueTextButton(tx('button_dismiss'), this.decline)}
+                        {buttons.blueTextButton(tx('button_dismiss'), this.decline, null, null, 'button_dismiss')}
                     </View>
                     <View style={{ flex: 1, alignItems: 'flex-start', justifyContent: 'center' }}>
-                        {buttons.roundBlueBgButton(tx('button_message'), this.accept)}
+                        {buttons.roundBlueBgButton(tx('button_message'), this.accept, null, 'button_message')}
                     </View>
                 </View>
                 <ProgressOverlay enabled={this.waiting} />

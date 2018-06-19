@@ -28,6 +28,10 @@ class ContactsPage extends Page {
     get searchContactButton() {
         return this.getWhenVisible('~button_add');
     }
+
+    get inviteContactButton() {
+        return this.getWhenVisible('~button_invite');
+    }
 }
 
 module.exports = ContactsPage;

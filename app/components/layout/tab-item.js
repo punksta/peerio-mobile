@@ -83,4 +83,3 @@ TabItem.propTypes = {
     bubble: PropTypes.any,
     highlightList: PropTypes.any
 };
-

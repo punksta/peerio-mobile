@@ -59,4 +59,14 @@ defineSupportCode(({ Then }) => {
         const contactVisible = await this.contactsPage.contactVisible;
         contactVisible.should.be.false; // eslint-disable-line
     });
+
+    Then('I invite someone to join Peerio', async function () {
+        await this.app.pause(2000); // wait for contacts to load
+        await this.homePage.contactsTab.click();
+        await this.contactsPage.addContactButton.click();
+
+        this.username = new Date().getTime();
+        this.email = `${this.username}@test.lan`;
+        await this.inviteContactWithEmail(this.email);
+    });
 });

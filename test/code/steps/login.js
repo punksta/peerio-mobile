@@ -1,4 +1,15 @@
 const { defineSupportCode } = require('cucumber');
+const { waitForEmail } = require('peerio-icebear/test/e2e/code/helpers/maildrop.js');
+const { getUrl } = require('peerio-icebear/test/e2e/code/helpers/https.js');
+
+const emailConfirmUrlRegex = /"(https:\/\/hocuspocus\.peerio\.com\/confirm-address\/.*?)"/;
+const primaryEmailConfirmSubject = 'Welcome to Peerio (Staging)! Confirm your account.';
+
+async function confirmPrimaryEmail(emailAddress) {
+    const email = await waitForEmail(emailAddress, primaryEmailConfirmSubject);
+    const url = emailConfirmUrlRegex.exec(email.body)[1];
+    await getUrl(url);
+}
 
 defineSupportCode(({ Given, When, Then }) => {
     const existingUsers = {
@@ -21,6 +32,10 @@ defineSupportCode(({ Given, When, Then }) => {
         upload_to_chat: {
             name: process.env.UPLOAD_TO_CHAT_USER,
             passphrase: process.env.UPLOAD_TO_CHAT_PASS
+        },
+        placeholder_test: {
+            name: process.env.PLACEHOLDERDM_TEST_USER,
+            passphrase: process.env.PLACEHOLDERDM_TEST_PASS
         }
     };
 
@@ -77,6 +92,16 @@ defineSupportCode(({ Given, When, Then }) => {
             const credentials = existingUsers[string];
             await this.loginExistingAccount(credentials.name, credentials.passphrase);
         }
+    });
+
+    // this.username needs to be set by a previous step definition
+    Then('They sign up', async function () {
+        await this.createNewAccount(this.username);
+    });
+
+    // this.email needs to be set by a previous step definition
+    Then('They confirm their email', async function () {
+        await confirmPrimaryEmail(this.email);
     });
 });
 
