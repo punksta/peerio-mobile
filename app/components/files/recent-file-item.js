@@ -22,6 +22,7 @@ const fileInfoContainerStyle = {
 export default class RecentFileItem extends SafeComponent {
     renderThrow() {
         const { file } = this.props;
+        if (file.deleted) return null;
         const iconRight = icons.dark('more-vert', this.props.onMenu);
         const nameStyle = {
             color: vars.txtDark,
