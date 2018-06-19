@@ -214,8 +214,8 @@ class World {
         await this.chatActionSheetPage.newDmOption.click();
     }
 
-    async searchForRecipient() {
-        await this.contactSelectorPage.textInput.setValue(process.env.CHAT_RECIPIENT_USER);
+    async searchForRecipient(recipientName) {
+        await this.contactSelectorPage.textInput.setValue(recipientName);
         await this.contactSelectorPage.hideKeyboardHelper();
     }
 

@@ -46,7 +46,7 @@ defineSupportCode(({ Then }) => {
     });
 
     Then('I search for someone', async function () {
-        await this.searchForRecipient();
+        await this.searchForRecipient(process.env.CHAT_RECIPIENT_USER);
     });
 
     Then('do not start a chat with them', async function () {

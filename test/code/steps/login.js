@@ -1,3 +1,5 @@
+const { existingUsers } = require('../helpers/userHelper');
+
 const { defineSupportCode } = require('cucumber');
 const { waitForEmail } = require('peerio-icebear/test/e2e/code/helpers/maildrop.js');
 const { getUrl } = require('peerio-icebear/test/e2e/code/helpers/https.js');
@@ -12,33 +14,6 @@ async function confirmPrimaryEmail(emailAddress) {
 }
 
 defineSupportCode(({ Given, When, Then }) => {
-    const existingUsers = {
-        create_dm_test: {
-            name: process.env.CREATE_DM_TEST_USER,
-            passphrase: process.env.CREATE_DM_TEST_PASS
-        },
-        room_test: {
-            name: process.env.CREATE_ROOM_TEST_USER,
-            passphrase: process.env.CREATE_ROOM_TEST_PASS
-        },
-        profile_test: {
-            name: process.env.PROFILE_TEST_USER,
-            passphrase: process.env.PROFILE_TEST_PASS
-        },
-        upload_to_files: {
-            name: process.env.UPLOAD_TO_FILES_USER,
-            passphrase: process.env.UPLOAD_TO_FILES_PASS
-        },
-        upload_to_chat: {
-            name: process.env.UPLOAD_TO_CHAT_USER,
-            passphrase: process.env.UPLOAD_TO_CHAT_PASS
-        },
-        placeholder_test: {
-            name: process.env.PLACEHOLDERDM_TEST_USER,
-            passphrase: process.env.PLACEHOLDERDM_TEST_PASS
-        }
-    };
-
     // Scenario: User signs up successfully
     When('I choose the create account option', function () {
         return this.selectCreateAccount();

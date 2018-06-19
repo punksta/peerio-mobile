@@ -11,7 +11,7 @@ defineSupportCode(({ When, Then }) => {
 
         await this.contactSelectorPage.textInput.setValue(process.env.CHAT_RECIPIENT_USER);
         await this.contactSelectorPage.hideKeyboardHelper();
-        await this.contactSelectorPage.recipientContact.click();
+        await this.contactSelectorPage.recipientContact(process.env.CHAT_RECIPIENT_USER).click();
 
         await this.chatPage.buttonExitChat.click();
     });

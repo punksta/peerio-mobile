@@ -27,7 +27,7 @@ export default class ContactSelectorSectionList extends Component {
             );
         }
         return (
-            <View {...testLabel(params.index.toString())}>
+            <View {...testLabel(params.index.toString())} accessible={false}>
                 <Avatar
                     noBorderBottom
                     starred={isAdded}

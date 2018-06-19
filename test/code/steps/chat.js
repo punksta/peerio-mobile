@@ -1,10 +1,12 @@
+const { existingUsers } = require('../helpers/userHelper');
+
 const { defineSupportCode } = require('cucumber');
 
 defineSupportCode(({ When, Then }) => {
-    When('I start a new DM with someone', async function () {
+    When('I start a DM with {word} user', async function (string) {
         await this.openContactsPickerForDM();
-        await this.searchForRecipient();
-        await this.contactSelectorPage.recipientContact.click();
+        await this.searchForRecipient(existingUsers[string].name);
+        await this.contactSelectorPage.recipientContact(existingUsers[string].name).click();
     });
 
     When('I create a new room', async function () {
@@ -27,6 +29,26 @@ defineSupportCode(({ When, Then }) => {
         await this.chatPage.textInput.setValue(message);
         await this.chatPage.hideKeyboardHelper();
         await this.chatPage.buttonSendMessage.click();
+    });
+
+    Then('I scroll down the chat list', async function () {
+        await this.chatListPage.scrollDownHelper();  // eslint-disable-line
+    });
+
+    Then('I press the top unread message indicator', async function () {
+        await this.chatListPage.topUnreadMessageIndicator.click();
+    });
+
+    Then('I can see the top unread chat', async function () {
+        await this.chatListPage.chatWithTitleIsVisible(process.env.TOPUNREADINDICATOR_TEST_USER);
+    });
+
+    Then('I press the bottom unread message indicator', async function () {
+        await this.chatListPage.bottomUnreadMessageIndicator.click();
+    });
+
+    Then('I can see the bottom unread chat', async function () {
+        await this.chatListPage.chatWithTitleIsVisible(process.env.BOTTOMUNREADINDICATOR_TEST_USER);
     });
 
     Then('They can send a message to the current chat', async function () {

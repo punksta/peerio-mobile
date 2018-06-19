@@ -179,7 +179,7 @@ export default class ActionSheetLayout extends SafeComponent {
             bottom: animatedActionsheetHeight
         };
         return (
-            <TouchableWithoutFeedback onPress={this.handleCancel}>
+            <TouchableWithoutFeedback accessible={false} onPress={this.handleCancel}>
                 <View style={wrapper}>
                     <Animated.View style={container}>
                         {header}

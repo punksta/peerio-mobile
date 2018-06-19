@@ -6,15 +6,23 @@ class ChatListPage extends Page {
     }
 
     chatWithTitle(selector) {
-        return this.getWhenPresent(`~${selector}`);
+        return this.getWhenVisible(`~${selector}`);
     }
 
-    chatWithTitleVisible(selector) {
+    chatWithTitleIsVisible(selector) {
         return this.checkIfVisible(`~${selector}`);
     }
 
     chatWithTitleExists(selector) {
         return this.checkIfPresent(`~${selector}`, 25000);
+    }
+
+    get topUnreadMessageIndicator() {
+        return this.getWhenVisible('~chatlist-unread-indicator-top');
+    }
+
+    get bottomUnreadMessageIndicator() {
+        return this.getWhenVisible('~chatlist-unread-indicator-bottom');
     }
 }
 

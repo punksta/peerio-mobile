@@ -41,7 +41,7 @@ class ChatPage extends Page {
         return this.app.waitForVisible('~test_recipient-memberList', 5000, true);
     }
 
-    chatWithTitle(selector) {
+    chatWithTitleVisible(selector) {
         return this.getWhenVisible(`~${selector}`);
     }
 

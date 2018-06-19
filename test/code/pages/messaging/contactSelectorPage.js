@@ -1,8 +1,8 @@
 const Page = require('../page');
 
 class ContactSelectorPage extends Page {
-    get recipientContact() {
-        return this.getElementInContainer('~foundContacts', `~${process.env.CHAT_RECIPIENT_USER}`);
+    recipientContact(contact) {
+        return this.getElementInContainer('~foundContacts', `~${contact}`);
     }
 
     get textInput() {

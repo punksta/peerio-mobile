@@ -17,8 +17,8 @@ class roomCreationPage extends Page {
         return this.getElementInContainer('~chooseContacts', '~buttonGo');
     }
 
-    get recipientContact() {
-        return this.getElementInContainer('~foundContacts', `~${process.env.CHAT_RECIPIENT_USER}`);
+    recipientContact(contact) {
+        return this.getElementInContainer('~foundContacts', `~${contact}`);
     }
 }
 
