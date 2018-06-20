@@ -74,9 +74,11 @@ export default class FolderInlineContainer extends SafeComponent {
     }
 
     get normalBody() {
+        const { folder } = this;
+        const { convertingToVolume, convertingFromFolder } = folder;
         const optionsIcon = (
             <View style={{ flex: 0 }}>
-                {icons.dark('more-vert', this.onAction)}
+                {icons.dark('more-vert', this.onAction, null, null, null, convertingToVolume || convertingFromFolder)}
             </View>);
         return (
             <View style={[header, { height: vars.inlineFolderContainerHeight }]}>

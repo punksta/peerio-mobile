@@ -68,8 +68,9 @@ const icons = {
         return icons.basic(name, iconStyle, onPress, style, size, true, undefined, disabled);
     },
 
-    dark(name, onPress, style, size, testID) {
-        return icons.basic(name, vars.darkIcon, onPress, style, size, undefined, testID);
+    dark(name, onPress, style, size, testID, disabled) {
+        const iconColor = disabled ? vars.disabledIcon : vars.darkIcon;
+        return icons.basic(name, iconColor, onPress, style, size, undefined, testID, disabled);
     },
 
     gold(name, onPress, style, size) {

@@ -11,7 +11,7 @@ import chatState from '../messaging/chat-state';
 
 export default class FoldersActionSheet {
     static show(folder, canUnshare) {
-        const { hasLegacyFiles, convertingToVolume, isShared, owner } = folder;
+        const { hasLegacyFiles, isShared, owner } = folder;
         const isOwner = !owner || owner === User.current.username;
 
         const header = (
@@ -19,7 +19,7 @@ export default class FoldersActionSheet {
         );
         const folderShareAction = {
             title: 'button_share',
-            disabled: hasLegacyFiles || convertingToVolume,
+            disabled: hasLegacyFiles,
             action: async () => {
                 // TODO add logic for isOwner
                 // TODO: refactor this, this is confusing and bad
@@ -62,7 +62,6 @@ export default class FoldersActionSheet {
 
         actionButtons.push({
             title: 'button_delete',
-            disabled: convertingToVolume,
             isDestructive: true,
             action: async () => {
                 // icebear will call this function to confirm file deletion

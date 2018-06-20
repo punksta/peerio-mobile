@@ -144,7 +144,7 @@ export default class FolderInnerItem extends SafeComponent {
 
     renderThrow() {
         const { folder, onSelect, hideOptionsIcon, onFolderAction, disabled } = this.props;
-        const { isShared } = folder;
+        const { isShared, convertingToVolume, convertingFromFolder } = folder;
         const checked = folder && folder.selected;
         const progressContainer = {
             backgroundColor: vars.fileUploadProgressColor,
@@ -169,7 +169,7 @@ export default class FolderInnerItem extends SafeComponent {
         };
         const optionsIcon = hideOptionsIcon || fileState.isFileSelectionMode ? null : (
             <View style={{ flex: 0 }}>
-                {icons.dark('more-vert', onFolderAction)}
+                {icons.dark('more-vert', onFolderAction, null, null, null, convertingToVolume || convertingFromFolder)}
             </View>);
         return (
             <View
