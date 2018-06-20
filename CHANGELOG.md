@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.302.0"></a>
+# [3.302.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.300.0...v3.302.0) (2018-06-20)
+
+
+### Bug Fixes
+
+* disable share from peerio when filestore is empty [branch ch8198] ([#244](https://github.com/PeerioTechnologies/peerio-mobile/issues/244)) ([b08c9ed](https://github.com/PeerioTechnologies/peerio-mobile/commit/b08c9ed))
+* icebear version ([cdfba69](https://github.com/PeerioTechnologies/peerio-mobile/commit/cdfba69))
+* recent files api ([402ad0d](https://github.com/PeerioTechnologies/peerio-mobile/commit/402ad0d))
+
+
+### Features
+
+* e2e test - chat list unread awareness [branch ch6724] ([#233](https://github.com/PeerioTechnologies/peerio-mobile/issues/233)) ([7b75090](https://github.com/PeerioTechnologies/peerio-mobile/commit/7b75090))
+* remove conditional server override [ch9061] ([9a08f1e](https://github.com/PeerioTechnologies/peerio-mobile/commit/9a08f1e))
+
+
+
 <a name="3.301.0"></a>
 # [3.301.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.300.0...v3.301.0) (2018-06-20)
 
