@@ -55,6 +55,7 @@ export default class FileUploadActionSheet {
         if (inline) {
             actionButtons.push({
                 title: tx('title_shareFromFiles'),
+                disabled: fileState.store.isEmpty,
                 async action() {
                     chatState.shareFilesAndFolders(await fileState.selectFilesAndFolders());
                 }
