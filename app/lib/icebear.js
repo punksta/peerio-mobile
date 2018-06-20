@@ -25,7 +25,9 @@ icebear.startSocket = async function() {
     if (serverOverride) {
         console.log('icebear.js: Overriding server name');
         config.socketServerUrl = serverOverride;
-    } else {
+    }
+    /* SERVER OVERRIDE FOR THE CASES OF PROD SERVER RELEASE BEING AFTER APPLE REVIEW
+    else {
         // we check current prod server and if it is not yet released, fallback to secondary
         try {
             const result = await fetch(config.socketServerUrl.replace('wss:', 'https:'));
@@ -41,7 +43,7 @@ icebear.startSocket = async function() {
         } catch (e) {
             console.error(e);
         }
-    }
+    } */
     console.log(`icebear.js: Starting connection to ${config.socketServerUrl}`);
     socket.start();
 };
