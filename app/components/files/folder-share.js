@@ -53,6 +53,7 @@ export default class FolderShare extends Component {
                 inputPlaceholder="title_searchByUsernameOrEmail"
                 multiselect
                 footer={footer}
+                hideInvites
             />);
     }
 

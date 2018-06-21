@@ -157,7 +157,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
         if (this.foundContact) {
             result.unshift({ data: [this.foundContact], key: null });
         }
-        if (!this.findUserText) {
+        if (!this.findUserText && !this.props.hideInvites) {
             result.push({ data: contactState.store.invitedContacts.slice(), key: 'title_allYourInvited' });
         }
         return result;
@@ -252,5 +252,6 @@ ContactSelectorUniversal.propTypes = {
     onExit: PropTypes.func,
     multiselect: PropTypes.any,
     footer: PropTypes.any,
-    hideHeader: PropTypes.any
+    hideHeader: PropTypes.any,
+    hideInvites: PropTypes.bool
 };

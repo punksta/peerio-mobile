@@ -30,7 +30,8 @@ export default class ComposeMessage extends Component {
                 action={contacts => chatState.startChat(contacts)}
                 inputPlaceholder="title_TryUsernameOrEmail"
                 title="title_newDirectMessage"
-                limit={chatState.LIMIT_PEOPLE_DM} />
+                limit={chatState.LIMIT_PEOPLE_DM}
+                hideInvites />
         );
     }
 }

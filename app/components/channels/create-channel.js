@@ -132,7 +132,8 @@ export default class CreateChannel extends Component {
                     action={this.createChannel}
                     ref={this.refContactSelector}
                     leftIconComponent={<Text style={titleStyle}>{tx('title_with')}</Text>}
-                    inputPlaceholder="title_roomParticipants" />
+                    inputPlaceholder="title_roomParticipants"
+                    hideInvites />
             </View>
         ) : <View style={card} />;
     }
