@@ -21,10 +21,7 @@ export default class FoldersActionSheet {
             title: 'button_share',
             disabled: hasLegacyFiles,
             action: async () => {
-                // TODO add logic for isOwner
-                // TODO: refactor this, this is confusing and bad
-                fileState.currentFile = folder;
-                const contacts = await routerModal.shareFolderTo();
+                const contacts = await routerModal.shareFolderTo({ folder });
                 if (!contacts) return;
                 await volumeStore.shareFolder(folder, contacts);
             }
@@ -33,9 +30,8 @@ export default class FoldersActionSheet {
             {
                 title: 'button_move',
                 disabled: isShared,
-                action: () => {
-                    fileState.currentFile = folder;
-                    routes.modal.moveFileTo();
+                action: async () => {
+                    await routes.modal.moveFileTo({ fsObject: folder });
                 }
             },
             {

@@ -111,15 +111,17 @@ export default class Files extends SafeComponent {
     };
 
     onEndReached = () => {
-        console.debug('files.js: on end reached');
-        this.maxLoadedIndex += PAGE_SIZE;
+        if (this.maxLoadedIndex <= this.data.length) this.maxLoadedIndex += PAGE_SIZE;
     };
 
     flatListRef = (ref) => { uiState.currentScrollView = ref; };
 
+    keyExtractor = fsObject => fsObject ? (fsObject.fileId || fsObject.id) : null;
+
     list() {
         return (
             <FlatList
+                keyExtractor={this.keyExtractor}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
                 data={this.dataSource}

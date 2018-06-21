@@ -1,5 +1,5 @@
 import React from 'react';
-import { observable } from 'mobx';
+import { observable, computed } from 'mobx';
 import Router from './router';
 import ComposeMessage from '../messaging/compose-message';
 import CreateChannel from '../channels/create-channel';
@@ -20,6 +20,7 @@ import { uiState } from '../states';
 
 class RouterModal extends Router {
     @observable animating = false;
+    modalProps = null;
     resolver = null;
 
     constructor() {
@@ -42,10 +43,11 @@ class RouterModal extends Router {
     add(route, component, isWhite) {
         const r = super.add(route, component);
         r.isWhite = isWhite;
-        this[route] = async () => {
+        this[route] = async (props) => {
             await uiState.hideAll();
             popupState.discardAllPopups();
             this.flushResolver();
+            this.modalProps = props;
             r.transition();
             return new Promise(resolve => {
                 this.resolver = resolve;
@@ -67,14 +69,15 @@ class RouterModal extends Router {
         await uiState.hideAll();
         this.flushResolver(value);
         this.route = null;
+        this.modalProps = null;
     }
 
     get isBlackStatusBar() {
         return !this.animating && this.current && !this.current.isWhite;
     }
 
-    get modal() {
-        return this.current ? React.createElement(this.current.component) : null;
+    @computed get modal() {
+        return this.current ? React.createElement(this.current.component, this.modalProps) : null;
     }
 }
 

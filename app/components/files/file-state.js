@@ -9,6 +9,7 @@ import { popupInputWithPreview, popupYesCancel, popupOkCancel } from '../shared/
 import { promiseWhen } from '../helpers/sugar';
 
 class FileState extends RoutedState {
+    // the current selected file for FileDetailView
     @observable currentFile = null;
     @observable previewFile = null;
     @observable isFileSelectionMode = null;
@@ -112,7 +113,6 @@ class FileState extends RoutedState {
 
     @action selectFilesAndFolders() {
         this.resetSelection();
-        // this.currentFile = null;
         fileStore.folderStore.currentFolder = this.store.folderStore.root;
         this.isFileSelectionMode = true;
         return new Promise((resolve, reject) => {

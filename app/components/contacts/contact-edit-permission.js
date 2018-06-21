@@ -8,7 +8,6 @@ import { tu } from '../utils/translator';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import Layout3 from '../layout/layout3';
-import fileState from '../files/file-state';
 import ContactEditPermissionItem from './contact-edit-permission-item';
 import ModalHeader from '../shared/modal-header';
 
@@ -17,16 +16,10 @@ const PAGE_SIZE = 2;
 
 @observer
 export default class ContactEditPermission extends SafeComponent {
-    get data() {
-        // currentFile is a folder
-        return fileState.currentFile && fileState.currentFile.isShared ?
-            fileState.currentFile.otherParticipants : [];
-    }
-
     @action.bound unshareFrom(contact) {
         // HINT: removing on layout animated listview causes side effects
         // we just collapse it inline
-        fileState.currentFile.removeParticipant(contact);
+        this.props.folder.removeParticipant(contact);
     }
 
     componentDidMount() {
@@ -44,7 +37,8 @@ export default class ContactEditPermission extends SafeComponent {
 
     get unshareButton() {
         const extraWidth = 20;
-        if (fileState.currentFile.isFolder && fileState.currentFile.isShared) {
+        const { folder: { isFolder, isShared } } = this.props;
+        if (isFolder && isShared) {
             return icons.text(tu('button_unshare'), this.props.action, null, null, extraWidth);
         }
         return icons.disabledText(tu('button_unshare'), null, extraWidth);
@@ -66,12 +60,15 @@ export default class ContactEditPermission extends SafeComponent {
             onUnshare={this.unshareFrom} />);
     };
 
+    keyExtractor = contact => contact.username;
+
     body() {
         return (
             <FlatList
+                keyExtractor={this.keyExtractor}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
-                data={this.data}
+                data={this.props.folder.otherParticipants || []}
                 renderItem={this.item} />);
     }
 

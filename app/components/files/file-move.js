@@ -4,7 +4,7 @@ import FolderSelect from './folder-select';
 export default class FileMove extends Component {
     render() {
         return (
-            <FolderSelect />
+            <FolderSelect {...this.props} />
         );
     }
 }

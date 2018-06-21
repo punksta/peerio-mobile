@@ -46,10 +46,7 @@ export default class FileActionSheet {
         actionButtons.push({
             title: tx('button_share'),
             disabled: isLegacy,
-            action: () => {
-                fileState.currentFile = file;
-                routes.modal.shareFileTo();
-            }
+            action: () => routes.modal.shareFileTo({ file })
         });
 
         // Open / Download
@@ -85,9 +82,8 @@ export default class FileActionSheet {
         actionButtons.push({
             title: tx('button_move'),
             disabled: isLegacy,
-            action: () => {
-                fileState.currentFile = file;
-                routes.modal.moveFileTo();
+            action: async () => {
+                await routes.modal.moveFileTo({ fsObject: file });
             }
         });
 

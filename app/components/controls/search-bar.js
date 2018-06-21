@@ -65,6 +65,5 @@ SearchBar.propTypes = {
     onSubmit: PropTypes.any,
     leftIcon: PropTypes.any,
     rightIcon: PropTypes.any,
-    ref: PropTypes.any,
     testId: PropTypes.any
 };

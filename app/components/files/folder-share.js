@@ -6,7 +6,6 @@ import ContactSelectorUniversal from '../contacts/contact-selector-universal';
 import ContactEditPermission from '../contacts/contact-edit-permission';
 import SharedFolderFooter from './shared-folder-footer';
 import { vars } from '../../styles/styles';
-import { fileState } from '../states';
 import routes from '../routes/routes';
 
 @observer
@@ -37,11 +36,12 @@ export default class FolderShare extends Component {
     }
 
     get renderContactSelector() {
-        const footer = fileState.currentFile && fileState.currentFile.isShared ? (
+        const { folder } = this.props;
+        const footer = folder && folder.isShared ? (
             <SharedFolderFooter
                 title="title_viewSharedWith"
                 action={this.togglePage}
-                volume={fileState.currentFile}
+                volume={folder}
                 showAvatars
             />
         ) : null;
@@ -62,6 +62,7 @@ export default class FolderShare extends Component {
             onExit={this.exit}
             action={this.unshareAction}
             title="title_sharedWith"
+            folder={this.props.folder}
             footer={<SharedFolderFooter
                 title="button_shareWithOthers"
                 action={this.togglePage}

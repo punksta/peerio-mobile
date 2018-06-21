@@ -36,18 +36,19 @@ export default class FolderSelect extends SafeComponent {
     item = ({ item }) => {
         const folder = item;
         const selectFolder = async () => {
-            const file = fileState.currentFile;
-            if (!file) return;
+            // filesystem object, may be file or folder
+            const { fsObject } = this.props;
+            if (!fsObject) return;
             if (folder.isShared) {
-                if (!preferenceStore.prefs.showMoveSharedFolderPopup) folder.attach(file);
+                if (!preferenceStore.prefs.showMoveSharedFolderPopup) folder.attach(fsObject);
                 else {
                     const result = await popupMoveToSharedFolder();
                     if (result) {
                         preferenceStore.prefs.showMoveSharedFolderPopup = !result.checked;
-                        folder.attach(file);
+                        folder.attach(fsObject);
                     }
                 }
-            } else folder.attach(file);
+            } else folder.attach(fsObject);
             routes.modal.discard();
         };
         const changeFolder = () => {
