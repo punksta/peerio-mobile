@@ -9,6 +9,7 @@ import { vars } from '../../../styles/styles';
 import routes from '../../routes/routes';
 import icons from '../../helpers/icons';
 import chatState from '../../messaging/chat-state';
+import { uiState } from '../../states';
 import { contactStore } from '../../../lib/icebear';
 import buttons from '../../helpers/buttons';
 
@@ -76,6 +77,14 @@ export default class MedcryptorAdminScreen extends SafeComponent {
     constructor(props) {
         super(props);
         this.helpAccount = contactStore.getContact(this.helpAccountUsername);
+    }
+
+    componentWillMount() {
+        uiState.hideTabs = true;
+    }
+
+    componentWillUnmount() {
+        uiState.hideTabs = false;
     }
 
     helpAccountUsername = 'team_medcryptor';

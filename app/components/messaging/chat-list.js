@@ -5,7 +5,6 @@ import sectionListGetItemLayout from 'react-native-section-list-get-item-layout'
 import { observable, reaction, action, computed } from 'mobx';
 import { chatInviteStore, chatStore } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
-import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import ChatListItem from './chat-list-item';
 import ChannelListItem from './channel-list-item';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -19,6 +18,7 @@ import uiState from '../layout/ui-state';
 // import { scrollHelper } from '../helpers/test-helper';
 import UnreadMessageIndicator from './unread-message-indicator';
 import { vars } from '../../styles/styles';
+import whiteLabelComponents from '../../components/whitelabel/white-label-components';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -265,7 +265,7 @@ export default class ChatList extends SafeComponent {
 
     renderThrow() {
         const body = ((chatStore.chats.length || chatInviteStore.received.length) && chatState.store.loaded) ?
-            this.listView() : <ChatZeroStatePlaceholder />;
+            this.listView() : <whiteLabelComponents.ChatZeroStatePlaceholder />;
 
         return (
             <View style={{ flexGrow: 1, flex: 1 }}>

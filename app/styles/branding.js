@@ -28,7 +28,8 @@ const brandingDefines = {
         lightGrayBg: '#f0f0f0',
         darkBlueBackground05: '#F2F2F5',
         snackbarBg: '#040B40',
-        channelInfoBg: '#F2F2F5'
+        channelInfoBg: '#F2F2F5',
+        separatorColor: '#f0f0f0'
     },
     expandoo: {
         bg: '#009dfd',
@@ -61,7 +62,8 @@ const brandingDefines = {
         lightGrayBg: '#FFFFFF',
         darkBlueBackground05: '#F5F5F5',
         usernameHighlight: '#FFB300',
-        channelInfoBg: '#FFFFFF'
+        channelInfoBg: '#FFFFFF',
+        separatorColor: '#f0f0f0'
     }
 };
 

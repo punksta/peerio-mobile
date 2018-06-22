@@ -6,7 +6,7 @@ import { observable, action, when, reaction, computed } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
-import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
+import whiteLabelComponents from '../../components/whitelabel/white-label-components';
 import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
 import ChatUnreadMessageIndicator from './chat-unread-message-indicator';
@@ -405,7 +405,7 @@ export default class Chat extends SafeComponent {
                 style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
                 {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
                 <View style={{ flex: 1, flexGrow: 1 }}>
-                    {this.data ? this.listView() : !chatState.loading && <ChatZeroStatePlaceholder />}
+                    {this.data ? this.listView() : !chatState.loading && <whiteLabelComponents.ChatZeroStatePlaceholder />}
                 </View>
                 <ProgressOverlay enabled={/* chatState.loading || */ !this.initialScrollDone} />
             </View>

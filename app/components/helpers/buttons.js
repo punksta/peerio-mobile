@@ -85,7 +85,7 @@ export default {
         );
     },
 
-    roundBlueBgButton(text, onPress, disabled, accessibilityId) {
+    roundBlueBgButton(text, onPress, disabled, accessibilityId, style) {
         const touchableStyle = {
             height: vars.button.touchableHeight,
             alignItems: 'center',
@@ -107,7 +107,7 @@ export default {
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={touchableStyle}>
-                <View style={buttonStyle}>
+                <View style={[buttonStyle, style]}>
                     <Text bold style={{ textAlign: 'center', color: vars.white }}>
                         {tu(text)}
                     </Text>

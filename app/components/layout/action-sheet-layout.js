@@ -48,7 +48,7 @@ const cancelButtonWrapper = {
 const buttonTextStyle = {
     fontSize: vars.font.size.huge,
     color: vars.actionSheetFontColor,
-    paddingHorizontal: vars.spacing.huge.mini2x
+    paddingHorizontal: vars.spacing.small.maxi2x
 };
 
 const boldButtonTextStyle = [buttonTextStyle, {

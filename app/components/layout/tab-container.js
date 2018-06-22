@@ -29,6 +29,7 @@ export default class TabContainer extends SafeComponent {
         if (routerMain.currentIndex !== 0) return null;
         if (fileState.isFileSelectionMode) return null;
         if (invitationState.currentInvitation) return null;
+        if (uiState.hideTabs) return null;
         return (
             <View style={bottomRowStyle}>
                 <TabItem

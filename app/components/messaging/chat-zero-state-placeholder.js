@@ -50,12 +50,18 @@ const contactDescriptionStyle = {
 
 @observer
 export default class ChatZeroStatePlaceholder extends SafeComponent {
+    get headerText() {
+        return (
+            <Text style={chatHeaderStyle} {...testLabel('title_headerZeroState')}>
+                {tx('title_headerZeroState')}
+            </Text>
+        );
+    }
+
     title() {
         return (
             <View>
-                <Text style={chatHeaderStyle} {...testLabel('title_headerZeroState')}>
-                    {tx('title_headerZeroState')}
-                </Text>
+                {this.headerText}
                 <Image
                     source={redArrowSrc}
                     style={{
@@ -85,13 +91,19 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
             </View>);
     }
 
+    get findContactsButton() {
+        return (
+            buttons.roundBlueBgButton('title_findContactsZeroState', () => routes.main.contactAdd())
+        );
+    }
+
     contactUI() {
         return (
             <View style={{ alignItems: 'center' }}>
                 <Text style={contactDescriptionStyle}>
                     {tx('title_seeWhoYouAlreadyKnow')}
                 </Text>
-                {buttons.roundBlueBgButton('title_findContactsZeroState', () => routes.main.contactAdd())}
+                {this.findContactsButton}
             </View>);
     }
 

@@ -29,6 +29,7 @@ class UIState extends RoutedState {
     @observable customOverlayComponent = null;
     @observable trustDevice2FA = false;
     @observable declinedChannelId = null;
+    @observable hideTabs = false;
     @observable languages = {
         en: `English`
         // fr: `French`,

@@ -37,7 +37,7 @@ export default class InputMainContainer extends SafeComponent {
         };
         const s = {
             backgroundColor: vars.white,
-            borderTopColor: vars.lightGrayBg,
+            borderTopColor: vars.separatorColor,
             borderTopWidth: 1
         };
         return (

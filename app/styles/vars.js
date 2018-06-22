@@ -29,7 +29,7 @@ const { darkBlue, darkTeal, peerioBlue, peerioPurple, confirmColor,
     peerioTeal, yellow, red, badgeText, filesBg, usernameHighlight,
     chatItemPressedBackground, invitedBadgeColor, invitedBadgeText,
     peerioBlueBackground15, darkBlueBackground15, snackbarBg, lightGrayBg,
-    darkBlueBackground05, channelInfoBg } = branding;
+    darkBlueBackground05, channelInfoBg, separatorColor } = branding;
 const statusBarHeight = iPhoneStatusBar;
 const layoutPaddingTop = iPhoneStatusBar;
 
@@ -61,6 +61,7 @@ const vars = {
     confirmColor,
     snackbarBg,
     channelInfoBg,
+    separatorColor,
     chatFadingOutBg: 'rgb(237,237,238)',
     textWhite100: '#FFF',
     textWhite70: 'rgba(255, 255, 255, .7)',
