@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { SectionList, View } from 'react-native';
-import { reaction, action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import chatState from '../messaging/chat-state';
 import ChatInfoSectionHeader from '../messaging/chat-info-section-header';
@@ -14,32 +13,11 @@ const INITIAL_LIST_SIZE = 25;
 
 @observer
 export default class RecentFilesList extends SafeComponent {
-    dataSource = [];
-
-    get data() { return chatState.currentChat.recentFiles; }
-
-    get hasData() { return this.dataSource[0] && this.dataSource[0].data.length; }
-
-    @action.bound refreshData() {
-        const newData = this.data;
-        this.dataSource = [{ data: newData.slice(), key: tx('title_recentFiles') }];
-        this.forceUpdate();
+    get sections() {
+        return [{ data: chatState.currentChat.recentFiles, key: tx('title_recentFiles') }];
     }
 
-    componentWillUnmount() {
-        this.reaction && this.reaction();
-        this.reaction = null;
-    }
-
-    componentDidMount() {
-        this.reaction = reaction(() => [
-            this.data,
-            this.data.length
-        ], () => {
-            this.dataSource = [{ data: this.data.slice(), key: tx('title_recentFiles') }];
-            this.forceUpdate();
-        }, true);
-    }
+    get hasData() { return chatState.currentChat.recentFiles.length; }
 
     item = ({ item }) => {
         const collapsible = chatState.currentChat.isChannel;
@@ -73,7 +51,7 @@ export default class RecentFilesList extends SafeComponent {
             <View>
                 <SectionList
                     initialNumToRender={INITIAL_LIST_SIZE}
-                    sections={this.dataSource}
+                    sections={this.sections}
                     keyExtractor={file => file.fileId}
                     renderItem={this.item}
                     renderSectionHeader={this.header}

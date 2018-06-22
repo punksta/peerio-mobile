@@ -11,7 +11,7 @@ import MemberListItem from './member-list-item';
 
 @observer
 export default class MemberList extends SafeComponent {
-    get dataSource() {
+    get sections() {
         return [
             { data: this.channelMembers, key: tx('title_Members') },
             { data: this.channelInvites, key: tx('title_invited') }
@@ -64,7 +64,6 @@ export default class MemberList extends SafeComponent {
         } else {
             await chatState.chatInviteStore.revokeInvite(this.data.id, contact.username);
         }
-        this.forceUpdate();
     };
 
     participant = ({ item, section }) => {
@@ -81,7 +80,7 @@ export default class MemberList extends SafeComponent {
         if (!this.hasData) return null;
         return (
             <SectionList
-                sections={this.dataSource}
+                sections={this.sections}
                 keyExtractor={contact => contact.username}
                 renderItem={this.participant}
                 renderSectionHeader={this.headers}

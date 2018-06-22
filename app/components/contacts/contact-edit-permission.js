@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import { reaction, action } from 'mobx';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import { tu } from '../utils/translator';
@@ -22,21 +22,9 @@ export default class ContactEditPermission extends SafeComponent {
         this.props.folder.removeParticipant(contact);
     }
 
-    componentDidMount() {
-        this.reaction = reaction(() => [
-            this.data
-        ], () => {
-            this.forceUpdate();
-        }, true);
-    }
-
-    componentWillUnmount() {
-        this.reaction && this.reaction();
-        this.reaction = null;
-    }
-
     get unshareButton() {
         const extraWidth = 20;
+        // TODO: can we ever get not isFolder here, @karim?
         const { folder: { isFolder, isShared } } = this.props;
         if (isFolder && isShared) {
             return icons.text(tu('button_unshare'), this.props.action, null, null, extraWidth);
