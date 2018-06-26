@@ -167,6 +167,7 @@ const vars = {
     layoutPaddingTop,
     headerHeight: 56,
     headerSpacing: 56 + layoutPaddingTop,
+    headerIconMargin: 16,
     iconSize: 24,
     iconSizeSmall: 16,
     iconSizeMedium: 32,

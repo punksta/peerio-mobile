@@ -17,14 +17,13 @@ export default class HeaderIconBase extends SafeComponent {
                 <TouchableOpacity
                     onPress={this.disabled ? null : this.action}
                     activeOpacity={this.disabled ? 0.5 : 1}
-                    {...testLabel(this.props.testID)}
-                >
+                    {...testLabel(this.props.testID)} >
                     <View style={[{
                         alignItems: 'center',
                         backgroundColor: 'transparent',
                         flexDirection: 'row',
                         justifyContent: 'center',
-                        margin: vars.spacing.medium.mini2x
+                        margin: vars.headerIconMargin
                     }, this.innerStyle]}>
                         {icons.plainWhite(this.icon)}
                     </View>

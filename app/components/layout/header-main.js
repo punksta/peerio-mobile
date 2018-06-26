@@ -18,26 +18,29 @@ export default class HeaderMain extends SafeComponent {
         if (routerMain.isBackVisible) {
             leftIcon = <BackIcon testID="buttonChatBack" />;
         }
+        const { titleAction } = routerMain;
+        const extraMargin = titleAction ? 2 : 0;
+        const marginHorizontal = rightIcon || leftIcon ?
+            vars.iconSize + (2 * vars.headerIconMargin) + extraMargin : 0;
         const textStyle = {
             color: vars.white,
             fontSize: vars.font.size.huge,
             textAlign: 'center',
             alignItems: 'center',
             justifyContent: 'center',
-            borderColor: 'blue',
-            borderWidth: 0,
-            backgroundColor: 'transparent'
+            backgroundColor: 'transparent',
+            flexShrink: 1
         };
         const actionContainerStyle = {
             flexGrow: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            marginHorizontal
         };
         const outerStyle = {
             backgroundColor: vars.darkBlue
         };
-        const { titleAction } = routerMain;
         const title = this.props.title || routerMain.title;
         const titleComponent = (
             <TouchableOpacity
