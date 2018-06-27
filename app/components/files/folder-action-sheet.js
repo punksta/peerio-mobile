@@ -5,7 +5,6 @@ import { popupInput, popupFolderDelete } from '../shared/popups';
 import { fileHelpers, volumeStore, config, User } from '../../lib/icebear';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import ActionSheetLayout from '../layout/action-sheet-layout';
-import routerModal from '../routes/router-modal';
 import routes from '../routes/routes';
 import chatState from '../messaging/chat-state';
 
@@ -21,7 +20,7 @@ export default class FoldersActionSheet {
             title: 'button_share',
             disabled: hasLegacyFiles,
             action: async () => {
-                const contacts = await routerModal.shareFolderTo({ folder });
+                const contacts = await routes.modal.shareFolderTo({ folder });
                 if (!contacts) return;
                 await volumeStore.shareFolder(folder, contacts);
             }
