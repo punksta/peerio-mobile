@@ -104,6 +104,8 @@ const vars = {
     chatUnreadIndicatorHeight: 32,
     contactInviteSuggestionBg: '#D2EDF1',
     contactInviteSuggestionHeight: 64,
+    popupPadding: scaleDim(20),
+    popupHorizontalMargin: scaleDim(16),
 
     circle: 10,
     circleSize: 4,

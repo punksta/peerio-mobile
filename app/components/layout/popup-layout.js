@@ -69,7 +69,7 @@ export default class PopupLayout extends SafeComponent {
             overflow: 'hidden',
             elevation: 10,
             margin,
-            marginHorizontal: vars.spacing.medium.mini2x,
+            marginHorizontal: vars.popupHorizontalMargin,
             marginBottom: (Platform.OS === 'android' ? 0 : uiState.keyboardHeight) + margin
         };
 
@@ -114,7 +114,7 @@ export default class PopupLayout extends SafeComponent {
             <ScrollView scrollEnabled={false} style={popupNonAnimatedStyle} contentContainerStyle={contentContainerStyle}>
                 <View style={wrapper}>
                     <View style={container}>
-                        <View style={{ padding: vars.spacing.medium.midi2x, flexGrow: 1, flexShrink: 1 }}>
+                        <View style={{ padding: popup.noPadding ? 0 : vars.popupPadding, flexGrow: 1, flexShrink: 1 }}>
                             {popup.title ? <Text bold style={title} >{popup.title}</Text> : null}
                             {popup.subTitle ? <Text style={subTitle} >{popup.subTitle}</Text> : null}
                             {popup.contents}

@@ -10,7 +10,7 @@ import contactState from '../contacts/contact-state';
 import signupState from '../signup/signup-state';
 import LoginWizardPage from '../login/login-wizard-page';
 import ContactImportItem from '../contacts/contact-import-item';
-import { popupOkCancel } from '../shared/popups';
+import { popupConfirmEmailInvites } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
 import SearchBar from '../controls/search-bar';
 import icons from '../helpers/icons';
@@ -23,6 +23,16 @@ const _ = require('lodash');
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
 const INITIAL_LIST_SIZE = 10;
+
+const title = {
+    fontSize: vars.font.size.big,
+    marginBottom: vars.spacing.small.midi2x,
+    color: vars.txtDark
+};
+
+const subTitle = {
+    color: vars.subtleText
+};
 
 @observer
 export default class SignupContactInvite extends LoginWizardPage {
@@ -210,10 +220,17 @@ export default class SignupContactInvite extends LoginWizardPage {
     }
 
     @action.bound async inviteSelectedContacts() {
-        const popupCopy = this.selectedContacts.length > 1 ?
-            `Email invites will be sent to ${this.selectedContacts.length} people.` :
-            `Email invite will be sent to ${this.selectedContacts.length} person.`;
-        const result = await popupOkCancel('Confirm email invites', popupCopy);
+        const numSelectedContacts = this.selectedContacts.length;
+        const popupCopy = numSelectedContacts > 1 ?
+            tx('title_confirmEmailInvite', { numSelectedContacts }) :
+            tx('title_confirmEmailInvite2');
+        const popupContents = (
+            <View style={{ padding: vars.popupPadding, paddingTop: vars.spacing.large.maxi }}>
+                <Text bold style={title}>{tx('title_confirmEmailInvitesHeading')}</Text>
+                <Text style={subTitle}>{popupCopy}</Text>
+            </View>);
+
+        const result = await popupConfirmEmailInvites(popupContents);
 
         if (result) {
             contactState.batchInvite(this.selectedEmails);
