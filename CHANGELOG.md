@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.305.0"></a>
+# [3.305.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.304.0...v3.305.0) (2018-06-28)
+
+
+### Bug Fixes
+
+* transition to chat list before deleting or leaving channel ([5e024d4](https://github.com/PeerioTechnologies/peerio-mobile/commit/5e024d4))
+
+
+
+<a name="3.304.0"></a>
+# [3.304.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.300.0...v3.304.0) (2018-06-27)
+
+
+### Bug Fixes
+
+* **medcryptor:** styling issues ([#237](https://github.com/PeerioTechnologies/peerio-mobile/issues/237)) ([e551b3d](https://github.com/PeerioTechnologies/peerio-mobile/commit/e551b3d))
+* added ellipsis to all long header names [branch ch9259] ([#250](https://github.com/PeerioTechnologies/peerio-mobile/issues/250)) ([f9f4a2f](https://github.com/PeerioTechnologies/peerio-mobile/commit/f9f4a2f))
+* circular deps ([#252](https://github.com/PeerioTechnologies/peerio-mobile/issues/252)) ([b5fb2cf](https://github.com/PeerioTechnologies/peerio-mobile/commit/b5fb2cf))
+* disable share from peerio when filestore is empty [branch ch8198] ([#244](https://github.com/PeerioTechnologies/peerio-mobile/issues/244)) ([b08c9ed](https://github.com/PeerioTechnologies/peerio-mobile/commit/b08c9ed))
+* hide deleted recent files [branch ch4353] ([#246](https://github.com/PeerioTechnologies/peerio-mobile/issues/246)) ([9dbbd8f](https://github.com/PeerioTechnologies/peerio-mobile/commit/9dbbd8f))
+* recent files api ([402ad0d](https://github.com/PeerioTechnologies/peerio-mobile/commit/402ad0d))
+* restore fileState.currentFile after file/folder move action is p… ([#245](https://github.com/PeerioTechnologies/peerio-mobile/issues/245)) ([3bd9bf0](https://github.com/PeerioTechnologies/peerio-mobile/commit/3bd9bf0))
+
+
+### Features
+
+* add performance polyfill ([85498b7](https://github.com/PeerioTechnologies/peerio-mobile/commit/85498b7))
+* e2e test - chat list unread awareness [branch ch6724] ([#233](https://github.com/PeerioTechnologies/peerio-mobile/issues/233)) ([7b75090](https://github.com/PeerioTechnologies/peerio-mobile/commit/7b75090))
+* remove conditional server override [ch9061] ([9a08f1e](https://github.com/PeerioTechnologies/peerio-mobile/commit/9a08f1e))
+
+
+
 <a name="3.303.0"></a>
 # [3.303.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.302.0...v3.303.0) (2018-06-20)
 
