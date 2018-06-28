@@ -7,7 +7,7 @@ Feature: Edit Profile Settings
     Examples:
     | new or existing |
     | new             |
-    | profile_test    |
+    | profiletest     |
 
     Scenario Outline: User changes last name
         When I log in as <new or existing> user
@@ -16,7 +16,7 @@ Feature: Edit Profile Settings
     Examples:
     | new or existing |
     | new             |
-    | profile_test    |
+    | profiletest     |
 
     Scenario Outline: User uploads a new avatar
         When I log in as <new or existing> user
@@ -25,15 +25,12 @@ Feature: Edit Profile Settings
     Examples:
     | new or existing |
     | new             |
-    | profile_test    |
+    | profiletest     |
 
-    Scenario Outline: User changes existing avatar
-        When I log in as <new or existing> user
+    Scenario: User changes existing avatar
+        When I log in as profiletest user
         And  I go to public profile settings
         Then I change my existing avatar
-    Examples:
-    | new or existing |
-    | profile_test    |
 
     Scenario: View account key
         Given I log in as new user

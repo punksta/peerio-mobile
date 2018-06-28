@@ -7,7 +7,7 @@ const existingUsers = {
         name: process.env.CREATE_ROOM_TEST_USER,
         passphrase: process.env.CREATE_ROOM_TEST_PASS
     },
-    profile_test: {
+    profiletest: {
         name: process.env.PROFILE_TEST_USER,
         passphrase: process.env.PROFILE_TEST_PASS
     },
