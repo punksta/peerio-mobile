@@ -46,15 +46,17 @@ export default class ChannelInfo extends SafeComponent {
 
     leaveChannel = async () => {
         if (await popupCancelConfirm(tx('button_leaveChannel'), tx('title_confirmChannelLeave'))) {
+            chatState.routerMain.chats();
+            await chatState.routerModal.discard();
             await this.chat.leave();
-            chatState.routerModal.discard();
         }
     };
 
     deleteChannel = async () => {
         if (await popupCancelConfirm(tx('button_deleteChannel'), tx('title_confirmChannelDelete'))) {
+            chatState.routerMain.chats();
+            await chatState.routerModal.discard();
             await this.chat.delete();
-            chatState.routerModal.discard();
         }
     };
 
