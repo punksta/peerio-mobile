@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.305.0"></a>
+# [3.305.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.304.0...v3.305.0) (2018-06-28)
+
+
+### Bug Fixes
+
+* transition to chat list before deleting or leaving channel ([5e024d4](https://github.com/PeerioTechnologies/peerio-mobile/commit/5e024d4))
+
+
+
 <a name="3.304.0"></a>
 # [3.304.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.300.0...v3.304.0) (2018-06-27)
 
