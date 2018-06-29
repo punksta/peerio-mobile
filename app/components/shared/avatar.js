@@ -176,15 +176,17 @@ export default class Avatar extends SafeComponent {
     }
 
     get message() {
-        const { ellipsize } = this.props;
+        const { ellipsize, shouldBeJumboji } = this.props;
         const ellipsizeMode = ellipsize ? 'tail' : undefined;
         const numberOfLines = ellipsize ? 1 : undefined;
+        const fontSize = { fontSize: shouldBeJumboji ? vars.font.size.huge : lastMessageTextStyle.fontSize };
+        const lineHeight = { lineHeight: shouldBeJumboji ? 26 : 22 };
         return this.props.message ? (
             <Text
                 ellipsizeMode={ellipsizeMode}
                 numberOfLines={numberOfLines}
                 selectable
-                style={lastMessageTextStyle}>
+                style={[lastMessageTextStyle, fontSize, lineHeight]}>
                 {tagify(this.props.message || '', User.current.username)}
             </Text>
         ) : this.props.messageComponent;
@@ -530,6 +532,7 @@ Avatar.propTypes = {
     rightIcon: PropTypes.any,
     message: PropTypes.string,
     messageComponent: PropTypes.any,
+    shouldBeJumboji: PropTypes.bool,
     hasDeletedFile: PropTypes.any,
     title: PropTypes.any,
     fullnameIsBold: PropTypes.any,

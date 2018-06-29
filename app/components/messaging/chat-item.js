@@ -9,6 +9,8 @@ import fileState from '../files/file-state';
 import { systemMessages } from '../../lib/icebear';
 import IdentityVerificationNotice from './identity-verification-notice';
 import { vars } from '../../styles/styles';
+import shouldBeJumboji from '../helpers/emoji-helper';
+
 @observer
 export default class ChatItem extends SafeComponent {
     setRef = ref => { this._ref = ref; };
@@ -21,6 +23,7 @@ export default class ChatItem extends SafeComponent {
         const key = i.id;
         const msg = i.text || '';
         const text = msg.replace(/\n[ ]+/g, '\n');
+        const isJumboji = shouldBeJumboji(text);
         const onPressAvatar = () => contactState.contactView(i.sender);
         const onPress = i.sendError ? this.props.onRetryCancel : null;
 
@@ -59,6 +62,7 @@ export default class ChatItem extends SafeComponent {
                     timestamp={i.timestamp}
                     timestampText={i.messageTimestampText}
                     message={text}
+                    shouldBeJumboji={isJumboji}
                     isChat
                     chat={chat}
                     messageObject={i}
