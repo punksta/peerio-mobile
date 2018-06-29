@@ -49,6 +49,7 @@ export default class StyledTextInput extends SafeComponent {
         if (uiState.focusedTextBox === this.textInput) {
             uiState.focusedTextBox = null;
         }
+        this.reaction = null;
     }
 
     get isValid() { return this.valid; }
