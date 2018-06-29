@@ -36,13 +36,13 @@ export default class ContactEditPermissionItem extends SafeComponent {
     // We hide the item, then do "unshare" logic after hide animation ends
     // Finally reset the UI state of the list item
     @action.bound removeClick() {
-        LayoutAnimation.easeInEaseOut(() => {
-            this.props.onUnshare(this.props.contact);
-            this.collapsed = false;
-            currentContactItem._showWarning = false;
-            currentContactItem = null;
-        });
+        LayoutAnimation.easeInEaseOut();
         this.collapsed = true;
+        // wait for animation to finish before removing item
+        setTimeout(() => {
+            this.props.onUnshare(this.props.contact);
+            currentContactItem = null;
+        }, 500);
     }
 
     removeButton() {
