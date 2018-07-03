@@ -18,7 +18,7 @@ function signapk(){
 function resigndebugapk() {
   if [ -f $1 ]; then
     zip -d $1 'META-INF/*.*F' 'META-INF/*.RSA' || true
-    signapk $1 ./apk/debug-armeabi-v7a-signed.apk
+    signapk $1 $2
   else
     echo "Debug $1 does not exist. Skipping"
   fi
@@ -39,8 +39,8 @@ mkdir -p $OUTPUT
 signapk $RELEASE_ARM "$OUTPUT/release-armeabi-v7a-signed.apk"
 signapk $RELEASE_X86 "$OUTPUT/release-x86-signed.apk"
 
-resigndebugapk $DEBUG_ARM
-resigndebugapk $DEBUG_X86
+resigndebugapk $DEBUG_ARM "$OUTPUT/debug-armeabi-v7a-signed.apk"
+resigndebugapk $DEBUG_X86 "$OUTPUT/debug-x86-signed.apk"
 
 echo ============================================
 echo "||             BUILD SUCCESS              ||"
