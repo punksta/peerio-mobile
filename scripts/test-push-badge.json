@@ -1,0 +1,6 @@
+{
+  "username": "s1222",
+  "payload": {
+    "GCM": "{ \"priority\": \"high\", \"data\": { \"badge\": \"10\" } }"
+  }
+}
