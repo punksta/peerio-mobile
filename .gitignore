@@ -72,6 +72,7 @@ app/lib/peerio-icebear
 *.dSYM*
 fastlane/report.xml
 fastlane/metadata
+apk
 
 # ctags
 tags

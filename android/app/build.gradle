@@ -118,9 +118,9 @@ android {
         targetSdkVersion 23
         versionCode code
         versionName packageJson.version
-        ndk {
-            abiFilters "armeabi-v7a", "x86"
-        }
+        // ndk {
+        //     abiFilters "armeabi-v7a", "x86"
+        // }
     }
     splits {
         abi {
