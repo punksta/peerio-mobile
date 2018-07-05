@@ -8,9 +8,10 @@
 // import MockThumbnail from './mock-thumbnail';
 // import MockActionSheet from './mock-action-sheet';
 // import MockSignupContactInvite from './mock-signup-contact-import';
-import MockPerfResults from './mock-perf-results';
+// import MockPerfResults from './mock-perf-results';
 
-export default MockPerfResults;
+export default null;
+// export default MockPerfResults;
 // export default MockSignupContactInvite;
 // export default MockChannel;
 // export default __DEV__ ? MockStyledTextInput : null;

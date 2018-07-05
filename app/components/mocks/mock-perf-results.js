@@ -4,11 +4,12 @@ import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
 import randomWords from 'random-words';
 import sqlcipher from 'react-native-sqlcipher-storage';
+import SqlCipherDbStorage from '../../store/sqlcipher-db-storage';
 // import sqlite from 'react-native-sqlite-storage';
 import Text from '../controls/custom-text';
 import KeyValueStorage from '../../store/key-value-storage';
 
-sqlcipher.enablePromise(true);
+// sqlcipher.enablePromise(true);
 
 let beacon = null;
 let lastTitle = '';
@@ -80,8 +81,8 @@ export default class MockActionSheet extends Component {
 
     async sqlCipherPrepare() {
         const name = 'test-perf-encrypted';
-        const key = 'supertestkey';
-        sql = await sqlcipher.openDatabase({ name, location: 2, key });
+        // const key = 'supertestkey';
+        sql = await sqlcipher.openDatabase({ name, location: 2 /* , key */ });
         try {
             await sql.executeSql('DROP TABLE key_value');
         } catch (e) {
@@ -106,9 +107,38 @@ export default class MockActionSheet extends Component {
         await r;
     }
 
-    async startTest() {
-        start('...');
-        await new Promise(resolve => setTimeout(resolve, 1000));
+    async sqlCipherStorageTest() {
+        start('Open storage');
+        const storage = new SqlCipherDbStorage('fixed-user');
+        await storage.open();
+        const k = randomWords();
+        const v = randomWords();
+        start(`Writing single string value ${k}, ${v}`);
+        await storage.setValue(k, v);
+        const stored = await storage.getValue(k);
+        if (stored === v) {
+            log('...passed');
+        }
+        start(`Deleting key ${k}`);
+        await storage.removeValue(k);
+        if (!await storage.getValue(k)) {
+            log('...passed');
+        }
+        start(`Clearing storage`);
+        await storage.clear();
+        start(`Adding test keys`);
+        for (let i = 0; i < 10; ++i) {
+            await storage.setValue(i, randomWords());
+        }
+        start(`Retrieving test keys`);
+        const keys = await storage.getAllKeys();
+        keys.forEach(testKey => log(testKey));
+        start(`Retrieving test values`);
+        const values = await storage.getAllValues();
+        values.forEach(testValue => log(testValue));
+    }
+
+    async tinyDbAndRawSqlTest() {
         start(`TinyDB write test: ${RECORD_TEST_COUNT} rows`);
         await this.batch(tinyDbWrite);
         start(`TinyDB read test: ${RECORD_TEST_COUNT} rows`);
@@ -121,6 +151,12 @@ export default class MockActionSheet extends Component {
         await this.batch(sqlRead);
         start(`SQLCipher read batch test: ${RECORD_TEST_COUNT} rows:`);
         await sqlReadBatch();
+    }
+
+    async startTest() {
+        start('...');
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        await this.sqlCipherStorageTest();
         stopAndLog();
     }
 
