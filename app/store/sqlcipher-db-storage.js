@@ -1,6 +1,32 @@
 import sqlcipher from 'react-native-sqlcipher-storage';
+import { b64ToBytes, bytesToB64 } from '../lib/peerio-icebear/crypto/util';
 
 sqlcipher.enablePromise(true);
+
+function serialize(item) {
+    if (item.payload) {
+        item.payload = bytesToB64(item.payload);
+    }
+    if (item.props && item.props.descriptor && item.props.descriptor.payload) {
+        item.props.descriptor.payload = bytesToB64(item.props.descriptor.payload);
+    }
+    return JSON.stringify(item);
+}
+
+function deserialize(data) {
+    try {
+        const item = JSON.parse(data);
+        if (item.payload) {
+            item.payload = b64ToBytes(item.payload);
+        }
+        if (item.props && item.props.descriptor && item.props.descriptor.payload) {
+            item.props.descriptor.payload = b64ToBytes(item.props.descriptor.payload);
+        }
+        return item;
+    } catch (e) {
+        return null;
+    }
+}
 
 class SqlCipherDbStorage {
     constructor(name) {
@@ -19,7 +45,7 @@ class SqlCipherDbStorage {
             'SELECT value FROM key_value WHERE key=?', [key]
         );
         if (!r.length || !r[0].rows.length) return undefined;
-        return JSON.parse(r[0].rows.item(0).value);
+        return JSON.deserialize(r[0].rows.item(0).value);
     }
 
     setValueInternal(key, value) {
@@ -34,7 +60,7 @@ class SqlCipherDbStorage {
                 throw new Error('Cache storage caller denied update.');
             }
         }
-        return this.setValueInternal(JSON.stringify(key), JSON.stringify(value));
+        return this.setValueInternal(JSON.stringify(key), serialize(value));
     }
 
     removeValue(key) {
@@ -64,7 +90,8 @@ class SqlCipherDbStorage {
         if (!r.length || !r[0].rows.length) return result;
         const table = r[0].rows;
         for (let i = 0; i < table.length; ++i) {
-            result.push(JSON.parse(table.item(i).value));
+            const item = deserialize(table.item(i).value);
+            if (item) result.push(item);
         }
         return result;
     }
