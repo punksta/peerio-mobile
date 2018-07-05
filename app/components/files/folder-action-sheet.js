@@ -1,7 +1,7 @@
 import React from 'react';
 import { tx } from '../utils/translator';
 import { fileState } from '../states';
-import { popupInput, popupFolderDelete } from '../shared/popups';
+import { popupFileRename, popupFolderDelete } from '../shared/popups';
 import { fileHelpers, volumeStore, config, User } from '../../lib/icebear';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import ActionSheetLayout from '../layout/action-sheet-layout';
@@ -36,8 +36,8 @@ export default class FoldersActionSheet {
             {
                 title: tx('button_rename'),
                 action: async () => {
-                    const newFolderName = await popupInput(
-                        tx('title_fileName'),
+                    const newFolderName = await popupFileRename(
+                        tx('title_folderName'),
                         '',
                         fileHelpers.getFileNameWithoutExtension(folder.name)
                     );

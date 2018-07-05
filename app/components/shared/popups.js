@@ -423,6 +423,21 @@ function popupSetupVideo() {
     });
 }
 
+function popupFileRename(title, subTitle, value, textInputProps) {
+    return new Promise((resolve) => {
+        const o = observable({ value });
+        popupState.showPopup({
+            title,
+            subTitle: textControl(subTitle),
+            contents: inputControl(o, null, textInputProps),
+            buttons: [
+                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
+                { id: 'update', text: tu('button_update'), action: () => resolve(o.value), get disabled() { return value === o.value; } }
+            ]
+        });
+    });
+}
+
 function popupFolderDelete(isShared, isOwner) {
     let text = 'dialog_deleteFolderText';
     if (isShared) {
@@ -537,6 +552,7 @@ export {
     popupSetupVideo,
     popupUpgradeNotification,
     popupUpgradeProgress,
+    popupFileRename,
     popupFolderDelete,
     popupMoveToSharedFolder,
     popupAbout
