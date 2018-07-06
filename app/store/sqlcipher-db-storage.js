@@ -45,7 +45,7 @@ class SqlCipherDbStorage {
             'SELECT value FROM key_value WHERE key=?', [key]
         );
         if (!r.length || !r[0].rows.length) return undefined;
-        return JSON.deserialize(r[0].rows.item(0).value);
+        return deserialize(r[0].rows.item(0).value);
     }
 
     setValueInternal(key, value) {
