@@ -19,7 +19,7 @@ import { socket, validation } from '../../../lib/icebear';
 import medcryptorUiState from './medcryptor-ui-state';
 
 const { validators } = validation;
-const { mcrDoctorAhpraAvailability, mcrAdminAhpraAvailability } = validators;
+const { mcrDoctorAhpraAvailability, mcrAdminAhpraAvailability, medicalIdFormat } = validators;
 
 const formStyle = {
     paddingVertical: vars.spacing.small.midi2x,
@@ -109,7 +109,7 @@ export default class SignupStepMedcryptor extends LoginWizardPage {
                 {this.selectedAU && <View>
                     <StyledTextInput
                         state={this.medicalIdState}
-                        validations={[this.ahpraValidator]}
+                        validations={[this.ahpraValidator, medicalIdFormat]}
                         hint={tx('title_medicalId')}
                         lowerCase
                         returnKeyType="go"
