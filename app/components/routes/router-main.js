@@ -82,7 +82,7 @@ class RouterMain extends Router {
         this.chatStateLoaded = true;
         await fileState.init();
         this.fileStateLoaded = true;
-        await contactState.init();
+        // await contactState.init();
         this.contactStateLoaded = true;
         this.loading = false;
         // wait for User object to be loaded

@@ -60,7 +60,7 @@ class SqlCipherDbStorage {
                 throw new Error('Cache storage caller denied update.');
             }
         }
-        return this.setValueInternal(JSON.stringify(key), serialize(value));
+        return this.setValueInternal(key, serialize(value));
     }
 
     removeValue(key) {
@@ -77,7 +77,7 @@ class SqlCipherDbStorage {
         if (!r.length || !r[0].rows.length) return result;
         const table = r[0].rows;
         for (let i = 0; i < table.length; ++i) {
-            result.push(JSON.parse(table.item(i).key));
+            result.push(table.item(i).key);
         }
         return result;
     }
