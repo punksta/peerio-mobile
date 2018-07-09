@@ -40,27 +40,34 @@ class SqlCipherDbStorage {
         );
     }
 
-    async getValue(key) {
-        const r = await this.sql.executeSql(
-            'SELECT value FROM key_value WHERE key=?', [key]
-        );
+    async getValue(key, transaction) {
+        let r = null;
+        const params = ['SELECT value FROM key_value WHERE key=?', [key]];
+        if (transaction) {
+            r = new Promise(resolve =>
+                transaction.executeSql(...params, (transactionCallback, result) => {
+                    resolve(result);
+                }));
+        } else {
+            r = await this.sql.executeSql(...params);
+        }
         if (!r.length || !r[0].rows.length) return undefined;
         return deserialize(r[0].rows.item(0).value);
     }
 
-    setValueInternal(key, value) {
-        return this.sql.executeSql(
-            'INSERT OR REPLACE INTO key_value(key, value) VALUES(?, ?)', [key, value]
-        );
-    }
-
-    async setValue(key, value, confirmUpdate) {
-        if (confirmUpdate) {
-            if (!confirmUpdate(await this.getValue(key), value)) {
-                throw new Error('Cache storage caller denied update.');
-            }
-        }
-        return this.setValueInternal(key, serialize(value));
+    setValue(key, value, confirmUpdate) {
+        return new Promise((resolve, reject) => {
+            this.sql.transaction(async transaction => {
+                if (confirmUpdate) {
+                    if (!confirmUpdate(await this.getValue(key, transaction), value)) {
+                        reject(new Error('Cache storage caller denied update.'));
+                    }
+                }
+                return transaction.executeSql(
+                    'INSERT OR REPLACE INTO key_value(key, value) VALUES(?, ?)', [key, serialize(value)], resolve
+                );
+            });
+        });
     }
 
     removeValue(key) {
