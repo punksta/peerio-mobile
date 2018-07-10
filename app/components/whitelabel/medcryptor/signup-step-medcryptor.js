@@ -48,7 +48,7 @@ const ahpraTextStyle = {
     fontSize: vars.font.size.smaller,
     color: vars.black54,
     alignSelf: 'flex-start',
-    margin: vars.spacing.medium.mini2x
+    marginHorizontal: vars.spacing.medium.mini2x
 };
 
 @observer

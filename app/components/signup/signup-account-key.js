@@ -1,12 +1,11 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Clipboard, CameraRoll, TouchableOpacity, Platform } from 'react-native';
+import { View, Clipboard, TouchableOpacity } from 'react-native';
 import ViewShot from 'react-native-view-shot';
-import { observable } from 'mobx';
 import Text from '../controls/custom-text';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
-import { config, getFirstLetterUpperCase, socket } from '../../lib/icebear';
+import { getFirstLetterUpperCase, socket } from '../../lib/icebear';
 import signupState from './signup-state';
 import { t, tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
@@ -63,35 +62,9 @@ const accountKeyView = {
 
 @observer
 export default class SignupStep1 extends LoginWizardPage {
-    @observable keySaved = false;
-    @observable savingScreenshot = false;
-
     copyAccountKey() {
         Clipboard.setString(signupState.passphrase);
         snackbarState.pushTemporary(t('title_copied'));
-    }
-
-    async saveAccountKey() {
-        this.keySaved = true;
-        this.savingScreenshot = true;
-        let uri = await new Promise(resolve =>
-            requestAnimationFrame(async () => {
-                const result = await this._viewShot.capture();
-                this.savingScreenshot = false;
-                resolve(result);
-            })
-        );
-        console.debug(uri);
-        // on iOS we can only preview our local data
-        (Platform.OS === 'ios') && config.FileStream.launchViewer(uri);
-        uri = await CameraRoll.saveToCameraRoll(uri);
-        signupState.keyBackedUp = true;
-        // on Android we can only preview external data
-        // but I am disabling it for now, cause it launches
-        // external viewer and it takes more than 1 tap to get
-        // back to the app
-        // (Platform.OS === 'android') && config.FileStream.launchViewer(uri);
-        console.debug(uri);
     }
 
     get avatarPlaceholder() {
@@ -104,8 +77,6 @@ export default class SignupStep1 extends LoginWizardPage {
     }
 
     get body() {
-        const { /* keySaved, */ savingScreenshot } = this;
-        // const saveTitle = keySaved ? tx('title_savedToCameraRoll') : tx('button_saveAccountKey');
         return (
             <View>
                 <Text style={textNormal}>{t('title_helloName', { name: (signupState.firstName || signupState.username) })}</Text>
@@ -116,14 +87,10 @@ export default class SignupStep1 extends LoginWizardPage {
                         <Text bold {...testLabel('passphrase')} style={accountKeyText} selectable>
                             {signupState.passphrase}
                         </Text>
-                        {buttons.blueTextButton(tx('button_copy'), this.copyAccountKey, false, savingScreenshot)}
+                        {buttons.blueTextButton(tx('button_copy'), this.copyAccountKey)}
                     </View>
                 </View>
                 <Text style={textNormal}>{tx('title_accountKey2')}</Text>
-                <View style={{ width: 240, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: vars.spacing.large.midi2x }}>
-                    {/* buttons.blueBgButton(tx(saveTitle), () => this.saveAccountKey(), keySaved, savingScreenshot) */}
-                    {/* signupState.keyBackedUp && icons.plaindark('check-circle') */}
-                </View>
             </View>
         );
     }
