@@ -41,12 +41,8 @@ export default class ChannelInviteListItem extends SafeComponent {
     }
 
     onPress = () => {
-        const { id, channelName, username } = this.props;
-        routes.main.channelInvite({
-            channelName,
-            id,
-            username
-        });
+        const { chat } = this.props;
+        routes.main.channelInvite(chat);
     };
 
     renderThrow() {
@@ -107,7 +103,5 @@ export default class ChannelInviteListItem extends SafeComponent {
 }
 
 ChannelInviteListItem.propTypes = {
-    id: PropTypes.any.isRequired,
-    channelName: PropTypes.any.isRequired,
-    username: PropTypes.any.isRequired
+    chat: PropTypes.any.isRequired
 };

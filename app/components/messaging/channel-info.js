@@ -156,7 +156,7 @@ export default class ChannelInfo extends SafeComponent {
         );
         return (<LayoutModalExit
             body={body}
-            title={`# ${chat.name}`}
+            title={`# ${chatState.title}`}
             onClose={() => chatState.routerModal.discard()} />);
     }
 }

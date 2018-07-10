@@ -36,6 +36,7 @@ export default class TabContainer extends SafeComponent {
                     text={t('title_chats')}
                     route="chats"
                     icon="forum"
+                    highlightList={['space']}
                     bubble={chatStore.unreadMessages + chatInviteStore.received.length} />
                 <TabItem
                     text={t('title_files')}

@@ -17,6 +17,7 @@ import Text from '../controls/custom-text';
 import routes from '../routes/routes';
 import icons from '../helpers/icons';
 import BackIcon from '../layout/back-icon';
+import whiteLabelComponents from '../../components/whitelabel/white-label-components';
 
 const textinputContainer = {
     backgroundColor: vars.white,
@@ -115,7 +116,7 @@ export default class ContactAdd extends SafeComponent {
         this.waiting = true;
         this.toInvite = null;
         this.notFound = false;
-        const contact = await contactStore.whitelabel.getContact(this.query);
+        const contact = await contactStore.whitelabel.getContact(this.query, 'addcontact');
         const { isLegacy, fullNameAndUsername: name } = contact;
         if (contact.notFound || contact.isHidden) {
             this.notFound = true;
@@ -234,6 +235,9 @@ export default class ContactAdd extends SafeComponent {
                         {contactState.empty && <View style={{ margin: vars.spacing.small.midi2x }}>
                             <Text style={labelDark}>{tx('title_contactZeroState')}</Text>
                         </View>}
+                        <View style={{ marginRight: vars.spacing.small.midi2x }}>
+                            <whiteLabelComponents.ContactAddWarning />
+                        </View>
                         <View style={{ marginVertical: vars.spacing.small.midi2x }}>
                             <Text style={label}>{tx('button_addAContact')}</Text>
                             <View style={textinputContainer}>

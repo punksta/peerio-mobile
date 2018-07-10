@@ -78,6 +78,7 @@ export default class ChatItem extends SafeComponent {
                     collapsed={!!i.groupWithPrevious}
                     extraPaddingTop={8}
                     ref={this.setRef}
+                    backgroundColor={this.props.backgroundColor}
                 />
                 {
                     shouldDisplayIdentityNotice &&

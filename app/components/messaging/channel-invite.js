@@ -72,7 +72,7 @@ export default class ChannelInvite extends SafeComponent {
     get invitation() { return invitationState.currentInvitation; }
 
     @action.bound async acceptInvite() {
-        const chatId = this.invitation.id;
+        const chatId = this.invitation.kegDbId;
         chatInviteStore.acceptInvite(chatId);
         let newChat = null;
         try {
@@ -87,11 +87,15 @@ export default class ChannelInvite extends SafeComponent {
     }
 
     @action.bound declineInvite() {
-        uiState.declinedChannelId = this.invitation.id;
+        uiState.declinedChannelId = this.invitation.kegDbId;
         routes.main.chats();
     }
 
     get leftIcon() { return <BackIcon action={routes.main.chats} />; }
+
+    get inviteText() { return 'title_roomInviteHeading'; }
+
+    get inviteRoomName() { return this.invitation.channelName; }
 
     renderThrow() {
         const hasPaywall = User.current.channelsLeft <= 0;
@@ -110,10 +114,10 @@ export default class ChannelInvite extends SafeComponent {
                         }}
                         resizeMode="contain" />
                     <Text style={headingStyle}>
-                        {tx('title_roomInviteHeading')}
+                        {tx(this.inviteText)}
                     </Text>
                     <Text bold style={headingStyle}>
-                        #{this.invitation.channelName}
+                        #{this.inviteRoomName}
                     </Text>
                     <View style={buttonContainer}>
                         <ButtonText
