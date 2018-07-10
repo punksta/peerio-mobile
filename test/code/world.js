@@ -203,7 +203,7 @@ class World {
         // Wait for rooms to load, otherwise position will change
         await this.app.pause(5000);
 
-        while (!(await this.chatListPage.chatWithTitleVisible(this.roomName))) { // eslint-disable-line
+        while (!(await this.chatListPage.chatWithTitleIsVisible(this.roomName))) { // eslint-disable-line
             await this.chatListPage.scrollDownHelper();  // eslint-disable-line
         }
     }
