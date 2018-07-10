@@ -4,7 +4,7 @@ import { tx } from '../utils/translator';
 import { fileState } from '../states';
 import routes from '../routes/routes';
 import ActionSheetLayout from '../layout/action-sheet-layout';
-import { fileHelpers, config } from '../../lib/icebear';
+import { fileHelpers, config, User } from '../../lib/icebear';
 import FileActionSheetHeader from '../files/file-action-sheet-header';
 import { popupFileRename } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
@@ -102,7 +102,7 @@ export default class FileActionSheet {
 
         // Delete
         actionButtons.push({
-            title: 'button_delete',
+            title: file.owner === User.current.username ? 'button_delete' : 'button_remove',
             isDestructive: true,
             action: async () => {
                 const result = await fileState.deleteFile(file);

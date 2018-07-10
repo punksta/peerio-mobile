@@ -2,7 +2,7 @@ import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
 import chatState from '../messaging/chat-state';
 import RoutedState from '../routes/routed-state';
-import { fileStore, TinyDb, socket, fileHelpers, clientApp, chatStore } from '../../lib/icebear';
+import { fileStore, TinyDb, socket, fileHelpers, clientApp, chatStore, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { popupInputWithPreview, popupYesCancel, popupOkCancel } from '../shared/popups';
@@ -50,9 +50,10 @@ class FileState extends RoutedState {
     }
 
     @action async deleteFile(file) {
-        const title = tx('dialog_confirmDeleteFile');
+        const isOwner = file.owner === User.current.username;
+        const title = isOwner ? tx('dialog_confirmDeleteFile') : tx('title_confirmRemoveFile');
         let subtitle = '';
-        if (file.shared) subtitle += `\n${tx('title_confirmRemoveSharedFiles')}`;
+        if (file.shared) subtitle += isOwner ? tx('title_confirmRemoveSharedFiles') : tx('dialog_confirmRemoveFileNonOwner');
         const result = await popupOkCancel(title, subtitle);
         console.log(result);
         if (result) {
