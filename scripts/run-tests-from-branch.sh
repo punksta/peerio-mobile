@@ -18,7 +18,7 @@ npm start >npm-start.log &
 ( tail -f -n0 npm-start.log & ) | grep -q "Loading dependency graph, done."
 
 echo "Loading app from packager"
-xcrun simctl install booted '../ios/build/Build/Products/Debug-iphonesimulator/peeriomobile.app'
+source ./reinstall-ios.sh
 xcrun simctl launch booted com.peerio
 ( tail -f -n0 npm-start.log & ) | grep -q "100.0%"
 
@@ -26,4 +26,4 @@ npm run test-ios ; \
 killall npm ; \
 killall node ; \
 killall appium ; \
-xcrun simctl install booted '../ios/build/Build/Products/Debug-iphonesimulator/peeriomobile.app'
+source ./reinstall-ios.sh
