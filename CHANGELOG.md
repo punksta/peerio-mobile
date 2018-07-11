@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.311.0"></a>
+# [3.311.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.310.0...v3.311.0) (2018-07-11)
+
+
+### Features
+
+* add transactions to caching engine ([5720b8f](https://github.com/PeerioTechnologies/peerio-mobile/commit/5720b8f))
+
+
+
+<a name="3.309.0"></a>
+# [3.309.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.308.0...v3.309.0) (2018-07-06)
+
+
+
+<a name="3.308.0"></a>
+# [3.308.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.307.0...v3.308.0) (2018-07-06)
+
+
+
+<a name="3.307.0"></a>
+# [3.307.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.306.0...v3.307.0) (2018-07-06)
+
+
+
+<a name="3.306.0"></a>
+# [3.306.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.300.0...v3.306.0) (2018-07-05)
+
+
+### Features
+
+* cache implementation for mobile ([a680b3b](https://github.com/PeerioTechnologies/peerio-mobile/commit/a680b3b))
+* parse payload into b64 and back ([fd1f055](https://github.com/PeerioTechnologies/peerio-mobile/commit/fd1f055))
+* provide cache engine to icebear ([e2ca6b6](https://github.com/PeerioTechnologies/peerio-mobile/commit/e2ca6b6))
+* pseudo tests for storage ([bfcf174](https://github.com/PeerioTechnologies/peerio-mobile/commit/bfcf174))
+* research perf [ch9240] ([2fa45e0](https://github.com/PeerioTechnologies/peerio-mobile/commit/2fa45e0))
+
+
+
 <a name="3.309.0"></a>
 # [3.309.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.308.0...v3.309.0) (2018-07-06)
 
