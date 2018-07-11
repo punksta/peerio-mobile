@@ -1,19 +1,20 @@
 #!/bin/bash
 
-rm npm-start.log || echo 'no npm log found'
-rm appium.log || echo 'no appium log found'
-echo "Terminating com.peerio"
-xcrun simctl terminate booted com.peerio || echo 'com.peerio could not be deleted from device'
+rm npm-start.log || echo 'no NPM log found'
+rm appium.log || echo 'no Appium log found'
 
-echo "Starting appium"
+echo "Terminating com.peerio"
+xcrun simctl terminate booted com.peerio || echo 'com.peerio could not be found on device'
+
+echo "Starting Appium"
 ./node_modules/.bin/appium > ./appium.log 2> ./appium.log &
 ( tail -f -n0 appium.log & ) | grep -q "Appium REST http interface listener started"
 
-echo "Starting npm"
+echo "Starting NPM"
 npm start >npm-start.log & 
-
 ( tail -f -n0 npm-start.log & ) | grep -q "Loading dependency graph, done."
 
+echo "Loading app from packager"
 xcrun simctl install booted '../ios/build/Build/Products/Debug-iphonesimulator/peeriomobile.app'
 xcrun simctl launch booted com.peerio
 ( tail -f -n0 npm-start.log & ) | grep -q "100.0%"
