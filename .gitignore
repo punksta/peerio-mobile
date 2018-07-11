@@ -89,3 +89,4 @@ signup-step-*.png
 py.test
 screenshots
 appium.log
+npm-start.log
