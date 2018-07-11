@@ -83,7 +83,7 @@
     "react-native-menu": "0.21.0",
     "react-native-popup-menu": "0.8.4",
     "react-native-privacy-snapshot": "github:PeerioTechnologies/react-native-privacy-snapshot",
-    "react-native-push-notification": "3.0.0",
+    "react-native-push-notification": "github:PeerioTechnologies/react-native-push-notification",
     "react-native-randombytes": "2.1.0",
     "react-native-restart": "github:PeerioTechnologies/react-native-restart",
     "react-native-section-list-get-item-layout": "2.2.2",
