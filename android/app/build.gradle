@@ -88,8 +88,8 @@ def enableSeparateBuildPerCPUArchitecture = true
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     def code = 1000000
     def minor = 0
     def Properties versionProps = new Properties()
@@ -115,7 +115,7 @@ android {
     defaultConfig {
         applicationId "com.peerio.app"
         minSdkVersion 21
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode code
         versionName packageJson.version
         // ndk {
@@ -174,10 +174,10 @@ dependencies {
     compile project(':react-native-device-info')
     compile project(':react-native-sqlcipher-storage')
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.4.0"
+    compile "com.android.support:appcompat-v7:27.0.1"
     compile "com.github.joshjdevl.libsodiumjni:libsodium-jni-aar:1.0.6@aar"
     // compile "com.facebook.react:react-native:+"  // From node_modules
-    compile ('com.google.android.gms:play-services-gcm:8.1.0') {
+    compile ('com.google.android.gms:play-services-gcm:11.2.0') {
         force = true;
     }
 }
