@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# noReset: process.env.NO_RESET,
-# lsof -i :8081 
-
 rm npm-start.log || echo 'no npm log found'
 rm appium.log || echo 'no appium log found'
 echo "Terminating com.peerio"
