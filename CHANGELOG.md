@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.307.0"></a>
+# [3.307.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.300.0...v3.307.0) (2018-07-11)
+
+
+### Bug Fixes
+
+* added ellipsis to all long header names [branch ch9259] ([#250](https://github.com/PeerioTechnologies/peerio-mobile/issues/250)) ([f9f4a2f](https://github.com/PeerioTechnologies/peerio-mobile/commit/f9f4a2f))
+* align room invite button [branch ch9954] ([#257](https://github.com/PeerioTechnologies/peerio-mobile/issues/257)) ([cfd5df5](https://github.com/PeerioTechnologies/peerio-mobile/commit/cfd5df5))
+* android animation when removing item [ch9878] ([2982a8f](https://github.com/PeerioTechnologies/peerio-mobile/commit/2982a8f))
+* change delete to remove inline file [branch 8303] ([#268](https://github.com/PeerioTechnologies/peerio-mobile/issues/268)) ([15974b1](https://github.com/PeerioTechnologies/peerio-mobile/commit/15974b1))
+* circular deps ([#252](https://github.com/PeerioTechnologies/peerio-mobile/issues/252)) ([b5fb2cf](https://github.com/PeerioTechnologies/peerio-mobile/commit/b5fb2cf))
+* disable share from peerio when filestore is empty [branch ch8198] ([#244](https://github.com/PeerioTechnologies/peerio-mobile/issues/244)) ([b08c9ed](https://github.com/PeerioTechnologies/peerio-mobile/commit/b08c9ed))
+* disabled lower case on account key confirm [branch ch10200] ([#258](https://github.com/PeerioTechnologies/peerio-mobile/issues/258)) ([f54d96b](https://github.com/PeerioTechnologies/peerio-mobile/commit/f54d96b))
+* email confirmation dialog copy [branch ch7245] ([#259](https://github.com/PeerioTechnologies/peerio-mobile/issues/259)) ([2b4b6df](https://github.com/PeerioTechnologies/peerio-mobile/commit/2b4b6df))
+* enable favorite button ([#270](https://github.com/PeerioTechnologies/peerio-mobile/issues/270)) ([b5674fa](https://github.com/PeerioTechnologies/peerio-mobile/commit/b5674fa))
+* hide deleted recent files [branch ch4353] ([#246](https://github.com/PeerioTechnologies/peerio-mobile/issues/246)) ([9dbbd8f](https://github.com/PeerioTechnologies/peerio-mobile/commit/9dbbd8f))
+* recent files api ([402ad0d](https://github.com/PeerioTechnologies/peerio-mobile/commit/402ad0d))
+* **MC:** AK screen is too far down the screen ([#269](https://github.com/PeerioTechnologies/peerio-mobile/issues/269)) ([d286c4c](https://github.com/PeerioTechnologies/peerio-mobile/commit/d286c4c))
+* restore fileState.currentFile after file/folder move action is p… ([#245](https://github.com/PeerioTechnologies/peerio-mobile/issues/245)) ([3bd9bf0](https://github.com/PeerioTechnologies/peerio-mobile/commit/3bd9bf0))
+* transition to chat list before deleting or leaving channel ([5e024d4](https://github.com/PeerioTechnologies/peerio-mobile/commit/5e024d4))
+* **medcryptor:** styling issues ([#237](https://github.com/PeerioTechnologies/peerio-mobile/issues/237)) ([e551b3d](https://github.com/PeerioTechnologies/peerio-mobile/commit/e551b3d))
+
+
+### Features
+
+* add finish to processing wakeful notifications ([88d8001](https://github.com/PeerioTechnologies/peerio-mobile/commit/88d8001))
+* add medical id format ([#265](https://github.com/PeerioTechnologies/peerio-mobile/issues/265)) ([b9f3d4c](https://github.com/PeerioTechnologies/peerio-mobile/commit/b9f3d4c))
+* add performance polyfill ([85498b7](https://github.com/PeerioTechnologies/peerio-mobile/commit/85498b7))
+* e2e test - chat list unread awareness [branch ch6724] ([#233](https://github.com/PeerioTechnologies/peerio-mobile/issues/233)) ([7b75090](https://github.com/PeerioTechnologies/peerio-mobile/commit/7b75090))
+* e2e test leave room and navigate to chat list [branch ch7326] ([#253](https://github.com/PeerioTechnologies/peerio-mobile/issues/253)) ([194cfc8](https://github.com/PeerioTechnologies/peerio-mobile/commit/194cfc8))
+* remove conditional server override [ch9061] ([9a08f1e](https://github.com/PeerioTechnologies/peerio-mobile/commit/9a08f1e))
+* set badge test scripts ([5dc0dd6](https://github.com/PeerioTechnologies/peerio-mobile/commit/5dc0dd6))
+* **android:** compile and target sdk are now 27 ([58d1252](https://github.com/PeerioTechnologies/peerio-mobile/commit/58d1252))
+
+
+
 <a name="3.306.0"></a>
 # [3.306.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.300.0...v3.306.0) (2018-07-11)
 
