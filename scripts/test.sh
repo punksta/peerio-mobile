@@ -1,5 +1,8 @@
 #!/bin/bash
 
+git checkout $1
+git pull
+
 rm npm-start.log || echo 'no NPM log found'
 rm appium.log || echo 'no Appium log found'
 
