@@ -102,7 +102,7 @@ export default class MedcryptorAdminScreen extends SafeComponent {
             <View key={title} style={featureContainer}>
                 <Icon
                     style={featureIcon}
-                    name="arrow-forward"
+                    name="chevron-right"
                     size={vars.iconSizeSmall}
                     color={vars.textBlack54} />
                 <Text style={featureStyle}>

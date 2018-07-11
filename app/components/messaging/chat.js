@@ -6,7 +6,6 @@ import { observable, action, when, reaction, computed } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
-import whiteLabelComponents from '../../components/whitelabel/white-label-components';
 import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
 import ChatUnreadMessageIndicator from './chat-unread-message-indicator';
@@ -20,6 +19,10 @@ import VideoIcon from '../layout/video-icon';
 import IdentityVerificationNotice from './identity-verification-notice';
 import DmContactInvite from './dm-contact-invite';
 import { clientApp } from '../../lib/icebear';
+import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
+import ChatBeginningNotice from './chat-beginning-notice';
+import BackIcon from '../layout/back-icon';
+import routes from '../routes/routes';
 
 const { width } = Dimensions.get('window');
 
@@ -66,6 +69,10 @@ export default class Chat extends SafeComponent {
         this.chatReaction();
     }
 
+    get leftIcon() {
+        return <BackIcon action={routes.main.chats} />;
+    }
+
     get rightIcon() {
         // show video icon then call function: returned link is then passed on to the message-printing function
         return <VideoIcon onAddVideoLink={link => chatState.addVideoMessage(link)} />;
@@ -101,6 +108,7 @@ export default class Chat extends SafeComponent {
                 key={key}
                 message={item}
                 chat={this.chat}
+                backgroundColor={this.background}
                 {...actions}
             />
         );
@@ -278,6 +286,10 @@ export default class Chat extends SafeComponent {
         }
     }
 
+    get background() {
+        return vars.white;
+    }
+
     listView() {
         if (chatState.loading) return null;
         const refreshControlTop = this.chat.canGoUp ? (
@@ -291,7 +303,7 @@ export default class Chat extends SafeComponent {
             <ScrollView
                 onLayout={this.layoutScrollView}
                 contentContainerStyle={{ opacity: this.initialScrollDone ? 1 : 0 }}
-                style={{ flexGrow: 1, flex: 1, backgroundColor: vars.white }}
+                style={{ flexGrow: 1, flex: 1, backgroundColor: this.background }}
                 initialListSize={1}
                 onContentSizeChange={this.contentSizeChanged}
                 scrollEnabled={this.scrollEnabled}
@@ -313,6 +325,10 @@ export default class Chat extends SafeComponent {
         const { chat } = this;
         if (chat.isChatCreatedFromPendingDM) return this.zeroStateChatInvite;
         return this.zeroStateChat;
+    }
+
+    chatNotice(chat) {
+        return <ChatBeginningNotice chat={chat} />;
     }
 
     get zeroStateChat() {
@@ -344,14 +360,7 @@ export default class Chat extends SafeComponent {
         return (
             <View style={zsContainer}>
                 <View style={{ flexDirection: 'row', paddingLeft: -marginLeft }}>{avatars}</View>
-                <Text style={{
-                    textAlign: 'left',
-                    marginTop: vars.spacing.small.maxi2x,
-                    marginBottom: vars.spacing.small.maxi2x,
-                    color: vars.txtDark
-                }}>
-                    {tx('title_chatBeginning', { chatName: chat.name })}
-                </Text>
+                {this.chatNotice(chat)}
                 <IdentityVerificationNotice fullWidth />
             </View>
         );
@@ -398,14 +407,18 @@ export default class Chat extends SafeComponent {
             </View>);
     }
 
+    zeroStatePlaceholder() {
+        return <ChatZeroStatePlaceholder />;
+    }
+
     renderThrow() {
         if (this.chat && this.chat.isInvite) return <DmContactInvite />;
         return (
             <View
                 style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
                 {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
-                <View style={{ flex: 1, flexGrow: 1 }}>
-                    {this.data ? this.listView() : !chatState.loading && <whiteLabelComponents.ChatZeroStatePlaceholder />}
+                <View style={{ flex: 1, flexGrow: 1, backgroundColor: this.background }}>
+                    {this.data ? this.listView() : !chatState.loading && this.zeroStatePlaceholder()}
                 </View>
                 <ProgressOverlay enabled={/* chatState.loading || */ !this.initialScrollDone} />
             </View>

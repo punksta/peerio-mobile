@@ -86,7 +86,6 @@ export default class SignupConfirmBackup extends LoginWizardPage {
                                 state={this.confirmTextState}
                                 hint={this.confirmTextSample}
                                 ref={ref => { this._textBox = ref; }}
-                                lowerCase
                                 testID="confirmText" />
                         </View>
                     </View>

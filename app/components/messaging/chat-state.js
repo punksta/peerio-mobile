@@ -63,9 +63,13 @@ class ChatState extends RoutedState {
         this._loading = v;
     }
 
+    titleFromChat = (chat, defaultName) => {
+        if (defaultName) return tx('title_chats');
+        return chat ? chat.name : '';
+    };
+
     get title() {
-        if (this.routerMain.currentIndex === 0) return tx('title_chats');
-        return this.currentChat ? this.currentChat.name : '';
+        return this.titleFromChat(this.currentChat, this.routerMain.currentIndex === 0);
     }
 
     activate(chat) {

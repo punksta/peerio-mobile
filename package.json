@@ -1,6 +1,6 @@
 {
   "name": "peeriomobile",
-  "version": "3.309.0",
+  "version": "3.310.0",
   "private": true,
   "scripts": {
     "postinstall": "./scripts/setup-env.sh && npm run icebear:compile && ./scripts/setup-rn-debugging.sh && ./scripts/copy-android-resources.sh && ./scripts/android-switch-to-rn-fork.sh && node scripts/test-deps.js",
@@ -26,7 +26,7 @@
     "test": "./scripts/setup_tests.sh && ./scripts/run-tests.sh",
     "cucumber": "source env.sh && ./scripts/cucumber.sh",
     "test-ios": "source env.sh && cucumberjs test/spec/contacts/contacts.feature -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"ios\"}'",
-    "test-android": "source env.sh && cucumberjs test/spec/chat/chatListUnreadIndicator.feature:3 -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"android\"}'",
+    "test-android": "source env.sh && cucumberjs test/spec/chat/roomInvites.feature:50 -r test/code -f node_modules/cucumber-pretty --world-parameters '{\"platform\": \"android\"}'",
     "gp-peerio": "npm run build-android && bash scripts/release_android.sh && fastlane android alpha",
     "commit-msg": "validate-commit-msg"
   },
@@ -83,7 +83,7 @@
     "react-native-menu": "0.21.0",
     "react-native-popup-menu": "0.8.4",
     "react-native-privacy-snapshot": "github:PeerioTechnologies/react-native-privacy-snapshot",
-    "react-native-push-notification": "3.0.0",
+    "react-native-push-notification": "github:PeerioTechnologies/react-native-push-notification",
     "react-native-randombytes": "2.1.0",
     "react-native-restart": "github:PeerioTechnologies/react-native-restart",
     "react-native-section-list-get-item-layout": "2.2.2",
@@ -95,7 +95,7 @@
     "rimraf": "2.6.2",
     "safe-json-stringify": "1.1.0",
     "scrypt-async": "2.0.0",
-    "socket.io-client": "2.1.0",
+    "socket.io-client": "2.1.1",
     "tweetnacl": "1.0.0",
     "url-regex": "4.1.1"
   },

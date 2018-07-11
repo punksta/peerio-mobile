@@ -17,7 +17,7 @@ export default class CommonHeader extends Component {
             minHeight: vars.headerHeight
         };
         return (
-            <View style={bgContainerStyle} {...testLabel(this.props.testID)}>
+            <View style={bgContainerStyle} {...testLabel(this.props.testID)} accessible={false}>
                 <View style={containerStyle} key={this.props.unique}>
                     {this.props.titleComponent}
                     <View style={{ position: 'absolute', left: 0 }}>

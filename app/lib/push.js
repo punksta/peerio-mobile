@@ -1,5 +1,5 @@
 import PushNotification from 'react-native-push-notification';
-import { Platform } from 'react-native';
+import { Platform, PushNotificationIOS } from 'react-native';
 import { when, observable } from 'mobx';
 import { socket } from '../lib/icebear';
 import whitelabel from '../components/whitelabel/white-label-config';
@@ -34,6 +34,8 @@ function enablePushNotifications() {
 
         onNotification(notification) {
             console.log('🚲 push.js: NOTIFICATION:', notification);
+            notification.finish(PushNotificationIOS.FetchResult.NoData);
+            console.log('🚲 push.js: nofitication finish callback called');
         },
 
         // GCM sender id

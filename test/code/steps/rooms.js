@@ -1,7 +1,11 @@
 const { defineSupportCode } = require('cucumber');
+const { existingUsers } = require('../helpers/userHelper');
 
 defineSupportCode(({ When, Then }) => {
-    When('I invite someone to join the room', async function () {
+    When('I invite {word} to join the room', async function (string) {
+        let invitee = process.env.CHAT_RECIPIENT_USER;
+        if (string !== 'someone') invitee = existingUsers[string].name;
+
         await this.scrollToChat();
         await this.chatListPage.chatWithTitle(this.roomName).click();
 
@@ -9,9 +13,9 @@ defineSupportCode(({ When, Then }) => {
         await this.chatPage.chatWithTitle(this.roomName).click();
         await this.chatPage.addMembersButton.click();
 
-        await this.contactSelectorPage.textInput.setValue(process.env.CHAT_RECIPIENT_USER);
+        await this.contactSelectorPage.textInput.setValue(invitee);
         await this.contactSelectorPage.hideKeyboardHelper();
-        await this.contactSelectorPage.recipientContact(process.env.CHAT_RECIPIENT_USER).click();
+        await this.contactSelectorPage.recipientContact(invitee).click();
 
         await this.chatPage.buttonExitChat.click();
     });
@@ -63,6 +67,7 @@ defineSupportCode(({ When, Then }) => {
         await this.app.pause(1000);
         await this.chatPage.leaveRoomButton.click();
         await this.chatPage.confirmLeaveRoomButton.click();
+        await this.chatPage.alertLeftRoom.click();
     });
 
     Then('they sign out', async function () {

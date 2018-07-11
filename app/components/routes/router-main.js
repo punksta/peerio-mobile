@@ -9,14 +9,11 @@ import SettingsLevel2 from '../settings/settings-level-2';
 import SettingsLevel3 from '../settings/settings-level-3';
 import Ghosts from '../ghosts/ghosts';
 import GhostsLevel1 from '../ghosts/ghosts-level-1';
-import Chat from '../messaging/chat';
-import ChatList from '../messaging/chat-list';
 import Files from '../files/files';
 import FileDetailView from '../files/file-detail-view';
 import ContactAdd from '../contacts/contact-add';
 import ContactView from '../contacts/contact-view';
 import ContactList from '../contacts/contact-list';
-import ChannelInvite from '../messaging/channel-invite';
 import ContactListInvite from '../contacts/contact-list-invite';
 import { fileState, ghostState, chatState, settingsState, contactState, contactAddState, invitationState } from '../states';
 // import { enablePushNotifications } from '../../lib/push';
@@ -48,16 +45,16 @@ class RouterMain extends Router {
     constructor() {
         super();
         routes.main = this;
-        reaction(() => this.currentIndex, i => { this.isBackVisible = i > 0; });
+        reaction(() => this.currentIndex && (this.route !== 'chats'), i => { this.isBackVisible = i > 0; });
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
         this.add('files', [<Files />, <FileDetailView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
-        this.add('chats', [<ChatList />, <Chat />], chatState);
+        this.add('chats', [<whiteLabelComponents.ChatList />, <whiteLabelComponents.Chat />], chatState);
         this.add('contacts', [<ContactList />, <ContactView nonModal />], contactState);
         this.add('contactAdd', [<ContactAdd />], contactAddState);
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
-        this.add('channelInvite', [<ChannelInvite />], invitationState);
+        this.add('channelInvite', [<whiteLabelComponents.ChannelInvite />], invitationState);
 
         reaction(() => fileStore.migration.pending, migration => {
             if (migration) this.filesystemUpgrade();

@@ -220,16 +220,11 @@ export default class SignupContactInvite extends LoginWizardPage {
     }
 
     @action.bound async inviteSelectedContacts() {
-        const numSelectedContacts = this.selectedContacts.length;
-        const popupCopy = numSelectedContacts > 1 ?
-            tx('title_confirmEmailInvite', { numSelectedContacts }) :
-            tx('title_confirmEmailInvite2');
         const popupContents = (
             <View style={{ padding: vars.popupPadding, paddingTop: vars.spacing.large.maxi }}>
                 <Text bold style={title}>{tx('title_confirmEmailInvitesHeading')}</Text>
-                <Text style={subTitle}>{popupCopy}</Text>
+                <Text style={subTitle}>{tx('title_confirmEmailInvite', { numSelectedContacts: this.selectedContacts.length })}</Text>
             </View>);
-
         const result = await popupConfirmEmailInvites(popupContents);
 
         if (result) {

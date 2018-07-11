@@ -37,11 +37,15 @@ class ChatPage extends Page {
         return this.getWhenVisible('~popupButton-confirm');
     }
 
+    get alertLeftRoom() {
+        return this.getWhenVisible('~popupButton-ok');
+    }
+
     get invitedContactRemoved() {
         return this.app.waitForVisible('~test_recipient-memberList', 5000, true);
     }
 
-    chatWithTitleVisible(selector) {
+    chatWithTitle(selector) {
         return this.getWhenVisible(`~${selector}`);
     }
 

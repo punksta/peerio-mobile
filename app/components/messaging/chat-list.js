@@ -18,7 +18,7 @@ import uiState from '../layout/ui-state';
 // import { scrollHelper } from '../helpers/test-helper';
 import UnreadMessageIndicator from './unread-message-indicator';
 import { vars } from '../../styles/styles';
-import whiteLabelComponents from '../../components/whitelabel/white-label-components';
+import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -43,11 +43,8 @@ export default class ChatList extends SafeComponent {
 
     get dataSource() {
         return [
-            // all channels and invites
             { title: 'title_channels', index: 0, data: this.firstSectionItems },
-            // all dms
-            { title: 'title_directMessages', index: 1, data: this.secondSectionItems },
-            { title: 'dummy', data: [], index: 2 }
+            { title: 'title_directMessages', index: 1, data: this.secondSectionItems }
         ];
     }
 
@@ -87,6 +84,10 @@ export default class ChatList extends SafeComponent {
         uiState.currentScrollView = null;
     }
 
+    get sectionTitles() {
+        return ['title_channels', 'title_directMessages'];
+    }
+
     sectionHeader = (item) => {
         const { data, title } = item.section;
         const i = (t, component) => {
@@ -94,13 +95,11 @@ export default class ChatList extends SafeComponent {
             r[t] = component;
             return r;
         };
-        const titles = {
-            ...i('title_channels',
-                <ChatSectionHeader state="collapseChannels" title={tx('title_channels')} />),
-            ...i('title_directMessages',
-                <ChatSectionHeader state="collapseDMs" title={tx('title_directMessages')} />),
-            ...i('dummy', <View />)
-        };
+        const titleComponents = this.sectionTitles.map(sectionTitle => {
+            return { ...i(sectionTitle, <ChatSectionHeader title={tx(sectionTitle)} />) };
+        });
+
+        const titles = Object.assign({}, ...titleComponents);
         return data && data.length ? titles[title] : null;
     };
 
@@ -108,21 +107,22 @@ export default class ChatList extends SafeComponent {
         return item.kegDbId || item.id || item.title;
     }
 
+    inviteItem = (chat) => <ChannelInviteListItem id={chat.kegDbId} chat={chat} channelName={chat.channelName} />;
+    channelItem = (chat) => <ChannelListItem chat={chat} channelName={chat.name} />;
+    dmItem = (chat) => <ChatListItem key={chat.id} chat={chat} />;
+
+    renderChatItem = (chat) => {
+        if (chat.kegDbId) return this.inviteItem(chat);
+        if (chat.isChannel) return this.channelItem(chat);
+
+        return this.dmItem(chat);
+    };
+
     item = (item) => {
         const chat = item.item;
-        if (chat.kegDbId) {
-            return (
-                <ChannelInviteListItem
-                    id={chat.kegDbId}
-                    channelName={chat.channelName}
-                    username={chat.username} />
-            );
-        }
-        if (!chat.id) return null;
-        else if (chat.isChannel) {
-            return <ChannelListItem chat={chat} />;
-        }
-        return <ChatListItem key={chat.id} chat={chat} />;
+        if (!chat.id && !chat.kegDbId && !chat.spaceId) return null;
+
+        return this.renderChatItem(chat);
     };
 
     @action.bound scrollViewRef(sv) {
@@ -173,7 +173,7 @@ export default class ChatList extends SafeComponent {
         const pos = this.lastUnreadItemPosition;
         if (!pos) return false;
         if (pos.section > this.maxSectionIndex) return true;
-        if (pos.section === this.maxSectionIndex) return pos.index >= this.maxItemIndex;
+        if (pos.section === this.maxSectionIndex) return pos.index > this.maxItemIndex;
         return false;
     }
 
@@ -197,9 +197,9 @@ export default class ChatList extends SafeComponent {
         const pos = this.lastUnreadItemPosition;
         if (!pos) return;
         this.scrollView.scrollToLocation({
-            itemIndex: pos.index + 1,
+            itemIndex: pos.index,
             sectionIndex: pos.section,
-            viewPosition: 1
+            viewPosition: 0.9
         });
     }
 
@@ -263,9 +263,13 @@ export default class ChatList extends SafeComponent {
         );
     }
 
+    zeroStatePlaceholder() {
+        return <ChatZeroStatePlaceholder />;
+    }
+
     renderThrow() {
         const body = ((chatStore.chats.length || chatInviteStore.received.length) && chatState.store.loaded) ?
-            this.listView() : <whiteLabelComponents.ChatZeroStatePlaceholder />;
+            this.listView() : this.zeroStatePlaceholder();
 
         return (
             <View style={{ flexGrow: 1, flex: 1 }}>

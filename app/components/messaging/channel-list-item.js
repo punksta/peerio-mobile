@@ -18,7 +18,7 @@ export default class ChannelListItem extends SafeComponent {
 
     renderThrow() {
         if (chatState.collapseChannels) return null;
-        const { chat } = this.props;
+        const { chat, channelName } = this.props;
         const { name, unreadCount, headLoaded } = chat;
         if (!headLoaded) return null;
         if (!chat) return null;
@@ -61,7 +61,7 @@ export default class ChannelListItem extends SafeComponent {
                     style={containerStyle}
                     pressRetentionOffset={vars.pressRetentionOffset}>
                     <Text semibold={hasUnread} style={[textStyle, (hasUnread && textUnreadStyle)]}>
-                        {`# ${name}`}
+                        {`# ${channelName}`}
                     </Text>
                     {unreadCount > 0 && <View style={circleStyle}><Text semibold style={textCircleStyle}>{unreadCount}</Text></View>}
                 </TouchableOpacity>

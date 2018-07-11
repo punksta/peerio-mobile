@@ -501,7 +501,7 @@ export default class Avatar extends SafeComponent {
                     pressRetentionOffset={vars.retentionOffset}
                     onPress={this.onPressAll}
                     activeOpacity={activeOpacity}
-                    style={{ backgroundColor: vars.white }}
+                    style={{ backgroundColor: this.props.backgroundColor || vars.white }}
                     onLayout={this.props.onLayout}
                     {...testLabel(testID)}>
                     {this.firstOfTheDay}

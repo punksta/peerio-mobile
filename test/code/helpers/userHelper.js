@@ -38,6 +38,14 @@ const existingUsers = {
     chatListUnreadSender_2: {
         name: process.env.CHATLISTUNREADSENDER_TEST_USER_2,
         passphrase: process.env.CHATLISTUNREADSENDER_TEST_PASS_2
+    },
+    leavechannelnav_inviter: {
+        name: process.env.LEAVECHANNELNAV_TEST_USER,
+        passphrase: process.env.LEAVECHANNELNAV_TEST_PASS
+    },
+    leavechannelnav_invitee: {
+        name: process.env.LEAVECHANNELNAV1_TEST_USER,
+        passphrase: process.env.LEAVECHANNELNAV1_TEST_PASS
     }
 };
 
