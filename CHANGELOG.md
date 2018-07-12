@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.313.0"></a>
+# [3.313.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.312.0...v3.313.0) (2018-07-12)
+
+
+### Bug Fixes
+
+* contact add button would cause the app to freeze [branch ch11147] ([#272](https://github.com/PeerioTechnologies/peerio-mobile/issues/272)) ([1d6ca43](https://github.com/PeerioTechnologies/peerio-mobile/commit/1d6ca43))
+
+
+
 <a name="3.312.0"></a>
 # [3.312.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.310.0...v3.312.0) (2018-07-11)
 
