@@ -20,11 +20,10 @@ Unlimited upload file size
 Premium support
 `;
 
-const professionalPaymentInfo =
-`
-Monthly plans will be charged $12.99 USD each month.
+const professionalPaymentInfo = (monthly, annual) => `
+Monthly plans will be charged ${monthly}.
 
-Annual plans will be charged $118.99 USD each year.
+Annual plans will be charged ${annual}.
 
 These prices may vary according to your location and local currency.
 
@@ -99,7 +98,7 @@ class ProfessionalPlan extends PaidPlan {
     }];
     includes = professionalIncludesInfo;
     info = professionalPlanInfo;
-    paymentInfo = professionalPaymentInfo;
+    paymentInfo = professionalPaymentInfo(this.priceOptions[0].price, this.priceOptions[1].price);
 }
 
 const plans = [new BasicPlan(), new ProfessionalPlan()];

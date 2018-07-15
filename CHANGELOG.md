@@ -2,8 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.313.0"></a>
+# [3.313.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.312.0...v3.313.0) (2018-07-12)
+
+
+### Bug Fixes
+
+* contact add button would cause the app to freeze [branch ch11147] ([#272](https://github.com/PeerioTechnologies/peerio-mobile/issues/272)) ([1d6ca43](https://github.com/PeerioTechnologies/peerio-mobile/commit/1d6ca43))
+
+
+
+<a name="3.312.0"></a>
+# [3.312.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.310.0...v3.312.0) (2018-07-11)
+
+
+
 <a name="3.311.0"></a>
 # [3.311.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.310.0...v3.311.0) (2018-07-11)
+
+
+
+<a name="3.310.0"></a>
+# [3.310.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.300.0...v3.310.0) (2018-07-11)
+
+
+### Bug Fixes
+
+* added ellipsis to all long header names [branch ch9259] ([#250](https://github.com/PeerioTechnologies/peerio-mobile/issues/250)) ([f9f4a2f](https://github.com/PeerioTechnologies/peerio-mobile/commit/f9f4a2f))
+* align room invite button [branch ch9954] ([#257](https://github.com/PeerioTechnologies/peerio-mobile/issues/257)) ([cfd5df5](https://github.com/PeerioTechnologies/peerio-mobile/commit/cfd5df5))
+* android animation when removing item [ch9878] ([2982a8f](https://github.com/PeerioTechnologies/peerio-mobile/commit/2982a8f))
+* change delete to remove inline file [branch 8303] ([#268](https://github.com/PeerioTechnologies/peerio-mobile/issues/268)) ([15974b1](https://github.com/PeerioTechnologies/peerio-mobile/commit/15974b1))
+* circular deps ([#252](https://github.com/PeerioTechnologies/peerio-mobile/issues/252)) ([b5fb2cf](https://github.com/PeerioTechnologies/peerio-mobile/commit/b5fb2cf))
+* disable share from peerio when filestore is empty [branch ch8198] ([#244](https://github.com/PeerioTechnologies/peerio-mobile/issues/244)) ([b08c9ed](https://github.com/PeerioTechnologies/peerio-mobile/commit/b08c9ed))
+* disabled lower case on account key confirm [branch ch10200] ([#258](https://github.com/PeerioTechnologies/peerio-mobile/issues/258)) ([f54d96b](https://github.com/PeerioTechnologies/peerio-mobile/commit/f54d96b))
+* email confirmation dialog copy [branch ch7245] ([#259](https://github.com/PeerioTechnologies/peerio-mobile/issues/259)) ([2b4b6df](https://github.com/PeerioTechnologies/peerio-mobile/commit/2b4b6df))
+* enable favorite button ([#270](https://github.com/PeerioTechnologies/peerio-mobile/issues/270)) ([b5674fa](https://github.com/PeerioTechnologies/peerio-mobile/commit/b5674fa))
+* hide deleted recent files [branch ch4353] ([#246](https://github.com/PeerioTechnologies/peerio-mobile/issues/246)) ([9dbbd8f](https://github.com/PeerioTechnologies/peerio-mobile/commit/9dbbd8f))
+* recent files api ([402ad0d](https://github.com/PeerioTechnologies/peerio-mobile/commit/402ad0d))
+* **MC:** AK screen is too far down the screen ([#269](https://github.com/PeerioTechnologies/peerio-mobile/issues/269)) ([d286c4c](https://github.com/PeerioTechnologies/peerio-mobile/commit/d286c4c))
+* restore fileState.currentFile after file/folder move action is p… ([#245](https://github.com/PeerioTechnologies/peerio-mobile/issues/245)) ([3bd9bf0](https://github.com/PeerioTechnologies/peerio-mobile/commit/3bd9bf0))
+* transition to chat list before deleting or leaving channel ([5e024d4](https://github.com/PeerioTechnologies/peerio-mobile/commit/5e024d4))
+* **medcryptor:** styling issues ([#237](https://github.com/PeerioTechnologies/peerio-mobile/issues/237)) ([e551b3d](https://github.com/PeerioTechnologies/peerio-mobile/commit/e551b3d))
+>>>>>>> dev
 
 
 ### Features
