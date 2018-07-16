@@ -1,7 +1,7 @@
 import sqlcipher from 'react-native-sqlcipher-storage';
 import { b64ToBytes, bytesToB64 } from '../lib/peerio-icebear/crypto/util';
 
-sqlcipher.enablePromise(true);
+sqlcipher.enablePromise(false);
 
 function serialize(item) {
     if (item.payload) {
@@ -35,50 +35,62 @@ class SqlCipherDbStorage {
 
     async open() {
         this.sql = await sqlcipher.openDatabase({ name: this.name, location: 2 });
-        await this.sql.executeSql(
+        this.sql.executeSqlPromise = (sql, params) => new Promise(resolve => {
+            this.sql.executeSql(sql, params, resolve);
+        });
+        await this.sql.executeSqlPromise(
             'CREATE TABLE IF NOT EXISTS key_value(key TEXT PRIMARY KEY, value TEXT) WITHOUT ROWID'
         );
     }
 
-    async getValue(key, transaction) {
+    async getValue(key) {
         let r = null;
-        const params = ['SELECT value FROM key_value WHERE key=?', [key]];
-        if (transaction) {
-            r = new Promise(resolve =>
-                transaction.executeSql(...params, (transactionCallback, result) => {
-                    resolve(result);
-                }));
-        } else {
-            r = await this.sql.executeSql(...params);
-        }
-        if (!r.length || !r[0].rows.length) return undefined;
-        return deserialize(r[0].rows.item(0).value);
+        r = await this.sql.executeSqlPromise('SELECT value FROM key_value WHERE key=?', [key]);
+        if (!r || !r.rows.length) return undefined;
+        r = deserialize(r.rows.item(0).value);
+        return r;
+    }
+
+    transactionInsert(transaction, key, value) {
+        return new Promise(resolve => transaction.executeSql(
+            'INSERT OR REPLACE INTO key_value(key, value) VALUES(?, ?)',
+            [key, serialize(value)],
+            resolve
+        ));
     }
 
     setValue(key, value, confirmUpdate) {
         return new Promise((resolve, reject) => {
-            this.sql.transaction(async transaction => {
-                if (confirmUpdate) {
-                    if (!confirmUpdate(await this.getValue(key, transaction), value)) {
-                        reject(new Error('Cache storage caller denied update.'));
-                    }
+            this.sql.transaction(transaction => {
+                if (!confirmUpdate) {
+                    resolve(this.transactionInsert(transaction, key, value));
+                    return;
                 }
-                return transaction.executeSql(
-                    'INSERT OR REPLACE INTO key_value(key, value) VALUES(?, ?)', [key, serialize(value)], resolve
+                transaction.executeSql(
+                    'SELECT value FROM key_value WHERE key=?',
+                    [key],
+                    (tx, result) => {
+                        const oldValue = result && result.rows.length ? result.rows.item(0).value : undefined;
+                        if (!confirmUpdate(oldValue, value)) {
+                            reject(new Error('Cache storage caller denied update.'));
+                        } else {
+                            resolve(this.transactionInsert(tx, key, value));
+                        }
+                    }
                 );
             });
         });
     }
 
     removeValue(key) {
-        return this.sql.executeSql(
+        return this.sql.executeSqlPromise(
             'DELETE FROM key_value WHERE key=?', [key]
         );
     }
 
     async getAllKeys() {
         const result = [];
-        const r = await this.sql.executeSql(
+        const r = await this.sql.executeSqlPromise(
             'SELECT key FROM key_value'
         );
         if (!r.length || !r[0].rows.length) return result;
@@ -91,7 +103,7 @@ class SqlCipherDbStorage {
 
     async getAllValues() {
         const result = [];
-        const r = await this.sql.executeSql(
+        const r = await this.sql.executeSqlPromise(
             'SELECT value FROM key_value'
         );
         if (!r.length || !r[0].rows.length) return result;
@@ -104,7 +116,7 @@ class SqlCipherDbStorage {
     }
 
     clear() {
-        return this.sql.executeSql(
+        return this.sql.executeSqlPromise(
             'DELETE FROM key_value'
         );
     }

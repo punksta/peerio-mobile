@@ -9,8 +9,6 @@ import SqlCipherDbStorage from '../../store/sqlcipher-db-storage';
 import Text from '../controls/custom-text';
 import KeyValueStorage from '../../store/key-value-storage';
 
-// sqlcipher.enablePromise(true);
-
 let beacon = null;
 let lastTitle = '';
 
