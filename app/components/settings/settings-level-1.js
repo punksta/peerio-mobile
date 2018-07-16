@@ -9,8 +9,8 @@ import { PaymentStorageUsage, paymentCheckout } from '../payments/payments-stora
 import { toggleConnection } from '../main/dev-menu-items';
 import plans from '../payments/payments-config';
 import { tx, tu } from '../utils/translator';
-import { warnings, clientApp } from '../../lib/icebear';
-import { popupAbout } from '../shared/popups';
+import { warnings, clientApp, contactStore } from '../../lib/icebear';
+import { popupAbout, popupInputCancel } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
 import { scrollHelper } from '../helpers/test-helper';
 
@@ -30,6 +30,14 @@ export default class SettingsLevel1 extends SafeComponent {
     get spacer() {
         return <View style={{ height: 16 }} />;
     }
+
+    testSilentInvite = async () => {
+        const result = await popupInputCancel('Enter email to invite', 'test@test.com', true);
+        if (!result) return;
+        const email = result.value;
+        console.log(email);
+        contactStore.inviteNoWarning(email, undefined, true);
+    };
 
     testShare() {
         const message = 'chat and share files securely using Peerio. https://www.testurl.com';
@@ -92,6 +100,7 @@ export default class SettingsLevel1 extends SafeComponent {
                         testID="button_signOut"
                     />
                     {this.spacer}
+                    {__DEV__ && <SettingsItem title="silent invite" onPress={this.testSilentInvite} />}
                     {__DEV__ && <SettingsItem title="toggle connection" onPress={toggleConnection} />}
                     {__DEV__ && <SettingsItem title="damage TouchID" onPress={() => mainState.damageUserTouchId()} />}
                     {__DEV__ && <SettingsItem title="snackbar" onPress={() =>
