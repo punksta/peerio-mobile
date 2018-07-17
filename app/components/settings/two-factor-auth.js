@@ -34,7 +34,9 @@ const labelStyle = {
 };
 
 const whiteStyle = {
-    backgroundColor: vars.white, paddingTop: vars.spacing.small.maxi, paddingHorizontal
+    backgroundColor: vars.white,
+    paddingTop: vars.spacing.small.maxi,
+    paddingLeft: paddingHorizontal
 };
 
 async function twoFactorAuthPopup(active2FARequest) {

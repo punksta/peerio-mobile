@@ -45,7 +45,7 @@ export default {
     blueTextButton(text, onPress, disabled, hidden, accessibilityId) {
         const opacity = hidden ? 0.0 : 1.0;
         const buttonStyle = {
-            paddingRight: vars.spacing.small.maxi2x,
+            paddingHorizontal: vars.spacing.small.maxi2x,
             paddingVertical: vars.spacing.small.maxi
         };
         return (
