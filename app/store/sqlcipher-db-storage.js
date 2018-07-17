@@ -7,6 +7,9 @@ function serialize(item) {
     if (item.payload) {
         item.payload = bytesToB64(item.payload);
     }
+    if (item.chatHead && item.chatHead.payload) {
+        item.chatHead.payload = bytesToB64(item.chatHead.payload);
+    }
     if (item.props && item.props.descriptor && item.props.descriptor.payload) {
         item.props.descriptor.payload = bytesToB64(item.props.descriptor.payload);
     }
@@ -18,6 +21,9 @@ function deserialize(data) {
         const item = JSON.parse(data);
         if (item.payload) {
             item.payload = b64ToBytes(item.payload);
+        }
+        if (item.chatHead && item.chatHead.payload) {
+            item.chatHead.payload = b64ToBytes(item.chatHead.payload).buffer;
         }
         if (item.props && item.props.descriptor && item.props.descriptor.payload) {
             item.props.descriptor.payload = b64ToBytes(item.props.descriptor.payload);
@@ -70,11 +76,12 @@ class SqlCipherDbStorage {
                     'SELECT value FROM key_value WHERE key=?',
                     [key],
                     (tx, result) => {
-                        const oldValue = result && result.rows.length ? result.rows.item(0).value : undefined;
-                        if (!confirmUpdate(oldValue, value)) {
+                        const oldValue = result && result.rows.length ? deserialize(result.rows.item(0).value) : undefined;
+                        const confirmed = confirmUpdate(oldValue, value);
+                        if (!confirmed) {
                             reject(new Error('Cache storage caller denied update.'));
                         } else {
-                            resolve(this.transactionInsert(tx, key, value));
+                            resolve(this.transactionInsert(tx, key, confirmed));
                         }
                     }
                 );

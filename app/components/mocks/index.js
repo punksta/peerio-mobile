@@ -13,7 +13,6 @@
 
 export default null;
 // export default MockSqlTest;
-// export default MockPerfResults;
 // export default MockSignupContactInvite;
 // export default MockChannel;
 // export default __DEV__ ? MockStyledTextInput : null;

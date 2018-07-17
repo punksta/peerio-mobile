@@ -6,6 +6,14 @@ import SqlCipherDbStorage from '../../store/sqlcipher-db-storage';
 import Text from '../controls/custom-text';
 import mockLog from './mock-log';
 
+function increment(oldValue, newValue) {
+    if (newValue.counter <= oldValue.counter) {
+        return null;
+    }
+    newValue.counter = oldValue.counter + 1;
+    return newValue;
+}
+
 @observer
 export default class MockSqlTest extends Component {
     db = null;
@@ -26,6 +34,19 @@ export default class MockSqlTest extends Component {
         await db.setValue(k, v, () => true);
         const r = await db.getValue(k);
         mockLog.log(`result ${r}, ${v === r}`);
+        mockLog.stopAndLog();
+    }
+
+    async startTest2() {
+        mockLog.start('...');
+        const { db } = this;
+        mockLog.start('open db');
+        await db.open();
+        for (let i = 0; i < 100; ++i) {
+            setTimeout(() => db.setValue('test', {}, increment));
+        }
+        const r = await db.getValue('test');
+        mockLog.log(`result ${r}`);
         mockLog.stopAndLog();
     }
 
