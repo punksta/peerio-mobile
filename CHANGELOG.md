@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.317.0"></a>
+# [3.317.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.316.0...v3.317.0) (2018-07-18)
+
+
+### Bug Fixes
+
+* allow uppercase in login account key [branch ch11209] ([#278](https://github.com/PeerioTechnologies/peerio-mobile/issues/278)) ([f2b07da](https://github.com/PeerioTechnologies/peerio-mobile/commit/f2b07da))
+
+
+### Features
+
+* popup leave room illustration [branch ch10821] ([#273](https://github.com/PeerioTechnologies/peerio-mobile/issues/273)) ([9de078b](https://github.com/PeerioTechnologies/peerio-mobile/commit/9de078b))
+
+
+
 <a name="3.316.0"></a>
 # [3.316.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.315.0...v3.316.0) (2018-07-18)
 
