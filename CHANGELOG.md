@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.316.0"></a>
+# [3.316.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.315.0...v3.316.0) (2018-07-18)
+
+
+### Bug Fixes
+
+* update avatar colors [branch ch9948] ([#256](https://github.com/PeerioTechnologies/peerio-mobile/issues/256)) ([4f2fe46](https://github.com/PeerioTechnologies/peerio-mobile/commit/4f2fe46)), closes [#255](https://github.com/PeerioTechnologies/peerio-mobile/issues/255) [#257](https://github.com/PeerioTechnologies/peerio-mobile/issues/257) [#260](https://github.com/PeerioTechnologies/peerio-mobile/issues/260) [#259](https://github.com/PeerioTechnologies/peerio-mobile/issues/259) [#258](https://github.com/PeerioTechnologies/peerio-mobile/issues/258) [#264](https://github.com/PeerioTechnologies/peerio-mobile/issues/264) [#265](https://github.com/PeerioTechnologies/peerio-mobile/issues/265) [#253](https://github.com/PeerioTechnologies/peerio-mobile/issues/253)
+
+
+
 <a name="3.315.0"></a>
 # [3.315.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.314.0...v3.315.0) (2018-07-17)
 
