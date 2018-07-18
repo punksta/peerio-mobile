@@ -1,7 +1,7 @@
 import React from 'react';
 import RNFS from 'react-native-fs';
 import FileOpener from 'react-native-file-opener';
-import { WebView, Image, View, Platform, Dimensions } from 'react-native';
+import { WebView, Image, View, Platform } from 'react-native';
 import { observable } from 'mobx';
 import Text from '../controls/custom-text';
 import { t, tu, tx } from '../utils/translator';
@@ -14,8 +14,6 @@ import { fileStore, User, config } from '../../lib/icebear';
 import testLabel from '../helpers/test-label';
 import FilePreview from '../files/file-preview';
 import PopupMigration from '../controls/popup-migration';
-
-const { width } = Dimensions.get('window');
 
 const titleStyle = {
     color: vars.lighterBlackText,
@@ -160,21 +158,18 @@ function popupOkCancel(title, subTitle, text) {
     });
 }
 
-function popupConfirmEmailInvites(body) {
-    const image = require('../../assets/email-invite-confirmation.png');
-    const imageWidth = width - (2 * vars.popupHorizontalMargin);
+function popupConfirmCancelIllustration(imageObject, content, confirmCopy, cancelCopy) {
     const contents = (<View>
-        <Image style={{ borderTopLeftRadius: 4, width: imageWidth, height: imageWidth / 3.822 }} // image ratio
-            source={image} resizeMode="contain" />
-        {body}
+        {imageObject}
+        {content}
     </View>);
     return new Promise((resolve) => {
         popupState.showPopup({
             noPadding: true,
             contents,
             buttons: [
-                { id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true },
-                { id: 'confirm', text: tu('button_confirm'), action: () => resolve(true) }
+                { id: tx(cancelCopy), text: tu(cancelCopy), action: () => resolve(false), secondary: true },
+                { id: tx(confirmCopy), text: tu(confirmCopy), action: () => resolve(true) }
             ]
         });
     });
@@ -533,7 +528,7 @@ export {
     popupYes,
     popupYesCancel,
     popupOkCancel,
-    popupConfirmEmailInvites,
+    popupConfirmCancelIllustration,
     popupYesSkip,
     popupInput,
     popupInputWithPreview,
