@@ -45,6 +45,11 @@ export default class Chat extends SafeComponent {
     indicatorHeight = 16;
 
     componentDidMount() {
+        uiState.testAction2 = () => {
+            const y = Math.max(0, this.lastId / 2);
+            this.scrollView.scrollTo({ y, animated: false });
+        };
+
         this.selfMessageReaction = reaction(() => chatState.selfNewMessageCounter,
             () => {
                 this.isAtBottom = true;
@@ -70,7 +75,7 @@ export default class Chat extends SafeComponent {
     }
 
     get leftIcon() {
-        return <BackIcon action={routes.main.chats} />;
+        return <BackIcon action={routes.main.chats} testID="buttonBackIcon" />;
     }
 
     get rightIcon() {
