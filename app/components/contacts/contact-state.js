@@ -234,8 +234,8 @@ class ContactState extends RoutedState {
     }
 
     // TODO replace with bulk
-    @action batchInvite(emails) {
-        emails.forEach((email) => this.store.inviteNoWarning(email));
+    @action batchInvite(emails, isAutoImport) {
+        emails.forEach((email) => this.store.inviteNoWarning(email, undefined, isAutoImport));
     }
 
     onTransition(active, contact) {
