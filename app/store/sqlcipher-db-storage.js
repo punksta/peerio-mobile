@@ -1,5 +1,6 @@
 import sqlcipher from 'react-native-sqlcipher-storage';
 import { b64ToBytes, bytesToB64 } from '../lib/peerio-icebear/crypto/util';
+import CacheEngineBase from '../lib/peerio-icebear/db/cache-engine-base';
 
 sqlcipher.enablePromise(false);
 
@@ -34,11 +35,7 @@ function deserialize(data) {
     }
 }
 
-class SqlCipherDbStorage {
-    constructor(name) {
-        this.name = `peerio_${name}`;
-    }
-
+class SqlCipherDbStorage extends CacheEngineBase {
     async open() {
         this.sql = await sqlcipher.openDatabase({ name: this.name, location: 2 });
         this.sql.executeSqlPromise = (sql, params) => new Promise(resolve => {
@@ -100,10 +97,9 @@ class SqlCipherDbStorage {
         const r = await this.sql.executeSqlPromise(
             'SELECT key FROM key_value'
         );
-        if (!r.length || !r[0].rows.length) return result;
-        const table = r[0].rows;
-        for (let i = 0; i < table.length; ++i) {
-            result.push(table.item(i).key);
+        if (!r || !r.rows) return result;
+        for (let i = 0; i < r.rows.length; ++i) {
+            result.push(r.rows.item(i).key);
         }
         return result;
     }
@@ -113,11 +109,9 @@ class SqlCipherDbStorage {
         const r = await this.sql.executeSqlPromise(
             'SELECT value FROM key_value'
         );
-        if (!r.length || !r[0].rows.length) return result;
-        const table = r[0].rows;
-        for (let i = 0; i < table.length; ++i) {
-            const item = deserialize(table.item(i).value);
-            if (item) result.push(item);
+        if (!r || !r.rows) return result;
+        for (let i = 0; i < r.rows.length; ++i) {
+            result.push(r.rows.item(i).key);
         }
         return result;
     }
@@ -126,6 +120,11 @@ class SqlCipherDbStorage {
         return this.sql.executeSqlPromise(
             'DELETE FROM key_value'
         );
+    }
+
+    async deleteDatabase(name) {
+        console.log(`deleting databases is not implemented: ${name}`);
+        return Promise.resolve();
     }
 }
 
