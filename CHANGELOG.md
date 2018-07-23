@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.318.0"></a>
+# [3.318.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.317.0...v3.318.0) (2018-07-23)
+
+
+### Bug Fixes
+
+* support sdk breaking change [ch11414] ([d400bf0](https://github.com/PeerioTechnologies/peerio-mobile/commit/d400bf0))
+
+
+
 <a name="3.317.0"></a>
 # [3.317.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.316.0...v3.317.0) (2018-07-18)
 
