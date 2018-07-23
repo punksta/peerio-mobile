@@ -549,7 +549,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				021C85951F70C0620046FFF4 /* AdSupport.framework in Frameworks */,
 				0235B5DB1E65DEAF001D77D1 /* libsqlite3.0.tbd in Frameworks */,
 				02BCD72D1DFE1606000B8FCF /* QuickLook.framework in Frameworks */,
 				025373851EB3751800752E61 /* libsodium.a in Frameworks */,
@@ -795,8 +794,11 @@
 		02BCD72B1DFE1606000B8FCF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				021C85941F70C0620046FFF4 /* AdSupport.framework */,
 				021C85911F70C0390046FFF4 /* libGoogleConversionTracking.a */,
+=======
+>>>>>>> parent of 75a86cd9... feat: enable native google idfa tracking
 				025373841EB3751800752E61 /* libsodium.a */,
 				0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */,
 				02BCD72C1DFE1606000B8FCF /* QuickLook.framework */,
@@ -1619,7 +1621,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				02A5EE7C1ECA9ECC00ED05C1 /* RNKeychain.m in Sources */,
-				021C855F1F70C02C0046FFF4 /* RNACTReporter.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				02726F891EB33E3000D82BF5 /* RNSodium.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
