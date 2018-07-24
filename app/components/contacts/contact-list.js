@@ -44,7 +44,7 @@ export default class ContactList extends SafeComponent {
         });
         sections.unshift({ data: [], key: `All (${contacts.length})` });
         sections.unshift({ data: addedContacts, key: `${tx('title_favoriteContacts')} (${addedContacts.length})` });
-        sections.push({ data: invitedNotJoinedContacts, key: `${tx('title_invitedContacts')} (${invitedContacts.length})` });
+        sections.push({ data: invitedNotJoinedContacts, key: `${tx('title_invitedContacts')} (${invitedNotJoinedContacts.length})` });
         return sections;
     }
 
