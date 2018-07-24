@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.320.0"></a>
+# [3.320.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.313.0...v3.320.0) (2018-07-24)
+
+
+### Bug Fixes
+
+* Account Key and COPY button alignment ([#275](https://github.com/PeerioTechnologies/peerio-mobile/issues/275)) ([9ecb5c8](https://github.com/PeerioTechnologies/peerio-mobile/commit/9ecb5c8))
+* allow uppercase in login account key [branch ch11209] ([#278](https://github.com/PeerioTechnologies/peerio-mobile/issues/278)) ([f2b07da](https://github.com/PeerioTechnologies/peerio-mobile/commit/f2b07da))
+* lowercase all emails [ch11438] ([#279](https://github.com/PeerioTechnologies/peerio-mobile/issues/279)) ([55b0340](https://github.com/PeerioTechnologies/peerio-mobile/commit/55b0340))
+* medcryptor prices popup ([#274](https://github.com/PeerioTechnologies/peerio-mobile/issues/274)) ([fbe14c3](https://github.com/PeerioTechnologies/peerio-mobile/commit/fbe14c3))
+* update avatar colors [branch ch9948] ([#256](https://github.com/PeerioTechnologies/peerio-mobile/issues/256)) ([4f2fe46](https://github.com/PeerioTechnologies/peerio-mobile/commit/4f2fe46)), closes [#255](https://github.com/PeerioTechnologies/peerio-mobile/issues/255) [#257](https://github.com/PeerioTechnologies/peerio-mobile/issues/257) [#260](https://github.com/PeerioTechnologies/peerio-mobile/issues/260) [#259](https://github.com/PeerioTechnologies/peerio-mobile/issues/259) [#258](https://github.com/PeerioTechnologies/peerio-mobile/issues/258) [#264](https://github.com/PeerioTechnologies/peerio-mobile/issues/264) [#265](https://github.com/PeerioTechnologies/peerio-mobile/issues/265) [#253](https://github.com/PeerioTechnologies/peerio-mobile/issues/253)
+
+
+### Features
+
+* popup leave room illustration [branch ch10821] ([#273](https://github.com/PeerioTechnologies/peerio-mobile/issues/273)) ([9de078b](https://github.com/PeerioTechnologies/peerio-mobile/commit/9de078b))
+* remove idfa tracking from code [ch11437] ([ecc4519](https://github.com/PeerioTechnologies/peerio-mobile/commit/ecc4519))
+* room invite should show members ([#276](https://github.com/PeerioTechnologies/peerio-mobile/issues/276)) ([2cb4514](https://github.com/PeerioTechnologies/peerio-mobile/commit/2cb4514))
+* show invite method in dm placeholder and some copy fixes [branc… ([#266](https://github.com/PeerioTechnologies/peerio-mobile/issues/266)) ([ab652ff](https://github.com/PeerioTechnologies/peerio-mobile/commit/ab652ff))
+
+
+
 <a name="3.319.0"></a>
 # [3.319.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.318.0...v3.319.0) (2018-07-24)
 
