@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.319.0"></a>
+# [3.319.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.318.0...v3.319.0) (2018-07-24)
+
+
+### Bug Fixes
+
+* Account Key and COPY button alignment ([#275](https://github.com/PeerioTechnologies/peerio-mobile/issues/275)) ([9ecb5c8](https://github.com/PeerioTechnologies/peerio-mobile/commit/9ecb5c8))
+
+
+### Features
+
+* remove idfa tracking from code [ch11437] ([ecc4519](https://github.com/PeerioTechnologies/peerio-mobile/commit/ecc4519))
+* show invite method in dm placeholder and some copy fixes [branc… ([#266](https://github.com/PeerioTechnologies/peerio-mobile/issues/266)) ([ab652ff](https://github.com/PeerioTechnologies/peerio-mobile/commit/ab652ff))
+
+
+
 <a name="3.318.0"></a>
 # [3.318.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.317.0...v3.318.0) (2018-07-23)
 
