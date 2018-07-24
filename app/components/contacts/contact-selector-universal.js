@@ -163,7 +163,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
             result.unshift({ data: [this.foundContact], key: null });
         }
         if (!this.findUserText) {
-            result.push({ data: contactState.store.invitedContacts.slice(), key: 'title_allYourInvited' });
+            result.push({ data: contactState.store.invitedNotJoinedContacts.slice(), key: 'title_allYourInvited' });
         }
         return result;
     }
