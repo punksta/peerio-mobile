@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Image, View, ScrollView, TouchableOpacity, LayoutAnimation } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { Image, View, ScrollView, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
+import { observable, reaction, action } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
@@ -243,6 +243,15 @@ export default class ProfileEdit extends SafeComponent {
         AvatarActionSheet.show(({ buffers }) => User.current.saveAvatar(buffers));
     }
 
+    @action.bound onChangeAddEmailText(text) {
+        const { Version, OS } = Platform;
+        if (OS !== 'android' || Version > 22) {
+            this.newEmailText = text.toLowerCase();
+        } else {
+            this.newEmailText = text;
+        }
+    }
+
     renderThrow() {
         const contact = contactStore.getContact(User.current.username);
         const { firstName, lastName, fingerprintSkylarFormatted, username } = contact;
@@ -302,7 +311,7 @@ export default class ProfileEdit extends SafeComponent {
                             autoCapitalize="none"
                             value={this.newEmailText}
                             onBlur={() => this.validateNewEmail()}
-                            onChangeText={text => { this.newEmailText = text; }}
+                            onChangeText={this.onChangeAddEmailText}
                             onSubmitEditing={() => this.emailAction()}
                             style={textinput} />
                     </View>

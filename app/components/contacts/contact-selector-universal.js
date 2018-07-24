@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { View, ActivityIndicator, LayoutAnimation } from 'react-native';
+import { View, ActivityIndicator, LayoutAnimation, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { observable, action, reaction, computed } from 'mobx';
 import { observer } from 'mobx-react/native';
@@ -61,7 +61,12 @@ export default class ContactSelectorUniversal extends SafeComponent {
             this.onSubmit();
             return;
         }
-        this.findUserText = text;
+        const { Version, OS } = Platform;
+        if (OS !== 'android' || Version > 22) {
+            this.findUserText = text.toLowerCase();
+        } else {
+            this.findUserText = text;
+        }
         this.searchUserTimeout(text);
     }
 
