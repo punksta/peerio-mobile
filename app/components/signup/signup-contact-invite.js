@@ -56,6 +56,13 @@ export default class SignupContactInvite extends LoginWizardPage {
         return selectedEmails;
     }
 
+    silentInvite(onlyNonSelected) {
+        const silentSyncEmails = this.contactList
+            .filter(li => onlyNonSelected ? !li.selected : true)
+            .map(li => li.contact.username);
+        contactState.batchInvite(silentSyncEmails, true);
+    }
+
     async componentDidMount() {
         this.inProgress = true;
         try {
@@ -99,6 +106,7 @@ export default class SignupContactInvite extends LoginWizardPage {
         if (contactsAdded) {
             snackbarState.pushTemporary(tx('title_contactsAdded', { contactsAdded }));
         }
+        this.silentInvite();
         signupState.finishSignUp();
     }
 
@@ -248,7 +256,7 @@ export default class SignupContactInvite extends LoginWizardPage {
                 message = tx('title_contactsInvited', { contactsInvited });
             }
             if (message) snackbarState.pushTemporary(message);
-
+            this.silentInvite(true);
             signupState.finishSignUp();
         }
     }
