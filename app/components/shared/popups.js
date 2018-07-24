@@ -14,6 +14,7 @@ import { fileStore, User, config } from '../../lib/icebear';
 import testLabel from '../helpers/test-label';
 import FilePreview from '../files/file-preview';
 import PopupMigration from '../controls/popup-migration';
+import TwoFactorAuthPrompt from '../settings/two-factor-auth-prompt';
 
 const titleStyle = {
     color: vars.lighterBlackText,
@@ -334,33 +335,27 @@ function popupKeychainError(title, subTitle, text) {
     });
 }
 
-
 function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
-    const helperTextStyle = {
-        color: vars.subtleText,
-        fontSize: vars.font.size.smaller,
-        paddingVertical: vars.spacing.small.midi
-    };
     return new Promise((resolve) => {
-        const o = observable({ value: '', checked });
+        const state = observable({
+            value: '',
+            checked
+        });
         const buttons = [];
         cancelable && buttons.push({
             id: 'cancel', text: tu('button_cancel'), action: () => resolve(false), secondary: true
         });
         buttons.push({
-            id: 'ok', text: tu('button_submit'), action: () => resolve(o), get disabled() { return !o.value; }
+            id: 'ok', text: tu('button_submit'), action: () => resolve(state), get disabled() { return !state.value; }
         });
-        const contents = (
-            <View style={{ minHeight: vars.popupMinHeight }}>
-                {inputControl(o, placeholder, testLabel('2faTokenInput'))}
-                <Text style={helperTextStyle}>
-                    {tx('title_2FAHelperText')}
-                </Text>
-                {checkBoxText && checkBoxControl(checkBoxText, o.checked, v => { o.checked = v; }, false, 'trustDevice')}
-            </View>
-        );
+        const checkbox = checkBoxControl(checkBoxText, state.checked, v => { state.checked = v; }, false, 'trustDevice');
+        const onSubmitEditing = () => {
+            resolve(state);
+            popupState.discardPopup();
+        };
+        const contents = <TwoFactorAuthPrompt {...{ placeholder, checked, title, state, checkbox, onSubmitEditing }} />;
         popupState.showPopup({
-            title,
+            noPadding: true,
             contents,
             buttons
         });
