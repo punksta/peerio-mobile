@@ -8,8 +8,11 @@
 // import MockThumbnail from './mock-thumbnail';
 // import MockActionSheet from './mock-action-sheet';
 // import MockSignupContactInvite from './mock-signup-contact-import';
+// import MockPerfResults from './mock-perf-results';
+// import MockSqlTest from './mock-sql-test';
 
 export default null;
+// export default MockSqlTest;
 // export default MockSignupContactInvite;
 // export default MockChannel;
 // export default __DEV__ ? MockStyledTextInput : null;
