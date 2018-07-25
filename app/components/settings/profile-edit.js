@@ -12,6 +12,7 @@ import AvatarActionSheet, { SIZE2 } from './avatar-action-sheet';
 import icons from '../helpers/icons';
 import uiState from '../layout/ui-state';
 import testLabel from '../helpers/test-label';
+import AvatarCircle from '../shared/avatar-circle';
 
 const emailFormatValidator = validation.validators.emailFormat.action;
 
@@ -204,8 +205,9 @@ export default class ProfileEdit extends SafeComponent {
 
     get avatarLetter() {
         const contact = contactStore.getContact(User.current.username);
+        const tryColor = contact.color || {};
         const style = {
-            color: vars.white,
+            color: tryColor.isLight ? 'black' : 'white',
             fontSize: vars.profileEditFontSize,
             marginHorizontal: vars.spacing.medium.maxi2x,
             marginVertical: vars.spacing.medium.mini2x
@@ -262,20 +264,22 @@ export default class ProfileEdit extends SafeComponent {
                 keyboardShouldPersistTaps="handled"
                 style={{ backgroundColor: vars.darkBlueBackground05 }}
                 ref={ref => { this._scrollView = ref; }}>
-                <View style={[flexRow, { backgroundColor: contact.hasAvatar ? vars.txtDate : contact.color }]}>
-                    {contact.hasAvatar ? this.avatar : this.avatarLetter}
+                <View style={[flexRow, { backgroundColor: vars.darkBlueBackground05 }]}>
+                    <View style={{ padding: vars.spacing.medium.mini2x }}>
+                        <AvatarCircle contact={contact} medium />
+                    </View>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
-                        <Text bold
+                        <Text
                             {...testLabel('fullName')}
                             style={{
-                                color: vars.white,
+                                color: vars.textBlack87,
                                 fontSize: vars.font.size.bigger,
                                 marginVertical: vars.spacing.small.mini2x
                             }}>{firstName} {lastName}</Text>
-                        <Text style={{ color: vars.white }}>@{username}</Text>
+                        <Text style={{ color: vars.textBlack54 }}>@{username}</Text>
                         <View style={{ position: 'absolute', right: 0, bottom: 0, flexDirection: 'row' }}>
-                            {contact.hasAvatar && icons.white('delete', () => user.deleteAvatar())}
-                            {icons.white('camera-alt', this.selectAvatar, null, null, 'uploadAvatarIcon')}
+                            {contact.hasAvatar && icons.dark('delete', () => user.deleteAvatar())}
+                            {icons.dark('camera-alt', this.selectAvatar, null, null, 'uploadAvatarIcon')}
                         </View>
                     </View>
                 </View>
