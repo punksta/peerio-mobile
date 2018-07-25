@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.321.0"></a>
+# [3.321.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.320.0...v3.321.0) (2018-07-25)
+
+
+### Bug Fixes
+
+* typo ([404cf52](https://github.com/PeerioTechnologies/peerio-mobile/commit/404cf52))
+* use invitedNotJoinedContacts [ch11415] ([7768d1e](https://github.com/PeerioTechnologies/peerio-mobile/commit/7768d1e))
+
+
+
 <a name="3.320.0"></a>
 # [3.320.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.313.0...v3.320.0) (2018-07-24)
 
