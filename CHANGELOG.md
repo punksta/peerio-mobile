@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.322.0"></a>
+# [3.322.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.321.0...v3.322.0) (2018-07-25)
+
+
+### Bug Fixes
+
+* fix cache getAllValues [ch11670] ([dd7aca5](https://github.com/PeerioTechnologies/peerio-mobile/commit/dd7aca5))
+* room names in the modal [ch11707] ([d18c93f](https://github.com/PeerioTechnologies/peerio-mobile/commit/d18c93f))
+
+
+
 <a name="3.321.0"></a>
 # [3.321.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.320.0...v3.321.0) (2018-07-25)
 
