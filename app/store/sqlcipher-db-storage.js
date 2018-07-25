@@ -112,7 +112,7 @@ class SqlCipherDbStorage extends CacheEngineBase {
         );
         if (!r || !r.rows) return result;
         for (let i = 0; i < r.rows.length; ++i) {
-            result.push(r.rows.item(i).key);
+            result.push(deserialize(r.rows.item(i).value));
         }
         return result;
     }
