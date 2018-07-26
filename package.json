@@ -16,7 +16,7 @@
     "ios-dev": "react-native run-ios",
     "android": "react-native run-android",
     "android-signed": "npm run build-android && ./scripts/release_android.sh",
-    "lint": "eslint --fix --ext .js,.jsx .",
+    "lint": "eslint --max-warnings=0 app && ./scripts/test-observer-decorator.sh",
     "localize": "tx pull -af",
     "release": "standard-version -r minor && git push --follow-tags origin",
     "link": "react-native link",
