@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.323.0"></a>
+# [3.323.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.322.0...v3.323.0) (2018-07-26)
+
+
+### Bug Fixes
+
+* switch targetSDK to version 23 to prevent a crash [ch11731] ([38d223c](https://github.com/PeerioTechnologies/peerio-mobile/commit/38d223c))
+
+
+### Features
+
+* add observer test script [ch9015] ([23e993a](https://github.com/PeerioTechnologies/peerio-mobile/commit/23e993a))
+* observer everywhere [ch9015] ([90ec181](https://github.com/PeerioTechnologies/peerio-mobile/commit/90ec181))
+
+
+
 <a name="3.322.0"></a>
 # [3.322.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.321.0...v3.322.0) (2018-07-25)
 
