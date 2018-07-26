@@ -26,4 +26,4 @@ npm run test-ios ; \
 killall npm ; \
 killall node ; \
 killall appium ; \
-# source ./scripts/reinstall-ios.sh
+source ./scripts/reinstall-ios.sh
