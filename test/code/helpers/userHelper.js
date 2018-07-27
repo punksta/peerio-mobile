@@ -54,6 +54,10 @@ const existingUsers = {
     leavechannelnav_invitee: {
         name: process.env.LEAVECHANNELNAV1_TEST_USER,
         passphrase: process.env.LEAVECHANNELNAV1_TEST_PASS
+    },
+    doctor: {
+        name: process.env.MCR_DOCTOR_USER,
+        passphrase: process.env.MCR_DOCTOR_PASS
     }
 };
 
