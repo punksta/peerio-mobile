@@ -18,7 +18,10 @@ import { vars } from '../../styles/styles';
 import uiState from '../layout/ui-state';
 import ListItem from './signup-contact-list-item';
 import Text from '../controls/custom-text';
+import tm from '../../telemetry';
+import { telemetry } from '../../lib/icebear';
 
+const { S } = telemetry;
 const { width } = Dimensions.get('window');
 
 const _ = require('lodash');
@@ -74,6 +77,12 @@ export default class SignupContactInvite extends LoginWizardPage {
             console.error(e);
         }
         this.inProgress = false;
+        tm.helpers.setCurrentRoute(S.INVITE_CONTACTS);
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        tm.signup.duration(null, S.ONBOARDING, this.startTime);
     }
 
     /**
@@ -101,12 +110,13 @@ export default class SignupContactInvite extends LoginWizardPage {
         return Promise.all(promises);
     }
 
-    @action.bound skip() {
+    @action.bound handleSkipButton() {
         const contactsAdded = contactState.store.addedContacts.length;
         if (contactsAdded) {
             snackbarState.pushTemporary(tx('title_contactsAdded', { contactsAdded }));
         }
         this.silentInvite();
+        tm.signup.skip();
         signupState.finishSignUp();
     }
 
@@ -152,7 +162,7 @@ export default class SignupContactInvite extends LoginWizardPage {
                         {tx('title_inviteContacts')}
                     </Text>
                     <View style={skipButtonStyle}>
-                        {buttons.whiteTextButton(tx('button_skip'), () => this.skip(), null, tx('button_skip'))}
+                        {buttons.whiteTextButton(tx('button_skip'), this.handleSkipButton, null, tx('button_skip'))}
                     </View>
                 </View>
                 <SearchBar
@@ -171,6 +181,7 @@ export default class SignupContactInvite extends LoginWizardPage {
     }
 
     @action.bound selectAll() {
+        tm.signup.selectBulkContacts(true);
         this.contactList.forEach(listItem => {
             listItem.selected = true;
         });
@@ -178,6 +189,7 @@ export default class SignupContactInvite extends LoginWizardPage {
     }
 
     @action.bound deselectAll() {
+        tm.signup.selectBulkContacts(false);
         this.contactList.forEach(listItem => {
             listItem.selected = false;
         });
@@ -186,6 +198,7 @@ export default class SignupContactInvite extends LoginWizardPage {
 
     @action.bound toggleCheckbox(listItem) {
         listItem.selected = !listItem.selected;
+        tm.signup.selectOneContact(listItem.selected);
         this.refreshList();
     }
 
@@ -242,7 +255,9 @@ export default class SignupContactInvite extends LoginWizardPage {
     }
 
     @action.bound async inviteSelectedContacts() {
+        tm.signup.inviteContact();
         if (await this.popupConfirmEmailInvites()) {
+            tm.signup.confirmInvite();
             contactState.batchInvite(this.selectedEmails);
             const contactsAdded = contactState.store.addedContacts.length;
             // TODO use contact store for invites sent

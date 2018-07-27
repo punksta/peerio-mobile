@@ -12,11 +12,19 @@ import LoginWizardPage, {
 } from '../login/login-wizard-page';
 import { formStyle, titleDark, textNormal } from '../../styles/signup-contact-sync';
 import { popupContactPermission } from '../shared/popups';
+import tm from '../../telemetry';
+import { telemetry } from '../../lib/icebear';
+
+const { S } = telemetry;
 
 const imageDiscoverNetwork = require('../../assets/discover-network.png');
 
 @observer
 export default class SignupContactSyncStart extends LoginWizardPage {
+    componentDidMount() {
+        tm.helpers.setCurrentRoute(S.SYNC_CONTACTS);
+    }
+
     get icon() {
         const width = topCircleSizeSmall * 2;
         const height = width;
@@ -30,12 +38,19 @@ export default class SignupContactSyncStart extends LoginWizardPage {
     }
 
     @action.bound async syncContacts() {
+        tm.signup.syncContacts();
         const result = await popupContactPermission(tx('title_permissionContacts'), tx('title_permissionContactsDescroption'));
+        tm.signup.contactPermissionDialog(result);
         if (result) {
             const hasPermissions = await contactState.hasPermissions();
             if (!hasPermissions) signupState.finishSignUp();
             signupState.next();
         } else signupState.finishSignUp();
+    }
+
+    handleSkipButton() {
+        tm.signup.skip();
+        signupState.finishSignUp();
     }
 
     render() {
@@ -51,13 +66,13 @@ export default class SignupContactSyncStart extends LoginWizardPage {
                             <Text style={textNormal}>{tx('title_findYourContactsDescription')} </Text>
                         </View>
                         <View style={{ flex: 1, justifyContent: 'flex-start', alignItems: 'center' }}>
-                            {buttons.roundBlueBgButton(tx('title_syncContacts'), () => this.syncContacts())}
+                            {buttons.roundBlueBgButton(tx('title_syncContacts'), this.syncContacts)}
                         </View>
                     </View>
                     {this.icon}
                 </View>
                 <View style={{ flexDirection: 'row', height: 90, justifyContent: 'flex-end' }}>
-                    {this.button('button_skip', () => signupState.finishSignUp())}
+                    {this.button('button_skip', this.handleSkipButton)}
                 </View>
             </View>
         );

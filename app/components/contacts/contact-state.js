@@ -2,10 +2,13 @@ import { DeviceEventEmitter } from 'react-native';
 import { observable, action, when } from 'mobx';
 import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
-import { contactStore, warnings, User } from '../../lib/icebear';
+import { contactStore, warnings, User, telemetry } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import contactAddState from './contact-add-state';
 import chatState from '../messaging/chat-state';
+import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 class ContactState extends RoutedState {
     _prefix = 'contacts';
@@ -107,10 +110,12 @@ class ContactState extends RoutedState {
             });
         }).then(permission => {
             if (permission === 'authorized') {
+                tm.signup.contactPermissionDialog(true, S.OS_DIALOG);
                 console.log('contact-state.js: authorized');
                 return true;
             }
             if (permission === 'denied') {
+                tm.signup.contactPermissionDialog(false, S.OS_DIALOG);
                 console.log('contact-state.js: denied');
             }
             return false;

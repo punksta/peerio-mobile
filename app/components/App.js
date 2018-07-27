@@ -20,6 +20,8 @@ import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
 import ActionSheetLayout from './layout/action-sheet-layout';
 import Text from './controls/custom-text';
+import { initTelemetry } from '../telemetry';
+
 
 const { height, width } = Dimensions.get('window');
 @observer
@@ -56,6 +58,7 @@ export default class App extends SafeComponent {
                 && !await TinyDb.system.getValue('apple-review-login')) {
                 route = routerApp.routes.loginStart;
             }
+            initTelemetry();
             route.transition();
         }
     }

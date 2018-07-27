@@ -13,6 +13,7 @@ import LoginClean from './login-clean';
 import Logs from '../logs/logs';
 import uiState from '../layout/ui-state';
 import consoleOverride from '../../lib/console-override';
+import tm from '../../telemetry';
 
 const { height } = Dimensions.get('window');
 
@@ -24,7 +25,12 @@ export default class LoginWizard extends Wizard {
     set index(i) { loginState.current = i; }
 
     loginStart = () => {
-        return <LoginStart login={() => this.changeIndex(1)} />;
+        return (<LoginStart
+            login={() => {
+                tm.login.onLoginClick();
+                this.changeIndex(1);
+            }}
+        />);
     };
 
     loginClean = () => { return <LoginClean />; };

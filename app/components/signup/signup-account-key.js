@@ -5,7 +5,7 @@ import ViewShot from 'react-native-view-shot';
 import Text from '../controls/custom-text';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
-import { getFirstLetterUpperCase, socket } from '../../lib/icebear';
+import { getFirstLetterUpperCase, socket, telemetry } from '../../lib/icebear';
 import signupState from './signup-state';
 import { t, tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
@@ -16,6 +16,9 @@ import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 import snackbarState from '../snackbars/snackbar-state';
 import testLabel from '../helpers/test-label';
+import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 const formStyle = {
     padding: vars.spacing.medium.midi2x,
@@ -70,6 +73,15 @@ const accountKeyView = {
 
 @observer
 export default class SignupStep1 extends LoginWizardPage {
+    componentDidMount() {
+        tm.helpers.setCurrentRoute(S.ACCOUNT_KEY);
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        tm.signup.duration(null, S.ONBOARDING, this.startTime);
+    }
+
     get formattedAccountKey() {
         const stringLength = signupState.passphrase.length;
         const stringMiddle = Math.ceil(stringLength / 2);
@@ -80,7 +92,13 @@ export default class SignupStep1 extends LoginWizardPage {
         return formatted;
     }
 
+    addPhoto() {
+        tm.signup.addPhoto();
+        SignupAvatarActionSheet.show();
+    }
+
     copyAccountKey() {
+        tm.signup.copy();
         Clipboard.setString(signupState.passphrase);
         snackbarState.pushTemporary(t('title_copied'));
     }
@@ -92,6 +110,16 @@ export default class SignupStep1 extends LoginWizardPage {
                 <Text bold style={addPhotoPlus}>{letter}</Text>
             </View>
         );
+    }
+
+    handleBackButton() {
+        tm.signup.back(S.ACCOUNT_KEY);
+        signupState.prev();
+    }
+
+    handleNextButton() {
+        tm.signup.next(S.ACCOUNT_KEY);
+        signupState.next();
     }
 
     get body() {
@@ -127,7 +155,7 @@ export default class SignupStep1 extends LoginWizardPage {
                             </View>
                         </View>
                         <TouchableOpacity
-                            onPress={() => SignupAvatarActionSheet.show()}
+                            onPress={this.addPhoto}
                             pressRetentionOffset={vars.pressRetentionOffset}
                             style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]}>
                             {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}
@@ -135,8 +163,8 @@ export default class SignupStep1 extends LoginWizardPage {
                     </View>
                 </ViewShot>
                 <View style={buttonRowStyle}>
-                    {this.button('button_back', () => signupState.prev())}
-                    {this.button('button_next', () => signupState.next(), false, !socket.connected)}
+                    {this.button('button_back', this.handleBackButton)}
+                    {this.button('button_next', this.handleNextButton, false, !socket.connected)}
                 </View>
                 <ActivityOverlay large visible={signupState.isInProgress} />
             </View>

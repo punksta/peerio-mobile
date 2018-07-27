@@ -2,6 +2,7 @@ import { observable, action } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
 import { User, crypto } from '../../lib/icebear';
+import tm from '../../telemetry';
 
 class SignupState extends RoutedState {
     @observable username = '';
@@ -56,6 +57,7 @@ class SignupState extends RoutedState {
 
     @action async finishSignUp() {
         return mainState.activateAndTransition(User.current)
+            .then(() => tm.signup.finishSignup())
             .catch((e) => {
                 console.log(e);
                 User.current = null;

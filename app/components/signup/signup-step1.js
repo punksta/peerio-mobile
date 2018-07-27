@@ -17,8 +17,10 @@ import LoginWizardPage, {
 import SignupAvatar from './signup-avatar';
 import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 import StyledTextInput from '../shared/styled-text-input';
-import { socket, validation } from '../../lib/icebear';
+import { socket, validation, telemetry } from '../../lib/icebear';
+import tm from '../../telemetry';
 
+const { S } = telemetry;
 const { validators } = validation;
 const { firstName, lastName, username, email } = validators;
 
@@ -60,8 +62,11 @@ const tosParser = {
     emphasis: text => <Bold>{text}</Bold>,
     tosButton: text => (
         <Text
-            onPress={popupTOS}
-            style={[footerText2, { textDecorationLine: 'underline' }]}>
+            style={[footerText2, { textDecorationLine: 'underline' }]}
+            onPress={() => {
+                tm.signup.viewLink(S.TERMS_OF_SERVICE);
+                popupTOS();
+            }}>
             {text}
         </Text>
     )
@@ -94,9 +99,21 @@ export default class SignupStep1 extends LoginWizardPage {
             this.firstNameInput.onChangeText(capitalize(randomWords()));
             this.lastNameInput.onChangeText(capitalize(randomWords()));
         }
+        tm.helpers.setCurrentRoute(S.SIGN_UP);
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        tm.signup.duration(null, S.ONBOARDING, this.startTime);
+    }
+
+    @action.bound handleBackButton() {
+        tm.signup.back();
+        signupState.exit();
     }
 
     @action.bound handleNextButton() {
+        tm.signup.next();
         signupState.firstName = this.firstnameState.value;
         signupState.lastName = this.lastnameState.value;
         signupState.username = this.usernameState.value;
@@ -108,6 +125,11 @@ export default class SignupStep1 extends LoginWizardPage {
         // removing "!this.firstnameState.value" causes a runtime error
         return socket.connected && (!this.firstnameState.value || !this.firstNameInput.isValid ||
         !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
+    }
+
+    addPhoto() {
+        tm.signup.addPhoto();
+        SignupAvatarActionSheet.show();
     }
 
     get avatar() {
@@ -130,6 +152,7 @@ export default class SignupStep1 extends LoginWizardPage {
         return (
             <View>
                 <StyledTextInput
+                    label={S.FIRST_NAME}
                     state={this.firstnameState}
                     validations={firstName}
                     hint={tx('title_firstName')}
@@ -141,6 +164,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     ref={this.firstNameInputRef}
                     testID="firstName" />
                 <StyledTextInput
+                    label={S.LAST_NAME}
                     state={this.lastnameState}
                     validations={lastName}
                     hint={tx('title_lastName')}
@@ -152,6 +176,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     ref={this.lastNameInputRef}
                     testID="lastName" />
                 <StyledTextInput
+                    label={S.USERNAME}
                     state={this.usernameState}
                     validations={username}
                     hint={tx('title_username')}
@@ -163,6 +188,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     ref={this.usernameInputRef}
                     testID="username" />
                 <StyledTextInput
+                    label={S.EMAIL}
                     state={this.emailState}
                     validations={email}
                     hint={tx('title_email')}
@@ -193,17 +219,14 @@ export default class SignupStep1 extends LoginWizardPage {
                         </View>
                         <TouchableOpacity
                             style={circleTopSmall}
-                            onPress={() => SignupAvatarActionSheet.show()}
+                            onPress={this.addPhoto}
                             pressRetentionOffset={vars.pressRetentionOffset}>
                             {signupState.avatarData ? this.avatar : this.avatarSelector}
                         </TouchableOpacity>
                     </View>
                     <View style={[buttonRowStyle, { justifyContent: 'space-between' }]}>
-                        {this.button('button_back', signupState.exit)}
-                        {this.button('button_next',
-                            () => this.handleNextButton(),
-                            false,
-                            this.isNextDisabled)}
+                        {this.button('button_back', this.handleBackButton)}
+                        {this.button('button_next', this.handleNextButton, false, this.isNextDisabled)}
                     </View>
                     <View style={footer}>
                         <Text style={signupTextStyle}>

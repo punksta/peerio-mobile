@@ -11,8 +11,11 @@ import LoginWizardPage, {
 import { vars } from '../../styles/styles';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
 import StyledTextInput from '../shared/styled-text-input';
-import { socket, validation } from '../../lib/icebear';
+import { socket, validation, telemetry } from '../../lib/icebear';
 import uiState from '../layout/ui-state';
+import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 const { validators } = validation;
 const { usernameLogin } = validators;
@@ -50,6 +53,18 @@ export default class LoginClean extends LoginWizardPage {
                 process.env.PEERIO_AUTOLOGIN && this.submit();
             });
         }
+        tm.helpers.setCurrentRoute(S.SIGN_IN);
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        console.log(this.startTime);
+        tm.login.duration(this.startTime);
+    }
+
+    @action.bound onSignInPress() {
+        tm.login.onLoginClick();
+        this.submit();
     }
 
     @action.bound submit() {
@@ -88,6 +103,7 @@ export default class LoginClean extends LoginWizardPage {
                     <View style={inner2}>
                         <View style={formStyle}>
                             <StyledTextInput
+                                label={S.USERNAME}
                                 state={this.usernameState}
                                 validations={usernameLogin}
                                 hint={tx('title_username')}
@@ -96,6 +112,7 @@ export default class LoginClean extends LoginWizardPage {
                                 testID="usernameLogin"
                             />
                             <StyledTextInput
+                                label={S.ACCOUNT_KEY}
                                 state={this.passwordState}
                                 hint={tx('title_AccountKey')}
                                 onSubmit={this.submit}
@@ -110,7 +127,7 @@ export default class LoginClean extends LoginWizardPage {
                     <View style={[row, { justifyContent: 'flex-end' }]}>
                         {this.button(
                             'button_login',
-                            this.submit,
+                            this.onSignInPress,
                             loginState.isInProgress,
                             this.isNextDisabled)}
                     </View>

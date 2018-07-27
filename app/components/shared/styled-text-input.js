@@ -11,6 +11,7 @@ import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
 import { tx } from '../utils/translator';
 import { socket } from '../../lib/icebear';
+import tm from '../../telemetry';
 
 // Because JS has no enums
 const VALID = true;
@@ -29,6 +30,7 @@ export default class StyledTextInput extends SafeComponent {
     @observable focusedAnim;
     @observable errorMessageText;
     @observable isDirty = false;
+    prevTextLength = 0;
 
     constructor(props) {
         super(props);
@@ -62,6 +64,7 @@ export default class StyledTextInput extends SafeComponent {
     @action.bound setCustomError(error) {
         this.valid = INVALID;
         this.errorMessageText = error;
+        tm.shared.styledTextInputOnError(this.props.label, this.errorMessageText);
     }
 
     // Checks if text field is empty and validates accordingly
@@ -121,6 +124,7 @@ export default class StyledTextInput extends SafeComponent {
                         this.valid = valid;
                         if (valid === INVALID) {
                             this.errorMessageText = validation.message;
+                            tm.shared.styledTextInputOnError(this.props.label, this.errorMessageText);
                             return false;
                         }
                         return true;
@@ -141,12 +145,17 @@ export default class StyledTextInput extends SafeComponent {
         this.isDirty = true;
         // even if not focused, move the hint to the top
         if (text) this.setHintToTop();
+        // key is entered and the key is '@'
+        if (this.prevTextLength + 1 === text.length && text[text.length - 1] === '@') {
+            tm.login.onLoginWithEmail();
+        }
         let inputText = text;
         const { Version, OS } = Platform;
         if (OS !== 'android' || Version > 22) {
             inputText = this.props.lowerCase ? text.toLowerCase() : text;
         }
         this.props.state.value = inputText;
+        this.prevTextLength = inputText.length;
         this.validate();
     }
 
@@ -165,6 +174,7 @@ export default class StyledTextInput extends SafeComponent {
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
         this.blurAnimation();
+        tm.shared.styledTextInputOnBlur(this.props.label, this.errorMessageText);
     }
 
     @action.bound onFocus() {
@@ -173,6 +183,7 @@ export default class StyledTextInput extends SafeComponent {
         if (this.props.onFocus) this.props.onFocus();
         this.textInput.focus();
         this.setHintToTop();
+        tm.shared.styledTextInputOnFocus(this.props.label);
     }
 
     /**
@@ -268,6 +279,7 @@ export default class StyledTextInput extends SafeComponent {
         const { state } = this.props;
         // we don't give user the ability to hide passphrase again, because Apple
         this.showSecret = !this.showSecret;
+        tm.login.toggleAkVisibility(this.showSecret);
         // prevent cursor skip
         if (state.value && Platform.OS === 'android') this._skip = true;
     }

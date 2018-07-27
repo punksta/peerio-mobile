@@ -11,6 +11,10 @@ import LoginWizardPage, {
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars } from '../../styles/styles';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
+import { telemetry } from '../../lib/icebear';
+import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 const imageWelcomeFast = require('../../assets/welcome-fast.png');
 const imageWelcomePrivate = require('../../assets/welcome-private.png');
@@ -20,6 +24,8 @@ function scrollItem(title, subtitle, icon) { return { title, subtitle, icon }; }
 
 @observer
 export default class LoginStart extends LoginWizardPage {
+    currentPage = 1;
+
     progress(current) {
         const count = 3;
         const circles = [];
@@ -52,7 +58,28 @@ export default class LoginStart extends LoginWizardPage {
 
     handleScroll = event => {
         const { x } = event.nativeEvent.contentOffset;
-        this._selected = Math.round(x / this._scrollerWidth);
+        this._selected = Math.round(x / this._scrollerWidth + 1);
+    };
+
+    handlePageChange = event => {
+        const { x } = event.nativeEvent.contentOffset;
+        const newPage = Math.round(x / this._scrollerWidth + 1);
+        if (newPage !== this.currentPage) {
+            switch (newPage) {
+                case (1):
+                    tm.signup.swipe(this.currentPage, S.LEFT);
+                    break;
+                case (2):
+                    if (this.currentPage === 1) tm.signup.swipe(this.currentPage, S.RIGHT);
+                    if (this.currentPage === 3) tm.signup.swipe(this.currentPage, S.LEFT);
+                    break;
+                case (3):
+                    tm.signup.swipe(this.currentPage, S.RIGHT);
+                    break;
+                default:
+            }
+        }
+        this.currentPage = newPage;
     };
 
     _scrollItems = [
@@ -63,6 +90,17 @@ export default class LoginStart extends LoginWizardPage {
 
     componentDidMount() {
         reaction(() => this._selected, () => LayoutAnimation.easeInEaseOut());
+        tm.helpers.setCurrentRoute(S.WELCOME_SCREEN);
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        tm.signup.duration(null, S.ONBOARDING, this.startTime);
+    }
+
+    handleCreateAccount() {
+        tm.shared.startAccountCreation();
+        loginState.routes.app.signupStep1();
     }
 
     render() {
@@ -81,6 +119,7 @@ export default class LoginStart extends LoginWizardPage {
                         showsHorizontalScrollIndicator={false}
                         horizontal
                         pagingEnabled
+                        onMomentumScrollEnd={this.handlePageChange}
                         style={inner}>
                         {this._scrollItems.map(({ title, subtitle }, i) => (
                             <View style={scrollStyle} key={title}>
@@ -101,7 +140,7 @@ export default class LoginStart extends LoginWizardPage {
                 <View style={row}>
                     {this.button('button_login', this.props.login, loginState.isInProgress)}
                     {/* TODO: copy */}
-                    {this.button('button_CreateAccount', () => loginState.routes.app.signupStep1(), loginState.isInProgress)}
+                    {this.button('button_CreateAccount', this.handleCreateAccount, loginState.isInProgress)}
                 </View>
                 <ActivityOverlay large visible={loginState.isInProgress} />
             </View>

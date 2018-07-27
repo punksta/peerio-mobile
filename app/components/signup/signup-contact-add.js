@@ -12,6 +12,10 @@ import ContactImportItem from '../contacts/contact-import-item';
 import { headerContainer, textStyle, skipButtonStyle, listHeader, textListTitle, footerContainer, container } from '../../styles/signup-contact-sync';
 import ListItem from './signup-contact-list-item';
 import Text from '../controls/custom-text';
+import tm from '../../telemetry';
+import { telemetry } from '../../lib/icebear';
+
+const { S } = telemetry;
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -36,6 +40,13 @@ export default class SignupContactAdd extends LoginWizardPage {
         }
         this.inProgress = false;
         if (this.contactList.length === 0) signupState.next();
+        tm.helpers.setCurrentRoute(S.ADD_CONTACTS);
+        this.startTime = Date.now();
+    }
+
+
+    componentWillUnmount() {
+        tm.signup.duration(null, S.ONBOARDING, this.startTime);
     }
 
     /**
@@ -61,6 +72,11 @@ export default class SignupContactAdd extends LoginWizardPage {
         return Promise.all(promises);
     }
 
+    handleSkipButton() {
+        tm.signup.skip();
+        signupState.next();
+    }
+
     header() {
         return (
             <View style={headerContainer}>
@@ -68,7 +84,7 @@ export default class SignupContactAdd extends LoginWizardPage {
                     {tx('title_addContacts')}
                 </Text>
                 <View style={skipButtonStyle}>
-                    {buttons.whiteTextButton(tx('button_skip'), () => signupState.next())}
+                    {buttons.whiteTextButton(tx('button_skip'), this.handleSkipButton)}
                 </View>
             </View>
         );
@@ -79,6 +95,7 @@ export default class SignupContactAdd extends LoginWizardPage {
     }
 
     @action.bound selectAll() {
+        tm.signup.selectBulkContacts(true);
         this.contactList.forEach(listItem => {
             listItem.selected = true;
         });
@@ -86,6 +103,7 @@ export default class SignupContactAdd extends LoginWizardPage {
     }
 
     @action.bound deselectAll() {
+        tm.signup.selectBulkContacts(false);
         this.contactList.forEach(listItem => {
             listItem.selected = false;
         });
@@ -94,6 +112,7 @@ export default class SignupContactAdd extends LoginWizardPage {
 
     @action.bound toggleCheckbox(listItem) {
         listItem.selected = !listItem.selected;
+        tm.signup.selectOneContact(listItem.selected);
         this.refreshList();
     }
 
@@ -133,6 +152,7 @@ export default class SignupContactAdd extends LoginWizardPage {
     }
 
     @action.bound addSelectedContacts() {
+        tm.signup.addContact();
         this.selectedContacts.forEach(i => contactState.store.getContactAndSave(i.contact.username));
         signupState.next();
     }

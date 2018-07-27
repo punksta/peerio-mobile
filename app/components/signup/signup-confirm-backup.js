@@ -12,7 +12,10 @@ import LoginWizardPage, {
 } from '../login/login-wizard-page';
 import StyledTextInput from '../shared/styled-text-input';
 import icons from '../helpers/icons';
+import { telemetry } from '../../lib/icebear';
+import tm from '../../telemetry';
 
+const { S } = telemetry;
 const imageWelcomeSafe = require('../../assets/welcome-safe.png');
 
 const textDescription = {
@@ -38,6 +41,35 @@ export default class SignupConfirmBackup extends LoginWizardPage {
     @observable confirmTextSample = tx('title_confirmTextSample');
     @observable confirmTextState = observable({ value: '' });
 
+    componentDidMount() {
+        when(() => this.isOk, () => {
+            signupState.keyBackedUp = true;
+            tm.signup.akConfirmed();
+        });
+        // QUICK SIGNUP DEV FLAG
+        if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
+            this.isOk = true;
+            signupState.keyBackedUp = true;
+            signupState.next();
+        }
+        tm.helpers.setCurrentRoute(S.A_CONFIRMATION);
+        this.startTime = Date.now();
+    }
+
+    componentWillUnmount() {
+        tm.signup.duration(null, S.ONBOARDING, this.startTime);
+    }
+
+    handleBackButton() {
+        tm.signup.back(S.AK_CONFIRMATION);
+        signupState.prev();
+    }
+
+    handleNextButton() {
+        tm.signup.next(S.AK_CONFIRMATION);
+        signupState.next();
+    }
+
     get isOk() {
         return this.confirmTextSample.toLowerCase() === this.confirmTextState.value.toLowerCase();
     }
@@ -52,16 +84,6 @@ export default class SignupConfirmBackup extends LoginWizardPage {
                     style={{ width, height }} />
             </View>
         );
-    }
-
-    componentDidMount() {
-        when(() => this.isOk, () => { signupState.keyBackedUp = true; });
-        // QUICK SIGNUP DEV FLAG
-        if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
-            this.isOk = true;
-            signupState.keyBackedUp = true;
-            signupState.next();
-        }
     }
 
     get checkIcon() { return icons.colored('check', null, vars.peerioTeal); }
@@ -82,6 +104,7 @@ export default class SignupConfirmBackup extends LoginWizardPage {
                         </View>
                         <View style={{ flexShrink: 1 }}>
                             <StyledTextInput
+                                label={S.AK_CONFIRMATION}
                                 customIcon={this.isOk && this.checkIcon}
                                 state={this.confirmTextState}
                                 hint={this.confirmTextSample}
@@ -92,8 +115,8 @@ export default class SignupConfirmBackup extends LoginWizardPage {
                     {this.icon}
                 </View>
                 <View style={[row, { justifyContent: 'space-between' }]}>
-                    {this.button('button_back', () => signupState.prev())}
-                    {this.button('button_next', () => signupState.next(), false, !signupState.keyBackedUp)}
+                    {this.button('button_back', this.handleBackButton)}
+                    {this.button('button_next', this.handleNextButton, false, !signupState.keyBackedUp)}
                 </View>
                 <ActivityOverlay large visible={signupState.isInProgress} />
             </View>
