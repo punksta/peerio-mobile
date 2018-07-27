@@ -130,6 +130,7 @@ const vars = {
     contactInviteSuggestionHeight: 64,
     popupPadding: scaleDim(20),
     popupHorizontalMargin: scaleDim(16),
+    tfaInputWidth: scaleDim(124),
 
     circle: 10,
     circleSize: 4,

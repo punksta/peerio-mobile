@@ -68,10 +68,10 @@ class ContactState extends RoutedState {
 
     // if we have no contacts except User.current
     get empty() {
-        const { addedContacts, invitedContacts, contacts } = this.store;
+        const { addedContacts, invitedNotJoinedContacts, contacts } = this.store;
         return !contacts || (contacts.length <= 1
             && !contacts.filter(u => User.current.username !== u.username).length)
-            && !invitedContacts.length
+            && !invitedNotJoinedContacts.length
             && !addedContacts.length;
     }
 
