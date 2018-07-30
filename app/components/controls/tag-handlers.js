@@ -15,7 +15,6 @@ function a(text, url, style) {
         const action = () => routes[type][route]();
         if (action) return <Link key={text} onPress={action} style={style}>{text}</Link>;
     }
-    // TODO not sure if using link string as key is a good idea
     return <Link key={url.link} url={url} style={style}>{text}</Link>;
 }
 
