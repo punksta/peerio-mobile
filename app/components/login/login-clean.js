@@ -59,7 +59,6 @@ export default class LoginClean extends LoginWizardPage {
     }
 
     componentWillUnmount() {
-        console.log(this.startTime);
         tm.login.duration(this.startTime);
     }
 

@@ -6,7 +6,6 @@ const { width, height } = Dimensions.get('window');
 
 function getDevicePixelRatio() {
     const result = PixelRatio.get();
-    console.log(`PixelRatio: ${result}`);
     switch (result) {
         case (1):
             return 160;
