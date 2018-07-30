@@ -32,6 +32,10 @@ class CreateAccountPage extends Page {
     get finishButton() {
         return this.getWhenEnabled('~button_finish');
     }
+
+    get skipButton() {
+        return this.getWhenEnabled('~button_skip');
+    }
 }
 
 module.exports = CreateAccountPage;

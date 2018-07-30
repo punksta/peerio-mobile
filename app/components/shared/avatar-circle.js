@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, ActivityIndicator, View, Image } from 'react-native';
+import { ActivityIndicator, View, Image } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import ErrorCircle from './error-circle';
 import { vars } from '../../styles/styles';
-
-const avatarDiameter = 36;
 
 @observer
 export default class AvatarCircle extends SafeComponent {
@@ -16,7 +15,7 @@ export default class AvatarCircle extends SafeComponent {
         let ratio = 1;
         if (large) ratio = 2 + (2 / 3);
         if (medium) ratio = 2;
-        const width = avatarDiameter * ratio;
+        const width = vars.avatarDiameter * ratio;
         const height = width;
         const avatarStyle = {
             width,
@@ -30,15 +29,16 @@ export default class AvatarCircle extends SafeComponent {
         }
 
         const { color, tofuError, letter } = contact || {};
+        const tryColor = color || {};
         const coloredAvatarStyle = [avatarStyle, {
             overflow: 'hidden',
             justifyContent: 'center',
             alignItems: 'center',
-            backgroundColor: color || 'gray'
+            backgroundColor: tryColor.value || 'gray'
         }];
         const avatarLetter = (
             <View style={coloredAvatarStyle}>
-                <Text style={{ color: 'white', textAlign: 'center', width: 14 * ratio, fontSize: vars.font.size.smaller * ratio }}>
+                <Text style={{ color: tryColor.isLight ? 'black' : 'white', textAlign: 'center', width: 14 * ratio, fontSize: vars.font.size.smaller * ratio }}>
                     {letter}
                 </Text>
             </View>

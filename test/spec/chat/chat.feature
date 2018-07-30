@@ -2,14 +2,14 @@ Feature: Create new chat
 
     Scenario Outline: Create DM successfully
         When I log in as <new or existing> user
-        And  I start a new DM with someone
+        And  I start a DM with <user> user
         And  I can send a message to the current chat
         And  I exit the current chat
         And  they are in my contacts
     Examples:
-    | new or existing |
-    | new             |
-    | create_dm_test  |
+    | new or existing | user       |
+    | new             | test_karim |
+    | create_dm_test  | test_karim |
 
     Scenario Outline: Create room successfully
         When I log in as <new or existing> user

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
-import { observable } from 'mobx';
+import { observable, action } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import FileInnerItem from './file-inner-item';
 import FolderInnerItem from './folder-inner-item';
@@ -33,13 +33,28 @@ export default class FileItem extends SafeComponent {
         }
     }
 
+    @action.bound onFileAction() {
+        const { file, onFileAction } = this.props;
+        onFileAction(file);
+    }
+
+    @action.bound onFolderPress(folder) {
+        const { onChangeFolder } = this.props;
+        onChangeFolder(folder);
+    }
+
+    @action.bound onFolderAction() {
+        const { file, onFolderAction } = this.props;
+        onFolderAction(file);
+    }
+
     renderThrow() {
         const { file } = this.props;
         return (
             <View style={{ backgroundColor: vars.filesBg, paddingHorizontal: vars.spacing.medium.mini2x }}>
                 {file.isFolder ?
-                    <FolderInnerItem folder={file} onLongPress={this.props.onLongPress} onPress={() => this.props.onChangeFolder(file)} /> :
-                    <FileInnerItem onPress={f => this.press(f)} file={file} rowID={this.props.rowID} />}
+                    <FolderInnerItem folder={file} onPress={this.onFolderPress} onFolderAction={this.onFolderAction} /> :
+                    <FileInnerItem file={file} onPress={f => this.press(f)} onFileAction={this.onFileAction} rowID={this.props.rowID} />}
             </View>
         );
     }
@@ -47,5 +62,7 @@ export default class FileItem extends SafeComponent {
 
 FileItem.propTypes = {
     file: PropTypes.any.isRequired,
-    onChangeFolder: PropTypes.any
+    onChangeFolder: PropTypes.any,
+    onFileAction: PropTypes.func,
+    onFolderAction: PropTypes.func
 };

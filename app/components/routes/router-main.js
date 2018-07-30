@@ -1,6 +1,7 @@
 import React from 'react';
 import { LayoutAnimation, Platform } from 'react-native';
-import { observable, reaction, action } from 'mobx';
+import { observable, reaction, action, when } from 'mobx';
+import RNKeepAwake from 'react-native-keep-awake';
 import Router from './router';
 import uiState from '../layout/ui-state';
 import SettingsLevel1 from '../settings/settings-level-1';
@@ -8,19 +9,23 @@ import SettingsLevel2 from '../settings/settings-level-2';
 import SettingsLevel3 from '../settings/settings-level-3';
 import Ghosts from '../ghosts/ghosts';
 import GhostsLevel1 from '../ghosts/ghosts-level-1';
-import Chat from '../messaging/chat';
-import ChatList from '../messaging/chat-list';
 import Files from '../files/files';
-import FileView from '../files/file-view';
+import FileDetailView from '../files/file-detail-view';
 import ContactAdd from '../contacts/contact-add';
 import ContactView from '../contacts/contact-view';
 import ContactList from '../contacts/contact-list';
-import ChannelInvite from '../messaging/channel-invite';
 import ContactListInvite from '../contacts/contact-list-invite';
-import { fileState, mainState, ghostState, chatState, settingsState, contactState, contactAddState, invitationState } from '../states';
+import { fileState, ghostState, chatState, settingsState, contactState, contactAddState, invitationState } from '../states';
 // import { enablePushNotifications } from '../../lib/push';
 import routes from './routes';
 import loginState from '../login/login-state';
+import snackbarState from '../snackbars/snackbar-state';
+import { tx } from '../utils/translator';
+import popupState from '../layout/popup-state';
+import { fileStore } from '../../lib/icebear';
+import { popupUpgradeNotification, popupUpgradeProgress } from '../shared/popups';
+import preferenceStore from '../settings/preference-store';
+import whiteLabelComponents from '../../components/whitelabel/white-label-components';
 
 class RouterMain extends Router {
     // current route object
@@ -40,16 +45,20 @@ class RouterMain extends Router {
     constructor() {
         super();
         routes.main = this;
-        reaction(() => this.currentIndex, i => { this.isBackVisible = i > 0; });
+        reaction(() => this.currentIndex && (this.route !== 'chats'), i => { this.isBackVisible = i > 0; });
         reaction(() => [this.route, this.currentIndex], () => uiState.hideAll());
-        this.add('files', [<Files />, <FileView />], fileState);
+        this.add('files', [<Files />, <FileDetailView />], fileState);
         this.add('ghosts', [<Ghosts />, <GhostsLevel1 />], ghostState);
-        this.add('chats', [<ChatList />, <Chat />], chatState);
+        this.add('chats', [<whiteLabelComponents.ChatList />, <whiteLabelComponents.Chat />], chatState);
         this.add('contacts', [<ContactList />, <ContactView nonModal />], contactState);
         this.add('contactAdd', [<ContactAdd />], contactAddState);
         this.add('contactInvite', [<ContactListInvite />], contactAddState);
         this.add('settings', [<SettingsLevel1 />, <SettingsLevel2 />, <SettingsLevel3 />], settingsState);
-        this.add('channelInvite', [<ChannelInvite />], invitationState);
+        this.add('channelInvite', [<whiteLabelComponents.ChannelInvite />], invitationState);
+
+        reaction(() => fileStore.migration.pending, migration => {
+            if (migration) this.filesystemUpgrade();
+        }, true);
     }
 
     @action initialRoute() {
@@ -65,23 +74,42 @@ class RouterMain extends Router {
         this.invoked = true;
         this.loading = true;
         // if (EN === 'peeriomobile') await enablePushNotifications();
-        await mainState.init();
+        await preferenceStore.init();
         await chatState.init();
         this.chatStateLoaded = true;
         await fileState.init();
         this.fileStateLoaded = true;
-        await contactState.init();
+        // await contactState.init();
         this.contactStateLoaded = true;
         this.loading = false;
+        // wait for User object to be loaded
+        if (whiteLabelComponents.extendRoutes) whiteLabelComponents.extendRoutes(this);
         this.initialRoute();
         loginState.transition();
+    }
+
+    @action async filesystemUpgrade() {
+        if (fileStore.migration.pending) {
+            if (!(fileStore.migration.started || fileStore.migration.performedByAnotherClient)) {
+                await popupUpgradeNotification();
+                fileStore.migration.confirmMigration();
+            }
+            popupUpgradeProgress();
+            when(() => !fileStore.migration.pending, () => {
+                popupState.discardPopup();
+                snackbarState.pushTemporary(tx('title_fileUpdateComplete'));
+                RNKeepAwake.deactivate();
+            });
+            RNKeepAwake.activate();
+        }
     }
 
     add(key, components, routeState) {
         const route = super.add(key, null);
         route.components = observable.ref(components);
         route.routeState = routeState;
-        this[key] = route.transition = (item, suppressTransition, index) => {
+        this[key] = route.transition = async (item, suppressTransition, index) => {
+            await uiState.hideAll();
             if (this.route !== key) {
                 !suppressTransition && LayoutAnimation.easeInEaseOut();
                 this.onTransition(this.current, false, item);
@@ -131,7 +159,8 @@ class RouterMain extends Router {
         this.current && this.current.routeState && this.current.routeState.fabAction();
     }
 
-    @action back() {
+    @action async back() {
+        await uiState.hideAll();
         if (this.currentIndex > 0) this.currentIndex--;
         this.onTransition(this.current, true);
         if (Platform.OS !== 'android') LayoutAnimation.easeInEaseOut();
@@ -145,8 +174,8 @@ class RouterMain extends Router {
 
     @action androidBackHandler() {
         if (this.route === 'files') {
-            if (!fileState.currentFolder.isRoot) {
-                fileState.currentFolder = fileState.currentFolder.parent;
+            if (fileStore.folderStore.currentFolder.parent) {
+                fileStore.folderStore.currentFolder = fileStore.folderStore.currentFolder.parent;
                 return true;
             }
             if (fileState.isFileSelectionMode) {

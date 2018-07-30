@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, Dimensions, View } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import moment from 'moment';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
@@ -21,6 +22,7 @@ const fileInfoContainerStyle = {
 export default class RecentFileItem extends SafeComponent {
     renderThrow() {
         const { file } = this.props;
+        if (file.deleted) return null;
         const iconRight = icons.dark('more-vert', this.props.onMenu);
         const nameStyle = {
             color: vars.txtDark,
@@ -28,8 +30,7 @@ export default class RecentFileItem extends SafeComponent {
         };
         const infoStyle = {
             color: vars.extraSubtleText,
-            fontSize: vars.font.size.smaller,
-            fontWeight: vars.font.weight.regular
+            fontSize: vars.font.size.smaller
         };
         const itemContainerStyle = {
             flex: 1,
@@ -74,6 +75,5 @@ export default class RecentFileItem extends SafeComponent {
 
 RecentFileItem.propTypes = {
     file: PropTypes.any.isRequired,
-    onMenu: PropTypes.func,
-    key: PropTypes.any
+    onMenu: PropTypes.func
 };

@@ -1,14 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { observable, action } from 'mobx';
-import { TextInput, View, Text, Platform, Animated } from 'react-native';
+import { observable, action, reaction } from 'mobx';
+import { TextInput, View, Platform, Animated } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import uiState from '../layout/ui-state';
 import { vars, styledTextInput } from '../../styles/styles';
 import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
 import { tx } from '../utils/translator';
+import { socket } from '../../lib/icebear';
 
 // Because JS has no enums
 const VALID = true;
@@ -26,6 +28,7 @@ export default class StyledTextInput extends SafeComponent {
     @observable end = 0;
     @observable focusedAnim;
     @observable errorMessageText;
+    @observable isDirty = false;
 
     constructor(props) {
         super(props);
@@ -35,10 +38,19 @@ export default class StyledTextInput extends SafeComponent {
         this.focusedAnim = new Animated.Value(0);
     }
 
+    componentDidMount() {
+        this.reaction = reaction(() => socket.connected, () => {
+            // Only run validation on reconnect, not on disconnect
+            if (socket.connected) this.validate();
+        }, true);
+    }
+
     componentWillUnmount() {
         if (uiState.focusedTextBox === this.textInput) {
             uiState.focusedTextBox = null;
         }
+        this.reaction && this.reaction();
+        this.reaction = null;
     }
 
     get isValid() { return this.valid; }
@@ -62,7 +74,7 @@ export default class StyledTextInput extends SafeComponent {
                     this.errorMessageText = validations[0].message;
                     throw new Error();
                 }
-                if (required) {
+                if (required && this.isDirty) {
                     this.valid = INVALID;
                     this.errorMessageText = tx('title_required');
                 }
@@ -80,7 +92,10 @@ export default class StyledTextInput extends SafeComponent {
      * @prop {String} validation.message - The error to show if validation fails at action
      */
     @action.bound async validate() {
-        const { validations, alwaysDirty, state, testID } = this.props;
+        const { validations, alwaysDirty, state } = this.props;
+        // Do not run validation on a field that hasn't been modified yet unless it is alwaysDirty
+        if (!this.isDirty && !alwaysDirty) return;
+        console.log('Running validation');
         this.handleEmptyField();
         // If no validation prop is passed, then no validation is needed and it is always valid
         if (!validations) {
@@ -116,13 +131,22 @@ export default class StyledTextInput extends SafeComponent {
                 }
             });
         });
-        // Append the end of the chain with a catch in order to break the chain
-        // when one of the validations is INVALID
-        promise = promise.catch(() => console.log(`Text Input ${testID}: Invalid input`));
+        // We need this catch in order to break the chain when one of the validations is INVALID
+        promise = promise.catch(() => {
+            // Do nothing
+        });
     }
 
     @action.bound async onChangeText(text) {
-        this.props.state.value = text;
+        this.isDirty = true;
+        // even if not focused, move the hint to the top
+        if (text) this.setHintToTop();
+        let inputText = text;
+        const { Version, OS } = Platform;
+        if (OS !== 'android' || Version > 22) {
+            inputText = this.props.lowerCase ? text.toLowerCase() : text;
+        }
+        this.props.state.value = inputText;
         this.validate();
     }
 
@@ -148,27 +172,37 @@ export default class StyledTextInput extends SafeComponent {
         this.focused = true;
         if (this.props.onFocus) this.props.onFocus();
         this.textInput.focus();
-        this.focusAnimation();
+        this.setHintToTop();
     }
 
-    focusAnimation() {
+    /**
+     * Move the hint to the top
+     */
+    setHintToTop = () => {
         Animated.timing(
             this.focusedAnim,
             {
                 toValue: 1,
                 duration: 300
             }).start();
-    }
+    };
+
+    /**
+     * Move the hint to the bottom
+     */
+    setHintToBottom = () => {
+        Animated.timing(
+            this.focusedAnim,
+            {
+                toValue: 0,
+                duration: 300
+            }).start();
+    };
 
     blurAnimation() {
         const { state } = this.props;
         if (!(state.value && state.value.length)) {
-            Animated.timing(
-                this.focusedAnim,
-                {
-                    toValue: 0,
-                    duration: 300
-                }).start();
+            this.setHintToBottom();
         }
     }
 
@@ -311,5 +345,6 @@ StyledTextInput.propTypes = {
     required: PropTypes.bool,
     maxLength: PropTypes.number,
     onBlur: PropTypes.any,
-    onFocus: PropTypes.any
+    onFocus: PropTypes.any,
+    lowerCase: PropTypes.bool
 };

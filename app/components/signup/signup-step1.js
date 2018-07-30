@@ -1,7 +1,10 @@
 import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import randomWords from 'random-words';
+import capitalize from 'capitalize';
+import Text from '../controls/custom-text';
 // import LanguagePickerBox from '../controls/language-picker-box';
 import Bold from '../controls/bold';
 import { vars } from '../../styles/styles';
@@ -82,6 +85,17 @@ export default class SignupStep1 extends LoginWizardPage {
     @action.bound onSubmitLastName() { this.usernameInput.onFocus(); }
     @action.bound onSubmitUsername() { this.emailInput.onFocus(); }
 
+    componentDidMount() {
+        // QUICK SIGNUP DEV FLAG
+        if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
+            const rnd = new Date().getTime() % 100000;
+            this.usernameInput.onChangeText(randomWords({ min: 2, max: 2, join: 'o' }).substring(0, 16));
+            this.emailInput.onChangeText(`${rnd}@test`);
+            this.firstNameInput.onChangeText(capitalize(randomWords()));
+            this.lastNameInput.onChangeText(capitalize(randomWords()));
+        }
+    }
+
     @action.bound handleNextButton() {
         signupState.firstName = this.firstnameState.value;
         signupState.lastName = this.lastnameState.value;
@@ -93,7 +107,7 @@ export default class SignupStep1 extends LoginWizardPage {
     get isNextDisabled() {
         // removing "!this.firstnameState.value" causes a runtime error
         return socket.connected && (!this.firstnameState.value || !this.firstNameInput.isValid ||
-            !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
+        !this.lastNameInput.isValid || !this.usernameInput.isValid || !this.emailInput.isValid);
     }
 
     get avatar() {
@@ -179,13 +193,13 @@ export default class SignupStep1 extends LoginWizardPage {
                         </View>
                         <TouchableOpacity
                             style={circleTopSmall}
-                            onPress={() => this._actionSheet.show()}
+                            onPress={() => SignupAvatarActionSheet.show()}
                             pressRetentionOffset={vars.pressRetentionOffset}>
                             {signupState.avatarData ? this.avatar : this.avatarSelector}
                         </TouchableOpacity>
                     </View>
                     <View style={[buttonRowStyle, { justifyContent: 'space-between' }]}>
-                        {this.button('button_back', () => signupState.routes.app.loginStart())}
+                        {this.button('button_back', signupState.exit)}
                         {this.button('button_next',
                             () => this.handleNextButton(),
                             false,
@@ -196,7 +210,6 @@ export default class SignupStep1 extends LoginWizardPage {
                             <T k="title_TOSRequestText">{tosParser}</T>
                         </Text>
                     </View>
-                    <SignupAvatarActionSheet ref={sheet => { this._actionSheet = sheet; }} />
                 </View>
             </View>
         );

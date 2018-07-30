@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { observable, when, reaction, action } from 'mobx';
-import { View, Image, Text, Dimensions, LayoutAnimation, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Image, Dimensions, LayoutAnimation, TouchableOpacity, ActivityIndicator } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import Progress from '../shared/progress';
 import FileProgress from './file-progress';
@@ -163,7 +164,6 @@ export default class FileInlineImage extends SafeComponent {
         };
         const text = {
             color: vars.peerioBlue,
-            fontStyle: 'italic',
             marginVertical: 10
         };
         return (
@@ -172,7 +172,7 @@ export default class FileInlineImage extends SafeComponent {
                     {tx('title_imageSizeWarning', { size: util.formatBytes(config.chat.inlineImageSizeLimit) })}
                 </Text>
                 <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={this.forceShow}>
-                    <Text style={text}>{tx('button_displayThisImageAfterWarning')}</Text>
+                    <Text italic style={text}>{tx('button_displayThisImageAfterWarning')}</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -180,17 +180,19 @@ export default class FileInlineImage extends SafeComponent {
 
     get displayCutOffImageOffer() {
         const outer = {
-            padding: this.outerPadding
+            padding: this.outerPadding,
+            height: vars.imageInnerContainerHeight,
+            justifyContent: 'center'
         };
         const text0 = {
             color: vars.txtDark
         };
         return (
-            <View style={outer}>
+            <TouchableOpacity style={outer} onPress={this.imageAction} pressRetentionOffset={vars.pressRetentionOffset}>
                 <Text style={text0}>
                     {tx('title_imageTooBigCutoff', { size: util.formatBytes(config.chat.inlineImageSizeLimitCutoff) })}
                 </Text>
-            </View>
+            </TouchableOpacity>
         );
     }
 
@@ -216,13 +218,12 @@ export default class FileInlineImage extends SafeComponent {
     get displayImageOffer() {
         const text = {
             color: vars.peerioBlue,
-            fontStyle: 'italic',
             textAlign: 'center',
             marginVertical: 10
         };
         return (
             <TouchableOpacity pressRetentionOffset={vars.pressRetentionOffset} onPress={() => { this.loadImage = true; }}>
-                <Text style={text}>{tx('button_displayThisImage')}</Text>
+                <Text italic style={text}>{tx('button_displayThisImage')}</Text>
             </TouchableOpacity>
         );
     }
@@ -230,7 +231,6 @@ export default class FileInlineImage extends SafeComponent {
     get updateSettingsOffer() {
         const text = {
             color: vars.txtDate,
-            fontStyle: 'italic',
             marginBottom: 4
         };
         return (
@@ -238,7 +238,7 @@ export default class FileInlineImage extends SafeComponent {
                 <View style={{ paddingTop: 2, marginRight: 4 }}>
                     {icons.coloredAsText('check-circle', vars.confirmColor, 14)}
                 </View>
-                <Text style={text}>
+                <Text italic style={text}>
                     <T k="title_updateSettingsAnyTime">{toSettingsParser}</T>
                 </Text>
             </View>
@@ -314,6 +314,16 @@ export default class FileInlineImage extends SafeComponent {
         );
     }
 
+    // Opens the image using exists, else attempts to download it
+    @action.bound imageAction() {
+        const { image } = this.props;
+        if (image.hasFileAvailableForPreview) {
+            image.launchViewer();
+        } else {
+            fileState.download(image);
+        }
+    }
+
     renderThrow() {
         const { image } = this.props;
         const { fileId, downloading } = image;
@@ -326,16 +336,17 @@ export default class FileInlineImage extends SafeComponent {
 
         const inner = {
             backgroundColor: loaded ? vars.white : vars.lightGrayBg,
-            minHeight: loaded ? undefined : 140,
+            minHeight: loaded ? undefined : vars.imageInnerContainerHeight,
             justifyContent: 'center'
         };
-
         return (
             <View>
                 <FileInlineContainer
                     onLayout={this.layout}
                     file={image}
-                    onAction={this.props.onAction}
+                    onActionSheet={this.props.onAction}
+                    onAction={this.imageAction}
+                    onLegacyFileAction={this.props.onLegacyFileAction}
                     isImage
                     isOpen={this.opened}
                     extraActionIcon={!downloading && icons.darkNoPadding(
@@ -346,17 +357,19 @@ export default class FileInlineImage extends SafeComponent {
                     {this.opened &&
                         <View style={inner}>
                             {!downloading && this.loadImage && width && height ?
-                                <Image
-                                    onProgress={this.handleProgress}
-                                    onLoadEnd={this.handleLoadEnd}
-                                    onLoad={this.onLoad}
-                                    onError={this.onErrorLoadingImage}
-                                    source={{ uri: source.uri, width, height }}
-                                    style={{ width, height }}
-                                /> : null }
+                                <TouchableOpacity onPress={this.imageAction} >
+                                    <Image
+                                        onProgress={this.handleProgress}
+                                        onLoadEnd={this.handleLoadEnd}
+                                        onLoad={this.onLoad}
+                                        onError={this.onErrorLoadingImage}
+                                        source={{ uri: source.uri, width, height }}
+                                        style={{ width, height }} />
+                                </TouchableOpacity>
+                                : null }
                             {!this.loadImage && !this.tooBig && this.displayImageOffer}
                             {!this.loadImage && this.tooBig && !this.oversizeCutoff && this.displayTooBigImageOffer}
-                            {this.oversizeCutoff && this.displayCutOffImageOffer}
+                            {!this.loadImage && this.oversizeCutoff && this.displayCutOffImageOffer}
                             {!this.loaded && cachingFailed && this.downloadErrorMessage}
                             {!this.loaded && !cachingFailed && this.downloadSlow && this.downloadSlowMessage}
                             {this.errorDisplayingImage && this.displayErrorMessage}
@@ -375,5 +388,5 @@ export default class FileInlineImage extends SafeComponent {
 
 FileInlineImage.propTypes = {
     image: PropTypes.any,
-    onAction: PropTypes.any
+    onActionSheet: PropTypes.any
 };

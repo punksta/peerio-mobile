@@ -44,7 +44,9 @@ class ContactState extends RoutedState {
     }
 
     getFiltered(findUserText, exclude = {}) {
-        const result = this.store.filter(findUserText || '')
+        // TODO: it is actually debatable if we need to filter
+        // contacts which are already in our contact list
+        const result = this.store.whitelabel.filter(findUserText || '')
             .filter(c => c.username !== User.current.username && !exclude[c.username]);
         return result.length ? result : this.found.filter(
             c => !c.loading && !c.notFound
@@ -63,10 +65,10 @@ class ContactState extends RoutedState {
 
     // if we have no contacts except User.current
     get empty() {
-        const { addedContacts, invitedContacts, contacts } = this.store;
+        const { addedContacts, invitedNotJoinedContacts, contacts } = this.store;
         return !contacts || (contacts.length <= 1
             && !contacts.filter(u => User.current.username !== u.username).length)
-            && !invitedContacts.length
+            && !invitedNotJoinedContacts.length
             && !addedContacts.length;
     }
 
@@ -226,16 +228,14 @@ class ContactState extends RoutedState {
 
     async resolveAndCache(usernameOrEmail) {
         if (this._resolveCache[usernameOrEmail]) return this._resolveCache[usernameOrEmail];
-        return new Promise(resolve => {
-            const contact = this.store.getContact(usernameOrEmail);
-            this._resolveCache[usernameOrEmail] = contact;
-            when(() => !contact.loading, () => resolve(contact));
-        });
+        const contact = await this.store.whitelabel.getContact(usernameOrEmail);
+        this._resolveCache[usernameOrEmail] = contact;
+        return contact;
     }
 
     // TODO replace with bulk
-    @action batchInvite(emails) {
-        emails.forEach((email) => this.store.inviteNoWarning(email));
+    @action batchInvite(emails, isAutoImport) {
+        emails.forEach((email) => this.store.inviteNoWarning(email, undefined, isAutoImport));
     }
 
     onTransition(active, contact) {

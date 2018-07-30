@@ -2,14 +2,14 @@
 if (typeof __dirname === 'undefined') global.__dirname = '/'
 if (typeof __filename === 'undefined') global.__filename = ''
 if (typeof process === 'undefined') {
-  global.process = require('process');
+	global.process = require('process');
 } else {
-  var bProcess = require('process');
-  for (var p in bProcess) {
-    if (!(p in process)) {
-      process[p] = bProcess[p];
-    }
-  }
+	var bProcess = require('process');
+	for (var p in bProcess) {
+		if (!(p in process)) {
+			process[p] = bProcess[p];
+		}
+	}
 }
 
 process.browser = false;
@@ -17,9 +17,9 @@ if (typeof Buffer === 'undefined') global.Buffer = require('buffer').Buffer;
 
 // https://tc39.github.io/ecma262/#sec-%typedarray%.prototype.join
 if (!Uint8Array.prototype.join) {
-  Object.defineProperty(Uint8Array.prototype, 'join', {
-    value: Array.prototype.join
-  });
+	Object.defineProperty(Uint8Array.prototype, 'join', {
+		value: Array.prototype.join
+	});
 }
 
 // https://tc39.github.io/ecma262/#sec-%typedarray%.prototype.fill
@@ -32,22 +32,22 @@ var isDev = typeof __DEV__ === 'boolean' && __DEV__;
 const env = process.env;
 env.NODE_ENV = isDev ? 'development' : 'production';
 if (typeof localStorage !== 'undefined') {
-  localStorage.debug = isDev ? '*' : '';
+	localStorage.debug = isDev ? '*' : '';
 }
 
 const rnWebSocket = global.WebSocket;
-global.WebSocket = function(url) {
-    // enforce TLS pinning for our main server
-    const options = url.startsWith('wss://') ? {
-        // for ios, name of asset containing verified cert
-        pinSSLCert: 'maincert.com',
-        // for Android, sha256 hash of verified cert
-        pinSSLHost: url.match(/\/\/(.*?)\//)[1],
-        pinSSLCertHash: 'sha256/hOTzKrLdAWvqPQuVV2lYC61JxrXUYyTudUmMhppBkVk='
-    } : null;
-    const r = new rnWebSocket(url, null, null, options);
-    r.binaryType = 'blob';
-    return r;
+global.WebSocket = function (url) {
+	// enforce TLS pinning for our main server
+	const options = url.startsWith('wss://') ? {
+		// for ios, name of asset containing verified cert
+		pinSSLCert: 'maincert.com',
+		// for Android, sha256 hash of verified cert
+		pinSSLHost: url.match(/\/\/(.*?)\//)[1],
+		pinSSLCertHash: 'sha256/hOTzKrLdAWvqPQuVV2lYC61JxrXUYyTudUmMhppBkVk='
+	} : null;
+	const r = new rnWebSocket(url, null, null, options);
+	r.binaryType = 'blob';
+	return r;
 };
 
 const { randomBytes } = require('react-native-randombytes');
@@ -67,18 +67,18 @@ nacl.setPRNG((x, n) => {
 // console.log('shim.js: ', global.originalWebSocket);
 /*! https://mths.be/codepointat v0.2.0 by @mathias */
 if (!String.prototype.codePointAt) {
-	(function() {
+	(function () {
 		'use strict'; // needed to support `apply`/`call` with `undefined`/`null`
-		var defineProperty = (function() {
+		var defineProperty = (function () {
 			// IE 8 only supports `Object.defineProperty` on DOM elements
 			try {
 				var object = {};
 				var $defineProperty = Object.defineProperty;
 				var result = $defineProperty(object, object, object) && $defineProperty;
-			} catch(error) {}
+			} catch (error) { }
 			return result;
 		}());
-		var codePointAt = function(position) {
+		var codePointAt = function (position) {
 			if (this == null) {
 				throw TypeError();
 			}
@@ -122,19 +122,19 @@ if (!String.prototype.codePointAt) {
 
 /*! https://mths.be/fromcodepoint v0.2.1 by @mathias */
 if (!String.fromCodePoint) {
-	(function() {
-		var defineProperty = (function() {
+	(function () {
+		var defineProperty = (function () {
 			// IE 8 only supports `Object.defineProperty` on DOM elements
 			try {
 				var object = {};
 				var $defineProperty = Object.defineProperty;
 				var result = $defineProperty(object, object, object) && $defineProperty;
-			} catch(error) {}
+			} catch (error) { }
 			return result;
 		}());
 		var stringFromCharCode = String.fromCharCode;
 		var floor = Math.floor;
-		var fromCodePoint = function(_) {
+		var fromCodePoint = function (_) {
 			var MAX_SIZE = 0x4000;
 			var codeUnits = [];
 			var highSurrogate;
@@ -190,20 +190,17 @@ if (!Array.prototype.random) {
 }
 
 // Implement console.time and console.timeEnd if one of them is missing
-if (!console["time"] || !console["timeEnd"])
-{
-    var timers = {};
-    console["time"] = function(id)
-    {
-        timers[id] = new Date().getTime();
-    };
-    console["timeEnd"] = function(id)
-    {
-        var start = timers[id];
-        if (start)
-        {
-            console.log(id + ": " + (new Date().getTime() - start) + "ms");
-            delete timers[id];
-        }
-    };
+if (!console["time"] || !console["timeEnd"]) {
+	var timers = {};
+	console["time"] = function (id) {
+		timers[id] = new Date().getTime();
+	};
+	console["timeEnd"] = function (id) {
+		var start = timers[id];
+		if (start) {
+			console.log(id + ": " + (new Date().getTime() - start) + "ms");
+			delete timers[id];
+		}
+	};
 }
+

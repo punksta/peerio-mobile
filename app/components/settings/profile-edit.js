@@ -1,7 +1,8 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Image, View, ScrollView, Text, TouchableOpacity, LayoutAnimation } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { Image, View, ScrollView, TouchableOpacity, LayoutAnimation, Platform } from 'react-native';
+import { observable, reaction, action } from 'mobx';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import SimpleTextBox from '../shared/simple-text-box';
 import { vars } from '../../styles/styles';
@@ -11,6 +12,7 @@ import AvatarActionSheet, { SIZE2 } from './avatar-action-sheet';
 import icons from '../helpers/icons';
 import uiState from '../layout/ui-state';
 import testLabel from '../helpers/test-label';
+import AvatarCircle from '../shared/avatar-circle';
 
 const emailFormatValidator = validation.validators.emailFormat.action;
 
@@ -28,7 +30,8 @@ const textinput = {
     color: vars.txtDark,
     marginLeft: vars.inputPaddingLeft,
     flex: 1,
-    flexGrow: 1
+    flexGrow: 1,
+    fontFamily: vars.peerioFontFamily
 };
 
 const textStatic = {
@@ -156,7 +159,7 @@ export default class ProfileEdit extends SafeComponent {
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={{ paddingRight: vars.spacing.small.maxi2x, paddingVertical: vars.spacing.small.maxi }}>
-                <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.peerioBlue }}>
+                <Text bold style={{ color: disabled ? vars.txtMedium : vars.peerioBlue }}>
                     {tu(text)}
                 </Text>
             </TouchableOpacity>
@@ -202,15 +205,15 @@ export default class ProfileEdit extends SafeComponent {
 
     get avatarLetter() {
         const contact = contactStore.getContact(User.current.username);
+        const tryColor = contact.color || {};
         const style = {
-            color: vars.white,
-            fontWeight: 'bold',
+            color: tryColor.isLight ? 'black' : 'white',
             fontSize: vars.profileEditFontSize,
             marginHorizontal: vars.spacing.medium.maxi2x,
             marginVertical: vars.spacing.medium.mini2x
         };
         return (
-            <Text style={style}>
+            <Text bold style={style}>
                 {contact.letter}
             </Text >
         );
@@ -223,7 +226,7 @@ export default class ProfileEdit extends SafeComponent {
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.retentionOffset}
-                onPress={() => this._actionSheet.show()}
+                onPress={this.selectAvatar}
                 {...testLabel('currentAvatar')}>
                 <Image
                     source={{ uri, cache: 'force-cache' }}
@@ -238,6 +241,19 @@ export default class ProfileEdit extends SafeComponent {
         );
     }
 
+    selectAvatar() {
+        AvatarActionSheet.show(({ buffers }) => User.current.saveAvatar(buffers));
+    }
+
+    @action.bound onChangeAddEmailText(text) {
+        const { Version, OS } = Platform;
+        if (OS !== 'android' || Version > 22) {
+            this.newEmailText = text.toLowerCase();
+        } else {
+            this.newEmailText = text;
+        }
+    }
+
     renderThrow() {
         const contact = contactStore.getContact(User.current.username);
         const { firstName, lastName, fingerprintSkylarFormatted, username } = contact;
@@ -248,21 +264,22 @@ export default class ProfileEdit extends SafeComponent {
                 keyboardShouldPersistTaps="handled"
                 style={{ backgroundColor: vars.darkBlueBackground05 }}
                 ref={ref => { this._scrollView = ref; }}>
-                <View style={[flexRow, { backgroundColor: contact.hasAvatar ? vars.txtDate : contact.color }]}>
-                    {contact.hasAvatar ? this.avatar : this.avatarLetter}
+                <View style={[flexRow, { backgroundColor: vars.darkBlueBackground05 }]}>
+                    <View style={{ padding: vars.spacing.medium.mini2x }}>
+                        <AvatarCircle contact={contact} medium />
+                    </View>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text
                             {...testLabel('fullName')}
                             style={{
-                                fontWeight: 'bold',
-                                color: vars.white,
+                                color: vars.textBlack87,
                                 fontSize: vars.font.size.bigger,
                                 marginVertical: vars.spacing.small.mini2x
                             }}>{firstName} {lastName}</Text>
-                        <Text style={{ color: vars.white }}>@{username}</Text>
+                        <Text style={{ color: vars.textBlack54 }}>@{username}</Text>
                         <View style={{ position: 'absolute', right: 0, bottom: 0, flexDirection: 'row' }}>
-                            {contact.hasAvatar && icons.white('delete', () => user.deleteAvatar())}
-                            {icons.white('camera-alt', () => this._actionSheet.show(), null, null, 'uploadAvatarIcon')}
+                            {contact.hasAvatar && icons.dark('delete', () => user.deleteAvatar())}
+                            {icons.dark('camera-alt', this.selectAvatar, null, null, 'uploadAvatarIcon')}
                         </View>
                     </View>
                 </View>
@@ -298,7 +315,7 @@ export default class ProfileEdit extends SafeComponent {
                             autoCapitalize="none"
                             value={this.newEmailText}
                             onBlur={() => this.validateNewEmail()}
-                            onChangeText={text => { this.newEmailText = text; }}
+                            onChangeText={this.onChangeAddEmailText}
                             onSubmitEditing={() => this.emailAction()}
                             style={textinput} />
                     </View>
@@ -313,7 +330,6 @@ export default class ProfileEdit extends SafeComponent {
                         {fingerprintSkylarFormatted}
                     </Text>
                 </View>
-                <AvatarActionSheet onSave={buffers => User.current.saveAvatar(buffers)} ref={sheet => { this._actionSheet = sheet; }} />
             </ScrollView>
         );
     }

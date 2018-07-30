@@ -12,9 +12,8 @@ function isIphoneX() {
     );
 }
 
-const iPhoneStatusBar = (Platform.OS === 'ios' ? 20 : 0);
-const iPhoneXTop = isIphoneX() ? 16 : 0;
-const iPhoneXBottom = iPhoneXTop;
+const iPhoneStatusBar = (Platform.OS === 'ios' ? 40 : 0);
+const iPhoneXBottom = isIphoneX() ? 16 : 0;
 
 const isDeviceScreenBig = isBigScreenSize();
 const isDeviceScreenSmall = !isDeviceScreenBig;
@@ -30,9 +29,9 @@ const { darkBlue, darkTeal, peerioBlue, peerioPurple, confirmColor,
     peerioTeal, yellow, red, badgeText, filesBg, usernameHighlight,
     chatItemPressedBackground, invitedBadgeColor, invitedBadgeText,
     peerioBlueBackground15, darkBlueBackground15, snackbarBg, lightGrayBg,
-    darkBlueBackground05, channelInfoBg } = branding;
-const statusBarHeight = (Platform.OS === 'android' ? 0 : 10) + iPhoneXTop;
-const layoutPaddingTop = statusBarHeight * 2;
+    darkBlueBackground05, channelInfoBg, separatorColor } = branding;
+const statusBarHeight = iPhoneStatusBar;
+const layoutPaddingTop = iPhoneStatusBar;
 
 const r = 40;
 const retentionOffset = { top: r, left: r, bottom: r, right: r };
@@ -62,6 +61,8 @@ const vars = {
     confirmColor,
     snackbarBg,
     channelInfoBg,
+    separatorColor,
+    chatFadingOutBg: 'rgb(237,237,238)',
     textWhite100: '#FFF',
     textWhite70: 'rgba(255, 255, 255, .7)',
     textWhite50: 'rgba(255, 255, 255, .5)',
@@ -70,9 +71,11 @@ const vars = {
     textBlack38: 'rgba(0, 0, 0, .38)',
     textBlack54: 'rgba(0, 0, 0, .54)',
     textBlack87: 'rgba(0, 0, 0, .87)',
+    linkColor: '#0e94cb',
     // Non-text
     black03: 'rgba(0, 0, 0, 0.03)',
     black05: 'rgba(0, 0, 0, 0.05)',
+    black07: 'rgba(0, 0, 0, 0.07)',
     black12: 'rgba(0, 0, 0, 0.12)',
     black25: 'rgba(0, 0, 0, 0.25)',
     black38: 'rgba(0, 0, 0, .38)',
@@ -95,6 +98,16 @@ const vars = {
     toggleInactive: '#9B9B9B',
     toggleLineActive: '#B6D3FF',
     toggleLineInactive: '#CFCFCF',
+    imageInnerContainerHeight: 140,
+    peerioFontFamily: 'Open Sans',
+    chatUnreadIndicatorBg: 'rgba(255, 255, 255, 0.95)',
+    chatUnreadIndicatorWidth: 70,
+    chatUnreadIndicatorHeight: 32,
+    contactInviteSuggestionBg: '#D2EDF1',
+    contactInviteSuggestionHeight: 64,
+    popupPadding: scaleDim(20),
+    popupHorizontalMargin: scaleDim(16),
+    tfaInputWidth: scaleDim(124),
 
     circle: 10,
     circleSize: 4,
@@ -107,6 +120,7 @@ const vars = {
     disabled: '#00000020',
     highlight: '#FFFFFFCC',
     midlight: '#FFFFFF55',
+    redWarning: '#D0021B',
     black: '#000',
     white: '#fff',
     whiteIcon: '#fff',
@@ -120,6 +134,9 @@ const vars = {
     txtMedium: 'rgba(98, 98, 98, 1)',
     txtDate: 'rgba(0, 0, 0, .38)',
     inputBg: '#fff',
+    legacyImageErrorBg: 'rgba(196, 196, 196, 0.12)',
+    legacyFileTitle: '#ECECEC',
+    legacyFileTitleBg: 'rgba(0, 0, 0, 0.54)',
     lightGrayBg,
     mediumGrayBg: '#D0D0D0',
     opacity54: 0.54,
@@ -132,6 +149,7 @@ const vars = {
     lighterBlackText: 'rgba(0, 0, 0, .87)',
     inputBgInactive: 'rgba(255, 255, 255, .5)',
     inputBgInactiveText: 'rgba(0,0,0, .54)',
+    checkboxDisabled: 'rgba(0,0,0,.12)',
     inputBorderColor: 'rgba(0,0,0, .38)',
     checkboxInactive: 'rgba(0,0,0,.06)',
     checkboxIconInactive: 'rgba(0, 0, 0, .54)',
@@ -139,17 +157,26 @@ const vars = {
     snackbarBgGreen: '#38CE86',
     snackbarHeight: 48,
     popupMinHeight: scaleDim(110),
+    settingsListPadding: 16,
     settingsItemHeight: 56,
+    largeSettingsItemHeight: 72,
+    accountSettingsIconColor: '#5461CC',
+    helpSettingsIconColor: '#A35EAA',
+    signoutSettingsButtonBg: 'rgba(255, 255, 255, .6)',
     headerBorderColor: 'rgba(0,0,0,.06)',
+    folderRemoveNotifBg: 'rgba(0,0,0,.06)',
+    folderRemoveNotifHeight: 95,
     gold: '#ffd700',
     fabEnabled: '#FF7D00',
     fabDisabled: '#CFCFCF',
     buttonGreen: '#2CCF84',
+    fileUploadProgressColor: 'rgba(50, 206, 195, 0.12)',
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
-    headerHeight: 56 + iPhoneStatusBar + iPhoneXTop,
+    headerHeight: 56,
     headerSpacing: 56 + layoutPaddingTop,
+    headerIconMargin: 16,
     iconSize: 24,
     iconSizeSmall: 16,
     iconSizeMedium: 32,
@@ -165,23 +192,36 @@ const vars = {
     chatListItemHeight: 48,
     chatListItemDMHeight: 61,
     contactListHeaderHeight: 48,
+    removeButtonHeight: 44,
+    warningHeight: 70,
     roundedButtonWidth: 134,
     wideRoundedButtonWidth: 190,
     menuWidthRatio: 0.8,
     animationDuration: 200,
     progressBarHeight: 4,
+    inlineFolderContainerHeight: 48,
     filesListItemHeight: 64,
     contactlistItemHeight: 56,
     listItemHeight: 56,
     listViewPaddingVertical: 36,
     listViewPaddingHorizontal: 8,
-    pinnedChatIconSize: 18,
+    avatarDiameter: 36,
+    disabledButtonFontColor: '#DDDDDD',
+    actionSheetOptionHeight: 56,
+    actionSheetFontColor: '#0076FF',
+    destructiveButtonFontColor: '#D0021B',
+    actionSheetButtonColor: '#f6f6f8',
+    actionSheetButtonBorderColor: '#dbdbe2',
+    pinnedChatIconSize: 16,
     pinnedChatPaddingHorizontal: 2,
+    fileListHorizontalPadding: scaleDim(16),
     fileInnerItemPaddingRight: 8,
     loadingScreenMarginBottom: scaleDim(170),
     loadingScreenMarginTop: scaleDim(206),
-    chatZeroStateImageWidth: scaleDim(327),
-    chatZeroStateImageHeight: scaleDim(125),
+    chatZeroStateImageWidth: scaleDim(405),
+    chatZeroStateImageHeight: scaleDim(155),
+    dmInvitePaddingTop: scaleDim(90),
+    verificationMessageWidth: scaleDim(260),
     modalPaddingVertical: 40,
     modalPaddingHorizontal: 40,
     wizardPadding: 36,
@@ -198,11 +238,6 @@ const vars = {
             bigger: scaleDim(16),
             huge: scaleDim(20),
             massive: scaleDim(24)
-        },
-        weight: {
-            bold: '700',
-            semiBold: '600',
-            regular: '400'
         }
     },
     accountTitleFontSize: scaleDim(37),
@@ -210,6 +245,8 @@ const vars = {
     signupFontSize: scaleDim(36),
     profileEditFontSize: scaleDim(60),
     readReceiptFontSize: scaleDim(9),
+    sharedWithNumberFontColor: '#F2F2F2',
+    sharedWithNumberBackground: 'grey',
     fontTitleSize: 16,
     largeInputWidth: 240,
     inputHeight: 46,
@@ -224,7 +261,6 @@ const vars = {
     fabBottom: 32,
     retentionOffset,
     iPhoneXBottom,
-    iPhoneXTop,
     tabCellHeight,
     tabsHeight: tabCellHeight + iPhoneXBottom,
     spacing: {

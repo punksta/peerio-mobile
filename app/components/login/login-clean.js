@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { observable, action } from 'mobx';
+import { View } from 'react-native';
+import { observable, action, when } from 'mobx';
+import Text from '../controls/custom-text';
 import { t, tx } from '../utils/translator';
 import ActivityOverlay from '../controls/activity-overlay';
 import loginState from './login-state';
@@ -41,14 +42,27 @@ export default class LoginClean extends LoginWizardPage {
     @action.bound usernameInputRef(ref) { this.usernameInput = ref; }
     @action.bound passwordInputRef(ref) { this.passwordInput = ref; }
 
-    @action.bound submit () {
+    componentDidMount() {
+        if (__DEV__ && process.env.PEERIO_USERNAME && process.env.PEERIO_PASSPHRASE) {
+            when(() => loginState.isConnected, () => {
+                this.usernameInput.onChangeText(process.env.PEERIO_USERNAME);
+                this.passwordInput.onChangeText(process.env.PEERIO_PASSPHRASE);
+                process.env.PEERIO_AUTOLOGIN && this.submit();
+            });
+        }
+    }
+
+    @action.bound submit() {
         loginState.username = this.usernameState.value;
         loginState.passphrase = this.passwordState.value;
         uiState.hideAll()
             .then(() => loginState.login())
             .catch(e => {
-                console.log(e);
-                this.passwordInput.setCustomError(tx('error_wrongAK'));
+                let errorMessage = 'error_wrongAK';
+                if (e.deleted || e.blacklisted) {
+                    errorMessage = 'error_accountSuspendedTitle';
+                }
+                this.passwordInput.setCustomError(tx(errorMessage));
             });
     }
 
@@ -62,7 +76,7 @@ export default class LoginClean extends LoginWizardPage {
             <View style={container}>
                 <DebugMenuTrigger>
                     <View style={{ justifyContent: 'center' }}>
-                        <Text style={[headingStyle1, { marginBottom: vars.spacing.large.midi }]}>
+                        <Text semibold style={[headingStyle1, { marginBottom: vars.spacing.large.midi }]}>
                             {t('title_welcome')}
                         </Text>
                         <Text style={[subHeadingStyle, { marginBottom: vars.spacing.medium.midi }]}>
@@ -78,6 +92,7 @@ export default class LoginClean extends LoginWizardPage {
                                 validations={usernameLogin}
                                 hint={tx('title_username')}
                                 ref={this.usernameInputRef}
+                                lowerCase
                                 testID="usernameLogin"
                             />
                             <StyledTextInput
@@ -85,7 +100,6 @@ export default class LoginClean extends LoginWizardPage {
                                 hint={tx('title_AccountKey')}
                                 onSubmit={this.submit}
                                 secureText
-                                lowerCase
                                 returnKeyType="go"
                                 ref={this.passwordInputRef}
                                 testID="usernamePassword"

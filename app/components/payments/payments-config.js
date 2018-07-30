@@ -2,6 +2,7 @@ import { observable } from 'mobx';
 import paymentsNative from '../payments/payments-native';
 import { User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
+import whitelabel from '../../components/whitelabel/white-label-config';
 
 const basicPlanInfo =
 `Secure Messaging
@@ -19,11 +20,10 @@ Unlimited upload file size
 Premium support
 `;
 
-const professionalPaymentInfo =
-`
-Monthly plans will be charged $12.99 USD each month.
+const professionalPaymentInfo = (monthly, annual) => `
+Monthly plans will be charged ${monthly}.
 
-Annual plans will be charged $118.99 USD each year.
+Annual plans will be charged ${annual}.
 
 These prices may vary according to your location and local currency.
 
@@ -89,16 +89,16 @@ class ProfessionalPlan extends PaidPlan {
         title: 'title_billedMonthly',
         id: professionalMonthlyID,
         serverID: 'icebear_pro_monthly',
-        price: process.env.PRO_MONTHLY_PRICE || '$12.99 USD/month'
+        price: whitelabel.PRO_MONTHLY_PRICE || '$12.99 USD/month'
     }, {
         title: 'title_billedAnnually',
         id: professionalYearlyID,
         serverID: 'icebear_pro_yearly',
-        price: process.env.PRO_YEARLY_PRICE || '$119.88 USD/year'
+        price: whitelabel.PRO_YEARLY_PRICE || '$119.88 USD/year'
     }];
     includes = professionalIncludesInfo;
     info = professionalPlanInfo;
-    paymentInfo = professionalPaymentInfo;
+    paymentInfo = professionalPaymentInfo(this.priceOptions[0].price, this.priceOptions[1].price);
 }
 
 const plans = [new BasicPlan(), new ProfessionalPlan()];

@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { TouchableOpacity, View, Text } from 'react-native';
-// TODO fix imports after merging Fonts
-// import { TouchableOpacity, View } from 'react-native';
-// import Text from './controls/custom-text';
+import { TouchableOpacity, View } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import { tu } from '../utils/translator';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class UnreadMessageIndicator extends SafeComponent {
@@ -42,13 +41,15 @@ export default class UnreadMessageIndicator extends SafeComponent {
             marginTop: isAlignedTop ? vars.spacing.small.mini : null
         };
         const iconName = isAlignedTop ? 'keyboard-arrow-up' : 'keyboard-arrow-down';
+        const testLabelName = isAlignedTop ? 'chatlist-unread-indicator-top' : 'chatlist-unread-indicator-bottom';
         return (
             <TouchableOpacity
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={[container, alignmentStyle]}
-                onPress={action}>
+                onPress={action}
+                {...testLabel(testLabelName)} >
                 <View style={[marginTopStyle, { flexDirection: 'row' }]}>
-                    <Text semiBold style={text}>{tu('title_unreadMessages')}</Text>
+                    <Text semibold style={text}>{tu('title_unreadMessages')}</Text>
                     {icons.plainWhite(iconName, vars.iconSize)}
                 </View>
             </TouchableOpacity>

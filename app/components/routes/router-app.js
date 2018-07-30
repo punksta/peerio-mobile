@@ -9,6 +9,7 @@ import LoginAutomatic from '../login/login-automatic';
 import PopupState from '../layout/popup-state';
 import routerMain from './router-main';
 import routes from './routes';
+import ActionSheetLayout from '../layout/action-sheet-layout';
 
 class RouterApp extends Router {
     constructor() {
@@ -16,14 +17,21 @@ class RouterApp extends Router {
         routes.app = this;
         this.add('loading', LoadingScreen);
         this.add('loginStart', Login.Wizard);
-        this.add('loginSaved', Login.Saved);
         this.add('signupStep1', SignupWizard);
         this.add('loginAutomatic', LoginAutomatic);
         this.add('main', LayoutMain, true);
 
         when(() => this.route === 'main', () => setTimeout(() => routerMain.initial(), 0));
         BackHandler.addEventListener('hardwareBackPress', () => {
+            if (ActionSheetLayout.visible) {
+                ActionSheetLayout.hide();
+                return true;
+            }
+            let blockingPopup = true;
             if (PopupState.activePopup) {
+                blockingPopup = (PopupState.activePopup.type === 'systemWarning') || (PopupState.activePopup.type === 'systemUpgrade');
+            }
+            if (!blockingPopup) {
                 PopupState.discardPopup();
                 return true;
             }

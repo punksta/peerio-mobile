@@ -1,29 +1,19 @@
+const { existingUsers } = require('../helpers/userHelper');
+
 const { defineSupportCode } = require('cucumber');
+const { waitForEmail } = require('peerio-icebear/test/e2e/code/helpers/maildrop.js');
+const { getUrl } = require('peerio-icebear/test/e2e/code/helpers/https.js');
+
+const emailConfirmUrlRegex = /"(https:\/\/hocuspocus\.peerio\.com\/confirm-address\/.*?)"/;
+const primaryEmailConfirmSubject = 'Welcome to Peerio (Staging)! Confirm your account.';
+
+async function confirmPrimaryEmail(emailAddress) {
+    const email = await waitForEmail(emailAddress, primaryEmailConfirmSubject);
+    const url = emailConfirmUrlRegex.exec(email.body)[1];
+    await getUrl(url);
+}
 
 defineSupportCode(({ Given, When, Then }) => {
-    const existingUsers = {
-        create_dm_test: {
-            name: process.env.CREATE_DM_TEST_USER,
-            passphrase: process.env.CREATE_DM_TEST_PASS
-        },
-        room_test: {
-            name: process.env.CREATE_ROOM_TEST_USER,
-            passphrase: process.env.CREATE_ROOM_TEST_PASS
-        },
-        profile_test: {
-            name: process.env.PROFILE_TEST_USER,
-            passphrase: process.env.PROFILE_TEST_PASS
-        },
-        upload_to_files: {
-            name: process.env.UPLOAD_TO_FILES_USER,
-            passphrase: process.env.UPLOAD_TO_FILES_PASS
-        },
-        upload_to_chat: {
-            name: process.env.UPLOAD_TO_CHAT_USER,
-            passphrase: process.env.UPLOAD_TO_CHAT_PASS
-        }
-    };
-
     // Scenario: User signs up successfully
     When('I choose the create account option', function () {
         return this.selectCreateAccount();
@@ -77,6 +67,16 @@ defineSupportCode(({ Given, When, Then }) => {
             const credentials = existingUsers[string];
             await this.loginExistingAccount(credentials.name, credentials.passphrase);
         }
+    });
+
+    // this.username needs to be set by a previous step definition
+    Then('They sign up', async function () {
+        await this.createNewAccount(this.username);
+    });
+
+    // this.email needs to be set by a previous step definition
+    Then('They confirm their email', async function () {
+        await confirmPrimaryEmail(this.email);
     });
 });
 

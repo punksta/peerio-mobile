@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
 import { observable } from 'mobx';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
+import Text from '../controls/custom-text';
 import Thumbnail from '../shared/thumbnail';
 import buttons from '../helpers/buttons';
-import FilesActionSheet from '../files/files-action-sheet';
+import FileActionSheet from '../files/file-action-sheet';
 import fileState from '../files/file-state';
 import { TinyDb } from '../../lib/icebear';
 
@@ -21,8 +22,7 @@ export default class MockThumbnail extends Component {
 
     @observable path;
 
-    setRef = ref => { this.actionSheet = ref; };
-    showActionSheet = () => { this.actionSheet.show(); };
+    showActionSheet = () => { FileActionSheet.show(); };
 
     render() {
         const s = {
@@ -40,7 +40,6 @@ export default class MockThumbnail extends Component {
                     <Text>{this.path}</Text>
                 </View>
                 {buttons.blueBgButton('Select image', this.showActionSheet)}
-                <FilesActionSheet ref={this.setRef} />
             </View>
         );
     }

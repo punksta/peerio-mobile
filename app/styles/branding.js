@@ -6,6 +6,7 @@ const brandingDefines = {
     peeriomobile: {
         bg: '#2C95CF',
         bgGradient: '#32CEC3',
+        tabsBg: '#f7f7f7',
         logo: require('../assets/logo-with-tag.png'),
         darkBlue: '#040B40',
         darkTeal: '#004E69',
@@ -27,7 +28,8 @@ const brandingDefines = {
         lightGrayBg: '#f0f0f0',
         darkBlueBackground05: '#F2F2F5',
         snackbarBg: '#040B40',
-        channelInfoBg: '#F2F2F5'
+        channelInfoBg: '#F2F2F5',
+        separatorColor: '#f0f0f0'
     },
     expandoo: {
         bg: '#009dfd',
@@ -42,7 +44,7 @@ const brandingDefines = {
         logo: require('../assets/logo-with-tag.png'),
         darkBlue: '#FF8C00',
         snackbarBg: '#444444',
-        darkTeal: '#FFFFFF',
+        darkTeal: '#004E69',
         peerioBlue: '#FF8C00',
         peerioPurple: '#FF6600',
         peerioTeal: '#FF8C00',
@@ -60,7 +62,8 @@ const brandingDefines = {
         lightGrayBg: '#FFFFFF',
         darkBlueBackground05: '#F5F5F5',
         usernameHighlight: '#FFB300',
-        channelInfoBg: '#FFFFFF'
+        channelInfoBg: '#FFFFFF',
+        separatorColor: '#f0f0f0'
     }
 };
 

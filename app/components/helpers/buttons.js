@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
+import Text from '../controls/custom-text';
 import { vars } from '../../styles/styles';
 import { tu } from '../utils/translator';
 import testLabel from '../helpers/test-label';
 
 export default {
-    whiteTextButton(text, onPress, disabled) {
+    whiteTextButton(text, onPress, disabled, accessibilityId) {
         const buttonStyle = {
             padding: vars.spacing.medium.mini,
             marginTop: vars.spacing.small.mini2x,
@@ -13,6 +14,7 @@ export default {
         };
         return (
             <TouchableOpacity
+                {...testLabel(accessibilityId)}
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={buttonStyle}>
@@ -40,7 +42,7 @@ export default {
         );
     },
 
-    blueTextButton(text, onPress, disabled, hidden, accessibilityId) {
+    blueTextButton(text, onPress, disabled, hidden, accessibilityId, style) {
         const opacity = hidden ? 0.0 : 1.0;
         const buttonStyle = {
             paddingRight: vars.spacing.small.maxi2x,
@@ -53,9 +55,8 @@ export default {
                     disabled={disabled}
                     onPress={disabled ? null : onPress}
                     pressRetentionOffset={vars.pressRetentionOffset}
-                    style={buttonStyle}>
-                    <Text
-                        style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.peerioPurple }}>
+                    style={[buttonStyle, style]}>
+                    <Text bold style={{ color: disabled ? vars.txtMedium : vars.peerioBlue }}>
                         {tu(text)}
                     </Text>
                 </TouchableOpacity>
@@ -77,14 +78,14 @@ export default {
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={buttonStyle}>
-                <Text style={{ fontWeight: 'bold', textAlign: 'center', color: vars.white }}>
+                <Text bold style={{ textAlign: 'center', color: vars.white }}>
                     {tu(text)}
                 </Text>
             </TouchableOpacity>
         );
     },
 
-    roundBlueBgButton(text, onPress, disabled, accessibilityId) {
+    roundBlueBgButton(text, onPress, disabled, accessibilityId, style) {
         const touchableStyle = {
             height: vars.button.touchableHeight,
             alignItems: 'center',
@@ -106,8 +107,8 @@ export default {
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={touchableStyle}>
-                <View style={buttonStyle}>
-                    <Text style={{ fontWeight: 'bold', textAlign: 'center', color: vars.white }}>
+                <View style={[buttonStyle, style]}>
+                    <Text bold style={{ textAlign: 'center', color: vars.white }}>
                         {tu(text)}
                     </Text>
                 </View>
@@ -125,7 +126,7 @@ export default {
                 onPress={disabled ? null : onPress}
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={buttonStyle}>
-                <Text style={{ fontWeight: 'bold', color: disabled ? vars.txtMedium : vars.red }}>
+                <Text bold style={{ color: disabled ? vars.txtMedium : vars.red }}>
                     {tu(text)}
                 </Text>
             </TouchableOpacity>

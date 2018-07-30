@@ -1,13 +1,14 @@
 import React from 'react';
-import { Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { View, TextInput, TouchableOpacity } from 'react-native';
 import { observable, action, when } from 'mobx';
 import { observer } from 'mobx-react/native';
 import ImagePicker from 'react-native-image-crop-picker';
+import Text from '../controls/custom-text';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import FileTypeIcon from '../files/file-type-icon';
 import SafeComponent from '../shared/safe-component';
-import { fileHelpers, config } from '../../lib/icebear';
+import { fileHelpers, config, warnings } from '../../lib/icebear';
 import Thumbnail from '../shared/thumbnail';
 
 const nameContainer = {
@@ -23,7 +24,8 @@ const inputStyle = {
     color: vars.lighterBlackText,
     paddingVertical: 0,
     paddingLeft: 0,
-    height: vars.searchInputHeight
+    height: vars.searchInputHeight,
+    fontFamily: vars.peerioFontFamily
 };
 
 const thumbnailDim = vars.searchInputHeight * 2;
@@ -70,7 +72,10 @@ export default class FilePreview extends SafeComponent {
     }
 
     @action.bound launchPreviewViewer() {
-        config.FileStream.launchViewer(this.props.state.path, this.props.state.fileName);
+        config.FileStream.launchViewer(this.props.state.path, this.props.state.fileName)
+            .catch(() => {
+                warnings.add('snackbar_couldntOpenFile');
+            });
     }
 
     get previewImage() {

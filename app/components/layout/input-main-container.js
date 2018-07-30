@@ -21,7 +21,7 @@ export default class InputMainContainer extends SafeComponent {
 
     sendAck = () => chatState.addAck();
 
-    plus = () => this.fileUploadActionSheet.show();
+    plus = () => FileUploadActionSheet.show(true, false);
 
     uploadQueue() {
         const chat = chatState.currentChat;
@@ -37,7 +37,7 @@ export default class InputMainContainer extends SafeComponent {
         };
         const s = {
             backgroundColor: vars.white,
-            borderTopColor: vars.lightGrayBg,
+            borderTopColor: vars.separatorColor,
             borderTopWidth: 1
         };
         return (
@@ -52,7 +52,6 @@ export default class InputMainContainer extends SafeComponent {
                         sendAck={this.sendAck}
                         send={this.send} />
                 </View>
-                <FileUploadActionSheet inline ref={ref => { this.fileUploadActionSheet = ref; }} />
             </View>
         );
     }

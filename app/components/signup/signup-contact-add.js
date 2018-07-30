@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, FlatList } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { observable, action, computed } from 'mobx';
 import ActivityOverlay from '../controls/activity-overlay';
 import { tx } from '../utils/translator';
@@ -11,6 +11,7 @@ import LoginWizardPage from '../login/login-wizard-page';
 import ContactImportItem from '../contacts/contact-import-item';
 import { headerContainer, textStyle, skipButtonStyle, listHeader, textListTitle, footerContainer, container } from '../../styles/signup-contact-sync';
 import ListItem from './signup-contact-list-item';
+import Text from '../controls/custom-text';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -48,7 +49,7 @@ export default class SignupContactAdd extends LoginWizardPage {
             promises.push((async () => {
                 try {
                     const contact = await contactState.resolveAndCache(c.email);
-                    if (!contact.notFound) {
+                    if (!contact.notFound && !contact.isHidden) {
                         this.contactList.push(new ListItem(contact, c.fullName, true));
                         this.refreshList();
                     }

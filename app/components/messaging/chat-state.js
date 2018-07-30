@@ -40,12 +40,7 @@ class ChatState extends RoutedState {
 
     @action async init() {
         const { store } = this;
-        store.loadAllChats();
         await promiseWhen(() => store.loaded);
-        await promiseWhen(
-            () => store.chats.filter(c => c.headLoaded).length === store.chats.length,
-            5000
-        );
     }
 
     get currentChat() {
@@ -64,9 +59,13 @@ class ChatState extends RoutedState {
         this._loading = v;
     }
 
+    titleFromChat = (chat, defaultName) => {
+        if (defaultName) return tx('title_chats');
+        return chat ? chat.name : '';
+    };
+
     get title() {
-        if (this.routerMain.currentIndex === 0) return tx('title_chats');
-        return this.currentChat ? this.currentChat.name : '';
+        return this.titleFromChat(this.currentChat, this.routerMain.currentIndex === 0);
     }
 
     activate(chat) {
@@ -110,13 +109,11 @@ class ChatState extends RoutedState {
 
     @action async startChat(recipients, isChannel = false, name, purpose) {
         try {
-            const chat = this.store.startChat(recipients, isChannel, name, purpose);
             this.loading = true;
-            return new Promise(resolve => when(() => !chat.loadingMeta, () => {
-                this.loading = false;
-                this.routerMain.chats(chat, true);
-                resolve(chat);
-            }));
+            const chat = await this.store.startChat(recipients, isChannel, name, purpose);
+            this.loading = false;
+            this.routerMain.chats(chat, true);
+            return chat;
         } catch (e) {
             this.loading = false;
             warnings.add(e.message);
@@ -137,10 +134,10 @@ class ChatState extends RoutedState {
             this.currentChat.sendMessage(msg).catch(sounds.destroy);
     }
 
-    @action shareFiles(files) {
+    @action shareFilesAndFolders(filesAndFolders) {
         this.selfNewMessageCounter++;
-        this.currentChat && files && files.length &&
-            this.currentChat.shareFiles(files).catch(sounds.destroy);
+        this.currentChat && filesAndFolders && filesAndFolders.length &&
+            this.currentChat.shareFilesAndFolders(filesAndFolders).catch(sounds.destroy);
     }
 
     @action addVideoMessage(link) {

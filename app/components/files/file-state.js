@@ -2,15 +2,15 @@ import { Linking, Platform } from 'react-native';
 import { observable, action, when } from 'mobx';
 import chatState from '../messaging/chat-state';
 import RoutedState from '../routes/routed-state';
-import { fileStore, TinyDb, socket, fileHelpers, clientApp, chatStore } from '../../lib/icebear';
+import { fileStore, TinyDb, socket, fileHelpers, clientApp, chatStore, User } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { rnAlertYesNo } from '../../lib/alerts';
 import { popupInputWithPreview, popupYesCancel, popupOkCancel } from '../shared/popups';
 import { promiseWhen } from '../helpers/sugar';
 
 class FileState extends RoutedState {
+    // the current selected file for FileDetailView
     @observable currentFile = null;
-    @observable currentFolder = null;
     @observable previewFile = null;
     @observable isFileSelectionMode = null;
     @observable findFilesText;
@@ -21,19 +21,19 @@ class FileState extends RoutedState {
     selectedFile = null;
 
     @action async init() {
-        this.currentFolder = fileStore.folders.root;
-        return new Promise(resolve => when(() => !this.store.loading, resolve));
+        fileStore.folderStore.currentFolder = fileStore.folderStore.root;
+        return new Promise(resolve => when(() => this.store.cacheLoaded, resolve));
     }
 
     get showSelection() {
-        return fileStore.hasSelectedFiles;
+        return fileStore.hasSelectedFilesOrFolders;
     }
 
     get selected() {
-        return fileStore.getSelectedFiles();
+        return fileStore.selectedFilesOrFolders;
     }
 
-    @action delete() {
+    @action delete(noTransition) {
         const f = this.currentFile ? [this.currentFile] : this.selected;
         const count = f.length;
         const shared = !!f.filter(i => !!i.shared).length;
@@ -44,16 +44,18 @@ class FileState extends RoutedState {
                 f.forEach(item => {
                     item.remove();
                 });
-                this.routerMain.files();
+                if (!noTransition) this.routerMain.files();
             })
             .catch((e) => console.error(e));
     }
 
     @action async deleteFile(file) {
-        const title = tx('dialog_confirmDeleteFile');
+        const isOwner = file.owner === User.current.username;
+        const title = isOwner ? tx('dialog_confirmDeleteFile') : tx('title_confirmRemoveFile');
         let subtitle = '';
-        if (file.shared) subtitle += `\n${tx('title_confirmRemoveSharedFiles')}`;
+        if (file.shared) subtitle += isOwner ? tx('title_confirmRemoveSharedFiles') : tx('dialog_confirmRemoveFileNonOwner');
         const result = await popupOkCancel(title, subtitle);
+        console.log(result);
         if (result) {
             await file.remove();
         }
@@ -110,8 +112,9 @@ class FileState extends RoutedState {
         this.selected.forEach(f => { f.selected = false; });
     }
 
-    @action selectFiles() {
+    @action selectFilesAndFolders() {
         this.resetSelection();
+        fileStore.folderStore.currentFolder = this.store.folderStore.root;
         this.isFileSelectionMode = true;
         return new Promise((resolve, reject) => {
             this.resolveFileSelection = resolve;
@@ -153,7 +156,7 @@ class FileState extends RoutedState {
         await promiseWhen(() => socket.authenticated);
         const chat = chatState.currentChat;
         if (!chat) throw new Error('file-state.js, uploadInline: no chat selected');
-        data.file = chat.uploadAndShareFile(data.url, data.fileName, false, null, data.message);
+        data.file = chat.uploadAndShareFile(data.url, data.fileName, false, data.message);
         await promiseWhen(() => data.file.fileId);
         // TODO: move this to icebear
         this.localFileMap.set(data.file.fileId, data.url);
@@ -162,15 +165,11 @@ class FileState extends RoutedState {
 
     uploadInFiles = async (data) => {
         await promiseWhen(() => socket.authenticated);
-        const folder = this.currentFolder;
+        const folder = fileStore.folderStore.currentFolder;
         const { shouldUpload, newFileName } = await this.preprocess(data);
         let file;
         if (shouldUpload) {
-            file = fileStore.upload(data.url, newFileName, folder.isRoot ? null : folder.folderId);
-            if (folder && !folder.isRoot) {
-                await promiseWhen(() => file.fileId);
-                folder.moveInto(file);
-            }
+            file = fileStore.upload(data.url, newFileName, folder);
         }
         return file;
     };
@@ -191,7 +190,7 @@ class FileState extends RoutedState {
     }
 
     goToRoot() {
-        this.currentFolder = fileStore.folders.root;
+        fileStore.folderStore.currentFolder = fileStore.folderStore.root;
     }
 
     get title() {

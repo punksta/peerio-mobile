@@ -14,7 +14,7 @@ class ContactsPage extends Page {
     }
 
     get backButton() {
-        return this.getWhenVisible('~buttonChatBack');
+        return this.getWhenVisible('~buttonBackIcon');
     }
 
     get addContactButton() {
@@ -27,6 +27,10 @@ class ContactsPage extends Page {
 
     get searchContactButton() {
         return this.getWhenVisible('~button_add');
+    }
+
+    get inviteContactButton() {
+        return this.getWhenVisible('~button_invite');
     }
 }
 

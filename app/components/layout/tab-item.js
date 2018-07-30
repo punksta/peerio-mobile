@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import fileState from '../files/file-state';
@@ -32,6 +33,8 @@ export default class TabItem extends SafeComponent {
             }
             if (uiState.currentScrollView.scrollTo) {
                 uiState.currentScrollView.scrollTo(0);
+            } else if (uiState.currentScrollView.scrollToIndex) {
+                uiState.currentScrollView.scrollToIndex({ index: 0 });
             } else {
                 uiState.currentScrollView.scrollToLocation(
                     {
@@ -47,8 +50,11 @@ export default class TabItem extends SafeComponent {
     }
 
     renderThrow() {
-        const { text, route, icon, bubble } = this.props;
-        const color = routerMain.route === route ? vars.peerioBlue : vars.tabsFg;
+        const { text, route, icon, bubble, highlightList } = this.props;
+        let color = vars.tabsFg;
+        if ((routerMain.route === route) || (highlightList && highlightList.includes(routerMain.route))) {
+            color = vars.peerioBlue;
+        }
         const indicator = bubble ? (
             <View style={{ position: 'absolute', right: -5, top: 0 }}>
                 {icons.bubble('')}
@@ -74,6 +80,6 @@ TabItem.propTypes = {
     text: PropTypes.any,
     route: PropTypes.any,
     icon: PropTypes.any,
-    bubble: PropTypes.any
+    bubble: PropTypes.any,
+    highlightList: PropTypes.any
 };
-

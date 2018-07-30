@@ -14,7 +14,7 @@ class ChatPage extends Page {
     }
 
     get buttonExitChat() {
-        return this.getWhenVisible('~buttonChatBack');
+        return this.getWhenVisible('~buttonBackIcon');
     }
 
     get addMembersButton() {
@@ -37,12 +37,32 @@ class ChatPage extends Page {
         return this.getWhenVisible('~popupButton-confirm');
     }
 
+    get alertLeftRoom() {
+        return this.getWhenVisible('~popupButton-ok');
+    }
+
     get invitedContactRemoved() {
         return this.app.waitForVisible('~test_recipient-memberList', 5000, true);
     }
 
-    roomWithTitle(selector) {
+    chatWithTitle(selector) {
         return this.getWhenVisible(`~${selector}`);
+    }
+
+    get chatUnreadMessageIndicator() {
+        return this.getWhenPresent('~chatUnreadMessageIndicator');
+    }
+
+    get chatUnreadMessageIndicatorDisappeared() {
+        return this.waitToDisappear('~chatUnreadMessageIndicator');
+    }
+
+    get messageDmPlaceholder() {
+        return this.getWhenVisible('~button_message');
+    }
+
+    get dismissDmPlaceholder() {
+        return this.getWhenVisible('~button_dismiss');
     }
 }
 

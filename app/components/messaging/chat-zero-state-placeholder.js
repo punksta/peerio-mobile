@@ -1,14 +1,16 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, Image } from 'react-native';
+import { View, Image } from 'react-native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
+import buttons from '../helpers/buttons';
+import routes from '../routes/routes';
 
 const redArrowSrc = require('../../assets/zero_chat_state/arrow-red.png');
-const roomSrc = require('../../assets/zero_chat_state/zeroState-room-big.png');
-const dmSrc = require('../../assets/zero_chat_state/zeroState-dm-big.png');
+const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
 
 const container = {
     flex: 1,
@@ -22,38 +24,44 @@ const wrapper = {
     flexGrow: 1
 };
 
-const titleStyle = {
-    color: vars.peerioBlue,
-    fontSize: vars.font.size.massive,
-    fontStyle: 'italic',
+const chatHeaderStyle = {
+    color: vars.textBlack87,
+    fontSize: vars.font.size.huge,
+    textAlign: 'center',
     marginTop: vars.spacing.medium.maxi2x,
-    marginBottom: vars.isDeviceScreenBig ? vars.spacing.medium.mini : vars.spacing.small.mini2x,
-    textAlign: 'center'
+    marginBottom: vars.spacing.medium.mini2x
 };
 
-const headingStyle = {
-    color: vars.subtleTextBold,
-    fontSize: vars.font.size.big,
-    fontWeight: vars.font.weight.semiBold,
-    marginTop: vars.isDeviceScreenBig ? vars.spacing.large.midi : vars.spacing.large.mini2x,
-    marginBottom: vars.isDeviceScreenBig ? vars.spacing.small.midi2x : vars.spacing.small.mini2x,
-    justifyContent: 'flex-start'
+const chatDescriptionStyle = {
+    textAlign: 'center',
+    color: vars.textBlack54,
+    fontSize: vars.font.size.bigger,
+    width: 250,
+    marginBottom: vars.spacing.large.midixx
 };
 
-const descriptionStyle = {
-    color: vars.subtleTextBold,
+const contactDescriptionStyle = {
+    color: vars.textBlack54,
     fontSize: vars.font.size.normal,
-    marginBottom: vars.isDeviceScreenBig ? vars.spacing.small.mini2x : vars.spacing.small.mini
+    marginTop: vars.spacing.huge.midi2x,
+    marginBottom: vars.spacing.medium.mini2x
 };
+
 
 @observer
 export default class ChatZeroStatePlaceholder extends SafeComponent {
+    get headerText() {
+        return (
+            <Text style={chatHeaderStyle} {...testLabel('title_headerZeroState')}>
+                {tx('title_headerZeroState')}
+            </Text>
+        );
+    }
+
     title() {
         return (
             <View>
-                <Text style={titleStyle} {...testLabel('title_startSecureChat')}>
-                    {tx('title_startSecureChat')}
-                </Text>
+                {this.headerText}
                 <Image
                     source={redArrowSrc}
                     style={{
@@ -67,17 +75,14 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
         );
     }
 
-    roomsUI() {
+    chatUI() {
         return (
             <View style={{ alignItems: 'center' }}>
-                <Text style={headingStyle}>
-                    {tx('title_channels')}
-                </Text>
-                <Text style={descriptionStyle}>
-                    {tx('title_zeroChatRoomDescription')}
+                <Text style={chatDescriptionStyle}>
+                    {tx('title_descriptionZeroState')}
                 </Text>
                 <Image
-                    source={roomSrc}
+                    source={zeroStateImage}
                     style={{
                         width: vars.chatZeroStateImageWidth,
                         height: vars.chatZeroStateImageHeight
@@ -86,22 +91,19 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
             </View>);
     }
 
-    dmUI() {
+    get findContactsButton() {
+        return (
+            buttons.roundBlueBgButton('title_findContactsZeroState', () => routes.main.contactAdd())
+        );
+    }
+
+    contactUI() {
         return (
             <View style={{ alignItems: 'center' }}>
-                <Text style={headingStyle}>
-                    {tx('title_zeroChatDmHeading')}
+                <Text style={contactDescriptionStyle}>
+                    {tx('title_seeWhoYouAlreadyKnow')}
                 </Text>
-                <Text style={descriptionStyle}>
-                    {tx('title_zeroChatDmDescription')}
-                </Text>
-                <Image
-                    source={dmSrc}
-                    style={{
-                        width: vars.chatZeroStateImageWidth,
-                        height: vars.chatZeroStateImageHeight
-                    }}
-                />
+                {this.findContactsButton}
             </View>);
     }
 
@@ -110,8 +112,8 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
             <View style={container}>
                 <View style={wrapper}>
                     {this.title()}
-                    {this.roomsUI()}
-                    {this.dmUI()}
+                    {this.chatUI()}
+                    {this.contactUI()}
                 </View>
             </View>
         );

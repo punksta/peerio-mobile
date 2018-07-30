@@ -2,11 +2,11 @@ const Page = require('../page');
 
 class LoginPage extends Page {
     get username() {
-        return this.getWhenVisible('~username');
+        return this.getWhenVisible('~usernameLogin');
     }
 
     get passphrase() {
-        return this.getWhenVisible('~passphrase');
+        return this.getWhenVisible('~usernamePassword');
     }
 
     get submitButton() {

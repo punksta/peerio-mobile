@@ -29,12 +29,14 @@ export default class TabContainer extends SafeComponent {
         if (routerMain.currentIndex !== 0) return null;
         if (fileState.isFileSelectionMode) return null;
         if (invitationState.currentInvitation) return null;
+        if (uiState.hideTabs) return null;
         return (
             <View style={bottomRowStyle}>
                 <TabItem
                     text={t('title_chats')}
                     route="chats"
                     icon="forum"
+                    highlightList={['space']}
                     bubble={chatStore.unreadMessages + chatInviteStore.received.length} />
                 <TabItem
                     text={t('title_files')}
@@ -44,7 +46,8 @@ export default class TabContainer extends SafeComponent {
                 <TabItem
                     text={t('title_contacts')}
                     route={contactState.empty ? 'contactAdd' : 'contacts'}
-                    icon="people" />
+                    icon="people"
+                    highlightList={['contactAdd', 'contactInvite']} />
                 <TabItem
                     text={t('title_settings')}
                     route="settings"

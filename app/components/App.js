@@ -1,9 +1,7 @@
 import React from 'react';
-import {
-    View, Text, PanResponder,
+import { View, PanResponder,
     AppState, ActivityIndicator, NativeModules,
-    Dimensions, PixelRatio, Platform, StatusBar
-} from 'react-native';
+    Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from './shared/safe-component';
 import PopupLayout from './layout/popup-layout';
@@ -14,13 +12,14 @@ import uiState from './layout/ui-state';
 import { clientApp, crypto, startSocket, config, User, TinyDb } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
-import { enableIdfa } from '../lib/idfa';
 import consoleOverride from '../lib/console-override';
 import '../lib/sounds';
 import './utils/bridge';
 import socketResetIfDead from './utils/socket-reset';
 import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
+import ActionSheetLayout from './layout/action-sheet-layout';
+import Text from './controls/custom-text';
 
 const { height, width } = Dimensions.get('window');
 @observer
@@ -46,8 +45,6 @@ export default class App extends SafeComponent {
 
         consoleOverride.configureConsole().then(() => {
             startSocket();
-            push.clearBadge();
-            enableIdfa();
         });
     }
 
@@ -116,6 +113,7 @@ export default class App extends SafeComponent {
                 <RouteNavigator key="navigator" routes={routerApp} />
                 <ModalLayout key="modals" />
                 <PopupLayout key="popups" />
+                <ActionSheetLayout key="actionSheets" />
                 {uiState.picker}
                 <Text key="debug" style={{ height: 0 }} testID="debugText">{uiState.debugText}</Text>
                 <StatusBar barStyle="light-content" hidden={false} key="statusBar" />

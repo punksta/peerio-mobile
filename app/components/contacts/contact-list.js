@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
 import { View, SectionList } from 'react-native';
-import { observable, reaction, action } from 'mobx';
+import { action, computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ContactsPlaceholder from './contacts-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -18,39 +18,8 @@ const INITIAL_LIST_SIZE = 20;
 
 @observer
 export default class ContactList extends SafeComponent {
-    dataSource = [];
-    @observable refreshing = false;
-
-    get data() { return contactState.store.contacts; }
-
-    componentWillUnmount() {
-        this.reaction && this.reaction();
-        this.reaction = null;
-    }
-
     componentDidMount() {
         contactState.store.uiViewFilter = 'all';
-        this.reaction = reaction(() => [
-            contactState.routerMain.route === 'contacts',
-            contactState.routerMain.currentIndex === 0,
-            this.data,
-            this.data.length,
-            contactState.store.uiView,
-            contactState.store.invitedContacts,
-            contactState.store.addedContacts
-        ], () => {
-            // console.log(contactState.store.uiView.length);
-            console.log(`contact-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
-            this.dataSource = [];
-            const { addedContacts, invitedContacts, uiView, contacts } = contactState.store;
-            this.dataSource = uiView.map(({ letter, items }) => {
-                return ({ data: items.slice(), key: letter });
-            });
-            this.dataSource.unshift({ data: [], key: `All (${contacts.length})` });
-            this.dataSource.unshift({ data: addedContacts.slice(), key: `${tx('title_favoriteContacts')} (${addedContacts.length})` });
-            this.dataSource.push({ data: invitedContacts.slice(), key: `${tx('title_invitedContacts')} (${invitedContacts.length})` });
-            this.forceUpdate();
-        }, true);
     }
 
     item({ item }) {
@@ -68,11 +37,22 @@ export default class ContactList extends SafeComponent {
         uiState.currentScrollView = sv;
     }
 
+    @computed get sections() {
+        const { addedContacts, invitedNotJoinedContacts, uiView, contacts } = contactState.store;
+        const sections = uiView.map(({ letter, items }) => {
+            return ({ data: items, key: letter });
+        });
+        sections.unshift({ data: [], key: `All (${contacts.length})` });
+        sections.unshift({ data: addedContacts, key: `${tx('title_favoriteContacts')} (${addedContacts.length})` });
+        sections.push({ data: invitedNotJoinedContacts, key: `${tx('title_invitedContacts')} (${invitedNotJoinedContacts.length})` });
+        return sections;
+    }
+
     listView() {
         return (
             <SectionList
                 initialNumToRender={INITIAL_LIST_SIZE}
-                sections={this.dataSource}
+                sections={this.sections}
                 keyExtractor={item => item.username || item.email}
                 renderItem={this.item}
                 renderSectionHeader={this.header}

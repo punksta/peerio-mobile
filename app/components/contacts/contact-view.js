@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
+import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
 import contactState from '../contacts/contact-state';
@@ -40,10 +41,10 @@ export default class ContactView extends SafeComponent {
                     </View>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text
+                            bold
                             ellipsizeMode="tail"
                             numberOfLines={2}
                             style={{
-                                fontWeight: 'bold',
                                 color: vars.txtDark,
                                 fontSize: vars.font.size.bigger,
                                 marginVertical: vars.spacing.small.mini2x
@@ -57,7 +58,7 @@ export default class ContactView extends SafeComponent {
     renderContact(contact) {
         const { username, firstName, lastName, tofuError, fingerprintSkylarFormatted, isAdded, isDeleted } = contact;
         const tofuErrorControl = tofuError && (
-            <View style={{ backgroundColor: '#D0021B', flexGrow: 1, padding: vars.spacing.small.maxi }}>
+            <View style={{ backgroundColor: vars.redWarning, flexGrow: 1, padding: vars.spacing.small.maxi }}>
                 <Text style={{ color: vars.white }}>
                     This contact{'\''}s public key has changed, which means it may be compromised.
                 </Text>
@@ -71,10 +72,10 @@ export default class ContactView extends SafeComponent {
                     </View>
                     <View style={{ flexGrow: 1, flexShrink: 1 }}>
                         <Text
+                            bold
                             ellipsizeMode="tail"
                             numberOfLines={2}
                             style={{
-                                fontWeight: 'bold',
                                 color: vars.txtDark,
                                 fontSize: vars.font.size.bigger,
                                 marginVertical: vars.spacing.small.mini2x
@@ -82,8 +83,8 @@ export default class ContactView extends SafeComponent {
                         <Text style={{ color: vars.txtDark }}>@{username}</Text>
                     </View>
                     {icons.dark('forum', () => this.startChat())}
-                    {isAdded ? icons.colored('star', () => this.toggleFav(), vars.yellow, null, 'favoriteButton') :
-                        icons.dark('star-border', () => this.toggleFav(), null, null, 'favoriteButton')}
+                    {isAdded ? icons.colored('star', () => this.toggleFav(), vars.yellow, null, false, 'favoriteButton') :
+                        icons.dark('star-border', () => this.toggleFav(), null, null, 'favoriteButton', false)}
                 </View>
                 <View style={{ margin: vars.spacing.medium.maxi2x }}>
                     {tofuErrorControl}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { View, TouchableOpacity, Dimensions } from 'react-native';
+import Text from '../controls/custom-text';
 import uiState from '../layout/ui-state';
 import testLabel from './test-label';
 
@@ -12,7 +13,7 @@ let currentScrollPosition = 0;
  * to the test script. Note that it overrides ref and onScroll
  * event handlers
  */
-const scrollHelper = {
+const scrollHelper = __DEV__ ? {
     ref: ref => {
         currentScrollPosition = 0;
         currentScrollView = ref;
@@ -20,7 +21,7 @@ const scrollHelper = {
     onScroll: e => {
         currentScrollPosition = e.nativeEvent.contentOffset.y;
     }
-};
+} : null;
 
 export { scrollHelper };
 
@@ -78,7 +79,7 @@ export default class TestHelper extends Component {
                 {this.item('↓', 'endScroll', this.scrollEnd)}
                 {this.item('1', 'testAction1', () => uiState.testAction1())}
                 {this.item('2', 'testAction2', () => uiState.testAction2())}
-                {this.item('3', 'testAction2', () => uiState.testAction3())}
+                {this.item('3', 'testAction3', () => uiState.testAction3())}
             </View>
         );
     }

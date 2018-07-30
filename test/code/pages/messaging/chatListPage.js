@@ -5,16 +5,44 @@ class ChatListPage extends Page {
         return this.getWhenVisible('~buttonCreateNewChat');
     }
 
-    roomWithTitle(selector) {
+    chatWithTitle(selector) {
         return this.getWhenVisible(`~${selector}`);
     }
 
-    roomWithTitleVisible(selector) {
+    chatWithTitleIsVisible(selector) {
         return this.checkIfVisible(`~${selector}`);
     }
 
-    roomWithTitleExists(selector) {
+    chatWithTitleExists(selector) {
         return this.checkIfPresent(`~${selector}`, 25000);
+    }
+
+    get topUnreadMessageIndicator() {
+        return this.getWhenVisible('~chatlist-unread-indicator-top');
+    }
+
+    get bottomUnreadMessageIndicator() {
+        return this.getWhenVisible('~chatlist-unread-indicator-bottom');
+    }
+
+    get patientSpace() {
+        return this.getWhenVisible('~Patient 1');
+    }
+
+    get internalRoomsHeader() {
+        return this.checkIfVisible('~Internal rooms');
+    }
+
+    get patientRoomsHeader() {
+        return this.checkIfVisible('~Patient rooms');
+    }
+
+    get consultationRoom() {
+        return this.getWhenVisible('~Consultation');
+    }
+
+    get internalRoom() {
+        return this.getWhenVisible('~general');
     }
 }
 

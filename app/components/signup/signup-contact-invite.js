@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { Text, View, FlatList } from 'react-native';
+import { View, Image, FlatList, Dimensions } from 'react-native';
 import { observable, action, computed } from 'mobx';
 import ActivityOverlay from '../controls/activity-overlay';
 import { headerContainer, textStyle, skipButtonStyle, listHeader, textListTitle, footerContainer, container } from '../../styles/signup-contact-sync';
@@ -10,18 +10,31 @@ import contactState from '../contacts/contact-state';
 import signupState from '../signup/signup-state';
 import LoginWizardPage from '../login/login-wizard-page';
 import ContactImportItem from '../contacts/contact-import-item';
-import { popupOkCancel } from '../shared/popups';
+import { popupConfirmCancelIllustration } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
 import SearchBar from '../controls/search-bar';
 import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import uiState from '../layout/ui-state';
 import ListItem from './signup-contact-list-item';
+import Text from '../controls/custom-text';
+
+const { width } = Dimensions.get('window');
 
 const _ = require('lodash');
 const iconClear = require('../../assets/file_icons/ic_close.png');
+const emailInvitesIllustration = require('../../assets/email-invite-confirmation.png');
 
 const INITIAL_LIST_SIZE = 10;
+
+const titleStyle = {
+    fontSize: vars.font.size.big,
+    marginBottom: vars.spacing.small.midi2x,
+    color: vars.txtDark
+};
+const descriptionStyle = {
+    color: vars.subtleText
+};
 
 @observer
 export default class SignupContactInvite extends LoginWizardPage {
@@ -41,6 +54,13 @@ export default class SignupContactInvite extends LoginWizardPage {
             if (listItem.selected) selectedEmails.push(listItem.contact.username);
         });
         return selectedEmails;
+    }
+
+    silentInvite(onlyNonSelected) {
+        const silentSyncEmails = this.contactList
+            .filter(li => onlyNonSelected ? !li.selected : true)
+            .map(li => li.contact.username);
+        contactState.batchInvite(silentSyncEmails, true);
     }
 
     async componentDidMount() {
@@ -67,7 +87,7 @@ export default class SignupContactInvite extends LoginWizardPage {
             promises.push((async () => {
                 try {
                     const contact = await contactState.resolveAndCache(c.email);
-                    if (contact.notFound) {
+                    if (contact.notFound || contact.isHidden) {
                         const listItem = new ListItem(contact, c.fullName, true);
                         listItem.visible = true;
                         this.contactList.push(listItem);
@@ -86,6 +106,7 @@ export default class SignupContactInvite extends LoginWizardPage {
         if (contactsAdded) {
             snackbarState.pushTemporary(tx('title_contactsAdded', { contactsAdded }));
         }
+        this.silentInvite();
         signupState.finishSignUp();
     }
 
@@ -131,7 +152,7 @@ export default class SignupContactInvite extends LoginWizardPage {
                         {tx('title_inviteContacts')}
                     </Text>
                     <View style={skipButtonStyle}>
-                        {buttons.whiteTextButton(tx('button_skip'), () => this.skip())}
+                        {buttons.whiteTextButton(tx('button_skip'), () => this.skip(), null, tx('button_skip'))}
                     </View>
                 </View>
                 <SearchBar
@@ -208,13 +229,20 @@ export default class SignupContactInvite extends LoginWizardPage {
         );
     }
 
-    @action.bound async inviteSelectedContacts() {
-        const popupCopy = this.selectedContacts.length > 1 ?
-            `Email invites will be sent to ${this.selectedContacts.length} people.` :
-            `Email invite will be sent to ${this.selectedContacts.length} person.`;
-        const result = await popupOkCancel('Confirm email invites', popupCopy);
+    popupConfirmEmailInvites() {
+        const imageWidth = width - (2 * vars.popupHorizontalMargin);
+        const image = (<Image style={{ borderTopLeftRadius: 4, width: imageWidth, height: imageWidth / 3.822 }} // image ratio
+            source={emailInvitesIllustration} resizeMode="contain" />);
+        const content =
+            (<View style={{ padding: vars.popupPadding, paddingTop: vars.spacing.large.maxi }}>
+                <Text bold style={titleStyle}>{tx('title_confirmEmailInvitesHeading')}</Text>
+                <Text style={descriptionStyle}>{tx('title_confirmEmailInvite', { numSelectedContacts: this.selectedContacts.length })}</Text>
+            </View>);
+        return popupConfirmCancelIllustration(image, content, 'button_confirm', 'button_cancel');
+    }
 
-        if (result) {
+    @action.bound async inviteSelectedContacts() {
+        if (await this.popupConfirmEmailInvites()) {
             contactState.batchInvite(this.selectedEmails);
             const contactsAdded = contactState.store.addedContacts.length;
             // TODO use contact store for invites sent
@@ -228,7 +256,7 @@ export default class SignupContactInvite extends LoginWizardPage {
                 message = tx('title_contactsInvited', { contactsInvited });
             }
             if (message) snackbarState.pushTemporary(message);
-
+            this.silentInvite(true);
             signupState.finishSignUp();
         }
     }

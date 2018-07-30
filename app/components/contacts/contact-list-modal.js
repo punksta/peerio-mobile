@@ -1,7 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, SectionList, Text } from 'react-native';
-import { observable, reaction } from 'mobx';
+import { View, SectionList } from 'react-native';
+import { computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ContactsPlaceholder from './contacts-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
@@ -13,48 +13,31 @@ import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import Center from '../controls/center';
+import Text from '../controls/custom-text';
 
 const INITIAL_LIST_SIZE = 20;
 
 @observer
 export default class ContactListModal extends SafeComponent {
-    dataSource = [];
-    @observable refreshing = false;
-
-    get data() { return contactState.store.contacts; }
-
-    componentWillUnmount() {
-        this.reaction && this.reaction();
-        this.reaction = null;
-    }
-
     componentDidMount() {
         contactState.store.uiViewFilter = 'all';
-        this.reaction = reaction(() => [
-            this.data,
-            this.data.length,
-            contactState.store.uiView,
-            contactState.store.addedContacts
-        ], () => {
-            // console.log(contactState.store.uiView.length);
-            console.log(`contact-list.js: update ${this.data.length} -> ${this.maxLoadedIndex}`);
-            this.dataSource = [];
-            const { uiView, contacts } = contactState.store;
-            this.dataSource = uiView.map(({ letter, items }) => {
-                return ({ data: items.slice(), key: letter });
-            });
-            this.dataSource.unshift({ data: [], key: `All (${contacts.length})` });
-            const { channels } = chatState.store;
-            this.dataSource.unshift({ data: channels, key: `Rooms (${channels.length})` });
-            // this.dataSource.unshift({ data: addedContacts.slice(), key: `${tx('title_favoriteContacts')} (${addedContacts.length})` });
-            this.forceUpdate();
-        }, true);
+    }
+
+    @computed get sections() {
+        const { uiView, contacts } = contactState.store;
+        const sections = uiView.map(({ letter, items }) => {
+            return ({ data: items, key: letter });
+        });
+        sections.unshift({ data: [], key: `All (${contacts.length})` });
+        const { channels } = chatState.store;
+        sections.unshift({ data: channels, key: `Rooms (${channels.length})` });
+        return sections;
     }
 
     item = ({ item }) => {
         const onPress = () => this.props.action(item);
         return item.isChannel ?
-            <ChannelListItem chat={item} onPress={onPress} /> :
+            <ChannelListItem chat={item} channelName={item.name} onPress={onPress} /> :
             <ContactItem contact={item} onPress={onPress} />;
     };
 
@@ -66,7 +49,7 @@ export default class ContactListModal extends SafeComponent {
         return (
             <SectionList
                 initialNumToRender={INITIAL_LIST_SIZE}
-                sections={this.dataSource}
+                sections={this.sections}
                 keyExtractor={item => item.username || item.email || item.id}
                 renderItem={this.item}
                 renderSectionHeader={this.header}
@@ -93,13 +76,12 @@ export default class ContactListModal extends SafeComponent {
         };
         const textStyle = {
             fontSize: vars.font.size.normal,
-            fontWeight: vars.font.weight.semiBold,
             color: 'rgba(0, 0, 0, .54)'
         };
         return (
             <View style={container}>
                 {icons.dark('close', this.props.onExit)}
-                <Center style={style}><Text style={textStyle}>{this.props.title}</Text></Center>
+                <Center style={style}><Text semibold style={textStyle}>{this.props.title}</Text></Center>
                 {icons.placeholder()}
             </View>
         );

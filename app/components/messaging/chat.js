@@ -1,22 +1,25 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { ScrollView, View, Text, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
-import { observable, when, reaction, computed } from 'mobx';
+import { ScrollView, View, TouchableOpacity, ActivityIndicator, Dimensions, Platform } from 'react-native';
+import { observable, action, when, reaction, computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ProgressOverlay from '../shared/progress-overlay';
-import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
 import ChatItem from './chat-item';
 import AvatarCircle from '../shared/avatar-circle';
-import ChatActionSheet from './chat-action-sheet';
-import InlineImageActionSheet from '../files/inline-image-action-sheet';
-import InlineFileActionSheet from '../files/inline-file-action-sheet';
+import ChatUnreadMessageIndicator from './chat-unread-message-indicator';
+import FileActionSheet from '../files/file-action-sheet';
 import contactState from '../contacts/contact-state';
 import { vars } from '../../styles/styles';
-import { tx } from '../utils/translator';
 import chatState from '../messaging/chat-state';
+import uiState from '../layout/ui-state';
 import VideoIcon from '../layout/video-icon';
 import IdentityVerificationNotice from './identity-verification-notice';
+import DmContactInvite from './dm-contact-invite';
+import { clientApp } from '../../lib/icebear';
+import ChatBeginningNotice from './chat-beginning-notice';
+import BackIcon from '../layout/back-icon';
+import routes from '../routes/routes';
 
 const { width } = Dimensions.get('window');
 
@@ -39,23 +42,37 @@ export default class Chat extends SafeComponent {
     indicatorHeight = 16;
 
     componentDidMount() {
-        this.selfMessageReaction = reaction(() => chatState.selfNewMessageCounter, () => {
-            // scroll to end
-            const y = this.contentHeight - this.scrollViewHeight;
-            if (y) {
-                this.scrollView.scrollTo({ y, animated: true });
+        uiState.testAction2 = () => {
+            const y = Math.max(0, this.lastId / 2);
+            this.scrollView.scrollTo({ y, animated: false });
+        };
+
+        this.selfMessageReaction = reaction(() => chatState.selfNewMessageCounter,
+            () => {
+                this.isAtBottom = true;
             }
-        });
-        this.chatReaction = reaction(() => chatState.store.activeChat, () => {
-            this.initialScrollDone = false;
-            this.waitForScrollToEnd = true;
-            this.contentHeight = 0;
-        });
+        );
+        this.chatReaction = reaction(() => chatState.store.activeChat, this.resetScrolling);
     }
 
+    resetScrolling = () => {
+        this.initialScrollDone = false;
+        this.waitForScrollToEnd = true;
+        this.contentHeight = 0;
+    };
+
     componentWillUnmount() {
+        if (this.unreadMessageIndicatorTimeout) {
+            clearTimeout(this.unreadMessageIndicatorTimeout);
+            this.unreadMessageIndicatorTimeout = null;
+        }
+        uiState.customOverlayComponent = null;
         this.selfMessageReaction();
         this.chatReaction();
+    }
+
+    get leftIcon() {
+        return <BackIcon action={routes.main.chats} testID="buttonBackIcon" />;
     }
 
     get rightIcon() {
@@ -72,25 +89,28 @@ export default class Chat extends SafeComponent {
     }
 
     get showInput() {
-        return !!chatState.currentChat && !chatState.loading;
+        return !!chatState.currentChat && !chatState.loading && !this.chat.isInvite;
     }
 
     _refs = {};
     _itemActionMap = {};
 
+    // TODO add folder action sheet
     item = (item, index) => {
         const key = item.id || index;
         const actions = getOrMake(
             key, this._itemActionMap, () => ({
                 ref: ref => { this._refs[key] = ref; },
-                onInlineImageAction: image => this._inlineImageActionSheet.show(image, item, this.chat),
-                onInlineFileAction: file => this._inlineFileActionSheet.show(file, item, this.chat),
-                onRetryCancel: () => this._actionSheet.show(item, this.chat)
+                onInlineImageAction: image => FileActionSheet.show(image),
+                onLegacyFileAction: file => FileActionSheet.show(file),
+                onFileAction: file => FileActionSheet.show(file, true)
             }));
         return (
             <ChatItem
                 key={key}
                 message={item}
+                chat={this.chat}
+                backgroundColor={this.background}
                 {...actions}
             />
         );
@@ -104,6 +124,8 @@ export default class Chat extends SafeComponent {
     contentSizeChanged = async (contentWidth, contentHeight) => {
         // console.log(`chat.js: content size changed ${contentWidth}, ${contentHeight}`);
         if (!this.scrollView || !this.chat) return;
+
+        const wasAtBottom = this.isAtBottom;
 
         // set current content heigth
         if (contentHeight) this.contentHeight = contentHeight;
@@ -124,18 +146,21 @@ export default class Chat extends SafeComponent {
                 const y = this.contentHeight - this.scrollViewHeight;
                 this.scrollEnabled = y - indicatorSpacing > 0;
                 console.debug(`in timeout refreshing: ${this.refreshing}, disableNextScroll: ${this.disableNextScroll}`);
-                if (!this.refreshing && !this.disableNextScroll) {
-                    console.log('chat.js: auto scrolling');
-                    this.scrollView.scrollTo({ y, animated: !this.waitForScrollToEnd });
-                    requestAnimationFrame(() => { this.initialScrollDone = true; });
+                if (!this.refreshing) {
+                    if (!this.initialScrollDone ||
+                        wasAtBottom) {
+                        console.log('chat.js: auto scrolling');
+                        this.isAtBottom = wasAtBottom;
+                        this.scrollView.scrollTo({ y, animated: false });
+                        requestAnimationFrame(() => { this.initialScrollDone = true; });
+                    }
                 }
 
                 if (this.waitForScrollToEnd) {
                     this.waitForScrollToEnd = false;
                 }
-                this.disableNextScroll = false;
             } else {
-                setTimeout(() => this.contentSizeChanged(), 1000);
+                this._contentSizeChanged = setTimeout(() => this.contentSizeChanged(), 1000);
             }
         }, 300);
     };
@@ -208,12 +233,36 @@ export default class Chat extends SafeComponent {
         }), 100);
     }
 
+    isAtBottom = true;
+
+    unreadMessageIndicatorTimeout = null;
+
     onScroll = (event) => {
         const { nativeEvent } = event;
+        const { y } = nativeEvent.contentOffset;
+        const maxY = this.contentHeight - this.scrollViewHeight;
+        // values here may be float therefore the magic "2" number
+        this.isAtBottom = (maxY - y) < 2;
+        clientApp.isReadingNewestMessages = this.isAtBottom;
+
+        if (this.unreadMessageIndicatorTimeout) {
+            clearTimeout(this.unreadMessageIndicatorTimeout);
+            this.unreadMessageIndicatorTimeout = null;
+        }
+
+        if (!this.isAtBottom && !chatState.loading) {
+            this.unreadMessageIndicatorTimeout = setTimeout(() => {
+                if (this.isAtBottom || chatState.loading) return;
+                uiState.customOverlayComponent =
+                    <ChatUnreadMessageIndicator onPress={this.scrollToBottom} />;
+            }, 1000);
+        } else {
+            uiState.customOverlayComponent = null;
+        }
         const updater = () => {
             const { contentHeight, scrollViewHeight, chat } = this;
             if (!contentHeight || !scrollViewHeight || !chat) return;
-            const { y } = nativeEvent.contentOffset;
+
             const h = this.contentHeight - this.scrollViewHeight;
             // trigger previous page if we are at the top
             if (y < this.indicatorHeight / 2) this._onGoUp();
@@ -224,6 +273,23 @@ export default class Chat extends SafeComponent {
         if (this._updater) clearTimeout(this._updater);
         this._updater = setTimeout(updater, 500);
     };
+
+    // scroll to end
+    @action.bound scrollToBottom() {
+        if (this.chat.canGoDown) {
+            this.resetScrolling();
+            this.chat.reset();
+            return;
+        }
+        const y = this.contentHeight - this.scrollViewHeight;
+        if (y) {
+            this.scrollView.scrollTo({ y, animated: true });
+        }
+    }
+
+    get background() {
+        return vars.white;
+    }
 
     listView() {
         if (chatState.loading) return null;
@@ -238,7 +304,7 @@ export default class Chat extends SafeComponent {
             <ScrollView
                 onLayout={this.layoutScrollView}
                 contentContainerStyle={{ opacity: this.initialScrollDone ? 1 : 0 }}
-                style={{ flexGrow: 1, flex: 1, backgroundColor: vars.white }}
+                style={{ flexGrow: 1, flex: 1, backgroundColor: this.background }}
                 initialListSize={1}
                 onContentSizeChange={this.contentSizeChanged}
                 scrollEnabled={this.scrollEnabled}
@@ -256,22 +322,17 @@ export default class Chat extends SafeComponent {
         );
     }
 
-    get archiveNotice() {
-        // TODO: archive notice
-        return true || this.props.archiveNotice ? ( // eslint-disable-line
-            <Text style={{
-                textAlign: 'left',
-                marginTop: 0,
-                marginRight: vars.spacing.medium.mini2x,
-                marginBottom: vars.spacing.medium.mini2x,
-                color: vars.txtMedium
-            }}>
-                {tx('title_chatArchive')}
-            </Text>
-        ) : null;
+    @computed get zeroStateItem() {
+        const { chat } = this;
+        if (chat.isChatCreatedFromPendingDM) return <DmContactInvite />;
+        return this.zeroStateChat;
     }
 
-    @computed get zeroStateItem() {
+    chatNotice(chat) {
+        return <ChatBeginningNotice chat={chat} />;
+    }
+
+    get zeroStateChat() {
         const zsContainer = {
             borderBottomWidth: 0,
             borderBottomColor: '#CFCFCF',
@@ -300,38 +361,27 @@ export default class Chat extends SafeComponent {
         return (
             <View style={zsContainer}>
                 <View style={{ flexDirection: 'row', paddingLeft: -marginLeft }}>{avatars}</View>
-                <Text style={{
-                    textAlign: 'left',
-                    marginTop: vars.spacing.small.maxi2x,
-                    marginBottom: vars.spacing.small.maxi2x,
-                    color: vars.txtDark
-                }}>
-                    {tx('title_chatBeginning', { chatName: chat.name })}
-                </Text>
-                {this.archiveNotice}
-                <IdentityVerificationNotice />
+                {this.chatNotice(chat)}
+                <IdentityVerificationNotice fullWidth />
             </View>
         );
     }
 
     renderThrow() {
+        if (this.chat && this.chat.isInvite) return <DmContactInvite showButtons />;
         return (
             <View
                 style={{ flexGrow: 1, paddingBottom: vars.spacing.small.mini2x }}>
                 {/* this.chat && !this.chat.canGoUp && upgradeForArchive() */}
-                <View style={{ flex: 1, flexGrow: 1 }}>
-                    {this.data ? this.listView() : !chatState.loading && <ChatZeroStatePlaceholder />}
+                <View style={{ flex: 1, flexGrow: 1, backgroundColor: this.background }}>
+                    {this.data ? this.listView() : !chatState.loading && this.zeroStatePlaceholder()}
                 </View>
                 <ProgressOverlay enabled={/* chatState.loading || */ !this.initialScrollDone} />
-                <ChatActionSheet ref={sheet => { this._actionSheet = sheet; }} />
-                <InlineImageActionSheet ref={sheet => { this._inlineImageActionSheet = sheet; }} />
-                <InlineFileActionSheet ref={sheet => { this._inlineFileActionSheet = sheet; }} />
             </View>
         );
     }
 }
 
 Chat.propTypes = {
-    hideInput: PropTypes.bool,
-    archiveNotice: PropTypes.bool
+    hideInput: PropTypes.bool
 };

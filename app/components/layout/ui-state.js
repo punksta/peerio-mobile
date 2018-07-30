@@ -9,11 +9,12 @@ import RoutedState from '../routes/routed-state';
 const { height } = Dimensions.get('window');
 
 class UIState extends RoutedState {
+    @observable actionSheetShown = false;
+    @observable fileUpdateProgress = 0; // TODO remove when fileState progress is wired
     @observable isFirstLogin = false;
     @observable focusedTextBox = null;
     @observable picker = null;
     @observable pickerVisible = false;
-    @observable keyboardVisible = false;
     @observable keyboardHeight = 0;
     @observable locale = null;
     @observable pickerHeight = 200;
@@ -24,7 +25,10 @@ class UIState extends RoutedState {
     @observable externalViewer = false;
     @observable currentScrollView = null;
     @observable currentScrollViewPosition = 0;
+    @observable customOverlayComponent = null;
     @observable trustDevice2FA = false;
+    @observable declinedChannelId = null;
+    @observable hideTabs = false;
     @observable languages = {
         en: `English`
         // fr: `French`,
@@ -59,6 +63,7 @@ class UIState extends RoutedState {
     @action.bound hideAll() {
         this.hideKeyboard();
         this.hidePicker();
+        this.customOverlayComponent = null;
         return new Promise(resolve => when(() => this.keyboardHeight === 0, resolve));
     }
 

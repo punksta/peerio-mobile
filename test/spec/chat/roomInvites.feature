@@ -5,6 +5,7 @@ Feature: Room invites
    If I get invited to a room, I can:
    - accept the invite and join the room
    - decline the invite
+   - accept an invite and then leave the room and be navigated to chat list
 
    Scenario: Accept a room invite
         Given I log in as room_test user
@@ -46,3 +47,12 @@ Feature: Room invites
         Then  they log in
         And   they accept the room invite
    
+    Scenario: Leave room and navigate to chat list
+        Given I log in as leavechannelnav_inviter user
+        And   I create a new room
+        When  I invite leavechannelnav_invitee to join the room
+        And   I sign out
+        Then  I log in as leavechannelnav_invitee user
+        And   they accept the room invite
+        And   they leave the room
+        Then  I am in the chat list page

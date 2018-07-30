@@ -9,13 +9,13 @@ import fileState from '../files/file-state';
 import { systemMessages } from '../../lib/icebear';
 import IdentityVerificationNotice from './identity-verification-notice';
 import { vars } from '../../styles/styles';
-
 @observer
 export default class ChatItem extends SafeComponent {
     setRef = ref => { this._ref = ref; };
 
     renderThrow() {
-        if (!this.props || !this.props.message) return null;
+        const { chat, message } = this.props;
+        if (!message || !chat) return null;
         const i = this.props.message;
         if (!i.sender) return null;
         const key = i.id;
@@ -29,14 +29,17 @@ export default class ChatItem extends SafeComponent {
         const systemMessageText =
             i.systemData && systemMessages.getSystemMessageText(i) || null;
         const videoCallLink = i.systemData && i.systemData.link || null;
-        const files = i.files && i.files.map(id => fileState.store.getById(id)).filter(f => f) || [];
+        const files = i.files && i.files.map(
+            id => fileState.store.getByIdInChat(id, chat.id)
+        ).filter(f => f) || [];
         const images = files.filter(f => f.isImage) || [];
         const normalFiles = files.filter(f => !f.isImage) || [];
-        let firstImage = images.length ? images[0] : null;
         if (i.hasUrls && i.externalImages.length) {
-            firstImage = i.externalImages[0];
+            images.push(...i.externalImages);
         }
-        const hasDeletedFile = i.files && !i.files.find(id => fileState.store.getById(id));
+        /* const hasDeletedFile = i.files && !i.files.find(
+            id => fileState.store.getByIdInChat(id, chat.id)
+        ); */
         const shouldDisplayIdentityNotice = i.systemData && i.systemData.action === 'join';
 
         return (
@@ -48,15 +51,17 @@ export default class ChatItem extends SafeComponent {
                     contact={i.sender}
                     isDeleted={i.sender ? i.sender.isDeleted : false}
                     files={normalFiles.map(f => f.fileId)}
-                    inlineImage={firstImage}
+                    folders={i.folders}
+                    inlineImages={images}
                     receipts={i.receipts}
                     hideOnline
                     firstOfTheDay={i.firstOfTheDay}
                     timestamp={i.timestamp}
                     timestampText={i.messageTimestampText}
                     message={text}
-                    hasDeletedFile={hasDeletedFile}
                     isChat
+                    chat={chat}
+                    messageObject={i}
                     fullnameIsBold
                     systemMessage={systemMessageText}
                     videoCallMessage={videoCallLink}
@@ -67,11 +72,13 @@ export default class ChatItem extends SafeComponent {
                     onLayout={this.props.onLayout}
                     onRetryCancel={this.props.onRetryCancel}
                     onInlineImageAction={this.props.onInlineImageAction}
-                    onInlineFileAction={this.props.onInlineFileAction}
+                    onLegacyFileAction={this.props.onLegacyFileAction}
+                    onFileAction={this.props.onFileAction}
                     noBorderBottom
                     collapsed={!!i.groupWithPrevious}
                     extraPaddingTop={8}
                     ref={this.setRef}
+                    backgroundColor={this.props.backgroundColor}
                 />
                 {
                     shouldDisplayIdentityNotice &&

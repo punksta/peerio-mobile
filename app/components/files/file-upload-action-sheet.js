@@ -1,111 +1,85 @@
-import React from 'react';
 import { Platform } from 'react-native';
-import { observer } from 'mobx-react/native';
-import { observable, action } from 'mobx';
-import ActionSheet from 'react-native-actionsheet';
-import SafeComponent from '../shared/safe-component';
+import { observable } from 'mobx';
 import fileState from '../files/file-state';
 import chatState from '../messaging/chat-state';
 import { tx } from '../utils/translator';
 import { popupInputCancel } from '../shared/popups';
 import imagepicker from '../helpers/imagepicker';
 import FileSharePreview from './file-share-preview';
+import { fileStore } from '../../lib/icebear';
+import ActionSheetLayout from '../layout/action-sheet-layout';
 
-@observer
-export default class FileUploadActionSheet extends SafeComponent {
-    @observable image;
-
-    @action.bound actionSheetRef (ref) {
-        this._actionSheet = ref;
-    }
-
-    async doUpload(sourceFunction) {
-        const uploader = this.props.inline ?
-            fileState.uploadInline : fileState.uploadInFiles;
-        const source = observable(await sourceFunction());
-        if (this.props.inline) {
-            const userSelection = await FileSharePreview.popup(source.url, source.fileName);
-            if (!userSelection) return;
-            source.fileName = `${userSelection.name}.${source.ext}`;
-            source.message = userSelection.message;
-            let { chat } = userSelection;
-            if (userSelection.contact && chat === null) {
-                chat = await chatState.startChat([userSelection.contact]);
-                // TODO: switching to new DMs without timeout causes file
-                // to be shared in previous chat. Couldn't figure out why
-                await new Promise(resolve => setTimeout(resolve, 1000));
-            }
+async function doUpload(sourceFunction, inline) {
+    const uploader = inline ?
+        fileState.uploadInline : fileState.uploadInFiles;
+    const source = observable(await sourceFunction());
+    if (inline) {
+        const userSelection = await FileSharePreview.popup(source.url, source.fileName);
+        if (!userSelection) return;
+        source.fileName = `${userSelection.name}.${source.ext}`;
+        source.message = userSelection.message;
+        let { chat } = userSelection;
+        if (userSelection.contact && chat === null) {
+            chat = await chatState.startChat([userSelection.contact]);
+            // TODO: switching to new DMs without timeout causes file
+            // to be shared in previous chat. Couldn't figure out why
+            await new Promise(resolve => setTimeout(resolve, 1000));
         }
-        uploader(source);
     }
+    uploader(source);
+}
 
-    get takePhoto() {
-        return {
+export default class FileUploadActionSheet {
+    static show(inline, createFolder) {
+        const actionButtons = [{
             title: tx('button_takeAPicture'),
-            event: () => this.doUpload(imagepicker.getImageFromCamera)
-        };
-    }
-
-    get chooseFromGallery() {
-        return {
-            title: tx('title_chooseFromGallery'),
-            event: () => this.doUpload(imagepicker.getImageFromGallery)
-        };
-    }
-
-    get androidFilePicker() {
-        return {
-            title: tx('title_chooseFromFiles'),
-            event: () => this.doUpload(imagepicker.getImageFromAndroidFilePicker)
-        };
-    }
-
-    get shareFromPeerio() {
-        return {
-            title: tx('title_shareFromFiles'),
-            async event() {
-                chatState.shareFiles(await fileState.selectFiles());
+            action() {
+                doUpload(imagepicker.getImageFromCamera, inline);
             }
-        };
-    }
+        }, {
+            title: tx('title_chooseFromGallery'),
+            action() {
+                doUpload(imagepicker.getImageFromGallery, inline);
+            }
+        }];
 
-    get createFolder() {
-        const event = async () => {
-            const result = await popupInputCancel(
-                tx('title_createFolder'), tx('title_createFolderPlaceholder'), true);
-            if (!result) return;
-            requestAnimationFrame(() => {
-                fileState.store.folders.createFolder(result.value, fileState.currentFolder);
-                fileState.store.folders.save();
+        if (Platform.OS === 'android') {
+            actionButtons.push({
+                title: tx('title_chooseFromFiles'),
+                action() {
+                    doUpload(imagepicker.getImageFromAndroidFilePicker, inline);
+                }
             });
-        };
-        return { title: tx('title_createFolder'), event };
-    }
+        }
 
-    get items() {
-        const result = [this.takePhoto, this.chooseFromGallery];
-        (Platform.OS === 'android') && result.push(this.androidFilePicker);
-        this.props.inline && result.push(this.shareFromPeerio);
-        this.props.createFolder && result.push(this.createFolder);
-        result.push({ title: tx('button_cancel') });
-        return result;
-    }
+        if (inline) {
+            actionButtons.push({
+                title: tx('title_shareFromFiles'),
+                disabled: fileState.store.isEmpty,
+                async action() {
+                    chatState.shareFilesAndFolders(await fileState.selectFilesAndFolders());
+                }
+            });
+        }
 
-    onPress = index => {
-        const { event } = this.items[index];
-        event && event();
-    };
+        if (createFolder) {
+            actionButtons.push({
+                title: tx('title_createFolder'),
+                async action() {
+                    const result = await popupInputCancel(
+                        tx('title_createFolder'), tx('title_createFolderPlaceholder'), true);
+                    if (!result) return;
+                    requestAnimationFrame(() => {
+                        fileStore.folderStore.currentFolder.createFolder(result.value);
+                    });
+                }
+            });
+        }
 
-    show = () => this._actionSheet.show();
-
-    renderThrow() {
-        return (
-            <ActionSheet
-                ref={this.actionSheetRef}
-                options={this.items.map(i => i.title)}
-                cancelButtonIndex={this.items.length - 1}
-                onPress={this.onPress}
-            />
-        );
+        ActionSheetLayout.show({
+            header: null,
+            actionButtons,
+            hasCancelButton: true
+        });
     }
 }

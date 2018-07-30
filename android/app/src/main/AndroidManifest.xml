@@ -27,7 +27,7 @@
     <!-- image picker plugin end -->
     <uses-sdk
         android:minSdkVersion="21"
-        android:targetSdkVersion="24" />
+        android:targetSdkVersion="27" />
 
     <compatible-screens>
         <screen android:screenSize="normal" android:screenDensity="ldpi" />

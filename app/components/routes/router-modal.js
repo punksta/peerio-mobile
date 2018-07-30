@@ -1,23 +1,25 @@
 import React from 'react';
-import { observable } from 'mobx';
+import { observable, computed } from 'mobx';
 import Router from './router';
 import ComposeMessage from '../messaging/compose-message';
 import CreateChannel from '../channels/create-channel';
 import ChannelAddPeople from '../messaging/channel-add-people';
 import FileShare from '../files/file-share';
+import FolderShare from '../files/folder-share';
 import FileMove from '../files/file-move';
 import FileChooseRecipient from '../files/file-choose-recipient';
 import ContactView from '../contacts/contact-view';
 import ChatInfo from '../messaging/chat-info';
 import ChannelInfo from '../messaging/channel-info';
-import PinModalAsk from '../controls/pin-modal-ask';
 import AccountUpgradeSwiper from '../settings/account-upgrade-swiper';
 import popupState from '../layout/popup-state';
 import routes from './routes';
 import { vars } from '../../styles/styles';
+import { uiState } from '../states';
 
 class RouterModal extends Router {
     @observable animating = false;
+    modalProps = null;
     resolver = null;
 
     constructor() {
@@ -27,10 +29,10 @@ class RouterModal extends Router {
         this.add('createChannel', CreateChannel);
         this.add('channelAddPeople', ChannelAddPeople);
         this.add('shareFileTo', FileShare);
+        this.add('shareFolderTo', FolderShare);
         this.add('changeRecipient', FileChooseRecipient);
         this.add('moveFileTo', FileMove);
         this.add('contactView', ContactView);
-        this.add('askPin', PinModalAsk, true);
         this.add('chatInfo', ChatInfo);
         this.add('channelInfo', ChannelInfo);
         this.add('accountUpgradeSwiper', AccountUpgradeSwiper, true, true);
@@ -39,9 +41,11 @@ class RouterModal extends Router {
     add(route, component, isWhite) {
         const r = super.add(route, component);
         r.isWhite = isWhite;
-        this[route] = () => {
+        this[route] = async (props) => {
+            await uiState.hideAll();
             popupState.discardAllPopups();
             this.flushResolver();
+            this.modalProps = props;
             r.transition();
             return new Promise(resolve => {
                 this.resolver = resolve;
@@ -59,17 +63,19 @@ class RouterModal extends Router {
         }
     }
 
-    discard(value) {
+    async discard(value) {
+        await uiState.hideAll();
         this.flushResolver(value);
         this.route = null;
+        this.modalProps = null;
     }
 
     get isBlackStatusBar() {
         return !this.animating && this.current && !this.current.isWhite;
     }
 
-    get modal() {
-        return this.current ? React.createElement(this.current.component) : null;
+    @computed get modal() {
+        return this.current ? React.createElement(this.current.component, this.modalProps) : null;
     }
 }
 

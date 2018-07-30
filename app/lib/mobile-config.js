@@ -3,7 +3,8 @@ import { setUrlMap, setTagHandler } from 'peerio-translator';
 import tagHandlers from '../components/controls/tag-handlers';
 import rnFileStream from './rn-file-stream';
 import KeyValueStorage from '../store/key-value-storage';
-import stringReplacements from './string-replacements';
+import SqlCipherDbStorage from '../store/sqlcipher-db-storage';
+import whitelabel from '../components/whitelabel/white-label-config';
 
 const { setStringReplacement } = require('peerio-translator');
 
@@ -12,36 +13,40 @@ export default (c, icebear) => {
     cfg.ghostFrontendUrl = 'https://mail.peerio.com';
     // --- TRANSLATOR
     cfg.translator = {};
-    cfg.translator.stringReplacements = stringReplacements; // white label only
-    cfg.translator.stringReplacements.forEach((replacementObject) => {
-        setStringReplacement(replacementObject.original, replacementObject.replacement);
-    });
+    if (whitelabel.stringReplacements) {
+        cfg.translator.stringReplacements = whitelabel.stringReplacements; // white label only
+        cfg.translator.stringReplacements.forEach((replacementObject) => {
+            setStringReplacement(replacementObject.original, replacementObject.replacement);
+        });
+    }
     cfg.translator.urlMap = {
-        fingerprint: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
-        mpDetail: 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
-        tfaDetail: 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-',
-        msgSignature: 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
+        fingerprint: whitelabel.FINGERPRINT || 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
+        mpDetail: whitelabel.MP_DETAIL || 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
+        tfaDetail: whitelabel.TFA_DETAIL || 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-',
+        msgSignature: whitelabel.MSG_SIGNATURE || 'https://peerio.zendesk.com/hc/en-us/articles/204394135',
         upgrade: 'route:modal:accountUpgradeSwiper',
         createRoom: 'route:modal:createChannel',
         signup: 'route:app:signupStep1',
         settings: 'route:main:settings',
-        proWelcome: 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
-        proAccount: 'https://account.peerio.com',
-        helpCenter: 'https://peerio.zendesk.com/',
-        contactSupport: 'https://peerio.zendesk.com/hc/en-us/requests/new',
-        socialShareUrl: process.env.SOCIAL_SHARE_URL || 'https://www.peerio.com/',
+        proWelcome: whitelabel.PRO_WELCOME || 'https://peerio.zendesk.com/hc/en-us/articles/208395556',
+        proAccount: whitelabel.PRO_ACCOUNT || 'https://account.peerio.com',
+        helpCenter: whitelabel.HELP_CENTER || 'https://peerio.zendesk.com/',
+        contactSupport: whitelabel.CONTACT_SUPPORT || 'https://peerio.zendesk.com/hc/en-us/requests/new',
+        socialShareUrl: whitelabel.SOCIAL_SHARE_URL || 'https://www.peerio.com/',
         googleAuth: 'https://support.google.com/accounts/answer/1066447?hl=en',
-        iosApp: 'https://itunes.apple.com/app/peerio-2/id1245026608',
-        androidApp: 'https://play.google.com/store/apps/details?id=com.peerio.app',
+        iosApp: whitelabel.IOS_APP || 'https://itunes.apple.com/app/peerio-2/id1245026608',
+        androidApp: whitelabel.ANDROID_APP || 'https://play.google.com/store/apps/details?id=com.peerio.app',
         googleAuthA: 'https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2&hl=en',
         googleAuthI: 'https://itunes.apple.com/app/google-authenticator/id388497605',
         authy: 'https://authy.com',
-        download: 'https://peerio.com',
-        learnUrlTracking: 'https://peerio.zendesk.com/hc/en-us/articles/115005090766',
-        identityVerification: 'https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-',
+        download: whitelabel.DOWNLOAD || 'https://peerio.com/download',
+        learnUrlTracking: whitelabel.LEARN_URL_TRACKING || 'https://peerio.zendesk.com/hc/en-us/articles/115005090766',
+        identityVerification: whitelabel.IDENTITY_VERIFICATION || 'https://peerio.zendesk.com/hc/en-us/articles/204480655-Verifying-a-Peerio-ID-',
         jitsiLink: 'https://jitsi.org/',
-        termsUrl: 'https://peerio.com/conditions.html',
-        privacyUrl: 'https://peerio.com/privacy.html'
+        learnLegacyFiles: 'https://www.peerio.com/blog/posts/new-filesystem/',
+        // sharedFiles: '' TODO: Add link to file
+        termsUrl: whitelabel.TERMS_URL || 'https://peerio.com/conditions.html',
+        privacyUrl: whitelabel.PRIVACY || 'https://peerio.com/privacy.html'
     };
 
     setUrlMap(cfg.translator.urlMap);
@@ -62,6 +67,7 @@ export default (c, icebear) => {
     cfg.socketServerUrl = process.env.PEERIO_SOCKET_SERVER || 'wss://changeme.peerio.com';
     cfg.FileStream = rnFileStream(icebear.FileStreamAbstract);
     cfg.StorageEngine = KeyValueStorage;
+    cfg.CacheEngine = SqlCipherDbStorage;
 
     cfg.FileStream.getCacheList()
         .then(r => {
@@ -76,9 +82,12 @@ export default (c, icebear) => {
 
     cfg.platform = Platform.OS;
     cfg.appLabel = process.env.APP_LABEL;
-    cfg.appleTestUser = 'applereview2607';
+    cfg.whiteLabel = { name: process.env.APP_LABEL };
+    cfg.appleTestUser = whitelabel.APPLE_REVIEW_ACCOUNT || 'applereview2607';
     cfg.appleTestPass = 'icebear';
     cfg.appleTestServer = 'wss://treetrunks.peerio.com';
+    cfg.enableVolumes = process.env.SHARED_FOLDERS_ENABLED;
+    cfg.preferredServerVersion = '7.0.0';
     Object.assign(cfg.chat, {
         maxInitialChats: 15,
         initialPageSize: 20, // amount of messages to load to a newly opened chat

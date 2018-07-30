@@ -6,7 +6,7 @@ class ContactAddState extends RoutedState {
     @observable imported = [];
 
     get title() {
-        if (this.routerMain.currentIndex === 0) return tx('title_contacts');
+        if (this.routerMain.currentIndex === 0) return tx('title_addContacts');
         return '';
     }
 

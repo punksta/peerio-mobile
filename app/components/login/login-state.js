@@ -43,14 +43,6 @@ class LoginState extends RoutedState {
         this.routes.app.loginStart();
     }
 
-    @action checkSavedUserPin() {
-        const user = new User();
-        user.username = this.username;
-        this.firstName = '';
-        this.lastName = '';
-        return user.hasPasscode().then(has => has && this.saved());
-    }
-
     @action useMasterPassword() {
         this.current = 2;
         this.routes.app.loginStart();
@@ -61,15 +53,7 @@ class LoginState extends RoutedState {
         this.username = '';
         this.passphrase = '';
         this.isInProgress = false;
-        this.resetValidationState();
     }
-
-    @action saved = () => {
-        this.routes.app.loginSaved();
-        if (__DEV__ && process.env.PEERIO_QUICK_PIN) {
-            this.login(process.env.PEERIO_QUICK_PIN);
-        }
-    };
 
     @action _login(user) {
         User.current = user;
@@ -83,9 +67,14 @@ class LoginState extends RoutedState {
             })
             .catch(e => {
                 this.isInProgress = false;
-                console.error(e);
+
+                const error = new Error(e);
+                error.deleted = User.current.deleted;
+                error.blacklisted = User.current.blacklisted;
+
                 User.current = null;
-                return Promise.reject(new Error(this.error));
+                console.error(error);
+                return Promise.reject(error);
             });
     }
 
