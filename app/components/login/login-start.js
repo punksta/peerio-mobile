@@ -13,6 +13,7 @@ import { vars } from '../../styles/styles';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
 import { telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
+import TmHelper from '../../telemetry/helpers';
 
 const { S } = telemetry;
 
@@ -90,7 +91,7 @@ export default class LoginStart extends LoginWizardPage {
 
     componentDidMount() {
         reaction(() => this._selected, () => LayoutAnimation.easeInEaseOut());
-        tm.helpers.setCurrentRoute(S.WELCOME_SCREEN);
+        TmHelper.currentRoute = S.WELCOME_SCREEN;
         this.startTime = Date.now();
     }
 

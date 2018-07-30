@@ -14,6 +14,7 @@ import StyledTextInput from '../shared/styled-text-input';
 import icons from '../helpers/icons';
 import { telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
+import TmHelper from '../../telemetry/helpers';
 
 const { S } = telemetry;
 const imageWelcomeSafe = require('../../assets/welcome-safe.png');
@@ -52,7 +53,7 @@ export default class SignupConfirmBackup extends LoginWizardPage {
             signupState.keyBackedUp = true;
             signupState.next();
         }
-        tm.helpers.setCurrentRoute(S.A_CONFIRMATION);
+        TmHelper.currentRoute = S.AK_CONFIRMATION;
         this.startTime = Date.now();
     }
 

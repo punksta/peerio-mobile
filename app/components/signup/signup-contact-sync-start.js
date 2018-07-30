@@ -14,6 +14,7 @@ import { formStyle, titleDark, textNormal } from '../../styles/signup-contact-sy
 import { popupContactPermission } from '../shared/popups';
 import tm from '../../telemetry';
 import { telemetry } from '../../lib/icebear';
+import TmHelper from '../../telemetry/helpers';
 
 const { S } = telemetry;
 
@@ -22,7 +23,7 @@ const imageDiscoverNetwork = require('../../assets/discover-network.png');
 @observer
 export default class SignupContactSyncStart extends LoginWizardPage {
     componentDidMount() {
-        tm.helpers.setCurrentRoute(S.SYNC_CONTACTS);
+        TmHelper.currentRoute = S.SYNC_CONTACTS;
     }
 
     get icon() {

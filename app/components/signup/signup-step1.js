@@ -19,6 +19,7 @@ import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 import StyledTextInput from '../shared/styled-text-input';
 import { socket, validation, telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
+import TmHelper from '../../telemetry/helpers';
 
 const { S } = telemetry;
 const { validators } = validation;
@@ -99,7 +100,7 @@ export default class SignupStep1 extends LoginWizardPage {
             this.firstNameInput.onChangeText(capitalize(randomWords()));
             this.lastNameInput.onChangeText(capitalize(randomWords()));
         }
-        tm.helpers.setCurrentRoute(S.SIGN_UP);
+        TmHelper.currentRoute = S.SIGN_UP;
         this.startTime = Date.now();
     }
 

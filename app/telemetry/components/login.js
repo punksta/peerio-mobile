@@ -23,13 +23,17 @@ const login = setup(
             ];
         },
 
-        onWhereAccountKeyClick: [
-            S.VIEW_LINK, { item: S.WHERE_ACCOUNT_KEY }
-        ],
+        onWhereAccountKeyClick: () => {
+            return [
+                S.VIEW_LINK, { item: S.WHERE_ACCOUNT_KEY }
+            ];
+        },
 
-        onLoginClick: [
-            S.SIGN_IN, { text: S.SIGN_IN }
-        ]
+        onLoginClick: () => {
+            return [
+                S.SIGN_IN, { text: S.SIGN_IN }
+            ];
+        }
     }
 );
 

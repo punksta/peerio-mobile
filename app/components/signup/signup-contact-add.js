@@ -14,6 +14,7 @@ import ListItem from './signup-contact-list-item';
 import Text from '../controls/custom-text';
 import tm from '../../telemetry';
 import { telemetry } from '../../lib/icebear';
+import TmHelper from '../../telemetry/helpers';
 
 const { S } = telemetry;
 
@@ -40,7 +41,7 @@ export default class SignupContactAdd extends LoginWizardPage {
         }
         this.inProgress = false;
         if (this.contactList.length === 0) signupState.next();
-        tm.helpers.setCurrentRoute(S.ADD_CONTACTS);
+        TmHelper.currentRoute = S.ADD_CONTACTS;
         this.startTime = Date.now();
     }
 

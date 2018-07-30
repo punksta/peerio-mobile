@@ -20,6 +20,7 @@ import ListItem from './signup-contact-list-item';
 import Text from '../controls/custom-text';
 import tm from '../../telemetry';
 import { telemetry } from '../../lib/icebear';
+import TmHelper from '../../telemetry/helpers';
 
 const { S } = telemetry;
 const { width } = Dimensions.get('window');
@@ -77,7 +78,7 @@ export default class SignupContactInvite extends LoginWizardPage {
             console.error(e);
         }
         this.inProgress = false;
-        tm.helpers.setCurrentRoute(S.INVITE_CONTACTS);
+        TmHelper.currentRoute = S.INVITE_CONTACTS;
         this.startTime = Date.now();
     }
 

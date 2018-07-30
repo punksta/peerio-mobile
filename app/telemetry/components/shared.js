@@ -5,24 +5,24 @@
 */
 import { telemetry } from '../../lib/icebear';
 import { setup } from '../main';
-import { currentRoute } from '../helpers';
+import TmHelper from '../helpers';
 
 const { S, textInput } = telemetry;
 
 const shared = setup({
     styledTextInputOnFocus: (label) => {
-        return textInput(label, null, currentRoute, S.IN_FOCUS);
+        return textInput(label, null, TmHelper.currentRoute, S.IN_FOCUS);
     },
 
     styledTextInputOnBlur: (label, errorMsg) => {
         if (errorMsg === 'error_usernameNotAvailable') return null;
-        return textInput(label, null, currentRoute, S.ERROR, errorMsg);
+        return textInput(label, null, TmHelper.currentRoute, S.ERROR, errorMsg);
     },
 
     // We need to send the Username Not Available error whenever it occurs
     styledTextInputOnError: (label, errorMsg) => {
         if (errorMsg !== 'error_usernameNotAvailable') return null;
-        return textInput(label, null, currentRoute, S.ERROR, errorMsg);
+        return textInput(label, null, TmHelper.currentRoute, S.ERROR, errorMsg);
     },
 
     startAccountCreation: () => {
@@ -30,7 +30,7 @@ const shared = setup({
             S.START_ACCOUNT_CREATION,
             {
                 text: S.CREATE_ACCOUNT,
-                sublocation: currentRoute
+                sublocation: TmHelper.currentRoute
             }
         ];
     }

@@ -17,6 +17,7 @@ import SignupAvatarActionSheet from './signup-avatar-action-sheet';
 import snackbarState from '../snackbars/snackbar-state';
 import testLabel from '../helpers/test-label';
 import tm from '../../telemetry';
+import TmHelper from '../../telemetry/helpers';
 
 const { S } = telemetry;
 
@@ -74,7 +75,7 @@ const accountKeyView = {
 @observer
 export default class SignupStep1 extends LoginWizardPage {
     componentDidMount() {
-        tm.helpers.setCurrentRoute(S.ACCOUNT_KEY);
+        TmHelper.currentRoute = S.ACCOUNT_KEY;
         this.startTime = Date.now();
     }
 

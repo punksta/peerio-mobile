@@ -14,6 +14,7 @@ import StyledTextInput from '../shared/styled-text-input';
 import { socket, validation, telemetry } from '../../lib/icebear';
 import uiState from '../layout/ui-state';
 import tm from '../../telemetry';
+import TmHelper from '../../telemetry/helpers';
 
 const { S } = telemetry;
 
@@ -53,7 +54,7 @@ export default class LoginClean extends LoginWizardPage {
                 process.env.PEERIO_AUTOLOGIN && this.submit();
             });
         }
-        tm.helpers.setCurrentRoute(S.SIGN_IN);
+        TmHelper.currentRoute = S.SIGN_IN;
         this.startTime = Date.now();
     }
 

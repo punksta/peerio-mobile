@@ -1,5 +1,5 @@
 import { telemetry } from '../lib/icebear';
-import helpers from './helpers';
+import TmHelper from './helpers';
 
 function setup(obj) {
     const ret = {};
@@ -25,7 +25,7 @@ function makeSendFunction(item) {
 }
 
 function send(event) {
-    helpers.send(telemetry, event);
+    TmHelper.send(telemetry, event);
 }
 
 module.exports = {

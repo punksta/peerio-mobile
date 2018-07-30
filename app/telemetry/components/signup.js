@@ -1,13 +1,13 @@
 import { telemetry } from '../../lib/icebear';
 import { setup } from '../main';
-import { getCurrentRoute } from '../helpers';
+import TmHelper from '../helpers';
 
 const { S, duration, textInput } = telemetry;
 
 const signup = setup(
     {
         duration: (item, location, startTime) => {
-            return duration(item, location, getCurrentRoute(), startTime);
+            return duration(item, location, TmHelper.currentRoute, startTime);
         },
 
         swipe: (pageNum, direction) => {
@@ -16,7 +16,7 @@ const signup = setup(
                 {
                     item: S[`CAROUSEL_CARD_${pageNum}`],
                     option: direction,
-                    sublocation: getCurrentRoute()
+                    sublocation: TmHelper.currentRoute
                 }
             ];
         },
@@ -26,63 +26,75 @@ const signup = setup(
                 S.VIEW_LINK,
                 {
                     item,
-                    sublocation: getCurrentRoute()
+                    sublocation: TmHelper.currentRoute
                 }
             ];
         },
 
-        addPhoto: [
-            S.ADD_PHOTO,
-            {
-                sublocation: getCurrentRoute()
-            }
-        ],
-
-        next: [
-            S.NAVIGATE,
-            {
-                option: S.NEXT,
-                sublocation: getCurrentRoute()
-            }
-        ],
-
-        back: [
-            S.NAVIGATE,
-            {
-                option: S.BACK,
-                sublocation: getCurrentRoute()
-            }
-        ],
-
-
-        copy: [
-            S.COPY,
-            {
-                item: S.ACCOUNT_KEY,
-                sublocation: getCurrentRoute()
-            }
-        ],
-
-        akConfirmed: () => {
-            return textInput(S.AK_CONFIRMATION, null, getCurrentRoute(), S.IN_FOCUS);
+        addPhoto: () => {
+            return [
+                S.ADD_PHOTO,
+                {
+                    sublocation: TmHelper.currentRoute
+                }
+            ];
         },
 
-        syncContacts: [
-            S.SYNC_CONTACTS,
-            {
-                location: S.ONBOARDING,
-                sublocation: getCurrentRoute()
-            }
-        ],
+        next: () => {
+            return [
+                S.NAVIGATE,
+                {
+                    option: S.NEXT,
+                    sublocation: TmHelper.currentRoute
+                }
+            ];
+        },
 
-        skip: [
-            S.NAVIGATE,
-            {
-                option: S.SKIP,
-                location: S.ONBOARDING,
-                sublocation: getCurrentRoute()
-            }
-        ],
+        back: () => {
+            return [
+                S.NAVIGATE,
+                {
+                    option: S.BACK,
+                    sublocation: TmHelper.currentRoute
+                }
+            ];
+        },
+
+
+        copy: () => {
+            return [
+                S.COPY,
+                {
+                    item: S.ACCOUNT_KEY,
+                    sublocation: TmHelper.currentRoute
+                }
+            ];
+        },
+
+        akConfirmed: () => {
+            return textInput(S.AK_CONFIRMATION, null, TmHelper.currentRoute, S.IN_FOCUS);
+        },
+
+        syncContacts: () => {
+            return [
+                S.SYNC_CONTACTS,
+                {
+                    location: S.ONBOARDING,
+                    sublocation: TmHelper.currentRoute
+                }
+            ];
+        },
+
+        skip: () => {
+            return [
+                S.NAVIGATE,
+                {
+                    option: S.SKIP,
+                    location: S.ONBOARDING,
+                    sublocation: TmHelper.currentRoute
+                }
+            ];
+        },
 
         contactPermissionDialog: (selected, sublocation) => {
             const ret = [
@@ -94,38 +106,44 @@ const signup = setup(
                 }
             ];
 
-            if (sublocation) ret[1].sublocation = sublocation || getCurrentRoute();
+            if (sublocation) ret[1].sublocation = sublocation || TmHelper.currentRoute;
 
             return ret;
         },
 
-        addContact: [
-            S.ADD_CONTACT,
-            {
-                text: S.ADD,
-                location: S.ONBOARDING,
-                sublocation: getCurrentRoute()
-            }
-        ],
+        addContact: () => {
+            return [
+                S.ADD_CONTACT,
+                {
+                    text: S.ADD,
+                    location: S.ONBOARDING,
+                    sublocation: TmHelper.currentRoute
+                }
+            ];
+        },
 
-        inviteContact: [
-            S.INVITE_CONTACT,
-            {
-                option: S.VIA_SYNC,
-                location: S.ONBOARDING,
-                sublocation: getCurrentRoute()
-            }
-        ],
+        inviteContact: () => {
+            return [
+                S.INVITE_CONTACT,
+                {
+                    option: S.VIA_SYNC,
+                    location: S.ONBOARDING,
+                    sublocation: TmHelper.currentRoute
+                }
+            ];
+        },
 
-        confirmInvite: [
-            S.INVITE_CONTACT,
-            {
-                location: S.ONBOARDING,
-                sublocation: getCurrentRoute(),
-                option: S.VIA_SYNC,
-                action: S.CONFIRMED
-            }
-        ],
+        confirmInvite: () => {
+            return [
+                S.INVITE_CONTACT,
+                {
+                    location: S.ONBOARDING,
+                    sublocation: TmHelper.currentRoute,
+                    option: S.VIA_SYNC,
+                    action: S.CONFIRMED
+                }
+            ];
+        },
 
         selectOneContact: (selected) => {
             return [
@@ -134,7 +152,7 @@ const signup = setup(
                     option: S.INDIVIDUAL,
                     item: S.CONTACT_LIST_ITEM,
                     location: S.ONBOARDING,
-                    sublocation: getCurrentRoute(),
+                    sublocation: TmHelper.currentRoute,
                     selected
                 }
             ];
@@ -147,7 +165,7 @@ const signup = setup(
                     option: S.BULK_SELECT,
                     item: S.CONTACT_LIST_ITEM,
                     location: S.ONBOARDING,
-                    sublocation: getCurrentRoute(),
+                    sublocation: TmHelper.currentRoute,
                     selected
                 }
             ];
