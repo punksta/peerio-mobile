@@ -146,7 +146,7 @@ export default class StyledTextInput extends SafeComponent {
         // even if not focused, move the hint to the top
         if (text) this.setHintToTop();
         // key is entered and the key is '@'
-        if (this.prevTextLength + 1 === text.length && text[text.length - 1] === '@') {
+        if (this.props.telemetryEmailInput && this.prevTextLength + 1 === text.length && text[text.length - 1] === '@') {
             tm.login.onLoginWithEmail();
         }
         let inputText = text;

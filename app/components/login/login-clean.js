@@ -104,6 +104,7 @@ export default class LoginClean extends LoginWizardPage {
                         <View style={formStyle}>
                             <StyledTextInput
                                 label={S.USERNAME}
+                                telemetryEmailInput
                                 state={this.usernameState}
                                 validations={usernameLogin}
                                 hint={tx('title_username')}
