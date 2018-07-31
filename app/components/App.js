@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, PanResponder,
+import { View, PanResponder, Linking,
     AppState, ActivityIndicator, NativeModules,
     Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -24,6 +24,24 @@ import Text from './controls/custom-text';
 const { height, width } = Dimensions.get('window');
 @observer
 export default class App extends SafeComponent {
+    // componentDidMount() {
+    //     console.log(`Initial url is: 1`);
+    //     Linking.getInitialURL().then((url) => {
+    //         console.log(`Initial url is: 2`);
+    //         if (url) {
+    //             console.log(`Initial url is: ${url}`);
+    //         }
+    //     }).catch(err => console.error('An error occurred', err));
+    // }
+
+    // componentWillUnmount() {
+    //     Linking.removeEventListener('url', this.handleOpenURL);
+    // }
+
+    handleOpenURL(event) {
+        console.log('opened in peerio', event);
+    }
+
     constructor(props) {
         super(props);
         uiState.load();
@@ -73,6 +91,8 @@ export default class App extends SafeComponent {
                 crypto.sign.setImplementation(signDetachedNative, verifyDetachedNative);
             }
         }
+        Linking.getInitialURL().then(this.handleOpenURL);
+        Linking.addEventListener('url', this.handleOpenURL);
     }
 
     _handleAppStateChange(appState) {
