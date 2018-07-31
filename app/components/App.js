@@ -47,7 +47,6 @@ export default class App extends SafeComponent {
 
         consoleOverride.configureConsole().then(() => {
             startSocket();
-            push.clearBadge();
         });
     }
 
