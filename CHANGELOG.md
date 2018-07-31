@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.325.0"></a>
+# [3.325.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.324.0...v3.325.0) (2018-07-31)
+
+
+### Bug Fixes
+
+* added prop to send telemetry username error in styled text input ([e6c3d5b](https://github.com/PeerioTechnologies/peerio-mobile/commit/e6c3d5b))
+* don't clear badge on app start unless app is in foreground [ch11730] ([f3c71f3](https://github.com/PeerioTechnologies/peerio-mobile/commit/f3c71f3))
+* iOS sim tests ([#282](https://github.com/PeerioTechnologies/peerio-mobile/issues/282)) ([368045b](https://github.com/PeerioTechnologies/peerio-mobile/commit/368045b))
+* sublocation routing issue ([f48d599](https://github.com/PeerioTechnologies/peerio-mobile/commit/f48d599))
+* update babel.config.js ([e5d154f](https://github.com/PeerioTechnologies/peerio-mobile/commit/e5d154f))
+
+
+### Features
+
+* mobile e2e tests for medcryptor patient space ([#281](https://github.com/PeerioTechnologies/peerio-mobile/issues/281)) ([1ec77d5](https://github.com/PeerioTechnologies/peerio-mobile/commit/1ec77d5))
+
+
+
 <a name="3.324.0"></a>
 # [3.324.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.323.0...v3.324.0) (2018-07-26)
 
