@@ -57,11 +57,14 @@ export default class LoginStart extends LoginWizardPage {
     @observable _selected = 0;
     _scrollerWidth = Dimensions.get('window').width - padding * 2;
 
+    // Need both scroll and page change events
+    // We need handleScroll to change the icon as the user is dragging their finger for smooth UX feedback
     handleScroll = event => {
         const { x } = event.nativeEvent.contentOffset;
         this._selected = Math.round(x / this._scrollerWidth + 1);
     };
 
+    // We need handlePageChange to register swipes for telemetry
     handlePageChange = event => {
         const { x } = event.nativeEvent.contentOffset;
         const newPage = Math.round(x / this._scrollerWidth + 1);
