@@ -1,7 +1,7 @@
 /*
     These are the events for components that are shared between multiple views.
     Since they appear in more than one place, they need to know the current route for the `Sublocation` prop.
-    Thus, they need to react to the routerStore.currentRoute value.
+    Thus, they need to react to TmHelper.currentRoute.
 */
 import { telemetry } from '../../lib/icebear';
 import { setup } from '../main';
