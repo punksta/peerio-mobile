@@ -14,6 +14,8 @@ import uiState from './ui-state';
 
 const actionCellStyle = {
     flex: 1,
+    borderWidth: 1,
+    borderColor: 'green',
     alignItems: 'center',
     height: vars.tabCellHeight,
     justifyContent: 'center'
@@ -81,12 +83,14 @@ export default class TabItem extends SafeComponent {
                 {...testLabel(icon)}
                 onPress={this.onPressTabItem}
                 pressRetentionOffset={vars.retentionOffset}
+                ref={this.setRef}
                 style={actionCellStyle}>
                 <View
-                    ref={this.setRef}
                     onLayout={this.layout}
-                    pointerEvents="none" style={{ alignItems: 'center', borderWidth: 1, borderColor: 'green' }}>
-                    {icons.plain(icon, undefined, color)}
+                    pointerEvents="none" style={{ alignItems: 'center' }}>
+                    <View style={{ borderWidth: 1, borderColor: 'yellow' }}>
+                        {icons.plain(icon, undefined, color)}
+                    </View>
                     <Text style={[actionTextStyle, { color }]}>{text}</Text>
                     {indicator}
                 </View>

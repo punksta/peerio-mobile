@@ -17,11 +17,22 @@ import routerModal from '../routes/router-modal';
 import CustomOverlay from './custom-overlay';
 
 const testBeacon = {
-    position: 'absolute',
-    width: 100,
-    height: 100,
-    borderWidth: 1,
-    borderColor: 'red'
+    width: 64,
+    height: 64,
+    borderWidth: 10,
+    borderRadius: 32,
+    borderColor: 'red',
+    transform: [{ translateY: -40 }, { translateX: -40 }]
+};
+
+const testBeaconContainer = {
+    position: 'absolute'
+};
+
+const testBeaconBg = {
+    width: 200,
+    height: 50,
+    backgroundColor: 'red'
 };
 
 @observer
@@ -75,7 +86,15 @@ export default class LayoutMain extends SafeComponent {
                 style={[common.container.root]}>
                 {animatedBlock}
                 {uiState.beaconCoords
-                    && <View style={[testBeacon, { left: beaconCoords.x, top: beaconCoords.y }]} />}
+                    && (
+                        <View style={[testBeaconContainer, { left: beaconCoords.x - 100, top: beaconCoords.y - 100 }]}>
+                            <View style={testBeaconBg} />
+                            <View style={[testBeacon]}>
+                                <View style={{ borderRadius: 22, backgroundColor: 'white', width: 44, height: 44 }} />
+                            </View>
+                        </View>
+                    )
+                }
                 <ProgressOverlay enabled={routerMain.loading} />
                 <StatusBar
                     barStyle={uiState.externalViewer || routerModal.isBlackStatusBar ? 'default' : 'light-content'}
