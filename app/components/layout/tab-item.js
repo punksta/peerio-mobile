@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { action } from 'mobx';
+import { action, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
 import Text from '../controls/custom-text';
@@ -25,6 +25,8 @@ const actionTextStyle = {
 
 @observer
 export default class TabItem extends SafeComponent {
+    @observable layoutLoaded = false;
+
     @action.bound onPressTabItem() {
         const { route } = this.props;
         if (routerMain.route === route) {
@@ -49,6 +51,20 @@ export default class TabItem extends SafeComponent {
         }
     }
 
+    setRef = ref => {
+        this.viewRef = ref;
+    };
+
+    layout = () => {
+        this.viewRef.measure(
+            (frameX, frameY, frameWidth, frameHeight, pageX, pageY) => {
+                console.log(`frameX: ${frameX}, frameY: ${frameY}, pageX: ${pageX}, ${pageY}`);
+                this.pageX = pageX;
+                this.pageY = pageY;
+                this.layoutLoaded = true;
+            });
+    };
+
     renderThrow() {
         const { text, route, icon, bubble, highlightList } = this.props;
         let color = vars.tabsFg;
@@ -66,7 +82,10 @@ export default class TabItem extends SafeComponent {
                 onPress={this.onPressTabItem}
                 pressRetentionOffset={vars.retentionOffset}
                 style={actionCellStyle}>
-                <View pointerEvents="none" style={{ alignItems: 'center' }}>
+                <View
+                    ref={this.setRef}
+                    onLayout={this.layout}
+                    pointerEvents="none" style={{ alignItems: 'center', borderWidth: 1, borderColor: 'green' }}>
                     {icons.plain(icon, undefined, color)}
                     <Text style={[actionTextStyle, { color }]}>{text}</Text>
                     {indicator}

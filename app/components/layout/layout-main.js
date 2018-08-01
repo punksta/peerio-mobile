@@ -16,6 +16,14 @@ import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
 import CustomOverlay from './custom-overlay';
 
+const testBeacon = {
+    position: 'absolute',
+    width: 100,
+    height: 100,
+    borderWidth: 1,
+    borderColor: 'red'
+};
+
 @observer
 export default class LayoutMain extends SafeComponent {
     @observable modalVisible = false;
@@ -60,11 +68,14 @@ export default class LayoutMain extends SafeComponent {
                 {actionsBar || <TabContainer />}
             </View>
         );
+        const { beaconCoords } = uiState;
         return (
             <View
                 testID="mainLayout"
                 style={[common.container.root]}>
                 {animatedBlock}
+                {uiState.beaconCoords
+                    && <View style={[testBeacon, { left: beaconCoords.x, top: beaconCoords.y }]} />}
                 <ProgressOverlay enabled={routerMain.loading} />
                 <StatusBar
                     barStyle={uiState.externalViewer || routerModal.isBlackStatusBar ? 'default' : 'light-content'}
