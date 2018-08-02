@@ -55,9 +55,26 @@ class ShareViewController: UIViewController {
       }
     }
     
-//    self.dismiss(animated: false) {
-//      self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-//    }
+    group.notify(queue: DispatchQueue.main) {
+      let files = try! FileManager.default.contentsOfDirectory(atPath: self.sharedFolderPath)
+      
+      do {
+        let jsonData : Data = try JSONSerialization.data(
+          withJSONObject: [
+            "incoming-files" : files
+          ],
+          options: JSONSerialization.WritingOptions.init(rawValue: 0))
+        let jsonString = (NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        print("peerioshare://shared?\(jsonString!)")
+        let result = self.openURL(URL(string: "peerioshare://shared?\(jsonString!)")!)
+      } catch let error {
+        NSLog("\(error)")
+      }
+      
+      self.dismiss(animated: false) {
+        self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+      }
+    }
   }
 
   @objc
