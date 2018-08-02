@@ -44,17 +44,19 @@ class ShareViewController: UIViewController {
 
         group.enter()
         itemProvider.loadItem(forTypeIdentifier: kUTTypeData as String, options: nil) { data, error in
-//          if error == nil {
-              print(data, error)
-////            let url = data as! URL
-////            let path = "\(self.docPath)/\(url.pathComponents.last ?? "")"
-////            print(">>> sharepath: \(String(describing: url.path))")
-////
-////            try? FileManager.default.copyItem(at: url, to: URL(fileURLWithPath: path))
-//
-//          } else {
-//            NSLog("\(error)")
-//          }
+          if error == nil {
+            let sharedItemUri = data as! URL
+            print(">>>", sharedItemUri)
+            
+            let pathToCopyTo = "\(self.sharedFolderPath)/\(sharedItemUri.pathComponents.last ?? "")"
+            print(">>>", pathToCopyTo)
+            print(">>> sharepath: \(String(describing: sharedItemUri.path))")
+
+            try? FileManager.default.copyItem(at: sharedItemUri, to: URL(fileURLWithPath: pathToCopyTo))
+
+          } else {
+            NSLog("\(error)")
+          }
           group.leave()
         }
       }
