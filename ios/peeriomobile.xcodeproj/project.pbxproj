@@ -72,7 +72,7 @@
 		8390076B9DE5486982F0EBE9 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ED79A42A8D3144739CE4C04B /* Ionicons.ttf */; };
 		8560D839D75A4E9590C8B1F5 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 372E848CA7B444A09B937444 /* SimpleLineIcons.ttf */; };
 		86F7F88564164E3CA0B1265B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0F64612EAF249BC98CB3DE2 /* Entypo.ttf */; };
-		96CEC59C21107C3600F546CE /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEC59B21107C3600F546CE /* ShareViewController.swift */; };
+		9632AAC221123273001A290F /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96CEC59B21107C3600F546CE /* ShareViewController.swift */; };
 		96CEC59F21107C3600F546CE /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 96CEC59D21107C3600F546CE /* MainInterface.storyboard */; };
 		96CEC5A321107C3600F546CE /* peerioshare.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 96CEC59921107C3600F546CE /* peerioshare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B73DC4B1F0BD4E63BE1B4BD5 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B836295CD1B344EBB035E1B6 /* Foundation.ttf */; };
@@ -553,6 +553,7 @@
 		85F72AE1AB9C4B249FDE6333 /* RNFS.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 		88D6237453EF462AAED942D1 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		91AFFC53E28140839A2B4730 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
+		9632AAC1211230D7001A290F /* peerioshare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = peerioshare.entitlements; sourceTree = "<group>"; };
 		96CEC560210F699500F546CE /* QBImagePicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = QBImagePicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96CEC562210F699500F546CE /* RSKImageCropper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		96CEC59921107C3600F546CE /* peerioshare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = peerioshare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1010,6 +1011,7 @@
 		96CEC59A21107C3600F546CE /* peerioshare */ = {
 			isa = PBXGroup;
 			children = (
+				9632AAC1211230D7001A290F /* peerioshare.entitlements */,
 				96CEC59B21107C3600F546CE /* ShareViewController.swift */,
 				96CEC59D21107C3600F546CE /* MainInterface.storyboard */,
 				96CEC5A021107C3600F546CE /* Info.plist */,
@@ -1114,7 +1116,13 @@
 					};
 					96CEC59821107C3600F546CE = {
 						CreatedOnToolsVersion = 9.4.1;
+						DevelopmentTeam = 7L45B96YPK;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1710,7 +1718,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				96CEC59C21107C3600F546CE /* ShareViewController.swift in Sources */,
+				9632AAC221123273001A290F /* ShareViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2044,11 +2052,12 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = peerioshare/peerioshare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Samvel Avanesov (7TA58ZPZB5)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7L45B96YPK;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = peerioshare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
@@ -2080,12 +2089,13 @@
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = peerioshare/peerioshare.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Technologies Peerio Inc. (7L45B96YPK)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7L45B96YPK;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = peerioshare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
