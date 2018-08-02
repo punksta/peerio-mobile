@@ -34,7 +34,6 @@ class ShareViewController: UIViewController {
   
   override func viewDidAppear(_ animated: Bool) {
 //    self.openURL(URL(string: "peerioshare://hello")!)
-    print(sharedFolderPath)
     let group = DispatchGroup()
 
     for item: Any in self.extensionContext!.inputItems {
@@ -46,14 +45,8 @@ class ShareViewController: UIViewController {
         itemProvider.loadItem(forTypeIdentifier: kUTTypeData as String, options: nil) { data, error in
           if error == nil {
             let sharedItemUri = data as! URL
-            print(">>>", sharedItemUri)
-            
             let pathToCopyTo = "\(self.sharedFolderPath)/\(sharedItemUri.pathComponents.last ?? "")"
-            print(">>>", pathToCopyTo)
-            print(">>> sharepath: \(String(describing: sharedItemUri.path))")
-
             try? FileManager.default.copyItem(at: sharedItemUri, to: URL(fileURLWithPath: pathToCopyTo))
-
           } else {
             NSLog("\(error)")
           }
@@ -62,9 +55,9 @@ class ShareViewController: UIViewController {
       }
     }
     
-    self.dismiss(animated: false) {
-      self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
-    }
+//    self.dismiss(animated: false) {
+//      self.extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+//    }
   }
 
   @objc
