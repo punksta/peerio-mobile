@@ -10,6 +10,7 @@ import FileTypeIcon from '../files/file-type-icon';
 import SafeComponent from '../shared/safe-component';
 import { fileHelpers, config, warnings } from '../../lib/icebear';
 import Thumbnail from '../shared/thumbnail';
+import testLabel from '../helpers/test-label';
 
 const nameContainer = {
     backgroundColor: 'rgba(0, 0, 0, 0.05)',
@@ -104,6 +105,7 @@ export default class FilePreview extends SafeComponent {
                         {tx('title_name')}
                     </Text>
                     <TextInput
+                        {...testLabel('title_name')}
                         autoCorrect={false}
                         autoCapitalize="sentences"
                         value={state.name}

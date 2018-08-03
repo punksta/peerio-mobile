@@ -5,6 +5,7 @@ import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
 
@@ -55,7 +56,12 @@ export default class FilesPlaceholder extends SafeComponent {
                         style={{ flex: 1, width: null, height: null }} />
                 </View>
                 <View style={{ flex: 0.5 }}>
-                    <Text style={headerStyle}>{tx('title_uploadSomething')}</Text>
+                    <Text
+                        style={headerStyle}
+                        {...testLabel('title_uploadSomething')}
+                    >
+                        {tx('title_uploadSomething')}
+                    </Text>
                 </View>
             </View>
         );

@@ -4,6 +4,7 @@ import { observer } from 'mobx-react/native';
 import { TextInput, View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
+import testLabel from '../helpers/test-label';
 
 @observer
 export default class TextInputStateful extends SafeComponent {
@@ -12,7 +13,7 @@ export default class TextInputStateful extends SafeComponent {
         return (
             <View style={{ borderColor: vars.checkboxIconInactive, borderWidth: 1, marginTop: vars.spacing.small.midi2x }}>
                 <TextInput
-                    testID={this.props.name}
+                    {...testLabel(this.props.placeholder)}
                     style={[{ height: vars.inputHeight, paddingLeft: vars.iconPadding, fontFamily: vars.peerioFontFamily }, this.props.style]}
                     underlineColorAndroid="transparent"
                     value={s.value}

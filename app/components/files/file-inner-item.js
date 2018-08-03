@@ -62,7 +62,7 @@ export default class FileInnerItem extends SafeComponent {
         if (file.signatureError) return <View style={{ marginHorizontal: vars.spacing.small.midi }}><FileSignatureError /></View>;
         const actionIcon = () => onFileAction();
         const iconRight = file.uploading ? icons.dark('close', () => fileState.cancelUpload(file)) :
-            icons.dark('more-vert', actionIcon);
+            icons.dark('more-vert', actionIcon, null, null, 'more-vert');
         const checked = this.props.file && this.props.file.selected;
         const nameStyle = {
             color: vars.txtDark,
@@ -101,7 +101,7 @@ export default class FileInnerItem extends SafeComponent {
                 {iconRight}
             </View>
         );
-        const testID = `file${this.props.rowID}`;
+        const testID = file.name;
         const owner = !file.fileOwner || file.fileOwner === User.current.username
             ? `` : `${contactStore.getContact(file.fileOwner).fullName} `;
         return (
@@ -110,6 +110,7 @@ export default class FileInnerItem extends SafeComponent {
                     pressRetentionOffset={vars.pressRetentionOffset}
                     onPress={this.onPress}
                     {...testLabel(testID)}
+                    accessible={false}
                     style={{ backgroundColor: vars.filesBg }}>
                     <View style={[fileInfoContainerStyle, { opacity }]}>
                         {this.checkbox()}

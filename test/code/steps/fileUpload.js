@@ -3,7 +3,7 @@ const { defineSupportCode } = require('cucumber');
 defineSupportCode(({ Then }) => {
     Then('I upload a file from gallery to Files', async function () {
         await this.homePage.filesTab.click();
-        await this.filesListPage.buttonUploadFileToFiles.click();
+        await this.filesListPage.uploadFileButtton.click();
         await this.fileUploadPage.uploadFileFromGallery();
         await this.filesListPage.fileUploadedPopup.click();
     });
