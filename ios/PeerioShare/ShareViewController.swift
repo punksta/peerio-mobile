@@ -62,12 +62,13 @@ class ShareViewController: UIViewController {
         do {
           let jsonData : Data = try JSONSerialization.data(
             withJSONObject: [
-              "incoming-files" : files
+              "path": self.sharedFolderPath,
+              "files" : files
             ],
             options: JSONSerialization.WritingOptions.init(rawValue: 0))
           let jsonString = (NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-          print("peerioshare://shared?\(jsonString!)")
-          self.openURL(URL(string: "peerioshare://shared?\(jsonString!)")!)
+          print("peerioshare://\(jsonString!)")
+          self.openURL(URL(string: "peerioshare://\(jsonString!)")!)
         } catch let error {
           NSLog("\(error)")
         }

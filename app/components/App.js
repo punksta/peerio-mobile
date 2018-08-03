@@ -20,26 +20,30 @@ import TestHelper from './helpers/test-helper';
 import MockComponent from './mocks';
 import ActionSheetLayout from './layout/action-sheet-layout';
 import Text from './controls/custom-text';
+import fileState from './files/file-state';
 
 const { height, width } = Dimensions.get('window');
 @observer
 export default class App extends SafeComponent {
-    // componentDidMount() {
-    //     console.log(`Initial url is: 1`);
-    //     Linking.getInitialURL().then((url) => {
-    //         console.log(`Initial url is: 2`);
-    //         if (url) {
-    //             console.log(`Initial url is: ${url}`);
-    //         }
-    //     }).catch(err => console.error('An error occurred', err));
-    // }
-
-    // componentWillUnmount() {
-    //     Linking.removeEventListener('url', this.handleOpenURL);
-    // }
-
     handleOpenURL(event) {
         console.log('opened in peerio', event);
+        if (event) {
+            console.log(event);
+            const url = decodeURIComponent(event);
+            console.log('url', url.toString());
+            const json = url.replace('peerioshare://', '');
+            console.log('json', json);
+            const { files, path } = JSON.parse(json);
+            console.log(files, path);
+
+            const fileProps = {
+                fileName: files[0],
+                ext: files[0].split('.')[1],
+                url: `${path}/${files[0]}`
+            };
+
+            fileState.uploadInFiles(fileProps);
+        }
     }
 
     constructor(props) {
