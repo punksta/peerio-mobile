@@ -8,6 +8,7 @@ import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import { uiState } from '../states';
+import testLabel from '../helpers/test-label';
 
 const { width, height } = Dimensions.get('window');
 const borderRadius = 16;
@@ -105,7 +106,9 @@ export default class ActionSheetLayout extends SafeComponent {
                             style={container}
                             onPress={() => this.executeAction(button)}>
                             {/* Style order is important for color override priority */}
-                            <Text style={[buttonTextStyle, destructiveTextstyle, disabledTextStyle]}>
+                            <Text
+                                {...testLabel(button.title)}
+                                style={[buttonTextStyle, destructiveTextstyle, disabledTextStyle]}>
                                 {tx(button.title)}
                             </Text>
                         </TouchableOpacity>

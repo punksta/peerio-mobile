@@ -27,7 +27,7 @@ export default class FoldersActionSheet {
         };
         const actionButtons = [
             {
-                title: 'button_move',
+                title: tx('button_move'),
                 disabled: isShared,
                 action: async () => {
                     await routes.modal.moveFileTo({ fsObject: folder });
@@ -56,7 +56,7 @@ export default class FoldersActionSheet {
         }
 
         actionButtons.push({
-            title: 'button_delete',
+            title: tx('button_delete'),
             isDestructive: true,
             action: async () => {
                 // icebear will call this function to confirm file deletion
