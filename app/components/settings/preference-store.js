@@ -18,7 +18,8 @@ class PreferenceStore {
         externalContentEnabled: true,
         externalContentJustForFavs: false,
         peerioContentEnabled: true,
-        showMoveSharedFolderPopup: true
+        showMoveSharedFolderPopup: true,
+        importContactsInBackground: false
     };
 
     observePreference(key, dbName, localStore) {
@@ -35,6 +36,8 @@ class PreferenceStore {
     }
 
     init() {
+        if (this.loaded) return;
+        this.loaded = true;
         Object.keys(this.prefs).forEach((key) => {
             this.observePreference(key, 'user', this.prefs);
         });

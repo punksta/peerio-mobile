@@ -30,12 +30,18 @@ export default class SignupContactSyncStart extends LoginWizardPage {
     }
 
     @action.bound async syncContacts() {
-        const result = await popupContactPermission(tx('title_permissionContacts'), tx('title_permissionContactsDescroption'));
-        if (result) {
-            const hasPermissions = await contactState.hasPermissions();
-            if (!hasPermissions) signupState.finishSignUp();
+        const hasPermissions =
+            await popupContactPermission(tx('title_permissionContacts'), tx('title_permissionContactsDescroption'))
+            && await contactState.hasPermissions();
+        if (hasPermissions) {
+            // user has chosen to auto import contacts
+            contactState.importContactsInBackground = true;
             signupState.next();
-        } else signupState.finishSignUp();
+        } else {
+            // user has not given permission to access contacts
+            contactState.importContactsInBackground = false;
+            signupState.finishSignUp();
+        }
     }
 
     render() {

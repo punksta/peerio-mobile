@@ -1,8 +1,8 @@
-import { DeviceEventEmitter } from 'react-native';
-import { observable, action, when } from 'mobx';
+import { DeviceEventEmitter, NativeEventEmitter } from 'react-native';
+import { observable, action } from 'mobx';
 import RNContacts from 'react-native-contacts';
 import RoutedState from '../routes/routed-state';
-import { contactStore, warnings, User } from '../../lib/icebear';
+import { clientApp, contactStore, warnings, User, config } from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import contactAddState from './contact-add-state';
 import chatState from '../messaging/chat-state';
@@ -13,7 +13,38 @@ class ContactState extends RoutedState {
     _permissionHandler = null;
 
     @action async init() {
-        return new Promise(resolve => when(() => !this.store.loading, resolve));
+        // TODO: rewrite
+        if (this.importContactsInBackground) {
+            clientApp.uiUserPrefs.importContactsInBackground = this.importContactsInBackground;
+        }
+        if (!clientApp.uiUserPrefs.importContactsInBackground) return;
+        this.cache = new config.CacheEngine('general_cache', 'id');
+        await this.cache.open();
+        // if we already ran import, do not reinvite existing contacts
+        // and do not reinitialize cache
+        this.importedEmails = this.importedEmails || await this.cache.getValue('imported_emails') || {};
+        console.log(`loaded cached imported emails: ${Object.keys(this.importedEmails).length}`);
+        await this.syncCachedEmails();
+        // TODO: android implementation of RNContacts.subscribeToUpdates
+        RNContacts.subscribeToUpdates && RNContacts.subscribeToUpdates(() => {
+            console.log(`contact-store.js: subscribed to updates`);
+        });
+    }
+
+    @action.bound async syncCachedEmails() {
+        const time = Date.now();
+        const emails = await this.getPhoneContactEmails();
+        console.log(`got contacts in background: ${emails.length}, ${Date.now() - time}ms`);
+        const newEmails = [];
+        emails.forEach(({ email }) => {
+            if (this.importedEmails[email]) return;
+            this.importedEmails[email] = email;
+            newEmails.push(email);
+            console.log(`got new email to import: ${email}`);
+        });
+        this.batchInvite(newEmails, true);
+        await this.cache.setValue('imported_emails', this.importedEmails);
+        console.log(`synced new email cache ${Object.keys(this.importedEmails).length}`);
     }
 
     @action exit() {
@@ -159,13 +190,10 @@ class ContactState extends RoutedState {
         const hash = {};
         contacts.forEach(contact => {
             const { givenName, familyName, emailAddresses } = contact;
-            const display = `contact-state.js: processing ${givenName} ${familyName}`;
-            console.log(display);
             if (emailAddresses) {
                 emailAddresses.forEach(ea => {
                     const { email } = ea;
                     if (email) {
-                        console.log(`${email}: ${givenName} ${familyName}`);
                         emails.push(email);
                         hash[email] = observable({
                             givenName,
@@ -180,7 +208,7 @@ class ContactState extends RoutedState {
                 });
             }
         });
-        // emails = ['seavan@gmail.com'];
+
         this.store.importContacts(emails)
             .then(success => {
                 console.log('contact-state.js: import success');
@@ -211,6 +239,7 @@ class ContactState extends RoutedState {
      */
     @action async getPhoneContactEmails() {
         const phoneContacts = await this.getPhoneContacts();
+        const time = Date.now();
         const contactEmails = [];
         phoneContacts.forEach(phoneContact => {
             const { emailAddresses, givenName, familyName } = phoneContact;
@@ -221,6 +250,7 @@ class ContactState extends RoutedState {
                 });
             }
         });
+        console.log(`parsed contacts in ${Date.now() - time}ms`);
         return contactEmails;
     }
 
@@ -235,7 +265,11 @@ class ContactState extends RoutedState {
 
     // TODO replace with bulk
     @action batchInvite(emails, isAutoImport) {
-        emails.forEach((email) => this.store.inviteNoWarning(email, undefined, isAutoImport));
+        emails.forEach((email) => {
+            if (!this.importedEmails) this.importedEmails = {};
+            this.importedEmails[email] = email;
+            this.store.inviteNoWarning(email, undefined, isAutoImport);
+        });
     }
 
     onTransition(active, contact) {
@@ -257,5 +291,12 @@ DeviceEventEmitter.addListener(`ContactPermissionsGranted`, data => {
     contactState.resolvePermissionHandler(data);
 });
 
+const emitter = new NativeEventEmitter(RNContacts);
+emitter.addListener(`ContactsChanged`, () => {
+    console.log(`contact-state.js: contacts changed`);
+    contactState.syncCachedEmails();
+});
+
+global.contactState = contactState;
 
 export default contactState;
