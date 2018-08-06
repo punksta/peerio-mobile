@@ -26,15 +26,10 @@ const { height, width } = Dimensions.get('window');
 @observer
 export default class App extends SafeComponent {
     handleOpenURL(event) {
-        console.log('opened in peerio', event);
         if (event) {
-            console.log(event);
-            const url = decodeURIComponent(event);
-            console.log('url', url.toString());
+            const url = decodeURIComponent(event.url);
             const json = url.replace('peerioshare://', '');
-            console.log('json', json);
             const { files, path } = JSON.parse(json);
-            console.log(files, path);
 
             const fileProps = {
                 fileName: files[0],
