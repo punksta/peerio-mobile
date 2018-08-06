@@ -42,10 +42,11 @@ export default class App extends SafeComponent {
             const json = url.replace('peerioshare://', '');
             const { files, path } = JSON.parse(json);
 
+            const firstFile = files[0];
             const fileProps = {
-                fileName: files[0],
-                ext: files[0].split('.')[1],
-                url: `${path}/${files[0]}`
+                fileName: firstFile,
+                ext: firstFile.split('.')[1],
+                url: `${path}/${firstFile}`
             };
 
             fileState.uploadInFiles(fileProps);
