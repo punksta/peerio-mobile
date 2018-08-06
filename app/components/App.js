@@ -9,7 +9,7 @@ import ModalLayout from './layout/modal-layout';
 import RouteNavigator from './routes/route-navigator';
 import routerApp from './routes/router-app';
 import uiState from './layout/ui-state';
-import { clientApp, crypto, startSocket, config, User, TinyDb } from '../lib/icebear';
+import { clientApp, crypto, startSocket, config, User, TinyDb, socket } from '../lib/icebear';
 import { scryptNative, signDetachedNative, verifyDetachedNative } from '../lib/scrypt-native';
 import push from '../lib/push';
 import consoleOverride from '../lib/console-override';
@@ -21,12 +21,23 @@ import MockComponent from './mocks';
 import ActionSheetLayout from './layout/action-sheet-layout';
 import Text from './controls/custom-text';
 import fileState from './files/file-state';
+import { promiseWhen } from './helpers/sugar';
+import routes from './routes/routes';
 
 const { height, width } = Dimensions.get('window');
 @observer
 export default class App extends SafeComponent {
-    handleOpenURL(event) {
-        if (event) {
+    wakeUpAndHandleOpenURL = (event) => {
+        this.handleOpenURL({ url: event });
+    };
+
+    async handleOpenURL(event) {
+        await promiseWhen(() => routes.main.contactStateLoaded);
+
+        if (event && socket.authenticated) {
+            routes.main.files();
+            fileState.goToRoot();
+
             const url = decodeURIComponent(event.url);
             const json = url.replace('peerioshare://', '');
             const { files, path } = JSON.parse(json);
@@ -90,7 +101,7 @@ export default class App extends SafeComponent {
                 crypto.sign.setImplementation(signDetachedNative, verifyDetachedNative);
             }
         }
-        Linking.getInitialURL().then(this.handleOpenURL);
+        Linking.getInitialURL().then(this.wakeUpAndHandleOpenURL);
         Linking.addEventListener('url', this.handleOpenURL);
     }
 
