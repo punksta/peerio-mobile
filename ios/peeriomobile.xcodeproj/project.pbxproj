@@ -437,13 +437,6 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		96CEC54B210F67C600F546CE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 85F72AE1AB9C4B249FDE6333 /* RNFS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 96CEC53E210F679F00F546CE;
-			remoteInfo = share;
-		};
 		96CEC5A121107C3600F546CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -831,7 +824,6 @@
 			isa = PBXGroup;
 			children = (
 				02E096D11DAE3B3B00641B85 /* libRNFS.a */,
-				96CEC54C210F67C600F546CE /* share.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1084,6 +1076,9 @@
 						DevelopmentTeam = 7L45B96YPK;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
 							com.apple.DataProtection = {
 								enabled = 1;
 							};
@@ -1601,13 +1596,6 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		96CEC54C210F67C600F546CE /* share.appex */ = {
-			isa = PBXReferenceProxy;
-			fileType = "wrapper.app-extension";
-			path = share.appex;
-			remoteRef = 96CEC54B210F67C600F546CE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
