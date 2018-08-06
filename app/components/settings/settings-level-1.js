@@ -87,7 +87,7 @@ export default class SettingsLevel1 extends SafeComponent {
     renderThrow() {
         const plan = plans.topPlan();
         const upgradeItem = plan ?
-            (<SettingsItem title={tx('title_viewYourPlan', { title: plan.title })}
+            (<SettingsItem title={tx('title_viewYourPlan', { title: tx(plan.title) })}
                 onPress={() => settingsState.upgrade()}
                 leftComponent={this.leftSettingsIcon('open-in-browser', vars.darkBlue)} />) :
             (<SettingsItem title="button_upgrade"
