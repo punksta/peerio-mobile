@@ -67,8 +67,9 @@ class ShareViewController: UIViewController {
             ],
             options: JSONSerialization.WritingOptions.init(rawValue: 0))
           let jsonString = (NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)! as String).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-          print("peerioshare://\(jsonString!)")
-          self.openURL(URL(string: "peerioshare://\(jsonString!)")!)
+          let scheme = Bundle.main.object(forInfoDictionaryKey: "SHARE_URL_SCHEME")!
+          let toOpen = URL(string: "\(scheme)://\(jsonString!)")!
+          self.openURL(toOpen)
         } catch let error {
           NSLog("\(error)")
         }

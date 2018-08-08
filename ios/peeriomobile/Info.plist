@@ -7,7 +7,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>peerioshare</string>
+				<string>$(SHARE_URL_SCHEME)</string>
 			</array>
 		</dict>
 	</array>

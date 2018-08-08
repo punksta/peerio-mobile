@@ -39,7 +39,7 @@ export default class App extends SafeComponent {
             fileState.goToRoot();
 
             const url = decodeURIComponent(event.url);
-            const json = url.replace('peerioshare://', '');
+            const json = url.split('://')[1]; // url format: {urlScheme}://{data}
             const { files, path } = JSON.parse(json);
 
             const firstFile = files[0];
