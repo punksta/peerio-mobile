@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.331.0"></a>
+# [3.331.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.324.0...v3.331.0) (2018-08-09)
+
+
+### Bug Fixes
+
+* don't clear badge on app start unless app is in foreground [ch11730] ([f3c71f3](https://github.com/PeerioTechnologies/peerio-mobile/commit/f3c71f3))
+* iOS sim tests ([#282](https://github.com/PeerioTechnologies/peerio-mobile/issues/282)) ([368045b](https://github.com/PeerioTechnologies/peerio-mobile/commit/368045b))
+* **ui:** fix FileInlineContainer for external images [ch12060] ([de3d804](https://github.com/PeerioTechnologies/peerio-mobile/commit/de3d804))
+* plan names ([#287](https://github.com/PeerioTechnologies/peerio-mobile/issues/287)) ([7045f3a](https://github.com/PeerioTechnologies/peerio-mobile/commit/7045f3a))
+* update babel.config.js ([e5d154f](https://github.com/PeerioTechnologies/peerio-mobile/commit/e5d154f))
+
+
+### Features
+
+* E2E tests: File folders (non-shared) ([#284](https://github.com/PeerioTechnologies/peerio-mobile/issues/284)) ([4abfa06](https://github.com/PeerioTechnologies/peerio-mobile/commit/4abfa06))
+* iOS native action to share ([#286](https://github.com/PeerioTechnologies/peerio-mobile/issues/286)) ([55861f2](https://github.com/PeerioTechnologies/peerio-mobile/commit/55861f2))
+* mobile e2e tests for medcryptor patient space ([#281](https://github.com/PeerioTechnologies/peerio-mobile/issues/281)) ([1ec77d5](https://github.com/PeerioTechnologies/peerio-mobile/commit/1ec77d5))
+
+
+
 <a name="3.325.0"></a>
 # [3.325.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.324.0...v3.325.0) (2018-08-09)
 
