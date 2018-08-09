@@ -33,7 +33,8 @@ class ShareViewController: UIViewController {
   }
   
   override func viewDidAppear(_ animated: Bool) {
-    let alertView = UIAlertController(title: "Peerio", message: "Uploading file(s)", preferredStyle: .alert)
+    let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
+    let alertView = UIAlertController(title: appName, message: "Uploading file(s)", preferredStyle: .alert)
     self.present(alertView, animated: true, completion: {
       let group = DispatchGroup()
 
