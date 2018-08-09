@@ -38,7 +38,7 @@ function deserialize(data) {
 const LOCATION_CONFIG = 2;
 
 class SqlCipherDbStorage extends CacheEngineBase {
-    async open() {
+    async openInternal() {
         console.log(`open db: ${this.name}`);
         this.sql = await sqlcipher.openDatabase({ name: this.name, location: LOCATION_CONFIG });
         this.sql.executeSqlPromise = (sql, params) => new Promise(resolve => {
@@ -47,7 +47,6 @@ class SqlCipherDbStorage extends CacheEngineBase {
         await this.sql.executeSqlPromise(
             'CREATE TABLE IF NOT EXISTS key_value(key TEXT PRIMARY KEY, value TEXT) WITHOUT ROWID'
         );
-        this.isOpen = true;
     }
 
     async getValue(key) {
