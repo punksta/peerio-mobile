@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { action, observable } from 'mobx';
+import { when, action, observable } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, TouchableOpacity } from 'react-native';
 import Text from '../controls/custom-text';
@@ -53,6 +53,17 @@ export default class TabItem extends SafeComponent {
         }
     }
 
+    async componentDidMount() {
+        when(() => this.layoutLoaded, () => {
+            uiState.beaconCoords = {
+                x: this.viewRef.pageX,
+                y: this.viewRef.pageY,
+                width: this.viewRef.frameWidth,
+                height: this.viewRef.frameHeight
+            };
+        });
+    }
+
     setRef = ref => {
         this.viewRef = ref;
     };
@@ -60,9 +71,11 @@ export default class TabItem extends SafeComponent {
     layout = () => {
         this.viewRef.measure(
             (frameX, frameY, frameWidth, frameHeight, pageX, pageY) => {
-                console.log(`frameX: ${frameX}, frameY: ${frameY}, pageX: ${pageX}, ${pageY}`);
-                this.pageX = pageX;
-                this.pageY = pageY;
+                console.log(`frameWidth: ${frameWidth}, frameHeight: ${frameHeight}, pageX: ${pageX}, pageY: ${pageY}`);
+                this.viewRef.frameWidth = frameWidth;
+                this.viewRef.frameHeight = frameHeight;
+                this.viewRef.pageX = pageX;
+                this.viewRef.pageY = pageY;
                 this.layoutLoaded = true;
             });
     };
@@ -83,12 +96,11 @@ export default class TabItem extends SafeComponent {
                 {...testLabel(icon)}
                 onPress={this.onPressTabItem}
                 pressRetentionOffset={vars.retentionOffset}
-                ref={this.setRef}
                 style={actionCellStyle}>
                 <View
                     onLayout={this.layout}
                     pointerEvents="none" style={{ alignItems: 'center' }}>
-                    <View style={{ borderWidth: 1, borderColor: 'yellow' }}>
+                    <View ref={this.setRef} style={{ borderWidth: 1, borderColor: 'yellow' }}>
                         {icons.plain(icon, undefined, color)}
                     </View>
                     <Text style={[actionTextStyle, { color }]}>{text}</Text>

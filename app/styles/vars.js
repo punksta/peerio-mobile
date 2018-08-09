@@ -108,6 +108,11 @@ const vars = {
     popupPadding: scaleDim(20),
     popupHorizontalMargin: scaleDim(16),
     tfaInputWidth: scaleDim(124),
+    beaconWidth: scaleDim(272),
+    beaconBorderWidth: 4,
+    beaconBg: '#5461CC',
+    beaconPadding: scaleDim(8),
+    beaconLineHeight: scaleDim(16),
 
     circle: 10,
     circleSize: 4,

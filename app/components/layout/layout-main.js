@@ -15,25 +15,7 @@ import { common } from '../../styles/styles';
 import routerMain from '../routes/router-main';
 import routerModal from '../routes/router-modal';
 import CustomOverlay from './custom-overlay';
-
-const testBeacon = {
-    width: 64,
-    height: 64,
-    borderWidth: 10,
-    borderRadius: 32,
-    borderColor: 'red',
-    transform: [{ translateY: -40 }, { translateX: -40 }]
-};
-
-const testBeaconContainer = {
-    position: 'absolute'
-};
-
-const testBeaconBg = {
-    width: 200,
-    height: 50,
-    backgroundColor: 'red'
-};
+import Beacon from '../shared/beacon';
 
 @observer
 export default class LayoutMain extends SafeComponent {
@@ -79,22 +61,16 @@ export default class LayoutMain extends SafeComponent {
                 {actionsBar || <TabContainer />}
             </View>
         );
-        const { beaconCoords } = uiState;
         return (
             <View
                 testID="mainLayout"
                 style={[common.container.root]}>
                 {animatedBlock}
-                {uiState.beaconCoords
-                    && (
-                        <View style={[testBeaconContainer, { left: beaconCoords.x - 100, top: beaconCoords.y - 100 }]}>
-                            <View style={testBeaconBg} />
-                            <View style={[testBeacon]}>
-                                <View style={{ borderRadius: 22, backgroundColor: 'white', width: 44, height: 44 }} />
-                            </View>
-                        </View>
-                    )
-                }
+                <Beacon
+                    positionX={3}
+                    copyHeader="Header"
+                    copyLine1="Line 1"
+                />
                 <ProgressOverlay enabled={routerMain.loading} />
                 <StatusBar
                     barStyle={uiState.externalViewer || routerModal.isBlackStatusBar ? 'default' : 'light-content'}

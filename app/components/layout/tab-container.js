@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { when } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
@@ -25,18 +24,6 @@ const bottomRowStyle = {
 
 @observer
 export default class TabContainer extends SafeComponent {
-    async componentDidMount() {
-        when(() => this.filesRef.layoutLoaded, () => {
-            uiState.beaconCoords = {
-                x: this.filesRef.pageX, y: this.filesRef.pageY
-            };
-        });
-    }
-
-    setFilesRef = ref => {
-        this.filesRef = ref;
-    };
-
     renderThrow() {
         if (uiState.keyboardHeight) return null;
         if (routerMain.currentIndex !== 0) return null;
@@ -62,7 +49,6 @@ export default class TabContainer extends SafeComponent {
                     icon="people"
                     highlightList={['contactAdd', 'contactInvite']} />
                 <TabItem
-                    ref={this.setFilesRef}
                     text={t('title_settings')}
                     route="settings"
                     icon="settings" />
