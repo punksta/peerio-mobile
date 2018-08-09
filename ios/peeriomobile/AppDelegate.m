@@ -15,6 +15,7 @@
 #import <AddressBook/AddressBook.h>
 #import <UserNotifications/UserNotifications.h>
 #import <Contacts/Contacts.h>
+#import <React/RCTLinkingManager.h>
 
 CNContactStore* contactStore = nil;
 
@@ -48,6 +49,13 @@ void RogerAddressBookChangeCallback(ABAddressBookRef addressBook, CFDictionaryRe
     // RogerAddressBook *instance = (__bridge RogerAddressBook *)context;
     // [instance import];
 } */
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+  return [RCTLinkingManager application:application openURL:url
+                      sourceApplication:sourceApplication annotation:annotation];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

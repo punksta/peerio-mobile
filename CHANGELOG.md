@@ -2,6 +2,97 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.330.0"></a>
+# [3.330.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.329.0...v3.330.0) (2018-08-09)
+
+
+### Bug Fixes
+
+* app name in alert ([5054341](https://github.com/PeerioTechnologies/peerio-mobile/commit/5054341))
+
+
+### Features
+
+* set sdk version ([5a2c7d0](https://github.com/PeerioTechnologies/peerio-mobile/commit/5a2c7d0))
+
+
+
+<a name="3.329.0"></a>
+# [3.329.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.328.0...v3.329.0) (2018-08-09)
+
+
+### Bug Fixes
+
+* check for url ([f920ee4](https://github.com/PeerioTechnologies/peerio-mobile/commit/f920ee4))
+
+
+
+<a name="3.328.0"></a>
+# [3.328.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.327.0...v3.328.0) (2018-08-08)
+
+
+### Bug Fixes
+
+* scheme ([186e4c3](https://github.com/PeerioTechnologies/peerio-mobile/commit/186e4c3))
+* text prop ([b463ed5](https://github.com/PeerioTechnologies/peerio-mobile/commit/b463ed5))
+
+
+
+<a name="3.327.0"></a>
+# [3.327.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.326.0...v3.327.0) (2018-08-08)
+
+
+
+<a name="3.326.0"></a>
+# [3.326.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.324.0...v3.326.0) (2018-08-07)
+
+
+### Bug Fixes
+
+* **ui:** fix FileInlineContainer for external images [ch12060] ([de3d804](https://github.com/PeerioTechnologies/peerio-mobile/commit/de3d804))
+* change display name ([ecc1d03](https://github.com/PeerioTechnologies/peerio-mobile/commit/ecc1d03))
+* don't clear badge on app start unless app is in foreground [ch11730] ([f3c71f3](https://github.com/PeerioTechnologies/peerio-mobile/commit/f3c71f3))
+* extract var ([55b74d1](https://github.com/PeerioTechnologies/peerio-mobile/commit/55b74d1))
+* iOS sim tests ([#282](https://github.com/PeerioTechnologies/peerio-mobile/issues/282)) ([368045b](https://github.com/PeerioTechnologies/peerio-mobile/commit/368045b))
+* main app capabilities ([7e9d9b3](https://github.com/PeerioTechnologies/peerio-mobile/commit/7e9d9b3))
+* revert android ([7ea5deb](https://github.com/PeerioTechnologies/peerio-mobile/commit/7ea5deb))
+* revert android ([6ad31b8](https://github.com/PeerioTechnologies/peerio-mobile/commit/6ad31b8))
+* update babel.config.js ([e5d154f](https://github.com/PeerioTechnologies/peerio-mobile/commit/e5d154f))
+
+
+### Features
+
+* **android:** register as share provider ([b15406a](https://github.com/PeerioTechnologies/peerio-mobile/commit/b15406a))
+* E2E tests: File folders (non-shared) ([#284](https://github.com/PeerioTechnologies/peerio-mobile/issues/284)) ([4abfa06](https://github.com/PeerioTechnologies/peerio-mobile/commit/4abfa06))
+* mobile e2e tests for medcryptor patient space ([#281](https://github.com/PeerioTechnologies/peerio-mobile/issues/281)) ([1ec77d5](https://github.com/PeerioTechnologies/peerio-mobile/commit/1ec77d5))
+
+
+
+<a name="3.325.0"></a>
+# [3.325.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.324.0...v3.325.0) (2018-08-07)
+
+
+### Bug Fixes
+
+* **ui:** fix FileInlineContainer for external images [ch12060] ([de3d804](https://github.com/PeerioTechnologies/peerio-mobile/commit/de3d804))
+* change display name ([ecc1d03](https://github.com/PeerioTechnologies/peerio-mobile/commit/ecc1d03))
+* don't clear badge on app start unless app is in foreground [ch11730] ([f3c71f3](https://github.com/PeerioTechnologies/peerio-mobile/commit/f3c71f3))
+* extract var ([55b74d1](https://github.com/PeerioTechnologies/peerio-mobile/commit/55b74d1))
+* iOS sim tests ([#282](https://github.com/PeerioTechnologies/peerio-mobile/issues/282)) ([368045b](https://github.com/PeerioTechnologies/peerio-mobile/commit/368045b))
+* main app capabilities ([7e9d9b3](https://github.com/PeerioTechnologies/peerio-mobile/commit/7e9d9b3))
+* revert android ([7ea5deb](https://github.com/PeerioTechnologies/peerio-mobile/commit/7ea5deb))
+* revert android ([6ad31b8](https://github.com/PeerioTechnologies/peerio-mobile/commit/6ad31b8))
+* update babel.config.js ([e5d154f](https://github.com/PeerioTechnologies/peerio-mobile/commit/e5d154f))
+
+
+### Features
+
+* **android:** register as share provider ([b15406a](https://github.com/PeerioTechnologies/peerio-mobile/commit/b15406a))
+* E2E tests: File folders (non-shared) ([#284](https://github.com/PeerioTechnologies/peerio-mobile/issues/284)) ([4abfa06](https://github.com/PeerioTechnologies/peerio-mobile/commit/4abfa06))
+* mobile e2e tests for medcryptor patient space ([#281](https://github.com/PeerioTechnologies/peerio-mobile/issues/281)) ([1ec77d5](https://github.com/PeerioTechnologies/peerio-mobile/commit/1ec77d5))
+
+
+
 <a name="3.324.0"></a>
 # [3.324.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.323.0...v3.324.0) (2018-07-26)
 
