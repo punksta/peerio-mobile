@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.330.0"></a>
+# [3.330.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.329.0...v3.330.0) (2018-08-09)
+
+
+### Bug Fixes
+
+* app name in alert ([5054341](https://github.com/PeerioTechnologies/peerio-mobile/commit/5054341))
+
+
+### Features
+
+* set sdk version ([5a2c7d0](https://github.com/PeerioTechnologies/peerio-mobile/commit/5a2c7d0))
+
+
+
 <a name="3.329.0"></a>
 # [3.329.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.328.0...v3.329.0) (2018-08-09)
 
