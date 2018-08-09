@@ -34,7 +34,7 @@ export default class App extends SafeComponent {
     async handleOpenURL(event) {
         await promiseWhen(() => routes.main.contactStateLoaded);
 
-        if (event && socket.authenticated) {
+        if (event && event.url && socket.authenticated) {
             routes.main.files();
             fileState.goToRoot();
 
