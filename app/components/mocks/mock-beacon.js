@@ -14,9 +14,10 @@ import { vars } from '../../styles/styles';
 import mockContactStore from './mock-contact-store';
 import mockFileStore from './mock-file-store';
 import TabContainer from '../layout/tab-container';
+import Beacon from '../shared/beacon';
 
 @observer
-export default class MockChatList extends Component {
+export default class MockBeacon extends Component {
     componentWillMount() {
         User.current = {};
         User.current.activePlans = [];
@@ -43,8 +44,10 @@ export default class MockChatList extends Component {
     render() {
         return (
             <View style={{ backgroundColor: 'white', flex: 1, flexGrow: 1, paddingTop: vars.layoutPaddingTop }}>
-                {this.list}
                 <TabContainer />
+                {this.list}
+                {/* <TabContainer /> */}
+                <Beacon />
                 <PopupLayout key="popups" />
                 <StatusBar barStyle="default" />
             </View>

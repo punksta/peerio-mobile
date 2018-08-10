@@ -66,11 +66,7 @@ export default class LayoutMain extends SafeComponent {
                 testID="mainLayout"
                 style={[common.container.root]}>
                 {animatedBlock}
-                <Beacon
-                    positionX={3}
-                    copyHeader="Header"
-                    copyLine1="Line 1"
-                />
+                <Beacon />
                 <ProgressOverlay enabled={routerMain.loading} />
                 <StatusBar
                     barStyle={uiState.externalViewer || routerModal.isBlackStatusBar ? 'default' : 'light-content'}

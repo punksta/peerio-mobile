@@ -53,14 +53,24 @@ export default class TabItem extends SafeComponent {
         }
     }
 
+    // TODO clean up mock beacons
+    // ---------------------
     async componentDidMount() {
         when(() => this.layoutLoaded, () => {
-            uiState.beaconCoords = {
-                x: this.viewRef.pageX,
-                y: this.viewRef.pageY,
-                width: this.viewRef.frameWidth,
-                height: this.viewRef.frameHeight
-            };
+            const { route } = this.props;
+            if (route === 'contacts') {
+                uiState.beaconContent = {
+                    x: this.viewRef.pageX,
+                    y: this.viewRef.pageY,
+                    width: this.viewRef.frameWidth,
+                    height: this.viewRef.frameHeight,
+                    positionX: 2,
+                    // textHeader: 'Header',
+                    textLine1: 'Line 1'
+                    // textLine2="Line 2",
+                    // textLine3="Line 3"
+                };
+            }
         });
     }
 
@@ -79,6 +89,7 @@ export default class TabItem extends SafeComponent {
                 this.layoutLoaded = true;
             });
     };
+    // ---------------------
 
     renderThrow() {
         const { text, route, icon, bubble, highlightList } = this.props;
@@ -98,9 +109,11 @@ export default class TabItem extends SafeComponent {
                 pressRetentionOffset={vars.retentionOffset}
                 style={actionCellStyle}>
                 <View
-                    onLayout={this.layout}
+                    onLayout={this.layout} // TODO clean up mock beacons
                     pointerEvents="none" style={{ alignItems: 'center' }}>
-                    <View ref={this.setRef} style={{ borderWidth: 1, borderColor: 'yellow' }}>
+                    <View
+                        ref={this.setRef} // TODO clean up mock beacons
+                        style={{ borderWidth: 1, borderColor: 'yellow' }}>
                         {icons.plain(icon, undefined, color)}
                     </View>
                     <Text style={[actionTextStyle, { color }]}>{text}</Text>
