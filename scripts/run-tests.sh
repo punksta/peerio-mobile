@@ -67,7 +67,7 @@ done
 
 check "appium launched"
 
-virtualenv .pyenv && source .pyenv/bin/activate
+virtualenv -p `which python2.7` .pyenv && source .pyenv/bin/activate
 py.test --platform=$PEERIO_TEST_PLATFORM -s -x tests
 deactivate
 
