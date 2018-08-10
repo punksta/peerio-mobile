@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     macos:
-      xcode: "8.3.3"
+      xcode: "9.4"
     environment:
       XCODE_SCHEME: peeriomobile
       PEERIO_IOS_SIM: 'iPhone 6 Plus'
