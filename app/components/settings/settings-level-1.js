@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ScrollView, Share } from 'react-native';
+import { View, ScrollView, Share, Alert } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
@@ -77,6 +77,12 @@ export default class SettingsLevel1 extends SafeComponent {
 
     resetExternalSetting = () => {
         clientApp.uiUserPrefs.externalContentConsented = false;
+    };
+
+    deleteProps = async () => {
+        User.current.props = {};
+        await User.current.saveProfile();
+        Alert.alert(`props: ${Object.keys(User.current.props)}`);
     };
 
     /**
@@ -158,6 +164,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {__DEV__ && <BasicSettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}
                     {__DEV__ && <BasicSettingsItem title="test warning" onPress={() => warnings.addSevere('warning')} />}
                     {__DEV__ && <BasicSettingsItem title="reset external setting" onPress={this.resetExternalSetting} />}
+                    {__DEV__ && <BasicSettingsItem title="delete MC props" onPress={this.deleteProps} />}
                     {/* <BasicSettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <BasicSettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </ScrollView>
