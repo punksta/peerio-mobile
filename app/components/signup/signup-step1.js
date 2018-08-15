@@ -1,7 +1,7 @@
 import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Alert } from 'react-native';
 import randomWords from 'random-words';
 import capitalize from 'capitalize';
 import Text from '../controls/custom-text';
@@ -174,6 +174,12 @@ export default class SignupStep1 extends LoginWizardPage {
                     testID="email" />
                 {/* <LanguagePickerBox /> */}
                 <View style={[{ flexGrow: 1 }]} />
+                <TouchableOpacity onPress={async () => {
+                    const s = await validators.suggestUsername(this.firstnameState.value.toLowerCase(), this.lastnameState.value.toLowerCase());
+                    Alert.alert('suggestions', s.join(', ').toString());
+                }}>
+                    <Text>show suggestions</Text>
+                </TouchableOpacity>
             </View>
         );
     }
