@@ -108,7 +108,7 @@ export default {
                 pressRetentionOffset={vars.pressRetentionOffset}
                 style={touchableStyle}>
                 <View style={[buttonStyle, style]}>
-                    <Text bold style={{ textAlign: 'center', color: vars.white }}>
+                    <Text semibold style={{ textAlign: 'center', color: vars.white }}>
                         {tu(text)}
                     </Text>
                 </View>
