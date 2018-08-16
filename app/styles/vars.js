@@ -174,6 +174,7 @@ const vars = {
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
+    welcomeHeaderHeight: 80 + statusBarHeight,
     headerHeight: 56,
     headerSpacing: 56 + layoutPaddingTop,
     headerIconMargin: 16,
@@ -289,7 +290,8 @@ const vars = {
             midixx: scaleDim(34),
             midi2x: scaleDim(36),
             maxi: scaleDim(40),
-            maxi2x: scaleDim(48)
+            maxi2x: scaleDim(44),
+            maxi3x: scaleDim(48)
         },
         huge: {
             mini: scaleDim(50),

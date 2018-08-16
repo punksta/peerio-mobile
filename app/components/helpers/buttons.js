@@ -116,6 +116,39 @@ export default {
         );
     },
 
+    roundWhiteBgButton(text, onPress, disabled, accessibilityId, style) {
+        const touchableStyle = {
+            height: vars.button.touchableHeight,
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+        const buttonStyle = {
+            minWidth: vars.button.minWidth,
+            height: vars.button.buttonHeight,
+            paddingHorizontal: vars.button.paddingHorizontal,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: vars.button.borderRadius,
+            borderColor: vars.peerioBlue,
+            borderWidth: 1,
+            backgroundColor: disabled ? vars.mediumGrayBg : vars.white
+        };
+        return (
+            <TouchableOpacity
+                {...testLabel(accessibilityId)}
+                disabled={disabled}
+                onPress={disabled ? null : onPress}
+                pressRetentionOffset={vars.pressRetentionOffset}
+                style={touchableStyle}>
+                <View style={[buttonStyle, style]}>
+                    <Text semibold style={{ textAlign: 'center', color: vars.peerioBlue }}>
+                        {tu(text)}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        );
+    },
+
     redTextButton(text, onPress, disabled) {
         const buttonStyle = {
             paddingRight: vars.spacing.small.maxi2x,

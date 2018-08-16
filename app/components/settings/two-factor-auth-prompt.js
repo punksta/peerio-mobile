@@ -32,7 +32,7 @@ const inputContainer = {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: vars.spacing.large.midixx,
-    marginBottom: vars.spacing.large.maxi2x
+    marginBottom: vars.spacing.large.maxi3x
 };
 const style = {
     height: vars.inputHeight,
