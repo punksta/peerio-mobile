@@ -8,6 +8,8 @@ import com.facebook.react.*;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.facebook.react.ReactActivityDelegate;
+import android.support.annotation.Nullable;
 
 public class MainActivity extends ReactActivity {
     /**
@@ -57,5 +59,58 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "peeriomobile";
+    }
+
+    public static class TestActivityDelegate extends ReactActivityDelegate {
+        private final @Nullable Activity mActivity;
+        private Bundle mInitialProps = null;
+
+        public TestActivityDelegate(Activity activity, String mainComponentName) {
+            super(activity, mainComponentName);
+            this.mActivity = activity;
+        }
+
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            Intent intent = mActivity.getIntent();
+            if (intent.getExtras() != null) {
+                String type = intent.getType();
+
+                mInitialProps = new Bundle();
+                if (Intent.ACTION_SEND.equals(intent.getAction()) && type != null) {
+                    if ("text/plain".equals(type)) {
+                        handleSendText(intent);
+                    } else if (type.startsWith("image/")) {
+                        handleSendFile(intent);
+                    }
+                }
+            }
+            super.onCreate(savedInstanceState);
+        }
+
+        @Override
+        protected Bundle getLaunchOptions() {
+            return mInitialProps;
+        }
+
+        void handleSendText(Intent intent) {
+            String sharedText = intent.getStringExtra(Intent.EXTRA_TEXT);
+            if (sharedText != null) {
+                mInitialProps.putString("sharedText", sharedText);
+                
+            }
+        }
+        void handleSendFile(Intent intent) {
+            Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            if (imageUri != null) {
+                mInitialProps.putString("sharedFile", imageUri.toString());
+                
+            }
+        }
+    }
+
+    @Override
+    protected ReactActivityDelegate createReactActivityDelegate() {
+        return new TestActivityDelegate(this, getMainComponentName());
     }
 }
