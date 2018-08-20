@@ -3,6 +3,9 @@ package com.peerio.app;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.app.Activity;
+import android.net.Uri;
+import android.content.Intent;
 
 import com.facebook.react.*;
 import com.facebook.react.bridge.ReactApplicationContext;
