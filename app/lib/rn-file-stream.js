@@ -9,26 +9,28 @@ const icebear = require('./peerio-icebear');
 const { fileHelpers } = icebear;
 const { bytesToB64, b64ToBytes } = icebear.crypto.cryptoUtil;
 
-const ROOT = Platform.OS === 'ios' ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
+const isIOS = Platform.OS === 'ios';
+const ROOT = isIOS ? RNFS.CachesDirectoryPath : RNFS.ExternalDirectoryPath;
 
 function getTemporaryDirectory() {
     return pathUtils.join(ROOT, 'cache');
 }
 
-export default (fileStream) => {
+export default fileStream => {
     class RNFileStream extends fileStream {
         async open() {
             if (this.mode === 'read') {
                 this.fileDescriptor = this.filePath; // read stream doesn't really have descriptor
-                return RNFS.stat(this.filePath)
-                    .then(s => {
-                        this.size = s.size;
-                        return this;
-                    });
+                return RNFS.stat(this.filePath).then(s => {
+                    this.size = s.size;
+                    return this;
+                });
             }
             // delete existing file if it is write mode
             if (this.mode === 'write') {
-                if (await RNFileStream.exists(this.filePath)) await RNFileStream.delete(this.filePath);
+                if (await RNFileStream.exists(this.filePath)) {
+                    await RNFileStream.delete(this.filePath);
+                }
             }
             await RNFS.mkdir(pathUtils.dirname(this.filePath));
             this.fileDescriptor = this.filePath;
@@ -38,7 +40,9 @@ export default (fileStream) => {
         close() {
             if (this.fileDescriptor == null) return Promise.resolve();
             this.fileDescriptor = null;
-            console.debug(`rn-file-stream.js successfully ${this.mode}: ${this.filePath}`);
+            console.debug(
+                `rn-file-stream.js successfully ${this.mode}: ${this.filePath}`
+            );
             return Promise.resolve();
         }
 
@@ -47,8 +51,9 @@ export default (fileStream) => {
          * @return {Promise<number>}
          */
         readInternal(size) {
-            return RNFS.readFileChunk(this.filePath, this.pos, size)
-                .then(contents => b64ToBytes(contents));
+            return RNFS.readFileChunk(this.filePath, this.pos, size).then(
+                contents => b64ToBytes(contents)
+            );
         }
 
         /**
@@ -70,7 +75,11 @@ export default (fileStream) => {
          * @return {Promise}
          */
         writeInternal(buffer) {
-            return RNFS.appendFile(this.fileDescriptor, bytesToB64(buffer), 'base64').return(buffer);
+            return RNFS.appendFile(
+                this.fileDescriptor,
+                bytesToB64(buffer),
+                'base64'
+            ).return(buffer);
         }
 
         static getFullPath(uid, name) {
@@ -99,10 +108,9 @@ export default (fileStream) => {
          * @returns {Promise<string[]>}
          */
         static getCacheList() {
-            return RNFS.readDir(ROOT)
-                .then(items => {
-                    return items.filter(i => i.isFile()).map(i => i.path);
-                });
+            return RNFS.readDir(ROOT).then(items => {
+                return items.filter(i => i.isFile()).map(i => i.path);
+            });
         }
 
         static delete(path) {
@@ -111,7 +119,9 @@ export default (fileStream) => {
 
         static async rename(oldPath, newPath) {
             if (oldPath === newPath) {
-                console.log(`rn-file-stream: ${oldPath} equals to new destination`);
+                console.log(
+                    `rn-file-stream: ${oldPath} equals to new destination`
+                );
                 return;
             }
             if (await RNFS.exists(newPath)) {
@@ -123,11 +133,26 @@ export default (fileStream) => {
         static getTempCachePath(name) {
             return pathUtils.join(getTemporaryDirectory(), name);
         }
+
+        static formatAssetsPath(path) {
+            return Platform.OS === 'ios'
+                ? `${RNFS.MainBundlePath}/${path}`
+                : path;
+        }
+
+        static readAssetsFile = (isIOS
+            ? RNFS.readFile
+            : RNFS.readFileAssets
+        ).bind(RNFS);
+
+        static existsAssetsFile = (isIOS
+            ? RNFS.exists
+            : RNFS.existsAssets
+        ).bind(RNFS);
     }
 
     return RNFileStream;
 };
-
 
 /**
  * Get encryption status of the filesystem
