@@ -21,7 +21,7 @@ module.exports = {
         const def = config.FileStream.formatAssetsPath(`dict/en.txt`);
         return config.FileStream.existsAssetsFile(path)
             .then(exists =>
-                config.FileStream.readAssetsFile(exists ? path : def, 'utf-8')
+                config.FileStream.readAssetsFile(exists ? path : def)
             )
             .catch(e => {
                 console.error(e);
@@ -32,8 +32,7 @@ module.exports = {
     loadAssetFile(name) {
         const path = config.FileStream.formatAssetsPath(`${name}`);
         return config.FileStream.existsAssetsFile(path).then(
-            exists =>
-                exists ? config.FileStream.readAssetsFile(path, 'utf-8') : ''
+            exists => (exists ? config.FileStream.readAssetsFile(path) : '')
         );
     }
 };

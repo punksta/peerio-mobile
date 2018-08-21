@@ -111,7 +111,7 @@ export default (c, icebear) => {
     cfg.enableVolumes = process.env.SHARED_FOLDERS_ENABLED;
     cfg.preferredServerVersion = '7.0.0';
     cfg.assetPathResolver = fileName => {
-        return cfg.FileStream.formatAssetsPath(fileName);
+        return cfg.FileStream.makeAssetPath(fileName);
     };
     Object.assign(cfg.chat, {
         maxInitialChats: 15,
