@@ -1,4 +1,5 @@
 import React from 'react';
+import RNFS from 'react-native-fs';
 import { View, PanResponder, Linking,
     AppState, ActivityIndicator, NativeModules,
     Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
@@ -104,6 +105,27 @@ export default class App extends SafeComponent {
         }
         Linking.getInitialURL().then(this.wakeUpAndHandleOpenURL);
         Linking.addEventListener('url', this.handleOpenURL);
+
+        const { sharedFile } = this.props;
+        if (sharedFile) {
+            console.log('>>>', sharedFile);
+            this.upload(sharedFile);
+        }
+    }
+
+    async upload(sharedFile) {
+        routes.main.files();
+        fileState.goToRoot();
+
+        const x = await RNFS.stat(sharedFile);
+        console.log('xxxx', x);
+        const firstFile = sharedFile;
+        const fileProps = {
+            fileName: 'firstFile',
+            ext: 'jpg',
+            url: firstFile
+        };
+        fileState.uploadInFiles(fileProps);
     }
 
     _handleAppStateChange(appState) {
