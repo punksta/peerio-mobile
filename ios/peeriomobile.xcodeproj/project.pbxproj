@@ -44,6 +44,7 @@
 		02A076271E6D8876008974C5 /* maincert.com.cer in Resources */ = {isa = PBXBuildFile; fileRef = 02A075FF1E6D880E008974C5 /* maincert.com.cer */; };
 		02A5EE7C1ECA9ECC00ED05C1 /* RNKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 02A5EE7B1ECA9ECC00ED05C1 /* RNKeychain.m */; };
 		02ADBC5E1EDDA0D600D304BE /* libRCTContacts.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ADBC361EDDA0C100D304BE /* libRCTContacts.a */; };
+		02AF517C212AA6170025F6A8 /* account_key_backup.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 02AF514A212AA6170025F6A8 /* account_key_backup.pdf */; };
 		02AF5ADD20842C18005056CF /* OpenSansSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02AF5AD720842C18005056CF /* OpenSansSemiBold.ttf */; };
 		02AF5ADE20842C18005056CF /* OpenSansItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02AF5AD820842C18005056CF /* OpenSansItalic.ttf */; };
 		02AF5ADF20842C18005056CF /* OpenSansSemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02AF5AD920842C18005056CF /* OpenSansSemiBoldItalic.ttf */; };
@@ -501,6 +502,7 @@
 		02A075FF1E6D880E008974C5 /* maincert.com.cer */ = {isa = PBXFileReference; lastKnownFileType = file; name = maincert.com.cer; path = ../app/assets/maincert.com.cer; sourceTree = "<group>"; };
 		02A5EE7A1ECA9EC400ED05C1 /* RNKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNKeychain.h; sourceTree = "<group>"; };
 		02A5EE7B1ECA9ECC00ED05C1 /* RNKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNKeychain.m; sourceTree = "<group>"; };
+		02AF514A212AA6170025F6A8 /* account_key_backup.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = account_key_backup.pdf; path = ../app/assets/account_key_backup.pdf; sourceTree = "<group>"; };
 		02AF5AD720842C18005056CF /* OpenSansSemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OpenSansSemiBold.ttf; path = ../app/assets/fonts/OpenSansSemiBold.ttf; sourceTree = "<group>"; };
 		02AF5AD820842C18005056CF /* OpenSansItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OpenSansItalic.ttf; path = ../app/assets/fonts/OpenSansItalic.ttf; sourceTree = "<group>"; };
 		02AF5AD920842C18005056CF /* OpenSansSemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = OpenSansSemiBoldItalic.ttf; path = ../app/assets/fonts/OpenSansSemiBoldItalic.ttf; sourceTree = "<group>"; };
@@ -1016,6 +1018,7 @@
 				0248F0711E5A59BF00C437A9 /* terms.txt */,
 				4FC9400FF0F74C249A550AC2 /* MaterialCommunityIcons.ttf */,
 				372E848CA7B444A09B937444 /* SimpleLineIcons.ttf */,
+				02AF514A212AA6170025F6A8 /* account_key_backup.pdf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1615,6 +1618,7 @@
 				02A076271E6D8876008974C5 /* maincert.com.cer in Resources */,
 				CF69BA63107E428598B08410 /* EvilIcons.ttf in Resources */,
 				51CAD96E068B4E2EAA239290 /* FontAwesome.ttf in Resources */,
+				02AF517C212AA6170025F6A8 /* account_key_backup.pdf in Resources */,
 				B73DC4B1F0BD4E63BE1B4BD5 /* Foundation.ttf in Resources */,
 				02AF5ADE20842C18005056CF /* OpenSansItalic.ttf in Resources */,
 				02AF5ADF20842C18005056CF /* OpenSansSemiBoldItalic.ttf in Resources */,
