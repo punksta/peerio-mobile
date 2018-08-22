@@ -7,6 +7,7 @@ import ContactInviteItem from './contact-invite-item';
 import ContactSectionHeader from './contact-section-header';
 import contactAddState from './contact-add-state';
 import { tx } from '../utils/translator';
+import ListSeparator from '../shared/list-separator';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -35,6 +36,7 @@ export default class ContactListInvite extends SafeComponent {
     listView() {
         return (
             <SectionList
+                ItemSeparatorComponent={ListSeparator}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 sections={this.sections}
                 keyExtractor={item => item.username}
