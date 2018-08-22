@@ -11,7 +11,7 @@ import icons from '../../helpers/icons';
 import { t } from '../../utils/translator';
 
 const containerStyle = {
-    height: vars.chatListItemHeight,
+    height: vars.sectionHeaderHeight,
     paddingHorizontal: vars.spacing.medium.midi,
     alignItems: 'center',
     justifyContent: 'flex-end',

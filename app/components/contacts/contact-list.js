@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { observer } from 'mobx-react/native';
-import { View, SectionList } from 'react-native';
+import { View } from 'react-native';
 import { action, computed } from 'mobx';
 import SafeComponent from '../shared/safe-component';
 import ContactsPlaceholder from './contacts-placeholder';
@@ -13,6 +13,8 @@ import PlusBorderIcon from '../layout/plus-border-icon';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import uiState from '../layout/ui-state';
+import SectionListWithDrawer from '../shared/section-list-with-drawer';
+import drawerState from '../shared/drawer-state';
 import ListSeparator from '../shared/list-separator';
 
 const INITIAL_LIST_SIZE = 20;
@@ -24,59 +26,66 @@ export default class ContactList extends SafeComponent {
     }
 
     item({ item }) {
-        return (
-            <ContactItem contact={item} />
-        );
+        return <ContactItem contact={item} />;
     }
 
     header({ section: /* data, */ { key } }) {
         return <ContactSectionHeader key={key} title={key} />;
     }
 
-    @action.bound scrollViewRef(sv) {
+    @action.bound
+    scrollViewRef(sv) {
         this.scrollView = sv;
         uiState.currentScrollView = sv;
     }
 
-    @computed get sections() {
+    @computed
+    get sections() {
         const { addedContacts, invitedNotJoinedContacts, uiView, contacts } = contactState.store;
         const sections = uiView.map(({ letter, items }) => {
-            return ({ data: items, key: letter });
+            return { data: items, key: letter };
         });
         sections.unshift({ data: [], key: `All (${contacts.length})` });
-        sections.unshift({ data: addedContacts, key: `${tx('title_favoriteContacts')} (${addedContacts.length})` });
-        sections.push({ data: invitedNotJoinedContacts, key: `${tx('title_invitedContacts')} (${invitedNotJoinedContacts.length})` });
+        sections.unshift({
+            data: addedContacts,
+            key: `${tx('title_favoriteContacts')} (${addedContacts.length})`
+        });
+        sections.push({
+            data: invitedNotJoinedContacts,
+            key: `${tx('title_invitedContacts')} (${invitedNotJoinedContacts.length})`
+        });
         return sections;
     }
 
     listView() {
         return (
-            <SectionList
+            <SectionListWithDrawer
+                context={drawerState.DRAWER_CONTEXT.CONTACTS}
+                setScrollViewRef={this.scrollViewRef}
                 ItemSeparatorComponent={ListSeparator}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 sections={this.sections}
                 keyExtractor={item => item.username || item.email}
                 renderItem={this.item}
                 renderSectionHeader={this.header}
-                ref={this.scrollViewRef}
             />
         );
     }
 
-    get rightIcon() { return <PlusBorderIcon action={contactState.fabAction} testID="addContactButton" />; }
+    get rightIcon() {
+        return <PlusBorderIcon action={contactState.fabAction} testID="addContactButton" />;
+    }
 
     get contactListComponent() {
-        return !contactState.empty ?
-            this.listView() : !contactState.store.loading && <ContactsPlaceholder />;
+        return !contactState.empty
+            ? this.listView()
+            : !contactState.store.loading && <ContactsPlaceholder />;
     }
 
     renderThrow() {
         return (
-            <View
-                style={{ flex: 1, backgroundColor: vars.lightGrayBg }}>
-                <View style={{ flex: 1 }}>
-                    {this.contactListComponent}
-                </View>
+            <View style={{ flex: 1, flexGrow: 1, backgroundColor: vars.lightGrayBg }}>
+                <View style={{ flex: 1, flexGrow: 1 }}>{this.contactListComponent}</View>
                 <ProgressOverlay enabled={contactState.store.loading} />
             </View>
         );

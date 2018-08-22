@@ -8,6 +8,8 @@ import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 import buttons from '../helpers/buttons';
 import routes from '../routes/routes';
+import ViewWithDrawer from '../shared/view-with-drawer';
+import drawerState from '../shared/drawer-state';
 
 const redArrowSrc = require('../../assets/zero_chat_state/arrow-red.png');
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
@@ -58,11 +60,11 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
         );
     }
 
-    title() {
+    get title() {
         return (
             <View>
                 {this.headerText}
-                <Image
+                {!drawerState.getDrawer(drawerState.DRAWER_CONTEXT.CHATS) && <Image
                     source={redArrowSrc}
                     style={{
                         width: vars.isDeviceScreenBig ? vars.iconSizeHuge : vars.iconSizeLarge2x,
@@ -70,12 +72,12 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
                         position: 'absolute',
                         right: vars.iconPadding
                     }}
-                />
+                />}
             </View>
         );
     }
 
-    chatUI() {
+    get chatUI() {
         return (
             <View style={{ alignItems: 'center' }}>
                 <Text style={chatDescriptionStyle}>
@@ -97,7 +99,7 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
         );
     }
 
-    contactUI() {
+    get contactUI() {
         return (
             <View style={{ alignItems: 'center' }}>
                 <Text style={contactDescriptionStyle}>
@@ -110,11 +112,11 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
     renderThrow() {
         return (
             <View style={container}>
-                <View style={wrapper}>
-                    {this.title()}
-                    {this.chatUI()}
-                    {this.contactUI()}
-                </View>
+                <ViewWithDrawer style={wrapper}>
+                    {this.title}
+                    {this.chatUI}
+                    {this.contactUI}
+                </ViewWithDrawer>
             </View>
         );
     }
