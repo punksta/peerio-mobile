@@ -57,13 +57,12 @@ export default class App extends SafeComponent {
     async tryUploadFile(sharedFile) {
         if (sharedFile) {
             const fileInfo = await RNFS.stat(sharedFile);
-
-            const path = fileInfo.originalFilepath.split('/').slice(0, -1).join('/');
             const file = fileInfo.originalFilepath.split('/').slice(-1).toString();
+            
             const fileName = file.split('.')[0];
             const ext = file.split('.')[1];
 
-            this.upload(path, fileName, ext);
+            this.upload(sharedFile, fileName, ext);
         }
     }
 
@@ -74,7 +73,7 @@ export default class App extends SafeComponent {
         const fileProps = {
             fileName,
             ext: extenstion,
-            url: `${path}/${fileName}.${extenstion}`
+            url: path
         };
 
         fileState.uploadInFiles(fileProps);
