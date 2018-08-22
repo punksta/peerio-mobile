@@ -54,6 +54,32 @@ export default class App extends SafeComponent {
         }
     }
 
+    async tryUploadFile(sharedFile) {
+        if (sharedFile) {
+            const fileInfo = await RNFS.stat(sharedFile);
+
+            const path = fileInfo.originalFilepath.split('/').slice(0, -1).join('/');
+            const file = fileInfo.originalFilepath.split('/').slice(-1).toString();
+            const fileName = file.split('.')[0];
+            const ext = file.split('.')[1];
+
+            this.upload(path, fileName, ext);
+        }
+    }
+
+    upload(path, fileName, extenstion) {
+        routes.main.files();
+        fileState.goToRoot();
+
+        const fileProps = {
+            fileName,
+            ext: extenstion,
+            url: `${path}/${fileName}.${extenstion}`
+        };
+
+        fileState.uploadInFiles(fileProps);
+    }
+
     constructor(props) {
         super(props);
         uiState.load();
@@ -88,6 +114,7 @@ export default class App extends SafeComponent {
             route.transition();
         }
     }
+
     componentDidMount() {
         AppState.addEventListener('change', this._handleAppStateChange);
         AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
@@ -106,25 +133,7 @@ export default class App extends SafeComponent {
         Linking.getInitialURL().then(this.wakeUpAndHandleOpenURL);
         Linking.addEventListener('url', this.handleOpenURL);
 
-        const { sharedFile } = this.props;
-        if (sharedFile) {
-            this.upload(sharedFile);
-        }
-    }
-
-    async upload(sharedFile) {
-        routes.main.files();
-        fileState.goToRoot();
-
-        const fileInfo = await RNFS.stat(sharedFile);
-        console.log('fileInfo is:', fileInfo);
-        
-        const fileProps = {
-            fileName: 'firstFile',
-            ext: 'jpg',
-            url: sharedFile
-        };
-        fileState.uploadInFiles(fileProps);
+        this.tryUploadFile(this.props.sharedFile);
     }
 
     _handleAppStateChange(appState) {
