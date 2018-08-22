@@ -58,7 +58,7 @@ export default class App extends SafeComponent {
         if (sharedFile) {
             const fileInfo = await RNFS.stat(sharedFile);
             const file = fileInfo.originalFilepath.split('/').slice(-1).toString();
-      
+
             const fileName = file.split('.')[0];
             const ext = file.split('.')[1];
 
