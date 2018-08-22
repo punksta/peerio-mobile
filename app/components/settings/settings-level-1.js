@@ -76,7 +76,7 @@ export default class SettingsLevel1 extends SafeComponent {
     testSaveAccountKey = async () => {
         const { username, firstName, lastName, passphrase } = User.current;
         const fileSavePath = config.FileStream.getTempCachePath(
-            `${username}.backup.pdf`
+            `${username}-${tx('title_appName')}.pdf`
         );
         await saveAccountKeyBackup(
             fileSavePath,
