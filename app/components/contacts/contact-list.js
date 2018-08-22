@@ -13,6 +13,7 @@ import PlusBorderIcon from '../layout/plus-border-icon';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import uiState from '../layout/ui-state';
+import ListSeparator from '../shared/list-separator';
 
 const INITIAL_LIST_SIZE = 20;
 
@@ -51,6 +52,7 @@ export default class ContactList extends SafeComponent {
     listView() {
         return (
             <SectionList
+                ItemSeparatorComponent={ListSeparator}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 sections={this.sections}
                 keyExtractor={item => item.username || item.email}

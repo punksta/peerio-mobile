@@ -6,11 +6,11 @@ import { observable } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import LayoutModalExit from '../layout/layout-modal-exit';
-import Avatar from '../shared/avatar';
 import chatState from '../messaging/chat-state';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
 import RecentFilesList from '../files/recent-files-list';
+import ContactCard from '../shared/contact-card';
 
 const pinOff = require('../../assets/chat/icon-pin-off.png');
 const pinOn = require('../../assets/chat/icon-pin-on.png');
@@ -46,14 +46,10 @@ export default class ChatInfo extends SafeComponent {
     }
 
     participant = (contact, i) => {
-        const { username } = contact;
         return (
-            <Avatar
-                noBorderBottom
+            <ContactCard
                 contact={contact}
-                key={username || i}
-                message=""
-                hideOnline
+                key={contact.username || i}
                 backgroundColor={vars.darkBlueBackground05} />
         );
     };

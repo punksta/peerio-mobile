@@ -27,10 +27,13 @@ const addPhotoText = {
     textAlign: 'center'
 };
 
-const addPhotoPlus = [addPhotoText, {
-    fontSize: vars.signupFontSize,
-    color: vars.white
-}];
+const addPhotoPlus = [
+    addPhotoText,
+    {
+        fontSize: vars.signupFontSize,
+        color: vars.white
+    }
+];
 
 const textNormal = {
     color: vars.lighterBlackText,
@@ -73,7 +76,10 @@ export default class SignupStep1 extends LoginWizardPage {
         const stringLength = signupState.passphrase.length;
         const stringMiddle = Math.ceil(stringLength / 2);
         const firstLine = signupState.passphrase.substring(0, stringMiddle);
-        const secondLine = signupState.passphrase.substring(stringMiddle, stringLength);
+        const secondLine = signupState.passphrase.substring(
+            stringMiddle,
+            stringLength
+        );
         const formatted = `${firstLine}\n${secondLine}`;
 
         return formatted;
@@ -85,10 +91,14 @@ export default class SignupStep1 extends LoginWizardPage {
     }
 
     get avatarPlaceholder() {
-        const letter = getFirstLetterUpperCase(signupState.firstName || signupState.username);
+        const letter = getFirstLetterUpperCase(
+            signupState.firstName || signupState.username
+        );
         return (
             <View>
-                <Text bold style={addPhotoPlus}>{letter}</Text>
+                <Text bold style={addPhotoPlus}>
+                    {letter}
+                </Text>
             </View>
         );
     }
@@ -96,15 +106,32 @@ export default class SignupStep1 extends LoginWizardPage {
     get body() {
         return (
             <View>
-                <Text style={textNormal}>{t('title_helloName', { name: (signupState.firstName || signupState.username) })}</Text>
+                <Text style={textNormal}>
+                    {t('title_helloName', {
+                        name: signupState.firstName || signupState.username
+                    })}
+                </Text>
                 <Text style={textNormal}>{tx('title_accountKey1')}</Text>
                 <View style={accountKeyView}>
                     <Text style={smallText}>{tx('title_yourAccountKey')}</Text>
                     <View style={accountKeyRow}>
-                        <Text bold {...testLabel('passphrase')} style={accountKeyText} selectable>
+                        <Text
+                            bold
+                            monospace
+                            {...testLabel('passphrase')}
+                            style={accountKeyText}
+                            selectable
+                        >
                             {this.formattedAccountKey}
                         </Text>
-                        {buttons.blueTextButton(tx('button_copy'), this.copyAccountKey, null, null, null, copyBtnContainer)}
+                        {buttons.blueTextButton(
+                            tx('button_copy'),
+                            this.copyAccountKey,
+                            null,
+                            null,
+                            null,
+                            copyBtnContainer
+                        )}
                     </View>
                 </View>
                 <Text style={textNormal}>{tx('title_accountKey2')}</Text>
@@ -117,25 +144,41 @@ export default class SignupStep1 extends LoginWizardPage {
             <View style={container} onLayout={this._layout}>
                 <View>
                     <View style={header2}>
-                        <Text style={headingStyle2}>{tx('title_AccountKey')}</Text>
+                        <Text style={headingStyle2}>
+                            {tx('title_AccountKey')}
+                        </Text>
                     </View>
                     <View>
                         <View style={innerSmall}>
-                            <View style={formStyle}>
-                                {this.body}
-                            </View>
+                            <View style={formStyle}>{this.body}</View>
                         </View>
                         <TouchableOpacity
                             onPress={() => SignupAvatarActionSheet.show()}
                             pressRetentionOffset={vars.pressRetentionOffset}
-                            style={[circleTopSmall, { backgroundColor: vars.txtMedium, borderWidth: 0 }]}>
-                            {signupState.avatarData ? <SignupAvatar /> : this.avatarPlaceholder}
+                            style={[
+                                circleTopSmall,
+                                {
+                                    backgroundColor: vars.txtMedium,
+                                    borderWidth: 0
+                                }
+                            ]}
+                        >
+                            {signupState.avatarData ? (
+                                <SignupAvatar />
+                            ) : (
+                                this.avatarPlaceholder
+                            )}
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={buttonRowStyle}>
                     {this.button('button_back', () => signupState.prev())}
-                    {this.button('button_next', () => signupState.next(), false, !socket.connected)}
+                    {this.button(
+                        'button_next',
+                        () => signupState.next(),
+                        false,
+                        !socket.connected
+                    )}
                 </View>
                 <ActivityOverlay large visible={signupState.isInProgress} />
             </View>
