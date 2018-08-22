@@ -1,20 +1,20 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Clipboard, TouchableOpacity } from 'react-native';
-import Text from '../controls/custom-text';
-import ActivityOverlay from '../controls/activity-overlay';
-import { vars } from '../../styles/styles';
-import { getFirstLetterUpperCase, socket } from '../../lib/icebear';
-import signupState from './signup-state';
-import { t, tx } from '../utils/translator';
-import buttons from '../helpers/buttons';
+import Text from '../../controls/custom-text';
+import ActivityOverlay from '../../controls/activity-overlay';
+import { vars } from '../../../styles/styles';
+import { getFirstLetterUpperCase, socket } from '../../../lib/icebear';
+import signupState from '../../signup/signup-state';
+import { t, tx } from '../../utils/translator';
+import buttons from '../../helpers/buttons';
 import LoginWizardPage, {
     header2, innerSmall, circleTopSmall, headingStyle2, buttonRowStyle, container
-} from '../login/login-wizard-page';
-import SignupAvatar from './signup-avatar';
-import SignupAvatarActionSheet from './signup-avatar-action-sheet';
-import snackbarState from '../snackbars/snackbar-state';
-import testLabel from '../helpers/test-label';
+} from '../../login/login-wizard-page';
+import SignupAvatar from '../../signup/signup-avatar';
+import SignupAvatarActionSheet from '../../signup/signup-avatar-action-sheet';
+import snackbarState from '../../snackbars/snackbar-state';
+import testLabel from '../../helpers/test-label';
 
 const formStyle = {
     padding: vars.spacing.medium.midi2x,

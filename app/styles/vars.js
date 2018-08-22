@@ -108,6 +108,7 @@ const vars = {
     popupPadding: scaleDim(20),
     popupHorizontalMargin: scaleDim(16),
     tfaInputWidth: scaleDim(124),
+    signupButtonWidth: 82,
 
     circle: 10,
     circleSize: 4,
@@ -195,7 +196,7 @@ const vars = {
     contactListHeaderHeight: 48,
     removeButtonHeight: 44,
     warningHeight: 70,
-    roundedButtonWidth: 134,
+    roundedButtonWidth: 132,
     wideRoundedButtonWidth: 190,
     menuWidthRatio: 0.8,
     animationDuration: 200,
@@ -301,7 +302,8 @@ const vars = {
             midi2x: scaleDim(64),
             midi3x: scaleDim(68),
             maxi: scaleDim(74),
-            maxi2x: scaleDim(75)
+            maxi2x: scaleDim(75),
+            maxi3x: scaleDim(80)
         }
     },
     loadingTimeout: 15000,
@@ -318,7 +320,7 @@ const vars = {
         buttonHeight: 36,
         minWidth: 72,
         borderRadius: 24,
-        paddingHorizontal: scaleDim(16),
+        paddingHorizontal: scaleDim(12),
         marginVertical: scaleDim(8),
         fontSize: scaleDim(14)
     }

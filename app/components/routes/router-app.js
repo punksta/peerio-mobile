@@ -16,7 +16,7 @@ class RouterApp extends Router {
         super();
         routes.app = this;
         this.add('loading', LoadingScreen);
-        this.add('loginStart', Login.Wizard);
+        this.add('loginWelcome', Login.Wizard);
         this.add('signupStep1', SignupWizard);
         this.add('loginAutomatic', LoginAutomatic);
         this.add('main', LayoutMain, true);
@@ -41,7 +41,7 @@ class RouterApp extends Router {
             }
             // go back from signupStep1
             if (this.route === 'signupStep1') {
-                this.loginStart();
+                this.loginWelcome();
                 return true;
             }
             // allow to back from main state when index is 0

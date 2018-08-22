@@ -47,12 +47,11 @@ const signupTextStyle = [footerText1, { fontSize: vars.font.size.smaller }];
 const ahpraTextStyle = {
     fontSize: vars.font.size.smaller,
     color: vars.black54,
-    alignSelf: 'flex-start',
-    marginHorizontal: vars.spacing.medium.mini2x
+    alignSelf: 'flex-start'
 };
 
 @observer
-export default class SignupStepMedcryptor extends LoginWizardPage {
+export default class SignupStep2Medcryptor extends LoginWizardPage {
     validations = {
         doctor: mcrDoctorAhpraAvailability,
         admin: mcrAdminAhpraAvailability
@@ -106,7 +105,7 @@ export default class SignupStepMedcryptor extends LoginWizardPage {
                 <MedcryptorCountryPickerBox />
                 {this.selectedAU && <MedcryptorSpecialtyPickerBox />}
                 <MedcryptorRolePickerBox />
-                {this.selectedAU && <View>
+                {this.selectedAU && <View style={{ marginHorizontal: vars.inputMarginHorizontal }}>
                     <StyledTextInput
                         state={this.medicalIdState}
                         validations={[this.ahpraValidator, medicalIdFormat]}

@@ -28,6 +28,7 @@ export default class Wizard extends SafeComponent {
     }
 
     _handleBack = () => {
+        // TODO waiting back button instructions from design
         if (this.index > 0) {
             this.index--;
             return true;

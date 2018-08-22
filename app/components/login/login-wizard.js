@@ -8,21 +8,28 @@ import loginState from './login-state';
 import { wizard, vars } from '../../styles/styles';
 import Layout1 from '../layout/layout1';
 import Button from '../controls/button';
-import LoginStart from './login-start';
+import LoginWelcome from './login-welcome';
 import LoginClean from './login-clean';
 import Logs from '../logs/logs';
 import uiState from '../layout/ui-state';
 import consoleOverride from '../../lib/console-override';
+import LoginStart from './login-start';
 
 const { height } = Dimensions.get('window');
 
 @observer
 export default class LoginWizard extends Wizard {
-    pages = ['loginStart', 'loginClean'];
+    pages = ['loginWelcome', 'loginClean'];
 
     get index() { return loginState.current; }
     set index(i) { loginState.current = i; }
 
+    // Peerio
+    loginWelcome = () => {
+        return <LoginWelcome onLoginPress={() => this.changeIndex(1)} />;
+    };
+
+    // MC
     loginStart = () => {
         return <LoginStart login={() => this.changeIndex(1)} />;
     };
@@ -30,7 +37,8 @@ export default class LoginWizard extends Wizard {
     loginClean = () => { return <LoginClean />; };
 
     pageComponents = [
-        this.loginStart,
+        // Temporary till peerio and medcryptor sign up flows catch up
+        process.env.EXECUTABLE_NAME === 'medcryptor' ? this.loginStart : this.loginWelcome,
         this.loginClean
     ];
 

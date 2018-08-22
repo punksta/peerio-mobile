@@ -1,5 +1,6 @@
 import branding from './branding';
 import vars from './vars';
+import signupStyles from './signup-styles';
 import textbox from './textbox';
 import styledTextInput from './styled-text-input';
 import button from './button';
@@ -23,6 +24,7 @@ const helpers = {
 
 const styles = {
     vars,
+    signupStyles,
     helpers,
     textbox,
     styledTextInput,
@@ -39,6 +41,7 @@ const styles = {
 
 export {
     vars,
+    signupStyles,
     helpers,
     textbox,
     styledTextInput,

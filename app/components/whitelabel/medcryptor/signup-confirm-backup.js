@@ -2,18 +2,18 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Image } from 'react-native';
 import { observable, when } from 'mobx';
-import Text from '../controls/custom-text';
-import ActivityOverlay from '../controls/activity-overlay';
-import { vars } from '../../styles/styles';
-import signupState from './signup-state';
-import { tx } from '../utils/translator';
+import Text from '../../controls/custom-text';
+import ActivityOverlay from '../../controls/activity-overlay';
+import { vars } from '../../../styles/styles';
+import signupState from '../../signup/signup-state';
+import { tx } from '../../utils/translator';
 import LoginWizardPage, {
     header2, innerSmall, circleTopSmall, headingStyle2, row, container, topCircleSizeSmall
-} from '../login/login-wizard-page';
-import StyledTextInput from '../shared/styled-text-input';
-import icons from '../helpers/icons';
+} from '../../login/login-wizard-page';
+import StyledTextInput from '../../shared/styled-text-input';
+import icons from '../../helpers/icons';
 
-const imageWelcomeSafe = require('../../assets/welcome-safe.png');
+const imageWelcomeSafe = require('../../../assets/welcome-safe.png');
 
 const textDescription = {
     paddingTop: vars.spacing.medium.midi2x,
@@ -80,7 +80,7 @@ export default class SignupConfirmBackup extends LoginWizardPage {
                             <Text style={textNormal}>{tx('title_confirmContent2')}</Text>
                             <Text style={textNormal}>{tx('title_confirmTextInput', { sample: this.confirmTextSample })}</Text>
                         </View>
-                        <View style={{ flexShrink: 1 }}>
+                        <View style={{ flexShrink: 1, marginHorizontal: vars.inputMarginHorizontal }}>
                             <StyledTextInput
                                 customIcon={this.isOk && this.checkIcon}
                                 state={this.confirmTextState}

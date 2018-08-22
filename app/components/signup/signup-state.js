@@ -36,7 +36,7 @@ class SignupState extends RoutedState {
         this.specialty = '';
         this.role = '';
         this.current = 0;
-        this.routes.app.loginStart();
+        this.routes.app.loginWelcome();
 
         // hook for whitelabel signup state to reset itself
         if (this.onExitHandler) this.onExitHandler();
@@ -48,11 +48,11 @@ class SignupState extends RoutedState {
 
     @action async next() {
         if (!this.passphrase) this.passphrase = await this.generatePassphrase();
-        if (this.keyBackedUp && !User.current) await this.finishAccountCreation();
+        if (this.keyBackedUp && !User.current) await this.finishAccountCreation(); // TODO tos accepted
         this.current++;
     }
 
-    @action prev() { (this.current > 0) ? this.current-- : this.exit(); }
+    @action.bound prev() { (this.current > 0) ? this.current-- : this.exit(); }
 
     @action async finishSignUp() {
         return mainState.activateAndTransition(User.current)

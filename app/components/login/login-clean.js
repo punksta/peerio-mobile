@@ -25,6 +25,7 @@ const inner2 = {
 };
 
 const formStyle = {
+    marginHorizontal: vars.inputMarginHorizontal,
     paddingVertical: vars.spacing.medium.midi2x,
     justifyContent: 'space-between'
 };
