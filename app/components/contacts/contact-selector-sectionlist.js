@@ -41,7 +41,7 @@ export default class ContactSelectorSectionList extends Component {
         const container = {
             marginLeft: vars.spacing.small.midi2x,
             justifyContent: 'center',
-            height: vars.contactListHeaderHeight,
+            height: vars.sectionHeaderHeight,
             backgroundColor: vars.darkBlueBackground05
         };
         return (

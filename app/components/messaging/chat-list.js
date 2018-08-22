@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, LayoutAnimation, SectionList } from 'react-native';
+import { View, LayoutAnimation } from 'react-native';
 import sectionListGetItemLayout from 'react-native-section-list-get-item-layout';
 import { observable, reaction, action, computed } from 'mobx';
 import { chatInviteStore, chatStore } from '../../lib/icebear';
@@ -15,10 +15,12 @@ import PlusBorderIcon from '../layout/plus-border-icon';
 import CreateActionSheet from './create-action-sheet';
 import { tx } from '../utils/translator';
 import uiState from '../layout/ui-state';
+import drawerState from '../shared/drawer-state';
 // import { scrollHelper } from '../helpers/test-helper';
 import UnreadMessageIndicator from './unread-message-indicator';
 import { vars } from '../../styles/styles';
 import ChatZeroStatePlaceholder from './chat-zero-state-placeholder';
+import SectionListWithDrawer from '../shared/section-list-with-drawer';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -136,13 +138,7 @@ export default class ChatList extends SafeComponent {
     @action.bound scrollViewRef(sv) {
         this.scrollView = sv;
         uiState.currentScrollView = sv;
-        // this is needed to reset viewable items indicator at initial render
-        setTimeout(() => this.scrollView && this.scrollView.scrollToLocation({
-            itemIndex: -1,
-            sectionIndex: 0,
-            viewPosition: 0
-        }), 500);
-        setTimeout(() => { this.enableIndicators = true; }, 1000);
+        setTimeout(() => { this.enableIndicators = true; }, 1200);
     }
 
     @computed get firstUnreadItemPosition() {
@@ -194,6 +190,7 @@ export default class ChatList extends SafeComponent {
         this.scrollView.scrollToLocation({
             itemIndex: pos.index,
             sectionIndex: pos.section,
+            viewOffset: drawerState.getDrawer(drawerState.DRAWER_CONTEXT.CHATS) ? -vars.topDrawerHeight : 0,
             viewPosition: 0
         });
     }
@@ -207,6 +204,7 @@ export default class ChatList extends SafeComponent {
         this.scrollView.scrollToLocation({
             itemIndex: pos.index,
             sectionIndex: pos.section,
+            viewOffset: drawerState.getDrawer(drawerState.DRAWER_CONTEXT.CHATS) ? -vars.topDrawerHeight : 0,
             viewPosition: 0.9
         });
     }
@@ -244,23 +242,22 @@ export default class ChatList extends SafeComponent {
         // first section is channels
         // second section is DMs
         getItemHeight: (rowData, sectionIndex /* , rowIndex */) => sectionIndex === 0 ?
-            vars.chatListItemHeight : vars.chatListItemDMHeight,
-        getSectionHeaderHeight: () => vars.chatListItemHeight
+            vars.sectionHeaderHeight : vars.chatListItemDMHeight,
+        getSectionHeaderHeight: () => vars.sectionHeaderHeight
     });
 
     listView() {
         if (chatState.routerMain.currentIndex !== 0) return null;
         return (
-            <SectionList
+            <SectionListWithDrawer
+                setScrollViewRef={this.scrollViewRef}
                 style={{ flexGrow: 1 }}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 sections={this.dataSource}
                 renderItem={this.item}
                 renderSectionHeader={this.sectionHeader}
-                onEndReached={this.onEndReached}
                 onEndReachedThreshold={20}
                 enableEmptySections
-                ref={this.scrollViewRef}
                 onViewableItemsChanged={this.onViewableItemsChanged}
                 getItemLayout={this.getItemLayout}
                 stickySectionHeadersEnabled={false}

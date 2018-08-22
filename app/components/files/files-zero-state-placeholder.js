@@ -5,6 +5,7 @@ import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
+import ViewWithDrawer from '../shared/view-with-drawer';
 import testLabel from '../helpers/test-label';
 
 const fileUploadZeroState = require('../../assets/file-upload-zero-state.png');
@@ -18,7 +19,7 @@ export default class FilesPlaceholder extends SafeComponent {
 
     renderThrow() {
         const outerContainer = {
-            flex: 1,
+            flexShrink: 1,
             width: this.width,
             justifyContent: 'center',
             marginTop: vars.spacing.medium.maxi
@@ -29,8 +30,9 @@ export default class FilesPlaceholder extends SafeComponent {
             marginTop: vars.spacing.large.maxi,
             marginBottom: vars.spacing.small.midi2x
         };
-        const imageContainer = {
-            flex: 1,
+        const imageStyle = {
+            width: this.width,
+            height: 275,
             paddingLeft: vars.spacing.medium.midi2x,
             paddingRight: vars.spacing.medium.midi2x
         };
@@ -45,25 +47,24 @@ export default class FilesPlaceholder extends SafeComponent {
             fontSize: vars.font.size.bigger
         };
         return (
-            <View style={outerContainer}>
-                <View style={infoContainer}>
-                    <Text style={infoStyle}>{tx('title_uploadShareAndManage')}</Text>
-                </View>
-                <View style={imageContainer}>
+            <ViewWithDrawer>
+                <View style={outerContainer}>
+                    <View style={infoContainer}>
+                        <Text style={infoStyle}>{tx('title_uploadShareAndManage')}</Text>
+                    </View>
                     <Image
                         source={fileUploadZeroState}
                         resizeMode="contain"
-                        style={{ flex: 1, width: null, height: null }} />
+                        style={imageStyle} />
                 </View>
                 <View style={{ flex: 0.5 }}>
                     <Text
                         style={headerStyle}
-                        {...testLabel('title_uploadSomething')}
-                    >
+                        {...testLabel('title_uploadSomething')}>
                         {tx('title_uploadSomething')}
                     </Text>
                 </View>
-            </View>
+            </ViewWithDrawer>
         );
     }
 }

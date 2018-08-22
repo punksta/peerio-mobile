@@ -54,7 +54,7 @@ const listHeader = {
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: vars.black05,
-    height: vars.contactListHeaderHeight,
+    height: vars.sectionHeaderHeight,
     paddingRight: vars.spacing.small.maxi2x
 };
 

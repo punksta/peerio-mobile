@@ -33,7 +33,8 @@ class MockChannel {
     @observable isFavorite = false;
     @observable isMuted = false;
     @observable adminMap = observable.map();
-    @observable headLoaded = true;
+    @observable loaded = true;
+    @observable unreadCount = 0;
 
     get allJoinedParticipants() { return this.participants; }
     get otherParticipants() { return this.participants; }
@@ -141,6 +142,10 @@ class MockChannel {
     }
 }
 
+class MockChat extends MockChannel {
+    @observable isChannel = false;
+}
+
 class MockChatStore {
     @observable chats = [];
     @observable invites = [];
@@ -166,11 +171,7 @@ class MockChatStore {
     }
 
     createMock() {
-        return observable({
-            id: randomWords({ min: 7, max: 7, join: ':' }),
-            title: randomWords({ min: 3, max: 5, join: ' ' }),
-            participants: [mockContactStore.createMock()]
-        });
+        return new MockChat();
     }
 
     createMockChannel() {

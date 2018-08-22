@@ -49,7 +49,7 @@ export default class ChannelInviteListItem extends SafeComponent {
         if (chatState.collapseChannels) return null;
         const { channelName } = this.props;
         const containerStyle = {
-            height: this.animating ? 0 : vars.chatListItemHeight,
+            height: this.animating ? 0 : vars.sectionHeaderHeight,
             paddingHorizontal: vars.spacing.medium.midi,
             alignItems: 'center',
             justifyContent: 'space-between',
