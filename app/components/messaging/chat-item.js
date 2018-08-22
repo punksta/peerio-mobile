@@ -3,89 +3,43 @@ import React from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
-import Avatar from '../shared/avatar';
-import contactState from '../contacts/contact-state';
-import fileState from '../files/file-state';
-import { systemMessages } from '../../lib/icebear';
 import IdentityVerificationNotice from './identity-verification-notice';
 import { vars } from '../../styles/styles';
+import ChatMessageContainer from '../shared/chat-message-container';
 @observer
 export default class ChatItem extends SafeComponent {
     setRef = ref => { this._ref = ref; };
 
+    get notice() {
+        const { message } = this.props;
+        const shouldDisplayIdentityNotice = message.systemData && message.systemData.action === 'join';
+
+        if (!shouldDisplayIdentityNotice) return null;
+
+        return (
+            <View style={{ padding: vars.spacing.medium.mini2x, paddingVertical: vars.spacing.small.midi }}>
+                <IdentityVerificationNotice />
+            </View>
+        );
+    }
+
     renderThrow() {
         const { chat, message } = this.props;
-        if (!message || !chat) return null;
-        const i = this.props.message;
-        if (!i.sender) return null;
-        const key = i.id;
-        const msg = i.text || '';
-        const text = msg.replace(/\n[ ]+/g, '\n');
-        const onPressAvatar = () => contactState.contactView(i.sender);
-        const onPress = i.sendError ? this.props.onRetryCancel : null;
-
-        // this causes double update on add message
-        const error = !!i.signatureError;
-        const systemMessageText =
-            i.systemData && systemMessages.getSystemMessageText(i) || null;
-        const videoCallLink = i.systemData && i.systemData.link || null;
-        const files = i.files && i.files.map(
-            id => fileState.store.getByIdInChat(id, chat.id)
-        ).filter(f => f) || [];
-        const images = files.filter(f => f.isImage) || [];
-        const normalFiles = files.filter(f => !f.isImage) || [];
-        if (i.hasUrls && i.externalImages.length) {
-            images.push(...i.externalImages);
-        }
-        /* const hasDeletedFile = i.files && !i.files.find(
-            id => fileState.store.getByIdInChat(id, chat.id)
-        ); */
-        const shouldDisplayIdentityNotice = i.systemData && i.systemData.action === 'join';
+        if (!message || !message.sender || !chat) return null;
 
         return (
             <View>
-                <Avatar
-                    noTap={!i.sendError}
-                    sendError={i.sendError}
-                    sending={i.sending}
-                    contact={i.sender}
-                    isDeleted={i.sender ? i.sender.isDeleted : false}
-                    files={normalFiles.map(f => f.fileId)}
-                    folders={i.folders}
-                    inlineImages={images}
-                    receipts={i.receipts}
-                    hideOnline
-                    firstOfTheDay={i.firstOfTheDay}
-                    timestamp={i.timestamp}
-                    timestampText={i.messageTimestampText}
-                    message={text}
-                    isChat
+                <ChatMessageContainer
                     chat={chat}
-                    messageObject={i}
-                    fullnameIsBold
-                    systemMessage={systemMessageText}
-                    videoCallMessage={videoCallLink}
-                    key={key}
-                    error={error}
-                    onPress={onPress}
-                    onPressAvatar={onPressAvatar}
-                    onLayout={this.props.onLayout}
-                    onRetryCancel={this.props.onRetryCancel}
+                    messageObject={message}
+                    key={message.id}
                     onInlineImageAction={this.props.onInlineImageAction}
                     onLegacyFileAction={this.props.onLegacyFileAction}
                     onFileAction={this.props.onFileAction}
-                    noBorderBottom
-                    collapsed={!!i.groupWithPrevious}
-                    extraPaddingTop={8}
-                    ref={this.setRef}
                     backgroundColor={this.props.backgroundColor}
+                    ref={this.setRef}
                 />
-                {
-                    shouldDisplayIdentityNotice &&
-                    <View style={{ padding: vars.spacing.medium.mini2x, paddingVertical: vars.spacing.small.midi }}>
-                        <IdentityVerificationNotice />
-                    </View>
-                }
+                {this.notice}
             </View>
         );
     }
@@ -93,7 +47,5 @@ export default class ChatItem extends SafeComponent {
 
 ChatItem.propTypes = {
     onLayout: PropTypes.func,
-    onPress: PropTypes.func,
-    onRetryCancel: PropTypes.func,
     message: PropTypes.any.isRequired
 };

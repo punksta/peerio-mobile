@@ -35,7 +35,7 @@ export default class ContactInviteItemPrompt extends SafeComponent {
                     <whiteLabelComponents.ContactAddWarning />
                 </View>
                 <View style={{ alignSelf: 'flex-end', marginTop: vars.spacing.small.maxi2x }}>
-                    {buttons.roundBlueBgButton(title, this.invite, invited)}
+                    {buttons.roundBlueBgButton(title, this.invite, !!invited)}
                 </View>
             </View>
         );

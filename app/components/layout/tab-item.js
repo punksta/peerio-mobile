@@ -27,23 +27,9 @@ const actionTextStyle = {
 export default class TabItem extends SafeComponent {
     @action.bound onPressTabItem() {
         const { route } = this.props;
-        if (routerMain.route === route) {
-            if (routerMain.route === 'files') {
-                fileState.goToRoot();
-            }
-            if (uiState.currentScrollView.scrollTo) {
-                uiState.currentScrollView.scrollTo(0);
-            } else if (uiState.currentScrollView.scrollToIndex) {
-                uiState.currentScrollView.scrollToIndex({ index: 0 });
-            } else {
-                uiState.currentScrollView.scrollToLocation(
-                    {
-                        itemIndex: 0,
-                        sectionIndex: 0,
-                        viewOffset: vars.contactListHeaderHeight,
-                        viewPosition: 0
-                    });
-            }
+        if (routerMain.route === route && uiState.currentScrollView) {
+            if (routerMain.route === 'files') fileState.goToRoot();
+            uiState.emit(uiState.EVENTS.HOME);
         } else {
             routerMain[route]();
         }
