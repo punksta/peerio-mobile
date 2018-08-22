@@ -12,7 +12,8 @@ function isIphoneX() {
     );
 }
 
-const iPhoneStatusBar = (Platform.OS === 'ios' ? 40 : 0);
+const iPhoneXTop = isIphoneX() ? 16 : 0;
+const iPhoneStatusBar = (Platform.OS === 'ios' ? 18 + iPhoneXTop : 0);
 const iPhoneXBottom = isIphoneX() ? 16 : 0;
 
 const isDeviceScreenBig = isBigScreenSize();
