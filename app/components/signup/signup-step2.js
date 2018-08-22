@@ -14,7 +14,7 @@ import buttons from '../helpers/buttons';
 import icons from '../helpers/icons';
 
 const { validators } = validation;
-const { username, suggestUsername } = validators;
+const { username } = validators;
 
 @observer
 export default class SignupStep2 extends SafeComponent {

@@ -22,7 +22,7 @@ const PAGES = {
     signupStep3,
     signupGenerateAK,
     signupBackupAK,
-    signupTermsOfUse,
+    signupTermsOfUse
     // signupShareData
 };
 

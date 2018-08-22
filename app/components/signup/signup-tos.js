@@ -7,7 +7,7 @@ import { signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
 import { tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
-import buttons from '../helpers/buttons';
+// import buttons from '../helpers/buttons';
 
 @observer
 export default class SignupTos extends SafeComponent {
