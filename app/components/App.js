@@ -108,7 +108,6 @@ export default class App extends SafeComponent {
 
         const { sharedFile } = this.props;
         if (sharedFile) {
-            console.log('>>>', sharedFile);
             this.upload(sharedFile);
         }
     }
@@ -117,13 +116,13 @@ export default class App extends SafeComponent {
         routes.main.files();
         fileState.goToRoot();
 
-        const x = await RNFS.stat(sharedFile);
-        console.log('xxxx', x);
-        const firstFile = sharedFile;
+        const fileInfo = await RNFS.stat(sharedFile);
+        console.log('fileInfo is:', fileInfo);
+        
         const fileProps = {
             fileName: 'firstFile',
             ext: 'jpg',
-            url: firstFile
+            url: sharedFile
         };
         fileState.uploadInFiles(fileProps);
     }
