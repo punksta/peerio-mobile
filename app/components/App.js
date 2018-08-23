@@ -62,11 +62,12 @@ export default class App extends SafeComponent {
             const fileName = file.split('.')[0];
             const ext = file.split('.')[1];
 
-            this.upload(sharedFile, fileName, ext);
+            await this.upload(sharedFile, fileName, ext);
         }
     }
 
-    upload(path, fileName, extenstion) {
+    async upload(path, fileName, extenstion) {
+        await promiseWhen(() => routes.main.contactStateLoaded);
         routes.main.files();
         fileState.goToRoot();
 
