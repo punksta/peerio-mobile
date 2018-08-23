@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { SectionList, View } from 'react-native';
 import { observer } from 'mobx-react/native';
-import Avatar from '../shared/avatar';
 import ContactInviteItem from './contact-invite-item';
 import testLabel from '../helpers/test-label';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import Text from '../controls/custom-text';
+import ContactCard from '../shared/contact-card';
 
 const INITIAL_LIST_SIZE = 10;
 
@@ -18,24 +18,18 @@ export default class ContactSelectorSectionList extends Component {
 
     item = (params) => {
         const { item } = params;
-        const { username, fullName, isLegacy, isAdded, email } = item;
+        const { username, email } = item;
         if (!username) {
             return (
                 <ContactInviteItem
-                    noBorderBottom
-                    contact={ContactInviteItem.fromEmail(email)} />
+                    contact={ContactInviteItem.fromEmail(email)}
+                    backgroundColor={vars.darkBlueBackground05} />
             );
         }
         return (
             <View {...testLabel(params.index.toString())} accessible={false}>
-                <Avatar
-                    noBorderBottom
-                    starred={isAdded}
+                <ContactCard
                     contact={item}
-                    title={<Text style={{ fontWeight: 'normal' }}>{fullName || username}</Text>}
-                    title2={isLegacy ? username : null}
-                    height={vars.listItemHeight}
-                    hideOnline
                     onPress={() => this.props.onPress(item)}
                     backgroundColor={vars.darkBlueBackground05} />
             </View>
@@ -47,7 +41,7 @@ export default class ContactSelectorSectionList extends Component {
         const container = {
             marginLeft: vars.spacing.small.midi2x,
             justifyContent: 'center',
-            height: vars.contactListHeaderHeight,
+            height: vars.sectionHeaderHeight,
             backgroundColor: vars.darkBlueBackground05
         };
         return (

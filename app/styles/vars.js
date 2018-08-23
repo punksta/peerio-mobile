@@ -12,7 +12,8 @@ function isIphoneX() {
     );
 }
 
-const iPhoneStatusBar = (Platform.OS === 'ios' ? 40 : 0);
+const iPhoneXTop = isIphoneX() ? 16 : 0;
+const iPhoneStatusBar = (Platform.OS === 'ios' ? 18 + iPhoneXTop : 0);
 const iPhoneXBottom = isIphoneX() ? 16 : 0;
 
 const isDeviceScreenBig = isBigScreenSize();
@@ -107,7 +108,9 @@ const vars = {
     contactInviteSuggestionHeight: 64,
     popupPadding: scaleDim(20),
     popupHorizontalMargin: scaleDim(16),
+    topDrawerHeight: 192,
     tfaInputWidth: scaleDim(124),
+    scrollOffset: 500, // arbitrary large offset
 
     circle: 10,
     circleSize: 4,
@@ -180,6 +183,7 @@ const vars = {
     iconSize: 24,
     iconSizeSmall: 16,
     iconSizeMedium: 32,
+    iconSizeMedium2x: 40,
     iconSizeLarge: 48,
     iconSizeLarge2x: 56,
     iconSizeHuge: 64,
@@ -189,9 +193,8 @@ const vars = {
     iconSizeBigger: 25,
     iconMargin: 30,
     imagePreviewSize: 48,
-    chatListItemHeight: 48,
+    sectionHeaderHeight: 48,
     chatListItemDMHeight: 61,
-    contactListHeaderHeight: 48,
     removeButtonHeight: 44,
     warningHeight: 70,
     roundedButtonWidth: 134,
@@ -203,7 +206,7 @@ const vars = {
     filesListItemHeight: 64,
     contactlistItemHeight: 56,
     listItemHeight: 56,
-    listViewPaddingVertical: 36,
+    listViewPaddingVertical: 18,
     listViewPaddingHorizontal: 8,
     avatarDiameter: 36,
     disabledButtonFontColor: '#DDDDDD',

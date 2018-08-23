@@ -5,13 +5,13 @@ import { View, TouchableOpacity } from 'react-native';
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu';
 import SafeComponent from '../shared/safe-component';
 import chatState from '../messaging/chat-state';
-import Avatar from '../shared/avatar';
 import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 import { vars } from '../../styles/styles';
 import { User } from '../../lib/icebear';
 import testLabel from '../helpers/test-label';
 import Text from '../controls/custom-text';
+import ContactCard from '../shared/contact-card';
 
 @observer
 export default class MemberListItem extends SafeComponent {
@@ -59,12 +59,9 @@ export default class MemberListItem extends SafeComponent {
                 style={this.rowStyle}
                 {...testLabel(`${contact.username}-memberList`)}>
                 <View style={this.avatarStyle}>
-                    <Avatar
-                        noBorderBottom
+                    <ContactCard
                         contact={contact}
                         key={username}
-                        message=""
-                        hideOnline
                         backgroundColor={vars.channelInfoBg} />
                 </View>
                 <View

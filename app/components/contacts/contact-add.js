@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, ScrollView, TouchableOpacity, LayoutAnimation, Share, Platform } from 'react-native';
+import { View, TouchableOpacity, LayoutAnimation, Share, Platform } from 'react-native';
 import { observable, reaction, action } from 'mobx';
 import ProgressOverlay from '../shared/progress-overlay';
 import SafeComponent from '../shared/safe-component';
@@ -18,6 +18,7 @@ import routes from '../routes/routes';
 import icons from '../helpers/icons';
 import BackIcon from '../layout/back-icon';
 import whiteLabelComponents from '../../components/whitelabel/white-label-components';
+import ViewWithDrawer from '../shared/view-with-drawer';
 
 const textinputContainer = {
     backgroundColor: vars.white,
@@ -234,12 +235,12 @@ export default class ContactAdd extends SafeComponent {
 
     renderThrow() {
         return (
-            <View style={{ flex: 1, flexGrow: 1 }}>
-                <ScrollView
+            <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
+                <ViewWithDrawer
                     onScroll={this.onScroll}
                     keyboardShouldPersistTaps="handled"
                     style={{ backgroundColor: vars.darkBlueBackground05 }}
-                    ref={ref => { this._scrollView = ref; }}>
+                    setScrollViewRef={ref => { this._scrollView = ref; }}>
                     <View style={{ marginTop: vars.spacing.medium.midi2x }}>
                         {contactState.empty && <View style={{ margin: vars.spacing.small.midi2x }}>
                             <Text style={labelDark}>{tx('title_contactZeroState')}</Text>
@@ -278,9 +279,8 @@ export default class ContactAdd extends SafeComponent {
                                 {this.renderButton1('button_share', () => this.share())}
                             </View>
                         </View>
-                        <View style={{ height: 180 }} />
                     </View>
-                </ScrollView>
+                </ViewWithDrawer>
                 <ProgressOverlay enabled={this.waiting} />
             </View>
         );

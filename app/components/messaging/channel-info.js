@@ -103,7 +103,7 @@ export default class ChannelInfo extends SafeComponent {
             flexDirection: 'row',
             alignItems: 'center',
             marginLeft: vars.spacing.medium.mini2x,
-            height: vars.chatListItemHeight
+            height: vars.sectionHeaderHeight
         };
         return (
             <View style={{ backgroundColor: vars.chatItemPressedBackground }}>
@@ -115,7 +115,7 @@ export default class ChannelInfo extends SafeComponent {
                     <View style={containerStyle}>
                         {icon ?
                             icons.darkNoPadding(icon, action) :
-                            icons.iconImageNoPadding(image, action)}
+                            icons.imageButtonNoPadding(image, action)}
                         <Text style={{ marginLeft: vars.spacing.medium.maxi2x, color: vars.lighterBlackText }}>
                             {title}
                         </Text>

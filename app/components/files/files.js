@@ -1,10 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Animated, FlatList } from 'react-native';
+import { View, Animated } from 'react-native';
 import { observable, reaction, action } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
-import FilesPlaceholder from './files-placeholder';
+import FilesZeroStatePlaceholder from './files-zero-state-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileUploadActionSheet from './file-upload-action-sheet';
@@ -22,6 +22,7 @@ import uiState from '../layout/ui-state';
 import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import { fileStore } from '../../lib/icebear';
 import SearchBar from '../controls/search-bar';
+import FlatListWithDrawer from '../shared/flat-list-with-drawer';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -120,7 +121,9 @@ export default class Files extends SafeComponent {
 
     list() {
         return (
-            <FlatList
+            <FlatListWithDrawer
+                setScrollViewRef={this.flatListRef}
+                ListHeaderComponent={!this.isZeroState && this.searchTextbox()}
                 keyExtractor={this.keyExtractor}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
@@ -128,9 +131,7 @@ export default class Files extends SafeComponent {
                 extraData={this.refresh}
                 renderItem={this.item}
                 onEndReached={this.onEndReached}
-                onEndReachedThreshold={0.5}
-                ref={this.flatListRef}
-            />
+                onEndReachedThreshold={0.5} />
         );
     }
 
@@ -184,12 +185,13 @@ export default class Files extends SafeComponent {
         const leftIcon = icons.plain('search', vars.iconSize, vars.black12);
         let rightIcon = null;
         if (fileState.findFilesText) {
-            rightIcon = icons.iconImage(
+            rightIcon = icons.imageButton(
                 iconClear,
                 () => {
                     fileState.findFilesText = '';
                     this.onChangeFindFilesText('');
                 },
+                null,
                 vars.opacity54
             );
         }
@@ -267,15 +269,14 @@ export default class Files extends SafeComponent {
                 </Text>
             );
         }
-        return this.isZeroState && <FilesPlaceholder />;
+        return this.isZeroState && <FilesZeroStatePlaceholder />;
     }
 
     renderThrow() {
         return (
             <View
-                style={{ flex: 1 }}>
-                <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
-                    {!this.isZeroState && this.searchTextbox()}
+                style={{ flex: 1, flexGrow: 1 }}>
+                <View style={{ flex: 1, flexGrow: 1, backgroundColor: vars.darkBlueBackground05 }}>
                     {upgradeForFiles()}
                     {this.noFilesInFolder}
                     {/* this.sharedFolderRemovalNotifs() */}
