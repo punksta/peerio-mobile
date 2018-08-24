@@ -4,6 +4,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.content.Intent;
+import android.net.Uri;
 
 import com.facebook.react.*;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -29,6 +30,21 @@ public class MainActivity extends ReactActivity {
         super.onNewIntent(intent);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         setIntent(intent);
+        handleSendFile2(intent);
+    }
+
+    void handleSendFile2(Intent intent) {
+        Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+        
+        if (imageUri != null) {
+            ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
+            if (context == null) {
+                return;
+            }
+            
+            context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                   .emit("sharedFile", imageUri.toString());
+        }
     }
 
     @Override

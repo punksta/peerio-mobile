@@ -19,29 +19,45 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
         this.mActivity = activity;
     }
 
+    // @Override
+    // public boolean onNewIntent(Intent intent) {
+    //     super.onNewIntent(intent);
+    //     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+    //     mActivity.setIntent(intent);
+
+    //     return true;
+    // }
+
+    // @Override
+    // protected void onResume() {
+    //     Intent intent = mActivity.getIntent();
+    //     if (intent.getExtras() != null) {
+    //         String type = intent.getType();
+
+    //         if (Intent.ACTION_SEND.equals(intent.getAction()) && type != null) {
+    //             if (type.startsWith("image/")) {
+    //                 handleSendFile2(intent);
+    //             }
+    //         }
+    //     }
+       
+    //     super.onResume();
+    // }
+
     @Override
-    public boolean onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        mActivity.setIntent(intent);
-
-        return true;
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
+    protected void onCreate(Bundle savedInstanceState) {
         Intent intent = mActivity.getIntent();
         if (intent.getExtras() != null) {
             String type = intent.getType();
 
+            mInitialProps = new Bundle();
             if (Intent.ACTION_SEND.equals(intent.getAction()) && type != null) {
                 if (type.startsWith("image/")) {
                     handleSendFile(intent);
                 }
             }
         }
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -56,13 +72,13 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
             mInitialProps = new Bundle();
             mInitialProps.putString("sharedFile", imageUri.toString());
            
-            ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
-            if (context == null) {
-                return;
-            }
+            // ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
+            // if (context == null) {
+            //     return;
+            // }
             
-            context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                   .emit("sharedFile", imageUri.toString());
+            // context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            //        .emit("sharedFile", imageUri.toString());
         }
     }
 }
