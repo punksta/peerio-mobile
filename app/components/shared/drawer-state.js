@@ -58,6 +58,10 @@ class DrawerState {
             console.error(`drawerState.dismiss: Could not find drawer component to dismiss`);
         }
     }
+
+    @action.bound dismissAll() {
+        this.drawers.clear();
+    }
 }
 
 const drawerState = new DrawerState();

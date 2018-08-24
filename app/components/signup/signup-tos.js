@@ -11,6 +11,7 @@ import buttons from '../helpers/buttons';
 import ViewWithDrawer from '../shared/view-with-drawer';
 import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
 import { drawerState } from '../states';
+import routes from '../routes/routes';
 
 const buttonContainer = {
     flexDirection: 'row',
@@ -23,7 +24,7 @@ const buttonContainer = {
 @observer
 export default class SignupTos extends SafeComponent {
     componentDidMount() {
-        if (!drawerState.globalDrawer) {
+        if (!signupState.keyBackedUp) {
             drawerState.addDrawer(TopDrawerBackupAccountKey);
         }
     }
@@ -31,6 +32,11 @@ export default class SignupTos extends SafeComponent {
     @action.bound async finishSignup() {
         await signupState.finishAccountCreation();
         await signupState.finishSignUp();
+    }
+
+    @action.bound declineTos() {
+        drawerState.dismissAll();
+        signupState.exit();
     }
 
     renderThrow() {
@@ -48,7 +54,7 @@ export default class SignupTos extends SafeComponent {
                     <View style={buttonContainer}>
                         {buttons.blueTextButton(
                             tx('button_decline'),
-                            signupState.prev,
+                            this.declineTos,
                             null,
                             null,
                             'button_decline')}

@@ -8,6 +8,7 @@ import { tx } from '../utils/translator';
 import AvatarCircle from './avatar-circle';
 import SafeComponent from './safe-component';
 import { chatState } from '../states';
+import signupState from '../signup/signup-state';
 
 const MAINTENANCE_DAY = 'May 15';
 const MAINTENANCE_TIME1 = '2 AM';
@@ -26,7 +27,7 @@ class TopDrawerBackupAccountKey extends SafeComponent {
                 )}
                 descriptionLine1={tx('title_backupAkReminder')}
                 buttonText={tx('button_backupNow')}
-                buttonAction={() => console.log('open link')} // TODO fix link
+                buttonAction={signupState.saveAccountKey}
             />
         );
     }

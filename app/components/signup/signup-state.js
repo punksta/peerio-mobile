@@ -37,6 +37,7 @@ class SignupState extends RoutedState {
         this.country = '';
         this.specialty = '';
         this.role = '';
+        this.keyBackedUp = false;
         this.current = 0;
         this.routes.app.loginWelcome();
 
