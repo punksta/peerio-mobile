@@ -5,6 +5,9 @@ import SafeComponent from '../shared/safe-component';
 import SnackBarConnection from '../snackbars/snackbar-connection';
 import SnackBar from '../snackbars/snackbar';
 import Bottom from '../controls/bottom';
+import ActivityOverlay from '../controls/activity-overlay';
+import signupState from '../signup/signup-state';
+
 
 @observer
 export default class LayoutSignup extends SafeComponent {
@@ -37,6 +40,7 @@ export default class LayoutSignup extends SafeComponent {
                     <SnackBarConnection />
                     <SnackBar />
                 </Bottom>
+                <ActivityOverlay large visible={signupState.isInProgress} />
             </View>
         );
     }
