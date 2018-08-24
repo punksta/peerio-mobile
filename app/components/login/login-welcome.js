@@ -8,6 +8,7 @@ import loginState from './login-state';
 import ActivityOverlay from '../controls/activity-overlay';
 import { vars, signupStyles } from '../../styles/styles';
 import buttons from '../helpers/buttons';
+import DebugMenu from '../shared/debug-menu';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
 import SafeComponent from '../shared/safe-component';
 
@@ -57,6 +58,7 @@ export default class LoginWelcome extends SafeComponent {
     render() {
         return (
             <View style={[signupStyles.page, { flexGrow: 1 }]}>
+                <DebugMenu />
                 <DebugMenuTrigger>
                     <View style={logoBar}>
                         <Image source={logoWelcome} resizeMode="contain" style={this.imageStyle(logoWelcome)} />
