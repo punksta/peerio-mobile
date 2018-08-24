@@ -14,6 +14,25 @@ const MAINTENANCE_DAY = 'May 15';
 const MAINTENANCE_TIME1 = '2 AM';
 const MAINTENANCE_TIME2 = '5 AM';
 
+const outerCircle = {
+    width: vars.iconSizeMedium2x,
+    height: vars.iconSizeMedium2x,
+    borderRadius: vars.iconSizeMedium2x / 2,
+    backgroundColor: vars.black05,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: vars.spacing.small.mini2x,
+    marginBottom: vars.spacing.medium.mini
+};
+const innerCircle = {
+    width: vars.iconSizeMedium,
+    height: vars.iconSizeMedium,
+    borderRadius: vars.iconSizeMedium / 2,
+    backgroundColor: vars.black07,
+    justifyContent: 'center',
+    alignItems: 'center'
+};
+
 @observer
 class TopDrawerBackupAccountKey extends SafeComponent {
     renderThrow() {
@@ -21,13 +40,15 @@ class TopDrawerBackupAccountKey extends SafeComponent {
             <TopDrawer
                 {...this.props}
                 heading={tx('title_backupAk')}
-                image={icons.imageIcon(
-                    require('../../assets/info-icon.png'),
-                    vars.iconSizeMedium2x
-                )}
-                descriptionLine1={tx('title_backupAkReminder')}
+                image={(
+                    <View style={outerCircle}>
+                        <View style={innerCircle}>
+                            {icons.darkNoPadding('file-download')}
+                        </View>
+                    </View>)}
+                descriptionLine1={tx('title_backupAkReminderMobile')}
                 buttonText={tx('button_backupNow')}
-                buttonAction={signupState.saveAccountKey}
+                buttonAction={signupState.goToBackupAk}
             />
         );
     }

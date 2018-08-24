@@ -8,6 +8,7 @@ import signupState from './signup-state';
 import { tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
+import { User } from '../../lib/icebear';
 
 const buttonContainer = {
     flexDirection: 'row',
@@ -19,17 +20,19 @@ const buttonContainer = {
 
 @observer
 export default class SignupShareData extends SafeComponent {
-    @action.bound handleAcceptButton() {
-        signupState.next();
+    @action.bound handleShareButton() {
+        User.current.settings.errorTracking = true;
+        User.current.settings.dataCollection = true;
+        User.current.saveSettings();
+        signupState.finishSignUp();
     }
 
     @action.bound handleDeclineButton() {
-        // cancel signup modal
+        signupState.finishSignUp();
     }
 
     renderThrow() {
         return (
-            // TODO <ViewWithDrawer />
             <View style={signupStyles.page}>
                 <View style={signupStyles.container2}>
                     <Text semibold serif style={signupStyles.headerStyle2}>
@@ -38,18 +41,17 @@ export default class SignupShareData extends SafeComponent {
                     <Text style={signupStyles.description}>
                         {tx('title_shareUsageDataDescription')}
                     </Text>
-                    {/* tos drawers */}
                     <View style={buttonContainer}>
                         {buttons.blueTextButton(
                             tx('button_notNow'),
-                            signupState.next,
+                            this.handleDeclineButton,
                             null,
                             null,
                             'button_notNow')}
                         <View style={{ width: 24 }} />
                         {buttons.roundBlueBgButton(
                             tx('button_share'),
-                            signupState.next,
+                            this.handleShareButton,
                             null,
                             'button_share')}
                     </View>

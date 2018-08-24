@@ -24,6 +24,7 @@ const buttonContainer = {
 @observer
 export default class SignupTos extends SafeComponent {
     componentDidMount() {
+        // TODO check that topDrawerBackupAccountKey isn't already there before adding
         if (!signupState.keyBackedUp) {
             drawerState.addDrawer(TopDrawerBackupAccountKey);
         }
@@ -31,17 +32,15 @@ export default class SignupTos extends SafeComponent {
 
     @action.bound async finishSignup() {
         await signupState.finishAccountCreation();
-        await signupState.finishSignUp();
+        signupState.next();
     }
 
     @action.bound declineTos() {
-        drawerState.dismissAll();
-        signupState.exit();
+        signupState.goToSignupCancel();
     }
 
     renderThrow() {
         return (
-            // TODO <ViewWithDrawer />
             <ViewWithDrawer style={signupStyles.page}>
                 <View style={signupStyles.container2}>
                     <Text semibold serif style={signupStyles.headerStyle2}>
@@ -50,7 +49,7 @@ export default class SignupTos extends SafeComponent {
                     <Text style={signupStyles.description}>
                         {tx('title_termsDescription_mobile')}
                     </Text>
-                    {/* tos drawers */}
+                    {/* tos accordion */}
                     <View style={buttonContainer}>
                         {buttons.blueTextButton(
                             tx('button_decline'),

@@ -61,6 +61,21 @@ class SignupState extends RoutedState {
         this.current++;
     }
 
+    // TODO These functions might be a bad idea
+    // ---------
+    @action.bound goToBackupAk() {
+        this.current = 4;
+    }
+
+    @action.bound goToSignupTos() {
+        this.current = 5;
+    }
+
+    @action.bound goToSignupCancel() {
+        this.current = 7;
+    }
+    // ---------
+
     @action.bound prev() { (this.current > 0) ? this.current-- : this.exit(); }
 
     @action.bound async suggestUsernames() {
@@ -109,7 +124,7 @@ class SignupState extends RoutedState {
         const user = new User();
         User.current = user;
         const { username, email, firstName, lastName, passphrase, avatarBuffers,
-            keyBackedUp, country, specialty, role, medicalId } = this;
+            keyBackedUp, subscribeToPromoEmails, country, specialty, role, medicalId } = this;
         const localeCode = uiState.locale;
         user.username = username;
         user.email = email;
@@ -134,6 +149,10 @@ class SignupState extends RoutedState {
             .then(() => mainState.saveUser())
             .then(() => keyBackedUp && User.current.setAccountKeyBackedUp())
             .then(() => avatarBuffers && User.current.saveAvatar(avatarBuffers))
+            .then(() => {
+                User.current.settings.subscribeToPromoEmails = subscribeToPromoEmails;
+                User.current.saveSettings();
+            })
             .finally(() => { this.isInProgress = false; });
     }
 }
