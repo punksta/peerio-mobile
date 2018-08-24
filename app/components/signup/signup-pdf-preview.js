@@ -28,7 +28,8 @@ const filenameStyle = {
     backgroundColor: 'transparent'
 };
 
-const FILE_SIZE = '76KB';
+const FILE_SIZE = '843KB';
+
 const filesizeStyle = {
     fontSize: vars.font.size.smaller,
     color: vars.textBlack54,
