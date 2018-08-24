@@ -28,24 +28,24 @@ public class MainActivity extends ReactActivity {
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (intent.getExtras() != null) {
-            if (Intent.ACTION_SEND.equals(intent.getAction()) && intent.getType() != null) {
-                handleSendFile(intent);
-            }
-        }
+        handleSendFile(intent);
     }
 
     void handleSendFile(Intent intent) {
-        Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
-        
-        if (imageUri != null) {
-            ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
-            if (context == null) {
-                return;
+         if (intent.getExtras() != null) {
+            if (Intent.ACTION_SEND.equals(intent.getAction()) && intent.getType() != null) {
+                Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
+                
+                if (imageUri != null) {
+                    ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
+                    if (context == null) {
+                        return;
+                    }
+                    
+                    context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        .emit("sharedFile", imageUri.toString());
+                }
             }
-            
-            context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                   .emit("sharedFile", imageUri.toString());
         }
     }
 

@@ -9,17 +9,17 @@ import android.support.annotation.Nullable;
 import com.facebook.react.ReactActivityDelegate;
 
 public class LaunchActivityDelegate extends ReactActivityDelegate {
-    private final @Nullable Activity mActivity;
-    private Bundle mInitialProps = null;
+    private final @Nullable Activity mainActivity;
+    private Bundle initialProps = null;
 
     public LaunchActivityDelegate(Activity activity, String mainComponentName) {
         super(activity, mainComponentName);
-        this.mActivity = activity;
+        this.mainActivity = activity;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Intent intent = mActivity.getIntent();
+        Intent intent = mainActivity.getIntent();
         if (intent.getExtras() != null) {
             if (Intent.ACTION_SEND.equals(intent.getAction()) && intent.getType() != null) {
                 handleSendFile(intent);
@@ -30,15 +30,15 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
 
     @Override
     protected Bundle getLaunchOptions() {
-        return mInitialProps;
+        return initialProps;
     }
 
     void handleSendFile(Intent intent) {
         Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
         
         if (imageUri != null) {
-            mInitialProps = new Bundle();
-            mInitialProps.putString("sharedFile", imageUri.toString());
+            initialProps = new Bundle();
+            initialProps.putString("sharedFile", imageUri.toString());
         }
     }
 }
