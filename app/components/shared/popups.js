@@ -159,11 +159,7 @@ function popupOkCancel(title, subTitle, text) {
     });
 }
 
-function popupConfirmCancelIllustration(imageObject, content, confirmCopy, cancelCopy) {
-    const contents = (<View>
-        {imageObject}
-        {content}
-    </View>);
+function popupConfirmCancelIllustration(contents, confirmCopy, cancelCopy) {
     return new Promise((resolve) => {
         popupState.showPopup({
             noPadding: true,
