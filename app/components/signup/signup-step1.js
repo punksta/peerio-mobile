@@ -98,7 +98,7 @@ export default class SignupStep1 extends SafeComponent {
                             this.handleNextButton,
                             this.isNextDisabled,
                             'button_next',
-                            { width: vars.signupButtonWidth })}
+                            { width: vars.signupButtonWidth, marginTop: 30 })}
                     </View>
                 </View>
             </View>

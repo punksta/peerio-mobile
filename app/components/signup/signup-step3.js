@@ -72,7 +72,7 @@ export default class SignupStep3 extends SafeComponent {
                         required
                         ref={this.emailInputRef}
                         testID="email" />
-                    <View style={[signupStyles.separator, { marginBottom: 0 }]} />
+                    <View style={[signupStyles.separator, { marginBottom: 12 }]} />
                     <CheckBox
                         alignLeft
                         isChecked={this.checked}
@@ -85,7 +85,7 @@ export default class SignupStep3 extends SafeComponent {
                             this.handleNextButton,
                             this.isNextDisabled,
                             'button_create',
-                            { width: vars.signupButtonWidth })}
+                            { width: vars.signupButtonWidth, marginTop: 30 })}
                     </View>
                 </View>
             </View>
