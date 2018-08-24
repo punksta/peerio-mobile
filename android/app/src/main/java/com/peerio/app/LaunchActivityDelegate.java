@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactActivityDelegate;
-import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 public class LaunchActivityDelegate extends ReactActivityDelegate {
     private final @Nullable Activity mActivity;
@@ -18,31 +16,6 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
         super(activity, mainComponentName);
         this.mActivity = activity;
     }
-
-    // @Override
-    // public boolean onNewIntent(Intent intent) {
-    //     super.onNewIntent(intent);
-    //     intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-    //     mActivity.setIntent(intent);
-
-    //     return true;
-    // }
-
-    // @Override
-    // protected void onResume() {
-    //     Intent intent = mActivity.getIntent();
-    //     if (intent.getExtras() != null) {
-    //         String type = intent.getType();
-
-    //         if (Intent.ACTION_SEND.equals(intent.getAction()) && type != null) {
-    //             if (type.startsWith("image/")) {
-    //                 handleSendFile2(intent);
-    //             }
-    //         }
-    //     }
-       
-    //     super.onResume();
-    // }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,14 +44,6 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
         if (imageUri != null) {
             mInitialProps = new Bundle();
             mInitialProps.putString("sharedFile", imageUri.toString());
-           
-            // ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
-            // if (context == null) {
-            //     return;
-            // }
-            
-            // context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-            //        .emit("sharedFile", imageUri.toString());
         }
     }
 }

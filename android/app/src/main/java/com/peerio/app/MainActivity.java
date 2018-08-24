@@ -30,10 +30,10 @@ public class MainActivity extends ReactActivity {
         super.onNewIntent(intent);
         intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         setIntent(intent);
-        handleSendFile2(intent);
+        handleSendFile(intent);
     }
 
-    void handleSendFile2(Intent intent) {
+    void handleSendFile(Intent intent) {
         Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
         
         if (imageUri != null) {
