@@ -25,7 +25,7 @@ export default class FileActionSheet {
             snackbarState.pushTemporary(tx('snackbar_fileNotFound'));
             return;
         }
-        const { isLegacy } = file;
+        const { isLegacy, readyForDownload } = file;
         const header = (<FileActionSheetHeader
             file={file}
             onPress={() => {
@@ -43,7 +43,7 @@ export default class FileActionSheet {
         // Share
         actionButtons.push({
             title: tx('button_share'),
-            disabled: isLegacy,
+            disabled: isLegacy || !readyForDownload,
             action: () => routes.modal.shareFileTo({ file })
         });
 
