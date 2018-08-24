@@ -26,8 +26,7 @@ const buttonContainer = {
 };
 const imageStyle = {
     flex: 1,
-    width: null,
-    height: null,
+    flexGrow: 1,
     marginLeft: vars.spacing.large.maxi2x,
     marginRight: vars.spacing.small.maxi,
     marginBottom: vars.spacing.medium.mini2x
@@ -45,7 +44,7 @@ export default class LoginWelcome extends SafeComponent {
 
     render() {
         return (
-            <View style={[signupStyles.page, { paddingBottom: pagePadding }]}>
+            <View style={[signupStyles.page, { paddingBottom: pagePadding, flexGrow: 1 }]}>
                 <DebugMenuTrigger>
                     <View style={logoBar}>
                         <Image />{/*  TODO add Logo */}
