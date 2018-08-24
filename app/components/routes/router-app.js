@@ -1,10 +1,11 @@
 import { BackHandler } from 'react-native';
 import { when } from 'mobx';
 import Router from './router';
-import Login from '../login/login';
 import SignupWizard from '../signup/signup-wizard';
 import LayoutMain from '../layout/layout-main';
 import LoadingScreen from '../layout/loading-screen';
+import LoginWelcome from '../login/login-welcome';
+import LoginClean from '../login/login-clean';
 import LoginAutomatic from '../login/login-automatic';
 import PopupState from '../layout/popup-state';
 import routerMain from './router-main';
@@ -16,7 +17,8 @@ class RouterApp extends Router {
         super();
         routes.app = this;
         this.add('loading', LoadingScreen);
-        this.add('loginWelcome', Login.Wizard);
+        this.add('loginWelcome', LoginWelcome);
+        this.add('loginClean', LoginClean);
         this.add('signupStep1', SignupWizard);
         this.add('loginAutomatic', LoginAutomatic);
         this.add('main', LayoutMain, true);

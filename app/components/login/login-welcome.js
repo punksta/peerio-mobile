@@ -39,8 +39,11 @@ export default class LoginWelcome extends SafeComponent {
         loginState.routes.app.signupStep1();
     }
 
+    @action.bound onLoginPress() {
+        loginState.routes.app.loginClean();
+    }
+
     render() {
-        const { onLoginPress } = this.props;
         return (
             <View style={[signupStyles.page, { paddingBottom: pagePadding }]}>
                 <DebugMenuTrigger>
@@ -50,24 +53,23 @@ export default class LoginWelcome extends SafeComponent {
                 </DebugMenuTrigger>
                 <View style={signupStyles.container}>
                     <View style={{ marginBottom }}>
-                        <Text semibold style={[signupStyles.headerStyle, { marginBottom }]}>{tx('title_loginWelcomeHeader')}</Text>
-                        <Text style={signupStyles.headerDescription}>{tx('title_loginWelcomeDescription1')}</Text>
-                        <Text style={signupStyles.headerDescription}>{tx('title_loginWelcomeDescription2')}</Text>
+                        <Text semibold style={[signupStyles.headerStyle, { marginBottom }]}>{tx('title_newUserWelcome')}</Text>
+                        <Text style={signupStyles.headerDescription}>{tx('title_newUserWelcomeDescription')}</Text>
                     </View>
                     <View style={buttonContainer}>
                         {buttons.roundBlueBgButton(
-                            tx('button_signup'),
+                            tx('button_CreateAccount'),
                             this.onSignupPress,
                             null,
-                            'button_signup',
-                            { width: vars.roundedButtonWidth, marginBottom: vars.spacing.small.midi2x }
+                            'button_CreateAccount',
+                            { width: vars.wideRoundedButtonWidth, marginBottom: vars.spacing.small.midi2x }
                         )}
                         {buttons.roundWhiteBgButton(
                             tx('button_login'),
-                            onLoginPress,
+                            this.onLoginPress,
                             null,
                             'button_login',
-                            { width: vars.roundedButtonWidth }
+                            { width: vars.wideRoundedButtonWidth }
                         )}
                     </View>
                 </View>
