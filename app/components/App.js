@@ -32,29 +32,18 @@ export default class App extends SafeComponent {
         this.handleOpenURL({ url: event });
     };
 
-    async handleOpenURL(event) {
-        await promiseWhen(() => routes.main.contactStateLoaded);
-
+    handleOpenURL = async (event) => {
         if (event && event.url && socket.authenticated) {
-            routes.main.files();
-            fileState.goToRoot();
-
             const url = decodeURIComponent(event.url);
             const json = url.split('://')[1]; // url format: {urlScheme}://{data}
             const { files, path } = JSON.parse(json);
 
-            const firstFile = files[0];
-            const fileProps = {
-                fileName: firstFile,
-                ext: firstFile.split('.')[1],
-                url: `${path}/${firstFile}`
-            };
-
-            fileState.uploadInFiles(fileProps);
+            const file = files[0];
+            await this.upload(`${path}/${file}`, file, file.split('.')[1]);
         }
     }
 
-    async tryUploadFile(sharedFile) {
+    tryUploadFile = async (sharedFile) => {
         if (sharedFile) {
             const fileInfo = await RNFS.stat(sharedFile);
             const file = fileInfo.originalFilepath.split('/').slice(-1).toString();
