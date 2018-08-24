@@ -19,12 +19,9 @@ const buttonContainer = {
 
 @observer
 export default class SignupTos extends SafeComponent {
-    @action.bound handleAcceptButton() {
-        signupState.next();
-    }
-
-    @action.bound handleDeclineButton() {
-        // cancel signup modal
+    @action.bound async finishSignup() {
+        await signupState.finishAccountCreation();
+        await signupState.finishSignUp();
     }
 
     renderThrow() {
@@ -49,7 +46,7 @@ export default class SignupTos extends SafeComponent {
                         <View style={{ width: 24 }} />
                         {buttons.roundBlueBgButton(
                             tx('button_accept'),
-                            signupState.next,
+                            this.finishSignup,
                             null,
                             'button_accept')}
                     </View>
