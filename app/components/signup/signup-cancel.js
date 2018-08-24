@@ -17,7 +17,6 @@ import routes from '../routes/routes';
 const buttonContainer = {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end',
     marginTop: vars.spacing.small.mini,
     marginBottom: vars.spacing.small.maxi2x
 };
