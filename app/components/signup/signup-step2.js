@@ -128,13 +128,13 @@ export default class SignupStep2 extends SafeComponent {
                         testID="username" />
                     <View style={signupStyles.separator} />
                     {this.suggestionBlock}
-                    <View style={{ alignItems: 'flex-end' }}>
+                    <View style={{ alignItems: 'flex-end', marginVertical: 30 }}>
                         {buttons.roundBlueBgButton(
                             tx('button_next'),
                             this.handleNextButton,
                             this.isNextDisabled,
                             'button_next',
-                            { width: vars.signupButtonWidth, marginTop: 30 })}
+                            { width: vars.signupButtonWidth })}
                     </View>
                 </View>
             </View>

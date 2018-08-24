@@ -85,7 +85,7 @@ export default class SignupStep3 extends SafeComponent {
                             this.handleNextButton,
                             this.isNextDisabled,
                             'button_create',
-                            { width: vars.signupButtonWidth, marginTop: 30 })}
+                            { width: vars.signupButtonWidth, marginVertical: 30 })}
                     </View>
                 </View>
             </View>

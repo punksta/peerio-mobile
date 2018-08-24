@@ -75,7 +75,8 @@ const separator = {
 const suggestionContainer = {
     height: 40,
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    flex: 1
 };
 const suggestionTitle = {
     color: vars.textBlack54,
