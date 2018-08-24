@@ -3,6 +3,8 @@ import { observer } from 'mobx-react/native';
 import { View, ScrollView, StatusBar } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import SnackBarConnection from '../snackbars/snackbar-connection';
+import SnackBar from '../snackbars/snackbar';
+import Bottom from '../controls/bottom';
 
 @observer
 export default class LayoutSignup extends SafeComponent {
@@ -22,17 +24,20 @@ export default class LayoutSignup extends SafeComponent {
 
     renderThrow() {
         return (
-            <ScrollView
-                automaticallyAdjustContentInsets={false}
-                alwaysBounceVertical={false}
-                style={{ flexGrow: 1 }}>
-                {this.props.body}
-                {this.props.footer}
-                <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+            <View style={{ flexGrow: 1 }}>
+                <ScrollView
+                    automaticallyAdjustContentInsets={false}
+                    alwaysBounceVertical={false}
+                    style={{ flexGrow: 1 }}>
+                    {this.props.body}
+                    {this.props.footer}
+                    <StatusBar hidden key="statusBar" />
+                </ScrollView>
+                <Bottom>
                     <SnackBarConnection />
-                </View>
-                <StatusBar hidden key="statusBar" />
-            </ScrollView>
+                    <SnackBar />
+                </Bottom>
+            </View>
         );
     }
 }

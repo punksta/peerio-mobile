@@ -7,8 +7,6 @@ import { wizard } from '../../styles/styles';
 import Wizard from '../wizard/wizard';
 
 import signupState from './signup-state';
-import Bottom from '../controls/bottom';
-import SnackBar from '../snackbars/snackbar';
 import WhiteLabel from '../whitelabel/white-label-components';
 
 export default class SignupWizard extends Wizard {
@@ -25,7 +23,6 @@ export default class SignupWizard extends Wizard {
             <View
                 style={[style.containerFlex]}>
                 {this.wizard()}
-                <Bottom><SnackBar /></Bottom>
             </View>
         );
         return <LayoutSignup body={body} autoScroll />;
