@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.335.0"></a>
+# [3.335.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.334.0...v3.335.0) (2018-08-24)
+
+
+### Bug Fixes
+
+* round button fontweight [branch ch12505] ([#290](https://github.com/PeerioTechnologies/peerio-mobile/issues/290)) ([1a23615](https://github.com/PeerioTechnologies/peerio-mobile/commit/1a23615))
+* view rendering inside Text ([154ae5a](https://github.com/PeerioTechnologies/peerio-mobile/commit/154ae5a))
+
+
+### Features
+
+* add activity overlay to signup layout ([ec56411](https://github.com/PeerioTechnologies/peerio-mobile/commit/ec56411))
+* adding asset protocol ([8a628db](https://github.com/PeerioTechnologies/peerio-mobile/commit/8a628db))
+* backup key reminder topdrawer ([e357577](https://github.com/PeerioTechnologies/peerio-mobile/commit/e357577))
+* multiple no-key tag correct key parsing support ([d60a3a7](https://github.com/PeerioTechnologies/peerio-mobile/commit/d60a3a7))
+* pdf preview and save pdf ([d91463d](https://github.com/PeerioTechnologies/peerio-mobile/commit/d91463d))
+* refactor Avatar component ✨ ([#289](https://github.com/PeerioTechnologies/peerio-mobile/issues/289)) ([5e49329](https://github.com/PeerioTechnologies/peerio-mobile/commit/5e49329))
+* wire up final signup steps ([44c0435](https://github.com/PeerioTechnologies/peerio-mobile/commit/44c0435))
+* wire up suggestions. fix nextdisabled logic ([a7c8a36](https://github.com/PeerioTechnologies/peerio-mobile/commit/a7c8a36))
+* wire up top drawer component for key back up ([cf5ed50](https://github.com/PeerioTechnologies/peerio-mobile/commit/cf5ed50))
+
+
+
 <a name="3.334.0"></a>
 # [3.334.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.333.0...v3.334.0) (2018-08-15)
 
