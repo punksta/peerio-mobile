@@ -1,6 +1,6 @@
 import React from 'react';
 import RNFS from 'react-native-fs';
-import { View, PanResponder, Linking, DeviceEventEmitter,
+import { View, PanResponder, Linking, DeviceEventEmitter, PermissionsAndroid,
     AppState, ActivityIndicator, NativeModules,
     Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -41,18 +41,33 @@ export default class App extends SafeComponent {
             const file = files[0];
             await this.upload(`${path}/${file}`, file, file.split('.')[1]);
         }
-    }
+    };
 
     tryUploadFile = async (sharedFile) => {
         if (sharedFile) {
-            const fileInfo = await RNFS.stat(sharedFile);
-            const file = fileInfo.originalFilepath.split('/').slice(-1).toString();
+            const readPermission = await this.getStoragePermission();
+            if (readPermission) {
+                const fileInfo = await RNFS.stat(sharedFile);
+                const file = fileInfo.originalFilepath.split('/').slice(-1).toString();
 
-            const fileName = file.split('.')[0];
-            const ext = file.split('.')[1];
+                const fileName = file.split('.')[0];
+                const ext = file.split('.')[1];
 
-            await this.upload(sharedFile, fileName, ext);
+                await this.upload(sharedFile, fileName, ext);
+            }
         }
+    };
+
+    async getStoragePermission() {
+        try {
+            const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                return true;
+            }
+        } catch (err) {
+            console.warn(err);
+        }
+        return false;
     }
 
     async upload(path, fileName, extenstion) {
