@@ -18,7 +18,7 @@ const buttonContainer = {
 };
 
 @observer
-export default class SignupTos extends SafeComponent {
+export default class SignupShareData extends SafeComponent {
     @action.bound handleAcceptButton() {
         signupState.next();
     }
@@ -33,25 +33,25 @@ export default class SignupTos extends SafeComponent {
             <View style={signupStyles.page}>
                 <View style={signupStyles.container2}>
                     <Text semibold serif style={signupStyles.headerStyle2}>
-                        {tx('title_termsOfUseSentenceCase')}
+                        {tx('title_shareUsageData')}
                     </Text>
                     <Text style={signupStyles.description}>
-                        {tx('title_termsDescription_mobile')}
+                        {tx('title_shareUsageDataDescription')}
                     </Text>
                     {/* tos drawers */}
                     <View style={buttonContainer}>
                         {buttons.blueTextButton(
-                            tx('button_decline'),
-                            signupState.prev,
-                            null,
-                            null,
-                            'button_decline')}
-                        <View style={{ width: 24 }} />
-                        {buttons.roundBlueBgButton(
-                            tx('button_accept'),
+                            tx('button_notNow'),
                             signupState.next,
                             null,
-                            'button_accept')}
+                            null,
+                            'button_notNow')}
+                        <View style={{ width: 24 }} />
+                        {buttons.roundBlueBgButton(
+                            tx('button_share'),
+                            signupState.next,
+                            null,
+                            'button_share')}
                     </View>
                 </View>
             </View>

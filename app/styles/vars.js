@@ -321,7 +321,7 @@ const vars = {
     button: {
         touchableHeight: 48,
         buttonHeight: 36,
-        minWidth: 72,
+        minWidth: 96,
         borderRadius: 24,
         paddingHorizontal: scaleDim(12),
         marginVertical: scaleDim(8),

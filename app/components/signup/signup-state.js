@@ -8,6 +8,7 @@ class SignupState extends RoutedState {
     @observable email = '';
     @observable firstName = '';
     @observable lastName = '';
+    @observable passphrase = '';
     @observable pin = '';
     @observable _current = 0;
     get current() { return this._current; }
@@ -46,7 +47,7 @@ class SignupState extends RoutedState {
 
     generatePassphrase = () => crypto.keys.getRandomAccountKeyHex();
 
-    @action async next() {
+    @action.bound async next() {
         if (!this.passphrase) this.passphrase = await this.generatePassphrase();
         if (this.keyBackedUp && !User.current) await this.finishAccountCreation(); // TODO tos accepted
         this.current++;

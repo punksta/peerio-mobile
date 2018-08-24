@@ -5,7 +5,7 @@ import SignupStep3 from '../../signup/signup-step3';
 import SignupGenerateAK from '../../signup/signup-generate-ak';
 import SignupBackupAK from '../../signup/signup-backup-ak';
 import SignupTermsOfUse from '../../signup/signup-tos';
-// import SignupShareData from '../../signup/signup-share-data';
+import SignupShareData from '../../signup/signup-share-data';
 
 
 const signupStep1 = () => <SignupStep1 />;
@@ -14,7 +14,7 @@ const signupStep3 = () => <SignupStep3 />;
 const signupGenerateAK = () => <SignupGenerateAK />;
 const signupBackupAK = () => <SignupBackupAK />;
 const signupTermsOfUse = () => <SignupTermsOfUse />;
-// const signupShareData = () => <SignupShareData />;
+const signupShareData = () => <SignupShareData />;
 
 const PAGES = {
     signupStep1,
@@ -22,8 +22,8 @@ const PAGES = {
     signupStep3,
     signupGenerateAK,
     signupBackupAK,
-    signupTermsOfUse
-    // signupShareData
+    signupTermsOfUse,
+    signupShareData
 };
 
 const PAGE_NAMES = Object.keys(PAGES);
