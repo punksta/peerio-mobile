@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactActivityDelegate;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 public class LaunchActivityDelegate extends ReactActivityDelegate {
     private final @Nullable Activity mActivity;
@@ -18,7 +20,22 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public boolean onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        mActivity.setIntent(intent);
+
+        return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
+            if (context == null) {
+                return;
+            }
+
         Intent intent = mActivity.getIntent();
         if (intent.getExtras() != null) {
             String type = intent.getType();
@@ -29,9 +46,28 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
                     handleSendText(intent);
                 } else if (type.startsWith("image/")) {
                     handleSendFile(intent);
+                    context.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                        .emit("resumedAct1", intent.toString());
                 }
             }
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // Intent intent = mActivity.getIntent();
+        // if (intent.getExtras() != null) {
+        //     String type = intent.getType();
+
+        //     mInitialProps = new Bundle();
+        //     if (Intent.ACTION_SEND.equals(intent.getAction()) && type != null) {
+        //         if ("text/plain".equals(type)) {
+        //             handleSendText(intent);
+        //         } else if (type.startsWith("image/")) {
+        //             handleSendFile(intent);
+        //         }
+        //     }
+        // }
         super.onCreate(savedInstanceState);
     }
 

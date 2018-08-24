@@ -3,12 +3,12 @@ package com.peerio.app;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.content.Intent;
 
 import com.facebook.react.*;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.facebook.react.ReactActivityDelegate;
 
 public class MainActivity extends ReactActivity {
     /**
@@ -22,6 +22,13 @@ public class MainActivity extends ReactActivity {
         if (BuildConfig.DEBUG) return;
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,
                 WindowManager.LayoutParams.FLAG_SECURE);
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        setIntent(intent);
     }
 
     @Override

@@ -1,6 +1,6 @@
 import React from 'react';
 import RNFS from 'react-native-fs';
-import { View, PanResponder, Linking,
+import { View, PanResponder, Linking, DeviceEventEmitter,
     AppState, ActivityIndicator, NativeModules,
     Dimensions, PixelRatio, Platform, StatusBar } from 'react-native';
 import { observer } from 'mobx-react/native';
@@ -183,3 +183,11 @@ export default class App extends SafeComponent {
         );
     }
 }
+
+DeviceEventEmitter.addListener(`resumedAct`, response => {
+    console.log(`>>> ${response}`);
+});
+
+DeviceEventEmitter.addListener(`resumedAct1`, response => {
+    console.log(`>>> ${response}`);
+});
