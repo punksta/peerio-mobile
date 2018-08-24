@@ -62,10 +62,12 @@ export default class SignupStep2 extends SafeComponent {
             borderWidth: 1,
             borderRadius: 16,
             marginRight: vars.spacing.small.midi2x,
+            marginBottom: vars.spacing.small.midi,
             paddingHorizontal: vars.spacing.small.midi
         };
         const textStyle = {
-            color: vars.peerioPurple
+            color: vars.peerioPurple,
+            backgroundColor: 'transparent'
         };
 
         return (
@@ -77,6 +79,25 @@ export default class SignupStep2 extends SafeComponent {
                 </View>
             </TouchableOpacity>
         );
+    }
+
+    get suggestionBlock() {
+        if (!this.suggestions) return null;
+        return (
+            <View style={{ flexDirection: 'row' }}>
+                <View>
+                    <Text style={signupStyles.suggestionTitle}>{tx('title_available')}</Text>
+                </View>
+                <View style={signupStyles.suggestionContainer}>
+                    {this.suggestionPill(this.suggestions[0])}
+                    {this.suggestionPill(this.suggestions[1])}
+                    {this.suggestionPill(this.suggestions[2])}
+                    {this.suggestionPill(this.suggestions[2])}
+                    {this.suggestionPill(this.suggestions[2])}
+                </View>
+            </View>
+        );
+
     }
 
     renderThrow() {
@@ -93,7 +114,7 @@ export default class SignupStep2 extends SafeComponent {
                     </View>
                     <View style={signupStyles.headerContainer}>
                         <Text semibold style={signupStyles.headerStyle}>{tx('title_createYourAccount')}</Text>
-                        <Text style={signupStyles.headerDescription}>{tx('title_pickUniqueUsername')}</Text>
+                        <Text style={signupStyles.headerDescription}>{tx('title_usernameHeading')}</Text>
                     </View>
                     <StyledTextInput
                         state={this.usernameState}
@@ -106,12 +127,7 @@ export default class SignupStep2 extends SafeComponent {
                         ref={this.usernameInputRef}
                         testID="username" />
                     <View style={signupStyles.separator} />
-                    {this.suggestions ? (<View style={signupStyles.suggestionContainer}>
-                        <Text style={signupStyles.suggestionTitle}>{tx('title_available')}</Text>
-                        {this.suggestionPill(this.suggestions[0])}
-                        {this.suggestionPill(this.suggestions[1])}
-                        {this.suggestionPill(this.suggestions[2])}
-                    </View>) : null}
+                    {this.suggestionBlock}
                     <View style={{ alignItems: 'flex-end' }}>
                         {buttons.roundBlueBgButton(
                             tx('button_next'),
