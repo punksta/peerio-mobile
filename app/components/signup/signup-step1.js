@@ -69,7 +69,7 @@ export default class SignupStep1 extends SafeComponent {
                     </View>
                     <View style={signupStyles.headerContainer}>
                         <Text semibold style={signupStyles.headerStyle}>{tx('title_createYourAccount')}</Text>
-                        <Text style={signupStyles.headerDescription}>{tx('title_whatIsYourName')}</Text>
+                        <Text style={signupStyles.headerDescription}>{tx('title_nameHeading')}</Text>
                     </View>
                     <StyledTextInput
                         state={this.firstnameState}

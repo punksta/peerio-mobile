@@ -3,7 +3,6 @@ import vars from './vars';
 const pagePadding = vars.spacing.medium.maxi2x;
 
 const page = {
-    flex: 1,
     backgroundColor: vars.white
 };
 const progressBarContainer = {
@@ -23,6 +22,7 @@ const emptyProgressBar = {
     backgroundColor: vars.black12
 };
 const container = {
+    flex: 0,
     paddingHorizontal: pagePadding,
     paddingTop: vars.spacing.large.mini2x
 };

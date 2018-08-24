@@ -2,7 +2,6 @@ import vars from './vars';
 import common from './common';
 
 const outerStyle = {
-    flex: 1,
     flexGrow: 1
 };
 
