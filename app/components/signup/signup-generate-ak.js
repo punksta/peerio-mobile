@@ -12,7 +12,7 @@ import SafeComponent from '../shared/safe-component';
 export default class SignupGenerateAk extends SafeComponent {
     @action.bound componentDidMount() {
         // TODO replace timeout with wait for animation to finish
-        setTimeout(() => { signupState.next(); }, 2000);
+        // setTimeout(() => { signupState.next(); }, 2000);
     }
 
     renderThrow() {
@@ -27,15 +27,14 @@ export default class SignupGenerateAk extends SafeComponent {
                     </Text>
                     <View style={{
                         height: 38,
-                        marginBottom: vars.spacing.small.midi2x,
-                        borderColor: 'red',
-                        borderWidth: 1
+                        marginBottom: 24,
+                        borderColor: vars.mediumGrayBg,
+                        borderWidth: 2,
+                        borderStyle: 'dotted',
+                        borderRadius: 6
                     }} />{/* TODO replace with lotti animation? */}
                     <Text style={signupStyles.description}>
-                        {tx('title_generatingAkTip')}
-                    </Text>
-                    <Text style={signupStyles.description}>
-                        {tx('title_generatingAkFunFact')}
+                        {tx('title_generatingAkExplanation')}
                     </Text>
                 </View>
             </View>
