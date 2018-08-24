@@ -1,6 +1,7 @@
 import vars from './vars';
 
-const pagePadding = vars.spacing.medium.maxi2x;
+const pagePaddingLarge = vars.spacing.medium.maxi2x;
+const pagePadding = vars.spacing.medium.mini2x;
 
 const page = {
     backgroundColor: vars.white
@@ -84,6 +85,7 @@ const suggestionTitle = {
 };
 
 export default {
+    pagePaddingLarge,
     pagePadding,
     page,
     progressBarContainer,

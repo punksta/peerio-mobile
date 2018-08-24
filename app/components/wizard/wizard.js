@@ -28,7 +28,12 @@ export default class Wizard extends SafeComponent {
     }
 
     _handleBack = () => {
-        // TODO waiting back button instructions from design
+        // TODO remove APP_LABEL condition when medcryptor sign up is up-to-date
+        // disable back after account has been created
+        if (process.env.APP_LABEL !== 'medcryptor' && this.index >= 3) {
+            return true;
+        }
+        // allow back
         if (this.index > 0) {
             this.index--;
             return true;

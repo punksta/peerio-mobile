@@ -8,12 +8,12 @@ import Text from '../controls/custom-text';
 
 const accountKeyStyle = {
     fontSize: vars.font.size.smaller,
-    color: '#E90162'
+    color: '#E90162',
+    letterSpacing: 3
 };
 
 const dottedBoxStyle = {
     height: 38,
-    marginBottom: 24,
     borderColor: vars.mediumGrayBg,
     borderWidth: 2,
     borderStyle: 'dotted',
@@ -29,10 +29,11 @@ export default class SignupGenerationBox extends SafeComponent {
     } */
 
     renderThrow() {
+        const { marginBottom } = this.props;
         /* TODO replace with lotti animation? */
         return (
-            <View style={dottedBoxStyle}>
-                <Text style={accountKeyStyle} monospace>{signupState.passphrase}</Text>
+            <View style={[dottedBoxStyle, { marginBottom: marginBottom ? 24 : 0 }]}>
+                <Text semibold style={accountKeyStyle}>{signupState.passphrase}</Text>
             </View>
         );
     }

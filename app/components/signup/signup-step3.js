@@ -16,6 +16,10 @@ import CheckBox from '../shared/checkbox';
 const { validators } = validation;
 const { email } = validators;
 
+const checkboxContainer = {
+    marginBottom: vars.spacing.small.maxi
+};
+
 @observer
 export default class SignupStep3 extends SafeComponent {
     @observable checked = false;
@@ -40,7 +44,7 @@ export default class SignupStep3 extends SafeComponent {
 
     @action.bound handleNextButton() {
         signupState.email = this.emailState.value;
-        signupState.newsletterSubscription = this.checked;
+        signupState.subscribeToPromoEmails = this.checked;
         signupState.next();
     }
 
@@ -73,12 +77,14 @@ export default class SignupStep3 extends SafeComponent {
                         ref={this.emailInputRef}
                         testID="email" />
                     <View style={[signupStyles.separator, { marginBottom: 12 }]} />
-                    <CheckBox
-                        alignLeft
-                        isChecked={this.checked}
-                        onChange={this.toggleChecked}
-                        text={tx('title_subscribeNewsletter')}
-                        accessibilityLabel={tx('title_subscribeNewsletter')} />
+                    <View style={checkboxContainer}>
+                        <CheckBox
+                            alignLeft
+                            isChecked={this.checked}
+                            onChange={this.toggleChecked}
+                            text={tx('title_subscribeNewsletter')}
+                            accessibilityLabel={tx('title_subscribeNewsletter')} />
+                    </View>
                     <View style={{ alignItems: 'flex-end' }}>
                         {buttons.roundBlueBgButton(
                             tx('button_create'),

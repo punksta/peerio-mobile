@@ -28,8 +28,16 @@ const filenameStyle = {
     backgroundColor: 'transparent'
 };
 
+const FILE_SIZE = '76KB';
+const filesizeStyle = {
+    fontSize: vars.font.size.smaller,
+    color: vars.textBlack54,
+    backgroundColor: 'transparent'
+};
+
 const previewBox = {
-    borderRadius: 12,
+    borderTopRightRadius: 12,
+    borderTopLeftRadius: 12,
     backgroundColor: '#dce8f6',
     paddingHorizontal: 24
 };
@@ -90,12 +98,16 @@ export default class SignupPdfPreview extends SafeComponent {
                         <Text style={filenameStyle}>
                             {signupState.backupFileName}
                         </Text>
+                        <Text style={filesizeStyle}>
+                            {FILE_SIZE}
+                        </Text>
                     </View>
                     {buttons.roundBlueBgButton(
                         tx('button_downloadPdf'),
                         signupState.saveAccountKey,
                         null,
-                        'button_downloadPdf')}
+                        'button_downloadPdf',
+                        { marginHorizontal: vars.spacing.small.mini2x })}
                 </View>
             </View>
         );

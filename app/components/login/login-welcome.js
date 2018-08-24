@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image } from 'react-native';
+import { View, Image, Dimensions } from 'react-native';
 import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import Text from '../controls/custom-text';
@@ -11,29 +11,41 @@ import buttons from '../helpers/buttons';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
 import SafeComponent from '../shared/safe-component';
 
+const logoWelcome = require('../../assets/peerio-logo-dark.png');
 const imageWelcome = require('../../assets/welcome-illustration.png');
 
+const { width } = Dimensions.get('window');
+
 const marginBottom = vars.spacing.medium.mini2x;
-const pagePadding = vars.spacing.medium.maxi2x;
+const imageWidth = Math.ceil(width - (2 * signupStyles.pagePadding));
 
 const logoBar = {
     height: vars.welcomeHeaderHeight,
     backgroundColor: vars.darkBlue
 };
-const buttonContainer = {
-    marginBottom: vars.spacing.small.maxi,
-    alignItems: 'flex-start'
-};
-const imageStyle = {
-    flex: 1,
-    flexGrow: 1,
+const illustrationStyle = {
     marginLeft: vars.spacing.large.maxi2x,
     marginRight: vars.spacing.small.maxi,
     marginBottom: vars.spacing.medium.mini2x
 };
+const buttonContainer = {
+    marginBottom: vars.spacing.small.maxi,
+    alignItems: 'flex-start'
+};
 
 @observer
 export default class LoginWelcome extends SafeComponent {
+    imageStyle(illustration) {
+        const asset = Image.resolveAssetSource(illustration);
+        const aspectRatio = asset.width / asset.height;
+        const imageHeight = Math.ceil(imageWidth / aspectRatio);
+        return {
+            flex: 1,
+            width: imageWidth,
+            height: imageHeight
+        };
+    }
+
     @action.bound onSignupPress() {
         loginState.routes.app.signupStep1();
     }
@@ -44,13 +56,13 @@ export default class LoginWelcome extends SafeComponent {
 
     render() {
         return (
-            <View style={[signupStyles.page, { paddingBottom: pagePadding, flexGrow: 1 }]}>
+            <View style={[signupStyles.page, { flexGrow: 1 }]}>
                 <DebugMenuTrigger>
                     <View style={logoBar}>
-                        <Image />{/*  TODO add Logo */}
+                        <Image source={logoWelcome} resizeMode="contain" style={this.imageStyle(logoWelcome)} />
                     </View>
                 </DebugMenuTrigger>
-                <View style={signupStyles.container}>
+                <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
                     <View style={{ marginBottom }}>
                         <Text semibold serif style={[signupStyles.headerStyle, { marginBottom }]}>{tx('title_newUserWelcome')}</Text>
                         <Text style={signupStyles.headerDescription}>{tx('title_newUserWelcomeDescription')}</Text>
@@ -61,18 +73,20 @@ export default class LoginWelcome extends SafeComponent {
                             this.onSignupPress,
                             null,
                             'button_CreateAccount',
-                            { width: vars.wideRoundedButtonWidth, marginBottom: vars.spacing.small.midi2x }
+                            { width: vars.roundedButtonWidth, marginBottom: vars.spacing.small.midi2x }
                         )}
                         {buttons.roundWhiteBgButton(
                             tx('button_login'),
                             this.onLoginPress,
                             null,
                             'button_login',
-                            { width: vars.wideRoundedButtonWidth }
+                            { width: vars.roundedButtonWidth }
                         )}
                     </View>
                 </View>
-                <Image source={imageWelcome} style={imageStyle} resizeMode="contain" />
+                <Image source={imageWelcome}
+                    resizeMode="contain"
+                    style={[this.imageStyle(imageWelcome), illustrationStyle]} />
                 <ActivityOverlay large visible={loginState.isInProgress} />
             </View>
         );

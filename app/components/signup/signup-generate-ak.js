@@ -26,7 +26,7 @@ export default class SignupGenerateAk extends SafeComponent {
                     <Text style={signupStyles.headerDescription2}>
                         {tx('title_generatingAkDescription')}
                     </Text>
-                    <SignupGenerationBox />
+                    <SignupGenerationBox marginBottom />
                     <Text style={signupStyles.description}>
                         {tx('title_generatingAkExplanation')}
                     </Text>

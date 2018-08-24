@@ -50,9 +50,10 @@ export default class SignupBackupAk extends SafeComponent {
                     </Text>
                     <SignupGenerationBox />
                     <View style={buttonContainer}>
-                        {buttons.roundBlueBgButton(
+                        {buttons.blueTextButton(
                             tx('button_copy'),
                             this.copyAccountKey,
+                            null,
                             null,
                             'button_copy')}
                     </View>
@@ -62,7 +63,7 @@ export default class SignupBackupAk extends SafeComponent {
                     <View>
                         <SignupPdfPreview />
                     </View>
-                    <View style={buttonContainer}>
+                    <View style={[buttonContainer, { marginTop: vars.spacing.medium.maxi2x }]}>
                         {buttons.blueTextButton(
                             tx('button_skipBackup'),
                             signupState.next,

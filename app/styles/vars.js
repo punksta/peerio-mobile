@@ -199,7 +199,7 @@ const vars = {
     chatListItemDMHeight: 61,
     removeButtonHeight: 44,
     warningHeight: 70,
-    roundedButtonWidth: 132,
+    roundedButtonWidth: 155,
     wideRoundedButtonWidth: 190,
     menuWidthRatio: 0.8,
     animationDuration: 200,
