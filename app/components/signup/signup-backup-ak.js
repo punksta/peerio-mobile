@@ -9,6 +9,7 @@ import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import snackbarState from '../snackbars/snackbar-state';
 import SignupGenerationBox from './signup-generation-box';
+import SignupPdfPreview from './signup-pdf-preview';
 
 const buttonContainer = {
     alignItems: 'flex-end',
@@ -46,6 +47,9 @@ export default class SignupBackupAk extends SafeComponent {
                     <Text style={signupStyles.description}>
                         {tx('title_akBackupDescription')}
                     </Text>
+                    <View>
+                        <SignupPdfPreview />
+                    </View>
                     <View style={buttonContainer}>
                         {buttons.blueTextButton(
                             tx('button_skipBackup'),

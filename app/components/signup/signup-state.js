@@ -1,7 +1,8 @@
 import { observable, action } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
-import { User, crypto } from '../../lib/icebear';
+import { User, crypto, saveAccountKeyBackup, config } from '../../lib/icebear';
+import { tx } from '../utils/translator';
 
 class SignupState extends RoutedState {
     @observable username = '';
@@ -49,7 +50,7 @@ class SignupState extends RoutedState {
 
     @action.bound async next() {
         if (!this.passphrase) this.passphrase = await this.generatePassphrase();
-        if (this.keyBackedUp && !User.current) await this.finishAccountCreation(); // TODO tos accepted
+        // if (this.keyBackedUp && !User.current) await this.finishAccountCreation(); // TODO tos accepted
         this.current++;
     }
 
@@ -62,6 +63,29 @@ class SignupState extends RoutedState {
                 User.current = null;
                 this.reset();
             });
+    }
+
+    get backupFileName() {
+        return `${this.username}-${tx('title_appName')}.pdf`;
+    }
+
+    @action.bound async saveAccountKey() {
+        const { username, firstName, lastName, passphrase, backupFileName } = this;
+        const fileSavePath = config.FileStream.getTempCachePath(backupFileName);
+        await saveAccountKeyBackup(
+            fileSavePath,
+            `${firstName} ${lastName}`,
+            username,
+            passphrase
+        );
+        this.isInProgress = true;
+        try {
+            await config.FileStream.launchViewer(fileSavePath);
+            this.keyBackedUp = true;
+        } catch (e) {
+            console.error(e);
+        }
+        this.isInProgress = false;
     }
 
     // After account is created, user goes to Contact Sync rather than main route
