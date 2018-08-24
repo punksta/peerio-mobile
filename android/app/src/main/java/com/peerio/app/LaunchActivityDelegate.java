@@ -45,22 +45,6 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        Intent intent = mActivity.getIntent();
-        if (intent.getExtras() != null) {
-            String type = intent.getType();
-
-            mInitialProps = new Bundle();
-            if (Intent.ACTION_SEND.equals(intent.getAction()) && type != null) {
-                if (type.startsWith("image/")) {
-                    handleSendFile(intent);
-                }
-            }
-        }
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     protected Bundle getLaunchOptions() {
         return mInitialProps;
     }
@@ -69,7 +53,8 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
         Uri imageUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);
         
         if (imageUri != null) {
-           mInitialProps.putString("sharedFile", imageUri.toString());
+            mInitialProps = new Bundle();
+            mInitialProps.putString("sharedFile", imageUri.toString());
            
             ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
             if (context == null) {
