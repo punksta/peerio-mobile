@@ -1,7 +1,7 @@
 import React from 'react';
-import { observable, action } from 'mobx';
+import { observable, action, reaction } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, LayoutAnimation } from 'react-native';
 import randomWords from 'random-words';
 import Text from '../controls/custom-text';
 import { vars, signupStyles } from '../../styles/styles';
@@ -18,19 +18,11 @@ const { username } = validators;
 
 @observer
 export default class SignupStep2 extends SafeComponent {
-    // TODO set default to empty array
-    suggestions = [
-        'chehab94',
-        'karimchehab',
-        'chehabk'
-    ];
     usernameState = observable({ value: '' });
 
     @action.bound usernameInputRef(ref) { this.usernameInput = ref; }
 
     componentDidMount() {
-        // TODO wire up
-        // this.suggestions = suggestUsername(signupState.firstName, signupState.lastName);
         // QUICK SIGNUP DEV FLAG
         if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
             this.usernameInput.onChangeText(randomWords({ min: 2, max: 2, join: 'o' }).substring(0, 16));
@@ -40,6 +32,17 @@ export default class SignupStep2 extends SafeComponent {
             this.usernameState.value = signupState.username;
             this.usernameInput.onChangeText(this.usernameState.value);
         }
+
+        this.suggestionAnimationReaction = reaction(
+            () => signupState.usernameSuggestions,
+            () => LayoutAnimation.easeInEaseOut()
+        );
+
+        signupState.suggestUsernames();
+    }
+
+    componentWillUnmount() {
+        this.suggestionAnimationReaction();
     }
 
     @action.bound handleNextButton() {
@@ -47,14 +50,14 @@ export default class SignupStep2 extends SafeComponent {
         signupState.next();
     }
 
-    get isNextDisabled() { return socket.connected && (!this.usernameState.value || !this.usernameInput.isValid); }
+    get isNextDisabled() { return !socket.connected || !this.usernameState.value || !this.usernameInput.isValid; }
 
     @action.bound fillField(suggestion) {
         this.usernameState.value = suggestion;
         this.usernameInput.onChangeText(this.usernameState.value);
     }
 
-    suggestionPill(suggestion) {
+    suggestionPill = (suggestion) => {
         if (!suggestion) return null;
         const style = {
             height: 21,
@@ -72,6 +75,7 @@ export default class SignupStep2 extends SafeComponent {
 
         return (
             <TouchableOpacity
+                key={suggestion}
                 pressRetentionOffset={vars.retentionOffset}
                 onPress={() => this.fillField(suggestion)}>
                 <View style={style}>
@@ -82,22 +86,20 @@ export default class SignupStep2 extends SafeComponent {
     }
 
     get suggestionBlock() {
-        if (!this.suggestions) return null;
+        if (!signupState.usernameSuggestions.length) return null;
         return (
-            <View style={{ flexDirection: 'row' }}>
-                <View>
-                    <Text style={signupStyles.suggestionTitle}>{tx('title_available')}</Text>
-                </View>
-                <View style={signupStyles.suggestionContainer}>
-                    {this.suggestionPill(this.suggestions[0])}
-                    {this.suggestionPill(this.suggestions[1])}
-                    {this.suggestionPill(this.suggestions[2])}
-                    {this.suggestionPill(this.suggestions[2])}
-                    {this.suggestionPill(this.suggestions[2])}
+            <View>
+                <View style={signupStyles.separator} />
+                <View style={{ flexDirection: 'row' }}>
+                    <View>
+                        <Text style={signupStyles.suggestionTitle}>{tx('title_available')}</Text>
+                    </View>
+                    <View style={signupStyles.suggestionContainer}>
+                        {signupState.usernameSuggestions.map(this.suggestionPill)}
+                    </View>
                 </View>
             </View>
         );
-
     }
 
     renderThrow() {
@@ -126,7 +128,6 @@ export default class SignupStep2 extends SafeComponent {
                         returnKeyType="next"
                         ref={this.usernameInputRef}
                         testID="username" />
-                    <View style={signupStyles.separator} />
                     {this.suggestionBlock}
                     <View style={{ alignItems: 'flex-end', marginVertical: 30 }}>
                         {buttons.roundBlueBgButton(

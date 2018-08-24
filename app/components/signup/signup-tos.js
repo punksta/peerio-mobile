@@ -11,7 +11,7 @@ import buttons from '../helpers/buttons';
 import ViewWithDrawer from '../shared/view-with-drawer';
 import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
 import { drawerState } from '../states';
-import routes from '../routes/routes';
+import { socket } from '../../lib/icebear';
 
 const buttonContainer = {
     flexDirection: 'row',
@@ -55,14 +55,14 @@ export default class SignupTos extends SafeComponent {
                         {buttons.blueTextButton(
                             tx('button_decline'),
                             this.declineTos,
-                            null,
+                            !socket.connected,
                             null,
                             'button_decline')}
                         <View style={{ width: 24 }} />
                         {buttons.roundBlueBgButton(
                             tx('button_accept'),
                             this.finishSignup,
-                            null,
+                            !socket.connected,
                             'button_accept')}
                     </View>
                 </View>

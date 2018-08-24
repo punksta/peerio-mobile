@@ -1,8 +1,12 @@
 import { observable, action } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
-import { User, crypto, saveAccountKeyBackup, config } from '../../lib/icebear';
+import { User, crypto, saveAccountKeyBackup, config, validation } from '../../lib/icebear';
 import { tx } from '../utils/translator';
+
+const { validators } = validation;
+const { suggestUsername } = validators;
+
 
 class SignupState extends RoutedState {
     @observable username = '';
@@ -22,6 +26,7 @@ class SignupState extends RoutedState {
     @observable specialty = '';
     @observable role = '';
     @observable medicalId = '';
+    @observable usernameSuggestions = [];
 
     get isFirst() { return this.current === 0; }
 
@@ -39,6 +44,7 @@ class SignupState extends RoutedState {
         this.role = '';
         this.keyBackedUp = false;
         this.current = 0;
+        this.usernameSuggestions.clear();
         this.routes.app.loginWelcome();
 
         // hook for whitelabel signup state to reset itself
@@ -56,6 +62,14 @@ class SignupState extends RoutedState {
     }
 
     @action.bound prev() { (this.current > 0) ? this.current-- : this.exit(); }
+
+    @action.bound async suggestUsernames() {
+        try {
+            this.usernameSuggestions = await suggestUsername(this.firstName, this.lastName);
+        } catch (e) {
+            console.error(e);
+        }
+    }
 
     @action async finishSignUp() {
         return mainState.activateAndTransition(User.current)
@@ -125,4 +139,5 @@ class SignupState extends RoutedState {
 }
 
 const signupState = new SignupState();
+global.signupState = signupState;
 export default signupState;

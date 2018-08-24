@@ -44,14 +44,14 @@ export default class SignupStep1 extends SafeComponent {
         }
     }
 
-    @action.bound handleNextButton() {
+    @action.bound async handleNextButton() {
         signupState.firstName = this.firstnameState.value;
         signupState.lastName = this.lastnameState.value;
         signupState.next();
     }
 
     get isNextDisabled() {
-        return socket.connected && (!this.firstnameState.value ||
+        return !socket.connected || (!this.firstnameState.value ||
             !this.firstNameInput.isValid || !this.lastNameInput.isValid);
     }
 

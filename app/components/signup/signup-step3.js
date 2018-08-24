@@ -44,7 +44,7 @@ export default class SignupStep3 extends SafeComponent {
         signupState.next();
     }
 
-    get isNextDisabled() { return socket.connected && (!this.emailState.value || !this.emailInput.isValid); }
+    get isNextDisabled() { return !socket.connected || !this.emailState.value || !this.emailInput.isValid; }
 
     renderThrow() {
         return (

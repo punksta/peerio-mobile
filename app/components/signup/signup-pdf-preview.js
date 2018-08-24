@@ -24,7 +24,7 @@ const footer = {
 
 const filenameStyle = {
     fontSize: vars.font.size.smaller,
-    colors: vars.txtDark,
+    color: vars.txtDark,
     backgroundColor: 'transparent'
 };
 
