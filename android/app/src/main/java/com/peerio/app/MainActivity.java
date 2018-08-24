@@ -28,9 +28,11 @@ public class MainActivity extends ReactActivity {
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        setIntent(intent);
-        handleSendFile(intent);
+        if (intent.getExtras() != null) {
+            if (Intent.ACTION_SEND.equals(intent.getAction()) && intent.getType() != null) {
+                handleSendFile(intent);
+            }
+        }
     }
 
     void handleSendFile(Intent intent) {

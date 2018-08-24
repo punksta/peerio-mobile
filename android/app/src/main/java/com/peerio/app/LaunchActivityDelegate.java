@@ -21,13 +21,8 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = mActivity.getIntent();
         if (intent.getExtras() != null) {
-            String type = intent.getType();
-
-            mInitialProps = new Bundle();
-            if (Intent.ACTION_SEND.equals(intent.getAction()) && type != null) {
-                if (type.startsWith("image/")) {
-                    handleSendFile(intent);
-                }
+            if (Intent.ACTION_SEND.equals(intent.getAction()) && intent.getType() != null) {
+                handleSendFile(intent);
             }
         }
         super.onCreate(savedInstanceState);
