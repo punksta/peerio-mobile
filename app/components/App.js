@@ -132,8 +132,11 @@ export default class App extends SafeComponent {
         }
         Linking.getInitialURL().then(this.wakeUpAndHandleOpenURL);
         Linking.addEventListener('url', this.handleOpenURL);
-
+    
         this.tryUploadFile(this.props.sharedFile);
+        DeviceEventEmitter.addListener('sharedFile', sharedFile => {
+            this.tryUploadFile(sharedFile);
+        });
     }
 
     _handleAppStateChange(appState) {
@@ -183,11 +186,3 @@ export default class App extends SafeComponent {
         );
     }
 }
-
-DeviceEventEmitter.addListener(`resumedAct`, response => {
-    console.log(`>>> ${response}`);
-});
-
-DeviceEventEmitter.addListener(`resumedAct1`, response => {
-    console.log(`>>> ${response}`);
-});
