@@ -8,6 +8,7 @@ import { t, tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import snackbarState from '../snackbars/snackbar-state';
+import SignupGenerationBox from './signup-generation-box';
 
 const buttonContainer = {
     alignItems: 'flex-end',
@@ -28,14 +29,13 @@ export default class SignupBackupAk extends SafeComponent {
         return (
             <View style={signupStyles.page}>
                 <View style={signupStyles.container2}>
-                    <Text semibold style={signupStyles.headerStyle2}>
+                    <Text semibold serif style={signupStyles.headerStyle2}>
                         {tx('title_backupAk')}
                     </Text>
                     <Text style={signupStyles.headerDescription2}>
-                        {tx('title_backupAkDescription')}
+                        {tx('title_generatingAkDescription')}
                     </Text>
-                    {/* TODO replace with account key */}
-                    <View style={{ height: 38, borderColor: 'red', borderWidth: 1 }} />
+                    <SignupGenerationBox />
                     <View style={buttonContainer}>
                         {buttons.roundBlueBgButton(
                             tx('button_copy'),
@@ -44,19 +44,16 @@ export default class SignupBackupAk extends SafeComponent {
                             'button_copy')}
                     </View>
                     <Text style={signupStyles.description}>
-                        {tx('title_copyAkTip')}
+                        {tx('title_akBackupDescription')}
                     </Text>
-                    <Text style={signupStyles.description}>
-                        {tx('title_copyAkTip2')}
-                    </Text>
-                </View>
-                <View style={{ position: 'absolute', bottom: 56, right: 20 }}>
-                    {buttons.blueTextButton(
-                        tx('button_skipBackup'),
-                        signupState.next,
-                        null,
-                        null,
-                        'button_skipBackup')}
+                    <View style={buttonContainer}>
+                        {buttons.blueTextButton(
+                            tx('button_skipBackup'),
+                            signupState.next,
+                            null,
+                            null,
+                            'button_skipBackup')}
+                    </View>
                 </View>
             </View>
         );

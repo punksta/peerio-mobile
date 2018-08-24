@@ -53,7 +53,7 @@ export default class LoginWelcome extends SafeComponent {
                 </DebugMenuTrigger>
                 <View style={signupStyles.container}>
                     <View style={{ marginBottom }}>
-                        <Text semibold style={[signupStyles.headerStyle, { marginBottom }]}>{tx('title_newUserWelcome')}</Text>
+                        <Text semibold serif style={[signupStyles.headerStyle, { marginBottom }]}>{tx('title_newUserWelcome')}</Text>
                         <Text style={signupStyles.headerDescription}>{tx('title_newUserWelcomeDescription')}</Text>
                     </View>
                     <View style={buttonContainer}>

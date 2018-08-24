@@ -24,11 +24,11 @@ export default class SignupTos extends SafeComponent {
             // TODO <ViewWithDrawer />
             <View style={signupStyles.page}>
                 <View style={signupStyles.container2}>
-                    <Text semibold style={signupStyles.headerStyle2}>
-                        {tx('title_tos')}
+                    <Text semibold serif style={signupStyles.headerStyle2}>
+                        {tx('title_termsOfUseSentenceCase')}
                     </Text>
                     <Text style={signupStyles.description}>
-                        {tx('title_tosDescription')}
+                        {tx('title_termsDescription_mobile')}
                     </Text>
                     {/* tos drawers */}
                     {/* buttons */}

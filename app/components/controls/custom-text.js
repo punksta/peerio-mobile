@@ -13,7 +13,7 @@ import { vars } from '../../styles/styles';
 @observer
 export default class Text extends SafeComponent {
     renderThrow() {
-        const { semibold, bold, italic, monospace } = this.props;
+        const { semibold, bold, italic, monospace, serif } = this.props;
         const style = {};
         const font = [vars.peerioFontFamily];
         if (Platform.OS === 'android') {
@@ -33,6 +33,13 @@ export default class Text extends SafeComponent {
             style.fontFamily = style.fontFamily.replace(' ', '');
         }
         if (monospace) style.fontFamily = 'Courier';
+        if (serif) {
+            if (Platform.OS === 'android') {
+                style.fontFamily = 'serif';
+            } else {
+                style.fontFamily = 'IowanOldStyle-Roman';
+            }
+        }
         return (
             <RNText {...this.props} style={[this.props.style, style]}>
                 {this.props.children}
