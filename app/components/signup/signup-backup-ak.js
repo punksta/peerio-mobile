@@ -1,5 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
+import { when } from 'mobx';
 import { View, Clipboard } from 'react-native';
 import Text from '../controls/custom-text';
 import { vars, signupStyles } from '../../styles/styles';
@@ -19,11 +20,22 @@ const buttonContainer = {
 
 @observer
 export default class SignupBackupAk extends SafeComponent {
+    componentDidMount() {
+        this.keyBackedUpReaction = when(() => signupState.keyBackedUp, signupState.next);
+    }
+
+    componentWillUnmount() {
+        this.keyBackedUpReaction();
+    }
+
     copyAccountKey() {
-        // TODO set signupState flag for drawer to not show in next step
-        Clipboard.setString(signupState.passphrase);
-        snackbarState.pushTemporary(t('title_copied'));
-        signupState.next();
+        try {
+            Clipboard.setString(signupState.passphrase);
+            snackbarState.pushTemporary(t('title_copied'));
+            signupState.keyBackedUp = true;
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     renderThrow() {

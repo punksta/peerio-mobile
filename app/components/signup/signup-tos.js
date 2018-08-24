@@ -8,6 +8,9 @@ import signupState from './signup-state';
 import { tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
+import ViewWithDrawer from '../shared/view-with-drawer';
+import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
+import { drawerState } from '../states';
 
 const buttonContainer = {
     flexDirection: 'row',
@@ -19,6 +22,12 @@ const buttonContainer = {
 
 @observer
 export default class SignupTos extends SafeComponent {
+    componentDidMount() {
+        if (!drawerState.globalDrawer) {
+            drawerState.addDrawer(TopDrawerBackupAccountKey);
+        }
+    }
+
     @action.bound async finishSignup() {
         await signupState.finishAccountCreation();
         await signupState.finishSignUp();
@@ -27,7 +36,7 @@ export default class SignupTos extends SafeComponent {
     renderThrow() {
         return (
             // TODO <ViewWithDrawer />
-            <View style={signupStyles.page}>
+            <ViewWithDrawer style={signupStyles.page}>
                 <View style={signupStyles.container2}>
                     <Text semibold serif style={signupStyles.headerStyle2}>
                         {tx('title_termsOfUseSentenceCase')}
@@ -51,7 +60,7 @@ export default class SignupTos extends SafeComponent {
                             'button_accept')}
                     </View>
                 </View>
-            </View>
+            </ViewWithDrawer>
         );
     }
 }

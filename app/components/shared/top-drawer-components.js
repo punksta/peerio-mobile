@@ -14,6 +14,25 @@ const MAINTENANCE_TIME1 = '2 AM';
 const MAINTENANCE_TIME2 = '5 AM';
 
 @observer
+class TopDrawerBackupAccountKey extends SafeComponent {
+    renderThrow() {
+        return (
+            <TopDrawer
+                {...this.props}
+                heading={tx('title_backupAk')}
+                image={icons.imageIcon(
+                    require('../../assets/info-icon.png'),
+                    vars.iconSizeMedium2x
+                )}
+                descriptionLine1={tx('title_backupAkReminder')}
+                buttonText={tx('button_backupNow')}
+                buttonAction={() => console.log('open link')} // TODO fix link
+            />
+        );
+    }
+}
+
+@observer
 class TopDrawerMaintenance extends SafeComponent {
     renderThrow() {
         return (
@@ -61,4 +80,4 @@ class TopDrawerNewContact extends SafeComponent {
     }
 }
 
-export { TopDrawerMaintenance, TopDrawerNewContact };
+export { TopDrawerMaintenance, TopDrawerNewContact, TopDrawerBackupAccountKey };

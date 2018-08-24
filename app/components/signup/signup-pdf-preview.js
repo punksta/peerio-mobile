@@ -62,12 +62,7 @@ const textBoxText = {
 
 @observer
 export default class SignupPdfPreview extends SafeComponent {
-    /* async componentWillMount() {
-        signupState.passphrase = await signupState.generatePassphrase();
-    } */
-
     renderThrow() {
-        /* TODO replace with lotti animation? */
         return (
             <View style={roundedBoxStyle}>
                 <View style={previewBox}>
