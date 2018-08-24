@@ -24,14 +24,11 @@ public class LaunchActivityDelegate extends ReactActivityDelegate {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent intent = mainActivity.getIntent();
-        handleSendFile(intent);
-        super.onCreate(savedInstanceState);
-    }
-
-    void handleSendFile(Intent intent) {
         String fileUri = Utils.getUriFromIntent(intent);
         if (fileUri != null) {
             initialProps.putString("sharedFile", fileUri.toString());
         }
+        
+        super.onCreate(savedInstanceState);
     }
 }

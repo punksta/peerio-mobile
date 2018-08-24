@@ -27,10 +27,7 @@ public class MainActivity extends ReactActivity {
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        handleSendFile(intent);
-    }
-
-    void handleSendFile(Intent intent) {
+        
         ReactContext context = this.getReactInstanceManager().getCurrentReactContext();
         String fileUri = Utils.getUriFromIntent(intent);
         
