@@ -11,7 +11,7 @@ import StyledTextInput from '../shared/styled-text-input';
 import { socket, validation } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
-import icons from '../helpers/icons';
+import SignupButtonBack from './signup-button-back';
 
 const { validators } = validation;
 const { username } = validators;
@@ -111,9 +111,7 @@ export default class SignupStep2 extends SafeComponent {
                     <View style={signupStyles.emptyProgressBar} />
                 </View>
                 <View style={signupStyles.container}>
-                    <View style={signupStyles.backButtonContainer}>
-                        {icons.basic('arrow-back', vars.darkBlue, signupState.prev, null, null, true, 'back')}
-                    </View>
+                    <SignupButtonBack />
                     <View style={signupStyles.headerContainer}>
                         <Text semibold serif style={signupStyles.headerStyle}>{tx('title_createYourAccount')}</Text>
                         <Text style={signupStyles.headerDescription}>{tx('title_usernameHeading')}</Text>
