@@ -1,32 +1,28 @@
-import RNFS from 'react-native-fs';
-
-const isIOS = !!RNFS.MainBundlePath;
-const root = RNFS.MainBundlePath || RNFS.DocumentDirectoryPath;
-const formatPath = isIOS ?
-    (file) => `${root}/${file}` :
-    (file) => file;
-
-const readFile = (isIOS ? RNFS.readFile : RNFS.readFileAssets).bind(RNFS);
-const existsFile = (isIOS ? RNFS.exists : RNFS.existsAssets).bind(RNFS);
+import { config } from '../lib/peerio-icebear';
 
 module.exports = {
-    loadLocaleFile(lc) {
-        const def = require('./peerio-icebear/copy/en.json');
-        if (lc === 'en') return Promise.resolve(def);
-        const path = formatPath(`locales/${lc}.json`);
-        return existsFile(path)
-            .then(exists => (exists ? readFile(path).then(JSON.parse) : def))
-            .catch(e => {
-                console.error(e);
-                return def;
-            });
+    async loadLocaleFile(lc) {
+        const defaultLocale = require('./peerio-icebear/copy/en.json');
+        if (lc === 'en') return defaultLocale;
+        const path = config.FileStream.formatAssetsPath(`locales/${lc}.json`);
+        try {
+            if (await config.FileStream.existsAssetsFile(path)) {
+                const file = await config.FileStream.readAssetsFile(path);
+                return JSON.parse(file);
+            }
+        } catch (e) {
+            console.error(e);
+        }
+        return defaultLocale;
     },
 
     loadDictFile(lc) {
-        const path = formatPath(`dict/${lc}.txt`);
-        const def = formatPath(`dict/en.txt`);
-        return existsFile(path)
-            .then(exists => readFile(exists ? path : def))
+        const path = config.FileStream.formatAssetsPath(`dict/${lc}.txt`);
+        const def = config.FileStream.formatAssetsPath(`dict/en.txt`);
+        return config.FileStream.existsAssetsFile(path)
+            .then(exists =>
+                config.FileStream.readAssetsFile(exists ? path : def)
+            )
             .catch(e => {
                 console.error(e);
                 return def;
@@ -34,10 +30,9 @@ module.exports = {
     },
 
     loadAssetFile(name) {
-        const path = formatPath(`${name}`);
-        return existsFile(path)
-            .then(exists => (exists ? readFile(path) : ''));
+        const path = config.FileStream.formatAssetsPath(`${name}`);
+        return config.FileStream.existsAssetsFile(path).then(
+            exists => (exists ? config.FileStream.readAssetsFile(path) : '')
+        );
     }
 };
-
-global.RNFS = RNFS;

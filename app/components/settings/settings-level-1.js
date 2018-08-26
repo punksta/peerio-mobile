@@ -10,7 +10,14 @@ import { settingsState, snackbarState, mainState, loginState, contactState, chat
 import { toggleConnection } from '../main/dev-menu-items';
 import plans from '../payments/payments-config';
 import { tx, tu } from '../utils/translator';
-import { warnings, clientApp, User, contactStore } from '../../lib/icebear';
+import {
+    warnings,
+    clientApp,
+    User,
+    contactStore,
+    saveAccountKeyBackup,
+    config
+} from '../../lib/icebear';
 import { popupAbout, popupInputCancel } from '../shared/popups';
 import ButtonWithIcon from '../controls/button-with-icon';
 import { scrollHelper } from '../helpers/test-helper';
@@ -42,7 +49,9 @@ export default class SettingsLevel1 extends SafeComponent {
     }
 
     leftSettingsIcon(iconName, iconColor) {
-        return icons.plain(iconName, null, iconColor, null, { paddingLeft: vars.iconPadding });
+        return icons.plain(iconName, null, iconColor, null, {
+            paddingLeft: vars.iconPadding
+        });
     }
 
     leftSettingsImageIcon(iconSource) {
@@ -50,13 +59,35 @@ export default class SettingsLevel1 extends SafeComponent {
     }
 
     get avatarCircle() {
-        return (<View style={{ marginLeft: vars.iconPadding }} >
-            <AvatarCircle contact={contactStore.getContact(User.current.username)} />
-        </View>);
+        return (
+            <View style={{ marginLeft: vars.iconPadding }}>
+                <AvatarCircle
+                    contact={contactStore.getContact(User.current.username)}
+                />
+            </View>
+        );
     }
 
+    testSaveAccountKey = async () => {
+        const { username, firstName, lastName, passphrase } = User.current;
+        const fileSavePath = config.FileStream.getTempCachePath(
+            `${username}-${tx('title_appName')}.pdf`
+        );
+        await saveAccountKeyBackup(
+            fileSavePath,
+            `${firstName} ${lastName}`,
+            username,
+            passphrase
+        );
+        await config.FileStream.launchViewer(fileSavePath);
+    };
+
     testSilentInvite = async () => {
-        const result = await popupInputCancel('Enter email to invite', 'test@test.com', true);
+        const result = await popupInputCancel(
+            'Enter email to invite',
+            'test@test.com',
+            true
+        );
         if (!result) return;
         const email = result.value;
         console.log(email);
@@ -64,7 +95,8 @@ export default class SettingsLevel1 extends SafeComponent {
     };
 
     testShare() {
-        const message = 'chat and share files securely using Peerio. https://www.testurl.com';
+        const message =
+            'chat and share files securely using Peerio. https://www.testurl.com';
         const title = 'peerio';
         const url = 'https://www.testurl.com';
         Share.share({ message, title, url });
@@ -98,46 +130,98 @@ export default class SettingsLevel1 extends SafeComponent {
      */
     renderThrow() {
         const plan = plans.topPlan();
-        const upgradeItem = plan ?
-            (<SettingsItem title={tx('title_viewYourPlan', { title: tx(plan.title) })}
+        const upgradeItem = plan ? (
+            <SettingsItem
+                title={tx('title_viewYourPlan', { title: tx(plan.title) })}
                 onPress={() => settingsState.upgrade()}
-                leftComponent={this.leftSettingsIcon('open-in-browser', vars.darkBlue)} />) :
-            (<SettingsItem title="button_upgrade"
+                leftComponent={this.leftSettingsIcon(
+                    'open-in-browser',
+                    vars.darkBlue
+                )}
+            />
+        ) : (
+            <SettingsItem
+                title="button_upgrade"
                 onPress={() => settingsState.upgrade()}
-                leftComponent={this.leftSettingsIcon('open-in-browser', vars.darkBlue)}>
-                <Text style={[descriptionTextStyle, { position: 'absolute', right: 0 }]}>{tx('title_getMoreGoPro')}</Text>
-            </SettingsItem>);
+                leftComponent={this.leftSettingsIcon(
+                    'open-in-browser',
+                    vars.darkBlue
+                )}
+            >
+                <Text
+                    style={[
+                        descriptionTextStyle,
+                        { position: 'absolute', right: 0 }
+                    ]}
+                >
+                    {tx('title_getMoreGoPro')}
+                </Text>
+            </SettingsItem>
+        );
         return (
             <ViewWithDrawer style={svStyle} {...scrollHelper}>
                 <View style={bgStyle}>
-                    <SettingsItem title={User.current.fullName} description={User.current.username} rightIcon={null} semibold large
+                    <SettingsItem
+                        title={User.current.fullName}
+                        description={User.current.username} rightIcon={null}
+                        semibold large
                         onPress={() => settingsState.transition('profile')}
-                        leftComponent={this.avatarCircle} />
+                        leftComponent={this.avatarCircle}
+                    />
                     {this.spacer}
 
-                    <SettingsItem title="title_settingsProfile"
+                    <SettingsItem
+                        title="title_settingsProfile"
                         onPress={() => settingsState.transition('profile')}
-                        leftComponent={this.leftSettingsImageIcon(require('../../assets/icons/public-profile-active.png'))} />
-                    <SettingsItem title="title_settingsSecurity"
+                        leftComponent={this.leftSettingsImageIcon(
+                            require('../../assets/icons/public-profile-active.png')
+                        )}
+                    />
+                    <SettingsItem
+                        title="title_settingsSecurity"
                         onPress={() => settingsState.transition('security')}
-                        leftComponent={this.leftSettingsIcon('security', vars.yellow)} />
-                    <SettingsItem title="title_settingsPreferences"
+                        leftComponent={this.leftSettingsIcon(
+                            'security',
+                            vars.yellow
+                        )}
+                    />
+                    <SettingsItem
+                        title="title_settingsPreferences"
                         onPress={() => settingsState.transition('preferences')}
-                        leftComponent={this.leftSettingsImageIcon(require('../../assets/icons/preferences-active.png'))} />
+                        leftComponent={this.leftSettingsImageIcon(
+                            require('../../assets/icons/preferences-active.png')
+                        )}
+                    />
                     {this.spacer}
 
-                    <SettingsItem title="title_settingsAccount"
+                    <SettingsItem
+                        title="title_settingsAccount"
                         onPress={() => settingsState.transition('account')}
-                        leftComponent={this.leftSettingsIcon('account-circle', vars.accountSettingsIconColor)} />
+                        leftComponent={this.leftSettingsIcon(
+                            'account-circle',
+                            vars.accountSettingsIconColor
+                        )}
+                    />
                     {!process.env.PEERIO_DISABLE_PAYMENTS && upgradeItem}
                     {this.spacer}
 
-                    <SettingsItem title="title_About"
-                        icon={null} onPress={() => popupAbout()}
-                        leftComponent={this.leftSettingsIcon('info', vars.peerioTeal)} />
-                    <SettingsItem title="title_help"
+                    <SettingsItem
+                        title="title_About"
+                        icon={null}
+                        onPress={() => popupAbout()}
+                        leftComponent={this.leftSettingsIcon(
+                            'info',
+                            vars.peerioTeal
+                        )}
+                    />
+                    <SettingsItem
+                        title="title_help"
                         onPress={() => settingsState.transition('logs')}
-                        leftComponent={this.leftSettingsIcon('help', vars.helpSettingsIconColor)} />
+                        leftComponent={this.leftSettingsIcon(
+                            'help',
+                            vars.helpSettingsIconColor
+                        )}
+                    />
 
                     <PaymentStorageUsageItem />
 
@@ -158,6 +242,7 @@ export default class SettingsLevel1 extends SafeComponent {
                         testID="button_signOut"
                     />
                     {this.spacer}
+                    {__DEV__ && <BasicSettingsItem title="save account key" onPress={this.testSaveAccountKey} />}
                     {__DEV__ && <BasicSettingsItem title="global drawer" onPress={this.testGlobalDrawer} />}
                     {__DEV__ && <BasicSettingsItem title="contact drawer" onPress={this.testLocalDrawer} />}
                     {__DEV__ && <BasicSettingsItem title="silent invite" onPress={this.testSilentInvite} />}
