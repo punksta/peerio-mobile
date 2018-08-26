@@ -34,7 +34,9 @@ export default class Text extends SafeComponent {
         if (Platform.OS === 'android') style.fontFamily = style.fontFamily.replace(' ', '');
 
         // Override font
-        if (monospace) style.fontFamily = 'Courier';
+        if (monospace) {
+            style.fontFamily = Platform.OS === 'android' ? 'monospace' : 'Courier';
+        }
 
         return (
             <RNText {...this.props} style={[this.props.style, style]}>

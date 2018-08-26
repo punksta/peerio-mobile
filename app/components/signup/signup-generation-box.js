@@ -33,7 +33,7 @@ export default class SignupGenerationBox extends SafeComponent {
         /* TODO replace with lotti animation? */
         return (
             <View style={[dottedBoxStyle, { marginBottom: marginBottom ? 24 : 0 }]}>
-                <Text semibold style={accountKeyStyle}>{signupState.passphrase}</Text>
+                <Text monospace semibold style={accountKeyStyle}>{signupState.passphrase}</Text>
             </View>
         );
     }
