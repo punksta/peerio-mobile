@@ -83,7 +83,7 @@ export default class SignupStep2 extends SafeComponent {
                 </View>
             </TouchableOpacity>
         );
-    }
+    };
 
     get suggestionBlock() {
         if (!signupState.usernameSuggestions.length) return null;
