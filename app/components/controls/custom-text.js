@@ -15,10 +15,7 @@ export default class Text extends SafeComponent {
     renderThrow() {
         const { semibold, bold, italic, monospace, serif } = this.props;
         const style = {};
-        let font = [vars.peerioFontFamily];
-
-        // Override font
-        if (serif) font = ['SourceSerifPro'];
+        const font = [serif ? vars.peerioSerifFontFamily : vars.peerioFontFamily];
 
         // Font Weight and Style
         if (Platform.OS === 'android') {

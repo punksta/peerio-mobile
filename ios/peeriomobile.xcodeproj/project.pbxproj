@@ -18,6 +18,9 @@
 		0221BCD21DDC710400706A4F /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221BCD11DDC6D3C00706A4F /* libRCTRestart.a */; };
 		0221BD371DDDC24200706A4F /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0221BD341DDDC22700706A4F /* libRNImagePicker.a */; };
 		0222C3941E0C98B40084C586 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0222C3801E0C989D0084C586 /* libRCTPushNotification.a */; };
+		0226520121324DAB003EEF56 /* SourceSerifPro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 022651CD21324DAA003EEF56 /* SourceSerifPro.ttf */; };
+		0226520221324DAB003EEF56 /* SourceSerifProBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 022651FF21324DAA003EEF56 /* SourceSerifProBold.ttf */; };
+		0226520321324DAB003EEF56 /* SourceSerifProSemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0226520021324DAA003EEF56 /* SourceSerifProSemiBold.ttf */; };
 		02321C5B1D7F1BC100282EB1 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */; };
 		02321C5D1D80558E00282EB1 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 02321C5C1D80558E00282EB1 /* main.jsbundle */; };
 		0235B5D81E65DE4B001D77D1 /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0235B5D71E65DE24001D77D1 /* libSQLite.a */; };
@@ -484,6 +487,9 @@
 		02210A831E0191BA006D7AC0 /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; name = sounds; path = ../app/sounds; sourceTree = "<group>"; };
 		0221BCCC1DDC6D3C00706A4F /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
 		0222C3701E0C989D0084C586 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
+		022651CD21324DAA003EEF56 /* SourceSerifPro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SourceSerifPro.ttf; path = ../app/assets/fonts/SourceSerifPro.ttf; sourceTree = "<group>"; };
+		022651FF21324DAA003EEF56 /* SourceSerifProBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SourceSerifProBold.ttf; path = ../app/assets/fonts/SourceSerifProBold.ttf; sourceTree = "<group>"; };
+		0226520021324DAA003EEF56 /* SourceSerifProSemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SourceSerifProSemiBold.ttf; path = ../app/assets/fonts/SourceSerifProSemiBold.ttf; sourceTree = "<group>"; };
 		02321C5A1D7F1BC100282EB1 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		02321C5C1D80558E00282EB1 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.jsbundle; sourceTree = "<group>"; };
 		0235B5DA1E65DEAF001D77D1 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
@@ -997,6 +1003,9 @@
 		EE3B3AB15A814B41A0267C44 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				022651CD21324DAA003EEF56 /* SourceSerifPro.ttf */,
+				022651FF21324DAA003EEF56 /* SourceSerifProBold.ttf */,
+				0226520021324DAA003EEF56 /* SourceSerifProSemiBold.ttf */,
 				02AF5ADB20842C18005056CF /* OpenSans.ttf */,
 				02AF5ADC20842C18005056CF /* OpenSansBold.ttf */,
 				02AF5ADA20842C18005056CF /* OpenSansBoldItalic.ttf */,
@@ -1614,7 +1623,9 @@
 				0248F0721E5A59BF00C437A9 /* terms.txt in Resources */,
 				02E096B31DAE398B00641B85 /* locales in Resources */,
 				02321C5B1D7F1BC100282EB1 /* MaterialIcons.ttf in Resources */,
+				0226520121324DAB003EEF56 /* SourceSerifPro.ttf in Resources */,
 				86F7F88564164E3CA0B1265B /* Entypo.ttf in Resources */,
+				0226520321324DAB003EEF56 /* SourceSerifProSemiBold.ttf in Resources */,
 				02A076271E6D8876008974C5 /* maincert.com.cer in Resources */,
 				CF69BA63107E428598B08410 /* EvilIcons.ttf in Resources */,
 				51CAD96E068B4E2EAA239290 /* FontAwesome.ttf in Resources */,
@@ -1629,6 +1640,7 @@
 				02AF5AE220842C18005056CF /* OpenSansBold.ttf in Resources */,
 				02AF5AE120842C18005056CF /* OpenSans.ttf in Resources */,
 				17093292DCFB4EFBB929257F /* Zocial.ttf in Resources */,
+				0226520221324DAB003EEF56 /* SourceSerifProBold.ttf in Resources */,
 				E19FDAE0C2454345A5CE2523 /* MaterialCommunityIcons.ttf in Resources */,
 				02AF5ADD20842C18005056CF /* OpenSansSemiBold.ttf in Resources */,
 				02726F581EB33C7A00D82BF5 /* libsodium-ios in Resources */,

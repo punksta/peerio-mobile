@@ -101,6 +101,7 @@ const vars = {
     toggleLineInactive: '#CFCFCF',
     imageInnerContainerHeight: 140,
     peerioFontFamily: 'Open Sans',
+    peerioSerifFontFamily: 'Source Serif Pro',
     chatUnreadIndicatorBg: 'rgba(255, 255, 255, 0.95)',
     chatUnreadIndicatorWidth: 70,
     chatUnreadIndicatorHeight: 32,
