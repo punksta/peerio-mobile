@@ -51,9 +51,9 @@ jobs:
       - run:
           name: "Create artifact folder"
           command: mkdir ~/reports && mkdir ~/reports/py.test && mkdir ~/artifacts
-      - run:
-          name: "Run tests"
-          command: npm test
+      # - run:
+      #     name: "Run tests"
+      #     command: npm test
       - store_test_results:
           path: ~/reports/py.test
       - store_artifacts:
