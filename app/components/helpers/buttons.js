@@ -56,7 +56,7 @@ export default {
                     onPress={disabled ? null : onPress}
                     pressRetentionOffset={vars.pressRetentionOffset}
                     style={[buttonStyle, style]}>
-                    <Text bold style={{ color: disabled ? vars.txtMedium : vars.peerioBlue }}>
+                    <Text semibold style={{ color: disabled ? vars.txtMedium : vars.peerioBlue }}>
                         {tu(text)}
                     </Text>
                 </TouchableOpacity>

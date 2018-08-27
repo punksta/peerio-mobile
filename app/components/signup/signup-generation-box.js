@@ -7,7 +7,7 @@ import signupState from './signup-state';
 import Text from '../controls/custom-text';
 
 const accountKeyStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size.xsmall,
     color: '#E90162',
     letterSpacing: 3
 };
@@ -24,10 +24,6 @@ const dottedBoxStyle = {
 
 @observer
 export default class SignupGenerationBox extends SafeComponent {
-    /* async componentWillMount() {
-        signupState.passphrase = await signupState.generatePassphrase();
-    } */
-
     renderThrow() {
         const { marginBottom } = this.props;
         /* TODO replace with lotti animation? */

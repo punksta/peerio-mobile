@@ -6,27 +6,25 @@ import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
 
-const marginBottom = 10;
-const marginTop = vars.spacing.small.maxi2x;
+const marginBottom = vars.spacing.medium.mini2x;
 
 const headerStyle = {
-    fontSize: 24, // TODO: accomodate for iPhone SE
+    fontSize: 30, // TODO: accomodate for iPhone SE
     color: vars.darkBlue,
     marginBottom
 };
 
 const headerDescription = {
     fontSize: 14, // TODO: accomodate for iPhone SE
-    color: vars.textBlack54,
-    marginBottom: marginBottom + 10
+    color: vars.textBlack54
 };
 
 @observer
-export default class SignupHeading extends SafeComponent {
+export default class LoginHeading extends SafeComponent {
     renderThrow() {
         const { title, subTitle } = this.props;
         return (
-            <View style={{ marginTop }}>
+            <View style={{ marginBottom }}>
                 <Text semibold serif style={headerStyle}>
                     {tx(title)}
                 </Text>

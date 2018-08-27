@@ -45,21 +45,21 @@ export default class SignupCancel extends SafeComponent {
                         {tx('title_cancelSignup')}
                     </Text>
                     <Text style={signupStyles.description}>
-                        {tx('title_cancelSignupDescription')}
+                        {tx('title_declineExplanation')}
                     </Text>
 
                     <Text semibold style={signupStyles.description}>
-                        {tx('title_whyTosRequired')}
+                        {tx('title_whyRequired')}
                     </Text>
                     <Text style={signupStyles.description}>
-                        {tx('title_whyTosRequiredDescription')}
+                        {tx('title_whyRequiredExplanation')}
                     </Text>
 
                     <Text semibold style={signupStyles.description}>
-                        {tx('title_signUpAgain')}
+                        {tx('title_signupAgain')}
                     </Text>
                     <Text style={signupStyles.description}>
-                        {tx('title_signUpAgainDescription')}
+                        {tx('title_signupAgainExplanation')}
                     </Text>
 
                     <View style={{ flexDirection: 'row' }}>

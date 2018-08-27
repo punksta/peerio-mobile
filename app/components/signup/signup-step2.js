@@ -12,6 +12,7 @@ import { socket, validation } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import SignupButtonBack from './signup-button-back';
+import SignupHeading from './signup-heading';
 
 const { validators } = validation;
 const { username } = validators;
@@ -112,10 +113,7 @@ export default class SignupStep2 extends SafeComponent {
                 </View>
                 <View style={signupStyles.container}>
                     <SignupButtonBack />
-                    <View style={signupStyles.headerContainer}>
-                        <Text semibold serif style={signupStyles.headerStyle}>{tx('title_createYourAccount')}</Text>
-                        <Text style={signupStyles.headerDescription}>{tx('title_usernameHeading')}</Text>
-                    </View>
+                    <SignupHeading title="title_createYourAccount" subTitle="title_usernameHeading" />
                     <StyledTextInput
                         state={this.usernameState}
                         validations={username}

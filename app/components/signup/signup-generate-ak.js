@@ -8,6 +8,7 @@ import signupState from './signup-state';
 import { tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import SignupGenerationBox from './signup-generation-box';
+import SignupHeading from './signup-heading';
 
 @observer
 export default class SignupGenerateAk extends SafeComponent {
@@ -20,12 +21,7 @@ export default class SignupGenerateAk extends SafeComponent {
         return (
             <View style={signupStyles.page}>
                 <View style={signupStyles.container2}>
-                    <Text semibold serif style={signupStyles.headerStyle2}>
-                        {tx('title_generatingAk')}
-                    </Text>
-                    <Text style={signupStyles.headerDescription2}>
-                        {tx('title_generatingAkDescription')}
-                    </Text>
+                    <SignupHeading title="title_generatingAk" subTitle="title_generatingAkDescription" />
                     <SignupGenerationBox marginBottom />
                     <Text style={signupStyles.description}>
                         {tx('title_generatingAkExplanation')}

@@ -10,7 +10,7 @@ import buttons from '../helpers/buttons';
 import DebugMenu from '../shared/debug-menu';
 import DebugMenuTrigger from '../shared/debug-menu-trigger';
 import SafeComponent from '../shared/safe-component';
-import SignupHeading from '../signup/signup-heading';
+import LoginHeading from './login-heading';
 import { adjustImageDimensions } from '../helpers/image';
 
 const logoWelcome = require('../../assets/peerio-logo-dark.png');
@@ -53,7 +53,7 @@ export default class LoginWelcome extends SafeComponent {
                     </View>
                 </DebugMenuTrigger>
                 <View style={[signupStyles.container, { paddingHorizontal: signupStyles.pagePaddingLarge }]}>
-                    <SignupHeading title="title_newUserWelcome" subTitle="title_newUserWelcomeDescription" />
+                    <LoginHeading title="title_newUserWelcome" subTitle="title_newUserWelcomeDescription" />
                     <View style={buttonContainer}>
                         {buttons.roundBlueBgButton(
                             tx('button_CreateAccount'),

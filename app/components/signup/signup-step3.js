@@ -2,7 +2,6 @@ import React from 'react';
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
-import Text from '../controls/custom-text';
 import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
 import { tx } from '../utils/translator';
@@ -12,6 +11,7 @@ import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import CheckBox from '../shared/checkbox';
 import SignupButtonBack from './signup-button-back';
+import SignupHeading from './signup-heading';
 
 const { validators } = validation;
 const { email } = validators;
@@ -60,10 +60,7 @@ export default class SignupStep3 extends SafeComponent {
                 </View>
                 <View style={signupStyles.container}>
                     <SignupButtonBack />
-                    <View style={signupStyles.headerContainer}>
-                        <Text semibold serif style={signupStyles.headerStyle}>{tx('title_createYourAccount')}</Text>
-                        <Text style={signupStyles.headerDescription}>{tx('title_whatIsYourEmail')}</Text>
-                    </View>
+                    <SignupHeading title="title_createYourAccount" subTitle="title_whatIsYourEmail" />
                     <StyledTextInput
                         state={this.emailState}
                         validations={email}

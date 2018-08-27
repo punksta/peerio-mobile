@@ -4,7 +4,6 @@ import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import randomWords from 'random-words';
 import capitalize from 'capitalize';
-import Text from '../controls/custom-text';
 import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
 import { tx } from '../utils/translator';
@@ -13,6 +12,7 @@ import { socket, validation } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import SignupButtonBack from './signup-button-back';
+import SignupHeading from './signup-heading';
 
 const { validators } = validation;
 const { firstName, lastName } = validators;
@@ -65,10 +65,7 @@ export default class SignupStep1 extends SafeComponent {
                 </View>
                 <View style={signupStyles.container}>
                     <SignupButtonBack />
-                    <View style={signupStyles.headerContainer}>
-                        <Text semibold serif style={signupStyles.headerStyle}>{tx('title_createYourAccount')}</Text>
-                        <Text style={signupStyles.headerDescription}>{tx('title_nameHeading')}</Text>
-                    </View>
+                    <SignupHeading title="title_createYourAccount" subTitle="title_nameHeading" />
                     <StyledTextInput
                         state={this.firstnameState}
                         validations={firstName}

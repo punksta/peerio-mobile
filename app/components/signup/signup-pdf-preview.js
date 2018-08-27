@@ -65,7 +65,7 @@ const textBox = {
 };
 
 const textBoxText = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size.xsmall,
     marginVertical: 4
 };
 
