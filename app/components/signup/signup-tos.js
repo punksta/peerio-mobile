@@ -15,7 +15,7 @@ import { socket } from '../../lib/icebear';
 import routes from '../routes/routes';
 import TosAccordion from './tos-accordion';
 
-const { height } = Dimensions.get('window');;
+const { height } = Dimensions.get('window');
 
 const buttonContainer = {
     flexDirection: 'row',
