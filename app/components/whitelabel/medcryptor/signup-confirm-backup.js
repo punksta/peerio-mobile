@@ -7,11 +7,9 @@ import ActivityOverlay from '../../controls/activity-overlay';
 import { vars } from '../../../styles/styles';
 import signupState from '../../signup/signup-state';
 import { tx } from '../../utils/translator';
-import LoginWizardPage, {
-    header2, innerSmall, circleTopSmall, headingStyle2, row, container, topCircleSizeSmall
-} from '../../login/login-wizard-page';
 import StyledTextInput from '../../shared/styled-text-input';
 import icons from '../../helpers/icons';
+import SafeComponent from '../../shared/safe-component';
 
 const imageWelcomeSafe = require('../../../assets/welcome-safe.png');
 
@@ -34,7 +32,7 @@ const titleDark = [textNormal, {
 }];
 
 @observer
-export default class SignupConfirmBackup extends LoginWizardPage {
+export default class SignupConfirmBackup extends SafeComponent {
     @observable confirmTextSample = tx('title_confirmTextSample');
     @observable confirmTextState = observable({ value: '' });
 
@@ -43,10 +41,10 @@ export default class SignupConfirmBackup extends LoginWizardPage {
     }
 
     get icon() {
-        const width = topCircleSizeSmall * 2;
+        const width = vars.topCircleSizeSmall * 2;
         const height = width;
         return (
-            <View style={[circleTopSmall, { borderWidth: 0 }]}>
+            <View style={[vars.circleTopSmall, { borderWidth: 0 }]}>
                 <Image
                     source={imageWelcomeSafe}
                     style={{ width, height }} />
@@ -68,12 +66,12 @@ export default class SignupConfirmBackup extends LoginWizardPage {
 
     render() {
         return (
-            <View style={container} onLayout={this._layout}>
-                <View style={header2}>
-                    <Text style={headingStyle2}>{tx('title_AccountKey')}</Text>
+            <View onLayout={this._layout}>
+                <View >
+                    <Text>{tx('title_AccountKey')}</Text>
                 </View>
                 <View style={{ flex: 0.7, flexGrow: 1, alignItems: 'flex-start' }}>
-                    <View style={innerSmall}>
+                    <View>
                         <View style={textDescription}>
                             <Text bold style={titleDark}>{tx('title_confirmTitle')}</Text>
                             <Text style={textNormal}>{tx('title_confirmContent1')} </Text>
@@ -91,7 +89,7 @@ export default class SignupConfirmBackup extends LoginWizardPage {
                     </View>
                     {this.icon}
                 </View>
-                <View style={[row, { justifyContent: 'space-between' }]}>
+                <View style={[{ justifyContent: 'space-between' }]}>
                     {this.button('button_back', () => signupState.prev())}
                     {this.button('button_next', () => signupState.next(), false, !signupState.keyBackedUp)}
                 </View>

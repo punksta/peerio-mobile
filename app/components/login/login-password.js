@@ -5,16 +5,16 @@ import Bold from '../controls/bold';
 import Center from '../controls/center';
 import ActivityOverlay from '../controls/activity-overlay';
 import loginState from './login-state';
-import LoginWizardPage from './login-wizard-page';
 import Text from '../controls/custom-text';
 import { vars } from '../../styles/styles';
+import SafeComponent from '../shared/safe-component';
 
 const textStyle = {
     marginBottom: vars.spacing.small.maxi2x,
     color: vars.txtLight
 };
 
-export default class LoginPassword extends LoginWizardPage {
+export default class LoginPassword extends SafeComponent {
     items() {
         const textParser = {
             emphasis: text => <Bold>{text}</Bold>

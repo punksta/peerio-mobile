@@ -8,13 +8,11 @@ import { getFirstLetterUpperCase, socket } from '../../../lib/icebear';
 import signupState from '../../signup/signup-state';
 import { t, tx } from '../../utils/translator';
 import buttons from '../../helpers/buttons';
-import LoginWizardPage, {
-    header2, innerSmall, circleTopSmall, headingStyle2, buttonRowStyle, container
-} from '../../login/login-wizard-page';
 import SignupAvatar from '../../signup/signup-avatar';
 import SignupAvatarActionSheet from '../../signup/signup-avatar-action-sheet';
 import snackbarState from '../../snackbars/snackbar-state';
 import testLabel from '../../helpers/test-label';
+import SafeComponent from '../../shared/safe-component';
 
 const formStyle = {
     padding: vars.spacing.medium.midi2x,
@@ -71,7 +69,7 @@ const accountKeyView = {
 };
 
 @observer
-export default class SignupStep1 extends LoginWizardPage {
+export default class SignupStep1 extends SafeComponent {
     get formattedAccountKey() {
         const stringLength = signupState.passphrase.length;
         const stringMiddle = Math.ceil(stringLength / 2);
@@ -141,22 +139,22 @@ export default class SignupStep1 extends LoginWizardPage {
 
     render() {
         return (
-            <View style={container} onLayout={this._layout}>
+            <View onLayout={this._layout}>
                 <View>
-                    <View style={header2}>
-                        <Text style={headingStyle2}>
+                    <View>
+                        <Text>
                             {tx('title_AccountKey')}
                         </Text>
                     </View>
                     <View>
-                        <View style={innerSmall}>
+                        <View>
                             <View style={formStyle}>{this.body}</View>
                         </View>
                         <TouchableOpacity
                             onPress={() => SignupAvatarActionSheet.show()}
                             pressRetentionOffset={vars.pressRetentionOffset}
                             style={[
-                                circleTopSmall,
+                                vars.circleTopSmall,
                                 {
                                     backgroundColor: vars.txtMedium,
                                     borderWidth: 0
@@ -171,7 +169,7 @@ export default class SignupStep1 extends LoginWizardPage {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={buttonRowStyle}>
+                <View>
                     {this.button('button_back', () => signupState.prev())}
                     {this.button(
                         'button_next',

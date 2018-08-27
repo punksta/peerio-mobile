@@ -6,7 +6,6 @@ import LayoutMain from '../layout/layout-main';
 import LoadingScreen from '../layout/loading-screen';
 import LoginWelcome from '../login/login-welcome';
 import LoginClean from '../login/login-clean';
-import LoginAutomatic from '../login/login-automatic';
 import PopupState from '../layout/popup-state';
 import routerMain from './router-main';
 import routes from './routes';
@@ -22,7 +21,6 @@ class RouterApp extends Router {
         this.add('loginClean', LoginClean);
         this.add('signupStep1', SignupWizard);
         this.add('signupCancel', SignupCancel);
-        this.add('loginAutomatic', LoginAutomatic);
         this.add('main', LayoutMain, true);
 
         when(() => this.route === 'main', () => setTimeout(() => routerMain.initial(), 0));

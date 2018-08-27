@@ -11,13 +11,11 @@ import { vars } from '../../../styles/styles';
 import signupState from '../../signup/signup-state';
 import { popupTOS } from '../../shared/popups';
 import { t, tx, T } from '../../utils/translator';
-import LoginWizardPage, {
-    header2, innerSmall, circleTopSmall, headingStyle2, footerText1, footerText2, innerContainer, outerContainer, buttonRowStyle
-} from '../../login/login-wizard-page';
 import SignupAvatar from '../../signup/signup-avatar';
 import SignupAvatarActionSheet from '../../signup/signup-avatar-action-sheet';
 import StyledTextInput from '../../shared/styled-text-input';
 import { socket, validation } from '../../../lib/icebear';
+import SafeComponent from '../../shared/safe-component';
 
 const { validators } = validation;
 const { firstName, lastName, username, email } = validators;
@@ -62,16 +60,16 @@ const tosParser = {
     tosButton: text => (
         <Text
             onPress={popupTOS}
-            style={[footerText2, { textDecorationLine: 'underline' }]}>
+            style={[{ textDecorationLine: 'underline' }]}>
             {text}
         </Text>
     )
 };
 
-const signupTextStyle = [footerText1, { fontSize: vars.font.size.smaller }];
+const signupTextStyle = [{ fontSize: vars.font.size.smaller }];
 
 @observer
-export default class SignupStep1Medcryptor extends LoginWizardPage {
+export default class SignupStep1Medcryptor extends SafeComponent {
     firstnameState = observable({ value: '' });
     lastnameState = observable({ value: '' });
     usernameState = observable({ value: '' });
@@ -181,25 +179,24 @@ export default class SignupStep1Medcryptor extends LoginWizardPage {
 
     render() {
         return (
-            <View style={outerContainer}>
-                <View style={innerContainer}>
-                    <View style={header2}>
-                        <Text style={headingStyle2}>{tx('title_createAccount')}</Text>
+            <View>
+                <View>
+                    <View>
+                        <Text>{tx('title_createAccount')}</Text>
                     </View>
                     <View>
-                        <View style={innerSmall}>
+                        <View>
                             <View style={formStyle}>
                                 {this.body}
                             </View>
                         </View>
                         <TouchableOpacity
-                            style={circleTopSmall}
                             onPress={() => SignupAvatarActionSheet.show()}
                             pressRetentionOffset={vars.pressRetentionOffset}>
                             {signupState.avatarData ? this.avatar : this.avatarSelector}
                         </TouchableOpacity>
                     </View>
-                    <View style={[buttonRowStyle, { justifyContent: 'space-between' }]}>
+                    <View style={[{ justifyContent: 'space-between' }]}>
                         {this.button('button_back', signupState.exit)}
                         {this.button('button_next',
                             () => this.handleNextButton(),

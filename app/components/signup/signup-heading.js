@@ -30,9 +30,9 @@ export default class SignupHeading extends SafeComponent {
                 <Text semibold serif style={headerStyle}>
                     {tx(title)}
                 </Text>
-                <Text style={headerDescription}>
+                {subTitle && <Text style={headerDescription}>
                     {tx(subTitle)}
-                </Text>
+                </Text>}
             </View>
         );
     }

@@ -11,12 +11,10 @@ import { vars } from '../../../styles/styles';
 import signupState from '../../signup/signup-state';
 import { popupTOS } from '../../shared/popups';
 import { tx, T } from '../../utils/translator';
-import LoginWizardPage, {
-    header2, innerSmall, headingStyle2, footerText1, footerText2, innerContainer, outerContainer, buttonRowStyle
-} from '../../login/login-wizard-page';
 import StyledTextInput from '../../shared/styled-text-input';
 import { socket, validation } from '../../../lib/icebear';
 import medcryptorUiState from './medcryptor-ui-state';
+import SafeComponent from '../../shared/safe-component';
 
 const { validators } = validation;
 const { mcrDoctorAhpraAvailability, mcrAdminAhpraAvailability, medicalIdFormat } = validators;
@@ -37,13 +35,13 @@ const tosParser = {
     tosButton: text => (
         <Text
             onPress={popupTOS}
-            style={[footerText2, { textDecorationLine: 'underline' }]}>
+            style={[{ textDecorationLine: 'underline' }]}>
             {text}
         </Text>
     )
 };
 
-const signupTextStyle = [footerText1, { fontSize: vars.font.size.smaller }];
+const signupTextStyle = [{ fontSize: vars.font.size.smaller }];
 const ahpraTextStyle = {
     fontSize: vars.font.size.smaller,
     color: vars.black54,
@@ -51,7 +49,7 @@ const ahpraTextStyle = {
 };
 
 @observer
-export default class SignupStep2Medcryptor extends LoginWizardPage {
+export default class SignupStep2Medcryptor extends SafeComponent {
     validations = {
         doctor: mcrDoctorAhpraAvailability,
         admin: mcrAdminAhpraAvailability
@@ -127,19 +125,19 @@ export default class SignupStep2Medcryptor extends LoginWizardPage {
 
     render() {
         return (
-            <View style={outerContainer}>
-                <View style={innerContainer}>
-                    <View style={header2}>
-                        <Text style={headingStyle2}>{tx('title_createAccount')}</Text>
+            <View>
+                <View>
+                    <View>
+                        <Text>{tx('title_createAccount')}</Text>
                     </View>
                     <View>
-                        <View style={innerSmall}>
+                        <View>
                             <View style={formStyle}>
                                 {this.body}
                             </View>
                         </View>
                     </View>
-                    <View style={[buttonRowStyle, { justifyContent: 'space-between' }]}>
+                    <View style={[{ justifyContent: 'space-between' }]}>
                         {this.button('button_back', () => signupState.prev())}
                         {this.button('button_next',
                             () => this.handleNextButton(),

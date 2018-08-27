@@ -8,7 +8,6 @@ import { tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import contactState from '../contacts/contact-state';
 import signupState from '../signup/signup-state';
-import LoginWizardPage from '../login/login-wizard-page';
 import ContactImportItem from '../contacts/contact-import-item';
 import snackbarState from '../snackbars/snackbar-state';
 import SearchBar from '../controls/search-bar';
@@ -18,6 +17,7 @@ import uiState from '../layout/ui-state';
 import ListItem from './signup-contact-list-item';
 import Text from '../controls/custom-text';
 import imagePopups from '../shared/image-popups';
+import SafeComponent from '../shared/safe-component';
 
 const _ = require('lodash');
 const iconClear = require('../../assets/file_icons/ic_close.png');
@@ -25,7 +25,7 @@ const iconClear = require('../../assets/file_icons/ic_close.png');
 const INITIAL_LIST_SIZE = 10;
 
 @observer
-export default class SignupContactInvite extends LoginWizardPage {
+export default class SignupContactInvite extends SafeComponent {
     get useLayout2() { return true; }
     @observable contactList = [];
     @observable searchBarValue = '';

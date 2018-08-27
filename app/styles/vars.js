@@ -232,6 +232,7 @@ const vars = {
     modalPaddingHorizontal: 40,
     wizardPadding: 36,
     height80: height * 0.8,
+    topCircleSizeSmall: 52,
 
     font: {
         size: {
