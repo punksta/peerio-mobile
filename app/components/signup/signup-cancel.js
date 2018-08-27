@@ -1,16 +1,16 @@
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View } from 'react-native';
+import { View, Linking } from 'react-native';
 import Text from '../controls/custom-text';
 import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
-import { tx } from '../utils/translator';
+import { T, tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
 import { drawerState } from '../states';
-import { socket } from '../../lib/icebear';
+import { config, socket } from '../../lib/icebear';
 import SignupHeading from './signup-heading';
 import routes from '../routes/routes';
 
@@ -21,6 +21,9 @@ const buttonContainer = {
     marginTop: vars.spacing.small.mini,
     marginBottom: vars.spacing.small.maxi2x
 };
+const linkStyle = {
+    color: vars.peerioBlue
+};
 
 @observer
 export default class SignupCancel extends SafeComponent {
@@ -28,6 +31,22 @@ export default class SignupCancel extends SafeComponent {
         if (!signupState.keyBackedUp) {
             drawerState.addDrawer(TopDrawerBackupAccountKey);
         }
+    }
+
+    @action.bound openPrivacyLink(text) {
+        return (
+            <Text style={linkStyle} onPress={() => { Linking.openURL(config.translator.urlMap.openPrivacy); }}>
+                {text}
+            </Text>
+        );
+    }
+
+    @action.bound openTermsLink(text) {
+        return (
+            <Text style={linkStyle} onPress={() => { Linking.openURL(config.translator.urlMap.openTerms); }}>
+                {text}
+            </Text>
+        );
     }
 
     @action.bound cancel() {
@@ -49,7 +68,12 @@ export default class SignupCancel extends SafeComponent {
                         {tx('title_whyRequired')}
                     </Text>
                     <Text style={signupStyles.description}>
-                        {tx('title_whyRequiredExplanation')}
+                        {<T k="title_whyRequiredExplanation">
+                            {{
+                                openPrivacy: this.openPrivacyLink,
+                                openTerms: this.openTermsLink
+                            }}
+                        </T>}
                     </Text>
 
                     <Text semibold style={signupStyles.subTitle}>
