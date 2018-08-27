@@ -43,6 +43,11 @@ export default class ChatList extends SafeComponent {
             testID="buttonCreateNewChat" />);
     }
 
+    // TODO use for firstLoginZeroState
+    // get layoutTitle() {
+    //     return uiState.isFirstLogin ? tx('title_zeroFirstLoginTitle') : tx('title_chats');
+    // }
+
     get dataSource() {
         return [
             { title: 'title_channels', index: 0, data: this.firstSectionItems },

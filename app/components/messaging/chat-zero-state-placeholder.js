@@ -10,6 +10,7 @@ import buttons from '../helpers/buttons';
 import routes from '../routes/routes';
 import ViewWithDrawer from '../shared/view-with-drawer';
 import drawerState from '../shared/drawer-state';
+// import { uiState } from '../states';
 
 const redArrowSrc = require('../../assets/zero_chat_state/arrow-red.png');
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
@@ -109,14 +110,50 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
             </View>);
     }
 
+    get defaultZeroState() {
+        return (
+            <ViewWithDrawer style={wrapper}>
+                {this.title}
+                {this.chatUI}
+                {this.contactUI}
+            </ViewWithDrawer>
+        );
+    }
+
+    get firstLoginZeroState() {
+        // TODO get correct illustration
+        const firstLoginZeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
+        const firstLoginStyle = {
+            position: 'absolute',
+            alignItems: 'center',
+            justifyContent: 'center',
+            top: vars.spacing.huge.maxi2x,
+            right: 0,
+            left: 0
+        };
+        const imageStyle = {
+            flexGrow: 1,
+            height: null,
+            width: null,
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+        return (
+            <ViewWithDrawer style={wrapper}>
+                <View style={firstLoginStyle}>
+                    <Image source={firstLoginZeroStateImage} style={imageStyle}>
+                        <Text style={{ textAlign: 'center' }}>{tx('title_zeroFirstLoginMessage')}</Text>
+                    </Image>
+                </View>
+            </ViewWithDrawer>
+        );
+    }
+
     renderThrow() {
         return (
             <View style={container}>
-                <ViewWithDrawer style={wrapper}>
-                    {this.title}
-                    {this.chatUI}
-                    {this.contactUI}
-                </ViewWithDrawer>
+                {/* {uiState.isFirstLogin ? this.firstLoginZeroState : this.defaultZeroState} */}
+                {this.defaultZeroState}
             </View>
         );
     }
