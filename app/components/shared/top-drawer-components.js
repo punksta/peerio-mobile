@@ -48,7 +48,7 @@ class TopDrawerBackupAccountKey extends SafeComponent {
                     </View>)}
                 descriptionLine1={tx('title_backupAkReminderMobile')}
                 buttonText={tx('button_backupNow')}
-                buttonAction={signupState.goToBackupAk}
+                buttonAction={signupState.saveAccountKey}
             />
         );
     }

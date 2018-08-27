@@ -12,6 +12,7 @@ import ViewWithDrawer from '../shared/view-with-drawer';
 import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
 import { drawerState } from '../states';
 import { socket } from '../../lib/icebear';
+import routes from '../routes/routes';
 
 const buttonContainer = {
     flexDirection: 'row',
@@ -35,10 +36,6 @@ export default class SignupTos extends SafeComponent {
         signupState.next();
     }
 
-    @action.bound declineTos() {
-        signupState.goToSignupCancel();
-    }
-
     renderThrow() {
         return (
             <ViewWithDrawer style={signupStyles.page}>
@@ -53,7 +50,7 @@ export default class SignupTos extends SafeComponent {
                     <View style={buttonContainer}>
                         {buttons.blueTextButton(
                             tx('button_decline'),
-                            this.declineTos,
+                            routes.app.signupCancel,
                             !socket.connected,
                             null,
                             'button_decline')}

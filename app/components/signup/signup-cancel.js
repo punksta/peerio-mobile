@@ -11,6 +11,8 @@ import buttons from '../helpers/buttons';
 import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
 import { drawerState } from '../states';
 import { socket } from '../../lib/icebear';
+import SignupHeading from './signup-heading';
+import routes from '../routes/routes';
 
 const buttonContainer = {
     flexDirection: 'row',
@@ -34,20 +36,14 @@ export default class SignupCancel extends SafeComponent {
     }
 
     @action.bound goBack() {
-        signupState.goToSignupTos();
+        routes.app.signupStep1();
     }
 
     renderThrow() {
         return (
             <View style={signupStyles.page}>
                 <View style={signupStyles.container2}>
-                    <Text semibold serif style={signupStyles.headerStyle2}>
-                        {tx('title_cancelSignup')}
-                    </Text>
-                    <Text style={signupStyles.description}>
-                        {tx('title_declineExplanation')}
-                    </Text>
-
+                    <SignupHeading title="title_cancelSignup" subTitle="title_declineExplanation" />
                     <Text semibold style={signupStyles.description}>
                         {tx('title_whyRequired')}
                     </Text>

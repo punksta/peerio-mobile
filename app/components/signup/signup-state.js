@@ -61,21 +61,6 @@ class SignupState extends RoutedState {
         this.current++;
     }
 
-    // TODO These functions might be a bad idea
-    // ---------
-    @action.bound goToBackupAk() {
-        this.current = 4;
-    }
-
-    @action.bound goToSignupTos() {
-        this.current = 5;
-    }
-
-    @action.bound goToSignupCancel() {
-        this.current = 7;
-    }
-    // ---------
-
     @action.bound prev() { (this.current > 0) ? this.current-- : this.exit(); }
 
     @action.bound async suggestUsernames() {

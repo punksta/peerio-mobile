@@ -11,6 +11,7 @@ import PopupState from '../layout/popup-state';
 import routerMain from './router-main';
 import routes from './routes';
 import ActionSheetLayout from '../layout/action-sheet-layout';
+import SignupCancel from '../signup/signup-cancel';
 
 class RouterApp extends Router {
     constructor() {
@@ -20,6 +21,7 @@ class RouterApp extends Router {
         this.add('loginWelcome', LoginWelcome);
         this.add('loginClean', LoginClean);
         this.add('signupStep1', SignupWizard);
+        this.add('signupCancel', SignupCancel);
         this.add('loginAutomatic', LoginAutomatic);
         this.add('main', LayoutMain, true);
 
