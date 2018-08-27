@@ -63,7 +63,7 @@ export default class SignupBackupAk extends SafeComponent {
                     <View>
                         <SignupPdfPreview />
                     </View>
-                    <View style={[buttonContainer, { marginTop: vars.spacing.medium.maxi2x }]}>
+                    <View style={[buttonContainer, { marginTop: 32 }]}>
                         {buttons.blueTextButton(
                             tx('button_skipBackup'),
                             signupState.next,
