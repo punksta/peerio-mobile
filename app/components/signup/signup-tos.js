@@ -1,7 +1,7 @@
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import Text from '../controls/custom-text';
 import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
@@ -14,6 +14,8 @@ import { drawerState } from '../states';
 import { socket } from '../../lib/icebear';
 import routes from '../routes/routes';
 import TosAccordion from './tos-accordion';
+
+const { height } = Dimensions.get('window');;
 
 const buttonContainer = {
     flexDirection: 'row',
@@ -39,7 +41,7 @@ export default class SignupTos extends SafeComponent {
 
     renderThrow() {
         return (
-            <ViewWithDrawer style={signupStyles.page}>
+            <ViewWithDrawer style={[signupStyles.page, { height }]}>
                 <View style={signupStyles.container2}>
                     <Text semibold serif style={signupStyles.headerStyle2}>
                         {tx('title_termsOfUseSentenceCase')}
