@@ -91,7 +91,7 @@ export default class LoginClean extends SafeComponent {
                         {buttons.roundBlueBgButton(
                             tx('button_login'),
                             this.submit,
-                            null,
+                            this.isNextDisabled || loginState.isInProgress,
                             'button_login',
                             { alignSelf: 'flex-end', marginBottom: vars.spacing.small.midi2x }
                         )}
