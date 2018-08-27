@@ -71,6 +71,10 @@ const description = {
     marginBottom: vars.spacing.medium.maxi2x
 };
 
+const subTitle = {
+    marginBottom: 0
+};
+
 const separator = {
     height: 1,
     backgroundColor: vars.darkBlueDivider12,
@@ -106,5 +110,6 @@ export default {
     description,
     separator,
     suggestionContainer,
-    suggestionTitle
+    suggestionTitle,
+    subTitle
 };
