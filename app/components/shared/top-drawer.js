@@ -20,24 +20,29 @@ const container = {
 };
 
 const headingStyle = {
-    color: vars.darkBlue,
     paddingVertical: vars.spacing.medium.mini,
     borderBottomWidth: 1,
     borderBottomColor: vars.black12,
-    textAlign: 'center',
-    width: '100%'
+    alignSelf: 'stretch'
 };
+
+const headingTextStyle = {
+    color: vars.darkBlue,
+    textAlign: 'center'
+};
+
 const descriptionContainer = {
     marginBottom: vars.spacing.small.midi2x,
-    width: '100%'
+    alignSelf: 'stretch'
 };
+
 const descriptionStyle = {
     fontSize: vars.font.size.smaller,
     color: vars.textBlack54,
     paddingHorizontal: vars.spacing.huge.mini2x,
-    textAlign: 'center',
-    width: '100%'
+    textAlign: 'center'
 };
+
 const iconStyle = {
     position: 'absolute',
     top: vars.spacing.small.maxi2x,
@@ -63,9 +68,11 @@ export default class TopDrawer extends SafeComponent {
         } = this.props;
         return (
             <View style={container}>
-                <Text semibold style={headingStyle}>
-                    {heading}
-                </Text>
+                <View style={headingStyle}>
+                    <Text semibold style={headingTextStyle}>
+                        {heading}
+                    </Text>
+                </View>
                 {image}
                 <View style={descriptionContainer}>
                     <Text numberOfLines={2} style={descriptionStyle}>
