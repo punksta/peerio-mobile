@@ -12,6 +12,7 @@ import buttons from '../helpers/buttons';
 import CheckBox from '../shared/checkbox';
 import SignupButtonBack from './signup-button-back';
 import SignupHeading from './signup-heading';
+import SignupStepIndicator from './signup-step-indicator';
 
 const { validators } = validation;
 const { email } = validators;
@@ -53,11 +54,7 @@ export default class SignupStep3 extends SafeComponent {
     renderThrow() {
         return (
             <View style={signupStyles.page}>
-                <View style={signupStyles.progressBarContainer}>
-                    <View style={signupStyles.filledProgressBar} />
-                    <View style={[signupStyles.filledProgressBar, { marginHorizontal: 1 }]} />
-                    <View style={signupStyles.filledProgressBar} />
-                </View>
+                <SignupStepIndicator />
                 <View style={signupStyles.container}>
                     <SignupButtonBack />
                     <SignupHeading title="title_createYourAccount" subTitle="title_whatIsYourEmail" />

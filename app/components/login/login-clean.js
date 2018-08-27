@@ -14,6 +14,7 @@ import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import SignupButtonBack from '../signup/signup-button-back';
 import SignupHeading from '../signup/signup-heading';
+import IntroStepIndicator from '../shared/intro-step-indicator';
 
 const { validators } = validation;
 const { usernameLogin } = validators;
@@ -64,6 +65,7 @@ export default class LoginClean extends SafeComponent {
     render() {
         return (
             <View style={signupStyles.page}>
+                <IntroStepIndicator max={1} current={1} />
                 <View style={signupStyles.container}>
                     <SignupButtonBack />
                     <SignupHeading title="title_welcomeBack" />
