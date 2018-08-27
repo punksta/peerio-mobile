@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.336.0"></a>
+# [3.336.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.335.0...v3.336.0) (2018-08-27)
+
+
+### Bug Fixes
+
+* add topdrawer border ([50e2949](https://github.com/PeerioTechnologies/peerio-mobile/commit/50e2949))
+* cancel page fonts and alignment ([99dd9b3](https://github.com/PeerioTechnologies/peerio-mobile/commit/99dd9b3))
+* hide status bar on login welcome screen too ([31a812a](https://github.com/PeerioTechnologies/peerio-mobile/commit/31a812a))
+* hide the overflow pill if it can't be contained ([6ada965](https://github.com/PeerioTechnologies/peerio-mobile/commit/6ada965))
+* image alignment and font sizes ([812aaf8](https://github.com/PeerioTechnologies/peerio-mobile/commit/812aaf8))
+* image on loginWelcom (bottom) ([8f9a454](https://github.com/PeerioTechnologies/peerio-mobile/commit/8f9a454))
+* margin for skip backup ([5a5a51b](https://github.com/PeerioTechnologies/peerio-mobile/commit/5a5a51b))
+* no white overlap for ios icon back [ch12757] ([239f653](https://github.com/PeerioTechnologies/peerio-mobile/commit/239f653))
+* return monospace for account key font [ch12757] ([81f2203](https://github.com/PeerioTechnologies/peerio-mobile/commit/81f2203))
+* saving settings for share data and newsletter ([99fcabc](https://github.com/PeerioTechnologies/peerio-mobile/commit/99fcabc))
+* validation on sign-in ([5615b0c](https://github.com/PeerioTechnologies/peerio-mobile/commit/5615b0c))
+
+
+### Features
+
+* add serif font to iOS assets [ch12757] ([ace5b03](https://github.com/PeerioTechnologies/peerio-mobile/commit/ace5b03))
+* delete room confirmation illustration ([#292](https://github.com/PeerioTechnologies/peerio-mobile/issues/292)) ([b79ac02](https://github.com/PeerioTechnologies/peerio-mobile/commit/b79ac02))
+* new sign in design ([b6b39e2](https://github.com/PeerioTechnologies/peerio-mobile/commit/b6b39e2))
+
+
+
 <a name="3.335.0"></a>
 # [3.335.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.334.0...v3.335.0) (2018-08-24)
 
