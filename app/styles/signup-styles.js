@@ -74,10 +74,11 @@ const separator = {
     marginVertical: vars.spacing.medium.mini2x
 };
 const suggestionContainer = {
-    height: 40,
+    height: 24,
     flexDirection: 'row',
     flexWrap: 'wrap',
-    flex: 1
+    flex: 1,
+    overflow: 'hidden'
 };
 const suggestionTitle = {
     color: vars.textBlack54,
