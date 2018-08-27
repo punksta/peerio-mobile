@@ -22,7 +22,6 @@ const checkboxContainer = {
 
 @observer
 export default class SignupStep3 extends SafeComponent {
-    @observable checked = false;
     emailState = observable({ value: '' });
     @action.bound emailInputRef(ref) { this.emailInput = ref; }
 
@@ -37,10 +36,11 @@ export default class SignupStep3 extends SafeComponent {
             this.emailState.value = signupState.email;
             this.emailInput.onChangeText(this.emailState.value);
         }
-        this.checked = signupState.newsletterSubscription;
     }
 
-    @action.bound toggleChecked() { this.checked = !this.checked; }
+    @action toggleChecked() {
+        signupState.subscribeToPromoEmails = !signupState.subscribeToPromoEmails;
+    }
 
     @action.bound handleNextButton() {
         signupState.email = this.emailState.value;
@@ -75,7 +75,7 @@ export default class SignupStep3 extends SafeComponent {
                     <View style={checkboxContainer}>
                         <CheckBox
                             alignLeft
-                            isChecked={this.checked}
+                            isChecked={signupState.subscribeToPromoEmails}
                             onChange={this.toggleChecked}
                             text={tx('title_subscribeNewsletter')}
                             accessibilityLabel={tx('title_subscribeNewsletter')} />

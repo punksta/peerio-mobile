@@ -1,5 +1,5 @@
 import React from 'react';
-import { action } from 'mobx';
+import { action, when } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import Text from '../controls/custom-text';
@@ -21,9 +21,13 @@ const buttonContainer = {
 @observer
 export default class SignupShareData extends SafeComponent {
     @action.bound handleShareButton() {
-        User.current.settings.errorTracking = true;
-        User.current.settings.dataCollection = true;
-        User.current.saveSettings();
+        // TODO: replace with icebear version after it's merged
+        const { settings } = User.current;
+        when(() => !settings.loading, () => {
+            settings.errorTracking = true;
+            settings.dataCollection = true;
+            User.current.saveSettings();
+        });
         signupState.finishSignUp();
     }
 

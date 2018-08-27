@@ -3,6 +3,7 @@ import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
 import { User, crypto, saveAccountKeyBackup, config, validation } from '../../lib/icebear';
 import { tx } from '../utils/translator';
+import { when } from '../../../node_modules/mobx/lib/mobx';
 
 const { validators } = validation;
 const { suggestUsername } = validators;
@@ -27,6 +28,7 @@ class SignupState extends RoutedState {
     @observable role = '';
     @observable medicalId = '';
     @observable usernameSuggestions = [];
+    @observable subscribeToPromoEmails = true;
 
     get isFirst() { return this.current === 0; }
 
@@ -108,8 +110,20 @@ class SignupState extends RoutedState {
         this.isInProgress = true;
         const user = new User();
         User.current = user;
-        const { username, email, firstName, lastName, passphrase, avatarBuffers,
-            keyBackedUp, subscribeToPromoEmails, country, specialty, role, medicalId } = this;
+        const {
+            username,
+            email,
+            firstName,
+            lastName,
+            passphrase,
+            avatarBuffers,
+            keyBackedUp,
+            subscribeToPromoEmails,
+            country,
+            specialty,
+            role,
+            medicalId
+        } = this;
         const localeCode = uiState.locale;
         user.username = username;
         user.email = email;
@@ -135,8 +149,12 @@ class SignupState extends RoutedState {
             .then(() => keyBackedUp && User.current.setAccountKeyBackedUp())
             .then(() => avatarBuffers && User.current.saveAvatar(avatarBuffers))
             .then(() => {
-                User.current.settings.subscribeToPromoEmails = subscribeToPromoEmails;
-                User.current.saveSettings();
+                // TODO: replace with icebear version after it's merged
+                const { settings } = User.current;
+                when(() => !settings.loading, () => {
+                    settings.subscribeToPromoEmails = subscribeToPromoEmails;
+                    User.current.saveSettings();
+                });
             })
             .finally(() => { this.isInProgress = false; });
     }
