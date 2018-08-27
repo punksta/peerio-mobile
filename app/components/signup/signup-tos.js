@@ -13,6 +13,7 @@ import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
 import { drawerState } from '../states';
 import { socket } from '../../lib/icebear';
 import routes from '../routes/routes';
+import TosAccordion from './tos-accordion';
 
 const buttonContainer = {
     flexDirection: 'row',
@@ -46,7 +47,7 @@ export default class SignupTos extends SafeComponent {
                     <Text style={signupStyles.description}>
                         {tx('title_termsDescription_mobile')}
                     </Text>
-                    {/* tos accordion */}
+                    <TosAccordion />
                     <View style={buttonContainer}>
                         {buttons.blueTextButton(
                             tx('button_decline'),

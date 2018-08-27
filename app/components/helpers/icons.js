@@ -85,6 +85,11 @@ const icons = {
         return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {}, null, null, testId, disabled);
     },
 
+    coloredNoPadding(name, onPress, outerStyle, colorFg, backgroundColor, disabled, testId) {
+        const s = backgroundColor ? [outerStyle, { backgroundColor }] : outerStyle;
+        return icons.basic(name, colorFg, onPress, s, null, true, testId, disabled);
+    },
+
     coloredSmall(name, onPress, colorFg, backgroundColor) {
         return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {}, vars.iconSizeSmall);
     },
@@ -176,6 +181,16 @@ const icons = {
         const padding = vars.iconPadding;
         return (
             <View style={{ padding }}>
+                <Image style={{ width, height }} source={source} />
+            </View>
+        );
+    },
+
+    imageIconNoPadding(source, size, style) {
+        const width = size || vars.iconSize;
+        const height = width;
+        return (
+            <View style={style}>
                 <Image style={{ width, height }} source={source} />
             </View>
         );
