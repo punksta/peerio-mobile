@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Dimensions } from 'react-native';
+import { View, Image, Dimensions, StatusBar } from 'react-native';
 import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import Text from '../controls/custom-text';
@@ -90,6 +90,7 @@ export default class LoginWelcome extends SafeComponent {
                     resizeMode="contain"
                     style={[this.imageStyle(imageWelcome), illustrationStyle]} />
                 <ActivityOverlay large visible={loginState.isInProgress} />
+                <StatusBar hidden />
             </View>
         );
     }
