@@ -64,6 +64,7 @@ const headerStyle2 = {
     color: vars.darkBlue,
     marginBottom: vars.spacing.medium.midi
 };
+
 const description = {
     fontSize: vars.font.big,
     color: vars.textBlack87,
