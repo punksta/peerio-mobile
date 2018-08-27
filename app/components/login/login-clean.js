@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import { observable, action, when } from 'mobx';
 import Text from '../controls/custom-text';
 import { tx } from '../utils/translator';
@@ -103,6 +103,7 @@ export default class LoginClean extends SafeComponent {
                         {tx('title_whereToFind')}
                     </Text>
                 </View>
+                <StatusBar hidden />
                 <ActivityOverlay large visible={loginState.isInProgress} />
             </View>
         );
