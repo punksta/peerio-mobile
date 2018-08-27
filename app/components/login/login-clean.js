@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import { observable, action, when } from 'mobx';
 import Text from '../controls/custom-text';
@@ -23,6 +24,7 @@ const findKeyText = {
     fontSize: vars.font.size.normal
 };
 
+@observer
 export default class LoginClean extends SafeComponent {
     usernameState = observable({ value: '' });
     passwordState = observable({ value: '' });
