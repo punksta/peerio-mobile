@@ -53,7 +53,7 @@ export default class TosAccordionItem extends SafeComponent {
             alignItems: 'center',
             borderColor: vars.darkBlueDivider12,
             borderTopWidth: index ? 1 : 0,
-            paddingBottom: this.isOpen ? vars.spacing.small.midi2x : 0
+            marginBottom: this.isOpen ? vars.spacing.small.midi2x : 0
         };
         const rightIconName = this.isOpen ? 'keyboard-arrow-down' : 'keyboard-arrow-right';
         const titleTextColor = this.isOpen ? vars.textBlack87 : vars.textBlack54;

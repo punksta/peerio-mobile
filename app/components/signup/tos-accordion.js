@@ -11,8 +11,8 @@ const listData = [
     {
         title: 'title_termsMainPoints',
         leftIcon: {
-            on: icons.imageIconNoPadding(require('../../assets/file_icons/detail_view/ic-mobile-file-txt-160dp.png'), null, { padding: iconPadding }),
-            off: icons.imageIconNoPadding(require('../../assets/file_icons/detail_view/ic-mobile-file-txt-160dp.png'), null, { padding: iconPadding })
+            on: icons.imageIconNoPadding(require('../../assets/icons/tos-read-icon-on.png'), null, { padding: iconPadding }),
+            off: icons.imageIconNoPadding(require('../../assets/icons/tos-read-icon-off.png'), null, { padding: iconPadding }),
         },
         content: [
             {

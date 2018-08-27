@@ -72,6 +72,7 @@ const description = {
 };
 
 const subTitle = {
+    color: vars.textBlack87,
     marginBottom: 0
 };
 
