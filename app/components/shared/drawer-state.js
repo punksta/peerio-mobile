@@ -25,6 +25,7 @@ class DrawerState {
     }
 
     DRAWER_CONTEXT = {
+        SIGNUP: 'signup',
         CHATS: 'chats',
         FILES: 'files',
         CONTACTS: 'contacts',
