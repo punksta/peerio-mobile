@@ -42,6 +42,12 @@ export default class LoginWelcome extends SafeComponent {
     render() {
         return (
             <View style={[signupStyles.page, { flexGrow: 1 }]}>
+                <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                    <Image
+                        resizeMode="cover"
+                        source={imageWelcome}
+                        style={adjustImageDimensions(imageWelcome, width)} />
+                </View>
                 <DebugMenu />
                 <DebugMenuTrigger>
                     <View style={logoBar}>
@@ -68,12 +74,6 @@ export default class LoginWelcome extends SafeComponent {
                             { width: vars.roundedButtonWidth }
                         )}
                     </View>
-                </View>
-                <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
-                    <Image
-                        resizeMode="cover"
-                        source={imageWelcome}
-                        style={adjustImageDimensions(imageWelcome, width)} />
                 </View>
                 <ActivityOverlay large visible={loginState.isInProgress} />
                 <StatusBar hidden />
