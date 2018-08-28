@@ -132,8 +132,10 @@ export default class SignupStep1 extends LoginWizardPage {
                 <StyledTextInput
                     state={this.firstnameState}
                     validations={firstName}
-                    hint={tx('title_firstName')}
+                    label={tx('title_firstNameLabel')}
+                    placeholder={tx('title_firstNamePlaceholder')}
                     maxLength={24}
+                    clearTextIcon
                     required
                     returnKeyType="next"
                     blurOnSubmit={false}
@@ -143,8 +145,10 @@ export default class SignupStep1 extends LoginWizardPage {
                 <StyledTextInput
                     state={this.lastnameState}
                     validations={lastName}
-                    hint={tx('title_lastName')}
+                    label={tx('title_lastNameLabel')}
+                    placeholder={tx('title_lastNamePlaceholder')}
                     maxLength={24}
+                    clearTextIcon
                     required
                     returnKeyType="next"
                     blurOnSubmit={false}
@@ -154,8 +158,9 @@ export default class SignupStep1 extends LoginWizardPage {
                 <StyledTextInput
                     state={this.usernameState}
                     validations={username}
-                    hint={tx('title_username')}
+                    label={tx('title_usernameLabel')}
                     lowerCase
+                    clearTextIcon
                     required
                     keyboardType="email-address"
                     returnKeyType="next"
@@ -165,10 +170,11 @@ export default class SignupStep1 extends LoginWizardPage {
                 <StyledTextInput
                     state={this.emailState}
                     validations={email}
-                    hint={tx('title_email')}
+                    label={tx('title_emailLabel')}
                     lowerCase
                     keyboardType="email-address"
                     returnKeyType="go"
+                    clearTextIcon
                     required
                     ref={this.emailInputRef}
                     testID="email" />

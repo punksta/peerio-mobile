@@ -84,7 +84,7 @@ export default class SignupConfirmBackup extends LoginWizardPage {
                             <StyledTextInput
                                 customIcon={this.isOk && this.checkIcon}
                                 state={this.confirmTextState}
-                                hint={this.confirmTextSample}
+                                label={this.confirmTextSample}
                                 ref={ref => { this._textBox = ref; }}
                                 testID="confirmText" />
                         </View>

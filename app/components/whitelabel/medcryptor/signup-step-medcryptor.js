@@ -110,7 +110,7 @@ export default class SignupStepMedcryptor extends LoginWizardPage {
                     <StyledTextInput
                         state={this.medicalIdState}
                         validations={[this.ahpraValidator, medicalIdFormat]}
-                        hint={tx('title_medicalId')}
+                        label={tx('title_medicalId')}
                         lowerCase
                         returnKeyType="go"
                         required

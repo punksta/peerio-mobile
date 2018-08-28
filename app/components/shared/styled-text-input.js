@@ -138,8 +138,6 @@ export default class StyledTextInput extends SafeComponent {
 
     @action.bound async onChangeText(text) {
         this.isDirty = true;
-        // even if not focused, move the hint to the top
-        if (text) this.setHintToTop();
         let inputText = text;
         const { Version, OS } = Platform;
         if (OS !== 'android' || Version > 22) {
@@ -163,7 +161,6 @@ export default class StyledTextInput extends SafeComponent {
         uiState.focusedTextBox = null;
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
-        this.blurAnimation();
     }
 
     @action.bound onFocus() {
@@ -171,38 +168,6 @@ export default class StyledTextInput extends SafeComponent {
         this.focused = true;
         if (this.props.onFocus) this.props.onFocus();
         this.textInput.focus();
-        this.setHintToTop();
-    }
-
-    /**
-     * Move the hint to the top
-     */
-    setHintToTop = () => {
-        Animated.timing(
-            this.focusedAnim,
-            {
-                toValue: 1,
-                duration: 300
-            }).start();
-    };
-
-    /**
-     * Move the hint to the bottom
-     */
-    setHintToBottom = () => {
-        Animated.timing(
-            this.focusedAnim,
-            {
-                toValue: 0,
-                duration: 300
-            }).start();
-    };
-
-    blurAnimation() {
-        const { state } = this.props;
-        if (!(state.value && state.value.length)) {
-            this.setHintToBottom();
-        }
     }
 
     get borderColor() {
@@ -211,54 +176,26 @@ export default class StyledTextInput extends SafeComponent {
         return vars.inputBorderColor;
     }
 
-    get hint() {
-        const normalFont = vars.font.size.normal;
-        const smallFont = vars.font.size.smaller;
-        const fontSize = this.focusedAnim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [normalFont, smallFont]
-        });
-        const bottomMin = (vars.inputHeight - normalFont) / 2 - vars.spacing.small.mini;
-        const bottomMax = (vars.inputHeight / 2) + vars.spacing.one;
-        const bottom = this.focusedAnim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [bottomMin, bottomMax]
-        });
-        let color = vars.textBlack38;
+    get label() {
+        let color = vars.textBlack54;
         if (this.focused) color = vars.peerioBlue;
         if (this.valid === INVALID) color = vars.red;
-        const animatedhintStyle = {
+        const labelStyle = {
+            fontSize: vars.font.size.smaller,
             alignSelf: 'center',
-            color,
-            fontSize
+            color
         };
-        return (this.props.hint &&
-            <Animated.View key="hint"
-                pointerEvents="none"
-                style={{ position: 'absolute', bottom, paddingLeft: vars.inputPaddingHorizontal }}>
-                <Animated.Text
-                    style={animatedhintStyle}>
-                    {this.props.hint}
-                </Animated.Text>
-            </Animated.View>
-        );
-    }
-
-    get secretIcon() {
-        return !this.props.secureText ? null : (
-            <View style={[styledTextInput.iconContainer, borderOffset]}>
-                {this.showSecret ?
-                    icons.colored('visibility', this.toggleSecret, vars.peerioTeal, 'transparent') :
-                    icons.dark('visibility', this.toggleSecret, { backgroundColor: 'transparent' })}
-            </View>
-        );
-    }
-
-    get customIcon() {
-        const { customIcon } = this.props;
-        return !customIcon ? null : (
-            <View style={[styledTextInput.iconContainer, borderOffset]}>
-                {customIcon}
+        const labelContainerStyle = {
+            position: 'absolute',
+            top: (-vars.font.size.smaller / 2) - 2,
+            left: vars.spacing.small.mini2x,
+            backgroundColor: 'white',
+            paddingLeft: vars.spacing.small.mini2x,
+            paddingRight: vars.spacing.small.mini2x
+        };
+        return (this.props.label &&
+            <View key="label" pointerEvents="none" style={labelContainerStyle}>
+                <Text style={labelStyle}>{this.props.label}</Text>
             </View>
         );
     }
@@ -271,20 +208,61 @@ export default class StyledTextInput extends SafeComponent {
         if (state.value && Platform.OS === 'android') this._skip = true;
     }
 
+    @action.bound clearInputValue() {
+        this.props.state.value = '';
+        this.onChangeText('');
+    }
+
+    get customIcon() {
+        return (<View style={[styledTextInput.iconContainer, borderOffset]}>
+            {this.props.customIcon}
+        </View>
+        );
+    }
+
+    get secretIcon() {
+        return (<View style={[styledTextInput.iconContainer, borderOffset]}>
+            {this.showSecret ?
+                icons.colored('visibility', this.toggleSecret, vars.peerioTeal, 'transparent') :
+                icons.dark('visibility', this.toggleSecret, { backgroundColor: 'transparent' })}
+        </View>
+        );
+    }
+
+    get clearTextIcon() {
+        return (<View style={[styledTextInput.iconContainer, borderOffset]}>
+            {icons.dark('clear', this.clearInputValue, { backgroundColor: 'transparent' })}
+        </View>);
+    }
+
+    // icon priority: custom > secureText > clearText
+    get rightIcon() {
+        const { customIcon, secureText, clearTextIcon, state } = this.props;
+        if (customIcon) return this.customIcon;
+        else if (secureText) return this.secretIcon;
+        else if (clearTextIcon && state.value) return this.clearTextIcon;
+        return null;
+    }
+
     // reserves space below text input for error message
     get errorSpacer() {
-        const marginBottom = styledTextInput.errorStyle.height
-            + styledTextInput.errorStyle.marginTop
-            + styledTextInput.errorStyle.marginBottom;
+        const marginBottom = styledTextInput.errorContainer.height
+            + styledTextInput.errorContainer.marginTop
+            + styledTextInput.errorContainer.marginBottom;
         return (<View style={{ marginBottom }} />);
     }
 
     get errorMessage() {
         if (this.valid === INVALID) {
+            const marginRight = vars.spacing.small.mini;
             return (
-                <Text style={styledTextInput.errorStyle}>
-                    {tx(this.errorMessageText)}
-                </Text>);
+                <View style={styledTextInput.errorContainer}>
+                    {icons.plainalert('error-outline', vars.iconSizeSmall, { marginRight })}
+                    <Text style={styledTextInput.errorStyle}>
+                        {tx(this.errorMessageText)}
+                    </Text>
+                </View>
+            );
         }
         return this.errorSpacer;
     }
@@ -301,13 +279,11 @@ export default class StyledTextInput extends SafeComponent {
             borderRadius: 4,
             overflow: 'hidden'
         };
-        const paddingRight = { paddingRight: secureText ? vars.iconSizeLarge : null };
+        const paddingRight = { paddingRight: this.rightIcon ? vars.iconSizeLarge : null };
         return (
-            <View style={styledTextInput.outerStyle}>
+            <View style={{ marginHorizontal: vars.inputMarginHorizontal }}>
                 <View style={fieldStyle}>
-                    {this.hint}
-                    {this.secretIcon}
-                    {this.customIcon}
+                    {this.rightIcon}
                     <TextInput
                         style={[styledTextInput.textinputStyle, style, paddingRight]}
                         value={state.value}
@@ -327,6 +303,7 @@ export default class StyledTextInput extends SafeComponent {
                         {...this.props} />
                 </View>
                 {this.errorMessage}
+                {this.label}
             </View>
         );
     }
@@ -336,11 +313,12 @@ StyledTextInput.propTypes = {
     state: PropTypes.any,
     style: PropTypes.any,
     validations: PropTypes.any,
-    hint: PropTypes.any,
+    label: PropTypes.any,
     testID: PropTypes.any,
     alwaysDirty: PropTypes.bool,
     customIcon: PropTypes.any,
     secureText: PropTypes.bool,
+    clearTextIcon: PropTypes.bool,
     required: PropTypes.bool,
     maxLength: PropTypes.number,
     onBlur: PropTypes.any,
