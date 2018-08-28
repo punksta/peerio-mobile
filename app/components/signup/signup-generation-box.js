@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View } from 'react-native';
+import { observable } from 'mobx';
+import { View, Platform, Animated, LayoutAnimation } from 'react-native';
 import LottieView from 'lottie-react-native';
 import { vars } from '../../styles/styles';
 import SafeComponent from '../shared/safe-component';
@@ -8,15 +9,19 @@ import signupState from './signup-state';
 import Text from '../controls/custom-text';
 
 const accountKeyStyle = {
-    fontSize: vars.font.size.xsmall,
+    height: vars.font.size.smaller,
+    alignSelf: 'stretch',
+    textAlign: 'center',
+    fontSize: vars.font.size.normal,
     color: '#E90162',
-    letterSpacing: 3
+    letterSpacing: Platform.OS === 'android' ? 3 : 0
 };
 
 const dottedBoxStyle = {
+    alignSelf: 'stretch',
     height: 44,
     borderColor: vars.mediumGrayBg,
-    borderWidth: 0,
+    borderWidth: 2,
     borderStyle: 'dotted',
     borderRadius: 20,
     alignItems: 'center',
@@ -25,38 +30,69 @@ const dottedBoxStyle = {
 
 @observer
 export default class SignupGenerationBox extends SafeComponent {
+    @observable animationFinished = false;
+
+    get isAnimated() {
+        return this.props.animated && !this.animationFinished;
+    }
+
+    lottieValue = new Animated.Value(0);
+
+    componentDidMount() {
+        this.props.animated &&
+            Animated.timing(this.lottieValue, {
+                toValue: 1,
+                duration: 8000,
+                useNativeDriver: true
+            }).start(() => {
+                this.animationFinished = true;
+                LayoutAnimation.easeInEaseOut();
+                setTimeout(this.props.onAnimationFinished, 1000);
+            });
+    }
+
     get animation() {
+        // this is for android throwing errors
+        const dummyStyle = {
+            alignSelf: 'stretch'
+        };
         return (
             <LottieView
-                style={{}}
+                progress={this.lottieValue}
+                style={dummyStyle}
                 resizeMode="cover"
                 source={require('../../assets/loader-ak.json')}
-                autoPlay
+                autoPlay={false}
+                loop={false}
             />
         );
     }
 
     get text() {
         return (
-            <Text monospace semibold style={accountKeyStyle}>
+            <Text
+                numberofLines={1}
+                minimumFontScale={0.1}
+                adjustsFontSizeToFit
+                monospace
+                semibold
+                style={accountKeyStyle}>
                 {signupState.passphrase}
             </Text>
         );
     }
 
     renderThrow() {
-        const { marginBottom, animated } = this.props;
+        const { marginBottom } = this.props;
         return (
             <View
                 style={[
                     dottedBoxStyle,
                     {
-                        marginBottom: marginBottom ? 24 : 0,
-                        borderWidth: animated ? 0 : 2
+                        marginBottom: marginBottom ? 24 : 0
                     }
-                ]}
-            >
-                {animated ? this.animation : this.text}
+                ]}>
+                {this.isAnimated ? this.animation : this.text}
             </View>
         );
     }
