@@ -123,6 +123,10 @@ export default class SettingsLevel1 extends SafeComponent {
         clientApp.uiUserPrefs.externalContentConsented = false;
     };
 
+    showProps = () => {
+        console.log('User props are:', User.current.props);
+    };
+
     /**
      * Scroll helper is used to provide scrolling capability
      * to the test script. Note that it overrides ref and onScroll
@@ -257,6 +261,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {__DEV__ && <BasicSettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}
                     {__DEV__ && <BasicSettingsItem title="test warning" onPress={() => warnings.addSevere('warning')} />}
                     {__DEV__ && <BasicSettingsItem title="reset external setting" onPress={this.resetExternalSetting} />}
+                    {__DEV__ && <BasicSettingsItem title="log MC props" onPress={this.showProps} />}
                     {/* <BasicSettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <BasicSettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </View>

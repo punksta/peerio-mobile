@@ -33,10 +33,15 @@ export default class SignupTos extends SafeComponent {
         }
     }
 
-    @action.bound async finishSignup() {
+    @action.bound
+    async finishSignup() {
         await signupState.finishAccountCreation();
         uiState.isFirstLogin = true;
         signupState.next();
+    }
+
+    get content() {
+        return <TosAccordion />;
     }
 
     renderThrow() {
@@ -49,20 +54,22 @@ export default class SignupTos extends SafeComponent {
                     <Text style={signupStyles.description}>
                         {tx('title_termsDescription_mobile')}
                     </Text>
-                    <TosAccordion />
+                    {this.content}
                     <View style={buttonContainer}>
                         {buttons.blueTextButton(
                             tx('button_decline'),
                             routes.app.signupCancel,
                             !socket.connected,
                             null,
-                            'button_decline')}
+                            'button_decline'
+                        )}
                         <View style={{ width: 24 }} />
                         {buttons.roundBlueBgButton(
                             tx('button_accept'),
                             this.finishSignup,
                             !socket.connected,
-                            'button_accept')}
+                            'button_accept'
+                        )}
                     </View>
                 </View>
             </ViewWithDrawer>

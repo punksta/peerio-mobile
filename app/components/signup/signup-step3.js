@@ -12,7 +12,7 @@ import buttons from '../helpers/buttons';
 import CheckBox from '../shared/checkbox';
 import SignupButtonBack from './signup-button-back';
 import SignupHeading from './signup-heading';
-import SignupStepIndicator from './signup-step-indicator';
+import whiteLabelComponents from '../../components/whitelabel/white-label-components';
 
 const { validators } = validation;
 const { email } = validators;
@@ -53,7 +53,7 @@ export default class SignupStep3 extends SafeComponent {
     renderThrow() {
         return (
             <View style={signupStyles.page}>
-                <SignupStepIndicator />
+                <whiteLabelComponents.SignupStepIndicator />
                 <View style={signupStyles.container}>
                     <SignupButtonBack />
                     <SignupHeading title="title_createYourAccount" subTitle="title_whatIsYourEmail" />

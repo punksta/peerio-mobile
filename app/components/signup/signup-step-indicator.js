@@ -5,7 +5,7 @@ import signupState from './signup-state';
 import SafeComponent from '../shared/safe-component';
 
 @observer
-export default class SignupStemIndicator extends SafeComponent {
+export default class SignupStepIndicator extends SafeComponent {
     renderThrow() {
         return <IntroStepIndicator max={3} current={signupState.current} />;
     }
