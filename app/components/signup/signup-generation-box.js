@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
+import LottieView from 'lottie-react-native';
 import { vars } from '../../styles/styles';
 import SafeComponent from '../shared/safe-component';
 import signupState from './signup-state';
@@ -15,21 +16,48 @@ const accountKeyStyle = {
 const dottedBoxStyle = {
     height: 38,
     borderColor: vars.mediumGrayBg,
-    borderWidth: 2,
+    borderWidth: 0,
     borderStyle: 'dotted',
-    borderRadius: 6,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center'
 };
 
 @observer
 export default class SignupGenerationBox extends SafeComponent {
+    get animation() {
+        return (
+            <LottieView
+                resizeMode="cover"
+                source={require('../../assets/loader-ak.json')}
+                autoPlay
+                loop
+            />
+        );
+    }
+
+    get text() {
+        return (
+            <Text monospace semibold style={accountKeyStyle}>
+                {signupState.passphrase}
+            </Text>
+        );
+    }
+
     renderThrow() {
-        const { marginBottom } = this.props;
+        const { marginBottom, animated } = this.props;
         /* TODO replace with lotti animation? */
         return (
-            <View style={[dottedBoxStyle, { marginBottom: marginBottom ? 24 : 0 }]}>
-                <Text monospace semibold style={accountKeyStyle}>{signupState.passphrase}</Text>
+            <View
+                style={[
+                    dottedBoxStyle,
+                    {
+                        marginBottom: marginBottom ? 24 : 0,
+                        borderWidth: animated ? 0 : 2
+                    }
+                ]}
+            >
+                {animated ? this.animation : this.text}
             </View>
         );
     }

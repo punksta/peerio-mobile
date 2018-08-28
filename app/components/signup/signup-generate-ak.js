@@ -12,17 +12,23 @@ import SignupHeading from './signup-heading';
 
 @observer
 export default class SignupGenerateAk extends SafeComponent {
-    @action.bound componentDidMount() {
+    @action.bound
+    componentDidMount() {
         // TODO replace timeout with wait for animation to finish
-        setTimeout(() => { signupState.next(); }, 2000);
+        setTimeout(() => {
+            signupState.next();
+        }, 11000);
     }
 
     renderThrow() {
         return (
             <View style={signupStyles.page}>
                 <View style={signupStyles.container2}>
-                    <SignupHeading title="title_generatingAk" subTitle="title_generatingAkDescription" />
-                    <SignupGenerationBox marginBottom />
+                    <SignupHeading
+                        title="title_generatingAk"
+                        subTitle="title_generatingAkDescription"
+                    />
+                    <SignupGenerationBox animated marginBottom />
                     <Text style={signupStyles.description}>
                         {tx('title_generatingAkExplanation')}
                     </Text>
