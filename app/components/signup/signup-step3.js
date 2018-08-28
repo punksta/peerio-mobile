@@ -45,7 +45,6 @@ export default class SignupStep3 extends SafeComponent {
 
     @action.bound handleNextButton() {
         signupState.email = this.emailState.value;
-        signupState.subscribeToPromoEmails = this.checked;
         signupState.next();
     }
 
