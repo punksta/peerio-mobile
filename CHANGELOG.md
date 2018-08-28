@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.337.0"></a>
+# [3.337.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.336.0...v3.337.0) (2018-08-28)
+
+
+### Bug Fixes
+
+* allow click through welcome screen illustration ([8b71335](https://github.com/PeerioTechnologies/peerio-mobile/commit/8b71335))
+* android back from sign in ([016f0f5](https://github.com/PeerioTechnologies/peerio-mobile/commit/016f0f5))
+* changed suggestion title to 'try' if username is taken [ch12788] ([9d5ceba](https://github.com/PeerioTechnologies/peerio-mobile/commit/9d5ceba))
+* disallow multiple drawers being added on signup ([3335768](https://github.com/PeerioTechnologies/peerio-mobile/commit/3335768))
+* hack for terms of use page ([8cc3b8d](https://github.com/PeerioTechnologies/peerio-mobile/commit/8cc3b8d))
+* sign up decine tos screen UI ([275c26b](https://github.com/PeerioTechnologies/peerio-mobile/commit/275c26b))
+* tos accordion icon color and styles ([c0759a4](https://github.com/PeerioTechnologies/peerio-mobile/commit/c0759a4))
+* tos and privacy link in signup ([31cd639](https://github.com/PeerioTechnologies/peerio-mobile/commit/31cd639))
+* update welcome screen illustration ([ac93ec8](https://github.com/PeerioTechnologies/peerio-mobile/commit/ac93ec8))
+
+
+### Features
+
+* android lottie animation support ([1683bf4](https://github.com/PeerioTechnologies/peerio-mobile/commit/1683bf4))
+* firstLoginZeroState (disabled) ([f34adc3](https://github.com/PeerioTechnologies/peerio-mobile/commit/f34adc3))
+* lottie animation for passphrase generation [ch12704] [ch12202] ([a1d6f86](https://github.com/PeerioTechnologies/peerio-mobile/commit/a1d6f86))
+* tos accordion ([1f6248e](https://github.com/PeerioTechnologies/peerio-mobile/commit/1f6248e))
+
+
+
 <a name="3.336.0"></a>
 # [3.336.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.335.0...v3.336.0) (2018-08-27)
 
