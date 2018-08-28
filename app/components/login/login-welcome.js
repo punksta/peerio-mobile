@@ -18,8 +18,6 @@ const imageWelcome = require('../../assets/welcome-illustration.png');
 
 const { width } = Dimensions.get('window');
 
-const bottomImageWidth = Math.ceil(width - (2 * signupStyles.pagePadding));
-
 const logoBar = {
     alignItems: 'center',
     height: vars.welcomeHeaderHeight,
@@ -71,10 +69,11 @@ export default class LoginWelcome extends SafeComponent {
                         )}
                     </View>
                 </View>
-                <View style={{ alignItems: 'center' }}>
+                <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     <Image
+                        resizeMode="cover"
                         source={imageWelcome}
-                        style={adjustImageDimensions(imageWelcome, bottomImageWidth)} />
+                        style={adjustImageDimensions(imageWelcome, width)} />
                 </View>
                 <ActivityOverlay large visible={loginState.isInProgress} />
                 <StatusBar hidden />
