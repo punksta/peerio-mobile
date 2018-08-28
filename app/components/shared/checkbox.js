@@ -17,7 +17,9 @@ export default class CheckBox extends Component {
     render() {
         const { isChecked, alignLeft } = this.props;
         const borderColor = isChecked ? vars.peerioBlue : 'gray';
-        const backgroundColor = isChecked ? vars.peerioBlueBackground15 : undefined;
+        const backgroundColor = isChecked
+            ? vars.peerioBlueBackground15
+            : undefined;
         const container = {
             flexDirection: 'row',
             flexGrow: 1,
@@ -44,21 +46,26 @@ export default class CheckBox extends Component {
             <TouchableOpacity
                 {...testLabel(this.props.accessibilityLabel)}
                 onPress={() => this.toggle()}
-                pressRetentionOffset={vars.retentionOffset}>
-                {alignLeft ?
+                pressRetentionOffset={vars.pressRetentionOffset}>
+                {alignLeft ? (
                     <View style={container}>
                         <View style={checkbox}>
-                            {this.props.isChecked && <Icon name="check" color={borderColor} />}
+                            {this.props.isChecked && (
+                                <Icon name="check" color={borderColor} />
+                            )}
                         </View>
                         <Text style={text}>{this.props.text}</Text>
-                    </View> :
+                    </View>
+                ) : (
                     <View style={container}>
                         <Text style={text}>{this.props.text}</Text>
                         <View style={checkbox}>
-                            {this.props.isChecked && <Icon name="check" color={borderColor} />}
+                            {this.props.isChecked && (
+                                <Icon name="check" color={borderColor} />
+                            )}
                         </View>
                     </View>
-                }
+                )}
             </TouchableOpacity>
         );
     }

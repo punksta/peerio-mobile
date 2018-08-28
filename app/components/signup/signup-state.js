@@ -39,7 +39,7 @@ class SignupState extends RoutedState {
     @observable role = '';
     @observable medicalId = '';
     @observable usernameSuggestions = [];
-    @observable subscribeToPromoEmails = true;
+    @observable subscribeToPromoEmails = false;
 
     get isFirst() {
         return this.current === 0;
