@@ -9,7 +9,7 @@ import signupState from './signup-state';
 import Text from '../controls/custom-text';
 
 const accountKeyStyle = {
-    height: vars.font.size.smaller,
+    height: Platform.OS === 'ios' ? vars.font.size.smaller : null,
     alignSelf: 'stretch',
     textAlign: 'center',
     fontSize: vars.font.size.normal,
