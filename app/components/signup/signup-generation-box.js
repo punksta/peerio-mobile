@@ -46,7 +46,6 @@ export default class SignupGenerationBox extends SafeComponent {
 
     renderThrow() {
         const { marginBottom, animated } = this.props;
-        /* TODO replace with lotti animation? */
         return (
             <View
                 style={[

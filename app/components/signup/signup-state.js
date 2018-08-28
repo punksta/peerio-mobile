@@ -77,7 +77,6 @@ class SignupState extends RoutedState {
     @action.bound
     async next() {
         if (!this.passphrase) this.passphrase = await this.generatePassphrase();
-        // if (this.keyBackedUp && !User.current) await this.finishAccountCreation(); // TODO tos accepted
         this.current++;
     }
 
@@ -137,7 +136,6 @@ class SignupState extends RoutedState {
         this.isInProgress = false;
     }
 
-    // After account is created, user goes to Contact Sync rather than main route
     @action
     async finishAccountCreation() {
         this.isInProgress = true;

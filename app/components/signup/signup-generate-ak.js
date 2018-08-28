@@ -14,7 +14,6 @@ import SignupHeading from './signup-heading';
 export default class SignupGenerateAk extends SafeComponent {
     @action.bound
     componentDidMount() {
-        // TODO replace timeout with wait for animation to finish
         setTimeout(() => {
             signupState.next();
         }, 11000);
