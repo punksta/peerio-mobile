@@ -1,13 +1,18 @@
 import { observable, action } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
-import { User, crypto, saveAccountKeyBackup, config, validation } from '../../lib/icebear';
+import {
+    User,
+    crypto,
+    saveAccountKeyBackup,
+    config,
+    validation
+} from '../../lib/icebear';
 import { tx } from '../utils/translator';
 import { when } from '../../../node_modules/mobx/lib/mobx';
 
 const { validators } = validation;
 const { suggestUsername } = validators;
-
 
 class SignupState extends RoutedState {
     @observable username = '';
@@ -17,8 +22,14 @@ class SignupState extends RoutedState {
     @observable passphrase = '';
     @observable pin = '';
     @observable _current = 0;
-    get current() { return this._current; }
-    set current(i) { uiState.hideAll().then(() => { this._current = i; }); }
+    get current() {
+        return this._current;
+    }
+    set current(i) {
+        uiState.hideAll().then(() => {
+            this._current = i;
+        });
+    }
     _prefix = 'signup';
     avatarBuffers = null;
     @observable avatarData = null;
@@ -30,11 +41,14 @@ class SignupState extends RoutedState {
     @observable usernameSuggestions = [];
     @observable subscribeToPromoEmails = true;
 
-    get isFirst() { return this.current === 0; }
+    get isFirst() {
+        return this.current === 0;
+    }
 
     transition = () => this.routes.app.signupStep1();
 
-    @action.bound exit() {
+    @action.bound
+    exit() {
         this.username = '';
         this.email = '';
         this.firstName = '';
@@ -53,41 +67,59 @@ class SignupState extends RoutedState {
         if (this.onExitHandler) this.onExitHandler();
     }
 
-    @action reset() { this.current = 0; }
+    @action
+    reset() {
+        this.current = 0;
+    }
 
     generatePassphrase = () => crypto.keys.getRandomAccountKeyHex();
 
-    @action.bound async next() {
+    @action.bound
+    async next() {
         if (!this.passphrase) this.passphrase = await this.generatePassphrase();
         // if (this.keyBackedUp && !User.current) await this.finishAccountCreation(); // TODO tos accepted
         this.current++;
     }
 
-    @action.bound prev() { (this.current > 0) ? this.current-- : this.exit(); }
+    @action.bound
+    prev() {
+        this.current > 0 ? this.current-- : this.exit();
+    }
 
-    @action.bound async suggestUsernames() {
+    @action.bound
+    async suggestUsernames() {
         try {
-            this.usernameSuggestions = await suggestUsername(this.firstName, this.lastName);
+            this.usernameSuggestions = await suggestUsername(
+                this.firstName,
+                this.lastName
+            );
         } catch (e) {
             console.error(e);
         }
     }
 
-    @action async finishSignUp() {
-        return mainState.activateAndTransition(User.current)
-            .catch((e) => {
-                console.log(e);
-                User.current = null;
-                this.reset();
-            });
+    @action
+    async finishSignUp() {
+        return mainState.activateAndTransition(User.current).catch(e => {
+            console.log(e);
+            User.current = null;
+            this.reset();
+        });
     }
 
     get backupFileName() {
         return `${this.username}-${tx('title_appName')}.pdf`;
     }
 
-    @action.bound async saveAccountKey() {
-        const { username, firstName, lastName, passphrase, backupFileName } = this;
+    @action.bound
+    async saveAccountKey() {
+        const {
+            username,
+            firstName,
+            lastName,
+            passphrase,
+            backupFileName
+        } = this;
         const fileSavePath = config.FileStream.getTempCachePath(backupFileName);
         await saveAccountKeyBackup(
             fileSavePath,
@@ -106,7 +138,8 @@ class SignupState extends RoutedState {
     }
 
     // After account is created, user goes to Contact Sync rather than main route
-    @action async finishAccountCreation() {
+    @action
+    async finishAccountCreation() {
         this.isInProgress = true;
         const user = new User();
         User.current = user;
@@ -127,7 +160,8 @@ class SignupState extends RoutedState {
         const localeCode = uiState.locale;
         user.username = username;
         user.email = email;
-        user.passphrase = __DEV__ && process.env.PEERIO_QUICK_SIGNUP ? 'icebear' : passphrase;
+        user.passphrase =
+            __DEV__ && process.env.PEERIO_QUICK_SIGNUP ? 'icebear' : passphrase;
         user.firstName = firstName;
         user.lastName = lastName;
         user.localeCode = localeCode;
@@ -143,7 +177,8 @@ class SignupState extends RoutedState {
                 mcrAHPRA: medicalId
             };
         }
-        return user.createAccountAndLogin()
+        return user
+            .createAccountAndLogin()
             .then(() => loginState.enableAutomaticLogin(user))
             .then(() => mainState.saveUser())
             .then(() => keyBackedUp && User.current.setAccountKeyBackedUp())
@@ -151,12 +186,17 @@ class SignupState extends RoutedState {
             .then(() => {
                 // TODO: replace with icebear version after it's merged
                 const { settings } = User.current;
-                when(() => !settings.loading, () => {
-                    settings.subscribeToPromoEmails = subscribeToPromoEmails;
-                    User.current.saveSettings();
-                });
+                when(
+                    () => !settings.loading,
+                    () => {
+                        settings.subscribeToPromoEmails = subscribeToPromoEmails;
+                        User.current.saveSettings();
+                    }
+                );
             })
-            .finally(() => { this.isInProgress = false; });
+            .finally(() => {
+                this.isInProgress = false;
+            });
     }
 }
 

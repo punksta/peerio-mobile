@@ -14,7 +14,7 @@ const accountKeyStyle = {
 };
 
 const dottedBoxStyle = {
-    height: 38,
+    height: 44,
     borderColor: vars.mediumGrayBg,
     borderWidth: 0,
     borderStyle: 'dotted',
@@ -28,10 +28,10 @@ export default class SignupGenerationBox extends SafeComponent {
     get animation() {
         return (
             <LottieView
+                style={{}}
                 resizeMode="cover"
                 source={require('../../assets/loader-ak.json')}
                 autoPlay
-                loop
             />
         );
     }
