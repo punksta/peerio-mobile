@@ -89,12 +89,14 @@ export default class SignupStep2 extends SafeComponent {
 
     get suggestionBlock() {
         if (!signupState.usernameSuggestions.length) return null;
+        const suggestionTitle = this.usernameInput && this.usernameInput.errorMessageText === 'error_usernameNotAvailable' ?
+            tx('title_try') : tx('title_available');
         return (
             <View>
                 <View style={signupStyles.separator} />
                 <View style={{ flexDirection: 'row' }}>
                     <View>
-                        <Text style={signupStyles.suggestionTitle}>{tx('title_available')}</Text>
+                        <Text style={signupStyles.suggestionTitle}>{suggestionTitle}</Text>
                     </View>
                     <View style={signupStyles.suggestionContainer}>
                         {signupState.usernameSuggestions.map(this.suggestionPill)}
