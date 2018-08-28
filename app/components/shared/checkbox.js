@@ -10,7 +10,6 @@ import testLabel from '../helpers/test-label';
 @observer
 export default class CheckBox extends Component {
     toggle() {
-        this.props.isChecked = !this.props.isChecked;
         this.props.onChange && this.props.onChange(this.props.isChecked);
     }
 
