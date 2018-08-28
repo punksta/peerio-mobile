@@ -9,7 +9,7 @@ const textinputStyle = {
     paddingHorizontal: vars.inputPaddingHorizontal
 };
 
-const errorContainer = {
+const bottomMessageContainer = {
     flexDirection: 'row',
     marginTop: vars.spacing.small.mini,
     marginBottom: vars.spacing.small.maxi,
@@ -19,6 +19,11 @@ const errorContainer = {
 const errorStyle = {
     fontSize: vars.font.size.smaller,
     color: vars.red
+};
+
+const helperStyle = {
+    fontSize: vars.font.size.smaller,
+    color: vars.peerioBlue
 };
 
 const inputContainer = [
@@ -36,8 +41,9 @@ const iconContainer = {
 
 export default {
     textinputStyle,
-    errorContainer,
+    bottomMessageContainer,
     errorStyle,
+    helperStyle,
     inputContainer,
     iconContainer
 };

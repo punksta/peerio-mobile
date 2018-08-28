@@ -27,7 +27,7 @@ export default class StyledTextInput extends SafeComponent {
     @observable start = 0;
     @observable end = 0;
     @observable focusedAnim;
-    @observable errorMessageText;
+    @observable errorTextCopy;
     @observable isDirty = false;
 
     constructor(props) {
@@ -61,7 +61,7 @@ export default class StyledTextInput extends SafeComponent {
      */
     @action.bound setCustomError(error) {
         this.valid = INVALID;
-        this.errorMessageText = error;
+        this.errorTextCopy = error;
     }
 
     // Checks if text field is empty and validates accordingly
@@ -71,12 +71,12 @@ export default class StyledTextInput extends SafeComponent {
             if (!state.value) {
                 if (alwaysDirty) {
                     this.valid = INVALID;
-                    this.errorMessageText = validations[0].message;
+                    this.errorTextCopy = validations[0].message;
                     throw new Error();
                 }
                 if (required && this.isDirty) {
                     this.valid = INVALID;
-                    this.errorMessageText = tx('title_required');
+                    this.errorTextCopy = tx('title_required');
                 }
             }
         } catch (error) {
@@ -105,7 +105,7 @@ export default class StyledTextInput extends SafeComponent {
         if (alwaysDirty) {
             // If its always dirty, assume it only has one validation method
             this.valid = INVALID;
-            this.errorMessageText = validations[0].message;
+            this.errorTextCopy = validations[0].message;
         }
         // Create a promise chain in order to execute one validation at a time
         // Next validation gets executed only if the previous one returns VALID
@@ -119,14 +119,14 @@ export default class StyledTextInput extends SafeComponent {
                         if (value !== state.value) return false;
                         this.valid = valid;
                         if (valid === INVALID) {
-                            this.errorMessageText = validation.message;
+                            this.errorTextCopy = validation.message;
                             return false;
                         }
                         return true;
                     });
                 // Throw an error to break the chain if a validation action returns INVALID
                 if (result === false) {
-                    throw new Error(this.errorMessageText);
+                    throw new Error(this.errorTextCopy);
                 }
             });
         });
@@ -244,27 +244,40 @@ export default class StyledTextInput extends SafeComponent {
         return null;
     }
 
-    // reserves space below text input for error message
-    get errorSpacer() {
-        const marginBottom = styledTextInput.errorContainer.height
-            + styledTextInput.errorContainer.marginTop
-            + styledTextInput.errorContainer.marginBottom;
+    // reserves space below text input for error or helper message
+    get bottomTextSpacer() {
+        const marginBottom = styledTextInput.bottomMessageContainer.height
+            + styledTextInput.bottomMessageContainer.marginTop
+            + styledTextInput.bottomMessageContainer.marginBottom;
         return (<View style={{ marginBottom }} />);
     }
 
-    get errorMessage() {
-        if (this.valid === INVALID) {
-            const marginRight = vars.spacing.small.mini;
-            return (
-                <View style={styledTextInput.errorContainer}>
-                    {icons.plainalert('error-outline', vars.iconSizeSmall, { marginRight })}
-                    <Text style={styledTextInput.errorStyle}>
-                        {tx(this.errorMessageText)}
-                    </Text>
-                </View>
-            );
-        }
-        return this.errorSpacer;
+    get errorText() {
+        const marginRight = vars.spacing.small.mini;
+        return (
+            <View style={styledTextInput.bottomMessageContainer}>
+                {icons.plainalert('error-outline', vars.iconSizeSmall, { marginRight })}
+                <Text style={styledTextInput.errorStyle}>
+                    {tx(this.errorTextCopy)}
+                </Text>
+            </View>
+        );
+    }
+
+    get helperText() {
+        return (
+            <View style={styledTextInput.bottomMessageContainer}>
+                <Text style={styledTextInput.helperStyle}>
+                    {tx(this.props.helperText)}
+                </Text>
+            </View>
+        );
+    }
+
+    get bottomText() {
+        if (this.valid === INVALID) return this.errorText;
+        else if (this.props.helperText && this.focused) return this.helperText;
+        return this.bottomTextSpacer;
     }
 
     @action.bound textInputRef(ref) { this.textInput = ref; }
@@ -302,7 +315,7 @@ export default class StyledTextInput extends SafeComponent {
                         {...testLabel(testID)}
                         {...this.props} />
                 </View>
-                {this.errorMessage}
+                {this.bottomText}
                 {this.label}
             </View>
         );
@@ -320,6 +333,7 @@ StyledTextInput.propTypes = {
     secureText: PropTypes.bool,
     clearTextIcon: PropTypes.bool,
     required: PropTypes.bool,
+    helperText: PropTypes.string,
     maxLength: PropTypes.number,
     onBlur: PropTypes.any,
     onFocus: PropTypes.any,
