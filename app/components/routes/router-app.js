@@ -42,7 +42,7 @@ class RouterApp extends Router {
                 return true;
             }
             // go back from signupStep1
-            if (this.route === 'signupStep1') {
+            if (this.route === 'signupStep1' || this.route === 'loginClean') {
                 this.loginWelcome();
                 return true;
             }
