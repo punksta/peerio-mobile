@@ -23,7 +23,7 @@ const footer = {
 };
 
 const filenameStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size.smallerx,
     color: vars.txtDark,
     backgroundColor: 'transparent'
 };
@@ -31,7 +31,7 @@ const filenameStyle = {
 const FILE_SIZE = '843KB';
 
 const filesizeStyle = {
-    fontSize: vars.font.size.smaller,
+    fontSize: vars.font.size.smallerx,
     color: vars.textBlack54,
     backgroundColor: 'transparent'
 };
@@ -65,6 +65,7 @@ const textBox = {
 };
 
 const textBoxText = {
+    color: vars.textBlack87,
     fontSize: vars.font.size.xsmall,
     marginVertical: 4
 };
