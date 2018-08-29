@@ -8,7 +8,7 @@ import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 import buttons from '../helpers/buttons';
 import ViewWithDrawer from '../shared/view-with-drawer';
-import { uiState, contactState } from '../states';
+import { uiState } from '../states';
 import routes from '../routes/routes';
 
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
