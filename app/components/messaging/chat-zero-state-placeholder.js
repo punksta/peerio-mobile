@@ -8,7 +8,7 @@ import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 import buttons from '../helpers/buttons';
 import ViewWithDrawer from '../shared/view-with-drawer';
-import { uiState } from '../states';
+import { uiState, contactState } from '../states';
 
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
 
@@ -44,14 +44,9 @@ const imageStyle = {
 
 @observer
 export default class ChatZeroStatePlaceholder extends SafeComponent {
-    syncContacts() {
-        uiState.isFirstLogin = false;
-        console.log('sync');
-    }
-
     get moreDetails() {
         if (uiState.isFirstLogin) {
-            return buttons.roundBlueBgButton('title_syncAddressBook', this.syncContacts, false, null, { marginTop: vars.spacing.large.maxi2x });
+            return buttons.roundBlueBgButton('title_syncAddressBook', () => contactState.testImport(), false, null, { marginTop: vars.spacing.large.maxi2x });
         }
         return (
             <View>
