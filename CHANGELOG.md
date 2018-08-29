@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.341.0"></a>
+# [3.341.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.334.0...v3.341.0) (2018-08-29)
+
+
+### Bug Fixes
+
+* round button fontweight [branch ch12505] ([#290](https://github.com/PeerioTechnologies/peerio-mobile/issues/290)) ([1a23615](https://github.com/PeerioTechnologies/peerio-mobile/commit/1a23615))
+* status bar progress ([1183f6f](https://github.com/PeerioTechnologies/peerio-mobile/commit/1183f6f))
+
+
+### Features
+
+* delete room confirmation illustration ([#292](https://github.com/PeerioTechnologies/peerio-mobile/issues/292)) ([b79ac02](https://github.com/PeerioTechnologies/peerio-mobile/commit/b79ac02))
+* refactor Avatar component ✨ ([#289](https://github.com/PeerioTechnologies/peerio-mobile/issues/289)) ([5e49329](https://github.com/PeerioTechnologies/peerio-mobile/commit/5e49329))
+
+
+
 <a name="3.340.0"></a>
 # [3.340.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.339.0...v3.340.0) (2018-08-29)
 
