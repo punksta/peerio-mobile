@@ -13,11 +13,7 @@ import { uiState } from '../states';
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
 
 const container = {
-    flex: 1,
-    flexGrow: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    backgroundColor: vars.darkBlueBackground05
 };
 
 const textStyle = {
@@ -77,8 +73,8 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
 
     renderThrow() {
         return (
-            <View style={container}>
-                <ViewWithDrawer>
+            <ViewWithDrawer>
+                <View style={container}>
                     <Text bold style={[textStyle, chatHeaderStyle]} {...testLabel('title_headerZeroState')}>
                         {tx('title_zeroChat')}
                     </Text>
@@ -89,9 +85,9 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
                         source={zeroStateImage}
                         resizeMode="contain"
                         style={imageStyle} />
-                    { this.moreDetails }
-                </ViewWithDrawer>
-            </View>
+                    {this.moreDetails}
+                </View>
+            </ViewWithDrawer>
         );
     }
 }
