@@ -8,6 +8,7 @@ import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 import buttons from '../helpers/buttons';
 import ViewWithDrawer from '../shared/view-with-drawer';
+import { uiState } from '../states';
 
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
 
@@ -47,10 +48,14 @@ const imageStyle = {
 
 @observer
 export default class ChatZeroStatePlaceholder extends SafeComponent {
+    syncContacts() {
+        uiState.hasSyncedContacts = true;
+        console.log('sync');
+    }
+
     get moreDetails() {
-        const hasSynced = true;
-        if (!hasSynced) {
-            return buttons.roundBlueBgButton('title_syncAddressBook', () => console.log('sync'), false, null, { marginTop: vars.spacing.large.maxi2x });
+        if (!uiState.hasSyncedContacts) {
+            return buttons.roundBlueBgButton('title_syncAddressBook', () => this.syncContacts(), false, null, { marginTop: vars.spacing.large.maxi2x });
         }
         return (
             <View>
@@ -75,10 +80,10 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
             <View style={container}>
                 <ViewWithDrawer>
                     <Text bold style={[textStyle, chatHeaderStyle]} {...testLabel('title_headerZeroState')}>
-                        {tx('title_headerZeroState')}
+                        {tx('title_zeroChat')}
                     </Text>
                     <Text style={[textStyle, chatDescriptionStyle]}>
-                        {tx('title_descriptionZeroState')}
+                        {tx('title_zeroChatSubtitle')}
                     </Text>
                     <Image
                         source={zeroStateImage}

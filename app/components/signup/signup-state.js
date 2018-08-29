@@ -94,7 +94,10 @@ class SignupState extends RoutedState {
             .then(() => mainState.saveUser())
             .then(() => keyBackedUp && User.current.setAccountKeyBackedUp())
             .then(() => avatarBuffers && User.current.saveAvatar(avatarBuffers))
-            .finally(() => { this.isInProgress = false; });
+            .finally(() => {
+                uiState.hasSyncedContacts = false;
+                this.isInProgress = false;
+            });
     }
 }
 
