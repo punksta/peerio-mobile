@@ -116,9 +116,12 @@ export default class SignupStep2 extends SafeComponent {
                     <StyledTextInput
                         state={this.usernameState}
                         validations={username}
-                        hint={tx('title_username')}
+                        helperText={tx('title_hintUsername')}
+                        label={`${tx('title_username')}*`}
                         lowerCase
                         required
+                        clearTextIcon
+                        placeholder={tx('title_emailPlaceholderSignup')}
                         keyboardType="email-address"
                         returnKeyType="next"
                         ref={this.usernameInputRef}

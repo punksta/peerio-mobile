@@ -60,11 +60,13 @@ export default class SignupStep3 extends SafeComponent {
                     <StyledTextInput
                         state={this.emailState}
                         validations={email}
-                        hint={tx('title_email')}
+                        label={`${tx('title_email')}*`}
+                        helperText={tx('title_hintEmail')}
                         lowerCase
                         keyboardType="email-address"
                         returnKeyType="go"
                         required
+                        clearTextIcon
                         ref={this.emailInputRef}
                         testID="email" />
                     <View style={[signupStyles.separator, { marginBottom: 12 }]} />

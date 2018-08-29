@@ -66,9 +66,11 @@ export default class SignupStep1 extends SafeComponent {
                     <StyledTextInput
                         state={this.firstnameState}
                         validations={firstName}
-                        hint={tx('title_firstName')}
+                        label={`${tx('title_firstName')}*`}
+                        helperText={tx('title_hintUsername')}
                         maxLength={24}
                         required
+                        clearTextIcon
                         returnKeyType="next"
                         blurOnSubmit={false}
                         onSubmitEditing={this.onSubmitFirstName}
@@ -77,9 +79,11 @@ export default class SignupStep1 extends SafeComponent {
                     <StyledTextInput
                         state={this.lastnameState}
                         validations={lastName}
-                        hint={tx('title_lastName')}
+                        label={`${tx('title_lastName')}*`}
+                        helperText={tx('title_hintUsername')}
                         maxLength={24}
                         required
+                        clearTextIcon
                         returnKeyType="next"
                         blurOnSubmit={false}
                         ref={this.lastNameInputRef}
