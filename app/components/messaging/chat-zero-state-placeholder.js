@@ -22,38 +22,41 @@ const container = {
 const textStyle = {
     color: vars.textBlack87,
     textAlign: 'center',
-    paddingHorizontal: vars.spacing.large.maxi2x
+    paddingHorizontal: vars.spacing.large.mini,
+    paddingVertical: vars.spacing.small.mini2x
 };
 
 const chatHeaderStyle = {
     fontSize: vars.font.size.huge,
-    marginTop: vars.spacing.medium.maxi2x
+    paddingTop: vars.spacing.medium.maxi2x,
+    paddingHorizontal: vars.spacing.large.maxi
 };
 
 const chatDescriptionStyle = {
     fontSize: vars.font.size.normal,
-    marginVertical: vars.spacing.medium.midi
+    marginVertical: vars.spacing.medium.mini,
+    paddingHorizontal: vars.spacing.large.maxi
 };
 
 const imageStyle = {
     width: Dimensions.get('window').width,
-    height: 275,
+    height: 255,
     paddingHorizontal: vars.spacing.medium.midi2x,
-    marginBottom: vars.spacing.medium.maxi2x
+    marginBottom: vars.spacing.small.midi2x
 };
 
 @observer
 export default class ChatZeroStatePlaceholder extends SafeComponent {
     get moreDetails() {
         if (false) {
-            return buttons.roundBlueBgButton('title_syncAddressBook', () => console.log('sync'));
+            return buttons.roundBlueBgButton('title_syncAddressBook', () => console.log('sync'), false, null, { marginTop: vars.spacing.large.maxi2x });
         }
         return (
             <View>
-                <Text style={textStyle}>
+                <Text bold style={[{ fontSize: vars.font.size.big }, textStyle]}>
                     {tx('button_createRooms')}
                 </Text>
-                <Text style={textStyle}>
+                <Text semibold style={[{ fontSize: vars.font.size.bigger }, textStyle]}>
                     {tx('title_roomsDescription1')}
                 </Text>
                 <Text style={textStyle}>
