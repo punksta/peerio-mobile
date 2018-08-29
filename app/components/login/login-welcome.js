@@ -16,7 +16,7 @@ import { adjustImageDimensions } from '../helpers/image';
 const logoWelcome = require('../../assets/peerio-logo-dark.png');
 const imageWelcome = require('../../assets/welcome-illustration.png');
 
-const { width } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 
 const logoBar = {
     alignItems: 'center',
@@ -44,9 +44,9 @@ export default class LoginWelcome extends SafeComponent {
             <View style={[signupStyles.page, { flexGrow: 1 }]}>
                 <View style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     <Image
-                        resizeMode="cover"
+                        resizeMode="contain"
                         source={imageWelcome}
-                        style={adjustImageDimensions(imageWelcome, width)} />
+                        style={{ height, alignSelf: 'center' }} />
                 </View>
                 <DebugMenu />
                 <DebugMenuTrigger>
