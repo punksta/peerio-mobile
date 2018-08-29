@@ -48,7 +48,8 @@ const imageStyle = {
 @observer
 export default class ChatZeroStatePlaceholder extends SafeComponent {
     get moreDetails() {
-        if (false) {
+        const hasSynced = true;
+        if (!hasSynced) {
             return buttons.roundBlueBgButton('title_syncAddressBook', () => console.log('sync'), false, null, { marginTop: vars.spacing.large.maxi2x });
         }
         return (
