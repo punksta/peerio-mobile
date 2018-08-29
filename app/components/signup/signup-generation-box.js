@@ -12,9 +12,8 @@ const accountKeyStyle = {
     height: Platform.OS === 'ios' ? vars.font.size.smaller : null,
     alignSelf: 'stretch',
     textAlign: 'center',
-    fontSize: vars.font.size.normal,
-    color: '#E90162',
-    letterSpacing: Platform.OS === 'android' ? 3 : 0
+    fontSize: vars.font.size.smaller,
+    color: '#E90162'
 };
 
 const dottedBoxStyle = {
@@ -74,8 +73,8 @@ export default class SignupGenerationBox extends SafeComponent {
                 numberofLines={1}
                 minimumFontScale={0.1}
                 adjustsFontSizeToFit
-                monospace
-                semibold
+                courier
+                bold
                 style={accountKeyStyle}>
                 {signupState.passphrase}
             </Text>

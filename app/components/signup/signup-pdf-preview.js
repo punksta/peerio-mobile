@@ -80,7 +80,7 @@ export default class SignupPdfPreview extends SafeComponent {
                             {tx('title_demoPdfUsernameLabel')}
                         </Text>
                         <View style={textBox}>
-                            <Text style={textBoxText} monospace>
+                            <Text style={textBoxText} courier>
                                 {signupState.username}
                             </Text>
                         </View>
@@ -88,7 +88,7 @@ export default class SignupPdfPreview extends SafeComponent {
                             {tx('title_demoPdfAkLabel')}
                         </Text>
                         <View style={textBox}>
-                            <Text style={textBoxText} monospace>
+                            <Text style={textBoxText} courier>
                                 {signupState.passphrase}
                             </Text>
                         </View>
