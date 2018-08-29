@@ -13,11 +13,9 @@ import { vars } from '../../styles/styles';
 @observer
 export default class Text extends SafeComponent {
     renderThrow() {
-        const { semibold, bold, italic, serif, courier } = this.props;
+        const { semibold, bold, italic, monospace, serif } = this.props;
         const style = {};
-        let font = [vars.peerioFontFamily];
-        if (serif) font = [vars.peerioSerifFontFamily];
-        if (courier) font = [vars.peerioCourierFontFamily];
+        const font = [serif ? vars.peerioSerifFontFamily : vars.peerioFontFamily];
 
         // Font Weight and Style
         if (Platform.OS === 'android') {
@@ -34,6 +32,11 @@ export default class Text extends SafeComponent {
         }
         style.fontFamily = font.join('');
         if (Platform.OS === 'android') style.fontFamily = style.fontFamily.replace(' ', '');
+
+        // Override font
+        if (monospace) {
+            style.fontFamily = Platform.OS === 'android' ? 'monospace' : 'Courier';
+        }
 
         return (
             <RNText {...this.props} style={[this.props.style, style]}>
@@ -62,7 +65,5 @@ Text.propTypes = {
     semibold: PropTypes.any,
     bold: PropTypes.any,
     italic: PropTypes.any,
-    serif: PropTypes.any,
-    courier: PropTypes.any,
     children: PropTypes.any
 };
