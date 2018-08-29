@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.340.0"></a>
+# [3.340.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.339.0...v3.340.0) (2018-08-29)
+
+
+### Bug Fixes
+
+* account key generator height on android ([34c4c94](https://github.com/PeerioTechnologies/peerio-mobile/commit/34c4c94))
+* behaviour of checkbox ([9a565f9](https://github.com/PeerioTechnologies/peerio-mobile/commit/9a565f9))
+
+
+### Features
+
+* update Medcryptor signup ([#296](https://github.com/PeerioTechnologies/peerio-mobile/issues/296)) ([e81552e](https://github.com/PeerioTechnologies/peerio-mobile/commit/e81552e))
+
+
+
 <a name="3.339.0"></a>
 # [3.339.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.338.0...v3.339.0) (2018-08-28)
 
