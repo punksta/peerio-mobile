@@ -1,17 +1,17 @@
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, Linking } from 'react-native';
 import Text from '../controls/custom-text';
 import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
-import { tx } from '../utils/translator';
+import { T, tx } from '../utils/translator';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import ViewWithDrawer from '../shared/view-with-drawer';
 import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
 import { drawerState, uiState } from '../states';
-import { socket } from '../../lib/icebear';
+import { config, socket } from '../../lib/icebear';
 import routes from '../routes/routes';
 import TosAccordion from './tos-accordion';
 
@@ -49,6 +49,14 @@ export default class SignupTos extends SafeComponent {
         return <TosAccordion />;
     }
 
+    @action.bound openTermsLink(text) {
+        return (
+            <Text style={{ color: vars.peerioBlue }} onPress={() => { Linking.openURL(config.translator.urlMap.openTerms); }}>
+                {text}
+            </Text>
+        );
+    }
+
     renderThrow() {
         return (
             <ViewWithDrawer style={[signupStyles.page, { height }]}>
@@ -57,7 +65,7 @@ export default class SignupTos extends SafeComponent {
                         {tx('title_termsOfUseSentenceCase')}
                     </Text>
                     <Text style={signupStyles.description}>
-                        {tx('title_termsDescription_mobile')}
+                        {<T k="title_termsDescription">{{ openTerms: this.openTermsLink }}</T>}
                     </Text>
                     {this.content}
                     <View style={buttonContainer}>
