@@ -55,7 +55,7 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
 
     get moreDetails() {
         if (uiState.isFirstLogin) {
-            return buttons.roundBlueBgButton('title_syncAddressBook', () => this.syncContacts(), false, null, { marginTop: vars.spacing.large.maxi2x });
+            return buttons.roundBlueBgButton('title_syncAddressBook', this.syncContacts, false, null, { marginTop: vars.spacing.large.maxi2x });
         }
         return (
             <View>
