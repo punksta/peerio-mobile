@@ -7,16 +7,16 @@ import { tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import contactState from '../contacts/contact-state';
 import signupState from '../signup/signup-state';
-import LoginWizardPage from '../login/login-wizard-page';
 import ContactImportItem from '../contacts/contact-import-item';
 import { headerContainer, textStyle, skipButtonStyle, listHeader, textListTitle, footerContainer, container } from '../../styles/signup-contact-sync';
 import ListItem from './signup-contact-list-item';
 import Text from '../controls/custom-text';
+import SafeComponent from '../shared/safe-component';
 
 const INITIAL_LIST_SIZE = 10;
 
 @observer
-export default class SignupContactAdd extends LoginWizardPage {
+export default class SignupContactAdd extends SafeComponent {
     get useLayout2() { return true; }
     @observable contactList = [];
     @observable inProgress = false;

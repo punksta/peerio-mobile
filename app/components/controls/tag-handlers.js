@@ -5,6 +5,9 @@ import Italic from './italic';
 import Link from './link';
 import routes from '../routes/routes';
 
+// counter for BR
+let keyIndex = 0;
+
 function a(text, url, style) {
     if (!url) {
         console.error(`tag-handlers.js: bad ${text} link`);
@@ -27,7 +30,7 @@ function i(text) {
 }
 
 function br() {
-    return <Text>{'\n'}</Text>;
+    return <Text key={++keyIndex}>{'\n'}</Text>;
 }
 
 module.exports = {
