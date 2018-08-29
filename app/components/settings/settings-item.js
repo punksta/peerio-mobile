@@ -6,7 +6,7 @@ import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import icons from '../helpers/icons';
-import { t } from '../utils/translator';
+import { tx } from '../utils/translator';
 import testLabel from '../helpers/test-label';
 
 const itemContainerStyle = {
@@ -60,7 +60,7 @@ export default class SettingsItem extends SafeComponent {
                 <View style={[itemContainerStyle, { height }]} pointerEvents={untappable ? undefined : 'none'}>
                     <View style={{ flexGrow: 1, flexShrink: 1, marginLeft }}>
                         <Text semibold={semibold} style={titleStyle}>
-                            {t(title)}
+                            {tx(title)}
                         </Text>
                         {!!description && <Text style={descriptionStyle}>
                             {description}

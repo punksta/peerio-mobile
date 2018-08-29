@@ -53,7 +53,7 @@ export default class StyledTextInput extends SafeComponent {
         this.reaction = null;
     }
 
-    get isValid() { return this.valid; }
+    get isValid() { return this.valid === VALID; }
 
     /**
      * Sets validation state to INVALID and displays the custom error

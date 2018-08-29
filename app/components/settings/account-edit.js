@@ -39,8 +39,9 @@ export default class AccountEdit extends SafeComponent {
     toggle(title, prop) {
         const state = User.current.settings;
         const onPress = () => {
-            state[prop] = !state[prop];
-            User.current.saveSettings();
+            User.current.saveSettings(settings => {
+                settings[prop] = !settings[prop];
+            });
         };
         return (
             <ToggleItem {...{ prop, title, state, onPress }} />

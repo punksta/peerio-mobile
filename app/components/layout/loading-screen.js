@@ -61,7 +61,7 @@ export default class LoadingScreen extends Component {
             await promiseWhen(() => routes.main.contactStateLoaded);
         } catch (e) {
             console.log('loading-screen.js: loading screen error');
-            if (!loginState.loaded) routes.app.routes.loginStart.transition();
+            if (!loginState.loaded) routes.app.routes.loginWelcome.transition();
             console.error(e);
             return;
         }

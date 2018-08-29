@@ -82,7 +82,7 @@ export default class App extends SafeComponent {
             let route = routerApp.routes.loading;
             if (!await User.getLastAuthenticated()
                 && !await TinyDb.system.getValue('apple-review-login')) {
-                route = routerApp.routes.loginStart;
+                route = routerApp.routes.loginWelcome;
             }
             route.transition();
         }
