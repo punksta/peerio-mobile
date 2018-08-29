@@ -162,7 +162,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     lowerCase
                     clearTextIcon
                     required
-                    helperText={tx('title_usernameHelperSignup')}
+                    helperText={tx('title_hintUsername')}
                     keyboardType="email-address"
                     returnKeyType="next"
                     onSubmitEditing={this.onSubmitUsername}
@@ -177,7 +177,7 @@ export default class SignupStep1 extends LoginWizardPage {
                     returnKeyType="go"
                     clearTextIcon
                     required
-                    helperText={tx('title_emailHelperSignup')}
+                    helperText={tx('title_hintEmail')}
                     placeholder={tx('title_emailPlaceholderSignup')}
                     ref={this.emailInputRef}
                     testID="email" />
