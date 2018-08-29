@@ -34,7 +34,7 @@ export default class LayoutSignup extends SafeComponent {
                     style={{ flexGrow: 1 }}>
                     {this.props.body}
                     {this.props.footer}
-                    {!signupState.isInProgress && <StatusBar hidden />}
+                    {!signupState.isPdfPreviewVisible && <StatusBar hidden />}
                 </ScrollView>
                 <Bottom>
                     <SnackBarConnection />

@@ -9,7 +9,7 @@ import TosAccordionItem from './tos-accordion-item';
 const iconPadding = vars.spacing.small.midi2x;
 const listData = [
     {
-        title: 'title_termsOfUseSignup',
+        title: 'title_termsOfUse',
         leftIcon: {
             on: icons.imageIconNoPadding(require('../../assets/icons/tos-read-icon-on.png'), null, { padding: iconPadding }),
             off: icons.imageIconNoPadding(require('../../assets/icons/tos-read-icon-off.png'), null, { padding: iconPadding })

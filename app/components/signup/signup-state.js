@@ -40,6 +40,7 @@ class SignupState extends RoutedState {
     @observable medicalId = '';
     @observable usernameSuggestions = [];
     @observable subscribeToPromoEmails = false;
+    @observable isPdfPreviewVisible = false;
 
     get isFirst() {
         return this.current === 0;
@@ -127,6 +128,7 @@ class SignupState extends RoutedState {
             passphrase
         );
         this.isInProgress = true;
+        this.isPdfPreviewVisible = true;
         try {
             await config.FileStream.launchViewer(fileSavePath);
             this.keyBackedUp = true;
@@ -134,6 +136,7 @@ class SignupState extends RoutedState {
             console.error(e);
         }
         this.isInProgress = false;
+        this.isPdfPreviewVisible = false;
     }
 
     @action
