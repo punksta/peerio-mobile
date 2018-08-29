@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Image } from 'react-native';
+import { View, Image, Dimensions } from 'react-native';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
 import { tx } from '../utils/translator';
@@ -9,9 +9,7 @@ import testLabel from '../helpers/test-label';
 import buttons from '../helpers/buttons';
 import routes from '../routes/routes';
 import ViewWithDrawer from '../shared/view-with-drawer';
-import drawerState from '../shared/drawer-state';
 
-const redArrowSrc = require('../../assets/zero_chat_state/arrow-red.png');
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
 
 const container = {
@@ -36,10 +34,10 @@ const chatHeaderStyle = {
 
 const chatDescriptionStyle = {
     textAlign: 'center',
-    color: vars.textBlack54,
+    color: vars.textBlack87,
     fontSize: vars.font.size.bigger,
-    width: 250,
-    marginBottom: vars.spacing.large.midixx
+    paddingHorizontal: vars.spacing.medium.maxi2x,
+    marginBottom: vars.spacing.large.midi
 };
 
 const contactDescriptionStyle = {
@@ -49,32 +47,26 @@ const contactDescriptionStyle = {
     marginBottom: vars.spacing.medium.mini2x
 };
 
+const { width } = Dimensions.get('window');
+const imageStyle = {
+    width,
+    height: 275,
+    paddingLeft: vars.spacing.medium.midi2x,
+    paddingRight: vars.spacing.medium.midi2x
+};
 
 @observer
 export default class ChatZeroStatePlaceholder extends SafeComponent {
-    get headerText() {
-        return (
-            <Text style={chatHeaderStyle} {...testLabel('title_headerZeroState')}>
+    get title() {
+        return (<View>
+            <Text
+                bold
+                style={chatHeaderStyle}
+                {...testLabel('title_headerZeroState')}
+            >
                 {tx('title_headerZeroState')}
             </Text>
-        );
-    }
-
-    get title() {
-        return (
-            <View>
-                {this.headerText}
-                {!drawerState.getDrawer(drawerState.DRAWER_CONTEXT.CHATS) && <Image
-                    source={redArrowSrc}
-                    style={{
-                        width: vars.isDeviceScreenBig ? vars.iconSizeHuge : vars.iconSizeLarge2x,
-                        height: vars.isDeviceScreenBig ? vars.iconSizeHuge : vars.iconSizeLarge2x,
-                        position: 'absolute',
-                        right: vars.iconPadding
-                    }}
-                />}
-            </View>
-        );
+        </View>);
     }
 
     get chatUI() {
@@ -85,17 +77,16 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
                 </Text>
                 <Image
                     source={zeroStateImage}
-                    style={{
-                        width: vars.chatZeroStateImageWidth,
-                        height: vars.chatZeroStateImageHeight
-                    }}
+                    resizeMode="contain"
+                    style={imageStyle}
                 />
-            </View>);
+            </View>
+        );
     }
 
     get findContactsButton() {
-        return (
-            buttons.roundBlueBgButton('title_findContactsZeroState', () => routes.main.contactAdd())
+        return buttons.roundBlueBgButton('title_findContactsZeroState', () =>
+            routes.main.contactAdd()
         );
     }
 
@@ -106,7 +97,8 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
                     {tx('title_seeWhoYouAlreadyKnow')}
                 </Text>
                 {this.findContactsButton}
-            </View>);
+            </View>
+        );
     }
 
     renderThrow() {
