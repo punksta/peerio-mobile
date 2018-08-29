@@ -73,8 +73,8 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
 
     renderThrow() {
         return (
-            <ViewWithDrawer>
-                <View style={container}>
+            <View style={container}>
+                <ViewWithDrawer>
                     <Text bold style={[textStyle, chatHeaderStyle]} {...testLabel('title_headerZeroState')}>
                         {tx('title_zeroChat')}
                     </Text>
@@ -86,8 +86,8 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
                         resizeMode="contain"
                         style={imageStyle} />
                     {this.moreDetails}
-                </View>
-            </ViewWithDrawer>
+                </ViewWithDrawer>
+            </View>
         );
     }
 }
