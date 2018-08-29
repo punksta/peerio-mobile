@@ -27,8 +27,12 @@ const buttonContainer = {
 
 @observer
 export default class SignupTos extends SafeComponent {
+    componentWillMount() {
+        // no other drawers in signup except for backup account key, so we can do it
+        drawerState.dismissAll();
+    }
+
     componentDidMount() {
-        // TODO check that topDrawerBackupAccountKey isn't already there before adding
         if (!signupState.keyBackedUp) {
             drawerState.addDrawer(TopDrawerBackupAccountKey);
         }
