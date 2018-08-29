@@ -13,7 +13,6 @@ class UIState extends RoutedState {
         HOME: 'home'
     };
 
-    @observable hasSyncedContacts = true;
     @observable actionSheetShown = false;
     @observable fileUpdateProgress = 0; // TODO remove when fileState progress is wired
     @observable isFirstLogin = false;

@@ -49,12 +49,12 @@ const imageStyle = {
 @observer
 export default class ChatZeroStatePlaceholder extends SafeComponent {
     syncContacts() {
-        uiState.hasSyncedContacts = true;
+        uiState.isFirstLogin = false;
         console.log('sync');
     }
 
     get moreDetails() {
-        if (!uiState.hasSyncedContacts) {
+        if (uiState.isFirstLogin) {
             return buttons.roundBlueBgButton('title_syncAddressBook', () => this.syncContacts(), false, null, { marginTop: vars.spacing.large.maxi2x });
         }
         return (
