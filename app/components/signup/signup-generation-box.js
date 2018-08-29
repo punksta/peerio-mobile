@@ -73,7 +73,7 @@ export default class SignupGenerationBox extends SafeComponent {
                 numberofLines={1}
                 minimumFontScale={0.1}
                 adjustsFontSizeToFit
-                courier
+                monospace
                 bold
                 style={accountKeyStyle}>
                 {signupState.passphrase}
