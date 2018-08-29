@@ -44,6 +44,28 @@ const imageStyle = {
 
 @observer
 export default class ChatZeroStatePlaceholder extends SafeComponent {
+    get moreDetails() {
+        if (false) {
+            return buttons.roundBlueBgButton('title_syncAddressBook', () => console.log('sync'));
+        }
+        return (
+            <View>
+                <Text style={textStyle}>
+                    {tx('button_createRooms')}
+                </Text>
+                <Text style={textStyle}>
+                    {tx('title_roomsDescription1')}
+                </Text>
+                <Text style={textStyle}>
+                    {tx('title_roomsDescription2')}
+                </Text>
+                <Text style={textStyle}>
+                    {tx('title_roomsDescription3')}
+                </Text>
+            </View>
+        );
+    }
+
     renderThrow() {
         return (
             <View style={container}>
@@ -58,7 +80,7 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
                         source={zeroStateImage}
                         resizeMode="contain"
                         style={imageStyle} />
-                    { buttons.roundBlueBgButton('title_syncAddressBook', () => console.log('sync'))}
+                    { this.moreDetails }
                 </ViewWithDrawer>
             </View>
         );
