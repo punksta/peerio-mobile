@@ -1,5 +1,4 @@
 import vars from './vars';
-import common from './common';
 
 const textinputStyle = {
     color: vars.black87,
@@ -16,20 +15,29 @@ const bottomMessageContainer = {
     height: vars.spacing.medium.midi2x
 };
 
-const errorStyle = {
+const errorTextStyle = {
     fontSize: vars.font.size.smaller,
     color: vars.red
 };
 
-const helperStyle = {
+const helperTextStyle = {
     fontSize: vars.font.size.smaller,
     color: vars.peerioBlue
 };
 
-const inputContainer = [
-    common.fullAbsoluteContainer,
-    { flexDirection: 'row' }
-];
+const inputContainer = {
+    marginHorizontal: vars.inputMarginHorizontal,
+    marginTop: vars.spacing.small.midi2x
+};
+
+const labelContainerStyle = {
+    position: 'absolute',
+    top: (-vars.font.size.smaller / 2) - 2,
+    left: vars.spacing.small.mini2x,
+    backgroundColor: 'white',
+    paddingLeft: vars.spacing.small.mini2x,
+    paddingRight: vars.spacing.small.mini2x
+};
 
 const iconContainer = {
     flexGrow: 0,
@@ -42,8 +50,9 @@ const iconContainer = {
 export default {
     textinputStyle,
     bottomMessageContainer,
-    errorStyle,
-    helperStyle,
+    errorTextStyle,
+    helperTextStyle,
     inputContainer,
+    labelContainerStyle,
     iconContainer
 };

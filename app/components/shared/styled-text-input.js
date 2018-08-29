@@ -185,16 +185,8 @@ export default class StyledTextInput extends SafeComponent {
             alignSelf: 'center',
             color
         };
-        const labelContainerStyle = {
-            position: 'absolute',
-            top: (-vars.font.size.smaller / 2) - 2,
-            left: vars.spacing.small.mini2x,
-            backgroundColor: 'white',
-            paddingLeft: vars.spacing.small.mini2x,
-            paddingRight: vars.spacing.small.mini2x
-        };
         return (this.props.label &&
-            <View key="label" pointerEvents="none" style={labelContainerStyle}>
+            <View pointerEvents="none" style={styledTextInput.labelContainerStyle}>
                 <Text style={labelStyle}>{this.props.label}</Text>
             </View>
         );
@@ -257,7 +249,7 @@ export default class StyledTextInput extends SafeComponent {
         return (
             <View style={styledTextInput.bottomMessageContainer}>
                 {icons.plainalert('error-outline', vars.iconSizeSmall, { marginRight })}
-                <Text style={styledTextInput.errorStyle}>
+                <Text style={styledTextInput.errorTextStyle}>
                     {tx(this.errorTextCopy)}
                 </Text>
             </View>
@@ -267,7 +259,7 @@ export default class StyledTextInput extends SafeComponent {
     get helperText() {
         return (
             <View style={styledTextInput.bottomMessageContainer}>
-                <Text style={styledTextInput.helperStyle}>
+                <Text style={styledTextInput.helperTextStyle}>
                     {tx(this.props.helperText)}
                 </Text>
             </View>
@@ -294,7 +286,7 @@ export default class StyledTextInput extends SafeComponent {
         };
         const paddingRight = { paddingRight: this.rightIcon ? vars.iconSizeLarge : null };
         return (
-            <View style={{ marginHorizontal: vars.inputMarginHorizontal }}>
+            <View style={styledTextInput.inputContainer}>
                 <View style={fieldStyle}>
                     {this.rightIcon}
                     <TextInput
