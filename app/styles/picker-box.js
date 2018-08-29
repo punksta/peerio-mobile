@@ -12,7 +12,6 @@ const icon = {
 
 const shadowNormal = {
     height: vars.inputHeight,
-    margin: vars.spacing.medium.mini2x,
     marginTop: vars.spacing.small.midi,
     marginBottom: vars.spacing.small.midi,
     paddingHorizontal: vars.inputPaddingHorizontal,

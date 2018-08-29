@@ -2,6 +2,109 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.340.0"></a>
+# [3.340.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.339.0...v3.340.0) (2018-08-29)
+
+
+### Bug Fixes
+
+* account key generator height on android ([34c4c94](https://github.com/PeerioTechnologies/peerio-mobile/commit/34c4c94))
+* behaviour of checkbox ([9a565f9](https://github.com/PeerioTechnologies/peerio-mobile/commit/9a565f9))
+
+
+### Features
+
+* update Medcryptor signup ([#296](https://github.com/PeerioTechnologies/peerio-mobile/issues/296)) ([e81552e](https://github.com/PeerioTechnologies/peerio-mobile/commit/e81552e))
+
+
+
+<a name="3.339.0"></a>
+# [3.339.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.338.0...v3.339.0) (2018-08-28)
+
+
+
+<a name="3.338.0"></a>
+# [3.338.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.337.0...v3.338.0) (2018-08-28)
+
+
+
+<a name="3.337.0"></a>
+# [3.337.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.336.0...v3.337.0) (2018-08-28)
+
+
+### Bug Fixes
+
+* allow click through welcome screen illustration ([8b71335](https://github.com/PeerioTechnologies/peerio-mobile/commit/8b71335))
+* android back from sign in ([016f0f5](https://github.com/PeerioTechnologies/peerio-mobile/commit/016f0f5))
+* changed suggestion title to 'try' if username is taken [ch12788] ([9d5ceba](https://github.com/PeerioTechnologies/peerio-mobile/commit/9d5ceba))
+* disallow multiple drawers being added on signup ([3335768](https://github.com/PeerioTechnologies/peerio-mobile/commit/3335768))
+* hack for terms of use page ([8cc3b8d](https://github.com/PeerioTechnologies/peerio-mobile/commit/8cc3b8d))
+* sign up decine tos screen UI ([275c26b](https://github.com/PeerioTechnologies/peerio-mobile/commit/275c26b))
+* tos accordion icon color and styles ([c0759a4](https://github.com/PeerioTechnologies/peerio-mobile/commit/c0759a4))
+* tos and privacy link in signup ([31cd639](https://github.com/PeerioTechnologies/peerio-mobile/commit/31cd639))
+* update welcome screen illustration ([ac93ec8](https://github.com/PeerioTechnologies/peerio-mobile/commit/ac93ec8))
+
+
+### Features
+
+* android lottie animation support ([1683bf4](https://github.com/PeerioTechnologies/peerio-mobile/commit/1683bf4))
+* firstLoginZeroState (disabled) ([f34adc3](https://github.com/PeerioTechnologies/peerio-mobile/commit/f34adc3))
+* lottie animation for passphrase generation [ch12704] [ch12202] ([a1d6f86](https://github.com/PeerioTechnologies/peerio-mobile/commit/a1d6f86))
+* tos accordion ([1f6248e](https://github.com/PeerioTechnologies/peerio-mobile/commit/1f6248e))
+
+
+
+<a name="3.336.0"></a>
+# [3.336.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.335.0...v3.336.0) (2018-08-27)
+
+
+### Bug Fixes
+
+* add topdrawer border ([50e2949](https://github.com/PeerioTechnologies/peerio-mobile/commit/50e2949))
+* cancel page fonts and alignment ([99dd9b3](https://github.com/PeerioTechnologies/peerio-mobile/commit/99dd9b3))
+* hide status bar on login welcome screen too ([31a812a](https://github.com/PeerioTechnologies/peerio-mobile/commit/31a812a))
+* hide the overflow pill if it can't be contained ([6ada965](https://github.com/PeerioTechnologies/peerio-mobile/commit/6ada965))
+* image alignment and font sizes ([812aaf8](https://github.com/PeerioTechnologies/peerio-mobile/commit/812aaf8))
+* image on loginWelcom (bottom) ([8f9a454](https://github.com/PeerioTechnologies/peerio-mobile/commit/8f9a454))
+* margin for skip backup ([5a5a51b](https://github.com/PeerioTechnologies/peerio-mobile/commit/5a5a51b))
+* no white overlap for ios icon back [ch12757] ([239f653](https://github.com/PeerioTechnologies/peerio-mobile/commit/239f653))
+* return monospace for account key font [ch12757] ([81f2203](https://github.com/PeerioTechnologies/peerio-mobile/commit/81f2203))
+* saving settings for share data and newsletter ([99fcabc](https://github.com/PeerioTechnologies/peerio-mobile/commit/99fcabc))
+* validation on sign-in ([5615b0c](https://github.com/PeerioTechnologies/peerio-mobile/commit/5615b0c))
+
+
+### Features
+
+* add serif font to iOS assets [ch12757] ([ace5b03](https://github.com/PeerioTechnologies/peerio-mobile/commit/ace5b03))
+* delete room confirmation illustration ([#292](https://github.com/PeerioTechnologies/peerio-mobile/issues/292)) ([b79ac02](https://github.com/PeerioTechnologies/peerio-mobile/commit/b79ac02))
+* new sign in design ([b6b39e2](https://github.com/PeerioTechnologies/peerio-mobile/commit/b6b39e2))
+
+
+
+<a name="3.335.0"></a>
+# [3.335.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.334.0...v3.335.0) (2018-08-24)
+
+
+### Bug Fixes
+
+* round button fontweight [branch ch12505] ([#290](https://github.com/PeerioTechnologies/peerio-mobile/issues/290)) ([1a23615](https://github.com/PeerioTechnologies/peerio-mobile/commit/1a23615))
+* view rendering inside Text ([154ae5a](https://github.com/PeerioTechnologies/peerio-mobile/commit/154ae5a))
+
+
+### Features
+
+* add activity overlay to signup layout ([ec56411](https://github.com/PeerioTechnologies/peerio-mobile/commit/ec56411))
+* adding asset protocol ([8a628db](https://github.com/PeerioTechnologies/peerio-mobile/commit/8a628db))
+* backup key reminder topdrawer ([e357577](https://github.com/PeerioTechnologies/peerio-mobile/commit/e357577))
+* multiple no-key tag correct key parsing support ([d60a3a7](https://github.com/PeerioTechnologies/peerio-mobile/commit/d60a3a7))
+* pdf preview and save pdf ([d91463d](https://github.com/PeerioTechnologies/peerio-mobile/commit/d91463d))
+* refactor Avatar component ✨ ([#289](https://github.com/PeerioTechnologies/peerio-mobile/issues/289)) ([5e49329](https://github.com/PeerioTechnologies/peerio-mobile/commit/5e49329))
+* wire up final signup steps ([44c0435](https://github.com/PeerioTechnologies/peerio-mobile/commit/44c0435))
+* wire up suggestions. fix nextdisabled logic ([a7c8a36](https://github.com/PeerioTechnologies/peerio-mobile/commit/a7c8a36))
+* wire up top drawer component for key back up ([cf5ed50](https://github.com/PeerioTechnologies/peerio-mobile/commit/cf5ed50))
+
+
+
 <a name="3.334.0"></a>
 # [3.334.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.333.0...v3.334.0) (2018-08-15)
 

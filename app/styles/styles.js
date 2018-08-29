@@ -1,5 +1,6 @@
 import branding from './branding';
 import vars from './vars';
+import signupStyles from './signup-styles';
 import textbox from './textbox';
 import styledTextInput from './styled-text-input';
 import button from './button';
@@ -21,8 +22,21 @@ const helpers = {
     }
 };
 
+vars.circleTopSmall = [helpers.circle(vars.topCircleSizeSmall * 2), {
+    top: 0,
+    backgroundColor: vars.lightGrayBg,
+    position: 'absolute',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: vars.gray54
+}];
+
 const styles = {
     vars,
+    signupStyles,
     helpers,
     textbox,
     styledTextInput,
@@ -39,6 +53,7 @@ const styles = {
 
 export {
     vars,
+    signupStyles,
     helpers,
     textbox,
     styledTextInput,

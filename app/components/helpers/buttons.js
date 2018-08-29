@@ -56,7 +56,7 @@ export default {
                     onPress={disabled ? null : onPress}
                     pressRetentionOffset={vars.pressRetentionOffset}
                     style={[buttonStyle, style]}>
-                    <Text bold style={{ color: disabled ? vars.txtMedium : vars.peerioBlue }}>
+                    <Text semibold style={{ color: disabled ? vars.txtMedium : vars.peerioBlue }}>
                         {tu(text)}
                     </Text>
                 </TouchableOpacity>
@@ -109,6 +109,39 @@ export default {
                 style={touchableStyle}>
                 <View style={[buttonStyle, style]}>
                     <Text semibold style={{ textAlign: 'center', color: vars.white }}>
+                        {tu(text)}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+        );
+    },
+
+    roundWhiteBgButton(text, onPress, disabled, accessibilityId, style) {
+        const touchableStyle = {
+            height: vars.button.touchableHeight,
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+        const buttonStyle = {
+            minWidth: vars.button.minWidth,
+            height: vars.button.buttonHeight,
+            paddingHorizontal: vars.button.paddingHorizontal,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: vars.button.borderRadius,
+            borderColor: vars.peerioBlue,
+            borderWidth: 1,
+            backgroundColor: disabled ? vars.mediumGrayBg : vars.white
+        };
+        return (
+            <TouchableOpacity
+                {...testLabel(accessibilityId)}
+                disabled={disabled}
+                onPress={disabled ? null : onPress}
+                pressRetentionOffset={vars.pressRetentionOffset}
+                style={touchableStyle}>
+                <View style={[buttonStyle, style]}>
+                    <Text semibold style={{ textAlign: 'center', color: vars.peerioBlue }}>
                         {tu(text)}
                     </Text>
                 </View>
