@@ -210,8 +210,8 @@ const icons = {
         );
     },
 
-    imageButtonNoPadding(source, size, onPress, opacity) {
-        const width = size || vars.iconSize;
+    imageButtonNoPadding(source, onPress, opacity) {
+        const width = vars.iconSize;
         const height = width;
         return (
             <TouchableOpacity
