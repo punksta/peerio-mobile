@@ -39,7 +39,6 @@ export default class ChatMessageInlineImages extends SafeComponent {
     }
 
     renderThrow() {
-        const { message } = this.props;
         if (!this.images.length) return null;
 
         return (
