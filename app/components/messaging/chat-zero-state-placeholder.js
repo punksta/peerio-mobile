@@ -112,7 +112,7 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
 
     get defaultZeroState() {
         return (
-            <ViewWithDrawer style={wrapper}>
+            <ViewWithDrawer style={wrapper} alwaysBounceVertical={false}>
                 {this.title}
                 {this.chatUI}
                 {this.contactUI}

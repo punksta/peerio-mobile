@@ -29,13 +29,14 @@ export default class ViewWithDrawer extends ListWithDrawer {
     };
 
     renderThrow() {
+        const minHeight = this.layoutHeight + (this.androidExtraScrollingSpace ? vars.topDrawerHeight : 0);
         return (
             <ScrollView
                 onLayout={(event) => { this.layoutHeight = event.nativeEvent.layout.height; }}
                 ref={this.scrollViewRef}
                 {...this.props}>
                 {this.topDrawer}
-                <View style={{ minHeight: this.layoutHeight + vars.topDrawerHeight }}>
+                <View style={{ minHeight }}>
                     {this.props.children}
                 </View>
             </ScrollView>);
