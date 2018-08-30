@@ -119,11 +119,23 @@ export default class Files extends SafeComponent {
 
     keyExtractor = fsObject => fsObject ? (fsObject.fileId || fsObject.id) : null;
 
+    get noFilesMatchSearch() {
+        if (this.data.length || !fileState.findFilesText || fileState.store.loading) return null;
+        return (
+            <View>
+                <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
+                    {tx('title_noFilesMatchSearch')}
+                </Text>
+            </View>
+        );
+    }
+
     list() {
         return (
             <FlatListWithDrawer
                 setScrollViewRef={this.flatListRef}
                 ListHeaderComponent={!this.isZeroState && this.searchTextbox()}
+                ListFooterComponent={this.noFilesMatchSearch}
                 keyExtractor={this.keyExtractor}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
@@ -137,10 +149,15 @@ export default class Files extends SafeComponent {
 
     get isZeroState() { return fileState.store.isEmpty; }
 
-    get noFilesInFolder() {
+    get isEmpty() {
         const folder = fileStore.folderStore.currentFolder;
         if (this.data.length
-            || (!folder.isShared && folder.isRoot)) return null;
+            || (!folder.isShared && folder.isRoot)) return false;
+        return true;
+    }
+
+    get noFilesInFolder() {
+        if (!this.isEmpty) return null;
         const s = {
             color: vars.txtMedium,
             textAlign: 'center',
@@ -182,6 +199,7 @@ export default class Files extends SafeComponent {
     }
 
     searchTextbox() {
+        if (this.isEmpty) return null;
         const leftIcon = icons.plain('search', vars.iconSize, vars.black12);
         let rightIcon = null;
         if (fileState.findFilesText) {
@@ -261,14 +279,9 @@ export default class Files extends SafeComponent {
     }
 
     body() {
-        if (this.data.length || !fileStore.folderStore.currentFolder.isRoot) return this.list();
-        if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
-            return (
-                <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
-                    {tx('title_noFilesMatchSearch')}
-                </Text>
-            );
-        }
+        if (this.data.length
+            || fileState.findFilesText
+            || !fileStore.folderStore.currentFolder.isRoot) return this.list();
         return this.isZeroState && <FilesZeroStatePlaceholder />;
     }
 
