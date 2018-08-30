@@ -316,6 +316,22 @@ function popupTOS() {
     });
 }
 
+let privacy = '';
+
+function popupPrivacy() {
+    console.log(`popups.js: popup privacy`);
+    return new Promise((resolve) => {
+        popupState.showPopup({
+            fullScreen: 1,
+            contents: <WebView
+                source={{ html: privacy }} />,
+            buttons: [{
+                id: 'ok', text: tu('button_ok'), action: resolve
+            }]
+        });
+    });
+}
+
 function popupKeychainError(title, subTitle, text) {
     return new Promise((resolve) => {
         popupState.showPopup({
@@ -513,6 +529,10 @@ locales.loadAssetFile('terms.txt').then(s => {
     tos = s;
 });
 
+locales.loadAssetFile('privacy.txt').then(s => {
+    privacy = s;
+});
+
 export {
     textControl,
     addSystemWarningAction,
@@ -525,6 +545,7 @@ export {
     popupInputWithPreview,
     popupContactPermission,
     popupTOS,
+    popupPrivacy,
     popupKeychainError,
     popup2FA,
     popupCopyCancel,

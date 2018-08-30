@@ -85,12 +85,12 @@ export default class SignupCancel extends SafeComponent {
 
                     <View style={buttonContainer}>
                         {buttons.blueTextButton(
-                            tx('button_yesCancel'),
+                            tx('button_confirmCancel'),
                             this.cancel,
                             !socket.connected,
                             null,
                             'button_decline')}
-                        <View style={{ width: 24 }} />
+                        <View style={{ width: 16 }} />
                         {buttons.roundBlueBgButton(
                             tx('button_goBack'),
                             this.goBack,
