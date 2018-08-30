@@ -9,12 +9,24 @@ import testLabel from '../helpers/test-label';
 
 @observer
 export default class CheckBox extends Component {
+    get isChecked() {
+        if (!this.props.state) {
+            console.error('must specify the state to use checkbox');
+            return false;
+        }
+        return !!this.props.state[this.props.property];
+    }
+
     toggle() {
-        this.props.onChange && this.props.onChange(this.props.isChecked);
+        if (this.props.state) {
+            this.props.state[this.props.property] = !this.isChecked;
+        }
+        this.props.onChange && this.props.onChange();
     }
 
     render() {
-        const { isChecked, alignLeft } = this.props;
+        const { alignLeft } = this.props;
+        const { isChecked } = this;
         const borderColor = isChecked ? vars.peerioBlue : 'gray';
         const backgroundColor = isChecked
             ? vars.peerioBlueBackground15
@@ -49,7 +61,7 @@ export default class CheckBox extends Component {
                 {alignLeft ? (
                     <View style={container}>
                         <View style={checkbox}>
-                            {this.props.isChecked && (
+                            {isChecked && (
                                 <Icon name="check" color={borderColor} />
                             )}
                         </View>
@@ -59,7 +71,7 @@ export default class CheckBox extends Component {
                     <View style={container}>
                         <Text style={text}>{this.props.text}</Text>
                         <View style={checkbox}>
-                            {this.props.isChecked && (
+                            {isChecked && (
                                 <Icon name="check" color={borderColor} />
                             )}
                         </View>

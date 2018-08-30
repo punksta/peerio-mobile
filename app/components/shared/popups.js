@@ -45,10 +45,6 @@ function textControl(str, style) {
     return <Text {...testLabel('textControl')} style={text}>{formatted}</Text>;
 }
 
-function checkBoxControl(str, checked, press, alignLeft, accessibilityLabel) {
-    return <CheckBox text={str} isChecked={checked} onChange={press} alignLeft accessibilityLabel={accessibilityLabel} />;
-}
-
 function inputControl(state, placeholder, props) {
     return (
         <TextInputStateful placeholder={placeholder} state={state} {...props} />
@@ -193,10 +189,7 @@ function popupSignOutAutologin() {
             <View style={{ minHeight: vars.popupMinHeight }}>
                 {textControl(t('title_signOutConfirmKeys'))}
                 {User.current.trustedDevice &&
-                    checkBoxControl(
-                        t('title_stopTrustingThisDevice'),
-                        o.checked,
-                        v => { o.checked = v; })
+                    <CheckBox text={t('title_stopTrustingThisDevice')} state={o} property="checked" />
                 }
             </View>
         );
@@ -347,7 +340,7 @@ function popupKeychainError(title, subTitle, text) {
     });
 }
 
-function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
+function popup2FA(title, placeholder, text, checked, cancelable) {
     return new Promise((resolve) => {
         const state = observable({
             value: '',
@@ -360,7 +353,8 @@ function popup2FA(title, placeholder, checkBoxText, checked, cancelable) {
         buttons.push({
             id: 'ok', text: tu('button_submit'), action: () => resolve(state), get disabled() { return !state.value; }
         });
-        const checkbox = checkBoxControl(checkBoxText, state.checked, v => { state.checked = v; }, false, 'trustDevice');
+        const checkbox =
+            <CheckBox {...{ text, state }} property="checked" accessibilityLabel="trustDevice" />;
         const onSubmitEditing = () => {
             resolve(state);
             popupState.discardPopup();
@@ -383,10 +377,6 @@ function popupDeleteAccount() {
                 {textControl(tx('title_accountDeleteDescription1'))}
                 {textControl(tx('title_accountDeleteDescription2'))}
                 {textControl(tx('title_accountDeleteDescription3'))}
-                {/* checkBoxControl(tx('title_accountDeleteAllFiles'), checked, value => {
-                    checked = value;
-                    console.log(checked);
-                }) */}
             </View>
         ),
         buttons: [
@@ -459,18 +449,12 @@ function popupFolderDelete(isShared, isOwner) {
 function popupMoveToSharedFolder() {
     return new Promise((resolve) => {
         const o = observable({ value: '', checked: false });
-        const alignedLeft = true;
         popupState.showPopup({
             title: textControl(tx('title_moveToSharedFolder')),
             contents: (
                 <View>
                     {textControl(tx('title_moveToSharedFolderDescription'))}
-                    {checkBoxControl(
-                        tx('title_dontShowMessageAgain'),
-                        o.checked,
-                        v => { o.checked = v; },
-                        alignedLeft
-                    )}
+                    <CheckBox text={tx('title_dontShowMessageAgain')} state={o} property="checked" alignedLeft />
                 </View>
             ),
             buttons: [

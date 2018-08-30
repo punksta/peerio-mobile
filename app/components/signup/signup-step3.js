@@ -39,10 +39,6 @@ export default class SignupStep3 extends SafeComponent {
         }
     }
 
-    @action toggleChecked() {
-        signupState.subscribeToPromoEmails = !signupState.subscribeToPromoEmails;
-    }
-
     @action.bound handleNextButton() {
         if (this.isNextDisabled) return;
         signupState.email = this.emailState.value;
@@ -74,8 +70,8 @@ export default class SignupStep3 extends SafeComponent {
                     <View style={checkboxContainer}>
                         <CheckBox
                             alignLeft
-                            isChecked={signupState.subscribeToPromoEmails}
-                            onChange={this.toggleChecked}
+                            state={signupState}
+                            property="subscribeToPromoEmails"
                             text={tx('title_subscribeNewsletter')}
                             accessibilityLabel={tx('title_subscribeNewsletter')} />
                     </View>
