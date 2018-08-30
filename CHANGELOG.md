@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.343.0"></a>
+# [3.343.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.342.0...v3.343.0) (2018-08-30)
+
+
+### Bug Fixes
+
+* added margin vertical to menu storage item [branch ch11637] ([#306](https://github.com/PeerioTechnologies/peerio-mobile/issues/306)) ([24b35a3](https://github.com/PeerioTechnologies/peerio-mobile/commit/24b35a3))
+
+
+
 <a name="3.342.0"></a>
 # [3.342.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.341.0...v3.342.0) (2018-08-30)
 
