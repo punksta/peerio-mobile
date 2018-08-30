@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { View } from 'react-native';
+import { computed } from 'mobx';
 import { observer } from 'mobx-react/native';
 import SafeComponent from '../shared/safe-component';
 import FileInlineImage from '../files/file-inline-image';
@@ -8,9 +9,9 @@ import fileState from '../files/file-state';
 
 @observer
 export default class ChatMessageInlineImages extends SafeComponent {
-    get images() {
+    @computed get images() {
         const { message, chat } = this.props;
-        const files = message.files
+        const files = (message.files || [])
             .map(id => fileState.store.getByIdInChat(id, chat.id))
             .filter(f => f) || [];
 
@@ -39,7 +40,7 @@ export default class ChatMessageInlineImages extends SafeComponent {
 
     renderThrow() {
         const { message } = this.props;
-        if (!message.files || !message.files.length) return null;
+        if (!this.images.length) return null;
 
         return (
             <View>
