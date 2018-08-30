@@ -148,7 +148,7 @@ export default class ChannelInfo extends SafeComponent {
                     <View>
                         {this.spacer}
                         {canIAdmin && this.action(tx('button_inviteToChannel'), 'person-add', this.addMembers)}
-                        {canILeave && this.action(tx('button_leaveChannel'), null, this.leaveChannel, leaveRoomImage)}
+                        {canILeave && this.action(tx('button_leaveChannel'), 'exit-to-app', this.leaveChannel, leaveRoomImage)}
                         {canIAdmin && this.action(tx('button_deleteChannel'), 'delete', this.deleteChannel)}
                         {this.spacer}
                     </View>)

@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.342.0"></a>
+# [3.342.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.341.0...v3.342.0) (2018-08-30)
+
+
+### Bug Fixes
+
+* make next work again and autofocus [ch12972] ([#303](https://github.com/PeerioTechnologies/peerio-mobile/issues/303)) ([c99f2e2](https://github.com/PeerioTechnologies/peerio-mobile/commit/c99f2e2))
+* no icon for leave channel action [ch12997] ([734311c](https://github.com/PeerioTechnologies/peerio-mobile/commit/734311c))
+* searchbar disappearing with empty result list [ch12995] ([3da4628](https://github.com/PeerioTechnologies/peerio-mobile/commit/3da4628))
+* show inline images in urls [ch12979] ([7e1c021](https://github.com/PeerioTechnologies/peerio-mobile/commit/7e1c021))
+
+
+### Features
+
+* illustration empty folder zero state ([#298](https://github.com/PeerioTechnologies/peerio-mobile/issues/298)) ([220909e](https://github.com/PeerioTechnologies/peerio-mobile/commit/220909e))
+* open share dialog when saving account key [ch12860] ([#302](https://github.com/PeerioTechnologies/peerio-mobile/issues/302)) ([0811c87](https://github.com/PeerioTechnologies/peerio-mobile/commit/0811c87))
+
+
+
 <a name="3.341.0"></a>
 # [3.341.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.334.0...v3.341.0) (2018-08-29)
 

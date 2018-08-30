@@ -110,7 +110,7 @@ export default class SettingsLevel1 extends SafeComponent {
     }
 
     testGlobalDrawer = () => {
-        drawerState.addDrawer(TopDrawerMaintenance);
+        setTimeout(() => drawerState.addDrawer(TopDrawerMaintenance), 3000);
     };
 
     testLocalDrawer = () => {

@@ -46,6 +46,7 @@ export default class SignupStep1 extends SafeComponent {
     }
 
     @action.bound async handleNextButton() {
+        if (this.isNextDisabled) return;
         signupState.firstName = this.firstnameState.value;
         signupState.lastName = this.lastnameState.value;
         signupState.next();
@@ -64,6 +65,7 @@ export default class SignupStep1 extends SafeComponent {
                     <SignupButtonBack />
                     <SignupHeading title="title_createYourAccount" subTitle="title_nameHeading" />
                     <StyledTextInput
+                        autoFocus
                         state={this.firstnameState}
                         validations={firstName}
                         hint={tx('title_firstName')}
@@ -82,6 +84,7 @@ export default class SignupStep1 extends SafeComponent {
                         required
                         returnKeyType="next"
                         blurOnSubmit={false}
+                        onSubmitEditing={this.handleNextButton}
                         ref={this.lastNameInputRef}
                         testID="lastName" />
                     <View style={{ alignItems: 'flex-end' }}>
