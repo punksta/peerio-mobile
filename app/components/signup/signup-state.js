@@ -1,4 +1,5 @@
 import RNShare from 'react-native-share';
+import { Platform } from 'react-native';
 import { observable, action } from 'mobx';
 import { mainState, uiState, loginState } from '../states';
 import RoutedState from '../routes/routed-state';
@@ -132,7 +133,7 @@ class SignupState extends RoutedState {
         this.isPdfPreviewVisible = true;
         try {
             const viewer = config.FileStream.launchViewer(fileSavePath);
-            RNShare.open({ type: 'text/pdf', url: fileSavePath });
+            if (Platform.OS !== 'android') RNShare.open({ type: 'text/pdf', url: fileSavePath });
             await viewer;
             this.keyBackedUp = true;
         } catch (e) {
