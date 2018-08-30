@@ -14,7 +14,8 @@ import routes from '../routes/routes';
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
 
 const container = {
-    backgroundColor: vars.darkBlueBackground05
+    backgroundColor: vars.darkBlueBackground05,
+    flex: 1
 };
 
 const textStyle = {
