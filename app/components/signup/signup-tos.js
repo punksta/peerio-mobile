@@ -47,7 +47,19 @@ export default class SignupTos extends SafeComponent {
     }
 
     get content() {
-        return <TosAccordion />;
+        return (
+            <View>
+                <Text style={signupStyles.description}>
+                    {<T k="title_termsDescription">
+                        {{
+                            openTerms: this.openTermsLink,
+                            openPrivacy: this.openPrivacyLink
+                        }}
+                    </T>}
+                </Text>
+                <TosAccordion />
+            </View>
+        );
     }
 
     @action.bound openTermsLink(text) {
@@ -72,14 +84,6 @@ export default class SignupTos extends SafeComponent {
                 <View style={signupStyles.container2}>
                     <Text semibold serif style={signupStyles.headerStyle2}>
                         {tx('title_termsOfUseSentenceCase')}
-                    </Text>
-                    <Text style={signupStyles.description}>
-                        {<T k="title_termsDescription">
-                            {{
-                                openTerms: this.openTermsLink,
-                                openPrivacy: this.openPrivacyLink
-                            }}
-                        </T>}
                     </Text>
                     {this.content}
                     <View style={buttonContainer}>
