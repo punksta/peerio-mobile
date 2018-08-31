@@ -23,6 +23,7 @@ import Text from './controls/custom-text';
 import fileState from './files/file-state';
 import { promiseWhen } from './helpers/sugar';
 import routes from './routes/routes';
+import { initTelemetry } from '../telemetry';
 
 const { height, width } = Dimensions.get('window');
 @observer
@@ -84,6 +85,7 @@ export default class App extends SafeComponent {
                 && !await TinyDb.system.getValue('apple-review-login')) {
                 route = routerApp.routes.loginWelcome;
             }
+            initTelemetry();
             route.transition();
         }
     }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
 import { View, Clipboard } from 'react-native';
 import Text from '../controls/custom-text';
@@ -11,6 +12,11 @@ import snackbarState from '../snackbars/snackbar-state';
 import SignupGenerationBox from './signup-generation-box';
 import SignupPdfPreview from './signup-pdf-preview';
 import SignupHeading from './signup-heading';
+import tm from '../../telemetry';
+import TmHelper from '../../telemetry/helpers';
+import { telemetry } from '../../lib/icebear';
+
+const { S } = telemetry;
 
 const buttonContainer = {
     alignItems: 'flex-end',
@@ -20,14 +26,29 @@ const buttonContainer = {
 
 @observer
 export default class SignupBackupAk extends SafeComponent {
+    componentDidMount() {
+        TmHelper.currentRoute = S.ACCOUNT_KEY;
+    }
+
     copyAccountKey() {
         try {
             Clipboard.setString(signupState.passphrase);
             snackbarState.pushTemporary(t('title_copied'));
             signupState.keyBackedUp = true;
+            tm.signup.copyAk();
         } catch (e) {
             console.error(e);
         }
+    }
+
+    @action.bound handleNext() {
+        signupState.next();
+        tm.signup.next();
+    }
+
+    @action.bound handleSkip() {
+        signupState.next();
+        tm.signup.skip();
     }
 
     renderThrow() {
@@ -53,7 +74,7 @@ export default class SignupBackupAk extends SafeComponent {
                     <View style={[buttonContainer, { marginTop: 32 }]}>
                         {buttons.blueTextButton(
                             tx(signupState.keyBackedUp ? 'button_next' : 'button_skipBackup'),
-                            signupState.next,
+                            signupState.keyBackedUp ? this.handleNext : this.handleSkip,
                             null,
                             null,
                             'button_skipBackup')}

@@ -6,13 +6,17 @@ import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
 import { tx } from '../utils/translator';
 import StyledTextInput from '../shared/styled-text-input';
-import { socket, validation } from '../../lib/icebear';
+import { socket, validation, telemetry } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import CheckBox from '../shared/checkbox';
 import SignupButtonBack from './signup-button-back';
 import SignupHeading from './signup-heading';
 import whiteLabelComponents from '../../components/whitelabel/white-label-components';
+import TmHelper from '../../telemetry/helpers';
+import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 const { validators } = validation;
 const { email } = validators;
@@ -27,6 +31,7 @@ export default class SignupStep3 extends SafeComponent {
     @action.bound emailInputRef(ref) { this.emailInput = ref; }
 
     componentDidMount() {
+        TmHelper.currentRoute = S.ACCOUNT_EMAIL;
         // QUICK SIGNUP DEV FLAG
         if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
             const rnd = new Date().getTime() % 100000;
@@ -39,17 +44,23 @@ export default class SignupStep3 extends SafeComponent {
         }
     }
 
+    componentWillUnmount() {
+        tm.signup.duration(this.startTime);
+    }
+
     @action toggleChecked() {
         signupState.subscribeToPromoEmails = !signupState.subscribeToPromoEmails;
+        tm.signup.toggleNewsletterCheckbox(signupState.subscribeToPromoEmails);
     }
 
-    @action.bound handleNextButton() {
-        if (this.isNextDisabled) return;
+    @action.bound handleCreateButton() {
+        if (this.isCreateDisabled) return;
         signupState.email = this.emailState.value;
         signupState.next();
+        tm.signup.create();
     }
 
-    get isNextDisabled() { return !socket.connected || !this.emailState.value || !this.emailInput.isValid; }
+    get isCreateDisabled() { return !socket.connected || !this.emailState.value || !this.emailInput.isValid; }
 
     renderThrow() {
         return (
@@ -63,10 +74,11 @@ export default class SignupStep3 extends SafeComponent {
                         state={this.emailState}
                         validations={email}
                         hint={tx('title_email')}
+                        inputName={S.EMAIL}
                         lowerCase
                         keyboardType="email-address"
                         returnKeyType="next"
-                        onSubmitEditing={this.handleNextButton}
+                        onSubmitEditing={this.handleCreateButton}
                         required
                         ref={this.emailInputRef}
                         testID="email" />
@@ -82,8 +94,8 @@ export default class SignupStep3 extends SafeComponent {
                     <View style={{ alignItems: 'flex-end' }}>
                         {buttons.roundBlueBgButton(
                             tx('button_create'),
-                            this.handleNextButton,
-                            this.isNextDisabled,
+                            this.handleCreateButton,
+                            this.isCreateDisabled,
                             'button_create',
                             { width: vars.signupButtonWidth, marginVertical: 30 })}
                     </View>

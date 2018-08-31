@@ -8,13 +8,17 @@ import ActivityOverlay from '../controls/activity-overlay';
 import loginState from './login-state';
 import { vars, signupStyles } from '../../styles/styles';
 import StyledTextInput from '../shared/styled-text-input';
-import { socket, validation } from '../../lib/icebear';
+import { socket, validation, telemetry } from '../../lib/icebear';
 import uiState from '../layout/ui-state';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import SignupButtonBack from '../signup/signup-button-back';
 import SignupHeading from '../signup/signup-heading';
 import IntroStepIndicator from '../shared/intro-step-indicator';
+import TmHelper from '../../telemetry/helpers';
+import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 const { validators } = validation;
 const { usernameLogin } = validators;
@@ -34,6 +38,8 @@ export default class LoginClean extends SafeComponent {
     @action.bound passwordInputRef(ref) { this.passwordInput = ref; }
 
     componentDidMount() {
+        this.startTime = Date.now();
+        TmHelper.currentRoute = S.SIGN_IN;
         if (__DEV__ && process.env.PEERIO_USERNAME && process.env.PEERIO_PASSPHRASE) {
             when(() => loginState.isConnected, () => {
                 this.usernameInput.onChangeText(process.env.PEERIO_USERNAME);
@@ -41,6 +47,15 @@ export default class LoginClean extends SafeComponent {
                 process.env.PEERIO_AUTOLOGIN && this.submit();
             });
         }
+    }
+
+    componentWillUnmount() {
+        tm.login.duration(this.startTime);
+    }
+
+    @action.bound onSignInPress() {
+        tm.login.onLoginClick();
+        this.submit();
     }
 
     @action.bound submit() {
@@ -53,7 +68,7 @@ export default class LoginClean extends SafeComponent {
                 if (e.deleted || e.blacklisted) {
                     errorMessage = 'error_accountSuspendedTitle';
                 }
-                this.passwordInput.setCustomError(tx(errorMessage));
+                this.passwordInput.setCustomError(errorMessage);
             });
     }
 
@@ -72,8 +87,10 @@ export default class LoginClean extends SafeComponent {
                     <View style={{ height: 16 }} />
                     <StyledTextInput
                         state={this.usernameState}
+                        inputName={S.USERNAME}
                         validations={usernameLogin}
                         hint={tx('title_username')}
+                        tmTrackEmailError
                         ref={this.usernameInputRef}
                         lowerCase
                         testID="usernameLogin"
@@ -81,6 +98,7 @@ export default class LoginClean extends SafeComponent {
                     <View style={{ height: 8 }} />
                     <StyledTextInput
                         state={this.passwordState}
+                        inputName={S.ACCOUNT_KEY}
                         hint={tx('title_AccountKey')}
                         onSubmit={this.submit}
                         secureText
@@ -92,7 +110,7 @@ export default class LoginClean extends SafeComponent {
                     <View>
                         {buttons.roundBlueBgButton(
                             tx('button_login'),
-                            this.submit,
+                            this.onSignInPress,
                             this.isNextDisabled || loginState.isInProgress,
                             'button_login',
                             { alignSelf: 'flex-end', marginBottom: vars.spacing.small.midi2x }

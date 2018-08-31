@@ -8,12 +8,16 @@ import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
 import { tx } from '../utils/translator';
 import StyledTextInput from '../shared/styled-text-input';
-import { socket, validation } from '../../lib/icebear';
+import { socket, validation, telemetry } from '../../lib/icebear';
 import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import SignupButtonBack from './signup-button-back';
 import SignupHeading from './signup-heading';
 import whiteLabelComponents from '../../components/whitelabel/white-label-components';
+import TmHelper from '../../telemetry/helpers';
+import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 const { validators } = validation;
 const { firstName, lastName } = validators;
@@ -29,6 +33,8 @@ export default class SignupStep1 extends SafeComponent {
     @action.bound onSubmitFirstName() { this.lastNameInput.onFocus(); }
 
     componentDidMount() {
+        this.startTime = Date.now();
+        TmHelper.currentRoute = S.ACCOUNT_NAME;
         // QUICK SIGNUP DEV FLAG
         if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
             this.firstNameInput.onChangeText(capitalize(randomWords()));
@@ -45,11 +51,16 @@ export default class SignupStep1 extends SafeComponent {
         }
     }
 
+    componentWillUnmount() {
+        tm.signup.duration(this.startTime);
+    }
+
     @action.bound async handleNextButton() {
         if (this.isNextDisabled) return;
         signupState.firstName = this.firstnameState.value;
         signupState.lastName = this.lastnameState.value;
         signupState.next();
+        tm.signup.next();
     }
 
     get isNextDisabled() {
@@ -69,6 +80,7 @@ export default class SignupStep1 extends SafeComponent {
                         state={this.firstnameState}
                         validations={firstName}
                         hint={tx('title_firstName')}
+                        inputName={S.FIRST_NAME}
                         maxLength={24}
                         required
                         returnKeyType="next"
@@ -80,6 +92,7 @@ export default class SignupStep1 extends SafeComponent {
                         state={this.lastnameState}
                         validations={lastName}
                         hint={tx('title_lastName')}
+                        inputName={S.LAST_NAME}
                         maxLength={24}
                         required
                         returnKeyType="next"
