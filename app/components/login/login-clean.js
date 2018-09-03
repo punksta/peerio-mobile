@@ -89,7 +89,7 @@ export default class LoginClean extends SafeComponent {
                         state={this.usernameState}
                         inputName={S.USERNAME}
                         validations={usernameLogin}
-                        hint={tx('title_username')}
+                        label={tx('title_username')}
                         tmTrackEmailError
                         ref={this.usernameInputRef}
                         lowerCase
@@ -99,7 +99,7 @@ export default class LoginClean extends SafeComponent {
                     <StyledTextInput
                         state={this.passwordState}
                         inputName={S.ACCOUNT_KEY}
-                        hint={tx('title_AccountKey')}
+                        label={tx('title_AccountKey')}
                         onSubmit={this.submit}
                         secureText
                         returnKeyType="go"

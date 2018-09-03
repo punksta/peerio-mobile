@@ -28,7 +28,7 @@ export default class StyledTextInput extends SafeComponent {
     @observable start = 0;
     @observable end = 0;
     @observable focusedAnim;
-    @observable errorMessageText;
+    @observable errorTextCopy;
     @observable isDirty = false;
     prevTextLength = 0;
 
@@ -63,7 +63,7 @@ export default class StyledTextInput extends SafeComponent {
      */
     @action.bound setCustomError(error) {
         this.valid = INVALID;
-        this.errorMessageText = error;
+        this.errorTextCopy = error;
         tm.shared.textInputOnError(this.props.inputName, error);
     }
 
@@ -74,12 +74,12 @@ export default class StyledTextInput extends SafeComponent {
             if (!state.value) {
                 if (alwaysDirty) {
                     this.valid = INVALID;
-                    this.errorMessageText = validations[0].message;
+                    this.errorTextCopy = validations[0].message;
                     throw new Error();
                 }
                 if (required && this.isDirty) {
                     this.valid = INVALID;
-                    this.errorMessageText = 'error_fieldRequired';
+                    this.errorTextCopy = 'error_fieldRequired';
                 }
             }
         } catch (error) {
@@ -108,7 +108,7 @@ export default class StyledTextInput extends SafeComponent {
         if (alwaysDirty) {
             // If its always dirty, assume it only has one validation method
             this.valid = INVALID;
-            this.errorMessageText = validations[0].message;
+            this.errorTextCopy = validations[0].message;
         }
         // Create a promise chain in order to execute one validation at a time
         // Next validation gets executed only if the previous one returns VALID
@@ -122,7 +122,7 @@ export default class StyledTextInput extends SafeComponent {
                         if (value !== state.value) return false;
                         this.valid = valid;
                         if (valid === INVALID) {
-                            this.errorMessageText = validation.message;
+                            this.errorTextCopy = validation.message;
                             tm.shared.textInputOnError(this.props.inputName, this.errorMessageText);
                             return false;
                         }
@@ -130,7 +130,7 @@ export default class StyledTextInput extends SafeComponent {
                     });
                 // Throw an error to break the chain if a validation action returns INVALID
                 if (result === false) {
-                    throw new Error(this.errorMessageText);
+                    throw new Error(this.errorTextCopy);
                 }
             });
         });
@@ -142,8 +142,6 @@ export default class StyledTextInput extends SafeComponent {
 
     @action.bound async onChangeText(text) {
         this.isDirty = true;
-        // even if not focused, move the hint to the top
-        if (text) this.setHintToTop();
         // key is entered and the key is '@'
         if (this.props.tmTrackEmailError &&
             this.prevTextLength + 1 === text.length && text[text.length - 1] === '@') {
@@ -173,7 +171,6 @@ export default class StyledTextInput extends SafeComponent {
         uiState.focusedTextBox = null;
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
-        this.blurAnimation();
         if (this.valid === INVALID) tm.shared.textInputOnBlur(this.props.inputName, this.errorMessageText);
     }
 
@@ -182,39 +179,7 @@ export default class StyledTextInput extends SafeComponent {
         this.focused = true;
         if (this.props.onFocus) this.props.onFocus();
         this.textInput.focus();
-        this.setHintToTop();
         tm.shared.textInputOnFocus(this.props.inputName);
-    }
-
-    /**
-     * Move the hint to the top
-     */
-    setHintToTop = () => {
-        Animated.timing(
-            this.focusedAnim,
-            {
-                toValue: 1,
-                duration: 300
-            }).start();
-    };
-
-    /**
-     * Move the hint to the bottom
-     */
-    setHintToBottom = () => {
-        Animated.timing(
-            this.focusedAnim,
-            {
-                toValue: 0,
-                duration: 300
-            }).start();
-    };
-
-    blurAnimation() {
-        const { state } = this.props;
-        if (!(state.value && state.value.length)) {
-            this.setHintToBottom();
-        }
     }
 
     get borderColor() {
@@ -223,54 +188,18 @@ export default class StyledTextInput extends SafeComponent {
         return vars.inputBorderColor;
     }
 
-    get hint() {
-        const normalFont = vars.font.size.normal;
-        const smallFont = vars.font.size.smaller;
-        const fontSize = this.focusedAnim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [normalFont, smallFont]
-        });
-        const bottomMin = (vars.inputHeight - normalFont) / 2 - vars.spacing.small.mini;
-        const bottomMax = (vars.inputHeight / 2) + vars.spacing.one;
-        const bottom = this.focusedAnim.interpolate({
-            inputRange: [0, 1],
-            outputRange: [bottomMin, bottomMax]
-        });
-        let color = vars.textBlack38;
+    get label() {
+        let color = vars.textBlack54;
         if (this.focused) color = vars.peerioBlue;
         if (this.valid === INVALID) color = vars.red;
-        const animatedhintStyle = {
+        const labelStyle = {
+            fontSize: vars.font.size.smaller,
             alignSelf: 'center',
-            color,
-            fontSize
+            color
         };
-        return (this.props.hint &&
-            <Animated.View key="hint"
-                pointerEvents="none"
-                style={{ position: 'absolute', bottom, paddingLeft: vars.inputPaddingHorizontal }}>
-                <Animated.Text
-                    style={animatedhintStyle}>
-                    {this.props.hint}
-                </Animated.Text>
-            </Animated.View>
-        );
-    }
-
-    get secretIcon() {
-        return !this.props.secureText ? null : (
-            <View style={[styledTextInput.iconContainer, borderOffset]}>
-                {this.showSecret ?
-                    icons.colored('visibility', this.toggleSecret, vars.peerioTeal, 'transparent') :
-                    icons.dark('visibility', this.toggleSecret, { backgroundColor: 'transparent' })}
-            </View>
-        );
-    }
-
-    get customIcon() {
-        const { customIcon } = this.props;
-        return !customIcon ? null : (
-            <View style={[styledTextInput.iconContainer, borderOffset]}>
-                {customIcon}
+        return (this.props.label &&
+            <View pointerEvents="none" style={styledTextInput.labelContainerStyle}>
+                <Text style={labelStyle}>{this.props.label}</Text>
             </View>
         );
     }
@@ -284,22 +213,76 @@ export default class StyledTextInput extends SafeComponent {
         if (state.value && Platform.OS === 'android') this._skip = true;
     }
 
-    // reserves space below text input for error message
-    get errorSpacer() {
-        const marginBottom = styledTextInput.errorStyle.height
-            + styledTextInput.errorStyle.marginTop
-            + styledTextInput.errorStyle.marginBottom;
+    @action.bound clearInputValue() {
+        this.props.state.value = '';
+        this.onChangeText('');
+    }
+
+    get customIcon() {
+        return (<View style={[styledTextInput.iconContainer, borderOffset]}>
+            {this.props.customIcon}
+        </View>
+        );
+    }
+
+    get secretIcon() {
+        return (<View style={[styledTextInput.iconContainer, borderOffset]}>
+            {this.showSecret ?
+                icons.colored('visibility', this.toggleSecret, vars.peerioTeal, 'transparent') :
+                icons.dark('visibility', this.toggleSecret, { backgroundColor: 'transparent' })}
+        </View>
+        );
+    }
+
+    get clearTextIcon() {
+        return (<View style={[styledTextInput.iconContainer, borderOffset]}>
+            {icons.dark('clear', this.clearInputValue, { backgroundColor: 'transparent' })}
+        </View>);
+    }
+
+    // icon priority: custom > secureText > clearText
+    get rightIcon() {
+        const { customIcon, secureText, clearTextIcon, state } = this.props;
+        if (customIcon) return this.customIcon;
+        else if (secureText) return this.secretIcon;
+        else if (clearTextIcon && state.value) return this.clearTextIcon;
+        return null;
+    }
+
+    // reserves space below text input for error or helper message
+    get bottomTextSpacer() {
+        const marginBottom = styledTextInput.bottomMessageContainer.height
+            + styledTextInput.bottomMessageContainer.marginTop
+            + styledTextInput.bottomMessageContainer.marginBottom;
         return (<View style={{ marginBottom }} />);
     }
 
-    get errorMessage() {
-        if (this.valid === INVALID) {
-            return (
-                <Text style={styledTextInput.errorStyle}>
-                    {tx(this.errorMessageText)}
-                </Text>);
-        }
-        return this.errorSpacer;
+    get errorText() {
+        const marginRight = vars.spacing.small.mini;
+        return (
+            <View style={styledTextInput.bottomMessageContainer}>
+                {icons.plainalert('error-outline', vars.iconSizeSmall, { marginRight })}
+                <Text style={styledTextInput.errorTextStyle}>
+                    {tx(this.errorTextCopy)}
+                </Text>
+            </View>
+        );
+    }
+
+    get helperText() {
+        return (
+            <View style={styledTextInput.bottomMessageContainer}>
+                <Text style={styledTextInput.helperTextStyle}>
+                    {tx(this.props.helperText)}
+                </Text>
+            </View>
+        );
+    }
+
+    get bottomText() {
+        if (this.valid === INVALID) return this.errorText;
+        else if (this.props.helperText && this.focused) return this.helperText;
+        return this.bottomTextSpacer;
     }
 
     @action.bound textInputRef(ref) { this.textInput = ref; }
@@ -314,13 +297,11 @@ export default class StyledTextInput extends SafeComponent {
             borderRadius: 4,
             overflow: 'hidden'
         };
-        const paddingRight = { paddingRight: secureText ? vars.iconSizeLarge : null };
+        const paddingRight = { paddingRight: this.rightIcon ? vars.iconSizeLarge : null };
         return (
-            <View style={styledTextInput.outerStyle}>
+            <View style={styledTextInput.inputContainer}>
                 <View style={fieldStyle}>
-                    {this.hint}
-                    {this.secretIcon}
-                    {this.customIcon}
+                    {this.rightIcon}
                     <TextInput
                         style={[styledTextInput.textinputStyle, style, paddingRight]}
                         value={state.value}
@@ -339,7 +320,8 @@ export default class StyledTextInput extends SafeComponent {
                         {...testLabel(testID)}
                         {...this.props} />
                 </View>
-                {this.errorMessage}
+                {this.bottomText}
+                {this.label}
             </View>
         );
     }
@@ -350,12 +332,14 @@ StyledTextInput.propTypes = {
     style: PropTypes.any,
     inputName: PropTypes.string,
     validations: PropTypes.any,
-    hint: PropTypes.any,
+    label: PropTypes.any,
     testID: PropTypes.any,
     alwaysDirty: PropTypes.bool,
     customIcon: PropTypes.any,
     secureText: PropTypes.bool,
+    clearTextIcon: PropTypes.bool,
     required: PropTypes.bool,
+    helperText: PropTypes.string,
     maxLength: PropTypes.number,
     onBlur: PropTypes.any,
     onFocus: PropTypes.any,

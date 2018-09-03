@@ -73,13 +73,15 @@ export default class SignupStep3 extends SafeComponent {
                         autoFocus
                         state={this.emailState}
                         validations={email}
-                        hint={tx('title_email')}
                         inputName={S.EMAIL}
+                        label={`${tx('title_email')}*`}
+                        helperText={tx('title_hintEmail')}
                         lowerCase
                         keyboardType="email-address"
                         returnKeyType="next"
                         onSubmitEditing={this.handleCreateButton}
                         required
+                        clearTextIcon
                         ref={this.emailInputRef}
                         testID="email" />
                     <View style={[signupStyles.separator, { marginBottom: 12 }]} />
