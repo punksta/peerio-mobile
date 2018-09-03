@@ -10,9 +10,13 @@ import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
 import { drawerState } from '../states';
-import { config, socket } from '../../lib/icebear';
+import { config, socket, telemetry } from '../../lib/icebear';
 import SignupHeading from './signup-heading';
 import routes from '../routes/routes';
+import TmHelper from '../../telemetry/helpers';
+import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 const buttonContainer = {
     flexDirection: 'row',
@@ -28,9 +32,15 @@ const linkStyle = {
 @observer
 export default class SignupCancel extends SafeComponent {
     componentDidMount() {
+        this.startTime = Date.now();
+        TmHelper.currentRoute = S.CANCEL_SIGN_UP;
         if (!signupState.keyBackedUp) {
             drawerState.addDrawer(TopDrawerBackupAccountKey);
         }
+    }
+
+    componentWillUnmount() {
+        tm.signup.duration(this.startTime);
     }
 
     @action.bound openPrivacyLink(text) {
@@ -50,6 +60,7 @@ export default class SignupCancel extends SafeComponent {
     }
 
     @action.bound cancel() {
+        tm.signup.declineTos();
         drawerState.dismissAll();
         signupState.exit();
     }

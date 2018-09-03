@@ -60,7 +60,7 @@ export default class SignupStep1 extends SafeComponent {
         signupState.firstName = this.firstnameState.value;
         signupState.lastName = this.lastnameState.value;
         signupState.next();
-        tm.signup.next();
+        tm.signup.navigate(S.NEXT);
     }
 
     get isNextDisabled() {

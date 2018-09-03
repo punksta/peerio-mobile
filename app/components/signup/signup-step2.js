@@ -32,6 +32,7 @@ export default class SignupStep2 extends SafeComponent {
     @action.bound usernameInputRef(ref) { this.usernameInput = ref; }
 
     componentDidMount() {
+        this.startTime = Date.now();
         TmHelper.currentRoute = S.ACCOUNT_USERNAME;
         // QUICK SIGNUP DEV FLAG
         if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
@@ -63,7 +64,7 @@ export default class SignupStep2 extends SafeComponent {
         if (this.isNextDisabled) return;
         signupState.username = this.usernameState.value;
         signupState.next();
-        tm.signup.next();
+        tm.signup.navigate(S.NEXT);
     }
 
     get isNextDisabled() { return !socket.connected || !this.usernameState.value || !this.usernameInput.isValid; }

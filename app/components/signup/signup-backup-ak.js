@@ -43,12 +43,12 @@ export default class SignupBackupAk extends SafeComponent {
 
     @action.bound handleNext() {
         signupState.next();
-        tm.signup.next();
+        tm.signup.navigate(S.NEXT);
     }
 
     @action.bound handleSkip() {
         signupState.next();
-        tm.signup.skip();
+        tm.signup.navigate(S.SKIP);
     }
 
     renderThrow() {

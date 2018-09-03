@@ -31,6 +31,7 @@ export default class SignupStep3 extends SafeComponent {
     @action.bound emailInputRef(ref) { this.emailInput = ref; }
 
     componentDidMount() {
+        this.startTime = Date.now();
         TmHelper.currentRoute = S.ACCOUNT_EMAIL;
         // QUICK SIGNUP DEV FLAG
         if (__DEV__ && process.env.PEERIO_QUICK_SIGNUP) {
@@ -57,7 +58,7 @@ export default class SignupStep3 extends SafeComponent {
         if (this.isCreateDisabled) return;
         signupState.email = this.emailState.value;
         signupState.next();
-        tm.signup.create();
+        tm.signup.navigate(S.CREATE);
     }
 
     get isCreateDisabled() { return !socket.connected || !this.emailState.value || !this.emailInput.isValid; }

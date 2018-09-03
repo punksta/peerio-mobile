@@ -216,6 +216,7 @@ export default class StyledTextInput extends SafeComponent {
     @action.bound clearInputValue() {
         this.props.state.value = '';
         this.onChangeText('');
+        tm.shared.textInputOnClear(this.props.inputName);
     }
 
     get customIcon() {

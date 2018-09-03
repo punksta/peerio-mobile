@@ -18,6 +18,17 @@ const signup = setup(
             ];
         },
 
+        durationItem: (startTime, item) => {
+            return [
+                S.DURATION,
+                {
+                    item,
+                    location: S.ONBOARDING,
+                    totalTime: duration(startTime)
+                }
+            ];
+        },
+
         onStartAccountCreation: () => {
             return [
                 S.START_ACCOUNT_CREATION, {
@@ -53,44 +64,58 @@ const signup = setup(
             ];
         },
 
-        next: () => {
+        navigate: (option) => {
             return [
                 S.NAVIGATE,
                 {
-                    option: S.NEXT,
+                    option,
                     sublocation: TmHelper.currentRoute
                 }
             ];
         },
 
-        create: () => {
+        viewLink: (item) => {
             return [
-                S.NAVIGATE,
+                S.VIEW_LINK,
                 {
-                    option: S.CREATE,
-                    sublocation: TmHelper.currentRoute
+                    item,
+                    location: S.ONBOARDING
                 }
             ];
         },
 
-        skip: () => {
+        onTosAccordionPress: (item) => {
             return [
-                S.NAVIGATE,
+                S.READ_MORE,
                 {
-                    option: S.SKIP,
-                    sublocation: TmHelper.currentRoute
+                    item,
+                    location: S.ONBOARDING
                 }
             ];
         },
 
-        back: () => {
+        acceptTos: () => {
+            return [S.ACCEPT_TERMS];
+        },
+
+        declineTos: () => {
+            return [S.DECLINE_TERMS];
+        },
+
+        shareData: (on) => {
             return [
-                S.NAVIGATE,
+                S.SET_SETTING,
                 {
-                    option: S.BACK,
-                    sublocation: TmHelper.currentRoute
+                    option: S.SHARE_DATA,
+                    on,
+                    item: S.CRASH_AND_ERROR_DATA,
+                    location: S.ONBOARDING
                 }
             ];
+        },
+
+        finishSignup: () => {
+            return [S.FINISH_ACCOUNT_CREATION];
         }
     }
 );

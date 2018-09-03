@@ -7,11 +7,14 @@ import signupState from './signup-state';
 import SafeComponent from '../shared/safe-component';
 import icons from '../helpers/icons';
 import tm from '../../telemetry';
+import { telemetry } from '../../lib/icebear';
+
+const { S } = telemetry;
 
 @observer
 export default class SignupButtonBack extends SafeComponent {
     @action.bound onBackPress() {
-        tm.signup.back();
+        tm.signup.navigate(S.BACK);
         signupState.prev();
     }
 
