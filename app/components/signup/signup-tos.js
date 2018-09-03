@@ -1,7 +1,7 @@
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, Dimensions, Linking } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import Text from '../controls/custom-text';
 import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
@@ -11,9 +11,10 @@ import buttons from '../helpers/buttons';
 import ViewWithDrawer from '../shared/view-with-drawer';
 import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
 import { drawerState, uiState } from '../states';
-import { config, socket } from '../../lib/icebear';
+import { socket } from '../../lib/icebear';
 import routes from '../routes/routes';
 import TosAccordion from './tos-accordion';
+import { popupTOS, popupPrivacy } from '../shared/popups';
 
 const { height } = Dimensions.get('window');
 
@@ -46,12 +47,32 @@ export default class SignupTos extends SafeComponent {
     }
 
     get content() {
-        return <TosAccordion />;
+        return (
+            <View>
+                <Text style={signupStyles.description}>
+                    {<T k="title_termsDescription">
+                        {{
+                            openTerms: this.openTermsLink,
+                            openPrivacy: this.openPrivacyLink
+                        }}
+                    </T>}
+                </Text>
+                <TosAccordion />
+            </View>
+        );
     }
 
     @action.bound openTermsLink(text) {
         return (
-            <Text style={{ color: vars.peerioBlue }} onPress={() => { Linking.openURL(config.translator.urlMap.openTerms); }}>
+            <Text style={{ color: vars.peerioBlue }} onPress={async () => { await popupTOS(); }}>
+                {text}
+            </Text>
+        );
+    }
+
+    @action.bound openPrivacyLink(text) {
+        return (
+            <Text style={{ color: vars.peerioBlue }} onPress={async () => { await popupPrivacy(); }}>
                 {text}
             </Text>
         );
@@ -63,9 +84,6 @@ export default class SignupTos extends SafeComponent {
                 <View style={signupStyles.container2}>
                     <Text semibold serif style={signupStyles.headerStyle2}>
                         {tx('title_termsOfUseSentenceCase')}
-                    </Text>
-                    <Text style={signupStyles.description}>
-                        {<T k="title_termsDescription">{{ openTerms: this.openTermsLink }}</T>}
                     </Text>
                     {this.content}
                     <View style={buttonContainer}>

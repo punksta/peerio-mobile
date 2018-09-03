@@ -9,27 +9,6 @@ import TosAccordionItem from './tos-accordion-item';
 const iconPadding = vars.spacing.small.midi2x;
 const listData = [
     {
-        title: 'title_termsOfUse',
-        leftIcon: {
-            on: icons.imageIconNoPadding(require('../../assets/icons/tos-read-icon-on.png'), null, { padding: iconPadding }),
-            off: icons.imageIconNoPadding(require('../../assets/icons/tos-read-icon-off.png'), null, { padding: iconPadding })
-        },
-        content: [
-            {
-                subtitle: 'title_content',
-                description: 'title_termsContentParagraph'
-            },
-            {
-                subtitle: 'title_behaviour',
-                description: 'title_termsBehaviourParagraph'
-            },
-            {
-                subtitle: 'title_security',
-                description: 'title_termsSecurityParagraph'
-            }
-        ]
-    },
-    {
         title: 'title_termsDataCollection',
         leftIcon: {
             on: icons.coloredNoPadding('help-outline', null, { padding: iconPadding }, vars.peerioBlue),
@@ -68,6 +47,27 @@ const listData = [
             {
                 subtitle: 'title_analytics',
                 description: 'title_termsAnalyticsParagraph'
+            }
+        ]
+    },
+    {
+        title: 'title_termsOfUse',
+        leftIcon: {
+            on: icons.imageIconNoPadding(require('../../assets/icons/tos-read-icon-on.png'), null, { padding: iconPadding }),
+            off: icons.imageIconNoPadding(require('../../assets/icons/tos-read-icon-off.png'), null, { padding: iconPadding })
+        },
+        content: [
+            {
+                subtitle: 'title_content',
+                description: 'title_termsContentParagraph'
+            },
+            {
+                subtitle: 'title_behaviour',
+                description: 'title_termsBehaviourParagraph'
+            },
+            {
+                subtitle: 'title_security',
+                description: 'title_termsSecurityParagraph'
             }
         ]
     }

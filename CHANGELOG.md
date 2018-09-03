@@ -2,6 +2,37 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.346.0"></a>
+# [3.346.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.345.0...v3.346.0) (2018-08-31)
+
+
+
+<a name="3.345.0"></a>
+# [3.345.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.344.0...v3.345.0) (2018-08-31)
+
+
+
+<a name="3.344.0"></a>
+# [3.344.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.343.0...v3.344.0) (2018-08-30)
+
+
+### Bug Fixes
+
+* don't crash on android ([7c4c907](https://github.com/PeerioTechnologies/peerio-mobile/commit/7c4c907))
+* some checkboxes aren't working [ch13109] ([37b6688](https://github.com/PeerioTechnologies/peerio-mobile/commit/37b6688))
+
+
+
+<a name="3.343.0"></a>
+# [3.343.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.342.0...v3.343.0) (2018-08-30)
+
+
+### Bug Fixes
+
+* added margin vertical to menu storage item [branch ch11637] ([#306](https://github.com/PeerioTechnologies/peerio-mobile/issues/306)) ([24b35a3](https://github.com/PeerioTechnologies/peerio-mobile/commit/24b35a3))
+
+
+
 <a name="3.342.0"></a>
 # [3.342.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.341.0...v3.342.0) (2018-08-30)
 

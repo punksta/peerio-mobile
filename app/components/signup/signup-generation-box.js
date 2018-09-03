@@ -12,7 +12,7 @@ const accountKeyStyle = {
     height: Platform.OS === 'ios' ? vars.font.size.smaller : null,
     alignSelf: 'stretch',
     textAlign: 'center',
-    fontSize: vars.font.size.normal,
+    fontSize: vars.font.size.smaller,
     color: '#E90162',
     letterSpacing: Platform.OS === 'android' ? 3 : 0
 };

@@ -14,7 +14,8 @@ const container = {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    height: vars.settingsItemHeight
+    height: vars.settingsItemHeight,
+    marginVertical: vars.spacing.medium.mini2x
 };
 
 const titleStyle = {
