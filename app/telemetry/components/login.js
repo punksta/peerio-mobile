@@ -26,6 +26,16 @@ const login = setup(
             ];
         },
 
+        navigate: (option) => {
+            return [
+                S.NAVIGATE,
+                {
+                    option,
+                    location: S.SIGN_IN
+                }
+            ];
+        },
+
         onLoginClick: () => {
             return [
                 S.SIGN_IN, { text: S.SIGN_IN }
@@ -53,6 +63,10 @@ const login = setup(
                     item: S.ACCOUNT_KEY
                 }
             ];
+        },
+
+        changeUser: () => {
+            return [S.CHANGE_USER];
         }
     }
 );

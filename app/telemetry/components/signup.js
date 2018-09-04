@@ -64,19 +64,19 @@ const signup = setup(
             ];
         },
 
-        navigate: (option) => {
+        saveAk: (sublocation) => {
             return [
-                S.NAVIGATE,
+                S.DOWNLOAD,
                 {
-                    option,
-                    sublocation: TmHelper.currentRoute
+                    item: S.ACCOUNT_KEY,
+                    sublocation: sublocation || TmHelper.currentRoute
                 }
             ];
         },
 
-        viewLink: (item) => {
+        readMorePopup: (item) => {
             return [
-                S.VIEW_LINK,
+                S.READ_MORE,
                 {
                     item,
                     location: S.ONBOARDING
@@ -84,11 +84,11 @@ const signup = setup(
             ];
         },
 
-        onTosAccordionPress: (item) => {
+        readMoreAccordion: (option) => {
             return [
                 S.READ_MORE,
                 {
-                    item,
+                    option,
                     location: S.ONBOARDING
                 }
             ];
@@ -115,7 +115,12 @@ const signup = setup(
         },
 
         finishSignup: () => {
-            return [S.FINISH_ACCOUNT_CREATION];
+            return [
+                S.FINISH_ACCOUNT_CREATION,
+                {
+                    location: S.ONBOARDING
+                }
+            ];
         }
     }
 );

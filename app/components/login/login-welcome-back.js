@@ -9,11 +9,12 @@ import { vars, signupStyles } from '../../styles/styles';
 import SafeComponent from '../shared/safe-component';
 import Text from '../controls/custom-text';
 import IntroStepIndicator from '../shared/intro-step-indicator';
-import SignupButtonBack from '../signup/signup-button-back';
 import LoginInputs from './login-inputs';
 import { User, telemetry } from '../../lib/icebear';
 import tm from '../../telemetry';
 import TmHelper from '../../telemetry/helpers';
+import signupState from '../signup/signup-state';
+import icons from '../helpers/icons';
 
 const { S } = telemetry;
 
@@ -42,6 +43,10 @@ export default class LoginWelcomeBack extends SafeComponent {
         this.lastUser = await User.getLastAuthenticated();
     }
 
+    componentWillUnmount() {
+        tm.login.duration(this.startTime);
+    }
+
     @action.bound onSignupPress() {
         loginState.routes.app.signupStep1();
     }
@@ -50,24 +55,46 @@ export default class LoginWelcomeBack extends SafeComponent {
         loginState.routes.app.loginClean();
     }
 
-    componentWillUnmount() {
-        tm.login.duration(this.startTime);
-    }
-
     @action.bound switchUserLink(text) {
+        const onPress = () => {
+            tm.login.changeUser();
+            loginState.clearLastUser();
+        };
         return (
-            <Text style={{ color: vars.peerioBlue }} onPress={() => { loginState.clearLastUser(); }}>
+            <Text style={{ color: vars.peerioBlue }} onPress={onPress}>
                 {text}
             </Text>
         );
     }
 
+    @action.bound async onBackPressed() {
+        tm.login.navigate(S.BACK);
+        signupState.prev();
+        await User.removeLastAuthenticated();
+    }
+
+    get backButton() {
+        return (
+            <View style={signupStyles.backButtonContainer}>
+                {icons.basic(
+                    'arrow-back',
+                    vars.darkBlue,
+                    this.onBackPressed,
+                    { backgroundColor: 'transparent' },
+                    null,
+                    true,
+                    'back')}
+            </View>
+        );
+    }
+
     renderThrow() {
+        if (!this.lastUser) return null;
         return (
             <View style={signupStyles.page}>
                 <IntroStepIndicator max={1} current={1} />
                 <View style={signupStyles.container}>
-                    <SignupButtonBack clearLastUser />
+                    {this.backButton}
                     <View style={{ marginTop }}>
                         <Text semibold serif style={titleStyle}>
                             {tx('title_welcomeBackFirstname', { firstName: this.lastUser.firstName })}

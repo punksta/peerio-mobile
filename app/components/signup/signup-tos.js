@@ -80,7 +80,7 @@ export default class SignupTos extends SafeComponent {
 
     @action.bound openTermsLink(text) {
         const onPress = async () => {
-            tm.signup.viewLink(S.TERMS_OF_USE);
+            tm.signup.readMorePopup(S.TERMS_OF_USE);
             await popupTOS();
         };
         return (<Text style={{ color: vars.peerioBlue }} onPress={onPress}>{text}</Text>);
@@ -88,7 +88,7 @@ export default class SignupTos extends SafeComponent {
 
     @action.bound openPrivacyLink(text) {
         const onPress = async () => {
-            tm.signup.viewLink(S.PRIVACY_POLICY);
+            tm.signup.readMorePopup(S.PRIVACY_POLICY);
             await popupPrivacy();
         };
         return (<Text style={{ color: vars.peerioBlue }} onPress={onPress}>{text}</Text>);

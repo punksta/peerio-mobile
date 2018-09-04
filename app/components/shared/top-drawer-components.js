@@ -9,6 +9,10 @@ import AvatarCircle from './avatar-circle';
 import SafeComponent from './safe-component';
 import { chatState } from '../states';
 import signupState from '../signup/signup-state';
+import { telemetry } from '../../lib/icebear';
+import tm from '../../telemetry';
+
+const { S } = telemetry;
 
 const MAINTENANCE_DAY = 'May 15';
 const MAINTENANCE_TIME1 = '2 AM';
@@ -36,6 +40,10 @@ const innerCircle = {
 @observer
 class TopDrawerBackupAccountKey extends SafeComponent {
     renderThrow() {
+        const action = () => {
+            signupState.saveAccountKey();
+            tm.signup.saveAk(S.TERMS_TOP_DRAWER);
+        };
         return (
             <TopDrawer
                 {...this.props}
@@ -48,7 +56,7 @@ class TopDrawerBackupAccountKey extends SafeComponent {
                     </View>)}
                 descriptionLine1={tx('title_backupAkReminderMobile')}
                 buttonText={tx('button_backupNow')}
-                buttonAction={signupState.saveAccountKey}
+                buttonAction={action}
             />
         );
     }
