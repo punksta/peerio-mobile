@@ -48,6 +48,11 @@ class LoginState extends RoutedState {
         this.routes.app.loginWelcome();
     }
 
+    @action async clearLastUser() {
+        await User.removeLastAuthenticated();
+        this.routes.app.loginClean();
+    }
+
     @action clean() {
         this.current = 0;
         this.username = '';
@@ -150,7 +155,6 @@ class LoginState extends RoutedState {
             }
             untrust = popupResult.checked;
         }
-        await User.removeLastAuthenticated();
         const { username } = User.current;
         overrideServer(null);
         await TinyDb.system.removeValue(`apple-review-login`);
