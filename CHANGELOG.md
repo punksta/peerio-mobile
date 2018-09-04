@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.347.0"></a>
+# [3.347.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.345.0...v3.347.0) (2018-09-04)
+
+
+### Bug Fixes
+
+* text input UI ([5b582be](https://github.com/PeerioTechnologies/peerio-mobile/commit/5b582be))
+* UI update ([8157dff](https://github.com/PeerioTechnologies/peerio-mobile/commit/8157dff))
+* update copy ([1cb5c80](https://github.com/PeerioTechnologies/peerio-mobile/commit/1cb5c80))
+
+
+### Features
+
+* helper text ([3592c91](https://github.com/PeerioTechnologies/peerio-mobile/commit/3592c91))
+* new sign up telemetry ([e1eddd6](https://github.com/PeerioTechnologies/peerio-mobile/commit/e1eddd6))
+* new styled text input update [branch ch12859] ([61f9a9f](https://github.com/PeerioTechnologies/peerio-mobile/commit/61f9a9f))
+* welcome back screen [branch ch12939] ([a99751a](https://github.com/PeerioTechnologies/peerio-mobile/commit/a99751a))
+
+
+
 <a name="3.346.0"></a>
 # [3.346.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.345.0...v3.346.0) (2018-08-31)
 
