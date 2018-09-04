@@ -81,14 +81,17 @@ export default class App extends SafeComponent {
     async componentWillMount() {
         if (!MockComponent) {
             let route = routerApp.routes.loading;
-            if (!await User.getLastAuthenticated()
-                && !await TinyDb.system.getValue('apple-review-login')) {
+            const lastUser = await User.getLastAuthenticated();
+
+            if (lastUser) route = routerApp.routes.loginWelcomeBack;
+            if (!lastUser && !await TinyDb.system.getValue('apple-review-login')) {
                 route = routerApp.routes.loginWelcome;
             }
             initTelemetry();
             route.transition();
         }
     }
+
     componentDidMount() {
         AppState.addEventListener('change', this._handleAppStateChange);
         AppState.addEventListener('memoryWarning', this._handleMemoryWarning);
