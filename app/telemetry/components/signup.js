@@ -38,6 +38,16 @@ const signup = setup(
             ];
         },
 
+        navigate: (option) => {
+            return [
+                S.NAVIGATE,
+                {
+                    option,
+                    sublocation: TmHelper.currentRoute
+                }
+            ];
+        },
+
         pickUsername: (errorFlag) => {
             return [S.PICK_USERNAME, { option: errorFlag }];
         },
