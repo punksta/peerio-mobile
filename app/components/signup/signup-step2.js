@@ -139,7 +139,6 @@ export default class SignupStep2 extends SafeComponent {
                         lowerCase
                         required
                         clearTextIcon
-                        placeholder={tx('title_emailPlaceholderSignup')}
                         keyboardType="email-address"
                         returnKeyType="next"
                         onSubmitEditing={this.handleNextButton}

@@ -81,6 +81,7 @@ export default class SignupStep3 extends SafeComponent {
                         keyboardType="email-address"
                         returnKeyType="next"
                         onSubmitEditing={this.handleCreateButton}
+                        placeholder={tx('title_emailPlaceholderSignup')}
                         required
                         clearTextIcon
                         ref={this.emailInputRef}
