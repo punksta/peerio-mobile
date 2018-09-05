@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="3.348.0"></a>
+# [3.348.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.347.0...v3.348.0) (2018-09-05)
+
+
+### Bug Fixes
+
+* missing signup navigationtelemetry event ([788efd5](https://github.com/PeerioTechnologies/peerio-mobile/commit/788efd5))
+* signup email input placeholder ([4b1a53e](https://github.com/PeerioTechnologies/peerio-mobile/commit/4b1a53e))
+
+
+
 <a name="3.347.0"></a>
 # [3.347.0](https://github.com/PeerioTechnologies/peerio-mobile/compare/v3.345.0...v3.347.0) (2018-09-04)
 
