@@ -45,7 +45,6 @@ export default class TabItem extends SafeComponent {
     // TODO clean up mock beacons
     // ---------------------
     async componentDidMount() {
-        this.updateBeacon();
         when(() => this.layoutLoaded, () => this.updateBeacon());
     }
 
