@@ -11,6 +11,16 @@ import uiState from '../layout/ui-state';
  * @property {component} component the React component, <TopDrawerMaintenance />, etc ...
  */
 class BeaconState {
+    beaconFlows = {
+        onboarding: [
+            'mobile-chat-icon',
+            'mobile-create-dm',
+            'mobile-upload-file',
+            'mobile-contacts-icon',
+            'mobile-contacts-search'
+        ]
+    };
+
     @computed get activeBeacons() {
         // all visible beacons in current layout
         return [];
