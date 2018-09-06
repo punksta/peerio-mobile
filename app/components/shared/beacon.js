@@ -112,6 +112,7 @@ export default class Beacon extends SafeComponent {
         return (
             <TouchableOpacity
                 onPress={this.onPress}
+                pressRetentionOffset={vars.pressRetentionOffset}
                 style={container}>
                 <View style={rectangle}>
                     {textHeader && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{textHeader}</Text>}
