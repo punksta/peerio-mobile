@@ -56,7 +56,7 @@ export default class SignupBackupAk extends SafeComponent {
                             signupState.next,
                             null,
                             null,
-                            'button_skipBackup')}
+                            'button_next')}
                     </View>
                 </View>
             </View>
