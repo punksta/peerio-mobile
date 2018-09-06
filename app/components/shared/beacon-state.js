@@ -35,6 +35,11 @@ class BeaconState {
     clearBeacons() {
         this.beacons = [];
     }
+
+    @action.bound
+    removeBeacon(id) {
+        this.beacons = this.beacons.filter(beacon => beacon.id !== id);
+    }
 }
 
 const beaconState = new BeaconState();

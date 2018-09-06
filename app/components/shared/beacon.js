@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-// import { observable } from 'mobx';
+import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, Dimensions } from 'react-native';
+import { View, Dimensions, TouchableOpacity } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import Text from '../controls/custom-text';
+import { User } from '../../lib/icebear';
+import beaconState from './beacon-state';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -39,6 +41,14 @@ export default class Beacon extends SafeComponent {
         contentArr.forEach((line) => { if (line) numLines++; });
 
         return (numLines * vars.beaconLineHeight) + (2 * vars.beaconPadding) + (this.bubbleRadius / 2);
+    }
+
+    @action.bound
+    async onPress() {
+        const { id } = this.props.beacon;
+        // User.current.beacons[id] = true;
+        // await User.current.saveBeacons();
+        beaconState.removeBeacon(id);
     }
 
     renderThrow() {
@@ -100,7 +110,9 @@ export default class Beacon extends SafeComponent {
         };
         // TODO have only 1 component for header and 1 component for Text
         return (
-            <View style={container}>
+            <TouchableOpacity
+                onPress={this.onPress}
+                style={container}>
                 <View style={rectangle}>
                     {textHeader && <Text bold style={[textStyle, { paddingBottom: vars.beaconPadding }]}>{textHeader}</Text>}
                     {textLine1 && <Text semibold={!textLine3 || !textHeader} style={textStyle}>{textLine1}</Text>}
@@ -110,7 +122,7 @@ export default class Beacon extends SafeComponent {
                 <View style={outerCircle}>
                     <View style={innerCircle} />{/* Replace with mock content */}
                 </View>
-            </View>
+            </TouchableOpacity>
         );
     }
 }
