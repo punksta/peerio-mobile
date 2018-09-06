@@ -4,9 +4,9 @@ import React from 'react';
 import { observer } from 'mobx-react/native';
 import { View, Dimensions } from 'react-native';
 import SafeComponent from '../shared/safe-component';
-import uiState from '../layout/ui-state';
 import { vars } from '../../styles/styles';
 import Text from '../controls/custom-text';
+import beaconState from './beacon-state';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -31,8 +31,8 @@ export default class Beacon extends SafeComponent {
     beaconPositionY;
 
     get beaconHeight() {
-        const { beaconContent } = uiState;
-        const { textHeader, textLine1, textLine2, textLine3 } = beaconContent;
+        const { beaconText } = beaconState;
+        const { textHeader, textLine1, textLine2, textLine3 } = beaconText;
         let numLines = 0;
 
         // count number of lines to determine beacon height
@@ -43,9 +43,21 @@ export default class Beacon extends SafeComponent {
     }
 
     renderThrow() {
-        const { beaconContent } = uiState;
-        if (!beaconContent) return null;
-        const { x, y, width, height, positionX, textHeader, textLine1, textLine2, textLine3 } = beaconContent;
+        const { beaconPosition, beaconText } = beaconState;
+        if (!beaconPosition) return null;
+        if (!beaconText) return null;
+
+        const x = beaconPosition.pageX;
+        const y = beaconPosition.pageY;
+        const height = beaconPosition.frameHeight;
+        const width = beaconPosition.frameWidth;
+
+        const positionX = 2; // TODO
+
+        const textHeader = beaconText.textHeader;
+        const textLine1 = beaconText.textLine1;
+        const textLine2 = beaconText.textLine2;
+        const textLine3 = beaconText.textLine3;
 
         // set beacon position Y based on whether content is in the upper or lower half of the screen
         this.beaconPositionY = (windowHeight / 2 >= y) ? 0 : -this.beaconHeight;

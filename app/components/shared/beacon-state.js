@@ -25,8 +25,29 @@ class BeaconState {
         // all visible beacons in current layout
         return [];
     }
+    
+    @observable.shallow beacons = [];
 
-    // @observable.shallow drawers = [];
+    @observable beaconPosition = null;
+    @observable beaconText = {
+        textHeader: 'title',
+        textLine1: 'subtitle',
+        textLine2: 'subtitle',
+        textLine3: 'subtitle'
+    };
+
+    requestBeacons(beacon) {
+        console.log('>>> Requested beacons', beacon);
+
+        const { id, position } = beacon;
+        this.beacons.unshift(id);
+        this.beaconPosition = position;
+    }
+
+    clearBeacons() {
+        this.beacons = [];
+    }
+
 
     // addDrawer(componentClass, context, propsParam) {
     //     lastDrawerId++;
