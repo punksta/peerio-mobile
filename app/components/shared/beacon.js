@@ -21,7 +21,7 @@ const textStyle = {
  *      y: contentRef.pageY,
  *      width: contentRef.frameWidth,
  *      height: contentRef.frameHeight,
- *      positionX: (0-3) // TODO determine positionX based on content ?
+ *      positionX: (0-3) // TODO determine positionX based on content ? automate?
  */
 
 @observer
@@ -96,6 +96,7 @@ export default class Beacon extends SafeComponent {
             paddingTop,
             paddingBottom
         };
+        // TODO have only 1 component for header and 1 component for Text
         return (
             <View style={container}>
                 <View style={rectangle}>
