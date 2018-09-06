@@ -8,6 +8,7 @@ import { vars } from '../../styles/styles';
 import Text from '../controls/custom-text';
 import { User } from '../../lib/icebear';
 import beaconState from './beacon-state';
+import beaconLabels from './beacon-labels';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -32,7 +33,7 @@ export default class Beacon extends SafeComponent {
     beaconPositionY;
 
     get beaconHeight() {
-        const { beaconText } = this.props.beacon;
+        const beaconText = beaconLabels[this.props.beacon.id];
         const { textHeader, textLine1, textLine2, textLine3 } = beaconText;
         let numLines = 0;
 
@@ -52,7 +53,9 @@ export default class Beacon extends SafeComponent {
     }
 
     renderThrow() {
-        const { position: beaconPosition, beaconText } = this.props.beacon;
+        const { id, position: beaconPosition } = this.props.beacon;
+        const beaconText = beaconLabels[id];
+
         if (!beaconPosition || !beaconText) return null;
 
         const { pageX: x, pageY: y, frameWidth: width, frameHeight: height } = beaconPosition;
