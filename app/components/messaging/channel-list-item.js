@@ -24,7 +24,7 @@ export default class ChannelListItem extends SafeComponent {
         if (chat.isChannel && !headLoaded) return null;
 
         const containerStyle = {
-            height: vars.chatListItemHeight,
+            height: vars.sectionHeaderHeight,
             paddingHorizontal: vars.spacing.medium.midi,
             alignItems: 'center',
             justifyContent: 'space-between',

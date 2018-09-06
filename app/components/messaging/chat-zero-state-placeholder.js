@@ -8,6 +8,9 @@ import { vars } from '../../styles/styles';
 import testLabel from '../helpers/test-label';
 import buttons from '../helpers/buttons';
 import routes from '../routes/routes';
+import ViewWithDrawer from '../shared/view-with-drawer';
+import drawerState from '../shared/drawer-state';
+// import { uiState } from '../states';
 
 const redArrowSrc = require('../../assets/zero_chat_state/arrow-red.png');
 const zeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
@@ -58,11 +61,11 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
         );
     }
 
-    title() {
+    get title() {
         return (
             <View>
                 {this.headerText}
-                <Image
+                {!drawerState.getDrawer(drawerState.DRAWER_CONTEXT.CHATS) && <Image
                     source={redArrowSrc}
                     style={{
                         width: vars.isDeviceScreenBig ? vars.iconSizeHuge : vars.iconSizeLarge2x,
@@ -70,12 +73,12 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
                         position: 'absolute',
                         right: vars.iconPadding
                     }}
-                />
+                />}
             </View>
         );
     }
 
-    chatUI() {
+    get chatUI() {
         return (
             <View style={{ alignItems: 'center' }}>
                 <Text style={chatDescriptionStyle}>
@@ -97,7 +100,7 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
         );
     }
 
-    contactUI() {
+    get contactUI() {
         return (
             <View style={{ alignItems: 'center' }}>
                 <Text style={contactDescriptionStyle}>
@@ -107,14 +110,50 @@ export default class ChatZeroStatePlaceholder extends SafeComponent {
             </View>);
     }
 
+    get defaultZeroState() {
+        return (
+            <ViewWithDrawer style={wrapper} alwaysBounceVertical={false}>
+                {this.title}
+                {this.chatUI}
+                {this.contactUI}
+            </ViewWithDrawer>
+        );
+    }
+
+    get firstLoginZeroState() {
+        // TODO get correct illustration
+        const firstLoginZeroStateImage = require('../../assets/zero_chat_state/zero-state.png');
+        const firstLoginStyle = {
+            position: 'absolute',
+            alignItems: 'center',
+            justifyContent: 'center',
+            top: vars.spacing.huge.maxi2x,
+            right: 0,
+            left: 0
+        };
+        const imageStyle = {
+            flexGrow: 1,
+            height: null,
+            width: null,
+            alignItems: 'center',
+            justifyContent: 'center'
+        };
+        return (
+            <ViewWithDrawer style={wrapper}>
+                <View style={firstLoginStyle}>
+                    <Image source={firstLoginZeroStateImage} style={imageStyle}>
+                        <Text style={{ textAlign: 'center' }}>{tx('title_zeroFirstLoginMessage')}</Text>
+                    </Image>
+                </View>
+            </ViewWithDrawer>
+        );
+    }
+
     renderThrow() {
         return (
             <View style={container}>
-                <View style={wrapper}>
-                    {this.title()}
-                    {this.chatUI()}
-                    {this.contactUI()}
-                </View>
+                {/* {uiState.isFirstLogin ? this.firstLoginZeroState : this.defaultZeroState} */}
+                {this.defaultZeroState}
             </View>
         );
     }

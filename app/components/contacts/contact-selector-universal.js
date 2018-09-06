@@ -204,7 +204,7 @@ export default class ContactSelectorUniversal extends SafeComponent {
                     {notFound}
                     {this.inviteContact}
                     {!!this.legacyContact &&
-                        <ContactLegacyItem noBorderBottom contact={this.legacyContact} />}
+                        <ContactLegacyItem contact={this.legacyContact} />}
                     <ContactSelectorSectionList dataSource={this.dataSource} onPress={this.onContactPress} />
                 </View>
             </View>

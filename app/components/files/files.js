@@ -1,10 +1,10 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Animated, FlatList } from 'react-native';
+import { View, Animated } from 'react-native';
 import { observable, reaction, action } from 'mobx';
 import Text from '../controls/custom-text';
 import SafeComponent from '../shared/safe-component';
-import FilesPlaceholder from './files-placeholder';
+import FilesZeroStatePlaceholder from './files-zero-state-placeholder';
 import ProgressOverlay from '../shared/progress-overlay';
 import FileItem from './file-item';
 import FileUploadActionSheet from './file-upload-action-sheet';
@@ -22,6 +22,7 @@ import uiState from '../layout/ui-state';
 import SharedFolderRemovalNotif from './shared-folder-removal-notif';
 import { fileStore } from '../../lib/icebear';
 import SearchBar from '../controls/search-bar';
+import FlatListWithDrawer from '../shared/flat-list-with-drawer';
 
 const iconClear = require('../../assets/file_icons/ic_close.png');
 
@@ -63,7 +64,7 @@ export default class Files extends SafeComponent {
         let data = fileState.store.searchQuery ?
             fileState.store.filesAndFoldersSearchResult
             : fileStore.folderStore.currentFolder.filesAndFoldersDefaultSorting;
-        if (fileState.isFileSelectionMode) data = data.filter(item => !item.isLegacy);
+        if (fileState.isFileSelectionMode) data = data.filter(item => !item.isLegacy && item.readyForDownload);
         return data;
     }
 
@@ -118,9 +119,23 @@ export default class Files extends SafeComponent {
 
     keyExtractor = fsObject => fsObject ? (fsObject.fileId || fsObject.id) : null;
 
+    get noFilesMatchSearch() {
+        if (this.data.length || !fileState.findFilesText || fileState.store.loading) return null;
+        return (
+            <View>
+                <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
+                    {tx('title_noFilesMatchSearch')}
+                </Text>
+            </View>
+        );
+    }
+
     list() {
         return (
-            <FlatList
+            <FlatListWithDrawer
+                setScrollViewRef={this.flatListRef}
+                ListHeaderComponent={!this.isZeroState && this.searchTextbox()}
+                ListFooterComponent={this.noFilesMatchSearch}
                 keyExtractor={this.keyExtractor}
                 initialNumToRender={INITIAL_LIST_SIZE}
                 pageSize={PAGE_SIZE}
@@ -128,18 +143,21 @@ export default class Files extends SafeComponent {
                 extraData={this.refresh}
                 renderItem={this.item}
                 onEndReached={this.onEndReached}
-                onEndReachedThreshold={0.5}
-                ref={this.flatListRef}
-            />
+                onEndReachedThreshold={0.5} />
         );
     }
 
     get isZeroState() { return fileState.store.isEmpty; }
 
-    get noFilesInFolder() {
+    get isEmpty() {
         const folder = fileStore.folderStore.currentFolder;
         if (this.data.length
-            || (!folder.isShared && folder.isRoot)) return null;
+            || (!folder.isShared && folder.isRoot)) return false;
+        return true;
+    }
+
+    get noFilesInFolder() {
+        if (!this.isEmpty) return null;
         const s = {
             color: vars.txtMedium,
             textAlign: 'center',
@@ -181,15 +199,17 @@ export default class Files extends SafeComponent {
     }
 
     searchTextbox() {
+        if (this.isEmpty) return null;
         const leftIcon = icons.plain('search', vars.iconSize, vars.black12);
         let rightIcon = null;
         if (fileState.findFilesText) {
-            rightIcon = icons.iconImage(
+            rightIcon = icons.imageButton(
                 iconClear,
                 () => {
                     fileState.findFilesText = '';
                     this.onChangeFindFilesText('');
                 },
+                null,
                 vars.opacity54
             );
         }
@@ -259,23 +279,17 @@ export default class Files extends SafeComponent {
     }
 
     body() {
-        if (this.data.length || !fileStore.folderStore.currentFolder.isRoot) return this.list();
-        if (!this.data.length && fileState.findFilesText && !fileState.store.loading) {
-            return (
-                <Text style={{ marginTop: vars.headerSpacing, textAlign: 'center' }}>
-                    {tx('title_noFilesMatchSearch')}
-                </Text>
-            );
-        }
-        return this.isZeroState && <FilesPlaceholder />;
+        if (this.data.length
+            || fileState.findFilesText
+            || !fileStore.folderStore.currentFolder.isRoot) return this.list();
+        return this.isZeroState && <FilesZeroStatePlaceholder />;
     }
 
     renderThrow() {
         return (
             <View
-                style={{ flex: 1 }}>
-                <View style={{ flex: 1, backgroundColor: vars.darkBlueBackground05 }}>
-                    {!this.isZeroState && this.searchTextbox()}
+                style={{ flex: 1, flexGrow: 1 }}>
+                <View style={{ flex: 1, flexGrow: 1, backgroundColor: vars.darkBlueBackground05 }}>
                     {upgradeForFiles()}
                     {this.noFilesInFolder}
                     {/* this.sharedFolderRemovalNotifs() */}

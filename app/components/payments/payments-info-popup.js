@@ -26,9 +26,9 @@ export default class PaymentsInfoPopup extends Component {
                     {this.props.text}
                 </Text>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                    {a(tx('title_termsOfUse'), config.translator.urlMap.termsUrl, linkStyle)}
+                    {a(tx('title_termsOfUse'), config.translator.urlMap.openTerms, linkStyle)}
                     <Text style={popupTextStyle}>   |   </Text>
-                    {a(tx('title_privacyPolicy'), config.translator.urlMap.privacyUrl, linkStyle)}
+                    {a(tx('title_privacyPolicy'), config.translator.urlMap.openPrivacy, linkStyle)}
                 </View>
             </ScrollView>
         );

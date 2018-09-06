@@ -10,6 +10,11 @@ const { height } = Dimensions.get('window');
 
 class UIState extends RoutedState {
     @observable beaconContent = null;
+
+    EVENTS = {
+        HOME: 'home'
+    };
+
     @observable actionSheetShown = false;
     @observable fileUpdateProgress = 0; // TODO remove when fileState progress is wired
     @observable isFirstLogin = false;
@@ -106,6 +111,25 @@ class UIState extends RoutedState {
             }
         }
     }
+
+    subscriptions = {};
+
+    emit = (event, params) => {
+        const subscriptionList = this.subscriptions[event] || [];
+        subscriptionList.forEach(handler => handler(params));
+    };
+
+    subscribeTo = (event, handler) => {
+        const subscriptionList = this.subscriptions[event] || [];
+        this.subscriptions[event] = subscriptionList;
+        subscriptionList.push(handler);
+    };
+
+    unsubscribe = (event, handler) => {
+        const subscriptionList = this.subscriptions[event] || [];
+        const index = this.subscriptions[event].indexOf(handler);
+        if (index !== -1) subscriptionList.splice(index, 1);
+    };
 }
 
 const uiState = new UIState();

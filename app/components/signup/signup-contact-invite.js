@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer } from 'mobx-react/native';
-import { View, Image, FlatList, Dimensions } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { observable, action, computed } from 'mobx';
 import ActivityOverlay from '../controls/activity-overlay';
 import { headerContainer, textStyle, skipButtonStyle, listHeader, textListTitle, footerContainer, container } from '../../styles/signup-contact-sync';
@@ -8,9 +8,7 @@ import { tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import contactState from '../contacts/contact-state';
 import signupState from '../signup/signup-state';
-import LoginWizardPage from '../login/login-wizard-page';
 import ContactImportItem from '../contacts/contact-import-item';
-import { popupConfirmCancelIllustration } from '../shared/popups';
 import snackbarState from '../snackbars/snackbar-state';
 import SearchBar from '../controls/search-bar';
 import icons from '../helpers/icons';
@@ -18,26 +16,16 @@ import { vars } from '../../styles/styles';
 import uiState from '../layout/ui-state';
 import ListItem from './signup-contact-list-item';
 import Text from '../controls/custom-text';
-
-const { width } = Dimensions.get('window');
+import imagePopups from '../shared/image-popups';
+import SafeComponent from '../shared/safe-component';
 
 const _ = require('lodash');
 const iconClear = require('../../assets/file_icons/ic_close.png');
-const emailInvitesIllustration = require('../../assets/email-invite-confirmation.png');
 
 const INITIAL_LIST_SIZE = 10;
 
-const titleStyle = {
-    fontSize: vars.font.size.big,
-    marginBottom: vars.spacing.small.midi2x,
-    color: vars.txtDark
-};
-const descriptionStyle = {
-    color: vars.subtleText
-};
-
 @observer
-export default class SignupContactInvite extends LoginWizardPage {
+export default class SignupContactInvite extends SafeComponent {
     get useLayout2() { return true; }
     @observable contactList = [];
     @observable searchBarValue = '';
@@ -67,7 +55,7 @@ export default class SignupContactInvite extends LoginWizardPage {
         this.inProgress = true;
         try {
             const phoneContacts = await contactState.getPhoneContactEmails();
-            console.log(`got plugin info`);
+            console.log(`got phoneContacts ${phoneContacts.length}`);
             await this.getNonPeerioContacts(phoneContacts);
             console.log(`got contact list`);
         } catch (e) {
@@ -143,7 +131,7 @@ export default class SignupContactInvite extends LoginWizardPage {
     header() {
         const leftIcon = icons.plain('search', vars.iconSize, vars.black12);
         const rightIcon = this.searchBarValue
-            ? icons.iconImage(iconClear, this.clearSearch, vars.opacity54)
+            ? icons.imageButton(iconClear, this.clearSearch, null, vars.opacity54)
             : null;
         return (
             <View>
@@ -229,20 +217,9 @@ export default class SignupContactInvite extends LoginWizardPage {
         );
     }
 
-    popupConfirmEmailInvites() {
-        const imageWidth = width - (2 * vars.popupHorizontalMargin);
-        const image = (<Image style={{ borderTopLeftRadius: 4, width: imageWidth, height: imageWidth / 3.822 }} // image ratio
-            source={emailInvitesIllustration} resizeMode="contain" />);
-        const content =
-            (<View style={{ padding: vars.popupPadding, paddingTop: vars.spacing.large.maxi }}>
-                <Text bold style={titleStyle}>{tx('title_confirmEmailInvitesHeading')}</Text>
-                <Text style={descriptionStyle}>{tx('title_confirmEmailInvite', { numSelectedContacts: this.selectedContacts.length })}</Text>
-            </View>);
-        return popupConfirmCancelIllustration(image, content, 'button_confirm', 'button_cancel');
-    }
-
     @action.bound async inviteSelectedContacts() {
-        if (await this.popupConfirmEmailInvites()) {
+        const confirmed = await imagePopups.confirmInvites(tx('title_confirmEmailInvite', { numSelectedContacts: this.selectedContacts.length }));
+        if (await confirmed) {
             contactState.batchInvite(this.selectedEmails);
             const contactsAdded = contactState.store.addedContacts.length;
             // TODO use contact store for invites sent

@@ -12,7 +12,8 @@ function isIphoneX() {
     );
 }
 
-const iPhoneStatusBar = (Platform.OS === 'ios' ? 40 : 0);
+const iPhoneXTop = isIphoneX() ? 16 : 0;
+const iPhoneStatusBar = (Platform.OS === 'ios' ? 18 + iPhoneXTop : 0);
 const iPhoneXBottom = isIphoneX() ? 16 : 0;
 
 const isDeviceScreenBig = isBigScreenSize();
@@ -100,6 +101,7 @@ const vars = {
     toggleLineInactive: '#CFCFCF',
     imageInnerContainerHeight: 140,
     peerioFontFamily: 'Open Sans',
+    peerioSerifFontFamily: 'Source Serif Pro',
     chatUnreadIndicatorBg: 'rgba(255, 255, 255, 0.95)',
     chatUnreadIndicatorWidth: 70,
     chatUnreadIndicatorHeight: 32,
@@ -107,12 +109,15 @@ const vars = {
     contactInviteSuggestionHeight: 64,
     popupPadding: scaleDim(20),
     popupHorizontalMargin: scaleDim(16),
+    topDrawerHeight: 192,
     tfaInputWidth: scaleDim(124),
     beaconWidth: scaleDim(272),
     beaconBorderWidth: 4,
     beaconBg: '#5461CC',
     beaconPadding: scaleDim(8),
     beaconLineHeight: scaleDim(16),
+    signupButtonWidth: 82,
+    scrollOffset: 500, // arbitrary large offset
 
     circle: 10,
     circleSize: 4,
@@ -179,12 +184,14 @@ const vars = {
     footerMarginX: 24,
     statusBarHeight,
     layoutPaddingTop,
+    welcomeHeaderHeight: 80 + statusBarHeight,
     headerHeight: 56,
     headerSpacing: 56 + layoutPaddingTop,
     headerIconMargin: 16,
     iconSize: 24,
     iconSizeSmall: 16,
     iconSizeMedium: 32,
+    iconSizeMedium2x: 40,
     iconSizeLarge: 48,
     iconSizeLarge2x: 56,
     iconSizeHuge: 64,
@@ -194,12 +201,11 @@ const vars = {
     iconSizeBigger: 25,
     iconMargin: 30,
     imagePreviewSize: 48,
-    chatListItemHeight: 48,
+    sectionHeaderHeight: 48,
     chatListItemDMHeight: 61,
-    contactListHeaderHeight: 48,
     removeButtonHeight: 44,
     warningHeight: 70,
-    roundedButtonWidth: 134,
+    roundedButtonWidth: 155,
     wideRoundedButtonWidth: 190,
     menuWidthRatio: 0.8,
     animationDuration: 200,
@@ -208,7 +214,7 @@ const vars = {
     filesListItemHeight: 64,
     contactlistItemHeight: 56,
     listItemHeight: 56,
-    listViewPaddingVertical: 36,
+    listViewPaddingVertical: 18,
     listViewPaddingHorizontal: 8,
     avatarDiameter: 36,
     disabledButtonFontColor: '#DDDDDD',
@@ -231,6 +237,7 @@ const vars = {
     modalPaddingHorizontal: 40,
     wizardPadding: 36,
     height80: height * 0.8,
+    topCircleSizeSmall: 52,
 
     font: {
         size: {
@@ -294,7 +301,8 @@ const vars = {
             midixx: scaleDim(34),
             midi2x: scaleDim(36),
             maxi: scaleDim(40),
-            maxi2x: scaleDim(48)
+            maxi2x: scaleDim(44),
+            maxi3x: scaleDim(48)
         },
         huge: {
             mini: scaleDim(50),
@@ -304,7 +312,8 @@ const vars = {
             midi2x: scaleDim(64),
             midi3x: scaleDim(68),
             maxi: scaleDim(74),
-            maxi2x: scaleDim(75)
+            maxi2x: scaleDim(75),
+            maxi3x: scaleDim(80)
         }
     },
     loadingTimeout: 15000,
@@ -319,9 +328,9 @@ const vars = {
     button: {
         touchableHeight: 48,
         buttonHeight: 36,
-        minWidth: 72,
+        minWidth: 96,
         borderRadius: 24,
-        paddingHorizontal: scaleDim(16),
+        paddingHorizontal: scaleDim(12),
         marginVertical: scaleDim(8),
         fontSize: scaleDim(14)
     }

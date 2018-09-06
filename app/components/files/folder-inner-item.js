@@ -11,6 +11,7 @@ import icons from '../helpers/icons';
 import { tx } from '../utils/translator';
 import fileState from './file-state';
 import { User, contactStore } from '../../lib/icebear';
+import testLabel from '../helpers/test-label';
 
 const height = vars.filesListItemHeight;
 const width = vars.listItemHeight;
@@ -169,7 +170,7 @@ export default class FolderInnerItem extends SafeComponent {
         };
         const optionsIcon = hideOptionsIcon || fileState.isFileSelectionMode ? null : (
             <View style={{ flex: 0 }}>
-                {icons.dark('more-vert', onFolderAction, null, null, null, convertingToVolume || convertingFromFolder)}
+                {icons.dark('more-vert', onFolderAction, null, null, 'more-vert', convertingToVolume || convertingFromFolder)}
             </View>);
         return (
             <View
@@ -179,7 +180,10 @@ export default class FolderInnerItem extends SafeComponent {
                     disabled={disabled}
                     onPress={hideOptionsIcon ? onSelect : this.onPress}
                     style={{ backgroundColor: vars.filesBg }}
-                    pressRetentionOffset={vars.pressRetentionOffset}>
+                    pressRetentionOffset={vars.pressRetentionOffset}
+                    {...testLabel(folder.name)}
+                    accessible={false}
+                >
                     <View style={folderInfoContainerStyle}>
                         {this.radio}
                         {this.checkbox}

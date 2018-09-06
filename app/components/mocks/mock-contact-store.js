@@ -30,10 +30,14 @@ class MockContactStore {
         const username = `${randomWords()}${this.contacts.length}`;
         const firstName = capitalize(randomWords());
         const lastName = capitalize(randomWords());
+        const address = `${randomWords()}@123com`;
         const contact = {
             username,
             firstName,
             lastName,
+            addresses: [
+                address
+            ],
             loading: false,
             notFound: false,
             fullName: `${firstName} ${lastName}`

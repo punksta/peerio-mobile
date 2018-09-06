@@ -53,7 +53,7 @@ export default class StyledTextInput extends SafeComponent {
         this.reaction = null;
     }
 
-    get isValid() { return this.valid; }
+    get isValid() { return this.valid === VALID; }
 
     /**
      * Sets validation state to INVALID and displays the custom error
@@ -95,7 +95,6 @@ export default class StyledTextInput extends SafeComponent {
         const { validations, alwaysDirty, state } = this.props;
         // Do not run validation on a field that hasn't been modified yet unless it is alwaysDirty
         if (!this.isDirty && !alwaysDirty) return;
-        console.log('Running validation');
         this.handleEmptyField();
         // If no validation prop is passed, then no validation is needed and it is always valid
         if (!validations) {

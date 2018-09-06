@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     macos:
-      xcode: "8.3.3"
+      xcode: "9.4.1"
     environment:
       XCODE_SCHEME: peeriomobile
       PEERIO_IOS_SIM: 'iPhone 6 Plus'
@@ -51,7 +51,7 @@ jobs:
       - run:
           name: "Create artifact folder"
           command: mkdir ~/reports && mkdir ~/reports/py.test && mkdir ~/artifacts
-      - run:
+      # - run:
           name: "Run tests"
           command: npm test
       - store_test_results:
