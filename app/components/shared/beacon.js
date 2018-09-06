@@ -47,17 +47,9 @@ export default class Beacon extends SafeComponent {
         if (!beaconPosition) return null;
         if (!beaconText) return null;
 
-        const x = beaconPosition.pageX;
-        const y = beaconPosition.pageY;
-        const height = beaconPosition.frameHeight;
-        const width = beaconPosition.frameWidth;
-
+        const { pageX: x, pageY: y, frameWidth: width, frameHeight: height } = beaconPosition;
+        const { textHeader, textLine1, textLine2, textLine3 } = beaconText;
         const positionX = 2; // TODO
-
-        const textHeader = beaconText.textHeader;
-        const textLine1 = beaconText.textLine1;
-        const textLine2 = beaconText.textLine2;
-        const textLine3 = beaconText.textLine3;
 
         // set beacon position Y based on whether content is in the upper or lower half of the screen
         this.beaconPositionY = (windowHeight / 2 >= y) ? 0 : -this.beaconHeight;
