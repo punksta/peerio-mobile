@@ -1,7 +1,7 @@
 import React from 'react';
 import { action } from 'mobx';
 import { observer } from 'mobx-react/native';
-import { View, Linking } from 'react-native';
+import { View } from 'react-native';
 import Text from '../controls/custom-text';
 import { vars, signupStyles } from '../../styles/styles';
 import signupState from './signup-state';
@@ -10,11 +10,12 @@ import SafeComponent from '../shared/safe-component';
 import buttons from '../helpers/buttons';
 import { TopDrawerBackupAccountKey } from '../shared/top-drawer-components';
 import { drawerState } from '../states';
-import { config, socket, telemetry } from '../../lib/icebear';
+import { socket, telemetry } from '../../lib/icebear';
 import SignupHeading from './signup-heading';
 import routes from '../routes/routes';
 import TmHelper from '../../telemetry/helpers';
 import tm from '../../telemetry';
+import { popupTOS, popupPrivacy } from '../shared/popups';
 
 const { S } = telemetry;
 
@@ -24,9 +25,6 @@ const buttonContainer = {
     justifyContent: 'flex-end',
     marginTop: vars.spacing.small.mini,
     marginBottom: vars.spacing.small.maxi2x
-};
-const linkStyle = {
-    color: vars.peerioBlue
 };
 
 @observer
@@ -43,20 +41,20 @@ export default class SignupCancel extends SafeComponent {
         tm.signup.duration(this.startTime);
     }
 
-    @action.bound openPrivacyLink(text) {
-        return (
-            <Text style={linkStyle} onPress={() => { Linking.openURL(config.translator.urlMap.openPrivacy); }}>
-                {text}
-            </Text>
-        );
+    @action.bound openTermsLink(text) {
+        const onPress = async () => {
+            tm.signup.readMorePopup(S.TERMS_OF_USE);
+            await popupTOS();
+        };
+        return (<Text style={{ color: vars.peerioBlue }} onPress={onPress}>{text}</Text>);
     }
 
-    @action.bound openTermsLink(text) {
-        return (
-            <Text style={linkStyle} onPress={() => { Linking.openURL(config.translator.urlMap.openTerms); }}>
-                {text}
-            </Text>
-        );
+    @action.bound openPrivacyLink(text) {
+        const onPress = async () => {
+            tm.signup.readMorePopup(S.PRIVACY_POLICY);
+            await popupPrivacy();
+        };
+        return (<Text style={{ color: vars.peerioBlue }} onPress={onPress}>{text}</Text>);
     }
 
     @action.bound cancel() {

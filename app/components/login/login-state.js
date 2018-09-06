@@ -63,7 +63,9 @@ class LoginState extends RoutedState {
     @action _login(user) {
         User.current = user;
         return user.login()
-            .then(() => console.log('login-state.js: logged in'))
+            .then(() => {
+                console.log('login-state.js: logged in');
+            })
             .then(async () => {
                 mainState.activate(user);
                 if (user.autologinEnabled) return;

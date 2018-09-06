@@ -36,7 +36,7 @@ const login = setup(
             ];
         },
 
-        onLoginClick: () => {
+        onLoginSuccess: () => {
             return [
                 S.SIGN_IN, { text: S.SIGN_IN }
             ];
@@ -58,7 +58,7 @@ const login = setup(
             return [
                 S.TOGGLE_VISIBILITY,
                 {
-                    location: TmHelper.currentRoute,
+                    location: S.SIGN_IN,
                     visible: isVisible,
                     item: S.ACCOUNT_KEY
                 }

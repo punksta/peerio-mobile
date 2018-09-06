@@ -123,7 +123,7 @@ export default class StyledTextInput extends SafeComponent {
                         this.valid = valid;
                         if (valid === INVALID) {
                             this.errorTextCopy = validation.message;
-                            tm.shared.textInputOnError(this.props.inputName, this.errorMessageText);
+                            tm.shared.textInputOnError(this.props.inputName, this.errorTextCopy);
                             return false;
                         }
                         return true;
@@ -171,7 +171,7 @@ export default class StyledTextInput extends SafeComponent {
         uiState.focusedTextBox = null;
         this.focused = false;
         if (this.props.onBlur) this.props.onBlur();
-        if (this.valid === INVALID) tm.shared.textInputOnBlur(this.props.inputName, this.errorMessageText);
+        if (this.valid === INVALID) tm.shared.textInputOnBlur(this.props.inputName, this.errorTextCopy);
     }
 
     @action.bound onFocus() {

@@ -34,7 +34,7 @@ export default (c, icebear, tm) => {
         },
         mpDetail: {
             link: whitelabel.MP_DETAIL || 'https://peerio.zendesk.com/hc/en-us/articles/214633103-What-is-a-Peerio-Master-Password-',
-            tracker: () => tmSendEvent([S.VIEW_LINK, { item: S.WHERE_ACCOUNT_KEY, location: TmHelper.currentRoute }])
+            tracker: () => tmSendEvent([S.VIEW_LINK, { item: S.WHERE_ACCOUNT_KEY, location: S.SIGN_IN }])
         },
         tfaDetail: {
             link: whitelabel.TFA_DETAIL || 'https://peerio.zendesk.com/hc/en-us/articles/203665635-What-is-two-factor-authentication-'

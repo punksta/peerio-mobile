@@ -27,7 +27,12 @@ const buttonContainer = {
 @observer
 export default class SignupBackupAk extends SafeComponent {
     componentDidMount() {
+        this.startTime = Date.now();
         TmHelper.currentRoute = S.ACCOUNT_KEY;
+    }
+
+    componentWillUnmount() {
+        tm.signup.duration(this.startTime);
     }
 
     copyAccountKey() {

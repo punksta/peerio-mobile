@@ -49,8 +49,7 @@ export default class SignupStep3 extends SafeComponent {
         tm.signup.duration(this.startTime);
     }
 
-    @action toggleChecked() {
-        signupState.subscribeToPromoEmails = !signupState.subscribeToPromoEmails;
+    @action tmToggleChecked() {
         tm.signup.toggleNewsletterCheckbox(signupState.subscribeToPromoEmails);
     }
 
@@ -91,6 +90,7 @@ export default class SignupStep3 extends SafeComponent {
                         <CheckBox
                             alignLeft
                             state={signupState}
+                            onChange={this.tmToggleChecked}
                             property="subscribeToPromoEmails"
                             text={tx('title_subscribeNewsletter')}
                             accessibilityLabel={tx('title_subscribeNewsletter')} />

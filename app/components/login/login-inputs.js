@@ -47,16 +47,14 @@ export default class LoginInputs extends SafeComponent {
         }
     }
 
-    @action.bound onSignInPress() {
-        tm.login.onLoginClick();
-        this.submit();
-    }
-
     @action.bound submit() {
         loginState.username = this.usernameState.value;
         loginState.passphrase = this.passwordState.value;
         uiState.hideAll()
-            .then(() => loginState.login())
+            .then(async () => {
+                await loginState.login();
+                tm.login.onLoginSuccess();
+            })
             .catch(e => {
                 let errorMessage = 'error_wrongAK';
                 if (e.deleted || e.blacklisted) {
@@ -92,7 +90,7 @@ export default class LoginInputs extends SafeComponent {
                     state={this.passwordState}
                     inputName={S.ACCOUNT_KEY}
                     label={tx('title_AccountKey')}
-                    onSubmit={this.onSignInPress}
+                    onSubmit={this.submit}
                     secureText
                     returnKeyType="go"
                     ref={this.passwordInputRef}
@@ -101,7 +99,7 @@ export default class LoginInputs extends SafeComponent {
                 <View>
                     {buttons.roundBlueBgButton(
                         tx('button_login'),
-                        this.onSignInPress,
+                        this.submit,
                         this.isNextDisabled || loginState.isInProgress,
                         'button_login',
                         { alignSelf: 'flex-end', marginBottom: vars.spacing.small.midi2x }
