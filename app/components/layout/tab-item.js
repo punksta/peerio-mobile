@@ -11,6 +11,7 @@ import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
 import uiState from './ui-state';
+import beaconState from '../shared/beacon-state';
 
 const actionCellStyle = {
     flex: 1,
@@ -37,27 +38,31 @@ export default class TabItem extends SafeComponent {
         } else {
             routerMain[route]();
         }
+
+        this.updateBeacon();
     }
 
     // TODO clean up mock beacons
     // ---------------------
     async componentDidMount() {
-        when(() => this.layoutLoaded, () => {
-            const { route } = this.props;
-            if (route === 'contacts') {
-                uiState.beaconContent = {
-                    x: this.viewRef.pageX,
-                    y: this.viewRef.pageY,
-                    width: this.viewRef.frameWidth,
-                    height: this.viewRef.frameHeight,
-                    positionX: 2,
-                    // textHeader: 'Header',
-                    textLine1: 'Line 1'
-                    // textLine2="Line 2",
-                    // textLine3="Line 3"
-                };
-            }
-        });
+        this.updateBeacon();
+        when(() => this.layoutLoaded, () => this.updateBeacon());
+    }
+
+    componentWillUnmount() {
+        beaconState.clearBeacons();
+    }
+
+    updateBeacon() {
+        beaconState.clearBeacons();
+
+        if (this.props.beacon) {
+            const beacon = {
+                id: this.props.beacon,
+                position: this.viewRef
+            };
+            beaconState.requestBeacons(beacon);
+        }
     }
 
     setRef = ref => {

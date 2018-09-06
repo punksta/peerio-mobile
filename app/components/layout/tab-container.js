@@ -37,7 +37,8 @@ export default class TabContainer extends SafeComponent {
                     route="chats"
                     icon="forum"
                     highlightList={['space']}
-                    bubble={chatStore.unreadMessages + chatInviteStore.received.length} />
+                    bubble={chatStore.unreadMessages + chatInviteStore.received.length}
+                    beacon="mobile-chat-icon" />
                 <TabItem
                     text={t('title_files')}
                     route="files"
@@ -47,7 +48,8 @@ export default class TabContainer extends SafeComponent {
                     text={t('title_contacts')}
                     route={contactState.empty ? 'contactAdd' : 'contacts'}
                     icon="people"
-                    highlightList={['contactAdd', 'contactInvite']} />
+                    highlightList={['contactAdd', 'contactInvite']}
+                    beacon="mobile-contacts-icon" />
                 <TabItem
                     text={t('title_settings')}
                     route="settings"
