@@ -6,7 +6,6 @@ import { View, Dimensions } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import { vars } from '../../styles/styles';
 import Text from '../controls/custom-text';
-import beaconState from './beacon-state';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -31,7 +30,7 @@ export default class Beacon extends SafeComponent {
     beaconPositionY;
 
     get beaconHeight() {
-        const { beaconText } = beaconState;
+        const { beaconText } = this.props.beacon;
         const { textHeader, textLine1, textLine2, textLine3 } = beaconText;
         let numLines = 0;
 
@@ -43,7 +42,8 @@ export default class Beacon extends SafeComponent {
     }
 
     renderThrow() {
-        const { beaconPosition, beaconText } = beaconState;
+        const { position: beaconPosition, beaconText } = this.props.beacon;
+        console.log(beaconPosition, beaconText);
         if (!beaconPosition) return null;
         if (!beaconText) return null;
 

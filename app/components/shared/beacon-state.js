@@ -5,6 +5,16 @@ import uiState from '../layout/ui-state';
 // to identify our drawers
 // let lastDrawerId = 0;
 
+const beaconContext = {
+    onboarding: [
+        'mobile-chat-icon',
+        'mobile-create-dm',
+        'mobile-upload-file',
+        'mobile-contacts-icon',
+        'mobile-contacts-search'
+    ]
+};
+
 const beaconLabels = {
     'mobile-chat-icon': {
         textHeader: 'See all your conversations here.',
@@ -22,35 +32,12 @@ const beaconLabels = {
  * @property {component} component the React component, <TopDrawerMaintenance />, etc ...
  */
 class BeaconState {
-    beaconFlows = {
-        onboarding: [
-            'mobile-chat-icon',
-            'mobile-create-dm',
-            'mobile-upload-file',
-            'mobile-contacts-icon',
-            'mobile-contacts-search'
-        ]
-    };
-
-    @computed get activeBeacons() {
-        // all visible beacons in current layout
-        return [];
-    }
-    
     @observable.shallow beacons = [];
-
-    @observable beaconPosition = null;
-    @observable beaconText = null;
 
     requestBeacons(beacon) {
         console.log('>>> Requested beacons', beacon);
-
-        const { id, position } = beacon;
-        
-        this.beacons.unshift(id);
-        
-        this.beaconText = beaconLabels[id];
-        this.beaconPosition = position;
+        beacon.beaconText = beaconLabels[beacon.id];
+        this.beacons.unshift(beacon);
     }
 
     clearBeacons() {
