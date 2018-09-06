@@ -15,5 +15,3 @@ cp app/assets/fonts/OpenSansBoldItalic.ttf android/app/src/main/assets/fonts/Ope
 cp app/assets/fonts/OpenSansItalic.ttf android/app/src/main/assets/fonts/OpenSansItalic.ttf
 cp app/assets/fonts/OpenSansSemiBold.ttf android/app/src/main/assets/fonts/OpenSansSemiBold.ttf
 cp app/assets/fonts/OpenSansSemiBoldItalic.ttf android/app/src/main/assets/fonts/OpenSansSemiBoldItalic.ttf
-
-cp app/assets/account_key_backup.pdf android/app/src/main/assets/

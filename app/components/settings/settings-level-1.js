@@ -110,7 +110,7 @@ export default class SettingsLevel1 extends SafeComponent {
     }
 
     testGlobalDrawer = () => {
-        drawerState.addDrawer(TopDrawerMaintenance);
+        setTimeout(() => drawerState.addDrawer(TopDrawerMaintenance), 3000);
     };
 
     testLocalDrawer = () => {
@@ -121,6 +121,10 @@ export default class SettingsLevel1 extends SafeComponent {
 
     resetExternalSetting = () => {
         clientApp.uiUserPrefs.externalContentConsented = false;
+    };
+
+    showProps = () => {
+        console.log('User props are:', User.current.props);
     };
 
     /**
@@ -257,6 +261,7 @@ export default class SettingsLevel1 extends SafeComponent {
                     {__DEV__ && <BasicSettingsItem title="test null activeChat" onPress={() => this.testNullActiveChat()} />}
                     {__DEV__ && <BasicSettingsItem title="test warning" onPress={() => warnings.addSevere('warning')} />}
                     {__DEV__ && <BasicSettingsItem title="reset external setting" onPress={this.resetExternalSetting} />}
+                    {__DEV__ && <BasicSettingsItem title="log MC props" onPress={this.showProps} />}
                     {/* <BasicSettingsItem title={t('payments')} onPress={() => settingsState.transition('payments')} /> */}
                     {/* <BasicSettingsItem title={t('quotas')} onPress={() => settingsState.transition('quotas')} /> */}
                 </View>

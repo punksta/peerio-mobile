@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Platform } from 'react-native';
 import { observer } from 'mobx-react/native';
 import { action, reaction, observable, when } from 'mobx';
 import SafeComponent from '../shared/safe-component';
@@ -10,6 +10,7 @@ import uiState from '../layout/ui-state';
 export default class ListWithDrawer extends SafeComponent {
     @observable timeout = null;
     @observable cachedDrawer = null;
+    @observable androidExtraScrollingSpace = false;
 
     whenAnimationFinished() {
         return new Promise(resolve => when(() => !this.timeout, resolve));
@@ -39,7 +40,7 @@ export default class ListWithDrawer extends SafeComponent {
                 if (drawer) {
                     // assigning and scrolling in the same render frame
                     if (!this.cachedDrawer) {
-                        this.onShowTopDrawer();
+                        await this.onShowTopDrawer();
                     }
                     this.cachedDrawer = drawer;
                 } else if (this.cachedDrawer) {
@@ -64,10 +65,15 @@ export default class ListWithDrawer extends SafeComponent {
     // Give it a delay then scroll down to "animate" it into view
     @action.bound
     async onShowTopDrawer() {
+        if (Platform.OS === 'android') {
+            this.androidExtraScrollingSpace = true;
+            await new Promise(resolve => setTimeout(resolve, 100));
+        }
         this.scrollDrawerOutOfView(false);
         this.timeout = setTimeout(() => {
             this.timeout = null;
             this.scrollToStart(true);
+            if (Platform.OS === 'android') this.androidExtraScrollingSpace = false;
         }, 100);
     }
 

@@ -85,6 +85,11 @@ const icons = {
         return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {}, null, null, testId, disabled);
     },
 
+    coloredNoPadding(name, onPress, outerStyle, colorFg, backgroundColor, disabled, testId) {
+        const s = backgroundColor ? [outerStyle, { backgroundColor }] : outerStyle;
+        return icons.basic(name, colorFg, onPress, s, null, true, testId, disabled);
+    },
+
     coloredSmall(name, onPress, colorFg, backgroundColor) {
         return icons.basic(name, colorFg, onPress, backgroundColor ? { backgroundColor } : {}, vars.iconSizeSmall);
     },
@@ -181,6 +186,16 @@ const icons = {
         );
     },
 
+    imageIconNoPadding(source, size, style) {
+        const width = size || vars.iconSize;
+        const height = width;
+        return (
+            <View style={style}>
+                <Image style={{ width, height }} source={source} />
+            </View>
+        );
+    },
+
     imageButton(source, onPress, size, opacity) {
         const width = size || vars.iconSize;
         const height = width;
@@ -195,8 +210,8 @@ const icons = {
         );
     },
 
-    imageButtonNoPadding(source, size, onPress, opacity) {
-        const width = size || vars.iconSize;
+    imageButtonNoPadding(source, onPress, opacity) {
+        const width = vars.iconSize;
         const height = width;
         return (
             <TouchableOpacity

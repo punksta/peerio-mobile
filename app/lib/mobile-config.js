@@ -71,8 +71,8 @@ export default (c, icebear) => {
         jitsiLink: 'https://jitsi.org/',
         learnLegacyFiles: 'https://www.peerio.com/blog/posts/new-filesystem/',
         // sharedFiles: '' TODO: Add link to file
-        termsUrl: whitelabel.TERMS_URL || 'https://peerio.com/conditions.html',
-        privacyUrl: whitelabel.PRIVACY || 'https://peerio.com/privacy.html'
+        openTerms: whitelabel.TERMS_URL || 'https://peerio.com/conditions.html',
+        openPrivacy: whitelabel.PRIVACY || 'https://peerio.com/privacy.html'
     };
 
     setUrlMap(cfg.translator.urlMap);

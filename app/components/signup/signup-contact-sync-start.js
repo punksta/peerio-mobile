@@ -7,21 +7,20 @@ import { tx } from '../utils/translator';
 import buttons from '../helpers/buttons';
 import contactState from '../contacts/contact-state';
 import signupState from './signup-state';
-import LoginWizardPage, {
-    header2, innerSmall, circleTopSmall, headingStyle2, container, topCircleSizeSmall
-} from '../login/login-wizard-page';
 import { formStyle, titleDark, textNormal } from '../../styles/signup-contact-sync';
 import { popupContactPermission } from '../shared/popups';
+import SafeComponent from '../shared/safe-component';
+import { vars } from '../../styles/styles';
 
 const imageDiscoverNetwork = require('../../assets/discover-network.png');
 
 @observer
-export default class SignupContactSyncStart extends LoginWizardPage {
+export default class SignupContactSyncStart extends SafeComponent {
     get icon() {
-        const width = topCircleSizeSmall * 2;
+        const width = vars.topCircleSizeSmall * 2;
         const height = width;
         return (
-            <View style={[circleTopSmall, { borderWidth: 0 }]}>
+            <View style={[vars.circleTopSmall, { borderWidth: 0 }]}>
                 <Image
                     source={imageDiscoverNetwork}
                     style={{ width, height }} />
@@ -46,12 +45,12 @@ export default class SignupContactSyncStart extends LoginWizardPage {
 
     render() {
         return (
-            <View style={container} onLayout={this._layout}>
-                <View style={header2}>
-                    <Text semibold style={headingStyle2}>{tx('title_discoverNetwork')}</Text>
+            <View onLayout={this._layout}>
+                <View>
+                    <Text semibold>{tx('title_discoverNetwork')}</Text>
                 </View>
                 <View style={{ flex: 0.7, flexGrow: 1 }}>
-                    <View style={innerSmall}>
+                    <View>
                         <View style={formStyle}>
                             <Text semibold style={titleDark}>{tx('title_findYourContacts')}</Text>
                             <Text style={textNormal}>{tx('title_findYourContactsDescription')} </Text>

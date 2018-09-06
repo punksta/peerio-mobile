@@ -80,12 +80,9 @@
 		<string>OpenSansItalic.ttf</string>
 		<string>OpenSansSemiBold.ttf</string>
 		<string>OpenSansSemiBoldItalic.ttf</string>
-		<string>OpenSans-Bold.ttf</string>
-		<string>OpenSans-BoldItalic.ttf</string>
-		<string>OpenSans-Italic.ttf</string>
-		<string>OpenSans-Regular.ttf</string>
-		<string>OpenSans-SemiBold.ttf</string>
-		<string>OpenSans-SemiBoldItalic.ttf</string>
+		<string>SourceSerifPro.ttf</string>
+		<string>SourceSerifProBold.ttf</string>
+		<string>SourceSerifProSemiBold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

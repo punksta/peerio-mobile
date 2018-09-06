@@ -24,34 +24,19 @@ export default class FilesPlaceholder extends SafeComponent {
             justifyContent: 'center',
             marginTop: vars.spacing.medium.maxi
         };
-        const infoContainer = {
-            flex: 0,
-            alignItems: 'center',
-            marginTop: vars.spacing.large.maxi,
-            marginBottom: vars.spacing.small.midi2x
-        };
         const imageStyle = {
             width: this.width,
             height: 275,
-            paddingLeft: vars.spacing.medium.midi2x,
-            paddingRight: vars.spacing.medium.midi2x
+            marginVertical: vars.spacing.huge.midi
         };
         const headerStyle = {
             color: vars.textBlack54,
             textAlign: 'center',
             fontSize: vars.font.size.huge
         };
-        const infoStyle = {
-            color: vars.textBlack54,
-            textAlign: 'center',
-            fontSize: vars.font.size.bigger
-        };
         return (
             <ViewWithDrawer>
                 <View style={outerContainer}>
-                    <View style={infoContainer}>
-                        <Text style={infoStyle}>{tx('title_uploadShareAndManage')}</Text>
-                    </View>
                     <Image
                         source={fileUploadZeroState}
                         resizeMode="contain"

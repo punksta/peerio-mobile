@@ -40,12 +40,12 @@ class LoginState extends RoutedState {
         if (this.isInProgress) return;
         this.changeUser = true;
         this.clean();
-        this.routes.app.loginStart();
+        this.routes.app.loginWelcome();
     }
 
     @action useMasterPassword() {
         this.current = 2;
-        this.routes.app.loginStart();
+        this.routes.app.loginWelcome();
     }
 
     @action clean() {
