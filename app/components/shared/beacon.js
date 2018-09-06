@@ -43,9 +43,7 @@ export default class Beacon extends SafeComponent {
 
     renderThrow() {
         const { position: beaconPosition, beaconText } = this.props.beacon;
-        console.log(beaconPosition, beaconText);
-        if (!beaconPosition) return null;
-        if (!beaconText) return null;
+        if (!beaconPosition || !beaconText) return null;
 
         const { pageX: x, pageY: y, frameWidth: width, frameHeight: height } = beaconPosition;
         const { textHeader, textLine1, textLine2, textLine3 } = beaconText;
