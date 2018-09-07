@@ -9,8 +9,9 @@ class KeyValueStorage {
         return this.prefix + key;
     }
 
-    _getOriginalKey(key) { 
-        return key.indexOf(this.prefix) === 0 ? key.slice(this.prefix.length) : key;
+    // inverse function for _getKey
+    _getOriginalKey(keyWithPrefix) { 
+        return keyWithPrefix.slice(this.prefix.length);
     }
 
     // should return null if value doesn't exist
