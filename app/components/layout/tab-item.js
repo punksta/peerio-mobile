@@ -11,7 +11,7 @@ import routerMain from '../routes/router-main';
 import icons from '../helpers/icons';
 import testLabel from '../helpers/test-label';
 import uiState from './ui-state';
-import beaconState from '../shared/beacon-state';
+import beaconState from '../beacons/beacon-state';
 
 const actionCellStyle = {
     flex: 1,
@@ -56,11 +56,7 @@ export default class TabItem extends SafeComponent {
         beaconState.clearBeacons();
 
         if (this.props.beacon) {
-            const beacon = {
-                id: this.props.beacon,
-                position: this.viewRef
-            };
-            beaconState.requestBeacons(beacon);
+            beaconState.requestBeacons(this.props.beacon, { beaconPosition: this.viewRef });
         }
     }
 

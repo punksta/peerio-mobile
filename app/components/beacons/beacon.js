@@ -8,7 +8,6 @@ import { vars } from '../../styles/styles';
 import Text from '../controls/custom-text';
 import { User } from '../../lib/icebear';
 import beaconState from './beacon-state';
-import beaconLabels from './beacon-labels';
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -33,8 +32,7 @@ export default class Beacon extends SafeComponent {
     beaconPositionY;
 
     get beaconHeight() {
-        const beaconText = beaconLabels[this.props.beacon.id];
-        const { textHeader, textLine1, textLine2, textLine3 } = beaconText;
+        const { textHeader, textLine1, textLine2, textLine3 } = this.props;
         let numLines = 0;
 
         // count number of lines to determine beacon height
@@ -46,20 +44,19 @@ export default class Beacon extends SafeComponent {
 
     @action.bound
     async onPress() {
-        const { id } = this.props.beacon;
+        const { id, beaconId } = this.props;
         // User.current.beacons[id] = true;
         // await User.current.saveBeacons();
-        beaconState.removeBeacon(id);
+        beaconState.removeBeacon(beaconId);
     }
 
     renderThrow() {
-        const { id, position: beaconPosition } = this.props.beacon;
-        const beaconText = beaconLabels[id];
+        const { id, beaconPosition, textHeader, textLine1, textLine2, textLine3 } = this.props;
 
-        if (!beaconPosition || !beaconText) return null;
+        if (User.current.beacons[id]) return null;
+        if (!beaconPosition || !textHeader || !textLine1) return null;
 
         const { pageX: x, pageY: y, frameWidth: width, frameHeight: height } = beaconPosition;
-        const { textHeader, textLine1, textLine2, textLine3 } = beaconText;
         const positionX = 2; // TODO
 
         // set beacon position Y based on whether content is in the upper or lower half of the screen

@@ -3,7 +3,6 @@ import { observer } from 'mobx-react/native';
 import { View } from 'react-native';
 import SafeComponent from '../shared/safe-component';
 import beaconState from './beacon-state';
-import Beacon from './beacon';
 
 const style = {
     position: 'absolute',
@@ -18,7 +17,7 @@ export default class BeaconLayout extends SafeComponent {
 
         return (
             <View style={style}>
-                {beaconState.beacons.map(beacon => <Beacon key={beacon.id} beacon={beacon} />)}
+                {beaconState.beacons.map(beacon => beacon.component)}
             </View>
         );
     }

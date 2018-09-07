@@ -23,7 +23,7 @@ import Text from './controls/custom-text';
 import fileState from './files/file-state';
 import { promiseWhen } from './helpers/sugar';
 import routes from './routes/routes';
-import BeaconLayout from './shared/beacon-layout';
+import BeaconLayout from './beacons/beacon-layout';
 
 const { height, width } = Dimensions.get('window');
 @observer
