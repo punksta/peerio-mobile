@@ -23,6 +23,7 @@ import Text from './controls/custom-text';
 import fileState from './files/file-state';
 import { promiseWhen } from './helpers/sugar';
 import routes from './routes/routes';
+import loginState from './login/login-state';
 
 const { height, width } = Dimensions.get('window');
 @observer
@@ -80,7 +81,13 @@ export default class App extends SafeComponent {
     async componentWillMount() {
         if (!MockComponent) {
             let route = routerApp.routes.loading;
-            if (!User.getLastAuthenticated() && !await TinyDb.system.getValue('apple-review-login')) {
+
+            // Have existing user that isn't logged in
+            if (await loginState.haveLoggedOutUser()) {
+                route = routerApp.routes.loginWelcomeBack;
+            }
+            // No existing user
+            if (!await User.getLastAuthenticated() && !await TinyDb.system.getValue('apple-review-login')) {
                 route = routerApp.routes.loginWelcome;
             }
             route.transition();
