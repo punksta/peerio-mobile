@@ -5,17 +5,31 @@ import CacheEngineBase from '../lib/peerio-icebear/db/cache-engine-base';
 sqlcipher.enablePromise(false);
 
 function serialize(item) {
+    const copy = {
+        ...item
+    };
+
     if (item.payload) {
-        item.payload = bytesToB64(item.payload);
+        copy.payload = bytesToB64(item.payload);
     }
     if (item.chatHead && item.chatHead.payload) {
-        item.chatHead.payload = bytesToB64(item.chatHead.payload);
+        copy.chatHead = {
+            ...item.chatHead,
+            payload: bytesToB64(item.chatHead.payload)
+        };
     }
     if (item.props && item.props.descriptor && item.props.descriptor.payload) {
-        item.props.descriptor.payload = bytesToB64(item.props.descriptor.payload);
+        copy.props = {
+            ...item.props,
+            descriptor: {
+                ...item.props.descriptor,
+                payload: bytesToB64(item.props.descriptor.payload)
+            }
+        };
     }
-    return JSON.stringify(item);
+    return JSON.stringify(copy);
 }
+
 
 function deserialize(data) {
     try {
