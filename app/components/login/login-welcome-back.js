@@ -52,7 +52,18 @@ export default class LoginWelcomeBack extends SafeComponent {
         );
     }
 
+    get placeholder() {
+        return (
+            <View style={signupStyles.page}>
+                <IntroStepIndicator max={1} current={1} />
+                <View style={signupStyles.container} />
+                <StatusBar hidden />
+            </View>
+        );
+    }
+
     renderThrow() {
+        if (!this.lastUser) return this.placeholder;
         return (
             <View style={signupStyles.page}>
                 <IntroStepIndicator max={1} current={1} />
@@ -71,7 +82,6 @@ export default class LoginWelcomeBack extends SafeComponent {
                     </View>
                     <LoginInputs hideUsernameInput />
                 </View>
-                <ActivityOverlay large visible={loginState.isInProgress} />
                 <StatusBar hidden />
             </View>
         );

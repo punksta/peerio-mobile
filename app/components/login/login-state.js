@@ -171,6 +171,15 @@ class LoginState extends RoutedState {
         await RNRestart.Restart();
     }
 
+    // Returns true if a we have existing user data AND that user is not currently logged in
+    async haveLoggedOutUser() {
+        const userData = await User.getLastAuthenticated();
+        if (!userData) return false;
+        const { username } = userData;
+        if (await TinyDb.system.getValue(`user::${username}::keychain`)) return false;
+        return true;
+    }
+
     async load() {
         console.log(`login-state.js: loading`);
         const appleReviewLogin = await TinyDb.system.getValue('apple-review-login');
