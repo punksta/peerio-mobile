@@ -31,7 +31,11 @@ export default class TosAccordionItem extends SafeComponent {
     @action.bound toggle() {
         this.isOpen = !this.isOpen;
         // Only need to send TM event on Open
-        if (this.isOpen) tm.signup.readMoreAccordion(tx(this.props.data.title));
+        if (this.isOpen) {
+            if (this.props.data.title === 'title_termsOfUse') {
+                tm.signup.readMoreAccordion(tx('title_termsOfUse'));
+            } else tm.signup.readMoreAccordion(tx(this.props.data.title));
+        }
     }
 
     keyExtractor = item => item.subtitle;
