@@ -9,6 +9,9 @@ import icons from '../helpers/icons';
 import { vars } from '../../styles/styles';
 import { tx } from '../utils/translator';
 import tm from '../../telemetry';
+import { telemetry } from '../../lib/icebear';
+
+const { S } = telemetry;
 
 const textTitleStyle = {
     flex: 1,
@@ -33,7 +36,7 @@ export default class TosAccordionItem extends SafeComponent {
         // Only need to send TM event on Open
         if (this.isOpen) {
             if (this.props.data.title === 'title_termsOfUse') {
-                tm.signup.readMoreAccordion(tx('title_termsOfUse'));
+                tm.signup.readMoreAccordion(S.TERMS_OF_USE_SUMMARY);
             } else tm.signup.readMoreAccordion(tx(this.props.data.title));
         }
     }
