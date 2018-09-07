@@ -9,6 +9,10 @@ class KeyValueStorage {
         return this.prefix + key;
     }
 
+    _getOriginalKey(key) { 
+        return key.indexOf(this.prefix) === 0 ? key.slice(this.prefix.length) : key;
+    }
+
     // should return null if value doesn't exist
     getValue(key) {
         return AsyncStorage.getItem(this._getKey(key))
@@ -34,7 +38,7 @@ class KeyValueStorage {
     getAllKeys() {
         return AsyncStorage.getAllKeys()
             .then(keys => {
-                return keys.filter(k => k.startsWith(this.prefix)).map(k => k.replace(this.prefix, ''));
+                return keys.filter(k => k.startsWith(this.prefix)).map(k => this._getOriginalKey(k));
             });
     }
 
@@ -42,6 +46,7 @@ class KeyValueStorage {
         return this.getAllKeys().then(keys => Promise.map(keys, key => this.removeValue(key)));
     }
 }
+
 
 
 export default KeyValueStorage;
