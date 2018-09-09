@@ -1,7 +1,6 @@
 import sqlcipher from 'react-native-sqlcipher-storage';
 import { b64ToBytes, bytesToB64 } from '../lib/peerio-icebear/crypto/util';
 import CacheEngineBase from '../lib/peerio-icebear/db/cache-engine-base';
-import _ from 'lodash';
 
 sqlcipher.enablePromise(false);
 
@@ -9,23 +8,21 @@ function isBytes(value) {
     return value && (value instanceof Uint8Array || value instanceof ArrayBuffer)
 }
 
-function payloadToBase64(value, key) {
-    if (key === 'payload' && isBytes(value)) return bytesToB64(value);
+function payloadToBase64(key, value) {
+    return (key === 'payload' && isBytes(value)) ? bytesToB64(value) : value
 }
 
-function payloadFromBase64(value, key) {
-    if (key === 'payload' && typeof value === "string") return b64ToBytes(value);
+function payloadFromBase64(key, value) {
+    return (key === 'payload' && typeof value === "string") ? b64ToBytes(value) : value
 }
 
 function serialize(item) {
-    const normalizedData = _.cloneDeepWith(item, payloadToBase64);
-    return JSON.stringify(normalizedData);
+    return JSON.stringify(item, payloadToBase64);
 }
 
 function deserialize(data) {
     try {
-        const item = JSON.parse(data);
-        return _.cloneDeepWith(item, payloadFromBase64);
+        return JSON.parse(data, payloadFromBase64);
     } catch (e) {
         return null;
     }
