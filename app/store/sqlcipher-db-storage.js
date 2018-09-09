@@ -1,66 +1,31 @@
 import sqlcipher from 'react-native-sqlcipher-storage';
 import { b64ToBytes, bytesToB64 } from '../lib/peerio-icebear/crypto/util';
 import CacheEngineBase from '../lib/peerio-icebear/db/cache-engine-base';
+import _ from 'lodash';
 
 sqlcipher.enablePromise(false);
 
+function isBytes(value) {
+    return value && (value instanceof Uint8Array || value instanceof ArrayBuffer)
+}
+
+function payloadToBase64(value, key) {
+    if (key === 'payload' && isBytes(value)) return bytesToB64(value);
+}
+
+function payloadFromBase64(value, key) {
+    if (key === 'payload' && typeof value === "string") return b64ToBytes(value);
+}
+
 function serialize(item) {
-    if (
-        !item ||
-        typeof item !== "object" ||
-        Array.isArray(item) ||
-        typeof item === "number" ||
-        typeof item === Date
-    ) {
-        return JSON.stringify(item);
-    }
-
-    let copy;
-    function ensureCopy() {
-        if (copy === undefined) {
-            copy = {
-                ...item
-            };
-        }
-    }
-
-    if (item.payload) {
-        ensureCopy();
-        copy.payload = bytesToB64(item.payload);
-    }
-    if (item.chatHead && item.chatHead.payload) {
-        ensureCopy();
-        copy.chatHead = {
-            ...item.chatHead,
-            payload: bytesToB64(item.chatHead.payload)
-        };
-    }
-    if (item.props && item.props.descriptor && item.props.descriptor.payload) {
-        ensureCopy();
-        copy.props = {
-            ...item.props,
-            descriptor: {
-                ...item.props.descriptor,
-                payload: bytesToB64(item.props.descriptor.payload)
-            }
-        };
-    }
-    return JSON.stringify(copy || item);
+    const normalizedData = _.cloneDeepWith(item, payloadToBase64);
+    return JSON.stringify(normalizedData);
 }
 
 function deserialize(data) {
     try {
         const item = JSON.parse(data);
-        if (item.payload) {
-            item.payload = b64ToBytes(item.payload);
-        }
-        if (item.chatHead && item.chatHead.payload) {
-            item.chatHead.payload = b64ToBytes(item.chatHead.payload).buffer;
-        }
-        if (item.props && item.props.descriptor && item.props.descriptor.payload) {
-            item.props.descriptor.payload = b64ToBytes(item.props.descriptor.payload);
-        }
-        return item;
+        return _.cloneDeepWith(item, payloadFromBase64);
     } catch (e) {
         return null;
     }
